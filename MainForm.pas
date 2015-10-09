@@ -21,12 +21,53 @@ uses
   dxBar, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.ImgList, dxSkinsForm,
   Vcl.ExtCtrls, dxStatusBar, dxRibbonStatusBar, cxLabel, dxGallery,
   dxGalleryControl, dxRibbonBackstageViewGalleryControl, dxRibbonBackstageView,
-  cxClasses, dxRibbon;
+  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit;
 
 type
   TfrmMain = class(T_frmMainRibbon)
+    dxRibbon1Tab2: TdxRibbonTab;
+    dxBarManagerBar1: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    dxBarLargeButton3: TdxBarLargeButton;
+    dxBarLargeButton4: TdxBarLargeButton;
+    actBancos: TAction;
+    actCatalogo: TAction;
+    actMonedas: TAction;
+    actUbicaciones: TAction;
+    actCotizacionMonedas: TAction;
+    dxBarLargeButton5: TdxBarLargeButton;
+    actUnidadMedida: TAction;
+    actMetodosPagos: TAction;
+    dxBarLargeButton6: TdxBarLargeButton;
+    actClientes: TAction;
+    dxBarLargeButton7: TdxBarLargeButton;
+    actProveedores: TAction;
+    actEmpleados: TAction;
+    dxBarLargeButton8: TdxBarLargeButton;
+    dxBarLargeButton9: TdxBarLargeButton;
+    actProductos: TAction;
+    dxBarLargeButton10: TdxBarLargeButton;
+    dxBarLargeButton12: TdxBarLargeButton;
+    actCotizaciones: TAction;
+    actPedidos: TAction;
+    actFacturacion: TAction;
+    dxBarLargeButton13: TdxBarLargeButton;
+    dxRibbon1Tab3: TdxRibbonTab;
+    dxRibbon1Tab4: TdxRibbonTab;
+    dxRibbon1Tab5: TdxRibbonTab;
+    dxRibbon1Tab6: TdxRibbonTab;
+    dxBarManagerBar3: TdxBar;
+    dxBarLargeButton14: TdxBarLargeButton;
+    dxBarLargeButton15: TdxBarLargeButton;
+    dxBarLargeButton16: TdxBarLargeButton;
+    procedure actCatalogoExecute(Sender: TObject);
   private
     { Private declarations }
+  protected
+    gModulo: T_dmStandar;
+    procedure CreateModule(pModulo: Integer; pCaption: String); override;
+    procedure DestroyModule; override;
   public
     { Public declarations }
   end;
@@ -37,5 +78,57 @@ var
 implementation
 
 {$R *.dfm}
+
+uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
+  UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
+  PersonasMaster;
+
+{ TfrmMain }
+
+procedure TfrmMain.actCatalogoExecute(Sender: TObject);
+begin
+  inherited;
+  CreateModule(TAction(Sender).Tag, TAction(Sender).Caption);
+end;
+
+procedure TfrmMain.CreateModule(pModulo: Integer; pCaption: String);
+begin
+  inherited;
+  DestroyModule;
+  case pModulo of
+    //Catalogos
+    1: gModulo := TdmBancos.Create(Self);
+    2: gModulo := TdmMonedas.Create(Self);
+    3: gModulo := TdmUbicaciones.Create(Self);
+    4: gModulo := TdmMonedasCotizaciones.Create(Self);
+    5: gModulo := TdmUnidadMedida.Create(Self);
+    6: gModulo := TdmMetodosPagos.Create(Self);
+    7: begin
+        gModulo := TdmPersonas.Create(Self);
+        TdmPersonas(gModulo).Rol := rCliente;
+       end;
+    8: begin
+        gModulo := TdmPersonas.Create(Self);
+        TdmPersonas(gModulo).Rol := rProveedor;
+       end;
+    9: begin
+        gModulo := TdmPersonas.Create(Self);
+        TdmPersonas(gModulo).Rol := rEmpleado;
+       end;
+   10: gModulo := TdmProductos.Create(Self);
+   20: gModulo := TdmCotizaciones.Create(Self);
+  end;
+  if Assigned(gModulo) then
+  begin
+    gModulo.ShowModule(pnlMain, pCaption);
+    Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription;
+  end;
+end;
+
+procedure TfrmMain.DestroyModule;
+begin
+  inherited;
+  if Assigned(gModulo) then FreeAndNil(gModulo);
+end;
 
 end.

@@ -157,9 +157,244 @@
             <Form>_frmStandarGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\Standard\_StandarGFormGrid.pas">
+            <Form>_frmStandarGFormGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Standard\_StandarGFormEdit.pas">
+            <Form>_frmStandarGFormEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="..\Standard\_Utils.pas"/>
         <DCCReference Include="MainForm.pas">
             <Form>frmMain</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\BancosDM.pas">
+            <Form>dmBancos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasDM.pas">
+            <Form>dmMonedas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UbicacionesDM.pas">
+            <Form>dmUbicaciones</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UnidadMedidaDM.pas">
+            <Form>dmUnidadMedida</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesDM.pas">
+            <Form>dmMonedasCotizaciones</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasDM.pas">
+            <Form>dmPersonas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MetodosPagosDM.pas">
+            <Form>dmMetodosPagos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\EmailDM.pas">
+            <Form>dmEmail</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\TelefonosDM.pas">
+            <Form>dmTelefonos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasDomiciliosDM.pas">
+            <Form>dmPersonasDomicilios</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosDM.pas">
+            <Form>dmProductos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\BancosForm.pas">
+            <Form>frmBancos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\EmailForm.pas">
+            <Form>frmEmail</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MetodosPagosForm.pas">
+            <Form>frmMetodosPagos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesForm.pas">
+            <Form>frmMonedasCotizaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasForm.pas">
+            <Form>frmMonedas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasForm.pas">
+            <Form>frmPersonas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UnidadMedidaForm.pas">
+            <Form>frmUnidadMedida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UbicacionesForm.pas">
+            <Form>frmUbicaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\EstadosForm.pas">
+            <Form>frmEstados</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MunicipiosForm.pas">
+            <Form>frmMunicipios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PoblacionesForm.pas">
+            <Form>frmPoblaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasDomiciliosForm.pas">
+            <Form>frmPersonasDomicilios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\TelefonosForm.pas">
+            <Form>frmTelefonos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosForm.pas">
+            <Form>frmProductos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DomiciliosDM.pas">
+            <Form>dmDomicilios</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DomiciliosForm.pas">
+            <Form>frmDomicilios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Standard\_StandarMasterDetailForm.pas">
+            <Form>_frmStandarMasterDetail</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesDM.pas">
+            <Form>dmCotizaciones</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesForm.pas">
+            <Form>frmCotizaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Standard\_StandarMDFormEdit.pas">
+            <Form>_frmStandarMDFormEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasEdit.pas">
+            <Form>frmMonedasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\BancosEdit.pas">
+            <Form>frmBancosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UbicacionesEdit.pas">
+            <Form>frmUbicacionesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PoblacionesEdit.pas">
+            <Form>frmPoblacionesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\EstadosEdit.pas">
+            <Form>frmEstadosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MunicipiosEdit.pas">
+            <Form>frmMunicipiosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MonedasCotizacionesEdit.pas">
+            <Form>frmMonedasCotizacionesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\UnidadMedidaEdit.pas">
+            <Form>frmUnidadMedidaEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\MetodosPagosEdit.pas">
+            <Form>frmMetodosPagosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosEdit.pas">
+            <Form>frmProductosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\EmailEdit.pas">
+            <Form>frmEmailEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\TelefonosEdit.pas">
+            <Form>frmTelefonosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasEdit.pas">
+            <Form>frmPersonasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasMaster.pas">
+            <Form>frmPersonasMaster</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasDomiciliosEdit.pas">
+            <Form>frmPersonasDomiciliosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasContactosDM.pas">
+            <Form>dmPersonaContactos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasContactosEdit.pas">
+            <Form>frmPersonasContactosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasContactosForm.pas">
+            <Form>frmPersonasContactos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DomiciliosEdit.pas">
+            <Form>frmDomiciliosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\CuentasBancariasDM.pas">
+            <Form>dmCuentasBancarias</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\CuentasBancariasEdit.pas">
+            <Form>frmCuentasBancariasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\CuentasBancariasForm.pas">
+            <Form>frmCuentasBancarias</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
