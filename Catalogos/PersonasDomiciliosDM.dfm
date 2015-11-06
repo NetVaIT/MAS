@@ -66,6 +66,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
   end
   object adodsDomiciliosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDomicilioTipo, Descripcion FROM DomiciliosTipos'
@@ -74,6 +75,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 96
   end
   object adodsDomicilios: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -83,11 +85,11 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       ' Municipios.Descripcion + '#39', '#39' + Poblaciones.Descripcion + '#39', '#39' ' +
       '+ Estados.Descripcion + '#39' '#39' + Domicilios.CodigoPostal + CHAR(13)' +
       '+CHAR(10) +'#13#10'Paises.Descripcion AS Domicilio'#13#10'FROM Domicilios '#13#10 +
-      'INNER JOIN Paises ON Domicilios.IdPais = Paises.IdPais'#13#10'INNER JO' +
-      'IN Estados ON Domicilios.IdEstado = Estados.IdEstado'#13#10'INNER JOIN' +
-      ' Municipios ON Domicilios.IdMunicipio = Municipios.IdMunicipio'#13#10 +
-      'INNER JOIN Poblaciones ON Domicilios.IdPoblacion = Poblaciones.I' +
-      'dPoblacion'#13#10
+      'LEFT JOIN Paises ON Domicilios.IdPais = Paises.IdPais'#13#10'LEFT JOIN' +
+      ' Estados ON Domicilios.IdEstado = Estados.IdEstado'#13#10'LEFT JOIN Mu' +
+      'nicipios ON Domicilios.IdMunicipio = Municipios.IdMunicipio'#13#10'LEF' +
+      'T JOIN Poblaciones ON Domicilios.IdPoblacion = Poblaciones.IdPob' +
+      'lacion'#13#10
     Parameters = <>
     Left = 120
     Top = 48
@@ -100,5 +102,37 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       ReadOnly = True
       Size = 473
     end
+  end
+  object DSPersona: TDataSource
+    DataSet = ADODtStPersona
+    Left = 124
+    Top = 176
+  end
+  object ADODtStPersona: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdPersona, RFC, RazonSocial from Personas where IDPersona' +
+      '=:idpersona'
+    DataSource = dsmaster
+    IndexFieldNames = 'IdPersona'
+    MasterFields = 'IdPersona'
+    Parameters = <
+      item
+        Name = 'idpersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 40
+    Top = 176
+  end
+  object dsmaster: TDataSource
+    DataSet = adodsMaster
+    OnDataChange = dsmasterDataChange
+    Left = 36
+    Top = 80
   end
 end

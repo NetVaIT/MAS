@@ -3,20 +3,55 @@ inherited dmCotizaciones: TdmCotizaciones
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdCotizacion, FechaCotizacion, IdPersona, IdCotizacionEst' +
-      'atus, IdMoneda, IdUsuario, VigenciaCotizacion, Observaciones, IV' +
-      'A, SubTotal, Total FROM Cotizaciones'
+      'SELECT IdDocumentoSalida, IdTipoDocumentoSalida, IdPersona,'#13#10' Id' +
+      'DocumentoVentaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IVA' +
+      ', SubTotal, Total, VigenciaDias, Observaciones'#13#10' FROM Documentos' +
+      'Salidas'
     Left = 64
-    object adodsMasterIdCotizacion: TIntegerField
-      FieldName = 'IdCotizacion'
-      Visible = False
+    object adodsMasterIdDocumentoSalida: TAutoIncField
+      FieldName = 'IdDocumentoSalida'
+      ReadOnly = True
     end
-    object adodsMasterFechaCotizacion: TWideStringField
-      FieldName = 'FechaCotizacion'
-      Size = 10
+    object adodsMasterIdTipoDocumentoSalida: TIntegerField
+      FieldName = 'IdTipoDocumentoSalida'
     end
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
+    end
+    object adodsMasterIdDocumentoVentaEstatus: TIntegerField
+      FieldName = 'IdDocumentoVentaEstatus'
+    end
+    object adodsMasterIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object adodsMasterIdUsuario: TIntegerField
+      FieldName = 'IdUsuario'
+    end
+    object adodsMasterFechaRegistro: TWideStringField
+      FieldName = 'FechaRegistro'
+      Size = 10
+    end
+    object adodsMasterIVA: TFMTBCDField
+      FieldName = 'IVA'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterSubTotal: TFMTBCDField
+      FieldName = 'SubTotal'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object adodsMasterVigenciaDias: TIntegerField
+      FieldName = 'VigenciaDias'
+    end
+    object adodsMasterObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
     end
     object adodsMasterCliente: TStringField
       FieldKind = fkLookup
@@ -25,26 +60,8 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupKeyFields = 'IdPersona'
       LookupResultField = 'RazonSocial'
       KeyFields = 'IdPersona'
-      Size = 300
+      Size = 100
       Lookup = True
-    end
-    object adodsMasterIdCotizacionEstatus: TIntegerField
-      FieldName = 'IdCotizacionEstatus'
-      Visible = False
-    end
-    object adodsMasterCotizacionEstatus: TStringField
-      FieldKind = fkLookup
-      FieldName = 'CotizacionEstatus'
-      LookupDataSet = adodsCotizacionEstatus
-      LookupKeyFields = 'IdCotizacionEstatus'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdCotizacionEstatus'
-      Size = 50
-      Lookup = True
-    end
-    object adodsMasterIdMoneda: TIntegerField
-      FieldName = 'IdMoneda'
-      Visible = False
     end
     object adodsMasterMoneda: TStringField
       FieldKind = fkLookup
@@ -53,51 +70,29 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupKeyFields = 'IdMoneda'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdMoneda'
-      Size = 80
       Lookup = True
     end
-    object adodsMasterIdUsuario: TIntegerField
-      FieldName = 'IdUsuario'
-      Visible = False
-    end
-    object adodsMasterUsuario: TStringField
+    object adodsMasterEstatus: TStringField
       FieldKind = fkLookup
-      FieldName = 'Usuario'
-      LookupDataSet = adodsUsuario
-      LookupKeyFields = 'IdUsuario'
-      LookupResultField = 'Nombre'
-      KeyFields = 'IdUsuario'
-      Size = 100
+      FieldName = 'Estatus'
+      LookupDataSet = adodsCotizacionEstatus
+      LookupKeyFields = 'IdDocumentoSalidaEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdDocumentoVentaEstatus'
       Lookup = True
-    end
-    object adodsMasterVigenciaCotizacion: TWideStringField
-      FieldName = 'VigenciaCotizacion'
-      Size = 10
-    end
-    object adodsMasterObservaciones: TStringField
-      FieldName = 'Observaciones'
-      Size = 300
-    end
-    object adodsMasterIVA: TFloatField
-      FieldName = 'IVA'
-    end
-    object adodsMasterSubTotal: TFloatField
-      FieldName = 'SubTotal'
-    end
-    object adodsMasterTotal: TFloatField
-      FieldName = 'Total'
     end
   end
   object adodsCotizacionesDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdCotizacionDetalle, IdCotizacion, Cantidad, IdProducto, ' +
-      'ClaveProducto, PrecioUnitario, Importe FROM CotizacionesDetalle ' +
-      'WHERE IdCotizacion = :IdCotizacion'
+      'SELECT  IdDocumentoSalidaDetalle, IdDocumentoSalida, IdProducto,' +
+      ' ClaveProducto, Cantidad, CantidadPendiente, PrecioUnitario, Imp' +
+      'orte'#13#10' FROM DocumentosSalidasDetalles WHERE  IdDocumentoSalida= ' +
+      ':IdDocumentoSalida'
     Parameters = <
       item
-        Name = 'IdCotizacion'
+        Name = 'IdDocumentoSalida'
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
@@ -106,24 +101,35 @@ inherited dmCotizaciones: TdmCotizaciones
       end>
     Left = 64
     Top = 80
-    object adodsCotizacionesDetalleIdCotizacionDetalle: TIntegerField
-      FieldName = 'IdCotizacionDetalle'
-      Visible = False
+    object adodsCotizacionesDetalleIdDocumentoSalidaDetalle: TAutoIncField
+      FieldName = 'IdDocumentoSalidaDetalle'
+      ReadOnly = True
     end
-    object adodsCotizacionesDetalleIdCotizacion: TIntegerField
-      FieldName = 'IdCotizacion'
-      Visible = False
-    end
-    object adodsCotizacionesDetalleCantidad: TIntegerField
-      FieldName = 'Cantidad'
+    object adodsCotizacionesDetalleIdDocumentoSalida: TIntegerField
+      FieldName = 'IdDocumentoSalida'
     end
     object adodsCotizacionesDetalleIdProducto: TIntegerField
       FieldName = 'IdProducto'
-      Visible = False
     end
     object adodsCotizacionesDetalleClaveProducto: TStringField
       FieldName = 'ClaveProducto'
       Size = 50
+    end
+    object adodsCotizacionesDetalleCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object adodsCotizacionesDetalleCantidadPendiente: TFloatField
+      FieldName = 'CantidadPendiente'
+    end
+    object adodsCotizacionesDetallePrecioUnitario: TFMTBCDField
+      FieldName = 'PrecioUnitario'
+      Precision = 18
+      Size = 6
+    end
+    object adodsCotizacionesDetalleImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
     end
     object adodsCotizacionesDetalleProducto: TStringField
       FieldKind = fkLookup
@@ -132,14 +138,8 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupKeyFields = 'IdProducto'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdProducto'
-      Size = 255
+      Size = 150
       Lookup = True
-    end
-    object adodsCotizacionesDetallePrecioUnitario: TFloatField
-      FieldName = 'PrecioUnitario'
-    end
-    object adodsCotizacionesDetalleImporte: TFloatField
-      FieldName = 'Importe'
     end
   end
   object adodsUsuario: TADODataSet
@@ -161,15 +161,29 @@ inherited dmCotizaciones: TdmCotizaciones
   object adodsClientes: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdPersona, RazonSocial FROM Personas'
+    CommandText = 'SELECT IdPersona,RFC, RazonSocial FROM Personas'
     Parameters = <>
     Left = 192
     Top = 40
+    object adodsClientesIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object adodsClientesRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adodsClientesRazonSocial: TStringField
+      FieldName = 'RazonSocial'
+      Size = 300
+    end
   end
   object adodsCotizacionEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdCotizacionEstatus, Descripcion FROM CotizacionesEstatus'
+    CommandText = 
+      'SELECT Identificador, IdDocumentoSalidaEstatus, Descripcion '#13#10#13#10 +
+      'FROM DocumentosSalidasEstatus'
     Parameters = <>
     Left = 192
     Top = 104
@@ -181,5 +195,13 @@ inherited dmCotizaciones: TdmCotizaciones
     Parameters = <>
     Left = 192
     Top = 160
+    object adodsMonedaIdMoneda: TAutoIncField
+      FieldName = 'IdMoneda'
+      ReadOnly = True
+    end
+    object adodsMonedaDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 80
+    end
   end
 end

@@ -1,93 +1,66 @@
 inherited frmPersonas: TfrmPersonas
   Caption = ''
-  ExplicitWidth = 550
-  ExplicitHeight = 408
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
-          Visible = False
         end
         object tvMasterRFC: TcxGridDBColumn
           DataBinding.FieldName = 'RFC'
         end
         object tvMasterCURP: TcxGridDBColumn
           DataBinding.FieldName = 'CURP'
-          Visible = False
         end
         object tvMasterIdPersonaTipo: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaTipo'
-          Visible = False
-        end
-        object tvMasterPersonaTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'PersonaTipo'
-          Visible = False
-        end
-        object tvMasterIdRazonSocialTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdRazonSocialTipo'
-          Visible = False
-        end
-        object tvMasterRazonSocialTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'RazonSocialTipo'
-          Visible = False
         end
         object tvMasterIdSexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdSexo'
-          Visible = False
-        end
-        object tvMasterSexo: TcxGridDBColumn
-          DataBinding.FieldName = 'Sexo'
-          Visible = False
         end
         object tvMasterIdEstadoCivil: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCivil'
-          Visible = False
-        end
-        object tvMasterEstadoCivil: TcxGridDBColumn
-          DataBinding.FieldName = 'EstadoCivil'
-          Visible = False
         end
         object tvMasterIdPais: TcxGridDBColumn
           DataBinding.FieldName = 'IdPais'
-          Visible = False
-        end
-        object tvMasterIdPoblacion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPoblacion'
-          Visible = False
         end
         object tvMasterRazonSocial: TcxGridDBColumn
           DataBinding.FieldName = 'RazonSocial'
         end
         object tvMasterNombre: TcxGridDBColumn
           DataBinding.FieldName = 'Nombre'
-          Visible = False
         end
         object tvMasterApellidoPaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoPaterno'
-          Visible = False
         end
         object tvMasterApellidoMaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoMaterno'
-          Visible = False
         end
         object tvMasterLugarNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'LugarNacimiento'
-          Visible = False
         end
         object tvMasterFechaNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'FechaNacimiento'
-          Visible = False
         end
-        object tvMasterIdPersonaTitular: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersonaTitular'
-          Visible = False
+        object tvMasterIdRol: TcxGridDBColumn
+          DataBinding.FieldName = 'IdRol'
         end
-        object tvMasterVigenciaFM34: TcxGridDBColumn
-          DataBinding.FieldName = 'VigenciaFM34'
-          Visible = False
+        object tvMasterRol: TcxGridDBColumn
+          DataBinding.FieldName = 'Rol'
+        end
+        object tvMasterPersonaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'PersonaTipo'
+        end
+        object tvMasterSexo: TcxGridDBColumn
+          DataBinding.FieldName = 'Sexo'
+        end
+        object tvMasterEstadoCivil: TcxGridDBColumn
+          DataBinding.FieldName = 'EstadoCivil'
         end
       end
     end
@@ -97,7 +70,7 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400880010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -238,7 +211,7 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010B000E00880010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E00900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

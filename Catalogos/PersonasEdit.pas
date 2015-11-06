@@ -22,7 +22,7 @@ uses
   cxDropDownEdit, cxCalendar, cxDBEdit, Vcl.StdCtrls, cxMaskEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxTextEdit, ShellApi, PersonasDM, PersonasDomiciliosDM,
   TelefonosDM, EmailDM, dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox,
-  cxPC, PersonasContactosDM, CuentasBancariasDM;
+  cxPC, PersonasContactosDM, CuentasBancariasDM, Vcl.DBCtrls;
 
 type
   TfrmPersonasEdit = class(T_frmStandarGFormEdit)
@@ -36,10 +36,8 @@ type
     btnWeb: TButton;
     pnlPersonaMoral: TPanel;
     Label3: TLabel;
-    Label4: TLabel;
     Label11: TLabel;
     edtRazonSocial: TcxDBTextEdit;
-    cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     pnlPersonaFisica: TPanel;
     Label5: TLabel;
@@ -57,18 +55,28 @@ type
     cxDBLookupComboBox3: TcxDBLookupComboBox;
     cxDBLookupComboBox4: TcxDBLookupComboBox;
     cxDBTextEdit2: TcxDBTextEdit;
-    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBTxtEdtNombreComp: TcxDBTextEdit;
     tsDomicilio: TcxTabSheet;
     tsTelefono: TcxTabSheet;
     tsCorreo: TcxTabSheet;
     tsContactos: TcxTabSheet;
     tsCuentasBancarias: TcxTabSheet;
-    cxTabSheet3: TcxTabSheet;
+    cxDBLkupCBxRol: TcxDBLookupComboBox;
+    PnlCliente: TPanel;
+    cxDBEdtCtaCliente: TcxDBTextEdit;
+    LblCteCte: TLabel;
+    cxDBLkupCBxMetodoPago: TcxDBLookupComboBox;
+    Label13: TLabel;
+    DBText1: TDBText;
+    Label15: TLabel;
+    DSMetodoPago: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cmbTipoPersonaPropertiesChange(Sender: TObject);
+    procedure edtNombrePropertiesEditValueChanged(Sender: TObject);
+    procedure cxDBLkupCBxMetodoPagoPropertiesChange(Sender: TObject);
   private
     { Private declarations }
     dmPersonasDomicilios : TdmPersonasDomicilios;
@@ -100,6 +108,33 @@ procedure TfrmPersonasEdit.cmbTipoPersonaPropertiesChange(Sender: TObject);
 begin
   inherited;
   MostrarPanel;
+  if datasource.State in[dsEdit,dsInsert] then             //Nov 4/15
+     datasource.DataSet.FieldByName('idrol').Asinteger:=integer(ROL);   //no coincide con los de la BD
+end;
+
+procedure TfrmPersonasEdit.cxDBLkupCBxMetodoPagoPropertiesChange(
+  Sender: TObject);
+begin
+   inherited;
+
+  LblCteCte.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
+  cxDBEdtCtaCliente.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
+  if DataSource.DataSet.State in [dsedit, dsInsert]  then
+  begin
+    if not cxDBEdtCtaCliente.Visible then
+      datasource.DataSet.FieldByName('NumCtaPagoCliente').AsString:='';
+  end;
+end;
+
+procedure TfrmPersonasEdit.edtNombrePropertiesEditValueChanged(Sender: TObject);
+begin
+  inherited;
+  if datasource.State in[dsEdit,dsInsert] then
+  begin
+    datasource.DataSet.FieldByName('RazonSocial').AsString:= datasource.DataSet.FieldByName('Nombre').AsString +' '+
+                                                             datasource.DataSet.FieldByName('ApellidoPaterno').AsString+' '+
+                                                             datasource.DataSet.FieldByName('ApellidoMaterno').AsString;
+  end;
 end;
 
 procedure TfrmPersonasEdit.FormCreate(Sender: TObject);
@@ -107,11 +142,13 @@ begin
   inherited;
   gFormGrid := TfrmPersonas.Create(Self);
   dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
+  dmPersonasDomicilios.MasterFieldName:='RazonSocial';  //Nov5/15
+
   dmTelefonos := TdmTelefonos.Create(nil);
   dmEmails := TdmEmail.Create(nil);
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
-  pcMain.Properties.HideTabs := False;
+//  pcMain.Properties.HideTabs := False;
   TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
@@ -131,7 +168,14 @@ begin
   MostrarPanel;
   dmPersonasDomicilios.MasterSource := DataSource;
   dmPersonasDomicilios.MasterFields := 'IdPersona';
+  dmPersonasDomicilios.MasterFieldName:='RazonSocial'; //Nov 5/15  Asociar nombre
+
+ // dmPersonasDomicilios.ADODtStPersona.DataSource:= DataSource;
+ // dmPersonasDomicilios.ADODtStPersona.MasterFields := 'IdPersona'; //Nov 5/15  Asociar nombre
+ // dmPersonasDomicilios.ADODtStPersona.open;   //Nov 5/15  Asociar nombre
   dmPersonasDomicilios.ShowModule(tsDomicilio,'');
+
+
   dmTelefonos.MasterSource := DataSource;
   dmTelefonos.MasterFields := 'IdPersona';
   dmTelefonos.ShowModule(tsTelefono,'');
@@ -170,6 +214,7 @@ begin
   end;
   if DataSource.DataSet.State in [dsInsert] then
   begin
+    //cxDBLkupCBxRol.EditValue:=Rol; //Nov 4/15
     if (Rol = rEmpleado) then
     begin
       cmbTipoPersona.Enabled := False;
@@ -185,7 +230,18 @@ begin
       pnlPersonaMoral.Visible := True;
       pnlPersonaFisica.Visible := False;
     end;
+
     cmbTipoPersona.Enabled := True;
+  end;
+  //ADD ABAN Nov 5/15
+  if not DataSource.DataSet.eof then
+  begin
+    pnlPersonaMoral.Visible := DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 2;  //
+    pnlPersonaFisica.Visible := DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 1;
+    PnlCliente.Visible:= DataSource.DataSet.FieldByName('Idrol').AsInteger =1;
+
+    LblCteCte.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;;
+    cxDBEdtCtaCliente.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;
   end;
 end;
 

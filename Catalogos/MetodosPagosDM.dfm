@@ -3,8 +3,8 @@ inherited dmMetodosPagos: TdmMetodosPagos
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdMetodoPago, Identificador, Descripcion, ExigeCuenta FRO' +
-      'M MetodoPago'
+      'SELECT IdMetodoPago, Identificador, Descripcion, ExigeCuenta'#13#10'FR' +
+      'OM MetodosPago'
     object adodsMasterIdMetodoPago: TIntegerField
       FieldName = 'IdMetodoPago'
       Visible = False

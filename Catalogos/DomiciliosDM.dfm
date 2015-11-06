@@ -12,11 +12,11 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais ' +
-      '= Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEstado = Est' +
-      'ados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdMunicipio =' +
-      ' Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.Id' +
-      'Poblacion = Poblaciones.IdPoblacion'
+      'ostal'#13#10'FROM Domicilios '#13#10'LEFT JOIN Paises ON Domicilios.IdPais =' +
+      ' Paises.IdPais'#13#10'LEFT JOIN Estados ON Domicilios.IdEstado = Estad' +
+      'os.IdEstado'#13#10'LEFT JOIN Municipios ON Domicilios.IdMunicipio = Mu' +
+      'nicipios.IdMunicipio'#13#10'LEFT JOIN Poblaciones ON Domicilios.IdPobl' +
+      'acion = Poblaciones.IdPoblacion'
     Left = 48
     Top = 32
     object adodsMasterIdDomicilio: TAutoIncField
@@ -105,12 +105,12 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais ' +
-      '= Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEstado = Est' +
-      'ados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdMunicipio =' +
-      ' Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.Id' +
-      'Poblacion = Poblaciones.IdPoblacion'#13#10'WHERE Domicilios.IdDomicili' +
-      'o = :IdDomicilio'
+      'ostal'#13#10'FROM Domicilios '#13#10'Left JOIN Paises ON Domicilios.IdPais =' +
+      ' Paises.IdPais'#13#10'LEFT JOIN Estados ON Domicilios.IdEstado = Estad' +
+      'os.IdEstado'#13#10'LEFT JOIN Municipios ON Domicilios.IdMunicipio = Mu' +
+      'nicipios.IdMunicipio'#13#10'LEFT JOIN Poblaciones ON Domicilios.IdPobl' +
+      'acion = Poblaciones.IdPoblacion'#13#10'WHERE Domicilios.IdDomicilio = ' +
+      ':IdDomicilio'
     Parameters = <
       item
         Name = 'IdDomicilio'

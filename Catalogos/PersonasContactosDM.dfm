@@ -27,7 +27,6 @@ inherited dmPersonaContactos: TdmPersonaContactos
     end
     object adodsMasterIdContacto: TIntegerField
       FieldName = 'IdContacto'
-      Visible = False
     end
     object adodsMasterContacto: TStringField
       FieldKind = fkLookup
@@ -48,7 +47,7 @@ inherited dmPersonaContactos: TdmPersonaContactos
     CursorType = ctStatic
     CommandText = 'SELECT IdPersona, RazonSocial FROM Personas'
     Parameters = <>
-    Left = 64
-    Top = 104
+    Left = 40
+    Top = 112
   end
 end

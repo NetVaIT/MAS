@@ -10,10 +10,10 @@ type
   TdmPersonaContactos = class(T_dmStandar)
     adodsMasterIdPersonaContacto: TAutoIncField;
     adodsMasterIdPersona: TIntegerField;
-    adodsMasterIdContacto: TIntegerField;
     adodsMasterPrincipal: TBooleanField;
     adodsContacto: TADODataSet;
     adodsMasterContacto: TStringField;
+    adodsMasterIdContacto: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

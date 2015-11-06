@@ -105,6 +105,7 @@ begin
     6: gModulo := TdmMetodosPagos.Create(Self);
     7: begin
         gModulo := TdmPersonas.Create(Self);
+        TdmPersonas(gModulo).MasterFieldName:='RazonSocial';
         TdmPersonas(gModulo).Rol := rCliente;
        end;
     8: begin

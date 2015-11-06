@@ -1,15 +1,20 @@
 inherited frmMain: TfrmMain
   Caption = 'MAS -Principal'
+  ClientWidth = 742
   Font.Height = -32
-  ExplicitWidth = 656
+  ExplicitWidth = 758
   ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
+    Width = 742
+    ExplicitWidth = 742
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -50,6 +55,16 @@ inherited frmMain: TfrmMain
       end
     end
   end
+  inherited dxRibbonStatusBar1: TdxRibbonStatusBar
+    Width = 742
+    ExplicitWidth = 742
+  end
+  inherited pnlMain: TPanel
+    Width = 742
+    ExplicitTop = 177
+    ExplicitWidth = 742
+    ExplicitHeight = 280
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -57,6 +72,8 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -207,13 +224,14 @@ inherited frmMain: TfrmMain
   end
   inherited cxSmallImages: TcxImageList
     FormatVersion = 1
+    DesignInfo = 1049244
   end
   inherited cxLargeImages: TcxImageList
     FormatVersion = 1
+    DesignInfo = 1049204
   end
   inherited ActionList: TActionList
-    Left = 424
-    Top = 72
+    Left = 528
     object actCatalogo: TAction [0]
       Category = 'Catalogo'
       Caption = 'Catalogo'
@@ -307,5 +325,8 @@ inherited frmMain: TfrmMain
       Caption = 'Facturacion'
       ImageIndex = 33
     end
+  end
+  inherited dxBarScreenTipRepository: TdxBarScreenTipRepository
+    Left = 448
   end
 end

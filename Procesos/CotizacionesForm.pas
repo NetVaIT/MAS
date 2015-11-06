@@ -28,14 +28,6 @@ uses
 
 type
   TfrmCotizaciones = class(T_frmStandarMasterDetail)
-    tvMasterIdCotizacionDetalle: TcxGridDBColumn;
-    tvMasterIdCotizacion: TcxGridDBColumn;
-    tvMasterCantidad: TcxGridDBColumn;
-    tvMasterIdProducto: TcxGridDBColumn;
-    tvMasterClaveProducto: TcxGridDBColumn;
-    tvMasterProducto: TcxGridDBColumn;
-    tvMasterPrecioUnitario: TcxGridDBColumn;
-    tvMasterImporte: TcxGridDBColumn;
     SpeedButton1: TSpeedButton;
     Label1: TLabel;
     Label2: TLabel;
@@ -55,6 +47,15 @@ type
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBTextEdit6: TcxDBTextEdit;
     cxDBTextEdit7: TcxDBTextEdit;
+    tvMasterIdDocumentoSalidaDetalle: TcxGridDBColumn;
+    tvMasterIdDocumentoSalida: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterClaveProducto: TcxGridDBColumn;
+    tvMasterCantidad: TcxGridDBColumn;
+    tvMasterCantidadPendiente: TcxGridDBColumn;
+    tvMasterPrecioUnitario: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
+    tvMasterProducto: TcxGridDBColumn;
   private
     { Private declarations }
   public

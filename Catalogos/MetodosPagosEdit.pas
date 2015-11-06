@@ -20,7 +20,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   cxTextEdit, cxDBEdit, Vcl.StdCtrls, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
-  cxScrollBox, cxPC;
+  cxScrollBox, cxPC, cxCheckBox;
 
 type
   TfrmMetodosPagosEdit = class(T_frmStandarGFormEdit)
@@ -28,6 +28,7 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     Label2: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
+    cxDBChckBxExigeCta: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

@@ -30,23 +30,20 @@ type
     tvMasterRFC: TcxGridDBColumn;
     tvMasterCURP: TcxGridDBColumn;
     tvMasterIdPersonaTipo: TcxGridDBColumn;
-    tvMasterPersonaTipo: TcxGridDBColumn;
-    tvMasterIdRazonSocialTipo: TcxGridDBColumn;
-    tvMasterRazonSocialTipo: TcxGridDBColumn;
     tvMasterIdSexo: TcxGridDBColumn;
-    tvMasterSexo: TcxGridDBColumn;
     tvMasterIdEstadoCivil: TcxGridDBColumn;
-    tvMasterEstadoCivil: TcxGridDBColumn;
     tvMasterIdPais: TcxGridDBColumn;
-    tvMasterIdPoblacion: TcxGridDBColumn;
     tvMasterRazonSocial: TcxGridDBColumn;
     tvMasterNombre: TcxGridDBColumn;
     tvMasterApellidoPaterno: TcxGridDBColumn;
     tvMasterApellidoMaterno: TcxGridDBColumn;
     tvMasterLugarNacimiento: TcxGridDBColumn;
     tvMasterFechaNacimiento: TcxGridDBColumn;
-    tvMasterIdPersonaTitular: TcxGridDBColumn;
-    tvMasterVigenciaFM34: TcxGridDBColumn;
+    tvMasterIdRol: TcxGridDBColumn;
+    tvMasterRol: TcxGridDBColumn;
+    tvMasterPersonaTipo: TcxGridDBColumn;
+    tvMasterSexo: TcxGridDBColumn;
+    tvMasterEstadoCivil: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
   private
     FRol: TPRol;
@@ -72,12 +69,14 @@ begin
     rCliente: Self.Caption := 'Clientes';
     rProveedor: Self.Caption := 'Proveedores';
     rEmpleado: Self.Caption := 'Empleados';
+    rEmisor: Self.Caption := 'Emisor'; //Aban nov 4/15
   end;
 end;
 
 procedure TfrmPersonas.SetRol(const Value: TPRol);
 begin
   FRol := Value;
+
 end;
 
 end.

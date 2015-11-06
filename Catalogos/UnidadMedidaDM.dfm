@@ -3,8 +3,8 @@ inherited dmUnidadMedida: TdmUnidadMedida
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdUnidadMedida, Identificador, Descripcion FROM UnidadMed' +
-      'ida'
+      'SELECT IdUnidadMedida, Identificador, Descripcion '#13#10'FROM Unidade' +
+      'sMedida '
     object adodsMasterIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
       Visible = False

@@ -9,7 +9,6 @@ uses
 type
   TdmBancos = class(T_dmStandar)
     adodsMasterIdBanco: TAutoIncField;
-    adodsMasterIdPaisBanco: TIntegerField;
     adodsMasterIdentificador: TStringField;
     adodsMasterNombre: TStringField;
     adodsMasterDescripcion: TStringField;

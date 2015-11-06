@@ -3,15 +3,11 @@ inherited dmBancos: TdmBancos
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdBanco, IdPaisBanco, Identificador, Nombre, Descripcion,' +
-      ' Siglas FROM Bancos'
+      'SELECT IdBanco, IdPais,Identificador, Nombre, Descripcion, Sigla' +
+      's FROM Bancos'
     object adodsMasterIdBanco: TAutoIncField
       FieldName = 'IdBanco'
       ReadOnly = True
-      Visible = False
-    end
-    object adodsMasterIdPaisBanco: TIntegerField
-      FieldName = 'IdPaisBanco'
       Visible = False
     end
     object adodsMasterIdentificador: TStringField

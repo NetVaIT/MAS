@@ -13,6 +13,8 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
+          Ctl3D = False
+          ParentCtl3D = False
           object Label1: TLabel
             Left = 32
             Top = 16
@@ -45,6 +47,18 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
             TabOrder = 1
             Width = 457
           end
+          object cxDBChckBxExigeCta: TcxDBCheckBox
+            Left = 33
+            Top = 107
+            Caption = 'Exige Cuenta'
+            DataBinding.DataField = 'ExigeCuenta'
+            DataBinding.DataSource = DataSource
+            Properties.ImmediatePost = True
+            Properties.ValueChecked = '1'
+            Properties.ValueUnchecked = '0'
+            TabOrder = 2
+            Width = 121
+          end
         end
       end
     end
@@ -54,7 +68,7 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -195,7 +209,7 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

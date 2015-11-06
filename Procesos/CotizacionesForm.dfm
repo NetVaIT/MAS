@@ -94,25 +94,22 @@ inherited frmCotizaciones: TfrmCotizaciones
     Top = 148
     Width = 681
     Height = 273
-    ExplicitTop = 228
+    ExplicitTop = 148
     ExplicitWidth = 681
-    ExplicitHeight = 171
+    ExplicitHeight = 273
     inherited cxGrid: TcxGrid
       Width = 681
       Height = 244
       ExplicitWidth = 681
-      ExplicitHeight = 142
+      ExplicitHeight = 244
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdCotizacionDetalle: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCotizacionDetalle'
+        object tvMasterIdDocumentoSalidaDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoSalidaDetalle'
           Visible = False
         end
-        object tvMasterIdCotizacion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdCotizacion'
+        object tvMasterIdDocumentoSalida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoSalida'
           Visible = False
-        end
-        object tvMasterCantidad: TcxGridDBColumn
-          DataBinding.FieldName = 'Cantidad'
         end
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
@@ -120,9 +117,16 @@ inherited frmCotizaciones: TfrmCotizaciones
         end
         object tvMasterClaveProducto: TcxGridDBColumn
           DataBinding.FieldName = 'ClaveProducto'
+          Width = 223
         end
         object tvMasterProducto: TcxGridDBColumn
           DataBinding.FieldName = 'Producto'
+        end
+        object tvMasterCantidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Cantidad'
+        end
+        object tvMasterCantidadPendiente: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadPendiente'
         end
         object tvMasterPrecioUnitario: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioUnitario'
@@ -188,15 +192,15 @@ inherited frmCotizaciones: TfrmCotizaciones
       object Label6: TLabel
         Left = 362
         Top = 56
-        Width = 88
+        Width = 79
         Height = 13
-        Caption = 'VigenciaCotizacion'
+        Caption = 'Vigencia en d'#237'as '
         FocusControl = cxDBTextEdit2
       end
       object cxDBTextEdit2: TcxDBTextEdit
         Left = 362
         Top = 72
-        DataBinding.DataField = 'VigenciaCotizacion'
+        DataBinding.DataField = 'VigenciaDias'
         DataBinding.DataSource = DataSourceMaster
         TabOrder = 0
         Width = 121
@@ -204,7 +208,7 @@ inherited frmCotizaciones: TfrmCotizaciones
       object cxDBLookupComboBox1: TcxDBLookupComboBox
         Left = 15
         Top = 71
-        DataBinding.DataField = 'CotizacionEstatus'
+        DataBinding.DataField = 'Estatus'
         DataBinding.DataSource = DataSourceMaster
         Properties.ListColumns = <>
         TabOrder = 1
@@ -212,7 +216,7 @@ inherited frmCotizaciones: TfrmCotizaciones
       end
       object cxDBTextEdit3: TcxDBTextEdit
         Left = 158
-        Top = 32
+        Top = 29
         DataBinding.DataField = 'Cliente'
         DataBinding.DataSource = DataSourceMaster
         TabOrder = 2
@@ -221,7 +225,7 @@ inherited frmCotizaciones: TfrmCotizaciones
       object cxDBDateEdit1: TcxDBDateEdit
         Left = 16
         Top = 32
-        DataBinding.DataField = 'FechaCotizacion'
+        DataBinding.DataField = 'FechaRegistro'
         DataBinding.DataSource = DataSourceMaster
         TabOrder = 3
         Width = 121
@@ -229,7 +233,7 @@ inherited frmCotizaciones: TfrmCotizaciones
       object cxDBLookupComboBox2: TcxDBLookupComboBox
         Left = 186
         Top = 71
-        DataBinding.DataField = 'Moneda'
+        DataBinding.DataField = 'IdMoneda'
         DataBinding.DataSource = DataSourceMaster
         Properties.ListColumns = <>
         TabOrder = 4
@@ -246,7 +250,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400740010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004007C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -387,7 +391,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010B000E00740010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E007C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
