@@ -359,10 +359,6 @@
             <Form>frmPersonasEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Catalogos\PersonasMaster.pas">
-            <Form>frmPersonasMaster</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Catalogos\PersonasDomiciliosEdit.pas">
             <Form>frmPersonasDomiciliosEdit</Form>
             <FormType>dfm</FormType>

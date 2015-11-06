@@ -3,7 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 742
   Font.Height = -32
   ExplicitWidth = 758
-  ExplicitHeight = 518
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -61,9 +61,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 742
-    ExplicitTop = 177
     ExplicitWidth = 742
-    ExplicitHeight = 280
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (

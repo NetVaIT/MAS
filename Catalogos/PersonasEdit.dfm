@@ -17,26 +17,35 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     TabOrder = 4
   end
   inherited pcMain: TcxPageControl
+    Top = 21
+    Height = 456
     TabOrder = 1
     Properties.HideTabs = False
-    ClientRectBottom = 475
+    ExplicitTop = 21
+    ExplicitHeight = 456
+    ClientRectBottom = 454
     ClientRectLeft = 2
     ClientRectRight = 748
     ClientRectTop = 28
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitLeft = 2
+      ExplicitTop = 28
+      ExplicitWidth = 746
+      ExplicitHeight = 426
       inherited cxScrollBox1: TcxScrollBox
         Width = 746
-        Height = 447
+        Height = 426
+        ExplicitWidth = 746
+        ExplicitHeight = 426
         inherited tbarData: TToolBar
           Width = 744
+          ExplicitWidth = 744
         end
         inherited pnlMaster: TPanel
           Width = 744
-          Height = 420
+          Height = 399
+          ExplicitWidth = 744
+          ExplicitHeight = 399
           object pnlPersona: TPanel
             Left = 0
             Top = 0
@@ -45,7 +54,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 746
             object Label1: TLabel
               Left = 200
               Top = 9
@@ -133,7 +141,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitWidth = 746
             object Label3: TLabel
               Left = 16
               Top = 8
@@ -176,7 +183,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             BevelOuter = bvNone
             TabOrder = 2
             Visible = False
-            ExplicitWidth = 746
             object Label5: TLabel
               Left = 16
               Top = 2
@@ -322,13 +328,11 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             Left = 0
             Top = 353
             Width = 744
-            Height = 67
+            Height = 46
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 3
             Visible = False
-            ExplicitWidth = 746
-            ExplicitHeight = 95
             object LblCteCte: TLabel
               Left = 210
               Top = 6
@@ -391,50 +395,50 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo'
       ImageIndex = 3
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
     end
     object tsContactos: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
     end
+  end
+  object cxDBLabel1: TcxDBLabel [8]
+    Left = 0
+    Top = 0
+    Align = alTop
+    DataBinding.DataField = 'RazonSocial'
+    DataBinding.DataSource = DataSource
+    ParentFont = False
+    Style.BorderStyle = ebsNone
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -11
+    Style.Font.Name = 'Tahoma'
+    Style.Font.Style = [fsBold]
+    Style.IsFontAssigned = True
+    ExplicitLeft = 413
+    ExplicitTop = 8
+    ExplicitWidth = 121
+    Height = 21
+    Width = 750
   end
   inherited DataSource: TDataSource
     DataSet = dmPersonas.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -575,7 +579,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -22,7 +22,7 @@ uses
   cxDropDownEdit, cxCalendar, cxDBEdit, Vcl.StdCtrls, cxMaskEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxTextEdit, ShellApi, PersonasDM, PersonasDomiciliosDM,
   TelefonosDM, EmailDM, dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox,
-  cxPC, PersonasContactosDM, CuentasBancariasDM, Vcl.DBCtrls;
+  cxPC, PersonasContactosDM, CuentasBancariasDM, Vcl.DBCtrls, cxLabel, cxDBLabel;
 
 type
   TfrmPersonasEdit = class(T_frmStandarGFormEdit)
@@ -70,6 +70,7 @@ type
     DBText1: TDBText;
     Label15: TLabel;
     DSMetodoPago: TDataSource;
+    cxDBLabel1: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -116,7 +117,6 @@ procedure TfrmPersonasEdit.cxDBLkupCBxMetodoPagoPropertiesChange(
   Sender: TObject);
 begin
    inherited;
-
   LblCteCte.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
   cxDBEdtCtaCliente.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
   if DataSource.DataSet.State in [dsedit, dsInsert]  then
@@ -142,13 +142,10 @@ begin
   inherited;
   gFormGrid := TfrmPersonas.Create(Self);
   dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
-  dmPersonasDomicilios.MasterFieldName:='RazonSocial';  //Nov5/15
-
   dmTelefonos := TdmTelefonos.Create(nil);
   dmEmails := TdmEmail.Create(nil);
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
-//  pcMain.Properties.HideTabs := False;
   TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
@@ -168,14 +165,7 @@ begin
   MostrarPanel;
   dmPersonasDomicilios.MasterSource := DataSource;
   dmPersonasDomicilios.MasterFields := 'IdPersona';
-  dmPersonasDomicilios.MasterFieldName:='RazonSocial'; //Nov 5/15  Asociar nombre
-
- // dmPersonasDomicilios.ADODtStPersona.DataSource:= DataSource;
- // dmPersonasDomicilios.ADODtStPersona.MasterFields := 'IdPersona'; //Nov 5/15  Asociar nombre
- // dmPersonasDomicilios.ADODtStPersona.open;   //Nov 5/15  Asociar nombre
   dmPersonasDomicilios.ShowModule(tsDomicilio,'');
-
-
   dmTelefonos.MasterSource := DataSource;
   dmTelefonos.MasterFields := 'IdPersona';
   dmTelefonos.ShowModule(tsTelefono,'');

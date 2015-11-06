@@ -67,7 +67,6 @@ uses
   EmailEdit in 'Catalogos\EmailEdit.pas' {frmEmailEdit},
   TelefonosEdit in 'Catalogos\TelefonosEdit.pas' {frmTelefonosEdit},
   PersonasEdit in 'Catalogos\PersonasEdit.pas' {frmPersonasEdit},
-  PersonasMaster in 'Catalogos\PersonasMaster.pas' {frmPersonasMaster},
   PersonasDomiciliosEdit in 'Catalogos\PersonasDomiciliosEdit.pas' {frmPersonasDomiciliosEdit},
   PersonasContactosDM in 'Catalogos\PersonasContactosDM.pas' {dmPersonaContactos: TDataModule},
   PersonasContactosEdit in 'Catalogos\PersonasContactosEdit.pas' {frmPersonasContactosEdit},

@@ -3,7 +3,13 @@ inherited dmPersonas: TdmPersonas
   Height = 464
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
-    CommandText = 'Select * from Personas'
+    CommandText = 
+      'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, I' +
+      'dPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEsta' +
+      'tus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, Apel' +
+      'lidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNacimiento' +
+      ', NumCtaPagoCliente, SaldoCliente, NumAnteriorCliente, NSSEmplea' +
+      'do'#13#10'FROM Personas'
     Left = 32
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'

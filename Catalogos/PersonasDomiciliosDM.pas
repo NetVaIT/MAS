@@ -26,7 +26,6 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
-    procedure dsmasterDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -78,15 +77,6 @@ begin
   gGridEditForm := TfrmPersonasDomiciliosEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   TfrmPersonasDomiciliosEdit(gGridEditForm).UpdateDomicilio := actUpdate;
-  TfrmPersonasDomiciliosEdit(gGridEditForm).LblNombrePersona.caption:=Nombre;
-
-end;
-
-procedure TdmPersonasDomicilios.dsmasterDataChange(Sender: TObject;
-  Field: TField);
-begin
-  inherited;
-//   TfrmPersonasDomiciliosEdit(gGridEditForm).LblNombrePersona.Caption:=Nombre;
 end;
 
 end.

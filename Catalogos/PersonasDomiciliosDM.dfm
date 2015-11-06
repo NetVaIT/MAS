@@ -131,7 +131,6 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
   end
   object dsmaster: TDataSource
     DataSet = adodsMaster
-    OnDataChange = dsmasterDataChange
     Left = 36
     Top = 80
   end

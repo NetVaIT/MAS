@@ -1,57 +1,44 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
   OnCreate = FormCreate
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 748
+      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
+          ExplicitLeft = 131
+          ExplicitTop = 185
           object Label1: TLabel
-            Left = 31
-            Top = 64
+            Left = 23
+            Top = 16
             Width = 40
             Height = 13
             Caption = 'Domicilio'
           end
           object Label2: TLabel
-            Left = 31
-            Top = 200
+            Left = 23
+            Top = 152
             Width = 20
             Height = 13
             Caption = 'Tipo'
             FocusControl = DBLookupComboBox2
           end
           object btnUpdate: TSpeedButton
-            Left = 508
-            Top = 110
+            Left = 500
+            Top = 62
             Width = 23
             Height = 22
           end
-          object Label3: TLabel
-            Left = 31
-            Top = 6
-            Width = 39
-            Height = 13
-            Caption = 'Persona'
-          end
-          object LblNombrePersona: TLabel
-            Left = 165
-            Top = 27
-            Width = 356
-            Height = 16
-            AutoSize = False
-            Caption = 'Nombre'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -13
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-          end
           object DBLookupComboBox2: TDBLookupComboBox
-            Left = 31
-            Top = 216
+            Left = 23
+            Top = 168
             Width = 300
             Height = 21
             DataField = 'DomicilioTipo'
@@ -59,8 +46,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             TabOrder = 0
           end
           object cxDBCheckBox1: TcxDBCheckBox
-            Left = 31
-            Top = 240
+            Left = 23
+            Top = 192
             Caption = 'Predeterminado'
             DataBinding.DataField = 'Predeterminado'
             DataBinding.DataSource = DataSource
@@ -68,29 +55,21 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Width = 121
           end
           object cxDBLabel1: TcxDBLabel
-            Left = 31
-            Top = 115
+            Left = 23
+            Top = 67
             DataBinding.DataField = 'Domicilio'
             DataBinding.DataSource = DataSource
             Height = 79
             Width = 471
           end
           object cxDBLookupComboBox1: TcxDBLookupComboBox
-            Left = 31
-            Top = 83
+            Left = 23
+            Top = 35
             DataBinding.DataField = 'Domicilio'
             DataBinding.DataSource = DataSource
             Properties.ListColumns = <>
             TabOrder = 3
             Width = 500
-          end
-          object cxDBLblPersona: TcxDBLabel
-            Left = 31
-            Top = 25
-            DataBinding.DataField = 'RazonSocial'
-            DataBinding.DataSource = DSPersona
-            Height = 27
-            Width = 114
           end
         end
       end
@@ -101,7 +80,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -242,7 +221,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -779,9 +758,5 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
-  end
-  object DSPersona: TDataSource
-    Left = 638
-    Top = 72
   end
 end

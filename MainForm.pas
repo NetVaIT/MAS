@@ -80,8 +80,7 @@ implementation
 {$R *.dfm}
 
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
-  UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
-  PersonasMaster;
+  UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM;
 
 { TfrmMain }
 
@@ -103,19 +102,9 @@ begin
     4: gModulo := TdmMonedasCotizaciones.Create(Self);
     5: gModulo := TdmUnidadMedida.Create(Self);
     6: gModulo := TdmMetodosPagos.Create(Self);
-    7: begin
-        gModulo := TdmPersonas.Create(Self);
-        TdmPersonas(gModulo).MasterFieldName:='RazonSocial';
-        TdmPersonas(gModulo).Rol := rCliente;
-       end;
-    8: begin
-        gModulo := TdmPersonas.Create(Self);
-        TdmPersonas(gModulo).Rol := rProveedor;
-       end;
-    9: begin
-        gModulo := TdmPersonas.Create(Self);
-        TdmPersonas(gModulo).Rol := rEmpleado;
-       end;
+    7: gModulo := TdmPersonas.CreateWRol(Self, rCliente);
+    8: gModulo := TdmPersonas.CreateWRol(Self, rProveedor);
+    9: gModulo := TdmPersonas.CreateWRol(Self, rEmpleado);
    10: gModulo := TdmProductos.Create(Self);
    20: gModulo := TdmCotizaciones.Create(Self);
   end;

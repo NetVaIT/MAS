@@ -32,10 +32,6 @@ type
     cxDBCheckBox1: TcxDBCheckBox;
     cxDBLabel1: TcxDBLabel;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
-    cxDBLblPersona: TcxDBLabel;
-    DSPersona: TDataSource;
-    Label3: TLabel;
-    LblNombrePersona: TLabel;
     procedure FormCreate(Sender: TObject);
   private
     FUpdateDomicilio: TBasicAction;
@@ -58,13 +54,7 @@ begin
   inherited;
   gFormGrid := TfrmPersonasDomicilios.Create(Self);
   TfrmPersonasDomicilios(gFormGrid).CerrarGrid := actCloseGrid;
-//  dspersona.DataSet.Open;
 end;
-
-
-
-
-
 
 procedure TfrmPersonasDomiciliosEdit.SetUpdateDomicilio(
   const Value: TBasicAction);
