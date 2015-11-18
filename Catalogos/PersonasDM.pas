@@ -56,9 +56,7 @@ type
     adodsMasterIdRegimenFiscalEmisor: TIntegerField;
     adodsMasterIdPersonaEstatus: TIntegerField;
     adodsMasterIdDocumentoLogoEmisor: TIntegerField;
-    adodsMasterNumCtaPagoCliente: TStringField;
     adodsMasterSaldoCliente: TFMTBCDField;
-    adodsMasterNumAnteriorCliente: TIntegerField;
     adodsMasterNSSEmpleado: TStringField;
     adodsMasterMetodoPago: TStringField;
     ADOdsRegimenFiscal: TADODataSet;
@@ -144,7 +142,7 @@ begin
   TfrmPersonasEdit(gGridEditForm).Rol := Rol;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEstatus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, ApellidoPaterno, ' +
-  'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente, NumAnteriorCliente, NSSEmpleado ' +
+  'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado ' +
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

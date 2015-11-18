@@ -4,7 +4,7 @@ inherited dmBancos: TdmBancos
     CursorType = ctStatic
     CommandText = 
       'SELECT IdBanco, IdPais,Identificador, Nombre, Descripcion, Sigla' +
-      's FROM Bancos'
+      's'#13#10' FROM Bancos'
     object adodsMasterIdBanco: TAutoIncField
       FieldName = 'IdBanco'
       ReadOnly = True
@@ -26,14 +26,17 @@ inherited dmBancos: TdmBancos
       FieldName = 'Siglas'
       Size = 10
     end
+    object adodsMasterIdPais: TIntegerField
+      FieldName = 'IdPais'
+    end
     object adodsMasterPais: TStringField
       FieldKind = fkLookup
       FieldName = 'Pais'
       LookupDataSet = adodsPaises
       LookupKeyFields = 'IdPais'
       LookupResultField = 'Descripcion'
-      KeyFields = 'IdPaisBanco'
-      Size = 100
+      KeyFields = 'IdPais'
+      Size = 50
       Lookup = True
     end
   end

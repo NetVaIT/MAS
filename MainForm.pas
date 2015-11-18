@@ -61,6 +61,8 @@ type
     dxBarLargeButton14: TdxBarLargeButton;
     dxBarLargeButton15: TdxBarLargeButton;
     dxBarLargeButton16: TdxBarLargeButton;
+    dxBarLargeButton11: TdxBarLargeButton;
+    ActOrdenSalida: TAction;
     procedure actCatalogoExecute(Sender: TObject);
   private
     { Private declarations }
@@ -106,7 +108,18 @@ begin
     8: gModulo := TdmPersonas.CreateWRol(Self, rProveedor);
     9: gModulo := TdmPersonas.CreateWRol(Self, rEmpleado);
    10: gModulo := TdmProductos.Create(Self);
-   20: gModulo := TdmCotizaciones.Create(Self);
+   20: begin
+         gModulo := TdmCotizaciones.Create(Self);
+         TdmCotizaciones(gModulo).TipoDocumento:=1;
+       end;
+   21: begin
+         gModulo := TdmCotizaciones.Create(Self);
+         TdmCotizaciones(gModulo).TipoDocumento:=2;
+       end;
+   22: begin   //Se supone que listo para Facturar
+         gModulo := TdmCotizaciones.Create(Self);
+         TdmCotizaciones(gModulo).TipoDocumento:=3;
+       end;
   end;
   if Assigned(gModulo) then
   begin

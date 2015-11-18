@@ -16,6 +16,7 @@ type
     adodsPaises: TADODataSet;
     adodsPaisesIdPais: TAutoIncField;
     adodsPaisesDescripcion: TStringField;
+    adodsMasterIdPais: TIntegerField;
     adodsMasterPais: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private

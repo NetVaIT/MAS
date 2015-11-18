@@ -3,7 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 742
   Font.Height = -32
   ExplicitWidth = 758
-  ExplicitHeight = 519
+  ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -14,7 +14,6 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -29,6 +28,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
+      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -151,6 +151,10 @@ inherited frmMain: TfrmMain
         end
         item
           Visible = True
+          ItemName = 'dxBarLargeButton11'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarLargeButton16'
         end>
       OneOnRow = True
@@ -217,6 +221,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton16: TdxBarLargeButton
       Action = actFacturacion
+      Category = 0
+    end
+    object dxBarLargeButton11: TdxBarLargeButton
+      Action = ActOrdenSalida
       Category = 0
     end
   end
@@ -317,11 +325,19 @@ inherited frmMain: TfrmMain
       Category = 'Ventas'
       Caption = 'Pedidos'
       ImageIndex = 21
+      OnExecute = actCatalogoExecute
     end
     object actFacturacion: TAction
+      Tag = 22
       Category = 'Ventas'
       Caption = 'Facturacion'
       ImageIndex = 33
+      OnExecute = actCatalogoExecute
+    end
+    object ActOrdenSalida: TAction
+      Category = 'Ventas'
+      Caption = 'Ordenes Salida'
+      ImageIndex = 45
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

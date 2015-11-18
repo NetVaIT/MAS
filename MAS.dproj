@@ -299,10 +299,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Procesos\CotizacionesForm.pas">
-            <Form>frmCotizaciones</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\Standard\_StandarMDFormEdit.pas">
             <Form>_frmStandarMDFormEdit</Form>
             <FormType>dfm</FormType>
@@ -393,6 +389,53 @@
             <Form>frmCuentasBancarias</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesForm.pas">
+            <Form>frmCotizaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CotizacionesFormGrid.pas">
+            <Form>frmCotizacionesGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ListaProductosForm.pas">
+            <Form>FrmListaProductos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DocumentosDM.pas">
+            <Form>dmDocumentos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DocumentosEdit.pas">
+            <Form>frmDocumentosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\DocumentosForm.pas">
+            <Form>frmDocumentos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosFotosDM.pas">
+            <Form>dmProductosFotos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosFotosForm.pas">
+            <Form>FrmProductosFotos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosFotosEdit.pas">
+            <Form>FrmProductosFotosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\OrdenesSalidaForm.pas">
+            <Form>FrmOrdenesSalida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\OrdenesSalidasDM.pas">
+            <Form>DMOrdenesSalidas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -455,9 +498,8 @@
                     <Source Name="MainSource">MAS.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k180.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp180.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k180.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment/>

@@ -4,12 +4,12 @@ inherited dmPersonas: TdmPersonas
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, I' +
-      'dPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEsta' +
-      'tus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, Apel' +
-      'lidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNacimiento' +
-      ', NumCtaPagoCliente, SaldoCliente, NumAnteriorCliente, NSSEmplea' +
-      'do'#13#10'FROM Personas'
+      'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, '#13 +
+      #10'IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor,'#13#10' IdPersona' +
+      'Estatus, IdDocumentoLogoEmisor, RFC, CURP, '#13#10'RazonSocial, Nombre' +
+      ', ApellidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNaci' +
+      'miento, '#13#10'NumCtaPagoCliente, SaldoCliente, '#13#10'NSSEmpleado'#13#10'FROM P' +
+      'ersonas'
     Left = 32
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -123,17 +123,10 @@ inherited dmPersonas: TdmPersonas
     object adodsMasterIdDocumentoLogoEmisor: TIntegerField
       FieldName = 'IdDocumentoLogoEmisor'
     end
-    object adodsMasterNumCtaPagoCliente: TStringField
-      FieldName = 'NumCtaPagoCliente'
-      Size = 30
-    end
     object adodsMasterSaldoCliente: TFMTBCDField
       FieldName = 'SaldoCliente'
       Precision = 18
       Size = 6
-    end
-    object adodsMasterNumAnteriorCliente: TIntegerField
-      FieldName = 'NumAnteriorCliente'
     end
     object adodsMasterNSSEmpleado: TStringField
       FieldName = 'NSSEmpleado'

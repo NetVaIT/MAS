@@ -52,7 +52,6 @@ uses
   DomiciliosForm in 'Catalogos\DomiciliosForm.pas' {frmDomicilios},
   _StandarMasterDetailForm in '..\Standard\_StandarMasterDetailForm.pas' {_frmStandarMasterDetail},
   CotizacionesDM in 'Procesos\CotizacionesDM.pas' {dmCotizaciones: TDataModule},
-  CotizacionesForm in 'Procesos\CotizacionesForm.pas' {frmCotizaciones},
   _StandarMDFormEdit in '..\Standard\_StandarMDFormEdit.pas' {_frmStandarMDFormEdit},
   MonedasEdit in 'Catalogos\MonedasEdit.pas' {frmMonedasEdit},
   BancosEdit in 'Catalogos\BancosEdit.pas' {frmBancosEdit},
@@ -74,7 +73,18 @@ uses
   DomiciliosEdit in 'Catalogos\DomiciliosEdit.pas' {frmDomiciliosEdit},
   CuentasBancariasDM in 'Catalogos\CuentasBancariasDM.pas' {dmCuentasBancarias: TDataModule},
   CuentasBancariasEdit in 'Catalogos\CuentasBancariasEdit.pas' {frmCuentasBancariasEdit},
-  CuentasBancariasForm in 'Catalogos\CuentasBancariasForm.pas' {frmCuentasBancarias};
+  CuentasBancariasForm in 'Catalogos\CuentasBancariasForm.pas' {frmCuentasBancarias},
+  CotizacionesForm in 'Procesos\CotizacionesForm.pas' {frmCotizaciones},
+  CotizacionesFormGrid in 'Procesos\CotizacionesFormGrid.pas' {frmCotizacionesGrid},
+  ListaProductosForm in 'Catalogos\ListaProductosForm.pas' {FrmListaProductos},
+  DocumentosDM in 'Catalogos\DocumentosDM.pas' {dmDocumentos: TDataModule},
+  DocumentosEdit in 'Catalogos\DocumentosEdit.pas' {frmDocumentosEdit},
+  DocumentosForm in 'Catalogos\DocumentosForm.pas' {frmDocumentos},
+  ProductosFotosDM in 'Catalogos\ProductosFotosDM.pas' {dmProductosFotos: TDataModule},
+  ProductosFotosForm in 'Catalogos\ProductosFotosForm.pas' {FrmProductosFotos},
+  ProductosFotosEdit in 'Catalogos\ProductosFotosEdit.pas' {FrmProductosFotosEdit},
+  OrdenesSalidaForm in 'Procesos\OrdenesSalidaForm.pas' {FrmOrdenesSalida},
+  OrdenesSalidasDM in 'Procesos\OrdenesSalidasDM.pas' {DMOrdenesSalidas: TDataModule};
 
 {$R *.res}
 
@@ -86,5 +96,8 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
+  Application.CreateForm(TFrmOrdenesSalida, FrmOrdenesSalida);
+  Application.CreateForm(T_frmStandarGFormEdit1, _frmStandarGFormEdit1);
+  Application.CreateForm(TDMOrdenesSalidas, DMOrdenesSalidas);
   Application.Run;
 end.
