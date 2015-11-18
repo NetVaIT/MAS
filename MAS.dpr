@@ -96,8 +96,5 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
-  Application.CreateForm(TFrmOrdenesSalida, FrmOrdenesSalida);
-  Application.CreateForm(T_frmStandarGFormEdit1, _frmStandarGFormEdit1);
-  Application.CreateForm(TDMOrdenesSalidas, DMOrdenesSalidas);
   Application.Run;
 end.
