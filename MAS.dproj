@@ -157,14 +157,6 @@
             <Form>_frmStandarGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Standard\_StandarGFormGrid.pas">
-            <Form>_frmStandarGFormGrid</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\Standard\_StandarGFormEdit.pas">
-            <Form>_frmStandarGFormEdit</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\Standard\_Utils.pas"/>
         <DCCReference Include="MainForm.pas">
             <Form>frmMain</Form>
@@ -427,14 +419,52 @@
             <Form>FrmProductosFotosEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Procesos\OrdenesSalidaForm.pas">
-            <Form>FrmOrdenesSalida</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Procesos\OrdenesSalidasDM.pas">
             <Form>DMOrdenesSalidas</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\OrdenesSalidaFormGrid.pas">
+            <Form>FrmOrdenesSalidaGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\GeneraOrdenSalida.pas">
+            <Form>FrmGeneraOrdenSalida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\OrdenesSalidaForm.pas">
+            <Form>FrmOrdenesSalida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasDM.pas">
+            <Form>DMFacturas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasFormEdit.pas">
+            <Form>frmFacturasFormEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\FacturasFormGrid.pas">
+            <Form>frmFacturasGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Facturar\DocComprobanteFiscal.pas"/>
+        <DCCReference Include="Facturar\FacturaReglamentacion.pas"/>
+        <DCCReference Include="Facturar\FacturaTipos.pas"/>
+        <DCCReference Include="Facturar\VirtualXML.pas"/>
+        <DCCReference Include="Facturar\XMLtoPDFDmod.pas">
+            <Form>dmodXMLtoPDF</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\Standard\_StandarGFormEdit.pas">
+            <Form>_frmStandarGFormEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Standard\_StandarGFormGrid.pas">
+            <Form>_frmStandarGFormGrid</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

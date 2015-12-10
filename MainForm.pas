@@ -82,7 +82,8 @@ implementation
 {$R *.dfm}
 
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
-  UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM;
+  UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
+  OrdenesSalidasDM, FacturasDM;
 
 { TfrmMain }
 
@@ -116,9 +117,14 @@ begin
          gModulo := TdmCotizaciones.Create(Self);
          TdmCotizaciones(gModulo).TipoDocumento:=2;
        end;
-   22: begin   //Se supone que listo para Facturar
-         gModulo := TdmCotizaciones.Create(Self);
-         TdmCotizaciones(gModulo).TipoDocumento:=3;
+   
+  22: begin//Orden Salida
+         gModulo := TDMOrdenesSalidas.Create(Self);
+        // TdmCotizaciones(gModulo).TipoDocumento:=3;
+       end;
+  23: begin   //Se supone que listo para Facturar
+         gModulo := TDMFacturas.Create(Self);
+        // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
   end;
   if Assigned(gModulo) then

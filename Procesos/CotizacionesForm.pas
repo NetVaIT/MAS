@@ -79,6 +79,9 @@ type
     DatasetDetalleEdit: TDataSetEdit;
     DatasetDetallePost: TDataSetPost;
     DatasetDetalleCancel: TDataSetCancel;
+    DSOrdenSalidaItems: TDataSource;
+    DSOrdenSalida: TDataSource;
+    DSQryBorrar: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnInsertaClick(Sender: TObject);
     procedure TlBtnEditaClick(Sender: TObject);
@@ -90,9 +93,13 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure SpdBtnCambioEstatusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     FTipoDoc: Integer;
     procedure SetTipoDoc(const Value: Integer);
+    function GenerarOrdenSalida(IDDocumento:Integer):Boolean;
+    function RevisaFaltantes(IDDocumento:Integer):Boolean; //si se partio el pedido en varias ordenes de salida //Nov 23/15
+
     { Private declarations }
   public
     { Public declarations }
@@ -104,7 +111,15 @@ implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm;
+uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm,
+  GeneraOrdenSalida;
+
+procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
+     SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
+end;
 
 procedure TfrmCotizaciones.DataSourceDetailStateChange(Sender: TObject);
 begin
@@ -183,9 +198,96 @@ begin
   inherited;
   case FTipoDoc of
     1:SpdBtnCambioEstatus.Caption:='Acepta Cotización';
-    2:SpdBtnCambioEstatus.Caption:='Genera Orden Salida';
+    2:SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
     3:SpdBtnCambioEstatus.Visible:=False;
   end;
+end;
+
+function TfrmCotizaciones.GenerarOrdenSalida(idDocumento: Integer): Boolean; //Nov 18/15
+var
+  id:integer;
+begin
+  Result:=False;
+
+  dsordenSalida.DataSet.Open;
+  DSOrdenSalidaItems.DataSet.Open;
+
+  dsordenSalida.DataSet.Insert;
+  dsordenSalida.DataSet.FieldByName('IDDocumentoSalida').asInteger:= idDocumento;
+  dsordenSalida.DataSet.FieldByName('FechaRegistro').AsDateTime:=Now;
+  dsordenSalida.DataSet.FieldByName('Subtotal').AsFloat:=DataSource.DataSet.FieldByName('Subtotal').asFloat;
+
+  dsordenSalida.DataSet.FieldByName('IVA').asFloat:=DataSource.DataSet.FieldByName('IVA').asFloat;
+  dsordenSalida.DataSet.FieldByName('Total').asFloat:=DataSource.DataSet.FieldByName('Total').asFloat;
+  dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
+  dsordenSalida.DataSet.Post;
+
+  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;
+
+  while not DataSourceDetail.DataSet.eof do
+  begin
+    if DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat>0 then
+    begin
+      DSOrdenSalidaItems.DataSet.Insert;
+      DSOrdenSalidaItems.DataSet.FieldByName('IDDocumentoSalidaDetalle').AsInteger:= DataSourceDetail.DataSet.FieldByName('IDDocumentoSalidaDetalle').AsInteger;
+      DSOrdenSalidaItems.DataSet.FieldByName('IdProducto').AsInteger:= DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger;
+      DSOrdenSalidaItems.DataSet.FieldByName('ClaveProducto').asString:= DataSourceDetail.DataSet.FieldByName('ClaveProducto').AsString;
+      DSOrdenSalidaItems.DataSet.FieldByName('CantidadSolicitada').asFloat:= DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat; //Verificar comportamiento
+      DSOrdenSalidaItems.DataSet.FieldByName('CantidadDespachada').asFloat:= DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat;
+      DSOrdenSalidaItems.DataSet.FieldByName('Precio').asFloat:= DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat;
+      DSOrdenSalidaItems.DataSet.FieldByName('Importe').asFloat:= DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat
+                                                                  *DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat;//DataSourceDetail.DataSet.FieldByName('Importe').AsFloat;
+                                                                   //Por que pude habae varias salidas por Pedido.
+
+      DSOrdenSalidaItems.DataSet.Post;
+    end;
+    DataSourceDetail.DataSet.next;
+  end;
+  DSQryBorrar.DataSet.Close;
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;  //Poner ceros en cada elemento de la tabla de documentosalidadetalle
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update DocumentosSalidasDetalles SET CantidadPendiente=0 where IDDocumentoSalida='+intToStr(idDocumento));
+  TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
+
+  //Actualizar en un sólo paso los n detales
+  REsult:=True;
+  (*   //Se genera pero se no se permite cabiar aca
+
+  FrmGeneraOrdenSalida:=TFrmGeneraOrdenSalida.Create(Self);
+  FrmGeneraOrdenSalida.IdOrden:=id;
+  FrmGeneraOrdenSalida.DSOrdenSalida.DataSet:=DSOrdenSalida.DataSet;
+  FrmGeneraOrdenSalida.DSOrdenSalidaItems.DataSet:=DSOrdenSalidaItems.DataSet;
+  FrmGeneraOrdenSalida.ShowModal;
+  if FrmGeneraOrdenSalida.ModalResult=mrCancel then
+  begin
+    //Eliminar y regresar FAlso
+
+    DSQryBorrar.DataSet.Close;
+    TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
+    TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Delete From OrdenesSalidasItems where IDOrdenSalida='+intToStr(ID));
+    TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
+
+    TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
+    TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Delete From OrdenesSalidas where IDOrdenSalida='+intToStr(ID));
+    TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
+    Result:=False;
+
+  end
+  else
+  begin
+    //Verificar Cambios y ajustar estatus  de docSalida
+    Result:=True;
+  end;
+  FrmGeneraOrdenSalida.Free;
+  *)
+end;
+
+function TfrmCotizaciones.RevisaFaltantes(IDDocumento: Integer): Boolean;
+begin //Nov 23/15
+  TADODataset(dsAuxiliar.dataset).Close;
+  TADODataset(dsAuxiliar.dataset).CommandText:='Select Sum(CantidadPendiente) Pendiente From DocumentosSalidasDetalles where IdDocumentoSalida='+intTosTR(IDDocumento);
+  dsAuxiliar.dataset.Open;
+  Result:=dsAuxiliar.DataSet.FieldByName('Pendiente').AsFloat >0;
+
 end;
 
 procedure TfrmCotizaciones.SetTipoDoc(const Value: Integer);
@@ -195,23 +297,36 @@ begin
 end;
 
 procedure TfrmCotizaciones.SpdBtnCambioEstatusClick(Sender: TObject);
+var
+ res:Boolean;
 begin
   inherited;
   if (DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger<3)then
   begin
-    if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2 then
+    if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
     begin
-      //Mostrar Orden de Salida, permitir ajustes por cantidades
-      //Verificar si se completo, se cierra
+      if RevisaFaltantes(DataSource.DataSet.FieldByName('idDocumentoSalida').AsInteger)then
+      begin
+        res:=GenerarOrdenSalida(DataSource.DataSet.FieldByName('idDocumentoSalida').AsInteger);
+        if res then
+        begin
+          if (DataSource.DataSet.State =dsBrowse) then //para Cambiar Estatus No Tipo
+            DataSource.DataSet.Edit;
+           DataSource.DataSet.FieldByName('idDocumentoSalidaEstatus').AsInteger:=4; //Nov 18/15 En proceso.. se cambiará luego a Cerrado si se surte todo
+          DataSource.DataSet.Post;//Mostrar Orden de Salida, permitir ajustes por cantidades
+          //Verificar si se completo, se cierra
+          //Cambiar y copiar en Orden de Salida
+        end; // no
+      end; //RevisaFaltantes
+    end
+    else   //Nov 18/15
+    begin
 
+      if (DataSource.DataSet.State =dsBrowse) then
+        DataSource.DataSet.Edit;
+      DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger:=DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger+1;
+      DataSource.DataSet.Post;
     end;
-
-
-    if (DataSource.DataSet.State =dsBrowse) then
-      DataSource.DataSet.Edit;
-    DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger:=DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger+1;
-    DataSource.DataSet.Post;
-
   end;
 
 
@@ -219,6 +334,8 @@ begin
   //rehacer consulta
   Datasource.dataset.close;
   Datasource.dataset.Open;
+  //Si se ven deberia ubicarse en la modificada
+
 end;
 
 procedure TfrmCotizaciones.TlBtnEditaClick(Sender: TObject);

@@ -41,11 +41,6 @@ type
     adodsClientesRFC: TStringField;
     adodsCotizacionesDetalleProducto: TStringField;
     adodsClientesIDRol: TIntegerField;
-    adodsClientesCalle: TStringField;
-    adodsClientesNoExterior: TStringField;
-    adodsClientesColonia: TStringField;
-    adodsClientesMunicipio: TStringField;
-    adodsClientesEstado: TStringField;
     adodsCotizacionEstatusIdentificador: TStringField;
     adodsCotizacionEstatusIdDocumentoSalidaEstatus: TAutoIncField;
     adodsCotizacionEstatusDescripcion: TStringField;
@@ -59,14 +54,52 @@ type
     adodsMasterFechaRegistro: TDateTimeField;
     ADODSAuxiliar: TADODataSet;
     DSMaster: TDataSource;
-    adodsClientesIdentificador: TIntegerField;
     adodsCotizacionesDetalleExistenciaActual: TFloatField;
+    ADODtStOrdenSalida: TADODataSet;
+    ADODtStOrdenSalidaItem: TADODataSet;
+    ADODtStOrdenSalidaItemIdOrdenSalidaItem: TAutoIncField;
+    ADODtStOrdenSalidaItemIdOrdenSalida: TIntegerField;
+    ADODtStOrdenSalidaItemIdDocumentoSalidaDetalle: TIntegerField;
+    ADODtStOrdenSalidaItemIdProducto: TIntegerField;
+    ADODtStOrdenSalidaItemCantidadDespachada: TFloatField;
+    ADODtStOrdenSalidaItemCantidadSolicitada: TFloatField;
+    ADODtStOrdenSalidaItemPrecio: TFMTBCDField;
+    ADODtStOrdenSalidaItemImporte: TFMTBCDField;
+    ADODtStOrdenSalidaItemObservaciones: TStringField;
+    ADODtStOrdenSalidaItemProducto: TStringField;
+    DSOrdenSalida: TDataSource;
+    ADODtStOrdenSalidaidOrdenSalida: TAutoIncField;
+    ADODtStOrdenSalidaIdDocumentoSalida: TIntegerField;
+    ADODtStOrdenSalidaIdOrdenEstatus: TIntegerField;
+    ADODtStOrdenSalidaIdPersonaRecolecta: TIntegerField;
+    ADODtStOrdenSalidaIdPersonaRevisa: TIntegerField;
+    ADODtStOrdenSalidaIdPersonaEmpaca: TIntegerField;
+    ADODtStOrdenSalidaFechaRegistro: TDateTimeField;
+    ADODtStOrdenSalidaTotal: TFMTBCDField;
+    ADODtStOrdenSalidaFechaIniRecolecta: TDateTimeField;
+    ADODtStOrdenSalidaFechaFinRecolecta: TDateTimeField;
+    ADODtStOrdenSalidaFechaIniRevisa: TDateTimeField;
+    ADODtStOrdenSalidaFechaFinRevisa: TDateTimeField;
+    ADODtStOrdenSalidaFechaIniEmpaca: TDateTimeField;
+    ADODtStOrdenSalidaFechaFinEmpaca: TDateTimeField;
+    ADODtStOrdenSalidaSubtotal: TFMTBCDField;
+    ADODtStOrdenSalidaIVA: TFMTBCDField;
+    ADODtStOrdenSalEstatus: TADODataSet;
+    ADODtStOrdenSalEstatusIdOrdenEstatus: TIntegerField;
+    ADODtStOrdenSalEstatusIdentificador: TStringField;
+    ADODtStOrdenSalEstatusDescripcion: TStringField;
+    ADODtStOrdenSalidaEstatus: TStringField;
+    ADODtStOrdenSalidaItemClaveProducto: TStringField;
+    ADOQryAuxiliar: TADOQuery;
+    ADODtStDireccionesCliente: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
     procedure adodsCotizacionesDetalleNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleCantidadChange(Sender: TField);
     procedure adodsCotizacionesDetalleAfterPost(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
   private
     FTipoDoc: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
@@ -179,6 +212,48 @@ begin  //Nov 6/15
   adodsMaster.fieldbyname('IDDocumentoSalidaEstatus').AsInteger:= 1;
 end;
 
+procedure TdmCotizaciones.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
+var idDocSalida, IDDocItem:Integer;
+//completo:Boolean;
+   Subtotal:Double;
+begin
+  inherited;
+  //Verificar si aca actualizar el item respectivo del detalle del documento
+  IDDocItem:=DataSet.FieldByName('IDDocumentoSalidaDetalle').AsInteger;
+  idDocSalida:=DataSet.FieldByName('IDOrdenSalida').AsInteger;
+//  completo:=DataSet.FieldByName('CantidadDespachada').AsFloat=DataSet.FieldByName('CantidadSolicitada').AsFloat;
+   //Hay cambio, debe ser menor o igual
+
+  //Siempre actualizar
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From OrdenesSalidasItems where idOrdenSalida='+intToStr(idDocSalida));
+  ADOQryAuxiliar.open;
+
+  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16)
+                          +' where IDOrdenSalida ='+IntToStr(idDocSalida));
+  ADOQryAuxiliar.ExecSQL;
+
+
+
+end;
+
+procedure TdmCotizaciones.ADODtStOrdenSalidaItemCantidadDespachadaChange(
+  Sender: TField);
+begin
+  inherited;
+  if ADODtStOrdenSalidaItem.State in [dsEdit,dsInsert] then
+  begin
+//    ADODtStOrdenSalidaItem.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
+     ADODtStOrdenSalidaItem.FieldByName('Importe').AsFloat:=ADODtStOrdenSalidaItem.FieldByName('Precio').AsFloat* ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
+  end;
+end;
+
 function TdmCotizaciones.CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA: Double; var AMontoIva,
   ASubtotal, ATotal: Double): Boolean;
 begin
@@ -205,6 +280,9 @@ begin
   TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
+  TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
+  TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15
+
 
 
 end;

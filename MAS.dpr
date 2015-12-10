@@ -19,8 +19,6 @@ uses
   _StandarDMod in '..\Standard\_StandarDMod.pas' {_dmStandar: TDataModule},
   _StandarForm in '..\Standard\_StandarForm.pas' {_StandarFrm},
   _StandarGridForm in '..\Standard\_StandarGridForm.pas' {_frmStandarGrid},
-  _StandarGFormGrid in '..\Standard\_StandarGFormGrid.pas' {_frmStandarGFormGrid},
-  _StandarGFormEdit in '..\Standard\_StandarGFormEdit.pas' {_frmStandarGFormEdit},
   _Utils in '..\Standard\_Utils.pas',
   MainForm in 'MainForm.pas' {frmMain},
   BancosDM in 'Catalogos\BancosDM.pas' {dmBancos: TDataModule},
@@ -83,8 +81,20 @@ uses
   ProductosFotosDM in 'Catalogos\ProductosFotosDM.pas' {dmProductosFotos: TDataModule},
   ProductosFotosForm in 'Catalogos\ProductosFotosForm.pas' {FrmProductosFotos},
   ProductosFotosEdit in 'Catalogos\ProductosFotosEdit.pas' {FrmProductosFotosEdit},
+  OrdenesSalidasDM in 'Procesos\OrdenesSalidasDM.pas' {DMOrdenesSalidas: TDataModule},
+  OrdenesSalidaFormGrid in 'Procesos\OrdenesSalidaFormGrid.pas' {FrmOrdenesSalidaGrid},
+  GeneraOrdenSalida in 'Procesos\GeneraOrdenSalida.pas' {FrmGeneraOrdenSalida},
   OrdenesSalidaForm in 'Procesos\OrdenesSalidaForm.pas' {FrmOrdenesSalida},
-  OrdenesSalidasDM in 'Procesos\OrdenesSalidasDM.pas' {DMOrdenesSalidas: TDataModule};
+  FacturasDM in 'Procesos\FacturasDM.pas' {DMFacturas: TDataModule},
+  FacturasFormEdit in 'Procesos\FacturasFormEdit.pas' {frmFacturasFormEdit},
+  FacturasFormGrid in 'Procesos\FacturasFormGrid.pas' {frmFacturasGrid},
+  DocComprobanteFiscal in 'Facturar\DocComprobanteFiscal.pas',
+  FacturaReglamentacion in 'Facturar\FacturaReglamentacion.pas',
+  FacturaTipos in 'Facturar\FacturaTipos.pas',
+  VirtualXML in 'Facturar\VirtualXML.pas',
+  XMLtoPDFDmod in 'Facturar\XMLtoPDFDmod.pas' {dmodXMLtoPDF: TDataModule},
+  _StandarGFormEdit in '..\Standard\_StandarGFormEdit.pas' {_frmStandarGFormEdit},
+  _StandarGFormGrid in '..\Standard\_StandarGFormGrid.pas' {_frmStandarGFormGrid};
 
 {$R *.res}
 

@@ -3,7 +3,6 @@ inherited frmMain: TfrmMain
   ClientWidth = 742
   Font.Height = -32
   ExplicitWidth = 758
-  ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -138,8 +137,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 674
       FloatTop = 8
-      FloatClientWidth = 83
-      FloatClientHeight = 162
+      FloatClientWidth = 102
+      FloatClientHeight = 216
       ItemLinks = <
         item
           Visible = True
@@ -327,17 +326,19 @@ inherited frmMain: TfrmMain
       ImageIndex = 21
       OnExecute = actCatalogoExecute
     end
-    object actFacturacion: TAction
-      Tag = 22
-      Category = 'Ventas'
-      Caption = 'Facturacion'
-      ImageIndex = 33
-      OnExecute = actCatalogoExecute
-    end
     object ActOrdenSalida: TAction
+      Tag = 22
       Category = 'Ventas'
       Caption = 'Ordenes Salida'
       ImageIndex = 45
+      OnExecute = actCatalogoExecute
+    end
+    object actFacturacion: TAction
+      Tag = 23
+      Category = 'Ventas'
+      Caption = 'Autoriza Factura'
+      ImageIndex = 33
+      OnExecute = actCatalogoExecute
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository
