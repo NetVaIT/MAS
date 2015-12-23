@@ -63,6 +63,8 @@ type
     dxBarLargeButton16: TdxBarLargeButton;
     dxBarLargeButton11: TdxBarLargeButton;
     ActOrdenSalida: TAction;
+    ActEmisor: TAction;
+    dxBarLargeButton17: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
   private
     { Private declarations }
@@ -109,6 +111,7 @@ begin
     8: gModulo := TdmPersonas.CreateWRol(Self, rProveedor);
     9: gModulo := TdmPersonas.CreateWRol(Self, rEmpleado);
    10: gModulo := TdmProductos.Create(Self);
+   11: gModulo := TdmPersonas.CreateWRol(Self, rEmisor); //Dic 14/15
    20: begin
          gModulo := TdmCotizaciones.Create(Self);
          TdmCotizaciones(gModulo).TipoDocumento:=1;
@@ -117,7 +120,7 @@ begin
          gModulo := TdmCotizaciones.Create(Self);
          TdmCotizaciones(gModulo).TipoDocumento:=2;
        end;
-   
+
   22: begin//Orden Salida
          gModulo := TDMOrdenesSalidas.Create(Self);
         // TdmCotizaciones(gModulo).TipoDocumento:=3;

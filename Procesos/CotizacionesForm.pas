@@ -82,6 +82,8 @@ type
     DSOrdenSalidaItems: TDataSource;
     DSOrdenSalida: TDataSource;
     DSQryBorrar: TDataSource;
+    DBLkpCmbBxDirCliente: TDBLookupComboBox;
+    LblDirCliente: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnInsertaClick(Sender: TObject);
     procedure TlBtnEditaClick(Sender: TObject);
@@ -196,9 +198,15 @@ end;
 procedure TfrmCotizaciones.FormShow(Sender: TObject);
 begin
   inherited;
+  LblDirCliente.Visible:=False;
+  DBLkpCmbBxDirCliente.Visible:=false;
   case FTipoDoc of
     1:SpdBtnCambioEstatus.Caption:='Acepta Cotización';
-    2:SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
+    2:begin
+       SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
+       LblDirCliente.Visible:=True;
+       DBLkpCmbBxDirCliente.Visible:=True;
+      end;
     3:SpdBtnCambioEstatus.Visible:=False;
   end;
 end;

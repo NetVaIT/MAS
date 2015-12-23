@@ -22,7 +22,7 @@ uses
   cxDropDownEdit, cxCalendar, cxDBEdit, Vcl.StdCtrls, cxMaskEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxTextEdit, ShellApi, PersonasDM, PersonasDomiciliosDM,
   TelefonosDM, EmailDM, dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox,
-  cxPC, PersonasContactosDM, CuentasBancariasDM, Vcl.DBCtrls, cxLabel, cxDBLabel;
+  cxPC, PersonasContactosDM, CuentasBancariasDM, Vcl.DBCtrls, cxLabel, cxDBLabel,PersonasCSDDM;
 
 type
   TfrmPersonasEdit = class(T_frmStandarGFormEdit)
@@ -71,6 +71,7 @@ type
     Label15: TLabel;
     DSMetodoPago: TDataSource;
     cxDBLabel1: TcxDBLabel;
+    TSCertificadosCSD: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -85,6 +86,7 @@ type
     dmEmails : TdmEmail;
     dmContactos : TdmPersonaContactos;
     dmCuentasBancarias : TdmCuentasBancarias;
+    dmPersonasCSD:TdmPersonasCSD;
     FRol: TPRol;
     procedure SetRol(const Value: TPRol);
     procedure MostrarPanel();
@@ -146,6 +148,7 @@ begin
   dmEmails := TdmEmail.Create(nil);
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
+  dmPersonasCSD:= TdmPersonasCSD.Create(nil);//Dic 21/15
   TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
@@ -157,6 +160,7 @@ begin
   FreeAndNil(dmEmails);
   FreeAndNil(dmContactos);
   FreeAndNil(dmCuentasBancarias);
+  FreeAndNil(dmPersonasCSD); //Dic 21/15
 end;
 
 procedure TfrmPersonasEdit.FormShow(Sender: TObject);
@@ -178,6 +182,10 @@ begin
   dmCuentasBancarias.MasterSource := DataSource;
   dmCuentasBancarias.MasterFields := 'IdPersona';
   dmCuentasBancarias.ShowModule(tsCuentasBancarias,'');
+  dmPersonasCSD.MasterSource:=DataSource;  //Dic 21/15
+  dmPersonasCSD.MasterFields := 'IdPersona';   //Dic 21/15
+  dmPersonasCSD.ShowModule(TSCertificadosCSD,''); //Dic 21/15
+
 end;
 
 procedure TfrmPersonasEdit.MostrarPanel;

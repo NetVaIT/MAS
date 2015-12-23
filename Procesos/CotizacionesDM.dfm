@@ -8,8 +8,9 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 
       'SELECT IdDocumentoSalida, IdTipoDocumentoSalida, IdPersona,'#13#10' Id' +
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
-      'A, SubTotal, Total, VigenciaDias, Observaciones'#13#10' FROM Documento' +
-      'sSalidas where IdTipoDocumentoSalida=:TipoDocto'
+      'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
+      'te'#13#10' FROM DocumentosSalidas where IdTipoDocumentoSalida=:TipoDoc' +
+      'to'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -111,10 +112,24 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdTipoDocumentoSalida'
       Lookup = True
     end
+    object adodsMasterIdDomicilioCliente: TIntegerField
+      FieldName = 'IdDomicilioCliente'
+    end
+    object adodsMasterDireccioncliente: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Direccioncliente'
+      LookupDataSet = ADODtStDireccionesCliente
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'DirCompleta'
+      KeyFields = 'IdDomicilioCliente'
+      Size = 300
+      Lookup = True
+    end
   end
   object adodsCotizacionesDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforeInsert = adodsCotizacionesDetalleBeforeInsert
     AfterPost = adodsCotizacionesDetalleAfterPost
     AfterDelete = adodsCotizacionesDetalleAfterPost
     OnNewRecord = adodsCotizacionesDetalleNewRecord
@@ -192,6 +207,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 224
   end
   object adodsProductos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -203,6 +219,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsClientes: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -228,6 +245,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -250,6 +268,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -266,6 +285,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -392,11 +412,12 @@ inherited dmCotizaciones: TdmCotizaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterPost = ADODtStOrdenSalidaItemAfterPost
+    OnNewRecord = ADODtStOrdenSalidaItemNewRecord
     CommandText = 
       'select IdOrdenSalidaItem, IdOrdenSalida, IdDocumentoSalidaDetall' +
-      'e,'#13#10' IdProducto, CantidadDespachada, Precio, Importe, CantidadSo' +
-      'licitada, Observaciones'#13#10', ClaveProducto from OrdenesSalidasItem' +
-      's where idOrdenSalida=:IdOrdenSalida'
+      'e, IdUnidadMedida,'#13#10' IdProducto, CantidadDespachada, Precio, Imp' +
+      'orte, CantidadSolicitada, Observaciones'#13#10', ClaveProducto from Or' +
+      'denesSalidasItems where idOrdenSalida=:IdOrdenSalida'
     DataSource = DSOrdenSalida
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -463,6 +484,9 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'ClaveProducto'
       Size = 50
     end
+    object ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField
+      FieldName = 'IdUnidadMedida'
+    end
   end
   object DSOrdenSalida: TDataSource
     DataSet = ADODtStOrdenSalida
@@ -499,6 +523,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object ADODtStDireccionesCliente: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnCalcFields = ADODtStDireccionesClienteCalcFields
     CommandText = 
       'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
@@ -510,6 +535,9 @@ inherited dmCotizaciones: TdmCotizaciones
       ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
       'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
       'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+    DataSource = DSMaster
+    IndexFieldNames = 'IdPersona'
+    MasterFields = 'IdPersona'
     Parameters = <
       item
         Name = 'IDPersona'
@@ -521,5 +549,66 @@ inherited dmCotizaciones: TdmCotizaciones
       end>
     Left = 448
     Top = 392
+    object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
+      FieldName = 'IdPersonaDomicilio'
+      ReadOnly = True
+    end
+    object ADODtStDireccionesClienteIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStDireccionesClienteIdDomicilio: TIntegerField
+      FieldName = 'IdDomicilio'
+    end
+    object ADODtStDireccionesClienteIdDomicilioTipo: TIntegerField
+      FieldName = 'IdDomicilioTipo'
+    end
+    object ADODtStDireccionesClienteIdentificador: TIntegerField
+      FieldName = 'Identificador'
+    end
+    object ADODtStDireccionesClientePredeterminado: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+    object ADODtStDireccionesClienteCalle: TStringField
+      FieldName = 'Calle'
+      Size = 50
+    end
+    object ADODtStDireccionesClienteNoExterior: TStringField
+      FieldName = 'NoExterior'
+      Size = 10
+    end
+    object ADODtStDireccionesClienteNoInterior: TStringField
+      FieldName = 'NoInterior'
+      Size = 10
+    end
+    object ADODtStDireccionesClienteColonia: TStringField
+      FieldName = 'Colonia'
+      Size = 50
+    end
+    object ADODtStDireccionesClienteCodigoPostal: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object ADODtStDireccionesClienteMunicipio: TStringField
+      FieldName = 'Municipio'
+      Size = 50
+    end
+    object ADODtStDireccionesClientePoblacion: TStringField
+      FieldName = 'Poblacion'
+      Size = 150
+    end
+    object ADODtStDireccionesClienteEstado: TStringField
+      FieldName = 'Estado'
+      Size = 50
+    end
+    object ADODtStDireccionesClientePais: TStringField
+      FieldName = 'Pais'
+      Size = 100
+    end
+    object ADODtStDireccionesClienteDirCompleta: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DirCompleta'
+      Size = 300
+      Calculated = True
+    end
   end
 end

@@ -98,6 +98,16 @@ type
     DBTxtSubtotal: TDBText;
     DBTxtIVA: TDBText;
     DBTxtTotal: TDBText;
+    LblAutorizo: TLabel;
+    DBText3: TDBText;
+    PnlAutorizaYFactura: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EdtContraAutoriza: TEdit;
+    BitBtn5: TBitBtn;
+    DBLkupCmbBxAutoriza: TDBLookupComboBox;
+    BitBtn6: TBitBtn;
+    BtBtnAutoriza: TBitBtn;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -109,6 +119,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure Facturar(IDOrden:Integer);
   end;
 
 var
@@ -118,7 +129,7 @@ implementation
 
 {$R *.dfm}
 
-uses OrdenesSalidaFormGrid, OrdenesSalidasDM;
+uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM;
 
 procedure TFrmOrdenesSalida.BtBtnAceptaProcesosClick(Sender: TObject);
 var estatus:Integer;
@@ -127,6 +138,7 @@ var estatus:Integer;
     btnAux:TbitBtn;
 begin
   inherited;
+  Estatus:=-1; //Para Cuando vaya a autorizar Dic 15/15
   case (Sender as TBitBtn).tag of
   1:begin
       campoFecha:='FechaIniRecolecta';
@@ -147,7 +159,17 @@ begin
       btnAux:=BtBtnFinRevisa;
       CampoIDPer:='IDPersonaRevisa'; //Nov 25
     end;
-  3:begin
+  3:begin//Autorizacion //Dic 15/15
+      campoFecha:='FechaAutoriza';
+      clave:=EdtContraAutoriza.Text;
+      CampoClave:='ClaveUautoriza';
+      Pnlaux:=PnlRecolecta;
+      EdtContraAutoriza.Clear;
+      btnAux:=BtBtnEmpaca;
+      CampoIDPer:='IDPersonaAutoriza';
+      Estatus:=4;
+    end;
+  4:begin   //Se cambio
       campoFecha:='FechaIniEmpaca';
       clave:=EdtContraseniaEm.Text;
       CampoClave:='ClaveUEmpaca';
@@ -166,6 +188,8 @@ begin
       if datasource.DataSet.State =dsBrowse then
         datasource.DataSet.Edit;
       datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+      if Estatus<>-1 then
+        datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=Estatus;
       datasource.DataSet.Post;
       Pnlaux.Visible:=False;
       btnAux.Visible:=true;
@@ -179,7 +203,13 @@ begin
   else
     ShowMessage('Debe seleccionar la persona y colocar su contraseña');
 
-
+  //Si es 4 autorizo bien... Se debe generar la Factura directamente
+  if Estatus<>-1 then //Cambio a 4
+  begin
+    showmessage('Mandar generacion de Factura');
+    Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger);
+    //Si no se genera hay que hacer algo para que se pueda generar en otro punto!!! ??
+  end;
 end;
 
 procedure TFrmOrdenesSalida.BtBtnCancelaProcClick(Sender: TObject);
@@ -190,15 +220,22 @@ begin
         BtBtnRecolecta.Visible:=true;
         PnlRecolecta.Visible:=False;
     end;
-    2:begin
-        PnlRevisa.Visible:=False;
-        BtBtnRevisa.Visible:=True;
-    end;
-    3:begin
-        BtBtnEmpaca.Visible:=True;
-        Pnlempaca.Visible:=False;
-    end;
+  2:begin
+      PnlRevisa.Visible:=False;
+      BtBtnRevisa.Visible:=True;
   end;
+  3:begin   //Dic 15/15
+      BtBtnAutoriza.Visible:=True;
+      PnlAutorizaYFactura.Visible:=False;
+  end;
+  4:begin
+      BtBtnEmpaca.Visible:=True;
+      Pnlempaca.Visible:=False;
+  end;
+
+  end;
+  if datasource.DataSet.State=dsEdit then
+      datasource.DataSet.Cancel;
 end;
 
 procedure TFrmOrdenesSalida.BtBtnFinGenProcesoClick(Sender: TObject);
@@ -218,14 +255,22 @@ begin
        EstatusNvo:=3; //Revisada  --> Para autorizar
        CampoFecha:='FechaFinRevisa';
     end;
-    3:begin   //Solo si esta autorizada
+(*    3:begin  //  //Dic 15/15 //Llamado en el unico boton
+        BtBtnAutoriza.Visible:=False;
+        EstatusNvo:=4; //aUTORIZADA
+        CampoFecha:='FechaAutoriza';
+
+    end;  *)
+
+    4:begin   //Solo si esta autorizada
         BtBtnFinEmpaque.Visible:=False;
         EstatusNvo:=5; //Empacada
         CampoFecha:='FechaFinempaca';
 
     end;
   end;
-   if datasource.DataSet.State =dsBrowse then
+
+  if datasource.DataSet.State =dsBrowse then
       datasource.DataSet.Edit;
     datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
     datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=EstatusNvo;
@@ -249,7 +294,12 @@ begin
         PnlRevisa.Visible:=true;
         BtBtnRevisa.Visible:=false;
     end;
-    3:begin
+    3:begin //Dic 15/15
+        BtBtnAutoriza.Visible:=False;
+        PnlAutorizaYFactura.Visible:=True;
+      end;
+
+    4:begin
         BtBtnEmpaca.Visible:=False;
         Pnlempaca.Visible:=True;
     end;
@@ -276,6 +326,9 @@ begin
     BtBtnFinRevisa.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=2) and
                             (not Datasource.DataSet.FieldByName('FechaIniRevisa').IsNull)and
                             (Datasource.DataSet.FieldByName('FechaFinRevisa').IsNull);
+    BtBtnAutoriza.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=3) and  //Dic 15/15
+                            (Datasource.DataSet.FieldByName('FechaAutoriza').IsNull);
+
     BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
                             (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
                             (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
@@ -284,6 +337,7 @@ begin
     PnlRecolecta.Visible:=False;
     PnlRevisa.Visible:=False;
     PnlEmpaca.Visible:=False;
+    PnlAutorizaYFactura.Visible:=False; //Dic 15/15
     //Nov 25/15
     LblRecoleccion.Visible:=not(Datasource.DataSet.FieldByName('FechaIniRecolecta').IsNull);
     if LblRecoleccion.Visible and (Datasource.DataSet.FieldByName('FechaFinRecolecta').IsNull) then
@@ -295,6 +349,12 @@ begin
       LblReviso.Caption:='Revisando:'
     else
       LblReviso.Caption:='Revisó:';
+   //Dic 15/15 desde
+    Lblautorizo.Visible:=not(Datasource.DataSet.FieldByName('Fechaautoriza').IsNull);
+
+   //Hasta
+
+
 
     LblEmpaco.Visible:=not(Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
     if LblEmpaco.Visible and (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull) then
@@ -303,6 +363,15 @@ begin
       LblEmpaco.Caption:='Empacó:';
 
   end;
+end;
+
+procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer);
+begin
+  dmFacturas := TdmFacturas.Create(nil);
+  dmFActuras.IDordenSalida:=IDOrden;
+  dmFacturas.ActCrearPrefacturas.Execute;
+  dmFacturas.ActProcesaFactura.Execute;
+  FreeAndNil(dmFacturas);
 end;
 
 procedure TFrmOrdenesSalida.FormActivate(Sender: TObject);

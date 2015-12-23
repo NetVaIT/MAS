@@ -8,11 +8,11 @@ uses
   System.IOUtils,
   Winapi.ShellAPI;
 
-  const
-  FileExts: array[0..6] of string = ('.xml', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv');
+  const                                                                                       //Dic 21/15
+  FileExts: array[0..8] of string = ('.xml', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv', '.cer', '.key');
 
-type
-  TFileAllowed = (faAll, faXML, faDOC, faDOCx, faXLS, faXLSx, faTXT, faCSV);
+type                                                                       //Dic 21/15
+  TFileAllowed = (faAll, faXML, faDOC, faDOCx, faXLS, faXLSx, faTXT, faCSV,faCER, faKEY);
   TFilesAllowed = set of TFileAllowed;
 
   TdmDocumentos = class(T_dmStandar)

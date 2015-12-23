@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Shellapi;
 
 type
   TfrmFacturasGrid = class(T_frmStandarGFormGrid)
@@ -36,16 +36,26 @@ type
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUUID_TB: TcxGridDBColumn;
     tvMasterFechaTimbrado_TB: TcxGridDBColumn;
-    tvMasterIdClienteDomicilio: TcxGridDBColumn;
     tvMasterSubTotal: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterTipoDocumento: TcxGridDBColumn;
     tvMasterCliente: TcxGridDBColumn;
+    ToolButton11: TToolButton;
+    TlBtnPrefactura: TToolButton;
+    TlBtnRegPDF: TToolButton;
+    procedure tbarGridClick(Sender: TObject);
   private
+    PreFacturas: TBasicAction;
+    RegeneraPDF: TBasicAction;
+    procedure SetPreFacturas(const Value: TBasicAction);
+    procedure SetRegeneraPDF(const Value: TBasicAction);
+
     { Private declarations }
   public
     { Public declarations }
+     property ActPreFacturas : TBasicAction read PreFacturas write SetPreFacturas;
+     property ActRegPDF : TBasicAction read RegeneraPDF write SetRegeneraPDF;
   end;
 
 var
@@ -56,5 +66,27 @@ implementation
 {$R *.dfm}
 
 uses FacturasDM;
+
+{ TfrmFacturasGrid }
+
+procedure TfrmFacturasGrid.SetPreFacturas(const Value: TBasicAction);
+begin
+  PreFacturas:=Value;
+  TlBtnPrefactura.Action:=Value;
+  TlBtnPrefactura.ImageIndex:=12; //Dic 10/15
+end;
+
+procedure TfrmFacturasGrid.SetRegeneraPDF(const Value: TBasicAction);
+begin //Dic 22/15
+  RegeneraPDF:=Value;
+  TlBtnRegPDF.Action:=Value;
+  TlBtnRegPDF.Imageindex:=13;
+end;
+
+procedure TfrmFacturasGrid.tbarGridClick(Sender: TObject);
+begin
+  inherited;
+  //Llama al regenerar
+end;
 
 end.

@@ -466,6 +466,19 @@
             <Form>_frmStandarGFormGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\PersonasCSDEdit.pas">
+            <Form>FrmPersonasCSDEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasCSDForm.pas">
+            <Form>frmPersonasCSDFormGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PersonasCSDDM.pas">
+            <Form>dmPersonasCSD</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

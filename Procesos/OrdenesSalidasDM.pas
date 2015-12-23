@@ -78,6 +78,17 @@ type
     adodsMasterNombreCliente: TStringField;
     ADODtStOrdenSalidaItemClaveProducto: TStringField;
     ADODtStDireccionesCliente: TADODataSet;
+    ADODtStPersonaAutoriza: TADODataSet;
+    ADODtStPersonaAutorizaIdPersona: TAutoIncField;
+    ADODtStPersonaAutorizaIdRol: TIntegerField;
+    ADODtStPersonaAutorizaIdPersonaEstatus: TIntegerField;
+    ADODtStPersonaAutorizaRazonSocial: TStringField;
+    ADODtStPersonaAutorizaClaveUsuario: TStringField;
+    ADODtStPersonaAutorizaPermiso: TStringField;
+    adodsMasterIdPersonaAutoriza: TIntegerField;
+    adodsMasterFechaAutoriza: TDateTimeField;
+    adodsMasterPersonaAutoriza: TStringField;
+    adodsMasterClaveUAutoriza: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);

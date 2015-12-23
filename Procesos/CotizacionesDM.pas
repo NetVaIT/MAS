@@ -92,6 +92,25 @@ type
     ADODtStOrdenSalidaItemClaveProducto: TStringField;
     ADOQryAuxiliar: TADOQuery;
     ADODtStDireccionesCliente: TADODataSet;
+    ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField;
+    ADODtStDireccionesClienteIdPersona: TIntegerField;
+    ADODtStDireccionesClienteIdDomicilio: TIntegerField;
+    ADODtStDireccionesClienteIdDomicilioTipo: TIntegerField;
+    ADODtStDireccionesClienteIdentificador: TIntegerField;
+    ADODtStDireccionesClientePredeterminado: TBooleanField;
+    ADODtStDireccionesClienteCalle: TStringField;
+    ADODtStDireccionesClienteNoExterior: TStringField;
+    ADODtStDireccionesClienteNoInterior: TStringField;
+    ADODtStDireccionesClienteColonia: TStringField;
+    ADODtStDireccionesClienteCodigoPostal: TStringField;
+    ADODtStDireccionesClienteMunicipio: TStringField;
+    ADODtStDireccionesClientePoblacion: TStringField;
+    ADODtStDireccionesClienteEstado: TStringField;
+    ADODtStDireccionesClientePais: TStringField;
+    adodsMasterIdDomicilioCliente: TIntegerField;
+    ADODtStDireccionesClienteDirCompleta: TStringField;
+    adodsMasterDireccioncliente: TStringField;
+    ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -100,6 +119,9 @@ type
     procedure adodsCotizacionesDetalleAfterPost(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
+    procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
+    procedure adodsCotizacionesDetalleBeforeInsert(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
@@ -134,6 +156,15 @@ begin
     ADodsMaster.FieldByName('Total').AsFloat:=  Total;
     ADodsMaster.Post;
   end;
+end;
+
+procedure TdmCotizaciones.adodsCotizacionesDetalleBeforeInsert(
+  DataSet: TDataSet);
+begin
+
+  if adodsMaster.State in [dsEdit,dsInsert]then //Para evitar que se vaya sin nada dic 22/15
+     adodsMaster.post;
+  inherited;
 end;
 
 procedure TdmCotizaciones.adodsCotizacionesDetalleCantidadChange(
@@ -212,6 +243,16 @@ begin  //Nov 6/15
   adodsMaster.fieldbyname('IDDocumentoSalidaEstatus').AsInteger:= 1;
 end;
 
+procedure TdmCotizaciones.ADODtStDireccionesClienteCalcFields(
+  DataSet: TDataSet);
+begin
+  inherited;
+  dataset.FieldByName('DirCompleta').AsString:= dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString+
+                                                '. '+dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
+                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString;
+
+end;
+
 procedure TdmCotizaciones.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
 var idDocSalida, IDDocItem:Integer;
 //completo:Boolean;
@@ -252,6 +293,12 @@ begin
 //    ADODtStOrdenSalidaItem.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
      ADODtStOrdenSalidaItem.FieldByName('Importe').AsFloat:=ADODtStOrdenSalidaItem.FieldByName('Precio').AsFloat* ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
   end;
+end;
+
+procedure TdmCotizaciones.ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  DataSet.FieldByName('IDUnidadMedida').AsInteger :=1 ;
 end;
 
 function TdmCotizaciones.CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA: Double; var AMontoIva,

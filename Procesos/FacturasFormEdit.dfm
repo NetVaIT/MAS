@@ -2,8 +2,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   Caption = 'frmFacturasFormEdit'
   ClientWidth = 990
   OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 990
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -64,8 +64,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     ClientRectBottom = 591
     ClientRectRight = 989
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
       ExplicitWidth = 988
       ExplicitHeight = 590
       inherited cxScrollBox1: TcxScrollBox
@@ -96,6 +94,16 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           Height = 563
           ExplicitWidth = 986
           ExplicitHeight = 563
+          object Splitter1: TSplitter
+            Left = 0
+            Top = 484
+            Width = 986
+            Height = 3
+            Cursor = crVSplit
+            Align = alTop
+            ExplicitLeft = 8
+            ExplicitTop = 473
+          end
           object PnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -103,7 +111,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Height = 313
             Align = alTop
             TabOrder = 0
-            ExplicitTop = 6
             object Label1: TLabel
               Left = 424
               Top = 16
@@ -121,7 +128,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             end
             object Label9: TLabel
               Left = 593
-              Top = 131
+              Top = 121
               Width = 36
               Height = 13
               Caption = 'Estatus'
@@ -157,11 +164,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Caption = 'Folio'
             end
             object SpdBtnGenerarCFDI: TSpeedButton
-              Left = 879
-              Top = 257
+              Left = 887
+              Top = 246
               Width = 90
               Height = 22
               Caption = 'Genera CFDI'
+              Visible = False
               OnClick = SpdBtnGenerarCFDIClick
             end
             object Label5: TLabel
@@ -174,7 +182,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             end
             object Label6: TLabel
               Left = 593
-              Top = 75
+              Top = 69
               Width = 99
               Height = 13
               Caption = 'Condiciones de Pago'
@@ -189,85 +197,119 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             end
             object Bevel1: TBevel
               Left = 31
-              Top = 131
+              Top = 122
               Width = 530
-              Height = 171
+              Height = 185
               Shape = bsFrame
             end
             object Label15: TLabel
               Left = 55
-              Top = 150
+              Top = 153
               Width = 23
               Height = 13
               Caption = 'Calle'
             end
             object Label16: TLabel
               Left = 336
-              Top = 150
+              Top = 153
               Width = 54
               Height = 13
               Caption = 'No Exterior'
             end
             object Label17: TLabel
-              Left = 448
-              Top = 150
+              Left = 441
+              Top = 153
               Width = 52
               Height = 13
               Caption = 'No Interior'
             end
             object Label19: TLabel
               Left = 55
-              Top = 195
+              Top = 198
               Width = 35
               Height = 13
               Caption = 'Colonia'
             end
             object Label23: TLabel
               Left = 337
-              Top = 195
+              Top = 198
               Width = 65
               Height = 13
               Caption = 'C'#243'digo Postal'
             end
             object Label20: TLabel
               Left = 55
-              Top = 238
+              Top = 241
               Width = 43
               Height = 13
               Caption = 'Municipio'
             end
             object Label21: TLabel
               Left = 205
-              Top = 238
+              Top = 241
               Width = 33
               Height = 13
               Caption = 'Estado'
             end
             object Label22: TLabel
               Left = 337
-              Top = 235
+              Top = 238
               Width = 19
               Height = 13
               Caption = 'Pa'#237's'
             end
             object SpdBtnRechazarPerdido: TSpeedButton
-              Left = 879
-              Top = 285
+              Left = 887
+              Top = 274
               Width = 90
               Height = 22
               Caption = 'Rechaza Pedido'
+              Visible = False
             end
             object SpeedButton1: TSpeedButton
-              Left = 466
-              Top = 275
-              Width = 90
+              Left = 471
+              Top = 285
+              Width = 87
               Height = 22
               Caption = 'Cambiar Domicilio'
+              Visible = False
               OnClick = SpeedButton1Click
+            end
+            object Label25: TLabel
+              Left = 593
+              Top = 178
+              Width = 78
+              Height = 13
+              Caption = 'M'#233'todo de Pago'
+              FocusControl = DBLookupComboBox5
+            end
+            object Label27: TLabel
+              Left = 40
+              Top = 108
+              Width = 76
+              Height = 13
+              Caption = 'DireccionCliente'
+              FocusControl = DBLookupComboBox6
+            end
+            object Label8: TLabel
+              Left = 593
+              Top = 235
+              Width = 38
+              Height = 13
+              Caption = 'Moneda'
+              FocusControl = DBLookupComboBox2
+            end
+            object Label12: TLabel
+              Left = 763
+              Top = 235
+              Width = 58
+              Height = 13
+              Caption = 'Tipo Cambio'
+              FocusControl = DBLookupComboBox2
             end
             object DBLookupComboBox1: TDBLookupComboBox
               Left = 40
-              Top = 81
+              Top = 83
               Width = 304
               Height = 21
               DataField = 'Cliente'
@@ -276,7 +318,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             end
             object DBLookupComboBox3: TDBLookupComboBox
               Left = 593
-              Top = 150
+              Top = 140
               Width = 209
               Height = 21
               DataField = 'Estatus'
@@ -288,22 +330,22 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Top = 34
               Width = 184
               Height = 21
-              DataField = 'TipoDocumento'
+              DataField = 'FormaPago'
               DataSource = DataSource
               TabOrder = 2
             end
             object cxDBDateEdit1: TcxDBDateEdit
               Left = 424
               Top = 35
-              DataBinding.DataField = 'FechaRegistro'
+              DataBinding.DataField = 'Fecha'
               DataBinding.DataSource = DataSource
               TabOrder = 3
-              Width = 121
+              Width = 137
             end
             object cxDBLabel1: TcxDBLabel
               Left = 793
               Top = 61
-              DataBinding.DataField = 'IdCFDITipoDocumento'
+              DataBinding.DataField = 'TipoDocumento'
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 184
@@ -321,7 +363,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Top = 34
               Width = 165
               Height = 21
-              DataField = 'IdCFDITipoDocumento'
+              DataField = 'TipoDocumento'
               DataSource = DataSource
               TabOrder = 6
             end
@@ -335,92 +377,162 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             end
             object cxDBLabel4: TcxDBLabel
               Left = 297
-              Top = 34
-              DataBinding.DataField = 'Serie'
+              Top = 35
+              DataBinding.DataField = 'Folio'
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 114
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 593
-              Top = 94
+              Top = 88
+              DataBinding.DataField = 'CondPago'
+              DataBinding.DataSource = DataSource
               TabOrder = 9
-              Width = 184
+              Width = 365
             end
             object cxDBLabel5: TcxDBLabel
               Left = 361
               Top = 81
-              DataBinding.DataField = 'Serie'
+              DataBinding.DataField = 'RFC'
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 114
             end
-            object cxDBTextEdit2: TcxDBTextEdit
+            object DBLookupComboBox5: TDBLookupComboBox
+              Left = 593
+              Top = 197
+              Width = 209
+              Height = 21
+              DataField = 'MetodoPago'
+              DataSource = DataSource
+              TabOrder = 11
+            end
+            object PnlCtaPago: TPanel
+              Left = 820
+              Top = 167
+              Width = 144
+              Height = 57
+              BevelOuter = bvNone
+              TabOrder = 12
+              object Label26: TLabel
+                Left = 3
+                Top = 10
+                Width = 55
+                Height = 13
+                Caption = 'Cuenta No:'
+                FocusControl = DBLookupComboBox5
+              end
+              object cxDBTextEdit15: TcxDBTextEdit
+                Left = 3
+                Top = 29
+                DataBinding.DataField = 'NumCtaPago'
+                DataBinding.DataSource = DataSource
+                TabOrder = 0
+                Width = 128
+              end
+            end
+            object DBLookupComboBox6: TDBLookupComboBox
               Left = 54
-              Top = 165
+              Top = 127
+              Width = 466
+              Height = 21
+              DataField = 'IdClienteDomicilio'
+              DataSource = DataSource
+              KeyField = 'IdPersonaDomicilio'
+              ListField = 'DirCompleta'
+              ListSource = DSDatosCliente
+              TabOrder = 13
+              Visible = False
+            end
+            object cxDBLabel6: TcxDBLabel
+              Left = 54
+              Top = 171
               DataBinding.DataField = 'Calle'
               DataBinding.DataSource = DSDatosCliente
-              TabOrder = 11
+              Height = 21
               Width = 257
             end
-            object cxDBTextEdit3: TcxDBTextEdit
-              Left = 54
-              Top = 211
-              DataBinding.DataField = 'Colonia'
+            object cxDBLabel13: TcxDBLabel
+              Left = 55
+              Top = 257
+              DataBinding.DataField = 'Municipio'
               DataBinding.DataSource = DSDatosCliente
-              TabOrder = 12
-              Width = 257
-            end
-            object cxDBTextEdit4: TcxDBTextEdit
-              Left = 54
-              Top = 253
-              DataBinding.DataSource = DSDatosCliente
-              TabOrder = 13
+              Height = 21
               Width = 145
             end
-            object cxDBTextEdit5: TcxDBTextEdit
+            object cxDBLabel12: TcxDBLabel
+              Left = 206
+              Top = 257
+              DataBinding.DataField = 'Estado'
+              DataBinding.DataSource = DSDatosCliente
+              Height = 21
+              Width = 106
+            end
+            object cxDBLabel11: TcxDBLabel
+              Left = 337
+              Top = 257
+              DataBinding.DataField = 'Pais'
+              DataBinding.DataSource = DSDatosCliente
+              Height = 21
+              Width = 139
+            end
+            object cxDBLabel10: TcxDBLabel
               Left = 336
-              Top = 168
+              Top = 217
+              DataBinding.DataField = 'CodigoPostal'
+              DataBinding.DataSource = DSDatosCliente
+              Height = 21
+              Width = 94
+            end
+            object cxDBLabel8: TcxDBLabel
+              Left = 335
+              Top = 172
               DataBinding.DataField = 'NoExterior'
               DataBinding.DataSource = DSDatosCliente
-              TabOrder = 14
-              Width = 96
+              Height = 21
+              Width = 94
             end
-            object cxDBTextEdit6: TcxDBTextEdit
-              Left = 448
-              Top = 165
+            object cxDBLabel9: TcxDBLabel
+              Left = 440
+              Top = 172
+              DataBinding.DataField = 'NoInterior'
               DataBinding.DataSource = DSDatosCliente
-              TabOrder = 15
-              Width = 77
+              Height = 21
+              Width = 81
             end
-            object cxDBTextEdit7: TcxDBTextEdit
-              Left = 337
-              Top = 211
+            object cxDBLabel7: TcxDBLabel
+              Left = 56
+              Top = 214
+              DataBinding.DataField = 'Colonia'
               DataBinding.DataSource = DSDatosCliente
-              TabOrder = 16
-              Width = 145
+              Height = 21
+              Width = 257
             end
-            object cxDBTextEdit9: TcxDBTextEdit
-              Left = 337
-              Top = 252
-              DataBinding.DataSource = DSDatosCliente
-              TabOrder = 17
-              Width = 145
+            object DBLookupComboBox2: TDBLookupComboBox
+              Left = 593
+              Top = 254
+              Width = 135
+              Height = 21
+              DataField = 'Moneda'
+              DataSource = DataSource
+              TabOrder = 22
             end
-            object cxDBTextEdit10: TcxDBTextEdit
-              Left = 205
-              Top = 252
-              DataBinding.DataSource = DSDatosCliente
-              TabOrder = 18
-              Width = 106
+            object cxDBTextEdit8: TcxDBTextEdit
+              Left = 762
+              Top = 254
+              DataBinding.DataField = 'TipoCambio'
+              DataBinding.DataSource = DataSource
+              TabOrder = 23
+              Width = 105
             end
           end
           object Panel3: TPanel
             Left = 0
             Top = 313
             Width = 986
-            Height = 167
-            Align = alClient
+            Height = 171
+            Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
             object ToolBar2: TToolBar
@@ -505,7 +617,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Left = 0
               Top = 29
               Width = 986
-              Height = 138
+              Height = 142
               Align = alClient
               DataSource = DSCFDIConceptos
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -577,107 +689,88 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object Panel1: TPanel
             Left = 0
-            Top = 480
+            Top = 487
             Width = 986
-            Height = 83
-            Align = alBottom
+            Height = 76
+            Align = alClient
             TabOrder = 2
             object Label13: TLabel
-              Left = 505
-              Top = 44
+              Left = 586
+              Top = 48
               Width = 17
               Height = 13
               Caption = 'IVA'
               FocusControl = cxDBTextEdit11
             end
             object Label14: TLabel
-              Left = 480
-              Top = 10
+              Left = 577
+              Top = 14
               Width = 42
               Height = 13
               Caption = 'SubTotal'
               FocusControl = cxDBTextEdit12
             end
             object Label18: TLabel
-              Left = 725
-              Top = 45
+              Left = 790
+              Top = 49
               Width = 24
               Height = 13
               Caption = 'Total'
               FocusControl = cxDBTextEdit13
             end
-            object Label8: TLabel
-              Left = 52
-              Top = 10
-              Width = 38
-              Height = 13
-              Caption = 'Moneda'
-              FocusControl = DBLookupComboBox2
-            end
-            object Label12: TLabel
-              Left = 32
-              Top = 41
-              Width = 58
-              Height = 13
-              Caption = 'Tipo Cambio'
-              FocusControl = DBLookupComboBox2
-            end
             object Label24: TLabel
-              Left = 698
-              Top = 10
+              Left = 763
+              Top = 14
               Width = 51
               Height = 13
               Caption = 'Descuento'
               FocusControl = cxDBTextEdit14
             end
-            object cxDBTextEdit11: TcxDBTextEdit
-              Left = 528
+            object Label28: TLabel
+              Left = 27
               Top = 6
+              Width = 71
+              Height = 13
+              Caption = 'Observaciones'
+            end
+            object cxDBTextEdit11: TcxDBTextEdit
+              Left = 625
+              Top = 10
               DataBinding.DataField = 'SubTotal'
               DataBinding.DataSource = DataSource
               TabOrder = 0
               Width = 121
             end
             object cxDBTextEdit12: TcxDBTextEdit
-              Left = 528
-              Top = 41
+              Left = 625
+              Top = 45
               DataBinding.DataField = 'TotalImpuestoTrasladado'
               DataBinding.DataSource = DataSource
               TabOrder = 1
               Width = 121
             end
             object cxDBTextEdit13: TcxDBTextEdit
-              Left = 755
-              Top = 41
+              Left = 820
+              Top = 45
               DataBinding.DataField = 'Total'
               DataBinding.DataSource = DataSource
               TabOrder = 2
               Width = 121
             end
-            object DBLookupComboBox2: TDBLookupComboBox
-              Left = 96
-              Top = 6
-              Width = 135
-              Height = 21
-              DataField = 'Moneda'
-              DataSource = DataSource
-              TabOrder = 3
-            end
-            object cxDBTextEdit8: TcxDBTextEdit
-              Left = 96
-              Top = 41
-              DataBinding.DataField = 'TipoCambio'
-              DataBinding.DataSource = DataSource
-              TabOrder = 4
-              Width = 105
-            end
             object cxDBTextEdit14: TcxDBTextEdit
-              Left = 755
-              Top = 6
+              Left = 820
+              Top = 10
               DataBinding.DataField = 'Descto'
               DataBinding.DataSource = DataSource
-              TabOrder = 5
+              TabOrder = 3
               Width = 121
+            end
+            object cxDBMemo1: TcxDBMemo
+              Left = 104
+              Top = 6
+              TabOrder = 4
+              Height = 59
+              Width = 441
             end
           end
         end
@@ -693,7 +786,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -903,7 +996,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011800C0027C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1841,12 +1934,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   end
   object DSCFDIConceptos: TDataSource
     DataSet = DMFacturas.ADODtStCFDIConceptos
-    Left = 716
-    Top = 280
+    Left = 812
+    Top = 328
   end
   object DSDatosCliente: TDataSource
     DataSet = DMFacturas.ADODtStDireccionesCliente
-    Left = 796
-    Top = 280
+    Left = 900
+    Top = 336
   end
 end

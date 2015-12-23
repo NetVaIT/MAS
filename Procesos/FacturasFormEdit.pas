@@ -21,7 +21,7 @@ uses
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxDBEdit,
   Vcl.Buttons, cxLabel, cxDBLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids;
+  cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, cxMemo,Data.Win.ADODB;
 
 type
   TfrmFacturasFormEdit = class(T_frmStandarGFormEdit)
@@ -57,14 +57,6 @@ type
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
-    cxDBTextEdit3: TcxDBTextEdit;
-    cxDBTextEdit4: TcxDBTextEdit;
-    cxDBTextEdit5: TcxDBTextEdit;
-    cxDBTextEdit6: TcxDBTextEdit;
-    cxDBTextEdit7: TcxDBTextEdit;
-    cxDBTextEdit9: TcxDBTextEdit;
-    cxDBTextEdit10: TcxDBTextEdit;
     Panel3: TPanel;
     ToolBar2: TToolBar;
     ToolButton31: TToolButton;
@@ -100,26 +92,52 @@ type
     cxDBTextEdit11: TcxDBTextEdit;
     cxDBTextEdit12: TcxDBTextEdit;
     cxDBTextEdit13: TcxDBTextEdit;
-    Label8: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
-    Label12: TLabel;
-    cxDBTextEdit8: TcxDBTextEdit;
     Label24: TLabel;
     cxDBTextEdit14: TcxDBTextEdit;
     SpdBtnRechazarPerdido: TSpeedButton;
     SpeedButton1: TSpeedButton;
     ToolButton3: TToolButton;
     TlBtnGeneraCFDI: TToolButton;
+    Label25: TLabel;
+    DBLookupComboBox5: TDBLookupComboBox;
+    PnlCtaPago: TPanel;
+    Label26: TLabel;
+    cxDBTextEdit15: TcxDBTextEdit;
+    Label27: TLabel;
+    DBLookupComboBox6: TDBLookupComboBox;
+    cxDBLabel6: TcxDBLabel;
+    cxDBLabel13: TcxDBLabel;
+    cxDBLabel12: TcxDBLabel;
+    cxDBLabel11: TcxDBLabel;
+    cxDBLabel10: TcxDBLabel;
+    cxDBLabel8: TcxDBLabel;
+    cxDBLabel9: TcxDBLabel;
+    cxDBLabel7: TcxDBLabel;
+    Splitter1: TSplitter;
+    Label28: TLabel;
+    cxDBMemo1: TcxDBMemo;
+    Label8: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label12: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpdBtnGenerarCFDIClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
+    RegeneraPDF: TBasicAction;
     procedure SetFacturaCta(const Value: TBasicAction);
+    procedure SetPreFacturas(const Value: TBasicAction);
+
+    procedure SetRegeneraPDF(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property FacturarCtas : TBasicAction read FacturaCta write SetFacturaCta;
+    property ActPreFacturas : TBasicAction read PreFacturas write SetPreFacturas;
+    property ActRegPDF : TBasicAction read RegeneraPDF write SetRegeneraPDF; //Dic 22/15
   end;
 
 var
@@ -136,12 +154,39 @@ begin
   inherited;
   gFormGrid := TfrmFacturasGrid.Create(Self);
   TFrmFacturasGrid(gFormGrid).CerrarGrid := actCloseGrid;
+
 end;
+
+procedure TfrmFacturasFormEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+//
+//  ActPreFacturas.Execute;
+ //  TADODataSet(DSDAtosCliente.DataSet).Parameters.ParamByName('IDClienteDomicilio').Value:= DataSource.DataSet.FieldByName('IDClienteDomicilio').AsInteger;    // vre comportamiento
+  TADODataSet(DSDAtosCliente.DataSet).Parameters.ParamByName('IDClienteDomicilio').Value;
+  DSDatosCliente.DataSet.Open;
+end;
+
 
 procedure TfrmFacturasFormEdit.SetFacturaCta(const Value: TBasicAction);
 begin
   FacturaCta := Value;
   TlBtnGeneraCFDI.Action:=Value;
+  TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
+end;
+
+procedure TfrmFacturasFormEdit.SetPreFacturas(const Value: TBasicAction);
+begin
+  PreFacturas:=value;
+  TFrmFacturasGrid(gFormGrid).ActPreFacturas:=value;
+
+end;
+
+procedure TfrmFacturasFormEdit.SetRegeneraPDF(const Value: TBasicAction);
+begin
+  RegeneraPDF:=Value;
+  TFrmFacturasGrid(gFormGrid).ActRegPDF:=value;
+
 end;
 
 procedure TfrmFacturasFormEdit.SpdBtnGenerarCFDIClick(Sender: TObject);

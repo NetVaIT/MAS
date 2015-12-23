@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils;
+  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils,winapi.windows, ShellApi;
 
 type
   TDMFacturas = class(T_dmStandar)
@@ -69,10 +69,6 @@ type
     adodsMasterObservaciones: TStringField;
     adodsMasterPorcentajeIVA: TFloatField;
     adodsMasterEmailCliente: TStringField;
-    adodsMasterFolioCFDIOrigen: TStringField;
-    adodsMasterSerieCFDIOrigen: TStringField;
-    adodsMasterFechaCFDIOrigen: TDateTimeField;
-    adodsMasterMontoFolFisOrig: TFloatField;
     adodsMasterUUID_TB: TStringField;
     adodsMasterSelloCFD_TB: TStringField;
     adodsMasterSelloSAT_TB: TStringField;
@@ -83,12 +79,9 @@ type
     ADODtStDatosDocumentoSalidaIDDocumentoSalida: TAutoIncField;
     ADODtStDatosDocumentoSalidaRazonSocial: TStringField;
     DSDatosDocSalida: TDataSource;
-    ADODtStOrdenSalidaIdPersonaCliente: TIntegerField;
-    ADODtStOrdenSalidaNombreCliente: TStringField;
     ADODtStDatosDocumentoSalidaIdMetodoPagoCliente: TIntegerField;
     ADODtStDatosDocumentoSalidaRFC: TStringField;
     ADODtStDatosDocumentoSalidaNumCtaPagoCliente: TStringField;
-    ADODtStOrdenSalidaIDMetPagoCLiente: TIntegerField;
     ADODtStCFDIImpuestosIdCFDI: TLargeintField;
     ADODtStCFDIImpuestosTipoImp: TStringField;
     ADODtStCFDIImpuestosImpuesto: TStringField;
@@ -100,7 +93,6 @@ type
     ADODtStOrdenSalidaItemProducto: TStringField;
     ADODtStDireccionesCliente: TADODataSet;
     ADODtStDatosDocumentoSalidaIdDomicilioCliente: TIntegerField;
-    ADODtStOrdenSalidaIdDomiCliente: TIntegerField;
     ActProcesaFactura: TAction;
     ADODtStPersonaEmisoridpersona: TAutoIncField;
     ADODtStPersonaEmisorRazonSocial: TStringField;
@@ -211,18 +203,88 @@ type
     adodsMasterCliente: TStringField;
     ADODtStCFDIEstatus: TADODataSet;
     adodsMasterEstatus: TStringField;
+    ActCrearPrefacturas: TAction;
+    ADODataSetOrdensalidaOriginal: TADODataSet;
+    IntegerField1: TIntegerField;
+    StringField1: TStringField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    AutoIncField1: TAutoIncField;
+    IntegerField4: TIntegerField;
+    IntegerField5: TIntegerField;
+    IntegerField6: TIntegerField;
+    IntegerField7: TIntegerField;
+    IntegerField8: TIntegerField;
+    DateTimeField1: TDateTimeField;
+    FMTBCDField1: TFMTBCDField;
+    DateTimeField2: TDateTimeField;
+    DateTimeField3: TDateTimeField;
+    DateTimeField4: TDateTimeField;
+    DateTimeField5: TDateTimeField;
+    DateTimeField6: TDateTimeField;
+    DateTimeField7: TDateTimeField;
+    FMTBCDField2: TFMTBCDField;
+    FMTBCDField3: TFMTBCDField;
+    ADODtStOrdenSalidaIDDomicilioCliente: TIntegerField;
+    ADODtStOrdenSalidaIDMetodoPagoCliente: TIntegerField;
+    ADODtStOrdenSalidaRFC: TStringField;
+    ADODtStOrdenSalidaNombreCliente: TStringField;
+    ADODtStOrdenSalidaIDPersonaCliente: TAutoIncField;
+    adodsMasterRFC: TStringField;
+    ADODtStDireccionesClienteDirCompleta: TStringField;
+    ADODtStFormasPago: TADODataSet;
+    ADODtStFormasPagoIDCFDIFormaPago: TAutoIncField;
+    ADODtStFormasPagoIdentificador: TStringField;
+    ADODtStFormasPagoDescripcion: TStringField;
+    adodsMasterFormaPago: TStringField;
+    ADODtStConsultaDirecciones: TADODataSet;
+    ADODtStConsultaDireccionesIdPersonaDomicilio: TAutoIncField;
+    ADODtStConsultaDireccionesIdPersona: TIntegerField;
+    ADODtStConsultaDireccionesIdDomicilio: TIntegerField;
+    ADODtStConsultaDireccionesIdDomicilioTipo: TIntegerField;
+    ADODtStConsultaDireccionesIdentificador: TIntegerField;
+    ADODtStConsultaDireccionesPredeterminado: TBooleanField;
+    ADODtStConsultaDireccionesCalle: TStringField;
+    ADODtStConsultaDireccionesNoExterior: TStringField;
+    ADODtStConsultaDireccionesNoInterior: TStringField;
+    ADODtStConsultaDireccionesColonia: TStringField;
+    ADODtStConsultaDireccionesCodigoPostal: TStringField;
+    ADODtStConsultaDireccionesMunicipio: TStringField;
+    ADODtStConsultaDireccionesPoblacion: TStringField;
+    ADODtStConsultaDireccionesEstado: TStringField;
+    ADODtStConsultaDireccionesPais: TStringField;
+    ADODtStConsultaDireccionesDirCompleta: TStringField;
+    ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField;
+    adodsDocumento: TADODataSet;
+    adodsDocumentoIdDocumento: TAutoIncField;
+    adodsDocumentoIdDocumentoTipo: TIntegerField;
+    adodsDocumentoIdDocumentoClase: TIntegerField;
+    adodsDocumentoDescripcion: TStringField;
+    adodsDocumentoNombreArchivo: TStringField;
+    adodsDocumentoIdArchivo: TGuidField;
+    adodsDocumentoArchivo: TBlobField;
+    ActRegeneraPDF: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
     procedure ActProcesaFacturaExecute(Sender: TObject);
+    procedure ActCrearPrefacturasExecute(Sender: TObject);
+    procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
+    procedure ActRegeneraPDFExecute(Sender: TObject);
   private
+    fidordenSal: Integer;
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
+    procedure actXMLaPDFExecute(Sender: TObject);
+    function CargaXMLPDFaFS(Archivo, Describe: string): integer;
+    procedure SubirXMLPDFaFS(FileName: TFileName);
+    procedure ReadFile(FileName: TFileName);
     { Private declarations }
   public
     { Public declarations }
     EsProduccion:Boolean;
+    property IDordenSalida:Integer read fidordenSal write fIdOrdenSal;
   end;
 
 var
@@ -235,6 +297,65 @@ implementation
 uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod;
 
 {$R *.dfm}
+
+procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);
+begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
+  inherited;
+    //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
+
+  adodsMaster.Open;
+  ADODtStOrdenSalida.Parameters.ParamByName('IdOrdenSalida').Value:=IDordenSalida;  //Enviar el parametro
+  ADODtStOrdenSalida.Open;
+  ADODtStOrdenSalidaItem.Open;
+
+  ADODtStCFDIConceptos.Open;
+  ADODtStCFDIImpuestos.Open;
+
+//  while not ADODtStOrdenSalida.eof do //Dic 16/15
+//  begin
+
+    adodsMaster.Insert;                                   //Verificar si se coloca autopmatica por la relacion
+    adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
+    adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
+    adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat;
+
+    adodsMaster.FieldByName('TotalImpuestoTrasladado').AsFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
+//    adodsMaster.FieldByName('IDPersonaEmisor').AsInteger:=SacarEmisor;  //ADODtStOrdenSalida.FieldByName('Total').AsFloat;
+
+    adodsMaster.FieldByName('IDPersonaReceptor').AsInteger := ADODtStOrdenSalida.FieldByName('IDPersonaCliente').ASInteger;
+    adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').ASInteger;
+    if  not ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').Isnull then
+      adodsMaster.FieldByName('IdClienteDomicilio').AsInteger := ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').ASInteger;
+                                                          //Verificar que tenga algo
+//    adodsMaster.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').ASInteger;
+    adodsMaster.Post;
+    ADODtStCFDIImpuestos.Insert;
+   // ADODtStCFDIImpuestos.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').AsInteger; //Verificar asociacion CFDI
+    ADODtStCFDIImpuestos.FieldByName('Importe').asFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
+    ADODtStCFDIImpuestos.Post;
+
+
+    while(not ADODtStOrdenSalidaItem.eof) do
+    begin
+      ADODtStCFDIConceptos.Insert;
+
+      ADODtStCFDIConceptos.FieldByName('IDOrdenSalidaItem').AsInteger := ADODtStOrdenSalidaItem.FieldByName('IDOrdenSalidaItem').AsInteger;
+      ADODtStCFDIConceptos.FieldByName('IDProducto').AsInteger := ADODtStOrdenSalidaItem.FieldByName('IDProducto').AsInteger;
+      ADODtStCFDIConceptos.FieldByName('Cantidad').AsFloat := ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
+      ADODtStCFDIConceptos.FieldByName('Descripcion').asString := ADODtStOrdenSalidaItem.FieldByName('Producto').asString;
+      ADODtStCFDIConceptos.FieldByName('NoIdentifica').ASString := ADODtStOrdenSalidaItem.FieldByName('ClaveProducto').ASString;
+      ADODtStCFDIConceptos.FieldByName('IdUnidadMedida').ASInteger := ADODtStOrdenSalidaItem.FieldByName('IDUnidadMedida').AsInteger;
+      ADODtStCFDIConceptos.FieldByName('Unidad').ASString := 'PZA';//ADODtStOrdenSalidaItem.FieldByName('ClaveProducto').ASString;
+      ADODtStCFDIConceptos.FieldByName('ValorUnitario').ASFloat := ADODtStOrdenSalidaItem.FieldByName('Precio').ASFloat;
+      ADODtStCFDIConceptos.FieldByName('Importe').ASFloat := ADODtStOrdenSalidaItem.FieldByName('Importe').ASFloat;
+
+
+      ADODtStCFDIConceptos.Post;
+      ADODtStOrdenSalidaItem.Next;
+    end;
+//    ADODtStOrdenSalida.Next;
+//  end;
+end;
 
 procedure TDMFacturas.ActProcesaFacturaExecute(Sender: TObject);
 const  //Copiado de sistema RH Dic 7/15
@@ -259,6 +380,11 @@ var
   FechaAux:TDAteTime;//Porque si se intento generar le mande la misma fecha original
 begin
   inherited;
+  //Habilitado Dic 21/15
+  XMLpdf := TdmodXMLtoPDF.Create(Self);
+  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm';
+  XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
+   //Habilitado Dic 21/15 hasta aca
   //verificar si no se intento generar antes
   FechaAux:=IncSecond(Now, _SEGUNDOS_A_RESTAR);
                                       //Prefactura
@@ -297,7 +423,7 @@ begin
     ADODtStPersonaReceptor.Close;
     // Verificar si se require esto... o borrar  adodsEmisor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
     // adodsReceptor.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaRelacionada').Value;
-    // adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
+     adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaEmisor').asInteger;
     // adodsKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersona').Value;
     adodsArchivosCerKey.Open;
     ADODtStPersonaEmisor.Open;
@@ -413,10 +539,14 @@ begin
           ADODtStCFDIImpuestos.Next;
         end;
         RutaFactura := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
-        if DirectoryExists (RutaFactura) then
+        if not DirectoryExists (RutaFactura) then
            ForceDirectories(RutaFactura);
+        if  DirectoryExists (RutaFactura) then
+        begin
         if GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI,EsProduccion) then
         begin
+          XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
+          RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura); //Dic 21/15  //verificar si sirve ese Formato
           //Actualizar datos de Timbre en CFDI
           adodsMaster.Edit;
           adodsMasterUUID_TB.AsString:=  TimbreCFDI.UUID;
@@ -425,10 +555,19 @@ begin
           adodsMasterSello.AsString:=TimbreCFDI.SelloEmisor; //Verificar
           adodsMasterCertificadoSAT_TB.AsString:=   TimbreCFDI.NoCertificadoSAT;
           adodsMasterFechaTimbrado_TB.AsDateTime:=ConvierteFechaT_DT(TimbreCFDI.FechaTimbre);
+          adodsMasterCadenaOriginal.AsString:= TimbreCFDI.CadenaTimbre ; // Dic 23/15
          // adodsMaster
+
+          adodsMasterIdDocumentoXML.Value := CargaXMLPDFaFS(RutaFactura,'Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
+          adodsMasterIdDocumentoPDF.Value := CargaXMLPDFaFS(RutaPDF,'Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
           adodsMaster.Post;
 
+          if FileExists(RutaPDF) then
+            ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
         end;
+        end
+        else
+          application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
 
 
 
@@ -440,11 +579,48 @@ begin
 
 end;
 
+procedure TDMFacturas.ActRegeneraPDFExecute(Sender: TObject);
+var      //Dic 22/15
+  IdDoc:Integer;
+  nombreArchi:TfileName;
+  XMLpdf: TdmodXMLtoPDF;
+begin
+  inherited;
+    //Sacar ID del Archivo XML del Master
+  idDoc:=adodsMasteridDocumentoXML.asInteger;
+  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+  adoDSDocumento.filtered:=True;
+  adoDSDocumento.open;
+  nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+  readFile( nombreArchi); //sacaxml
+  //nombreArchi:= ChangeFileExt(nombreArchi, fePDF);
+  //nombreArchi:=ExtractfilePath(Application.exename)+nombreArchi;
+  //Se manda el nombre del XML
+  XMLpdf := TdmodXMLtoPDF.Create(Self);
+  try
+     XMLpdf.FileIMG := nombreArchi + fePNG;
+     nombreArchi:=XMLpdf.GeneratePDFFile(nombreArchi);
+  finally
+    XMLpdf.Free;
+  end;
+
+
+  adoDSDocumento.filter:='';
+  adoDSDocumento.filtered:=false;
+
+  ShellExecute(application.Handle, 'open', PChar(nombreArchi), nil, nil, SW_SHOWNORMAL);
+
+  //Filtrar con ID enDocumento
+  //Sacar Documento
+  //Aun no guarda de nuevo.. (Verificar)
+end;
+
 function TDMFacturas.ConvierteFechaT_DT(Texto:String):TDateTime;  //Habilitada Dic 9/15
 var                      //Texto Viene en formato 'yyyy-mm-dd''T''hh:nn:ss'
  anio, mes, dia:word;
  tiempo:string;
- dato, dato2:TDatetime;
+ dato2:TDatetime;
  t:Ttime;
 begin
    anio:= STRToint(copy(texto,1,4)) ;
@@ -487,68 +663,39 @@ begin
   DataSet.FieldByName('Tasa').ASFloat:=16;
 end;
 
+procedure TDMFacturas.ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
+begin        //Usada en los dos
+  inherited;
+  dataset.FieldByName('DirCompleta').AsString:= dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString+
+                                                '. '+dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
+                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString;
+end;
+
 procedure TDMFacturas.ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  DataSet.FieldByName('IDUnidadMedida').AsInteger :=1 ;
+// Aca no se inserta  DataSet.FieldByName('IDUnidadMedida').AsInteger :=1 ;
 end;
 
 procedure TDMFacturas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  ADODtStPersonaEmisor.Open;
 
+  ADODtStCFDIConceptos.open;
+  ADODtStCFDIImpuestos.Open; //Dic 21/15
 
   gGridEditForm:= TfrmFacturasFormEdit.Create(Self);
 //  adodsMaster.Parameters.ParamByName('TipoDocto').Value:=FTipoDoc;
   gGridEditForm.DataSet := adodsMaster;
 
   TfrmFacturasFormEdit(gGridEditForm).FacturarCtas := actProcesaFactura;
-  //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
-  adodsMaster.Open;
-  ADODtStOrdenSalida.Open;
-  ADODtStOrdenSalidaItem.Open;
+  TfrmFacturasFormEdit(gGridEditForm).ActPreFacturas := ActCrearPrefacturas;
+  TfrmFacturasFormEdit(gGridEditForm).ActRegPdf := ActRegeneraPDF; //Dic 22/15
+  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
+  TfrmFacturasFormEdit(gGridEditForm).DSDatosCliente.DataSet:=ADODtStDireccionesCliente;
+//  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
 
-  ADODtStCFDIConceptos.Open;
-  ADODtStCFDIImpuestos.Open;
-
-  while not ADODtStOrdenSalida.eof do
-  begin
-
-    adodsMaster.Insert;                                   //Verificar si se coloca autopmatica por la relacion
-    adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
-    adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
-    adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat;
-
-    adodsMaster.FieldByName('TotalImpuestoTrasladado').AsFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
-//    adodsMaster.FieldByName('IDPersonaEmisor').AsInteger:=SacarEmisor;  //ADODtStOrdenSalida.FieldByName('Total').AsFloat;
-
-    adodsMaster.FieldByName('IDPersonaReceptor').AsInteger := ADODtStOrdenSalida.FieldByName('IDPersonaCliente').ASInteger;
-    adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetPagoCliente').ASInteger;
-                                                          //Verificar que tenga algo
-//    adodsMaster.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').ASInteger;
-    adodsMaster.Post;
-    ADODtStCFDIImpuestos.Insert;
-   // ADODtStCFDIImpuestos.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').AsInteger; //Verificar asociacion CFDI
-    ADODtStCFDIImpuestos.FieldByName('Importe').asFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
-    ADODtStCFDIImpuestos.Post;
-
-
-    while(not ADODtStOrdenSalidaItem.eof) do
-    begin
-      ADODtStCFDIConceptos.Insert;
-
-      ADODtStCFDIConceptos.FieldByName('IDOrdenSalidaItem').AsInteger := ADODtStOrdenSalidaItem.FieldByName('IDOrdenSalidaItem').AsInteger;
-      ADODtStCFDIConceptos.FieldByName('IDProducto').AsInteger := ADODtStOrdenSalidaItem.FieldByName('IDProducto').AsInteger;
-      ADODtStCFDIConceptos.FieldByName('Cantidad').AsFloat := ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
-      ADODtStCFDIConceptos.FieldByName('Descripcion').asString := ADODtStOrdenSalidaItem.FieldByName('Producto').asString;
-      ADODtStCFDIConceptos.FieldByName('NoIdentifica').ASString := ADODtStOrdenSalidaItem.FieldByName('ClaveProducto').ASString;
-
-
-      ADODtStCFDIConceptos.Post;
-      ADODtStOrdenSalidaItem.Next;
-    end;
-    ADODtStOrdenSalida.Next;
-  end;
 end;
 
 procedure TDMFacturas.ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
@@ -583,6 +730,79 @@ begin
   end;
 
 
+end;
+//Dic 21/15 Desde
+procedure TDMFacturas.actXMLaPDFExecute(Sender: TObject);
+var
+  XMLpdf: TdmodXMLtoPDF;
+begin
+  inherited;
+  XMLpdf := TdmodXMLtoPDF.Create(Self);
+  try
+    XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm'; //'FacturaCFDI.rtm';
+    XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
+    XMLpdf.ModifyDocument;
+//    XMLpdf.GeneratePDFFile(ArchivoRuta);
+  finally
+    XMLpdf.Free;
+  end;
+end;
+
+function TDMFacturas.CargaXMLPDFaFS(Archivo: string; Describe : string):integer;
+var
+  FacturaXML : TFileName;
+begin
+  FacturaXML := Archivo;
+  adodsDocumento.Open;
+  adodsDocumento.Insert;
+  adodsDocumentoIdDocumentoTipo.Value := 2;
+  adodsDocumentoIdDocumentoClase.Value := 1;
+  adodsDocumentoDescripcion.AsString := Describe;
+  adodsDocumentoNombreArchivo.AsString := ExtractFileName(Archivo);
+  SubirXMLPDFaFS(FacturaXML);
+  adodsDocumento.Post;
+  Result := adodsDocumentoIdDocumento.Value;
+  adodsDocumento.Close;
+end;
+
+procedure TDMFacturas.SubirXMLPDFaFS(FileName: TFileName);
+var
+  Blob: TStream;
+  Fs: TFileStream;
+begin
+  Blob:= adodsUpdate.CreateBlobStream(adodsDocumentoArchivo, bmWrite);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+    try
+      Blob.CopyFrom(Fs, Fs.Size)
+    finally
+      Fs.Free
+    end;
+  finally
+    Blob.Free
+  end;
+end;
+
+//Dic 21/15 Hasta
+
+procedure TDMFacturas.ReadFile(FileName: TFileName); //Dic 21/15
+var
+  Blob : TStream;
+  Fs: TFileStream;
+begin
+  Blob := adodsDocumento.CreateBlobStream(adodsDocumentoArchivo, bmRead);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs := TFileStream.Create(FileName, fmCreate);
+    try
+      Fs.CopyFrom(Blob, Blob.Size);
+    finally
+      Fs.Free;
+    end;
+  finally
+    Blob.Free
+  end;
 end;
 
 end.

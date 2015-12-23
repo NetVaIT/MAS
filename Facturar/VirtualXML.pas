@@ -337,7 +337,8 @@ begin
     PWideChar(TFEReglamentacion.ComoMoneda(TotalImpuestosRetenidos)));
 
   // VirtualXML_ProcesaDocumento(hXml, 'aaqm610917qja.cer', 'aaqm610917qja_1011180955s.key', '12345678a', pansichar(NomArchi));
-   RutaCompleta := Ruta + string(Documento.Emisor.RFC) + string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;
+                                //Modificado porque aca interesa el receptor Dic 21/15
+   RutaCompleta := Ruta + string(Documento.Receptor.RFC) +'_'+ string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;
    ArchivoXML := RutaCompleta;
    Ruta := RutaCompleta;
   // ArchivoXML:= strDir + PathDelim + string(Documento.Emisor.RFC) + string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;

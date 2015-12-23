@@ -8,45 +8,55 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 933
+    ExplicitWidth = 933
   end
   inherited splDetail2: TSplitter
     Width = 933
+    ExplicitWidth = 933
   end
   inherited splDetail1: TSplitter
     Width = 933
+    ExplicitWidth = 933
   end
   inherited pnlClose: TPanel
     Width = 933
+    ExplicitWidth = 933
   end
   inherited pnlDetail3: TPanel
     Width = 933
+    ExplicitWidth = 933
   end
   inherited pnlDetail2: TPanel
     Width = 933
+    ExplicitWidth = 933
   end
   inherited pnlDetail1: TPanel
     Width = 933
+    ExplicitWidth = 933
   end
   inherited pcMain: TcxPageControl
     Width = 933
+    ExplicitWidth = 933
     ClientRectRight = 932
     inherited tsGeneral: TcxTabSheet
+      ExplicitWidth = 931
       inherited cxScrollBox1: TcxScrollBox
         Width = 931
+        ExplicitWidth = 931
         inherited tbarData: TToolBar
           Width = 929
+          ExplicitWidth = 929
         end
         inherited pnlMaster: TPanel
           Width = 929
+          ExplicitWidth = 929
           object Panel4: TPanel
             Left = 0
             Top = 0
             Width = 929
-            Height = 265
+            Height = 361
             Align = alTop
             TabOrder = 0
-            ExplicitTop = 8
-            ExplicitWidth = 746
             object Label10: TLabel
               Left = 31
               Top = 16
@@ -77,7 +87,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object Label16: TLabel
               Left = 63
-              Top = 221
+              Top = 299
               Width = 23
               Height = 13
               Caption = 'IVA:'
@@ -90,7 +100,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object Label17: TLabel
               Left = 33
-              Top = 202
+              Top = 280
               Width = 53
               Height = 13
               Caption = 'SubTotal:'
@@ -103,7 +113,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object Label18: TLabel
               Left = 54
-              Top = 241
+              Top = 319
               Width = 32
               Height = 13
               Caption = 'Total:'
@@ -137,8 +147,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataSource = DataSource
             end
             object LblReviso: TLabel
-              Left = 35
-              Top = 105
+              Left = 34
+              Top = 124
               Width = 41
               Height = 13
               Caption = 'Revis'#243':'
@@ -150,8 +160,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               ParentFont = False
             end
             object LblEmpaco: TLabel
-              Left = 35
-              Top = 154
+              Left = 33
+              Top = 218
               Width = 47
               Height = 13
               Caption = 'Empac'#243':'
@@ -163,8 +173,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               ParentFont = False
             end
             object DBTxtQuienRevisa: TDBText
-              Left = 115
-              Top = 105
+              Left = 114
+              Top = 124
               Width = 89
               Height = 13
               AutoSize = True
@@ -172,8 +182,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataSource = DataSource
             end
             object DBTxtQuienEmpaca: TDBText
-              Left = 115
-              Top = 152
+              Left = 113
+              Top = 218
               Width = 94
               Height = 13
               AutoSize = True
@@ -213,7 +223,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object DBTxtSubtotal: TDBText
               Left = 91
-              Top = 202
+              Top = 280
               Width = 121
               Height = 17
               DataField = 'Subtotal'
@@ -221,7 +231,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object DBTxtIVA: TDBText
               Left = 91
-              Top = 221
+              Top = 299
               Width = 121
               Height = 17
               DataField = 'IVA'
@@ -229,10 +239,32 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object DBTxtTotal: TDBText
               Left = 91
-              Top = 242
+              Top = 320
               Width = 121
               Height = 17
               DataField = 'Total'
+              DataSource = DataSource
+            end
+            object LblAutorizo: TLabel
+              Left = 33
+              Top = 172
+              Width = 51
+              Height = 13
+              Caption = 'Autoriz'#243':'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object DBText3: TDBText
+              Left = 113
+              Top = 172
+              Width = 41
+              Height = 13
+              AutoSize = True
+              DataField = 'PersonaAutoriza'
               DataSource = DataSource
             end
             object cxDBDateEdit2: TcxDBDateEdit
@@ -253,10 +285,10 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               TabOrder = 1
             end
             object PnlRecolecta: TPanel
-              Left = -1
-              Top = 59
-              Width = 690
-              Height = 63
+              Left = 0
+              Top = 61
+              Width = 684
+              Height = 50
               BevelOuter = bvNone
               TabOrder = 2
               Visible = False
@@ -276,7 +308,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
               object Label13: TLabel
                 Left = 34
-                Top = 2
+                Top = 1
                 Width = 56
                 Height = 13
                 Caption = 'Recolecta'
@@ -356,7 +388,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object BtBtnRecolecta: TBitBtn
               Tag = 1
-              Left = 32
+              Left = 31
               Top = 74
               Width = 103
               Height = 25
@@ -394,8 +426,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               OnClick = BtBtnIniciarProceso
             end
             object PnlRevisa: TPanel
-              Left = -1
-              Top = 106
+              Left = 0
+              Top = 108
               Width = 684
               Height = 50
               BevelOuter = bvNone
@@ -416,7 +448,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
               object Label20: TLabel
                 Left = 33
-                Top = 1
+                Top = 2
                 Width = 38
                 Height = 13
                 Caption = 'Revisa'
@@ -495,7 +527,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object BtBtnRevisa: TBitBtn
               Tag = 2
-              Left = 33
+              Left = 31
               Top = 122
               Width = 103
               Height = 25
@@ -532,8 +564,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object PnlEmpaca: TPanel
               Left = 0
-              Top = 155
-              Width = 689
+              Top = 204
+              Width = 684
               Height = 50
               BevelOuter = bvNone
               TabOrder = 6
@@ -573,7 +605,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 TabOrder = 0
               end
               object BitBtn3: TBitBtn
-                Tag = 3
+                Tag = 4
                 Left = 498
                 Top = 15
                 Width = 83
@@ -598,7 +630,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
               object DBLkupCmbBxEmpaca: TDBLookupComboBox
                 Left = 31
-                Top = 15
+                Top = 16
                 Width = 283
                 Height = 21
                 DataField = 'PersonaEmpaca'
@@ -606,7 +638,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 TabOrder = 2
               end
               object BtBtnCancelaProc: TBitBtn
-                Tag = 3
+                Tag = 4
                 Left = 597
                 Top = 15
                 Width = 83
@@ -631,9 +663,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
             end
             object BtBtnEmpaca: TBitBtn
-              Tag = 3
-              Left = 31
-              Top = 167
+              Tag = 4
+              Left = 30
+              Top = 219
               Width = 99
               Height = 25
               Caption = 'Empacar'
@@ -718,9 +750,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               OnClick = BtBtnFinGenProcesoClick
             end
             object BtBtnFinEmpaque: TBitBtn
-              Tag = 3
-              Left = 341
-              Top = 168
+              Tag = 4
+              Left = 342
+              Top = 218
               Width = 97
               Height = 25
               Caption = 'Fin empaque'
@@ -742,17 +774,139 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Visible = False
               OnClick = BtBtnFinGenProcesoClick
             end
+            object PnlAutorizaYFactura: TPanel
+              Left = 0
+              Top = 156
+              Width = 684
+              Height = 50
+              BevelOuter = bvNone
+              TabOrder = 11
+              Visible = False
+              object Label3: TLabel
+                Left = 320
+                Top = 0
+                Width = 65
+                Height = 13
+                Caption = 'Contrase'#241'a'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object Label4: TLabel
+                Left = 33
+                Top = 2
+                Width = 48
+                Height = 13
+                Caption = 'Autoriza'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object EdtContraAutoriza: TEdit
+                Left = 325
+                Top = 19
+                Width = 153
+                Height = 21
+                PasswordChar = '*'
+                TabOrder = 0
+              end
+              object BitBtn5: TBitBtn
+                Tag = 3
+                Left = 498
+                Top = 15
+                Width = 83
+                Height = 25
+                Caption = 'Aceptar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+                  555555555555555555555555555555555555555555FF55555555555559055555
+                  55555555577FF5555555555599905555555555557777F5555555555599905555
+                  555555557777FF5555555559999905555555555777777F555555559999990555
+                  5555557777777FF5555557990599905555555777757777F55555790555599055
+                  55557775555777FF5555555555599905555555555557777F5555555555559905
+                  555555555555777FF5555555555559905555555555555777FF55555555555579
+                  05555555555555777FF5555555555557905555555555555777FF555555555555
+                  5990555555555555577755555555555555555555555555555555}
+                NumGlyphs = 2
+                TabOrder = 1
+                OnClick = BtBtnAceptaProcesosClick
+              end
+              object DBLkupCmbBxAutoriza: TDBLookupComboBox
+                Left = 33
+                Top = 19
+                Width = 282
+                Height = 21
+                DataField = 'PersonaAutoriza'
+                DataSource = DataSource
+                TabOrder = 2
+              end
+              object BitBtn6: TBitBtn
+                Tag = 3
+                Left = 597
+                Top = 15
+                Width = 83
+                Height = 25
+                Caption = 'Cancelar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                  999333777FF37FF377733339993000399933333777F777F77733333399970799
+                  93333333777F7377733333333999399933333333377737773333333333990993
+                  3333333333737F73333333333331013333333333333777FF3333333333910193
+                  333333333337773FF3333333399000993333333337377737FF33333399900099
+                  93333333773777377FF333399930003999333337773777F777FF339993370733
+                  9993337773337333777333333333333333333333333333333333333333333333
+                  3333333333333333333333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 3
+                OnClick = BtBtnCancelaProcClick
+              end
+            end
+            object BtBtnAutoriza: TBitBtn
+              Tag = 3
+              Left = 31
+              Top = 171
+              Width = 99
+              Height = 25
+              Caption = 'Autorizar'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                8000008000000080800080000000800080008080000080808000C0C0C0000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FF7FFFFF07333337F3FF33337F333330F767FFFF
+                07333337FF77F3337F33333076667FFF07333337F7737F337F33333066F667FF
+                07333FF7F33337F37FFFBBB06FFF667F0BB37777F333333F777F3BB0FFFFF667
+                0BBB3777F3333FFF77773330FFFF000003333337F333777773333330FFFF0FF0
+                33333337F3337F37F3333330FFFF0F0B33333337F3337F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              TabOrder = 12
+              OnClick = BtBtnIniciarProceso
+            end
           end
           object Panel3: TPanel
             Left = 0
-            Top = 265
+            Top = 361
             Width = 929
             Height = 153
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitTop = 225
-            ExplicitWidth = 895
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -760,7 +914,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Height = 29
               Images = ilAction
               TabOrder = 0
-              ExplicitWidth = 895
               object ToolButton31: TToolButton
                 Left = 0
                 Top = 0
@@ -915,7 +1068,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1118,7 +1271,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C002600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1923,7 +2076,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   object DtSrcOrdenSalItem: TDataSource
     AutoEdit = False
     DataSet = DMOrdenesSalidas.ADODtStOrdenSalidaItem
-    Left = 722
-    Top = 264
+    Left = 866
+    Top = 272
   end
 end

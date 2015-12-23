@@ -4,7 +4,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 960
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -40,10 +39,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     ExplicitWidth = 960
     ClientRectRight = 959
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
       ExplicitWidth = 958
-      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 958
         ExplicitWidth = 958
@@ -56,7 +52,7 @@ inherited frmCotizaciones: TfrmCotizaciones
           ExplicitWidth = 956
           object pnlDetail: TPanel
             Left = 0
-            Top = 129
+            Top = 152
             Width = 956
             Height = 177
             Align = alTop
@@ -217,7 +213,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 item
                   Expanded = False
                   FieldName = 'Importe'
-                  Width = 64
                   Visible = True
                 end>
             end
@@ -226,7 +221,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Left = 0
             Top = 0
             Width = 956
-            Height = 129
+            Height = 152
             Align = alTop
             TabOrder = 1
             object Label1: TLabel
@@ -237,63 +232,71 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'FechaRegistro'
             end
             object Label5: TLabel
-              Left = 441
-              Top = 72
+              Left = 442
+              Top = 106
               Width = 59
               Height = 13
               Caption = 'VigenciaDias'
               FocusControl = cxDBSpinEdit1
             end
             object Label7: TLabel
-              Left = 193
-              Top = 16
+              Left = 40
+              Top = 60
               Width = 33
               Height = 13
               Caption = 'Cliente'
               FocusControl = DBLookupComboBox1
             end
             object Label8: TLabel
-              Left = 40
-              Top = 72
+              Left = 41
+              Top = 106
               Width = 38
               Height = 13
               Caption = 'Moneda'
               FocusControl = DBLookupComboBox2
             end
             object Label9: TLabel
-              Left = 204
-              Top = 72
+              Left = 205
+              Top = 106
               Width = 36
               Height = 13
               Caption = 'Estatus'
               FocusControl = DBLookupComboBox3
             end
             object Label10: TLabel
-              Left = 521
-              Top = 16
+              Left = 231
+              Top = 17
               Width = 74
               Height = 13
               Caption = 'TipoDocumento'
               FocusControl = DBLookupComboBox4
             end
             object SpdBtnCambioEstatus: TSpeedButton
-              Left = 775
-              Top = 35
+              Left = 455
+              Top = 36
               Width = 122
               Height = 22
               OnClick = SpdBtnCambioEstatusClick
             end
+            object LblDirCliente: TLabel
+              Left = 370
+              Top = 62
+              Width = 79
+              Height = 13
+              Caption = 'Direcci'#243'n Cliente'
+              FocusControl = DBLkpCmbBxDirCliente
+            end
             object cxDBSpinEdit1: TcxDBSpinEdit
-              Left = 441
-              Top = 91
+              Left = 442
+              Top = 125
               DataBinding.DataField = 'VigenciaDias'
               DataBinding.DataSource = DataSource
               TabOrder = 0
               Width = 121
             end
             object DBLookupComboBox1: TDBLookupComboBox
-              Left = 193
-              Top = 35
+              Left = 40
+              Top = 77
               Width = 304
               Height = 21
               DataField = 'Cliente'
@@ -301,8 +304,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 1
             end
             object DBLookupComboBox2: TDBLookupComboBox
-              Left = 40
-              Top = 91
+              Left = 41
+              Top = 125
               Width = 135
               Height = 21
               DataField = 'Moneda'
@@ -310,8 +313,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 2
             end
             object DBLookupComboBox3: TDBLookupComboBox
-              Left = 204
-              Top = 91
+              Left = 205
+              Top = 125
               Width = 209
               Height = 21
               DataField = 'Estatus'
@@ -319,8 +322,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 3
             end
             object DBLookupComboBox4: TDBLookupComboBox
-              Left = 521
-              Top = 35
+              Left = 231
+              Top = 36
               Width = 184
               Height = 21
               DataField = 'TipoDocumento'
@@ -336,17 +339,26 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 121
             end
             object cxDBLabel1: TcxDBLabel
-              Left = 521
-              Top = 35
+              Left = 231
+              Top = 36
               DataBinding.DataField = 'TipoDocumento'
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 184
             end
+            object DBLkpCmbBxDirCliente: TDBLookupComboBox
+              Left = 370
+              Top = 77
+              Width = 439
+              Height = 21
+              DataField = 'Direccioncliente'
+              DataSource = DataSource
+              TabOrder = 7
+            end
           end
           object Panel1: TPanel
             Left = 0
-            Top = 306
+            Top = 329
             Width = 956
             Height = 111
             Align = alTop
@@ -426,7 +438,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -599,35 +611,40 @@ inherited frmCotizaciones: TfrmCotizaciones
       Caption = '&Inserta'
       Hint = 'Inserta'
       ImageIndex = 17
+      DataSource = DataSourceDetail
     end
     object DatasetDetalleDelete: TDataSetDelete
       Category = 'DatasetDetalle'
       Caption = '&Eliminar'
       Hint = 'Eliminar'
       ImageIndex = 18
+      DataSource = DataSourceDetail
     end
     object DatasetDetalleEdit: TDataSetEdit
       Category = 'DatasetDetalle'
       Caption = '&Editar'
       Hint = 'Editar'
       ImageIndex = 19
+      DataSource = DataSourceDetail
     end
     object DatasetDetallePost: TDataSetPost
       Category = 'DatasetDetalle'
       Caption = '&Guardar'
       Hint = 'Guardar'
       ImageIndex = 20
+      DataSource = DataSourceDetail
     end
     object DatasetDetalleCancel: TDataSetCancel
       Category = 'DatasetDetalle'
       Caption = '&Cancelar'
       Hint = 'Cancelar'
       ImageIndex = 21
+      DataSource = DataSourceDetail
     end
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C002700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

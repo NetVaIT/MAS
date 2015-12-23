@@ -94,7 +94,10 @@ uses
   VirtualXML in 'Facturar\VirtualXML.pas',
   XMLtoPDFDmod in 'Facturar\XMLtoPDFDmod.pas' {dmodXMLtoPDF: TDataModule},
   _StandarGFormEdit in '..\Standard\_StandarGFormEdit.pas' {_frmStandarGFormEdit},
-  _StandarGFormGrid in '..\Standard\_StandarGFormGrid.pas' {_frmStandarGFormGrid};
+  _StandarGFormGrid in '..\Standard\_StandarGFormGrid.pas' {_frmStandarGFormGrid},
+  PersonasCSDEdit in 'Catalogos\PersonasCSDEdit.pas' {FrmPersonasCSDEdit},
+  PersonasCSDForm in 'Catalogos\PersonasCSDForm.pas' {frmPersonasCSDFormGrid},
+  PersonasCSDDM in 'Catalogos\PersonasCSDDM.pas' {dmPersonasCSD: TDataModule};
 
 {$R *.res}
 

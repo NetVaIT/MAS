@@ -1,18 +1,20 @@
 inherited frmMain: TfrmMain
   Caption = 'MAS -Principal'
-  ClientWidth = 742
+  ClientWidth = 936
   Font.Height = -32
-  ExplicitWidth = 758
+  ExplicitWidth = 952
+  ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
-    Width = 742
+    Width = 936
     ExplicitWidth = 742
     inherited dxRibbon1Tab1: TdxRibbonTab
       Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -27,7 +29,6 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
-      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -55,11 +56,11 @@ inherited frmMain: TfrmMain
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
-    Width = 742
+    Width = 936
     ExplicitWidth = 742
   end
   inherited pnlMain: TPanel
-    Width = 742
+    Width = 936
     ExplicitWidth = 742
   end
   inherited dxBarManager: TdxBarManager
@@ -123,6 +124,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton10'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton17'
         end>
       OneOnRow = True
       Row = 0
@@ -224,6 +229,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton11: TdxBarLargeButton
       Action = ActOrdenSalida
+      Category = 0
+    end
+    object dxBarLargeButton17: TdxBarLargeButton
+      Action = ActEmisor
       Category = 0
     end
   end
@@ -338,6 +347,13 @@ inherited frmMain: TfrmMain
       Category = 'Ventas'
       Caption = 'Autoriza Factura'
       ImageIndex = 33
+      OnExecute = actCatalogoExecute
+    end
+    object ActEmisor: TAction
+      Tag = 11
+      Category = 'Catalogo'
+      Caption = 'Emisor'
+      ImageIndex = 11
       OnExecute = actCatalogoExecute
     end
   end
