@@ -207,7 +207,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 224
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -219,7 +218,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsClientes: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -245,7 +243,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -268,7 +265,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -285,7 +281,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -537,7 +532,7 @@ inherited dmCotizaciones: TdmCotizaciones
       'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
-    MasterFields = 'IdPersona'
+    MasterFields = 'IDPersona'
     Parameters = <
       item
         Name = 'IDPersona'
@@ -605,6 +600,144 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 100
     end
     object ADODtStDireccionesClienteDirCompleta: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DirCompleta'
+      Size = 300
+      Calculated = True
+    end
+  end
+  object ADODtStProductosKardex: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from ProductosKardex'
+    Parameters = <>
+    Left = 64
+    Top = 553
+    object ADODtStProductosKardexIdProductosKardex: TAutoIncField
+      FieldName = 'IdProductosKardex'
+      ReadOnly = True
+    end
+    object ADODtStProductosKardexIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+    end
+    object ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField
+      FieldName = 'IdOrdenSalidaItem'
+    end
+    object ADODtStProductosKardexIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object ADODtStProductosKardexIdSeccion: TIntegerField
+      FieldName = 'IdSeccion'
+    end
+    object ADODtStProductosKardexReferenciaEspacio: TIntegerField
+      FieldName = 'ReferenciaEspacio'
+    end
+    object ADODtStProductosKardexContenedor: TStringField
+      FieldName = 'Contenedor'
+      Size = 30
+    end
+    object ADODtStProductosKardexFecha: TWideStringField
+      FieldName = 'Fecha'
+      Size = 10
+    end
+    object ADODtStProductosKardexMovimiento: TStringField
+      FieldName = 'Movimiento'
+      Size = 1
+    end
+    object ADODtStProductosKardexCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object ADODtStProductosKardexImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object ADODtStDireccAuxiliar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = ADODtStDireccionesClienteCalcFields
+    CommandText = 
+      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
+      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
+      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
+      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
+      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
+      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
+      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
+      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
+      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
+      'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+    Parameters = <
+      item
+        Name = 'IDPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 448
+    Top = 336
+    object AutoIncField1: TAutoIncField
+      FieldName = 'IdPersonaDomicilio'
+      ReadOnly = True
+    end
+    object IntegerField1: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'IdDomicilio'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'IdDomicilioTipo'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'Identificador'
+    end
+    object BooleanField1: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+    object StringField1: TStringField
+      FieldName = 'Calle'
+      Size = 50
+    end
+    object StringField2: TStringField
+      FieldName = 'NoExterior'
+      Size = 10
+    end
+    object StringField3: TStringField
+      FieldName = 'NoInterior'
+      Size = 10
+    end
+    object StringField4: TStringField
+      FieldName = 'Colonia'
+      Size = 50
+    end
+    object StringField5: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object StringField6: TStringField
+      FieldName = 'Municipio'
+      Size = 50
+    end
+    object StringField7: TStringField
+      FieldName = 'Poblacion'
+      Size = 150
+    end
+    object StringField8: TStringField
+      FieldName = 'Estado'
+      Size = 50
+    end
+    object StringField9: TStringField
+      FieldName = 'Pais'
+      Size = 100
+    end
+    object StringField10: TStringField
       FieldKind = fkCalculated
       FieldName = 'DirCompleta'
       Size = 300

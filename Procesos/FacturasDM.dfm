@@ -16,7 +16,7 @@ inherited DMFacturas: TDMFacturas
       'o, TotalImpuestoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, ' +
       'Observaciones, '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_' +
       'TB, '#13#10'SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB '#13#10' from C' +
-      'FDI Where idCFDIEstatus=1'
+      'FDI '
     Left = 48
     Top = 24
     object adodsMasterIdCFDI: TLargeintField
@@ -244,6 +244,10 @@ inherited DMFacturas: TDMFacturas
     object ActRegeneraPDF: TAction
       Caption = 'ActRegeneraPDF'
       OnExecute = ActRegeneraPDFExecute
+    end
+    object ActBuscar: TAction
+      Caption = 'ActBuscar'
+      OnExecute = ActBuscarExecute
     end
   end
   object DSMaster: TDataSource
@@ -1042,8 +1046,8 @@ inherited DMFacturas: TDMFacturas
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IDDocumentoSalida'
     Parameters = <>
-    Left = 208
-    Top = 497
+    Left = 176
+    Top = 449
     object IntegerField1: TIntegerField
       FieldKind = fkLookup
       FieldName = 'IdPersonaCliente'
@@ -1284,5 +1288,63 @@ inherited DMFacturas: TDMFacturas
     object adodsDocumentoArchivo: TBlobField
       FieldName = 'Archivo'
     end
+  end
+  object ADODtStProductosKardex: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from ProductosKardex'
+    Parameters = <>
+    Left = 72
+    Top = 521
+    object ADODtStProductosKardexIdProductosKardex: TAutoIncField
+      FieldName = 'IdProductosKardex'
+      ReadOnly = True
+    end
+    object ADODtStProductosKardexIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+    end
+    object ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField
+      FieldName = 'IdOrdenSalidaItem'
+    end
+    object ADODtStProductosKardexIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object ADODtStProductosKardexIdSeccion: TIntegerField
+      FieldName = 'IdSeccion'
+    end
+    object ADODtStProductosKardexReferenciaEspacio: TIntegerField
+      FieldName = 'ReferenciaEspacio'
+    end
+    object ADODtStProductosKardexContenedor: TStringField
+      FieldName = 'Contenedor'
+      Size = 30
+    end
+    object ADODtStProductosKardexFecha: TWideStringField
+      FieldName = 'Fecha'
+      Size = 10
+    end
+    object ADODtStProductosKardexMovimiento: TStringField
+      FieldName = 'Movimiento'
+      Size = 1
+    end
+    object ADODtStProductosKardexCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object ADODtStProductosKardexImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object ADODtStInventario: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from Inventario'
+    Parameters = <>
+    Left = 304
+    Top = 529
   end
 end

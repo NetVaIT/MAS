@@ -8,13 +8,12 @@ inherited frmMain: TfrmMain
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
     Width = 936
-    ExplicitWidth = 742
+    ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
       Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -29,6 +28,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
+      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -57,11 +57,11 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 936
-    ExplicitWidth = 742
+    ExplicitWidth = 936
   end
   inherited pnlMain: TPanel
     Width = 936
-    ExplicitWidth = 742
+    ExplicitWidth = 936
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -142,7 +142,7 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 674
       FloatTop = 8
-      FloatClientWidth = 102
+      FloatClientWidth = 94
       FloatClientHeight = 216
       ItemLinks = <
         item
@@ -345,7 +345,7 @@ inherited frmMain: TfrmMain
     object actFacturacion: TAction
       Tag = 23
       Category = 'Ventas'
-      Caption = 'Autoriza Factura'
+      Caption = 'Facturas'
       ImageIndex = 33
       OnExecute = actCatalogoExecute
     end

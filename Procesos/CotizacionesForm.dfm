@@ -4,6 +4,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 960
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -39,7 +40,10 @@ inherited frmCotizaciones: TfrmCotizaciones
     ExplicitWidth = 960
     ClientRectRight = 959
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 958
+      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 958
         ExplicitWidth = 958
@@ -95,6 +99,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                 Left = 62
                 Top = 0
                 Action = DatasetDetalleDelete
+                OnClick = TlBtnBorraClick
               end
               object ToolButton6: TToolButton
                 Left = 85
@@ -295,13 +300,14 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 121
             end
             object DBLookupComboBox1: TDBLookupComboBox
-              Left = 40
-              Top = 77
+              Left = 41
+              Top = 79
               Width = 304
               Height = 21
               DataField = 'Cliente'
               DataSource = DataSource
               TabOrder = 1
+              OnClick = DBLookupComboBox1Click
             end
             object DBLookupComboBox2: TDBLookupComboBox
               Left = 41
@@ -354,6 +360,18 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataField = 'Direccioncliente'
               DataSource = DataSource
               TabOrder = 7
+            end
+            object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
+              Left = 370
+              Top = 77
+              Width = 439
+              Height = 21
+              DataField = 'IdDomicilioCliente'
+              DataSource = DataSource
+              KeyField = 'IdPersonaDomicilio'
+              ListField = 'DirCompleta'
+              ListSource = DSDireccioncliente
+              TabOrder = 8
             end
           end
           object Panel1: TPanel
@@ -434,11 +452,12 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
+    OnStateChange = DataSourceStateChange
     OnDataChange = DataSourceDataChange
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -644,7 +663,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C002780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1473,5 +1492,11 @@ inherited frmCotizaciones: TfrmCotizaciones
     OnStateChange = DataSourceDetailStateChange
     Left = 904
     Top = 192
+  end
+  object DSDireccioncliente: TDataSource
+    DataSet = dmCotizaciones.ADODtStDireccAuxiliar
+    OnStateChange = DataSourceDetailStateChange
+    Left = 856
+    Top = 128
   end
 end

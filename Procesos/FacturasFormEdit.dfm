@@ -4,6 +4,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 990
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -64,6 +65,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     ClientRectBottom = 591
     ClientRectRight = 989
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 988
       ExplicitHeight = 590
       inherited cxScrollBox1: TcxScrollBox
@@ -96,13 +99,20 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           ExplicitHeight = 563
           object Splitter1: TSplitter
             Left = 0
-            Top = 484
+            Top = 313
             Width = 986
-            Height = 3
+            Height = 2
             Cursor = crVSplit
             Align = alTop
-            ExplicitLeft = 8
-            ExplicitTop = 473
+          end
+          object Splitter2: TSplitter
+            Left = 0
+            Top = 485
+            Width = 986
+            Height = 2
+            Cursor = crVSplit
+            Align = alBottom
+            ExplicitTop = 482
           end
           object PnlEncabezado: TPanel
             Left = 0
@@ -170,7 +180,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 22
               Caption = 'Genera CFDI'
               Visible = False
-              OnClick = SpdBtnGenerarCFDIClick
             end
             object Label5: TLabel
               Left = 593
@@ -529,10 +538,10 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object Panel3: TPanel
             Left = 0
-            Top = 313
+            Top = 315
             Width = 986
-            Height = 171
-            Align = alTop
+            Height = 170
+            Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
             object ToolBar2: TToolBar
@@ -617,7 +626,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Left = 0
               Top = 29
               Width = 986
-              Height = 142
+              Height = 141
               Align = alClient
               DataSource = DSCFDIConceptos
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -692,7 +701,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Top = 487
             Width = 986
             Height = 76
-            Align = alClient
+            Align = alBottom
             TabOrder = 2
             object Label13: TLabel
               Left = 586
@@ -779,6 +788,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   end
   inherited DataSource: TDataSource
     DataSet = DMFacturas.adodsMaster
+    OnDataChange = DataSourceDataChange
     Left = 750
     Top = 0
   end
@@ -786,7 +796,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -996,7 +1006,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011800C002880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -111,6 +111,36 @@ type
     ADODtStDireccionesClienteDirCompleta: TStringField;
     adodsMasterDireccioncliente: TStringField;
     ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField;
+    ADODtStProductosKardex: TADODataSet;
+    ADODtStProductosKardexIdProductosKardex: TAutoIncField;
+    ADODtStProductosKardexIdProducto: TIntegerField;
+    ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
+    ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
+    ADODtStProductosKardexIdMoneda: TIntegerField;
+    ADODtStProductosKardexIdSeccion: TIntegerField;
+    ADODtStProductosKardexReferenciaEspacio: TIntegerField;
+    ADODtStProductosKardexContenedor: TStringField;
+    ADODtStProductosKardexFecha: TWideStringField;
+    ADODtStProductosKardexMovimiento: TStringField;
+    ADODtStProductosKardexCantidad: TFloatField;
+    ADODtStProductosKardexImporte: TFMTBCDField;
+    ADODtStDireccAuxiliar: TADODataSet;
+    AutoIncField1: TAutoIncField;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    IntegerField4: TIntegerField;
+    BooleanField1: TBooleanField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    StringField6: TStringField;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    StringField9: TStringField;
+    StringField10: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -150,11 +180,13 @@ begin
   if CalcularTotales(dataset.fieldbyname('IdDocumentoSalida').asInteger,'IdDocumentoSalida','Importe',
                      'DocumentosSalidasDetalles',PIVA,MontoIVA,SubTotal,Total) then
   begin
-    ADodsMaster.edit;
-    ADodsMaster.FieldByName('SubTotal').AsFloat:=  SubTotal;
-    ADodsMaster.FieldByName('IVA').AsFloat:=  MontoIva;
-    ADodsMaster.FieldByName('Total').AsFloat:=  Total;
-    ADodsMaster.Post;
+    adoQryauxiliar.Close;
+    TAdoquery(AdoQryAuxiliar).SQL.Clear;
+    TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE DocumentosSalidas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
+                                    +' WHERE IDDocumentoSalida= '+intToStr(dataset.fieldbyname('IdDocumentoSalida').asInteger));
+    if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
+       ADodsMaster.Refresh;
+  //Se cambio mecanismo de actualizacion .Ene 11/16
   end;
 end;
 

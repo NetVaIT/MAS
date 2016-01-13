@@ -89,6 +89,19 @@ type
     adodsMasterFechaAutoriza: TDateTimeField;
     adodsMasterPersonaAutoriza: TStringField;
     adodsMasterClaveUAutoriza: TStringField;
+    ADODtStProductosKardex: TADODataSet;
+    ADODtStProductosKardexIdProductosKardex: TAutoIncField;
+    ADODtStProductosKardexIdProducto: TIntegerField;
+    ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
+    ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
+    ADODtStProductosKardexIdMoneda: TIntegerField;
+    ADODtStProductosKardexIdSeccion: TIntegerField;
+    ADODtStProductosKardexReferenciaEspacio: TIntegerField;
+    ADODtStProductosKardexContenedor: TStringField;
+    ADODtStProductosKardexFecha: TWideStringField;
+    ADODtStProductosKardexMovimiento: TStringField;
+    ADODtStProductosKardexCantidad: TFloatField;
+    ADODtStProductosKardexImporte: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -116,6 +129,7 @@ procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
 var idDocSalida, IDDocItem:Integer;
 //completo:Boolean;
    Subtotal:Double;
+   Cant1, Cant2:Double; //Ene 11/16
 begin
   inherited;
   //Verificar si aca actualizar el item respectivo del detalle del documento
@@ -123,7 +137,9 @@ begin
   idDocSalida:=DataSet.FieldByName('IDOrdenSalida').AsInteger;
 //  completo:=DataSet.FieldByName('CantidadDespachada').AsFloat=DataSet.FieldByName('CantidadSolicitada').AsFloat;
    //Hay cambio, debe ser menor o igual
-
+  Cant1:=  DataSet.FieldByName('CantidadSolicitada').ASFloat;  //Ene 11/16
+  Cant2:=  DataSet.FieldByName('CantidadDespachada').AsFloat;  //Ene 11/16
+  Cant2:=Cant1-Cant2;//2 no puede ser mayor a 1 , ya controlado
   //Siempre actualizar
 
   ADOQryAuxiliar.Close;
@@ -143,6 +159,14 @@ begin
   adodsMaster.refresh; //OK
 
   if ajustar then
+  begin
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;                                                                             //Es la diferencia
+    ADOQryAuxiliar.SQL.Add('UPDATE DocumentosSalidasDetalles SET CantidadPendiente= CantidadPendiente+'+FloattoSTR(Cant2)
+                          +' where IDDocumentoSalidaDetalle ='+IntToStr(idDocItem));
+    ADOQryAuxiliar.ExecSQL;
+    ajustar:=False;
+  end;
   //Actualizar DocumentoSalidaItem
 end;
 

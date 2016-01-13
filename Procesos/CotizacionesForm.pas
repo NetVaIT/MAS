@@ -84,6 +84,8 @@ type
     DSQryBorrar: TDataSource;
     DBLkpCmbBxDirCliente: TDBLookupComboBox;
     LblDirCliente: TLabel;
+    DSDireccioncliente: TDataSource;
+    DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnInsertaClick(Sender: TObject);
     procedure TlBtnEditaClick(Sender: TObject);
@@ -96,12 +98,14 @@ type
     procedure SpdBtnCambioEstatusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure DBLookupComboBox1Click(Sender: TObject);
+    procedure DataSourceStateChange(Sender: TObject);
   private
     FTipoDoc: Integer;
     procedure SetTipoDoc(const Value: Integer);
     function GenerarOrdenSalida(IDDocumento:Integer):Boolean;
     function RevisaFaltantes(IDDocumento:Integer):Boolean; //si se partio el pedido en varias ordenes de salida //Nov 23/15
-
+    function ActualizaPedidoXSurtirEnInventario(IdProducto:Integer; Cantidad:Double):Boolean;// Ene12/16
     { Private declarations }
   public
     { Public declarations }
@@ -116,11 +120,19 @@ implementation
 uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm,
   GeneraOrdenSalida;
 
+function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
+  IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
+begin
+//  dsQryBorrar Este sirve cambiando la consulta par que actualice lo reuqerido
+end;
+
 procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
      SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
+  pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and  SpdBtnCambioEstatus.Visible;  // ene 11/16
+
 end;
 
 procedure TfrmCotizaciones.DataSourceDetailStateChange(Sender: TObject);
@@ -134,6 +146,13 @@ begin
 
   //DBGrid1EditButtonClick(nil);
 
+
+end;
+
+procedure TfrmCotizaciones.DataSourceStateChange(Sender: TObject);
+begin
+  inherited;
+  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State=dsInsert) and(SpdBtnCambioEstatus.Enabled);
 
 end;
 
@@ -185,6 +204,18 @@ begin
   //ShowMessage('Entro al evento');
 end;
 
+procedure TfrmCotizaciones.DBLookupComboBox1Click(Sender: TObject);
+begin
+  inherited;
+  //Para que abra la de direcciones //ene11/2016
+   if DataSource.State=dsInsert then
+   begin
+     dsDireccionCliente.dataset.close;
+     TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
+     dsDireccionCliente.dataset.Open
+   end;
+end;
+
 procedure TfrmCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -198,17 +229,19 @@ end;
 procedure TfrmCotizaciones.FormShow(Sender: TObject);
 begin
   inherited;
-  LblDirCliente.Visible:=False;
-  DBLkpCmbBxDirCliente.Visible:=false;
+//  LblDirCliente.Visible:=False;
+//  DBLkpCmbBxDirCliente.Visible:=false;
   case FTipoDoc of
     1:SpdBtnCambioEstatus.Caption:='Acepta Cotización';
     2:begin
        SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
-       LblDirCliente.Visible:=True;
-       DBLkpCmbBxDirCliente.Visible:=True;
+
+//       LblDirCliente.Visible:=True;
+//       DBLkpCmbBxDirCliente.Visible:=True;
       end;
     3:SpdBtnCambioEstatus.Visible:=False;
   end;
+
 end;
 
 function TfrmCotizaciones.GenerarOrdenSalida(idDocumento: Integer): Boolean; //Nov 18/15
@@ -248,6 +281,16 @@ begin
                                                                    //Por que pude habae varias salidas por Pedido.
 
       DSOrdenSalidaItems.DataSet.Post;
+
+      if  DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat=  DataSourceDetail.DataSet.FieldByName('Cantidad').AsFloat then //Es la primera vez Ene 12/16
+      begin
+        //Actualizar todo para que se aparte en inventario// no se sabe quien lo tiene
+
+        //ActualizaPedidoXSurtirEnInventario(DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger,DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat)
+
+
+      end;
+
     end;
     DataSourceDetail.DataSet.next;
   end;
@@ -258,7 +301,7 @@ begin
 
   //Actualizar en un sólo paso los n detales
   REsult:=True;
-  (*   //Se genera pero se no se permite cabiar aca
+  (*   //Se genera pero se no se permite cambiar aca
 
   FrmGeneraOrdenSalida:=TFrmGeneraOrdenSalida.Create(Self);
   FrmGeneraOrdenSalida.IdOrden:=id;
@@ -349,20 +392,22 @@ end;
 procedure TfrmCotizaciones.TlBtnEditaClick(Sender: TObject);
 begin
   inherited;
-  DataSourceDetail.DataSet.Edit;
+//  DataSourceDetail.DataSet.Edit;
 end;
 
 procedure TfrmCotizaciones.TlBtnInsertaClick(Sender: TObject);
 begin
   inherited;
-  if Datasource.DataSet.State in[dsInsert,dsEdit] then
-    Datasource.DataSet.post;
-  DataSourceDetail.DataSet.Insert;
+//  if Datasource.DataSet.State in[dsInsert,dsEdit] then
+//    Datasource.DataSet.post;
+//  DataSourceDetail.DataSet.Insert;
 end;
 
 procedure TfrmCotizaciones.TlBtnBorraClick(Sender: TObject);
 begin
-  inherited;
+
+ //   inherited;
+  //Porque borra nin confirmar si no se tiene
    if MessageDlg(strAllowDelete, mtConfirmation, mbYesNo, 0) = mrYes then
      DataSourceDetail.DataSet.Delete;
 end;
@@ -370,13 +415,13 @@ end;
 procedure TfrmCotizaciones.TlBtnCancelaClick(Sender: TObject);
 begin
   inherited;
-  DataSourceDetail.DataSet.Cancel;
+ // DataSourceDetail.DataSet.Cancel;
 end;
 
 procedure TfrmCotizaciones.TlBtnGuardaClick(Sender: TObject);
 begin
   inherited;
-  DataSourceDetail.DataSet.Post;
+ // DataSourceDetail.DataSet.Post;
 end;
 
 end.

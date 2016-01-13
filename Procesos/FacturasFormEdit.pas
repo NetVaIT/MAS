@@ -120,24 +120,37 @@ type
     DBLookupComboBox2: TDBLookupComboBox;
     Label12: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
+    Splitter2: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
-    procedure SpdBtnGenerarCFDIClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
     RegeneraPDF: TBasicAction;
+    Consulta: TBasicAction;
+    ffiltro: String; //Dic 29/15
+    fImpresionED: integer;
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
 
     procedure SetRegeneraPDF(const Value: TBasicAction);
+
+    procedure SetConsulta(const Value: TBasicAction);  //Dic 29/15
+    function GetfImpresioned: integer;  //ene 7/16
+
     { Private declarations }
   public
     { Public declarations }
     property FacturarCtas : TBasicAction read FacturaCta write SetFacturaCta;
     property ActPreFacturas : TBasicAction read PreFacturas write SetPreFacturas;
     property ActRegPDF : TBasicAction read RegeneraPDF write SetRegeneraPDF; //Dic 22/15
+    property ActBusqueda : TBasicAction read Consulta write SetConsulta; //Dic 29/15
+    property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
+    property MiImpresion:integer read GetfImpresionEd write fImpresionEd;
+
+
   end;
 
 var
@@ -148,6 +161,17 @@ implementation
 {$R *.dfm}
 
 uses FacturasFormGrid, FacturasDM;
+
+
+
+procedure TfrmFacturasFormEdit.DataSourceDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  pnlmaster.Enabled:=  DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1;   //Prefactura
+  TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled;
+  ToolButton12.Enabled:=  pnlmaster.Enabled;
+end;
 
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
 begin
@@ -168,11 +192,26 @@ begin
 end;
 
 
+function TfrmFacturasFormEdit.GetfImpresioned: integer;
+begin
+  fImpresioned:= TFrmFacturasGrid(gFormGrid).GRImpresion;  //Cambiado a ver si se pone bien   el de GR viene bien
+  Result:= fImpresioned;
+end;
+
+procedure TfrmFacturasFormEdit.SetConsulta(const Value: TBasicAction);
+begin
+  Consulta:=Value;
+  TFrmFacturasGrid(gFormGrid).ActBusqueda:=value;
+
+
+end;
+
 procedure TfrmFacturasFormEdit.SetFacturaCta(const Value: TBasicAction);
 begin
   FacturaCta := Value;
   TlBtnGeneraCFDI.Action:=Value;
   TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
+
 end;
 
 procedure TfrmFacturasFormEdit.SetPreFacturas(const Value: TBasicAction);
@@ -187,13 +226,6 @@ begin
   RegeneraPDF:=Value;
   TFrmFacturasGrid(gFormGrid).ActRegPDF:=value;
 
-end;
-
-procedure TfrmFacturasFormEdit.SpdBtnGenerarCFDIClick(Sender: TObject);
-begin
-  inherited;
-  //Poner aca Serie y Folio y Fecha y luego llamar a generar Factura
-  //Esta debe tener asignado el llamado al Procesar
 end;
 
 procedure TfrmFacturasFormEdit.SpeedButton1Click(Sender: TObject);

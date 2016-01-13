@@ -4,9 +4,10 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils,winapi.windows, ShellApi;
+  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils,winapi.windows, ShellApi,dialogs,comCtrls;
 
 type
+  TArrDinamico= array of integer; //ene 7/16
   TDMFacturas = class(T_dmStandar)
     DSMaster: TDataSource;
     ADODtStOrdenSalida: TADODataSet;
@@ -264,6 +265,21 @@ type
     adodsDocumentoIdArchivo: TGuidField;
     adodsDocumentoArchivo: TBlobField;
     ActRegeneraPDF: TAction;
+    ActBuscar: TAction;
+    ADODtStProductosKardex: TADODataSet;
+    ADODtStProductosKardexIdProductosKardex: TAutoIncField;
+    ADODtStProductosKardexIdProducto: TIntegerField;
+    ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
+    ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
+    ADODtStProductosKardexIdMoneda: TIntegerField;
+    ADODtStProductosKardexIdSeccion: TIntegerField;
+    ADODtStProductosKardexReferenciaEspacio: TIntegerField;
+    ADODtStProductosKardexContenedor: TStringField;
+    ADODtStProductosKardexFecha: TWideStringField;
+    ADODtStProductosKardexMovimiento: TStringField;
+    ADODtStProductosKardexCantidad: TFloatField;
+    ADODtStProductosKardexImporte: TFMTBCDField;
+    ADODtStInventario: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -272,19 +288,28 @@ type
     procedure ActCrearPrefacturasExecute(Sender: TObject);
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure ActRegeneraPDFExecute(Sender: TObject);
+    procedure ActBuscarExecute(Sender: TObject);
   private
     fidordenSal: Integer;
+    ffiltro: String;
+    fImpresion: Integer;
+    ArrBinario:TArrDinamico;//Ene7/16
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
     procedure actXMLaPDFExecute(Sender: TObject);
     function CargaXMLPDFaFS(Archivo, Describe: string): integer;
     procedure SubirXMLPDFaFS(FileName: TFileName);
     procedure ReadFile(FileName: TFileName);
+    function GetfImpresion: Integer;
+
+    procedure ConvierteBinADec(Numero: integer; var B:TArrDinamico); //Ene7/16
     { Private declarations }
   public
     { Public declarations }
     EsProduccion:Boolean;
     property IDordenSalida:Integer read fidordenSal write fIdOrdenSal;
+    property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
+    property DMImpresion:Integer read GetfImpresion write FImpresion;
   end;
 
 var
@@ -294,9 +319,23 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod;
+uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod, _Utils;
 
 {$R *.dfm}
+
+procedure TDMFacturas.ActBuscarExecute(Sender: TObject);
+
+begin
+//  FiltroCon:=(Sender as TToolButton).hint;
+  inherited;
+//  adodsMaster.close;
+
+//  adodsMaster.filter:=FiltroCon;
+//  adodsMaster.filtered:=filtrocon<>'';
+//  adodsMaster.Open;
+
+
+end;
 
 procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);
 begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
@@ -409,11 +448,19 @@ begin
         ADODtStBuscaFolioSerie.Post;
       end
       else //Verificar si se debe hacer algun ajuste antes de generar!!
-      begin
-        FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
+      begin //dic 29/15
+        Showmessage('Se generara sin serie ,ni folio ');
+        adodsMaster.Edit;
+        adodsMasterFecha.AsDateTime:=FechaAux;
+        adodsMaster.Post;
+
       end;
+    end
+    else //Dic 29/15 ya se intento pero no se genero
+    begin
+      FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
     end;
-    ScreenCursorProc(-11);
+   // ScreenCursorProc(-11);  //Deshabilitado Dic 29/15
     DecodeDate(Now, Anio, Mes, Dia);
 //    RutaBase :=SacaRutaBase;
 
@@ -546,6 +593,7 @@ begin
         if GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI,EsProduccion) then
         begin
           XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
+          XMLpdf.CadenaOriginalTimbre:= TimbreCFDI.CadenaTimbre; //Dic 28/15
           RutaPDF := XMLpdf.GeneratePDFFile(RutaFactura); //Dic 21/15  //verificar si sirve ese Formato
           //Actualizar datos de Timbre en CFDI
           adodsMaster.Edit;
@@ -557,14 +605,20 @@ begin
           adodsMasterFechaTimbrado_TB.AsDateTime:=ConvierteFechaT_DT(TimbreCFDI.FechaTimbre);
           adodsMasterCadenaOriginal.AsString:= TimbreCFDI.CadenaTimbre ; // Dic 23/15
          // adodsMaster
-
+          adodsMasterIdCFDIEstatus.AsInteger:=2; //Dic 29/15
           adodsMasterIdDocumentoXML.Value := CargaXMLPDFaFS(RutaFactura,'Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
           adodsMasterIdDocumentoPDF.Value := CargaXMLPDFaFS(RutaPDF,'Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));
+
+          adodsMasterIdDocumentoCBB.Value := CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
+
           adodsMaster.Post;
+          Showmessage('CFDI Generado');//Dic 29/15
 
           if FileExists(RutaPDF) then
             ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
-        end;
+        end
+        else
+          Showmessage('Error Generando CFDI '+TimbreCFDI.MensajeError);//Dic 29/15
         end
         else
           application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
@@ -575,17 +629,22 @@ begin
       finally
 
     end ;
-  end;
+  end
+  else
+    Showmessage('CFDI generado con anterioridad');
 
 end;
 
 procedure TDMFacturas.ActRegeneraPDFExecute(Sender: TObject);
 var      //Dic 22/15
-  IdDoc:Integer;
-  nombreArchi:TfileName;
+  IdDoc, Avance:Integer;
+  nombreArchi, nomImagen,nomAux:TfileName;
   XMLpdf: TdmodXMLtoPDF;
 begin
   inherited;
+  Avance:=0; //Ene8/16
+  ShowProgress(5,100.1,'Buscando Archivos...' + IntToStr(5) + '%');
+  ConvierteBinADec(DMImpresion,ArrBinario);
     //Sacar ID del Archivo XML del Master
   idDoc:=adodsMasteridDocumentoXML.asInteger;
   adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
@@ -594,13 +653,65 @@ begin
   nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
 
   readFile( nombreArchi); //sacaxml
+
+  //Sacar PNG Ene6/16
+  idDoc:=adodsMasterIdDocumentoCBB.asInteger;
+  if idDoc>0 then
+  begin
+    adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+    adoDSDocumento.filtered:=True;
+    adoDSDocumento.open;
+    nomImagen:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+    readFile( nomImagen); //sacaPng
+  end;
+  //Hasta aca ene6/16
+
+
   //nombreArchi:= ChangeFileExt(nombreArchi, fePDF);
   //nombreArchi:=ExtractfilePath(Application.exename)+nombreArchi;
   //Se manda el nombre del XML
   XMLpdf := TdmodXMLtoPDF.Create(Self);
+  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm'; //dic28/15  HAy  que actualizarlos
+  XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';   //dic28/15
+  XMLpdf.CadenaOriginalTimbre:= adodsMasterCadenaOriginal.AsString; //dic 28/15 verificar
   try
-     XMLpdf.FileIMG := nombreArchi + fePNG;
-     nombreArchi:=XMLpdf.GeneratePDFFile(nombreArchi);
+     XMLpdf.FileIMG := nomImagen;//nombreArchi + fePNG; //Ajustado ene6/16
+     if fileExists(XMLpdf.FileIMG) then//dic 28/15
+     begin
+       ShowProgress(20,100.1,'Generando para imprimir...' + IntToStr(20) + '%');
+       if ArrBinario[0]=1 then
+       begin
+         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,'FISCAL');
+         XMLpdf.PrintPDFFile(nomAux);
+         ShowProgress(40,100.1,'Imprimiendo FISCAL...' + IntToStr(40) + '%');
+       end;
+       if ArrBinario[1]=1 then
+       begin
+         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,'COBRANZA');
+         XMLpdf.PrintPDFFile(nomAux);
+         ShowProgress(60,100.1,'Imprimiendo COBRANZA...' + IntToStr(60) + '%');
+       end;
+       if ArrBinario[2]=1 then
+       begin
+         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,'EMBARQUE');
+         XMLpdf.PrintPDFFile(nomAux);
+         ShowProgress(80,100.1,'Imprimiendo EMBARQUE...' + IntToStr(80) + '%');
+       end;
+       if ArrBinario[3]=1 then
+       begin
+         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,'EXPEDIENTE');
+         XMLpdf.PrintPDFFile(nomAux);
+         ShowProgress(95,100.1,'Imprimiendo EXPEDIENTE...' + IntToStr(95) + '%');
+       end;
+       if high(ArrBinario)=0 then
+         nomAux:=XMLpdf.GeneratePDFFile(nombreArchi,''); //SE genera un original, pero no se guarda.
+     end
+     else
+     begin
+       nombreArchi:='';
+
+     end;
   finally
     XMLpdf.Free;
   end;
@@ -608,12 +719,47 @@ begin
 
   adoDSDocumento.filter:='';
   adoDSDocumento.filtered:=false;
-
-  ShellExecute(application.Handle, 'open', PChar(nombreArchi), nil, nil, SW_SHOWNORMAL);
-
+  if high(ArrBinario)=0 then
+  begin
+    if nombreArchi<>'' then                        //Ultimo
+       ShellExecute(application.Handle, 'open', PChar(nomAux), nil, nil, SW_SHOWNORMAL)
+    else
+      Showmessage ('No fue posible regenerar el PDF, puede que no se haya encontrado el archivo PNG');
+  end
+  else
+     ShowProgress(100,100.1,'Impresión terminada' + IntToStr(Avance) + '%');
+   ShowProgress(100,100);
   //Filtrar con ID enDocumento
   //Sacar Documento
   //Aun no guarda de nuevo.. (Verificar)
+end;
+
+procedure TDMFacturas.ConvierteBinADec(Numero: integer; var B: TArrDinamico); //Ene 7/16
+var      // Este convierte Decimal a Binario
+  aux,i:integer;
+  cadena:String;
+begin
+   //Limpiar B
+   for i:= Low(B) to High(B) do
+      B[i]:=0;
+   i:=0;
+   while numero >1 do
+   begin
+     aux:=numero mod 2;
+     numero:= numero div 2;
+     SetLength(B,i+1);
+     B[i]:=aux;
+     inc(i);
+   end;
+   SetLength(B,i+1);
+   B[i]:=numero;
+
+   for i:= high(B) downto 0 do
+   begin
+     cadena:=Cadena + intTostr(B[i]);
+   end;
+ //  showmessage(Cadena);
+
 end;
 
 function TDMFacturas.ConvierteFechaT_DT(Texto:String):TDateTime;  //Habilitada Dic 9/15
@@ -646,7 +792,7 @@ begin
   //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
   DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
   DataSet.FieldByName('Fecha').AsDateTime:=now; //Se supondría que se van a generar inmediatamente pero hay que verificar(por si se requiere cambio de fecha antes de generar)
-  DataSet.FieldByName('LugarExpedicion').AsString:='Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
+  DataSet.FieldByName('LugarExpedicion').AsString:=ADODtStPersonaEmisorMunicipio.Value +', '+ADODtStPersonaEmisorEstado.Value;//'Zapopan, Jalisco' ; //Verificar si se saca de  la direccion del emisor?
 
 // DataSet.FieldByName('Serie').AsString:=
   DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
@@ -692,9 +838,19 @@ begin
   TfrmFacturasFormEdit(gGridEditForm).FacturarCtas := actProcesaFactura;
   TfrmFacturasFormEdit(gGridEditForm).ActPreFacturas := ActCrearPrefacturas;
   TfrmFacturasFormEdit(gGridEditForm).ActRegPdf := ActRegeneraPDF; //Dic 22/15
+  TfrmFacturasFormEdit(gGridEditForm).ActBusqueda := ActBuscar; //Dic 29/15
   TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
   TfrmFacturasFormEdit(gGridEditForm).DSDatosCliente.DataSet:=ADODtStDireccionesCliente;
 //  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
+
+end;
+
+function TDMFacturas.GetfImpresion: Integer;
+begin
+ // if True then    //Ya se pierde el valor
+  fImpresion:= TfrmFacturasFormEdit(gGridEditForm).MiImpresion;
+  Result:=  fImpresion;
+
 
 end;
 

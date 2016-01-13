@@ -3,15 +3,12 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
   Height = 475
   Width = 742
   object XMLTransform: TXMLTransform
-    TransformationFile = 'C:\Desarrollo\TractoPartes\MAS\Facturar\Transfor32.xtr'
     Left = 48
     Top = 24
   end
   object cdsXML: TClientDataSet
-    Active = True
     Aggregates = <>
     Params = <>
-    ProviderName = 'XMLTransformProvider'
     OnCalcFields = cdsXMLCalcFields
     Left = 64
     Top = 312
@@ -27,9 +24,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       Size = 99999
       Calculated = True
     end
-    object cdsXMLfechahora: TDateTimeField
+    object cdsXMLCadenaOriginalTimbre: TStringField
       FieldKind = fkCalculated
-      FieldName = 'fechahora'
+      FieldName = 'CadenaOriginalTimbre'
+      Size = 99999
       Calculated = True
     end
     object cdsXMLversion: TStringField
@@ -44,9 +42,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     object cdsXMLfolio: TStringField
       FieldName = 'folio'
     end
-    object cdsXMLfecha: TDateField
+    object cdsXMLfecha: TStringField
       FieldName = 'fecha'
-      Required = True
+      Size = 31
     end
     object cdsXMLsello: TStringField
       FieldName = 'sello'
@@ -342,9 +340,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     end
   end
   object XMLTransformProvider: TXMLTransformProvider
-    TransformRead.TransformationFile = 'C:\Desarrollo\TractoPartes\MAS\Facturar\Transfor32.xtr'
-    XMLDataFile = 'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\AGG9401055GA_F3.XML'
-    CacheData = True
+    TransformRead.TransformationFile = 
+      'C:\Users\hucj1e3\Documents\RAD Studio\Projects\NetVaIT\RH\Factur' +
+      'ar\Transfor32.xtr'
+    XMLDataFile = 'C:\FacturasRH\AAA010101AAA\JUNIO2015\AAA010101AAA0.XML'
     Left = 48
     Top = 80
   end
@@ -365,7 +364,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
     PrinterSetup.PaperSize = 1
-    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Facturar\CFDIInterva.rtm'
+    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\CFDIInterva.rtm'
     Units = utScreenPixels
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -413,11 +412,31 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       mmBottomOffset = 0
       mmHeight = 93134
       mmPrintPosition = 0
+      object ppLblEtiqueta: TppLabel
+        UserName = 'LblEtiqueta'
+        Angle = 45
+        CharWrap = True
+        Caption = 'EMBARQUE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clActiveCaption
+        Font.Name = 'Arial'
+        Font.Size = 60
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        mmHeight = 120386
+        mmLeft = 47362
+        mmTop = 46302
+        mmWidth = 108744
+        BandType = 0
+        LayerName = Foreground
+        RotatedOriginLeft = -126
+        RotatedOriginTop = 98874
+      end
       object ppShape1: TppShape
         UserName = 'Shape1'
         Brush.Color = clBtnFace
         Shape = stRoundRect
-        mmHeight = 30956
+        mmHeight = 32546
         mmLeft = 3175
         mmTop = 48948
         mmWidth = 105304
@@ -429,13 +448,14 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmHeight = 5027
         mmLeft = 3175
         mmTop = 53975
-        mmWidth = 105040
+        mmWidth = 105305
         BandType = 0
         LayerName = Foreground
       end
-      object ppShape2: TppShape
-        UserName = 'Shape2'
+      object ppShpMarco: TppShape
+        UserName = 'ShpMarco'
         Brush.Style = bsClear
+        Pen.Width = 2
         Shape = stRoundRect
         mmHeight = 10848
         mmLeft = 7673
@@ -448,10 +468,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         UserName = 'Shape8'
         Brush.Color = clBtnFace
         Shape = stRoundRect
-        mmHeight = 6613
+        mmHeight = 6615
         mmLeft = 0
         mmTop = 86519
-        mmWidth = 206640
+        mmWidth = 202936
         BandType = 0
         LayerName = Foreground
       end
@@ -527,15 +547,15 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
-        mmHeight = 4233
+        mmHeight = 4762
         mmLeft = 16669
         mmTop = 41540
-        mmWidth = 2117
+        mmWidth = 10054
         BandType = 0
         LayerName = Foreground
       end
@@ -546,8 +566,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
@@ -569,18 +589,20 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 155837
-        mmTop = 72759
-        mmWidth = 37042
+        mmLeft = 155045
+        mmTop = 73026
+        mmWidth = 44715
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel29: TppLabel
         UserName = 'Label29'
-        Caption = 'Lugar de Expedici'#243'n'
+        AutoSize = False
+        Caption = 'Lugar de Expedici'#243'n:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -588,9 +610,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 112974
-        mmTop = 67999
-        mmWidth = 34131
+        mmLeft = 112184
+        mmTop = 67998
+        mmWidth = 42333
         BandType = 0
         LayerName = Foreground
       end
@@ -629,7 +651,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       object ppLabel3: TppLabel
         UserName = 'Label3'
         AutoSize = False
-        Caption = 'Calle'
+        Caption = 'Calle:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -646,7 +668,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       object ppLabel6: TppLabel
         UserName = 'Label6'
         AutoSize = False
-        Caption = 'Colonia'
+        Caption = 'Colonia:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -687,7 +709,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 63765
+        mmLeft = 62442
         mmTop = 66146
         mmWidth = 7938
         BandType = 0
@@ -775,7 +797,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
-        VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
         mmLeft = 124346
@@ -932,7 +953,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 73025
+        mmLeft = 75936
         mmTop = 66146
         mmWidth = 19844
         BandType = 0
@@ -951,7 +972,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 81492
+        mmLeft = 80167
         mmTop = 61648
         mmWidth = 15346
         BandType = 0
@@ -970,7 +991,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 63765
+        mmLeft = 62440
         mmTop = 61648
         mmWidth = 15346
         BandType = 0
@@ -989,7 +1010,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 20638
+        mmLeft = 19313
         mmTop = 61648
         mmWidth = 42069
         BandType = 0
@@ -1009,7 +1030,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
         mmLeft = 68792
-        mmTop = 49477
+        mmTop = 50007
         mmWidth = 26723
         BandType = 0
         LayerName = Foreground
@@ -1057,8 +1078,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 62706
-        mmTop = 70908
+        mmLeft = 75936
+        mmTop = 75936
         mmWidth = 24342
         BandType = 0
         LayerName = Foreground
@@ -1076,9 +1097,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 35454
+        mmLeft = 75940
         mmTop = 70908
-        mmWidth = 25400
+        mmWidth = 29104
         BandType = 0
         LayerName = Foreground
       end
@@ -1092,13 +1113,12 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
-        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 6085
+        mmLeft = 19315
         mmTop = 70908
-        mmWidth = 27252
+        mmWidth = 42069
         BandType = 0
         LayerName = Foreground
       end
@@ -1115,15 +1135,16 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 20902
+        mmLeft = 19577
         mmTop = 66146
         mmWidth = 41804
         BandType = 0
         LayerName = Foreground
       end
-      object ppShape14: TppShape
-        UserName = 'Shape14'
+      object ppShpTitulo: TppShape
+        UserName = 'ShpTitulo'
         Brush.Color = clBtnFace
+        Pen.Width = 2
         Shape = stRoundRect
         mmHeight = 5556
         mmLeft = 7673
@@ -1151,7 +1172,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       end
       object ppLabel25: TppLabel
         UserName = 'Label25'
-        Caption = 'Fecha y hora Emisi'#243'n'
+        AutoSize = False
+        Caption = 'Fecha y hora Emisi'#243'n:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -1159,9 +1181,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 112974
-        mmTop = 72759
-        mmWidth = 35719
+        mmLeft = 112184
+        mmTop = 72761
+        mmWidth = 40746
         BandType = 0
         LayerName = Foreground
       end
@@ -1196,12 +1218,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
-        mmHeight = 3969
-        mmLeft = 155837
-        mmTop = 67999
-        mmWidth = 24870
+        mmHeight = 4234
+        mmLeft = 155574
+        mmTop = 68263
+        mmWidth = 44186
         BandType = 0
         LayerName = Foreground
       end
@@ -4167,17 +4190,19 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4233
-        mmLeft = 146312
-        mmTop = 77522
-        mmWidth = 43127
+        mmLeft = 145520
+        mmTop = 77523
+        mmWidth = 54240
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel37: TppLabel
         UserName = 'Label37'
+        AutoSize = False
         Caption = 'Comprobante de: '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4186,15 +4211,16 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold, fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 113239
-        mmTop = 77522
-        mmWidth = 29369
+        mmLeft = 112448
+        mmTop = 77523
+        mmWidth = 34131
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel9: TppLabel
         UserName = 'Label9'
-        Caption = 'Folio SAT'
+        AutoSize = False
+        Caption = 'Folio SAT:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4203,9 +4229,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 112974
-        mmTop = 48686
-        mmWidth = 17727
+        mmLeft = 112184
+        mmTop = 48683
+        mmWidth = 25665
         BandType = 0
         LayerName = Foreground
       end
@@ -4220,35 +4246,20 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 132557
+        mmLeft = 134143
         mmTop = 48683
-        mmWidth = 67998
+        mmWidth = 65617
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel19: TppLabel
         UserName = 'Label19'
-        Caption = 'Num. Serie Certificado SAT'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = [fsBold, fsItalic]
-        Transparent = True
-        WordWrap = True
-        mmHeight = 3969
-        mmLeft = 112974
-        mmTop = 53448
-        mmWidth = 47625
-        BandType = 0
-        LayerName = Foreground
-      end
-      object ppLabel21: TppLabel
-        UserName = 'Label21'
-        Caption = 'Num. Serie Certificado CSD'
+        AutoSize = False
+        Caption = 'Num. Serie Certificado SAT:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4257,14 +4268,33 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4233
-        mmLeft = 113239
-        mmTop = 57946
-        mmWidth = 47625
+        mmLeft = 112184
+        mmTop = 53446
+        mmWidth = 49213
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel21: TppLabel
+        UserName = 'Label21'
+        AutoSize = False
+        Caption = 'Num. Serie Certificado CSD:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold, fsItalic]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 4233
+        mmLeft = 112448
+        mmTop = 57944
+        mmWidth = 49742
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel34: TppLabel
         UserName = 'Label34'
+        AutoSize = False
         Caption = 'Fecha y hora de Certificaci'#243'n:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4274,7 +4304,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 4498
-        mmLeft = 113239
+        mmLeft = 112444
         mmTop = 62708
         mmWidth = 50536
         BandType = 0
@@ -4291,12 +4321,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
-        mmHeight = 3968
-        mmLeft = 163509
-        mmTop = 53448
-        mmWidth = 37042
+        mmHeight = 3969
+        mmLeft = 168010
+        mmTop = 53446
+        mmWidth = 31750
         BandType = 0
         LayerName = Foreground
       end
@@ -4311,12 +4342,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 163509
-        mmTop = 57946
-        mmWidth = 37042
+        mmLeft = 173830
+        mmTop = 57944
+        mmWidth = 25930
         BandType = 0
         LayerName = Foreground
       end
@@ -4331,12 +4363,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 163509
-        mmTop = 62708
-        mmWidth = 31486
+        mmLeft = 163247
+        mmTop = 63500
+        mmWidth = 36513
         BandType = 0
         LayerName = Foreground
       end
@@ -4350,16 +4383,14 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         Lines.Strings = (
-          
-            'TELS: 3647-9944  3647-9044  3647-9144    FAX:3647-9094   EMAIL: ' +
-            'tracmas@prodigy.net.mx ')
+          'TELS: 3647-9944  3647-9044  3647-9144    FAX:3647-9094  '
+          '                 EMAIL: tracmas@prodigy.net.mx ')
         RemoveEmptyLines = False
-        TextAlignment = taCentered
         Transparent = True
         mmHeight = 7938
-        mmLeft = 82815
-        mmTop = 29897
-        mmWidth = 94456
+        mmLeft = 88106
+        mmTop = 29898
+        mmWidth = 94192
         BandType = 0
         LayerName = Foreground
         mmBottomOffset = 0
@@ -4396,25 +4427,57 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 115624
-        mmTop = 25135
+        mmLeft = 116154
+        mmTop = 25665
         mmWidth = 1058
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel7: TppLabel
         UserName = 'Label7'
-        Caption = ', '
+        Caption = 'Estado: '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 10
-        Font.Style = []
+        Font.Style = [fsItalic]
+        Transparent = True
+        mmHeight = 4234
+        mmLeft = 62442
+        mmTop = 70908
+        mmWidth = 12964
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel10: TppLabel
+        UserName = 'Label10'
+        Caption = 'Ciudad:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsItalic]
+        Transparent = True
+        mmHeight = 4234
+        mmLeft = 6085
+        mmTop = 70908
+        mmWidth = 11642
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel22: TppLabel
+        UserName = 'Label22'
+        Caption = 'Pa'#237's:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsItalic]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 33867
-        mmTop = 70908
-        mmWidth = 2117
+        mmLeft = 62442
+        mmTop = 75936
+        mmWidth = 7937
         BandType = 0
         LayerName = Foreground
       end
@@ -4486,7 +4549,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmHeight = 4233
         mmLeft = 181240
         mmTop = 265
-        mmWidth = 22754
+        mmWidth = 19315
         BandType = 4
         LayerName = Foreground
       end
@@ -4543,8 +4606,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       Background.Brush.Style = bsClear
       PrintHeight = phDynamic
       AlignToBottom = True
-      mmBottomOffset = 0
-      mmHeight = 91281
+      mmBottomOffset = 794
+      mmHeight = 101336
       mmPrintPosition = 0
       object ppShape9: TppShape
         UserName = 'Shape9'
@@ -4552,7 +4615,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmHeight = 7673
         mmLeft = 0
         mmTop = 529
-        mmWidth = 206642
+        mmWidth = 202936
         BandType = 7
         LayerName = Foreground
       end
@@ -4566,7 +4629,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 153194
+        mmLeft = 150014
         mmTop = 8730
         mmWidth = 17727
         BandType = 7
@@ -4582,7 +4645,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4234
-        mmLeft = 153194
+        mmLeft = 150014
         mmTop = 18261
         mmWidth = 23548
         BandType = 7
@@ -4603,7 +4666,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4191
-        mmLeft = 175684
+        mmLeft = 172239
         mmTop = 8465
         mmWidth = 28310
         BandType = 7
@@ -4619,7 +4682,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4233
-        mmLeft = 153194
+        mmLeft = 150014
         mmTop = 28058
         mmWidth = 11377
         BandType = 7
@@ -4712,7 +4775,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4191
-        mmLeft = 175684
+        mmLeft = 172239
         mmTop = 18261
         mmWidth = 28310
         BandType = 7
@@ -4733,7 +4796,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4191
-        mmLeft = 175684
+        mmLeft = 172239
         mmTop = 28058
         mmWidth = 28310
         BandType = 7
@@ -4761,8 +4824,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Weight = 0.750000000000000000
         mmHeight = 1058
         mmLeft = 0
-        mmTop = 43663
-        mmWidth = 206375
+        mmTop = 43656
+        mmWidth = 202936
         BandType = 7
         LayerName = Foreground
       end
@@ -4783,8 +4846,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 8996
         mmLeft = 265
-        mmTop = 49749
-        mmWidth = 202671
+        mmTop = 49742
+        mmWidth = 200290
         BandType = 7
         LayerName = Foreground
         mmBottomOffset = 0
@@ -4844,8 +4907,8 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 8996
         mmLeft = 0
-        mmTop = 64036
-        mmWidth = 202671
+        mmTop = 64029
+        mmWidth = 200555
         BandType = 7
         LayerName = Foreground
         mmBottomOffset = 0
@@ -4857,7 +4920,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       object ppDBMemo4: TppDBMemo
         UserName = 'DBMemo4'
         CharWrap = True
-        DataField = 'CADENAORIGINAL'
+        DataField = 'CadenaOriginalTimbre'
         DataPipeline = ppDBPipelineDatosFactura
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4868,12 +4931,11 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         RemoveEmptyLines = False
         Stretch = True
         Transparent = True
-        Visible = False
         DataPipelineName = 'ppDBPipelineDatosFactura'
-        mmHeight = 13494
+        mmHeight = 15081
         mmLeft = 0
-        mmTop = 77001
-        mmWidth = 202671
+        mmTop = 76994
+        mmWidth = 200555
         BandType = 7
         LayerName = Foreground
         mmBottomOffset = 0
@@ -4891,7 +4953,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 10
         Font.Style = [fsBold, fsItalic]
         Transparent = True
-        Visible = False
         WordWrap = True
         mmHeight = 4234
         mmLeft = 0
@@ -4911,9 +4972,9 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         WordWrap = True
         mmHeight = 8467
-        mmLeft = 133879
-        mmTop = 33874
-        mmWidth = 72496
+        mmLeft = 135202
+        mmTop = 33867
+        mmWidth = 67733
         BandType = 7
         LayerName = Foreground
       end
@@ -4924,7 +4985,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         MaintainAspectRatio = False
         Stretch = True
         mmHeight = 32547
-        mmLeft = 99746
+        mmLeft = 101601
         mmTop = 9785
         mmWidth = 32547
         BandType = 7
@@ -4940,7 +5001,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4234
-        mmLeft = 153194
+        mmLeft = 150014
         mmTop = 13758
         mmWidth = 21167
         BandType = 7
@@ -4961,7 +5022,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4191
-        mmLeft = 175680
+        mmLeft = 172235
         mmTop = 13498
         mmWidth = 28310
         BandType = 7
@@ -4982,7 +5043,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 4191
-        mmLeft = 175680
+        mmLeft = 172235
         mmTop = 23023
         mmWidth = 28310
         BandType = 7
@@ -4998,7 +5059,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Style = []
         Transparent = True
         mmHeight = 4233
-        mmLeft = 153194
+        mmLeft = 150014
         mmTop = 23019
         mmWidth = 14288
         BandType = 7
@@ -5035,7 +5096,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmHeight = 3704
         mmLeft = 30956
         mmTop = 16404
-        mmWidth = 26723
+        mmWidth = 49213
         BandType = 7
         LayerName = Foreground
       end
@@ -5061,17 +5122,17 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       end
       object ppLabel36: TppLabel
         UserName = 'Label36'
-        Caption = 'CONDICIONES DE PAGO'
+        Caption = 'Condiciones de Pago:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
         Font.Size = 10
         Font.Style = [fsItalic]
         Transparent = True
-        mmHeight = 3969
+        mmHeight = 4234
         mmLeft = 2646
         mmTop = 21431
-        mmWidth = 41804
+        mmWidth = 33602
         BandType = 7
         LayerName = Foreground
       end
@@ -5092,6 +5153,35 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmLeft = 49213
         mmTop = 21431
         mmWidth = 41804
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBText8: TppDBText
+        UserName = 'DBText8'
+        DataField = 'NumCtaPago'
+        DataPipeline = ppDBPipelineDatosFactura
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPipelineDatosFactura'
+        mmHeight = 3704
+        mmLeft = 81492
+        mmTop = 16404
+        mmWidth = 16140
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppLine1: TppLine
+        UserName = 'Line1'
+        Weight = 0.750000000000000000
+        mmHeight = 1058
+        mmLeft = 0
+        mmTop = 95779
+        mmWidth = 202936
         BandType = 7
         LayerName = Foreground
       end
@@ -5129,519 +5219,721 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       FieldAlias = 'ImporteConLetra'
       FieldName = 'ImporteConLetra'
       FieldLength = 0
+      DataType = dtNotKnown
       DisplayWidth = 0
       Position = 0
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField2: TppField
       FieldAlias = 'CadenaOriginal'
       FieldName = 'CadenaOriginal'
-      FieldLength = 99999
-      DisplayWidth = 99999
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 1
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField3: TppField
-      FieldAlias = 'fechahora'
-      FieldName = 'fechahora'
+      FieldAlias = 'CadenaOriginalTimbre'
+      FieldName = 'CadenaOriginalTimbre'
       FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 2
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField4: TppField
       FieldAlias = 'version1'
       FieldName = 'version1'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 3
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField5: TppField
       FieldAlias = 'serie'
       FieldName = 'serie'
-      FieldLength = 25
-      DisplayWidth = 25
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 4
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField6: TppField
       FieldAlias = 'folio'
       FieldName = 'folio'
-      FieldLength = 20
-      DisplayWidth = 20
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 5
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField7: TppField
       FieldAlias = 'fecha'
       FieldName = 'fecha'
       FieldLength = 0
-      DataType = dtDate
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 6
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField8: TppField
       FieldAlias = 'sello'
       FieldName = 'sello'
-      FieldLength = 2000
-      DisplayWidth = 2000
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 7
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField9: TppField
       FieldAlias = 'formaDePago'
       FieldName = 'formaDePago'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 8
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField10: TppField
       FieldAlias = 'noCertificado'
       FieldName = 'noCertificado'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 9
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField11: TppField
       FieldAlias = 'certificado'
       FieldName = 'certificado'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 10
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField12: TppField
       FieldAlias = 'condicionesDePago'
       FieldName = 'condicionesDePago'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 11
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField13: TppField
-      Alignment = taRightJustify
       FieldAlias = 'subTotal'
       FieldName = 'subTotal'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 12
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField14: TppField
-      Alignment = taRightJustify
       FieldAlias = 'descuento'
       FieldName = 'descuento'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 13
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField15: TppField
       FieldAlias = 'motivoDescuento'
       FieldName = 'motivoDescuento'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 14
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField16: TppField
       FieldAlias = 'TipoCambio'
       FieldName = 'TipoCambio'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 15
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField17: TppField
       FieldAlias = 'Moneda'
       FieldName = 'Moneda'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 16
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField18: TppField
-      Alignment = taRightJustify
       FieldAlias = 'total'
       FieldName = 'total'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 17
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField19: TppField
       FieldAlias = 'tipoDeComprobante'
       FieldName = 'tipoDeComprobante'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 18
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField20: TppField
       FieldAlias = 'metodoDePago'
       FieldName = 'metodoDePago'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 19
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField21: TppField
       FieldAlias = 'LugarExpedicion'
       FieldName = 'LugarExpedicion'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 20
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField22: TppField
       FieldAlias = 'NumCtaPago'
       FieldName = 'NumCtaPago'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 21
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField23: TppField
       FieldAlias = 'FolioFiscalOrig'
       FieldName = 'FolioFiscalOrig'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 22
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField24: TppField
       FieldAlias = 'SerieFolioFiscalOrig'
       FieldName = 'SerieFolioFiscalOrig'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 23
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField25: TppField
       FieldAlias = 'FechaFolioFiscalOrig'
       FieldName = 'FechaFolioFiscalOrig'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 24
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField26: TppField
-      Alignment = taRightJustify
       FieldAlias = 'MontoFolioFiscalOrig'
       FieldName = 'MontoFolioFiscalOrig'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 25
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField27: TppField
       FieldAlias = 'Emisor_rfc'
       FieldName = 'Emisor_rfc'
-      FieldLength = 13
-      DisplayWidth = 13
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 26
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField28: TppField
       FieldAlias = 'Emisor_nombre'
       FieldName = 'Emisor_nombre'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 27
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField29: TppField
       FieldAlias = 'DomicilioFiscal_calle'
       FieldName = 'DomicilioFiscal_calle'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 28
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField30: TppField
       FieldAlias = 'DomicilioFiscal_noExterior'
       FieldName = 'DomicilioFiscal_noExterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 29
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField31: TppField
       FieldAlias = 'DomicilioFiscal_noInterior'
       FieldName = 'DomicilioFiscal_noInterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 30
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField32: TppField
       FieldAlias = 'DomicilioFiscal_colonia'
       FieldName = 'DomicilioFiscal_colonia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 31
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField33: TppField
       FieldAlias = 'DomicilioFiscal_localidad'
       FieldName = 'DomicilioFiscal_localidad'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 32
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField34: TppField
       FieldAlias = 'DomicilioFiscal_referencia'
       FieldName = 'DomicilioFiscal_referencia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 33
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField35: TppField
       FieldAlias = 'DomicilioFiscal_municipio'
       FieldName = 'DomicilioFiscal_municipio'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 34
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField36: TppField
       FieldAlias = 'DomicilioFiscal_estado'
       FieldName = 'DomicilioFiscal_estado'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 35
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField37: TppField
       FieldAlias = 'DomicilioFiscal_pais'
       FieldName = 'DomicilioFiscal_pais'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 36
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField38: TppField
       FieldAlias = 'DomicilioFiscal_codigoPostal'
       FieldName = 'DomicilioFiscal_codigoPostal'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 37
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField39: TppField
       FieldAlias = 'ExpedidoEn_calle'
       FieldName = 'ExpedidoEn_calle'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 38
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField40: TppField
       FieldAlias = 'ExpedidoEn_noExterior'
       FieldName = 'ExpedidoEn_noExterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 39
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField41: TppField
       FieldAlias = 'ExpedidoEn_noInterior'
       FieldName = 'ExpedidoEn_noInterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 40
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField42: TppField
       FieldAlias = 'ExpedidoEn_colonia'
       FieldName = 'ExpedidoEn_colonia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 41
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField43: TppField
       FieldAlias = 'ExpedidoEn_localidad'
       FieldName = 'ExpedidoEn_localidad'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 42
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField44: TppField
       FieldAlias = 'ExpedidoEn_referencia'
       FieldName = 'ExpedidoEn_referencia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 43
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField45: TppField
       FieldAlias = 'ExpedidoEn_municipio'
       FieldName = 'ExpedidoEn_municipio'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 44
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField46: TppField
       FieldAlias = 'ExpedidoEn_estado'
       FieldName = 'ExpedidoEn_estado'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 45
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField47: TppField
       FieldAlias = 'ExpedidoEn_pais'
       FieldName = 'ExpedidoEn_pais'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 46
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField48: TppField
       FieldAlias = 'ExpedidoEn_codigoPostal'
       FieldName = 'ExpedidoEn_codigoPostal'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 47
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField49: TppField
       FieldAlias = 'Receptor_rfc'
       FieldName = 'Receptor_rfc'
-      FieldLength = 13
-      DisplayWidth = 13
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 48
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField50: TppField
       FieldAlias = 'Receptor_nombre'
       FieldName = 'Receptor_nombre'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 49
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField51: TppField
       FieldAlias = 'Domicilio_calle'
       FieldName = 'Domicilio_calle'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 50
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField52: TppField
       FieldAlias = 'Domicilio_noExterior'
       FieldName = 'Domicilio_noExterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 51
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField53: TppField
       FieldAlias = 'Domicilio_noInterior'
       FieldName = 'Domicilio_noInterior'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 52
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField54: TppField
       FieldAlias = 'Domicilio_colonia'
       FieldName = 'Domicilio_colonia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 53
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField55: TppField
       FieldAlias = 'Domicilio_localidad'
       FieldName = 'Domicilio_localidad'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 54
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField56: TppField
       FieldAlias = 'Domicilio_referencia'
       FieldName = 'Domicilio_referencia'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 55
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField57: TppField
       FieldAlias = 'Domicilio_municipio'
       FieldName = 'Domicilio_municipio'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 56
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField58: TppField
       FieldAlias = 'Domicilio_estado'
       FieldName = 'Domicilio_estado'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 57
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField59: TppField
       FieldAlias = 'Domicilio_pais'
       FieldName = 'Domicilio_pais'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 58
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField60: TppField
       FieldAlias = 'Domicilio_codigoPostal'
       FieldName = 'Domicilio_codigoPostal'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 59
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField61: TppField
-      Alignment = taRightJustify
       FieldAlias = 'totalImpuestosRetenidos'
       FieldName = 'totalImpuestosRetenidos'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 60
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField62: TppField
-      Alignment = taRightJustify
       FieldAlias = 'totalImpuestosTrasladados'
       FieldName = 'totalImpuestosTrasladados'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 61
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField63: TppField
       FieldAlias = 'version2'
       FieldName = 'version2'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 62
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField64: TppField
       FieldAlias = 'UUID'
       FieldName = 'UUID'
-      FieldLength = 36
-      DisplayWidth = 36
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 63
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField65: TppField
       FieldAlias = 'FechaTimbrado'
       FieldName = 'FechaTimbrado'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 64
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField66: TppField
       FieldAlias = 'selloCFD'
       FieldName = 'selloCFD'
-      FieldLength = 2000
-      DisplayWidth = 2000
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 65
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField67: TppField
       FieldAlias = 'noCertificadoSAT'
       FieldName = 'noCertificadoSAT'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 66
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField68: TppField
       FieldAlias = 'selloSAT'
       FieldName = 'selloSAT'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 67
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField69: TppField
       FieldAlias = 'RegimenFiscal'
       FieldName = 'RegimenFiscal'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 68
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField70: TppField
       FieldAlias = 'Concepto'
       FieldName = 'Concepto'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 69
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField71: TppField
       FieldAlias = 'Retencion'
       FieldName = 'Retencion'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 70
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosFacturappField72: TppField
       FieldAlias = 'Traslado'
       FieldName = 'Traslado'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 71
+      Searchable = False
+      Sortable = False
     end
   end
   object dsXML: TDataSource
@@ -5655,73 +5947,94 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     Left = 184
     Top = 176
     object ppDBPipelineDatosDetalleFacturappField1: TppField
-      Alignment = taRightJustify
       FieldAlias = 'cantidad'
       FieldName = 'cantidad'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 0
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField2: TppField
       FieldAlias = 'unidad'
       FieldName = 'unidad'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 1
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField3: TppField
       FieldAlias = 'noIdentificacion'
       FieldName = 'noIdentificacion'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 2
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField4: TppField
       FieldAlias = 'descripcion'
       FieldName = 'descripcion'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 3
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField5: TppField
-      Alignment = taRightJustify
       FieldAlias = 'valorUnitario'
       FieldName = 'valorUnitario'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 4
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField6: TppField
-      Alignment = taRightJustify
       FieldAlias = 'importe'
       FieldName = 'importe'
-      FieldLength = 4
-      DataType = dtDouble
-      DisplayWidth = 15
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 5
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField7: TppField
       FieldAlias = 'numero'
       FieldName = 'numero'
-      FieldLength = 31
-      DisplayWidth = 31
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 6
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField8: TppField
       FieldAlias = 'InformacionAduanera'
       FieldName = 'InformacionAduanera'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 7
+      Searchable = False
+      Sortable = False
     end
     object ppDBPipelineDatosDetalleFacturappField9: TppField
       FieldAlias = 'Parte'
       FieldName = 'Parte'
       FieldLength = 0
-      DisplayWidth = 10
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 8
+      Searchable = False
+      Sortable = False
     end
   end
   object dsConcepto: TDataSource
@@ -5734,6 +6047,26 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     UserName = 'Retencion'
     Left = 296
     Top = 200
+    object ppDBPipelineDatosRetencionppField1: TppField
+      FieldAlias = 'impuesto'
+      FieldName = 'impuesto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineDatosRetencionppField2: TppField
+      FieldAlias = 'importe'
+      FieldName = 'importe'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
   end
   object dsRetencion: TDataSource
     DataSet = cdsRetencion
@@ -5745,6 +6078,36 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     UserName = 'Traslado'
     Left = 408
     Top = 176
+    object ppDBPipelineDatosTrasladoppField1: TppField
+      FieldAlias = 'impuesto'
+      FieldName = 'impuesto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineDatosTrasladoppField2: TppField
+      FieldAlias = 'tasa'
+      FieldName = 'tasa'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineDatosTrasladoppField3: TppField
+      FieldAlias = 'importe'
+      FieldName = 'importe'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
   end
   object dsTraslado: TDataSource
     DataSet = cdsTraslado
@@ -6666,7 +7029,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     Top = 40
   end
   object cdsConcepto: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsXMLConcepto
     Params = <>
@@ -6723,9 +7085,38 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     UserName = 'InformacionAduanera'
     Left = 504
     Top = 200
+    object ppDBPipelineInfoAduanerappField1: TppField
+      FieldAlias = 'numero'
+      FieldName = 'numero'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineInfoAduanerappField2: TppField
+      FieldAlias = 'fecha'
+      FieldName = 'fecha'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineInfoAduanerappField3: TppField
+      FieldAlias = 'aduana'
+      FieldName = 'aduana'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
   end
   object cdsRetencion: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsXMLRetencion
     Params = <>
@@ -6742,7 +7133,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     end
   end
   object cdsTraslado: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsXMLTraslado
     Params = <>
@@ -6764,7 +7154,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     end
   end
   object cdsInfoAduanera: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsConceptoInformacionAduanera
     Params = <>
@@ -6790,7 +7179,6 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     Top = 40
   end
   object cdsRegimenFiscal: TClientDataSet
-    Active = True
     Aggregates = <>
     DataSetField = cdsXMLRegimenFiscal
     Params = <>
@@ -6815,9 +7203,12 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     object ppDBPipelineRegimenFiscalppField1: TppField
       FieldAlias = 'Regimen'
       FieldName = 'Regimen'
-      FieldLength = 255
-      DisplayWidth = 255
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
       Position = 0
+      Searchable = False
+      Sortable = False
     end
   end
 end

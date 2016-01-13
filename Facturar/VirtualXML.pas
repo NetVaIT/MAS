@@ -273,7 +273,7 @@ begin
     VirtualXML_SetComprobanteInfo(hXML,
     PWideChar(string(Documento.Serie)), PWideChar(IntToStr(Documento.Folio)),
     PWideChar(TFEReglamentacion.ComoFechaHora(Documento.FechaGeneracion)),
-    PWideChar(Documento.TipoCompTexto{GetTipoComprobante(Documento.Tipo)}), //Dic 8/15
+    PWideChar(Documento.TipoCompTexto{GetTipoComprobante(Documento.Tipo)}), //Dic 29/15   N
     PWideChar(GetFormaDePago(Documento.FormaDePago)),
     PWideChar(TFEReglamentacion.ComoMoneda(Documento.SubTotal)),
     PWideChar(TFEReglamentacion.ComoMoneda(Documento.DescuentoMonto)),
@@ -337,12 +337,12 @@ begin
     PWideChar(TFEReglamentacion.ComoMoneda(TotalImpuestosRetenidos)));
 
   // VirtualXML_ProcesaDocumento(hXml, 'aaqm610917qja.cer', 'aaqm610917qja_1011180955s.key', '12345678a', pansichar(NomArchi));
-                                //Modificado porque aca interesa el receptor Dic 21/15
-   RutaCompleta := Ruta + string(Documento.Receptor.RFC) +'_'+ string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;
-   ArchivoXML := RutaCompleta;
+  // RutaCompleta := Ruta + string(Documento.Emisor.RFC) + string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;
+   RutaCompleta := Ruta + string(Documento.Receptor.RFC) +'_'+ string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;// dic 29/15 N
+   ArchivoXML := RutaCompleta;                           //Modificado porque aca interesa el receptor Dic 21/15
    Ruta := RutaCompleta;
   // ArchivoXML:= strDir + PathDelim + string(Documento.Emisor.RFC) + string(Documento.Serie) + IntToStr(Documento.Folio) + feXML;
-    VirtualXML_ProcesaDocumento(hXML, PWideChar(Certificado.Ruta), PWideChar(Certificado.LlavePrivada.Ruta), PWideChar(Certificado.LlavePrivada.Clave), PWideChar(ArchivoXML));
+   VirtualXML_ProcesaDocumento(hXML, PWideChar(Certificado.Ruta), PWideChar(Certificado.LlavePrivada.Ruta), PWideChar(Certificado.LlavePrivada.Clave), PWideChar(ArchivoXML));
   // Ejecutamos la función de firmado y sellado, esta función realiza TODAS las labores de generación del CFDI que son:
   //
   // 1. Firmado y sellado del xml de entrada

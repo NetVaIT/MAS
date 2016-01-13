@@ -490,4 +490,54 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 255
     end
   end
+  object ADODtStProductosKardex: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from ProductosKardex'
+    Parameters = <>
+    Left = 72
+    Top = 521
+    object ADODtStProductosKardexIdProductosKardex: TAutoIncField
+      FieldName = 'IdProductosKardex'
+      ReadOnly = True
+    end
+    object ADODtStProductosKardexIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+    end
+    object ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField
+      FieldName = 'IdOrdenSalidaItem'
+    end
+    object ADODtStProductosKardexIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object ADODtStProductosKardexIdSeccion: TIntegerField
+      FieldName = 'IdSeccion'
+    end
+    object ADODtStProductosKardexReferenciaEspacio: TIntegerField
+      FieldName = 'ReferenciaEspacio'
+    end
+    object ADODtStProductosKardexContenedor: TStringField
+      FieldName = 'Contenedor'
+      Size = 30
+    end
+    object ADODtStProductosKardexFecha: TWideStringField
+      FieldName = 'Fecha'
+      Size = 10
+    end
+    object ADODtStProductosKardexMovimiento: TStringField
+      FieldName = 'Movimiento'
+      Size = 1
+    end
+    object ADODtStProductosKardexCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object ADODtStProductosKardexImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+  end
 end
