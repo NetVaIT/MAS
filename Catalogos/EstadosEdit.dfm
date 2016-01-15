@@ -1,16 +1,10 @@
 inherited frmEstadosEdit: TfrmEstadosEdit
   Caption = 'frmEstadosEdit'
   OnCreate = FormCreate
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
           object Label1: TLabel
@@ -49,12 +43,9 @@ inherited frmEstadosEdit: TfrmEstadosEdit
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmUbicaciones.adodsEstados
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -195,7 +186,7 @@ inherited frmEstadosEdit: TfrmEstadosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

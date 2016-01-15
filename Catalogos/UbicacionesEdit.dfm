@@ -1,21 +1,33 @@
 inherited frmUbicacionesEdit: TfrmUbicacionesEdit
   Caption = 'frmUbicacionesEdit'
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnShow = FormShow
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
+    Properties.HideTabs = False
+    ClientRectBottom = 475
+    ClientRectLeft = 2
+    ClientRectRight = 748
+    ClientRectTop = 28
     inherited tsGeneral: TcxTabSheet
       Caption = 'Paises'
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitLeft = 2
+      ExplicitTop = 28
+      ExplicitWidth = 746
+      ExplicitHeight = 447
       inherited cxScrollBox1: TcxScrollBox
+        Width = 746
+        Height = 447
+        ExplicitWidth = 746
+        ExplicitHeight = 447
+        inherited tbarData: TToolBar
+          Width = 744
+          ExplicitWidth = 744
+        end
         inherited pnlMaster: TPanel
+          Width = 744
+          Height = 420
+          ExplicitWidth = 744
+          ExplicitHeight = 420
           object Label1: TLabel
             Left = 32
             Top = 16
@@ -76,12 +88,9 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
       ExplicitHeight = 0
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmUbicaciones.adodsMaster
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -222,7 +231,7 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

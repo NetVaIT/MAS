@@ -479,6 +479,43 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Catalogos\AlmacenesDM.pas">
+            <Form>dmAlmacenes</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\AlmacenesEdit.pas">
+            <Form>frmAlmacenesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\AlmacenesForm.pas">
+            <Form>frmAlmacenes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ZonasEdit.pas">
+            <Form>frmZonasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ZonasForm.pas">
+            <Form>frmZonas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\AnaquelesEdit.pas">
+            <Form>frmAnaquelesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\AnaquelesForm.pas">
+            <Form>frmAnaqueles</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\SeccionesEdit.pas">
+            <Form>frmSeccionesEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\SeccionesForm.pas">
+            <Form>frmSecciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

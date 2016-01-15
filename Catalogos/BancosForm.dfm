@@ -1,66 +1,23 @@
 inherited frmBancos: TfrmBancos
-  BorderStyle = bsNone
   Caption = 'Bancos'
-  ClientHeight = 650
-  ClientWidth = 750
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 565
-    Width = 750
+    ExplicitTop = 565
+    ExplicitWidth = 750
   end
   inherited splDetail2: TSplitter
-    Top = 521
-    Width = 750
+    ExplicitTop = 521
+    ExplicitWidth = 750
   end
   inherited splDetail1: TSplitter
-    Top = 477
-    Width = 750
-  end
-  inherited pnlClose: TPanel
-    Top = 609
-    Width = 750
-    ExplicitTop = 585
-    ExplicitWidth = 744
-  end
-  inherited pnlDetail3: TPanel
-    Top = 568
-    Width = 750
-    ExplicitTop = 544
-    ExplicitWidth = 744
-  end
-  inherited pnlDetail2: TPanel
-    Top = 524
-    Width = 750
-    ExplicitTop = 500
-    ExplicitWidth = 744
-  end
-  inherited pnlDetail1: TPanel
-    Top = 480
-    Width = 750
-    ExplicitTop = 456
-    ExplicitWidth = 744
-  end
-  inherited pnltoolbar: TPanel
-    Width = 750
-    ExplicitWidth = 744
-  end
-  inherited tbarGrid: TToolBar
-    Width = 750
-    ExplicitWidth = 744
+    ExplicitTop = 477
+    ExplicitWidth = 750
   end
   inherited pnlMaster: TPanel
-    Width = 750
-    Height = 442
-    ExplicitWidth = 744
-    ExplicitHeight = 418
     inherited cxGrid: TcxGrid
-      Width = 750
-      Height = 442
-      ExplicitWidth = 744
-      ExplicitHeight = 418
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdBanco: TcxGridDBColumn
           DataBinding.FieldName = 'IdBanco'
@@ -88,12 +45,9 @@ inherited frmBancos: TfrmBancos
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmBancos.adodsMaster
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400840010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400880010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -234,7 +188,7 @@ inherited frmBancos: TfrmBancos
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010B000E00840010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E00880010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

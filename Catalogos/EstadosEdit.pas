@@ -45,7 +45,6 @@ procedure TfrmEstadosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmEstados.Create(Self);
-  TfrmEstados(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

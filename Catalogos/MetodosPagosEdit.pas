@@ -46,7 +46,6 @@ procedure TfrmMetodosPagosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmMetodosPagos.Create(Self);
-  TfrmMetodosPagos(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

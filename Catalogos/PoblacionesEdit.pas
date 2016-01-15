@@ -45,7 +45,6 @@ procedure TfrmPoblacionesEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPoblaciones.Create(Self);
-  TfrmPoblaciones(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

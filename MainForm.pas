@@ -65,6 +65,9 @@ type
     ActOrdenSalida: TAction;
     ActEmisor: TAction;
     dxBarLargeButton17: TdxBarLargeButton;
+    dxbAlmacenes: TdxBar;
+    actAlmacenes: TAction;
+    dxBarLargeButton18: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
   private
     { Private declarations }
@@ -85,7 +88,7 @@ implementation
 
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
-  OrdenesSalidasDM, FacturasDM;
+  OrdenesSalidasDM, FacturasDM, AlmacenesDM;
 
 { TfrmMain }
 
@@ -129,6 +132,7 @@ begin
          gModulo := TDMFacturas.Create(Self);
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
+   30: gModulo := TdmAlmacenes.Create(Self);
   end;
   if Assigned(gModulo) then
   begin

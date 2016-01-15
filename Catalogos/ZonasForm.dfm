@@ -1,5 +1,5 @@
-inherited frmMonedas: TfrmMonedas
-  Caption = 'Monedas'
+inherited frmZonas: TfrmZonas
+  Caption = 'frmZonas'
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -7,12 +7,12 @@ inherited frmMonedas: TfrmMonedas
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMoneda'
+        object tvMasterIdZona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdZona'
           Visible = False
         end
-        object tvMasterIdPais: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPais'
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
           Visible = False
         end
         object tvMasterIdentificador: TcxGridDBColumn
@@ -21,15 +21,12 @@ inherited frmMonedas: TfrmMonedas
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
         end
-        object tvMasterPais: TcxGridDBColumn
-          DataBinding.FieldName = 'Pais'
-        end
       end
     end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400C40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -170,7 +167,7 @@ inherited frmMonedas: TfrmMonedas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010B000E00900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E00DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

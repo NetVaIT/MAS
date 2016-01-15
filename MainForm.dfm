@@ -3,7 +3,7 @@ inherited frmMain: TfrmMain
   ClientWidth = 936
   Font.Height = -32
   ExplicitWidth = 952
-  ExplicitHeight = 518
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -14,6 +14,7 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -24,11 +25,13 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab3: TdxRibbonTab
       Caption = 'Almac'#233'n'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'dxbAlmacenes'
+        end>
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
-      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -167,6 +170,26 @@ inherited frmMain: TfrmMain
       Visible = True
       WholeRow = False
     end
+    object dxbAlmacenes: TdxBar [4]
+      Caption = 'Almacenes'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 970
+      FloatTop = 8
+      FloatClientWidth = 74
+      FloatClientHeight = 42
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton18'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object dxBarLargeButton1: TdxBarLargeButton
       Action = actBancos
       Category = 0
@@ -233,6 +256,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton17: TdxBarLargeButton
       Action = ActEmisor
+      Category = 0
+    end
+    object dxBarLargeButton18: TdxBarLargeButton
+      Action = actAlmacenes
       Category = 0
     end
   end
@@ -354,6 +381,12 @@ inherited frmMain: TfrmMain
       Category = 'Catalogo'
       Caption = 'Emisor'
       ImageIndex = 11
+      OnExecute = actCatalogoExecute
+    end
+    object actAlmacenes: TAction
+      Tag = 30
+      Category = 'Almacen'
+      Caption = 'Almacenes'
       OnExecute = actCatalogoExecute
     end
   end

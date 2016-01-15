@@ -63,6 +63,12 @@ begin
   if adodsPoblaciones.CommandText <> EmptyStr then adodsPoblaciones.Open;
   gGridEditForm := TfrmUbicacionesEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  gFormDetail1:= TfrmEstadosEdit.Create(Self);
+  gFormDetail1.DataSet:= adodsEstados;
+  gFormDetail2 := TfrmMunicipiosEdit.Create(Self);
+  gFormDetail2.DataSet:= adodsMunicipios;
+  gFormDetail3 := TfrmPoblacionesEdit.Create(Self);
+  gFormDetail3.DataSet:= adodsPoblaciones;
 end;
 
 procedure TdmUbicaciones.DataModuleDestroy(Sender: TObject);

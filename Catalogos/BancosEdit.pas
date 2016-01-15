@@ -52,7 +52,6 @@ procedure TfrmBancosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmBancos.Create(Self);
-  TfrmBancos(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

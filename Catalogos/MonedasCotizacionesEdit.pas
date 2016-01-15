@@ -48,7 +48,6 @@ procedure TfrmMonedasCotizacionesEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmMonedasCotizaciones.Create(Self);
-  TfrmMonedasCotizaciones(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

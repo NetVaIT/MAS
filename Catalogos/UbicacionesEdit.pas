@@ -20,7 +20,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   cxTextEdit, cxDBEdit, Vcl.StdCtrls, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
-  cxScrollBox, cxPC, EstadosEdit, MunicipiosEdit, PoblacionesEdit;
+  cxScrollBox, cxPC;
 
 type
   TfrmUbicacionesEdit = class(T_frmStandarGFormEdit)
@@ -32,13 +32,8 @@ type
     tsMunicipio: TcxTabSheet;
     tsPoblacion: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-    frmEstados : TfrmEstadosEdit;
-    frmMunicipios : TfrmMunicipiosEdit;
-    frmPoblacion : TfrmPoblacionesEdit;
   public
     { Public declarations }
   end;
@@ -52,34 +47,10 @@ uses UbicacionesDM, UbicacionesForm;
 procedure TfrmUbicacionesEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TfrmUbicaciones.Create(Self);
-  pcMain.Properties.HideTabs := False;
-  frmEstados := TfrmEstadosEdit.Create(nil);
-  frmMunicipios := TfrmMunicipiosEdit.Create(nil);
-  frmPoblacion := TfrmPoblacionesEdit.Create(nil);
-  TfrmUbicaciones(gFormGrid).CerrarGrid := actCloseGrid;
-end;
-
-procedure TfrmUbicacionesEdit.FormDestroy(Sender: TObject);
-begin
-  inherited;
-  FreeAndNil(frmEstados);
-  FreeAndNil(frmMunicipios);
-  FreeAndNil(frmPoblacion);
-end;
-
-procedure TfrmUbicacionesEdit.FormShow(Sender: TObject);
-begin
-  inherited;
-  frmEstados.Parent := tsEstado;
-  frmEstados.Align := alClient;
-  frmEstados.Show;
-  frmMunicipios.Parent := tsMunicipio;
-  frmMunicipios.Align := alClient;
-  frmMunicipios.Show;
-  frmPoblacion.Parent := tsPoblacion;
-  frmPoblacion.Align := alClient;
-  frmPoblacion.Show;
+  gFormGrid:= TfrmUbicaciones.Create(Self);
+  ContainerDetail1:= tsEstado;
+  ContainerDetail2:= tsMunicipio;
+  ContainerDetail3:= tsPoblacion;
 end;
 
 end.

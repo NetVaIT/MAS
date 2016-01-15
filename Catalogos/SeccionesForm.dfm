@@ -1,35 +1,36 @@
-inherited frmMonedas: TfrmMonedas
-  Caption = 'Monedas'
+inherited frmSecciones: TfrmSecciones
+  Caption = 'frmSecciones'
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMoneda'
+        object tvMasterIdSeccion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdSeccion'
           Visible = False
         end
-        object tvMasterIdPais: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPais'
+        object tvMasterIdAnaquel: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAnaquel'
           Visible = False
         end
-        object tvMasterIdentificador: TcxGridDBColumn
-          DataBinding.FieldName = 'Identificador'
+        object tvMasterFila: TcxGridDBColumn
+          DataBinding.FieldName = 'Fila'
         end
-        object tvMasterDescripcion: TcxGridDBColumn
-          DataBinding.FieldName = 'Descripcion'
+        object tvMasterColumna: TcxGridDBColumn
+          DataBinding.FieldName = 'Columna'
         end
-        object tvMasterPais: TcxGridDBColumn
-          DataBinding.FieldName = 'Pais'
+        object tvMasterEspacios: TcxGridDBColumn
+          DataBinding.FieldName = 'Espacios'
         end
       end
     end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400C40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -170,7 +171,7 @@ inherited frmMonedas: TfrmMonedas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010B000E00900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E00DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

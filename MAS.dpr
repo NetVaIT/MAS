@@ -97,7 +97,16 @@ uses
   _StandarGFormGrid in '..\Standard\_StandarGFormGrid.pas' {_frmStandarGFormGrid},
   PersonasCSDEdit in 'Catalogos\PersonasCSDEdit.pas' {FrmPersonasCSDEdit},
   PersonasCSDForm in 'Catalogos\PersonasCSDForm.pas' {frmPersonasCSDFormGrid},
-  PersonasCSDDM in 'Catalogos\PersonasCSDDM.pas' {dmPersonasCSD: TDataModule};
+  PersonasCSDDM in 'Catalogos\PersonasCSDDM.pas' {dmPersonasCSD: TDataModule},
+  AlmacenesDM in 'Catalogos\AlmacenesDM.pas' {dmAlmacenes: TDataModule},
+  AlmacenesEdit in 'Catalogos\AlmacenesEdit.pas' {frmAlmacenesEdit},
+  AlmacenesForm in 'Catalogos\AlmacenesForm.pas' {frmAlmacenes},
+  ZonasEdit in 'Catalogos\ZonasEdit.pas' {frmZonasEdit},
+  ZonasForm in 'Catalogos\ZonasForm.pas' {frmZonas},
+  AnaquelesEdit in 'Catalogos\AnaquelesEdit.pas' {frmAnaquelesEdit},
+  AnaquelesForm in 'Catalogos\AnaquelesForm.pas' {frmAnaqueles},
+  SeccionesEdit in 'Catalogos\SeccionesEdit.pas' {frmSeccionesEdit},
+  SeccionesForm in 'Catalogos\SeccionesForm.pas' {frmSecciones};
 
 {$R *.res}
 

@@ -45,7 +45,6 @@ procedure TfrmUnidadMedidaEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmUnidadMedida.Create(Self);
-  TfrmUnidadMedida(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.
