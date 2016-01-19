@@ -1,4 +1,4 @@
-unit AlmacenesEdit;
+unit EspaciosEdit;
 
 interface
 
@@ -23,17 +23,9 @@ uses
   cxDBEdit, Vcl.StdCtrls;
 
 type
-  TfrmAlmacenesEdit = class(T_frmStandarGFormEdit)
-    tsZonas: TcxTabSheet;
-    tsAnaqueles: TcxTabSheet;
-    tsSecciones: TcxTabSheet;
+  TfrmEspaciosEdit = class(T_frmStandarGFormEdit)
     Label1: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
-    Label2: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
-    Label3: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
-    tsEspacios: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -45,16 +37,12 @@ implementation
 
 {$R *.dfm}
 
-uses AlmacenesDM, AlmacenesForm;
+uses AlmacenesDM, EspaciosForm;
 
-procedure TfrmAlmacenesEdit.FormCreate(Sender: TObject);
+procedure TfrmEspaciosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TfrmAlmacenes.Create(Self);
-  ContainerDetail1:= tsZonas;
-  ContainerDetail2:= tsAnaqueles;
-  ContainerDetail3:= tsSecciones;
-  ContainerDetail4:= tsEspacios;
+  gFormGrid := TfrmEspacios.Create(Self);
 end;
 
 end.

@@ -151,4 +151,43 @@ inherited dmAlmacenes: TdmAlmacenes
       FieldName = 'Espacios'
     end
   end
+  object dsSecciones: TDataSource
+    DataSet = adodsSecciones
+    Left = 128
+    Top = 208
+  end
+  object adodsEspacios: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdEspacio, IdSeccion, Descripcion from Espacios WHERE IdS' +
+      'eccion = :IdSeccion'
+    DataSource = dsSecciones
+    MasterFields = 'IdSeccion'
+    Parameters = <
+      item
+        Name = 'IdSeccion'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 40
+    Top = 264
+    object adodsEspaciosIdEspacio: TAutoIncField
+      FieldName = 'IdEspacio'
+      ReadOnly = True
+      Visible = False
+    end
+    object adodsEspaciosIdSeccion: TIntegerField
+      FieldName = 'IdSeccion'
+      Visible = False
+    end
+    object adodsEspaciosDescripcion: TStringField
+      DisplayLabel = 'Descripci'#243'n'
+      FieldName = 'Descripcion'
+      Size = 50
+    end
+  end
 end

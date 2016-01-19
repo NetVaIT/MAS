@@ -31,6 +31,11 @@ type
     adodsSeccionesFila: TStringField;
     adodsSeccionesColumna: TStringField;
     adodsSeccionesEspacios: TIntegerField;
+    dsSecciones: TDataSource;
+    adodsEspacios: TADODataSet;
+    adodsEspaciosIdEspacio: TAutoIncField;
+    adodsEspaciosIdSeccion: TIntegerField;
+    adodsEspaciosDescripcion: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -43,7 +48,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses AlmacenesEdit, ZonasEdit, AnaquelesEdit, SeccionesEdit;
+uses AlmacenesEdit, ZonasEdit, AnaquelesEdit, SeccionesEdit, EspaciosEdit;
 
 {$R *.dfm}
 
@@ -53,6 +58,7 @@ begin
   if adodsZonas.CommandText <> EmptyStr then adodsZonas.Open;
   if adodsAnaqueles.CommandText <> EmptyStr then adodsAnaqueles.Open;
   if adodsSecciones.CommandText <> EmptyStr then adodsSecciones.Open;
+  if adodsEspacios.CommandText <> EmptyStr then adodsEspacios.Open;
   gGridEditForm := TfrmAlmacenesEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   gFormDetail1:= TfrmZonasEdit.Create(Self);
@@ -61,6 +67,8 @@ begin
   gFormDetail2.DataSet:= adodsAnaqueles;
   gFormDetail3:= TfrmSeccionesEdit.Create(Self);
   gFormDetail3.DataSet:= adodsSecciones;
+  gFormDetail4:= TfrmEspaciosEdit.Create(Self);
+  gFormDetail4.DataSet:= adodsEspacios;
 end;
 
 procedure TdmAlmacenes.DataModuleDestroy(Sender: TObject);
@@ -69,6 +77,7 @@ begin
   adodsZonas.Close;
   adodsAnaqueles.Close;
   adodsSecciones.Close;
+  adodsEspacios.Close;
 end;
 
 end.

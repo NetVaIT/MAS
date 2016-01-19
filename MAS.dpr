@@ -106,7 +106,9 @@ uses
   AnaquelesEdit in 'Catalogos\AnaquelesEdit.pas' {frmAnaquelesEdit},
   AnaquelesForm in 'Catalogos\AnaquelesForm.pas' {frmAnaqueles},
   SeccionesEdit in 'Catalogos\SeccionesEdit.pas' {frmSeccionesEdit},
-  SeccionesForm in 'Catalogos\SeccionesForm.pas' {frmSecciones};
+  SeccionesForm in 'Catalogos\SeccionesForm.pas' {frmSecciones},
+  EspaciosEdit in 'Catalogos\EspaciosEdit.pas' {frmEspaciosEdit},
+  EspaciosForm in 'Catalogos\EspaciosForm.pas' {frmEspacios};
 
 {$R *.res}
 
