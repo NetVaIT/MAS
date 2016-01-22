@@ -87,10 +87,6 @@ type
     DSDireccioncliente: TDataSource;
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
-    procedure TlBtnInsertaClick(Sender: TObject);
-    procedure TlBtnEditaClick(Sender: TObject);
-    procedure TlBtnGuardaClick(Sender: TObject);
-    procedure TlBtnCancelaClick(Sender: TObject);
     procedure DataSourceDetailStateChange(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);
@@ -123,7 +119,10 @@ uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm,
 function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
 begin
-//  dsQryBorrar Este sirve cambiando la consulta par que actualice lo reuqerido
+  dsQryBorrar.DataSet.Close;
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cantidad)+' where IDProducto='+intToStr(idProducto));
+  TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
 end;
 
 procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
@@ -132,7 +131,8 @@ begin
   if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
      SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
   pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and  SpdBtnCambioEstatus.Visible;  // ene 11/16
-
+  toolbutton10.Visible:= pnlMaster.Enabled;
+  toolbutton12.visible:=pnlMaster.Enabled;
 end;
 
 procedure TfrmCotizaciones.DataSourceDetailStateChange(Sender: TObject);
@@ -212,7 +212,10 @@ begin
    begin
      dsDireccionCliente.dataset.close;
      TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
-     dsDireccionCliente.dataset.Open
+     dsDireccionCliente.dataset.Open;
+     if dsDireccionCliente.dataset.RecordCount >=1 then
+        DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
+
    end;
 end;
 
@@ -221,7 +224,7 @@ begin
   inherited;
 
   gFormGrid := TfrmCotizacionesGrid.Create(Self);
-  TfrmCotizacionesGrid(gFormGrid).CerrarGrid := actCloseGrid;
+ // TfrmCotizacionesGrid(gFormGrid).CerrarGrid := actCloseGrid;  //Se vaa acolocar en el estandar hay que quitarlo de aca Ene 13/16
   DataSource.DataSet.open;
   DataSourceDetail.DataSet.Open;
 end;
@@ -285,10 +288,7 @@ begin
       if  DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat=  DataSourceDetail.DataSet.FieldByName('Cantidad').AsFloat then //Es la primera vez Ene 12/16
       begin
         //Actualizar todo para que se aparte en inventario// no se sabe quien lo tiene
-
-        //ActualizaPedidoXSurtirEnInventario(DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger,DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat)
-
-
+        ActualizaPedidoXSurtirEnInventario(DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger,DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat)
       end;
 
     end;
@@ -350,8 +350,10 @@ end;
 procedure TfrmCotizaciones.SpdBtnCambioEstatusClick(Sender: TObject);
 var
  res:Boolean;
+ id:Integer; //Ene14/16
 begin
   inherited;
+
   if (DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger<3)then
   begin
     if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
@@ -380,27 +382,15 @@ begin
     end;
   end;
 
-
+  id:=DataSource.DataSet.FieldByName('idDocumentoSalida').AsInteger; //Ene 14/16
 
   //rehacer consulta
   Datasource.dataset.close;
   Datasource.dataset.Open;
+  Datasource.dataset.Locate('idDocumentoSalida',id,[]); //Ene 14/16
+
   //Si se ven deberia ubicarse en la modificada
 
-end;
-
-procedure TfrmCotizaciones.TlBtnEditaClick(Sender: TObject);
-begin
-  inherited;
-//  DataSourceDetail.DataSet.Edit;
-end;
-
-procedure TfrmCotizaciones.TlBtnInsertaClick(Sender: TObject);
-begin
-  inherited;
-//  if Datasource.DataSet.State in[dsInsert,dsEdit] then
-//    Datasource.DataSet.post;
-//  DataSourceDetail.DataSet.Insert;
 end;
 
 procedure TfrmCotizaciones.TlBtnBorraClick(Sender: TObject);
@@ -410,18 +400,6 @@ begin
   //Porque borra nin confirmar si no se tiene
    if MessageDlg(strAllowDelete, mtConfirmation, mbYesNo, 0) = mrYes then
      DataSourceDetail.DataSet.Delete;
-end;
-
-procedure TfrmCotizaciones.TlBtnCancelaClick(Sender: TObject);
-begin
-  inherited;
- // DataSourceDetail.DataSet.Cancel;
-end;
-
-procedure TfrmCotizaciones.TlBtnGuardaClick(Sender: TObject);
-begin
-  inherited;
- // DataSourceDetail.DataSet.Post;
 end;
 
 end.

@@ -1,10 +1,7 @@
 inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'frmCotizaciones'
   ClientWidth = 960
-  OnCreate = FormCreate
-  OnShow = FormShow
   ExplicitWidth = 960
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -342,7 +339,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataField = 'FechaRegistro'
               DataBinding.DataSource = DataSource
               TabOrder = 5
-              Width = 121
+              Width = 145
             end
             object cxDBLabel1: TcxDBLabel
               Left = 231
@@ -457,7 +454,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -663,7 +660,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C002800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C0028C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

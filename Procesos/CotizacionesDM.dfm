@@ -1,7 +1,7 @@
 inherited dmCotizaciones: TdmCotizaciones
   OldCreateOrder = True
   Height = 628
-  Width = 564
+  Width = 615
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
@@ -211,8 +211,9 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     CommandText = 
       'SELECT P.IdProducto,P.Descripcion,P.PrecioUnitario, I.Existencia' +
-      #13#10' FROM Productos P'#13#10' inner join Inventario  I On P.IDProducto=I' +
-      '.IdProducto'
+      ','#13#10' I.PedidoXSurtir, I.apartado, (I.Existencia-I.PedidoXSurtir-I' +
+      '.Apartado ) as ExistenciaReal'#13#10' FROM Productos P'#13#10' inner join In' +
+      'ventario  I On P.IDProducto=I.IdProducto'
     Parameters = <>
     Left = 64
     Top = 144

@@ -1,9 +1,41 @@
 inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   Caption = 'frmCotizacionesGrid'
+  ClientWidth = 890
+  ExplicitWidth = 890
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 890
+  end
+  inherited splDetail2: TSplitter
+    Width = 890
+  end
+  inherited splDetail1: TSplitter
+    Width = 890
+  end
+  inherited pnlClose: TPanel
+    Width = 890
+  end
+  inherited pnlDetail3: TPanel
+    Width = 890
+  end
+  inherited pnlDetail2: TPanel
+    Width = 890
+  end
+  inherited pnlDetail1: TPanel
+    Width = 890
+  end
+  inherited pnltoolbar: TPanel
+    Width = 890
+  end
+  inherited tbarGrid: TToolBar
+    Width = 890
+  end
   inherited pnlMaster: TPanel
+    Width = 890
     inherited cxGrid: TcxGrid
+      Width = 890
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFechaRegistro: TcxGridDBColumn
           DataBinding.FieldName = 'FechaRegistro'
@@ -11,17 +43,11 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
         object tvMasterTipoDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'TipoDocumento'
         end
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-        end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
         end
-        object tvMasterMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'Moneda'
-        end
-        object tvMasterVigenciaDias: TcxGridDBColumn
-          DataBinding.FieldName = 'VigenciaDias'
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
         end
         object tvMasterIVA: TcxGridDBColumn
           DataBinding.FieldName = 'IVA'
@@ -35,6 +61,12 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
         end
+        object tvMasterMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'Moneda'
+        end
+        object tvMasterVigenciaDias: TcxGridDBColumn
+          DataBinding.FieldName = 'VigenciaDias'
+        end
       end
     end
   end
@@ -43,7 +75,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400C80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400CC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -184,7 +216,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00C001EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

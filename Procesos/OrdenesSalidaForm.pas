@@ -384,7 +384,7 @@ procedure TFrmOrdenesSalida.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TFrmOrdenesSalidaGrid.Create(Self);
-  TFrmOrdenesSalidaGrid(gFormGrid).CerrarGrid := actCloseGrid;
+//  TFrmOrdenesSalidaGrid(gFormGrid).CerrarGrid := actCloseGrid;
 
   DataSource.dataset.open; //Nov 25/15
   DtSrcOrdenSalItem.DataSet.Open

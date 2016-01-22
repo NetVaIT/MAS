@@ -95,7 +95,6 @@ type
     Label24: TLabel;
     cxDBTextEdit14: TcxDBTextEdit;
     SpdBtnRechazarPerdido: TSpeedButton;
-    SpeedButton1: TSpeedButton;
     ToolButton3: TToolButton;
     TlBtnGeneraCFDI: TToolButton;
     Label25: TLabel;
@@ -122,7 +121,6 @@ type
     cxDBTextEdit8: TcxDBTextEdit;
     Splitter2: TSplitter;
     procedure FormCreate(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
@@ -177,7 +175,7 @@ procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmFacturasGrid.Create(Self);
-  TFrmFacturasGrid(gFormGrid).CerrarGrid := actCloseGrid;
+  //TFrmFacturasGrid(gFormGrid).CerrarGrid := actCloseGrid;
 
 end;
 
@@ -226,12 +224,6 @@ begin
   RegeneraPDF:=Value;
   TFrmFacturasGrid(gFormGrid).ActRegPDF:=value;
 
-end;
-
-procedure TfrmFacturasFormEdit.SpeedButton1Click(Sender: TObject);
-begin
-  inherited;
- ////Mostrar para pedir selecccion y cambiar tambien en el Documento Salida
 end;
 
 end.

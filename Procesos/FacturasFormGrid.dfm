@@ -127,25 +127,45 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       ExplicitHeight = 33
     end
     inherited tbtnCerrar: TToolButton
+      Hint = 'Visualiza Factura Actual'
+      ParentShowHint = False
       ExplicitHeight = 33
     end
     object ToolButton11: TToolButton
       Left = 239
       Top = 0
-      Width = 170
+      Width = 58
       Caption = 'ToolButton11'
       ImageIndex = 0
       Style = tbsSeparator
     end
     object TlBtnPrefactura: TToolButton
-      Left = 409
+      Left = 297
       Top = 0
       Hint = 'Prefacturaci'#243'n'
       ImageIndex = 12
       Visible = False
     end
+    object TlBtnConsulta: TToolButton
+      Left = 320
+      Top = 0
+      Hint = 'Consulta por Estatus'
+      Caption = 'TlBtnConsulta'
+      ImageIndex = 14
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = TlBtnConsultaClick
+    end
+    object ToolButton12: TToolButton
+      Left = 343
+      Top = 0
+      Width = 74
+      Caption = 'ToolButton12'
+      ImageIndex = 15
+      Style = tbsSeparator
+    end
     object TlBtnRegPDF: TToolButton
-      Left = 432
+      Left = 417
       Top = 0
       Hint = 'Impresi'#243'n de Facturas por Departamento'
       Caption = 'TlBtnRegPDF'
@@ -153,13 +173,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       ParentShowHint = False
       ShowHint = True
       OnMouseDown = TlBtnRegPDFMouseDown
-    end
-    object TlBtnConsulta: TToolButton
-      Left = 455
-      Top = 0
-      Caption = 'TlBtnConsulta'
-      ImageIndex = 14
-      OnClick = TlBtnConsultaClick
     end
   end
   inherited pnlMaster: TPanel
@@ -188,8 +201,12 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         object tvMasterTipoDocumento: TcxGridDBColumn
           DataBinding.FieldName = 'TipoDocumento'
         end
+        object tvMasterEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'Estatus'
+        end
         object tvMasterTipoComp: TcxGridDBColumn
           DataBinding.FieldName = 'TipoComp'
+          Visible = False
         end
         object tvMasterUUID_TB: TcxGridDBColumn
           DataBinding.FieldName = 'UUID_TB'
@@ -237,7 +254,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -384,7 +401,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01010F00D0013C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F00D001400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

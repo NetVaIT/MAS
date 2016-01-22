@@ -48,6 +48,8 @@ type
     RdGrpSeleccion: TRadioGroup;
     ChckLstImpresion: TCheckListBox;
     Label1: TLabel;
+    tvMasterEstatus: TcxGridDBColumn;
+    ToolButton12: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);

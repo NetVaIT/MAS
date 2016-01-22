@@ -1,8 +1,6 @@
 inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   Caption = 'frmFacturasFormEdit'
   ClientWidth = 990
-  OnCreate = FormCreate
-  OnShow = FormShow
   ExplicitWidth = 990
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -90,6 +88,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Top = 0
             Hint = 'Generar CFDI'
             ImageIndex = 23
+            ParentShowHint = False
+            ShowHint = True
           end
         end
         inherited pnlMaster: TPanel
@@ -208,7 +208,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Left = 31
               Top = 122
               Width = 530
-              Height = 185
+              Height = 175
               Shape = bsFrame
             end
             object Label15: TLabel
@@ -274,15 +274,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 22
               Caption = 'Rechaza Pedido'
               Visible = False
-            end
-            object SpeedButton1: TSpeedButton
-              Left = 471
-              Top = 285
-              Width = 87
-              Height = 22
-              Caption = 'Cambiar Domicilio'
-              Visible = False
-              OnClick = SpeedButton1Click
             end
             object Label25: TLabel
               Left = 593
@@ -796,7 +787,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1006,7 +997,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011800C002940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C0029C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
