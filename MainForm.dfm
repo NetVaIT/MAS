@@ -14,7 +14,6 @@ inherited frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -49,6 +48,15 @@ inherited frmMain: TfrmMain
       Caption = 'Cuentas X Cobrar'
       Groups = <>
       Index = 5
+    end
+    object dxRibbon1Tab7: TdxRibbonTab
+      Active = True
+      Caption = 'Reportes'
+      Groups = <
+        item
+          ToolbarName = 'dxbReportes'
+        end>
+      Index = 6
     end
   end
   inherited dxRibbonBackstageView1: TdxRibbonBackstageView
@@ -190,6 +198,26 @@ inherited frmMain: TfrmMain
       Visible = True
       WholeRow = False
     end
+    object dxbReportes: TdxBar [5]
+      Caption = 'Reportes'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 970
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton19'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object dxBarLargeButton1: TdxBarLargeButton
       Action = actBancos
       Category = 0
@@ -260,6 +288,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton18: TdxBarLargeButton
       Action = actAlmacenes
+      Category = 0
+    end
+    object dxBarLargeButton19: TdxBarLargeButton
+      Action = actRptVentasUnidades
       Category = 0
     end
   end
@@ -387,6 +419,14 @@ inherited frmMain: TfrmMain
       Tag = 30
       Category = 'Almacen'
       Caption = 'Almacenes'
+      ImageIndex = 37
+      OnExecute = actCatalogoExecute
+    end
+    object actRptVentasUnidades: TAction
+      Tag = 50
+      Category = 'Reportes'
+      Caption = 'Ventas de unidades'
+      ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
   end

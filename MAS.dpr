@@ -109,7 +109,9 @@ uses
   SeccionesForm in 'Catalogos\SeccionesForm.pas' {frmSecciones},
   EspaciosEdit in 'Catalogos\EspaciosEdit.pas' {frmEspaciosEdit},
   EspaciosForm in 'Catalogos\EspaciosForm.pas' {frmEspacios},
-  ImpresosSalidasDM in 'Procesos\ImpresosSalidasDM.pas' {DMImpresosSalidas: TDataModule};
+  ImpresosSalidasDM in 'Procesos\ImpresosSalidasDM.pas' {DMImpresosSalidas: TDataModule},
+  rptVentasUnidadesDM in 'Reportes\rptVentasUnidadesDM.pas' {dmrptVentasUnidades: TDataModule},
+  rptVentasUnidadesForm in 'Reportes\rptVentasUnidadesForm.pas' {frmrptVentasUnidades};
 
 {$R *.res}
 
