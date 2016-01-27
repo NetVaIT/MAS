@@ -1,61 +1,92 @@
 inherited FrmOrdenesSalida: TFrmOrdenesSalida
   Caption = 'FrmOrdenesSalida'
-  ClientWidth = 933
+  ClientWidth = 974
   OnActivate = FormActivate
-  ExplicitWidth = 933
+  ExplicitWidth = 974
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 933
+    Top = 620
+    Width = 974
     ExplicitWidth = 933
   end
   inherited splDetail2: TSplitter
-    Width = 933
+    Top = 551
+    Width = 974
+    Height = 28
+    ExplicitTop = 545
     ExplicitWidth = 933
+    ExplicitHeight = 28
   end
   inherited splDetail1: TSplitter
-    Width = 933
+    Top = 524
+    Width = 974
     ExplicitWidth = 933
   end
   inherited pnlClose: TPanel
-    Width = 933
+    Top = 640
+    Width = 974
+    Height = 10
+    ExplicitTop = 640
     ExplicitWidth = 933
+    ExplicitHeight = 10
   end
   inherited pnlDetail3: TPanel
-    Width = 933
+    Top = 623
+    Width = 974
+    Height = 17
+    ExplicitTop = 592
     ExplicitWidth = 933
+    ExplicitHeight = 17
   end
   inherited pnlDetail2: TPanel
-    Width = 933
+    Top = 579
+    Width = 974
+    ExplicitLeft = -1
+    ExplicitTop = 545
     ExplicitWidth = 933
   end
   inherited pnlDetail1: TPanel
-    Width = 933
+    Top = 527
+    Width = 974
+    Height = 24
+    ExplicitTop = 496
     ExplicitWidth = 933
+    ExplicitHeight = 24
   end
   inherited pcMain: TcxPageControl
-    Width = 933
+    Width = 974
+    Height = 524
     ExplicitWidth = 933
-    ClientRectRight = 932
+    ClientRectBottom = 523
+    ClientRectRight = 973
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 931
+      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
-        Width = 931
+        Width = 972
+        Height = 522
         ExplicitWidth = 931
         inherited tbarData: TToolBar
-          Width = 929
+          Width = 970
           ExplicitWidth = 929
         end
         inherited pnlMaster: TPanel
-          Width = 929
+          Width = 970
+          Height = 495
           ExplicitWidth = 929
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 929
-            Height = 361
+            Width = 970
+            Height = 393
             Align = alTop
             TabOrder = 0
+            ExplicitLeft = -2
+            ExplicitTop = -6
             object Label10: TLabel
               Left = 31
               Top = 16
@@ -237,8 +268,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataSource = DataSource
             end
             object DBTxtTotal: TDBText
-              Left = 91
-              Top = 320
+              Left = 92
+              Top = 322
               Width = 121
               Height = 17
               DataField = 'Total'
@@ -897,22 +928,236 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               TabOrder = 12
               OnClick = BtBtnIniciarProceso
             end
+            object PnlInformacionEntrega: TPanel
+              Left = 200
+              Top = 250
+              Width = 769
+              Height = 141
+              BevelOuter = bvNone
+              TabOrder = 13
+              Visible = False
+              object Label2: TLabel
+                Left = 23
+                Top = 5
+                Width = 113
+                Height = 13
+                Caption = 'Programaci'#243'n entrega: '
+              end
+              object Label5: TLabel
+                Left = 323
+                Top = 5
+                Width = 87
+                Height = 13
+                Caption = 'Condicion Entrega'
+                FocusControl = cxDBTextEdit2
+              end
+              object Label6: TLabel
+                Left = 23
+                Top = 96
+                Width = 71
+                Height = 13
+                Caption = 'Observaciones'
+                FocusControl = cxDBTextEdit3
+              end
+              object Label7: TLabel
+                Left = 168
+                Top = 8
+                Width = 42
+                Height = 13
+                Caption = 'Tel'#233'fono'
+              end
+              object Label9: TLabel
+                Left = 500
+                Top = 98
+                Width = 24
+                Height = 13
+                Caption = 'Valor'
+              end
+              object Label8: TLabel
+                Left = 23
+                Top = 52
+                Width = 46
+                Height = 13
+                Caption = 'Conducto'
+                FocusControl = cxDBTextEdit1
+              end
+              object Label21: TLabel
+                Left = 320
+                Top = 53
+                Width = 49
+                Height = 13
+                Caption = 'Contenido'
+                FocusControl = cxDBTextEdit4
+              end
+              object cxDBTextEdit2: TcxDBTextEdit
+                Left = 320
+                Top = 24
+                DataBinding.DataField = 'CondicionEntrega'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 0
+                Width = 287
+              end
+              object cxDBTextEdit3: TcxDBTextEdit
+                Left = 23
+                Top = 114
+                DataBinding.DataField = 'Observaciones'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 1
+                Width = 466
+              end
+              object cxDBCheckBox1: TcxDBCheckBox
+                Left = 637
+                Top = 67
+                Caption = 'Flete Pagado'
+                DataBinding.DataField = 'PagoFlete'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 2
+                Width = 121
+              end
+              object cxDBCheckBox2: TcxDBCheckBox
+                Left = 638
+                Top = 116
+                Caption = 'Asegurado'
+                DataBinding.DataField = 'Asegurado'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 3
+                Width = 121
+              end
+              object cxDBTextEdit5: TcxDBTextEdit
+                Left = 500
+                Top = 114
+                DataBinding.DataField = 'Valor'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 4
+                Width = 129
+              end
+              object cxDBDateEdit1: TcxDBDateEdit
+                Left = 23
+                Top = 24
+                DataBinding.DataField = 'FechaProgramadaEnt'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 5
+                Width = 127
+              end
+              object DBLookupComboBox1: TDBLookupComboBox
+                Left = 168
+                Top = 24
+                Width = 138
+                Height = 21
+                DataField = 'TelefonoCompleto'
+                DataSource = DSInformacionEntrega
+                TabOrder = 6
+              end
+              object cxDBTextEdit1: TcxDBTextEdit
+                Left = 23
+                Top = 68
+                DataBinding.DataField = 'Conducto'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 7
+                Width = 283
+              end
+              object cxDBTextEdit4: TcxDBTextEdit
+                Left = 320
+                Top = 69
+                DataBinding.DataField = 'Contenido'
+                DataBinding.DataSource = DSInformacionEntrega
+                TabOrder = 8
+                Width = 169
+              end
+              object cxDBRadioGroup1: TcxDBRadioGroup
+                Left = 495
+                Top = 51
+                Caption = 'Servicio'
+                DataBinding.DataField = 'Servicio'
+                DataBinding.DataSource = DSInformacionEntrega
+                Properties.Columns = 2
+                Properties.Items = <
+                  item
+                    Caption = 'Ocurre'
+                    Value = 'Ocurre'
+                  end
+                  item
+                    Caption = 'Domicilio'
+                    Value = 'Domicilio'
+                  end>
+                TabOrder = 9
+                Height = 40
+                Width = 136
+              end
+            end
+            object PnlSalidasUbicacion: TPanel
+              Left = 321
+              Top = 52
+              Width = 638
+              Height = 306
+              TabOrder = 14
+              Visible = False
+              object BtBtnAcepta: TBitBtn
+                Tag = 1
+                Left = 428
+                Top = 265
+                Width = 83
+                Height = 25
+                Caption = 'Aceptar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+                  555555555555555555555555555555555555555555FF55555555555559055555
+                  55555555577FF5555555555599905555555555557777F5555555555599905555
+                  555555557777FF5555555559999905555555555777777F555555559999990555
+                  5555557777777FF5555557990599905555555777757777F55555790555599055
+                  55557775555777FF5555555555599905555555555557777F5555555555559905
+                  555555555555777FF5555555555559905555555555555777FF55555555555579
+                  05555555555555777FF5555555555557905555555555555777FF555555555555
+                  5990555555555555577755555555555555555555555555555555}
+                NumGlyphs = 2
+                TabOrder = 0
+              end
+              object BitBtn8: TBitBtn
+                Tag = 1
+                Left = 531
+                Top = 265
+                Width = 83
+                Height = 25
+                Caption = 'Cancelar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                  999333777FF37FF377733339993000399933333777F777F77733333399970799
+                  93333333777F7377733333333999399933333333377737773333333333990993
+                  3333333333737F73333333333331013333333333333777FF3333333333910193
+                  333333333337773FF3333333399000993333333337377737FF33333399900099
+                  93333333773777377FF333399930003999333337773777F777FF339993370733
+                  9993337773337333777333333333333333333333333333333333333333333333
+                  3333333333333333333333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 1
+              end
+            end
           end
           object Panel3: TPanel
             Left = 0
-            Top = 361
-            Width = 929
+            Top = 393
+            Width = 970
             Height = 153
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitTop = 361
+            ExplicitWidth = 929
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
-              Width = 929
+              Width = 970
               Height = 29
               Images = ilAction
               TabOrder = 0
+              ExplicitWidth = 929
               object ToolButton31: TToolButton
                 Left = 0
                 Top = 0
@@ -986,7 +1231,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             object DBGrid2: TDBGrid
               Left = 0
               Top = 29
-              Width = 929
+              Width = 970
               Height = 124
               Align = alClient
               DataSource = DtSrcOrdenSalItem
@@ -1067,7 +1312,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1270,7 +1515,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C0026C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2075,7 +2320,12 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   object DtSrcOrdenSalItem: TDataSource
     AutoEdit = False
     DataSet = DMOrdenesSalidas.ADODtStOrdenSalidaItem
-    Left = 866
-    Top = 272
+    Left = 882
+    Top = 88
+  end
+  object DSInformacionEntrega: TDataSource
+    DataSet = DMOrdenesSalidas.ADODtStInformacionEnvio
+    Left = 820
+    Top = 224
   end
 end

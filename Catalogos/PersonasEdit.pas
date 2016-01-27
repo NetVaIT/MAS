@@ -149,7 +149,7 @@ begin
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
   dmPersonasCSD:= TdmPersonasCSD.Create(nil);//Dic 21/15
-  TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
+ // TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 procedure TfrmPersonasEdit.FormDestroy(Sender: TObject);

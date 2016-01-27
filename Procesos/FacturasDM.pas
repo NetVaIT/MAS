@@ -280,6 +280,24 @@ type
     ADODtStProductosKardexCantidad: TFloatField;
     ADODtStProductosKardexImporte: TFMTBCDField;
     ADODtStInventario: TADODataSet;
+    ADODtStInformacionEnvio: TADODataSet;
+    ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField;
+    ADODtStInformacionEnvioIdCFDI: TLargeintField;
+    ADODtStInformacionEnvioIDPersonaCliente: TIntegerField;
+    ADODtStInformacionEnvioIDPersonaDomicilio: TIntegerField;
+    ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField;
+    ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField;
+    ADODtStInformacionEnvioFechaRealEnt: TWideStringField;
+    ADODtStInformacionEnvioCondicionEntrega: TStringField;
+    ADODtStInformacionEnvioObservaciones: TStringField;
+    ADODtStInformacionEnvioEstatusEntrega: TStringField;
+    ADODtStInformacionEnvioIdTelefono: TIntegerField;
+    ADODtStInformacionEnvioContenido: TStringField;
+    ADODtStInformacionEnvioConducto: TStringField;
+    ADODtStInformacionEnvioServicio: TStringField;
+    ADODtStInformacionEnvioPagoFlete: TBooleanField;
+    ADODtStInformacionEnvioValor: TFloatField;
+    ADODtStInformacionEnvioAsegurado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -302,7 +320,8 @@ type
     procedure ReadFile(FileName: TFileName);
     function GetfImpresion: Integer;
 
-    procedure ConvierteBinADec(Numero: integer; var B:TArrDinamico); //Ene7/16
+    procedure ConvierteBinADec(Numero: integer; var B:TArrDinamico);
+    procedure LlenaDatosEnvio; //Ene7/16
     { Private declarations }
   public
     { Public declarations }
@@ -623,7 +642,7 @@ begin
         end
         else
           application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
-
+        LlenaDatosEnvio; //Ene 27/16  Se hace aun y cuando no se haya alcanzado a Timbrar la Factura.
 
 
 
@@ -634,6 +653,35 @@ begin
   else
     Showmessage('CFDI generado con anterioridad');
 
+end;
+
+
+procedure TDMFacturas.LlenaDatosEnvio; //Ene 27/16
+begin
+
+  ADODtStInformacionEnvio.Open;
+  if ADODtStInformacionEnvio.eof then
+  begin
+    ADODtStInformacionEnvio.Insert;
+    ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
+    ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
+    ADODtStInformacionEnvio.Fieldbyname('FechaProgramadaEntrega').AsDateTime:= Now+10;
+    ADODtStInformacionEnvio.Fieldbyname('Servicio').AsInteger:= 'Domicilio';
+    ADODtStInformacionEnvio.Fieldbyname('PagoFlete').AsInteger:= 0;
+    ADODtStInformacionEnvio.Fieldbyname('Valor').AsInteger:=  adodsMaster.FieldByName('Total').ASFloat;
+    ADODtStInformacionEnvio.Fieldbyname('Asegurado').AsInteger:= 0;
+    ADODtStInformacionEnvio.Post;
+
+  end
+  else      //Por si hubiese algún cambio
+  begin
+    ADODtStInformacionEnvio.Edit;
+ //   ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
+    ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
+    ADODtStInformacionEnvio.Fieldbyname('Valor').AsInteger:=  adodsMaster.FieldByName('Total').ASFloat;
+    ADODtStInformacionEnvio.Post;
+  end;
+  ADODtStInformacionEnvio.Close;
 end;
 
 procedure TDMFacturas.ActRegeneraPDFExecute(Sender: TObject);

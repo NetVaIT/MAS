@@ -15,7 +15,6 @@ type
     adodsCotizacionEstatus: TADODataSet;
     adodsMoneda: TADODataSet;
     adodsMasterIdDocumentoSalida: TAutoIncField;
-    adodsMasterIdTipoDocumentoSalida: TIntegerField;
     adodsMasterIdPersona: TIntegerField;
     adodsMasterIdMoneda: TIntegerField;
     adodsMasterIdUsuario: TIntegerField;
@@ -50,7 +49,6 @@ type
     ADOdsTipoDocumentoIdDocumentoSalidaTipo: TAutoIncField;
     ADOdsTipoDocumentoIdentificador: TStringField;
     ADOdsTipoDocumentoDescripcion: TStringField;
-    adodsMasterTipoDocumento: TStringField;
     adodsMasterFechaRegistro: TDateTimeField;
     ADODSAuxiliar: TADODataSet;
     DSMaster: TDataSource;
@@ -141,6 +139,8 @@ type
     StringField8: TStringField;
     StringField9: TStringField;
     StringField10: TStringField;
+    adodsMasterIdDocumentoSalidaTipo: TIntegerField;
+    adodsMasterTipoDocumento: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -271,7 +271,7 @@ begin  //Nov 6/15
   adodsMaster.fieldbyname('VigenciaDias').AsInteger:=30; //Cambiar a parámetro del sistema
   adodsMaster.fieldbyname('IDMoneda').AsInteger:=106; //DEbe ser parámetro
   adodsMaster.fieldbyname('IDUsuario').AsInteger:= 1;
-  adodsMaster.fieldbyname('IDTipoDocumentoSalida').AsInteger:= 1;
+  adodsMaster.fieldbyname('IDDocumentoSalidaTipo').AsInteger:= 1;
   adodsMaster.fieldbyname('IDDocumentoSalidaEstatus').AsInteger:= 1;
 end;
 

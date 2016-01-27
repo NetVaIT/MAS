@@ -3,7 +3,6 @@ inherited frmMain: TfrmMain
   ClientWidth = 936
   Font.Height = -32
   ExplicitWidth = 952
-  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -68,6 +67,7 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 936
+    ExplicitTop = 32000
     ExplicitWidth = 936
   end
   inherited pnlMain: TPanel

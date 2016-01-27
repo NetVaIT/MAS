@@ -1,6 +1,5 @@
 inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   Caption = 'FrmPersonasCSDEdit'
-  OnCreate = FormCreate
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -13,8 +12,6 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
-          ExplicitLeft = -3
-          ExplicitTop = 24
           object Label1: TLabel
             Left = 16
             Top = 16
@@ -82,7 +79,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
           end
           object cxDBLabel2: TcxDBLabel
             Left = 14
-            Top = 91
+            Top = 96
             DataBinding.DataField = 'ArchivoKEY'
             DataBinding.DataSource = DataSource
             Height = 45
@@ -97,7 +94,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -238,7 +235,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D00C002700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D00C002740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

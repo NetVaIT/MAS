@@ -457,6 +457,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 240
   end
   object ADODtStPersonaAutoriza: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -535,6 +536,234 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldName = 'Cantidad'
     end
     object ADODtStProductosKardexImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object ADODtStInformacionEnvio: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from InformacionEntregas where IdCFDI=:IDCFDI'
+    DataSource = dsFacturaCFDI
+    IndexFieldNames = 'IdCFDI'
+    MasterFields = 'IDCFDI'
+    Parameters = <
+      item
+        Name = 'IDCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    Left = 440
+    Top = 489
+    object ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField
+      FieldName = 'IdInfoEntrega'
+      ReadOnly = True
+    end
+    object ADODtStInformacionEnvioIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStInformacionEnvioIDPersonaCliente: TIntegerField
+      FieldName = 'IDPersonaCliente'
+    end
+    object ADODtStInformacionEnvioIDPersonaDomicilio: TIntegerField
+      FieldName = 'IDPersonaDomicilio'
+    end
+    object ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField
+      FieldName = 'IDResponsableEntrega'
+    end
+    object ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField
+      FieldName = 'FechaProgramadaEnt'
+      Size = 10
+    end
+    object ADODtStInformacionEnvioFechaRealEnt: TWideStringField
+      FieldName = 'FechaRealEnt'
+      Size = 10
+    end
+    object ADODtStInformacionEnvioCondicionEntrega: TStringField
+      FieldName = 'CondicionEntrega'
+      Size = 300
+    end
+    object ADODtStInformacionEnvioObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 100
+    end
+    object ADODtStInformacionEnvioEstatusEntrega: TStringField
+      FieldName = 'EstatusEntrega'
+    end
+    object ADODtStInformacionEnvioIdTelefono: TIntegerField
+      FieldName = 'IdTelefono'
+    end
+    object ADODtStInformacionEnvioContenido: TStringField
+      FieldName = 'Contenido'
+      Size = 500
+    end
+    object ADODtStInformacionEnvioConducto: TStringField
+      FieldName = 'Conducto'
+      Size = 100
+    end
+    object ADODtStInformacionEnvioServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object ADODtStInformacionEnvioPagoFlete: TBooleanField
+      FieldName = 'PagoFlete'
+    end
+    object ADODtStInformacionEnvioValor: TFloatField
+      FieldName = 'Valor'
+    end
+    object ADODtStInformacionEnvioAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
+    object ADODtStInformacionEnvioTelefonoCompleto: TStringField
+      FieldKind = fkLookup
+      FieldName = 'TelefonoCompleto'
+      LookupDataSet = ADODtStTelefonos
+      LookupKeyFields = 'IdTelefono'
+      LookupResultField = 'TeleconLada'
+      KeyFields = 'IdTelefono'
+      Size = 40
+      Lookup = True
+    end
+  end
+  object ADODtStFacturasCFDI: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdCFDI, IDOrdenSalida, IdPersonaReceptor, IdClienteDomici' +
+      'lio  from CFDI'#13#10' where IdOrdenSalida=:IdOrdenSalida'#13#10
+    DataSource = DSMaster
+    IndexFieldNames = 'IDOrdenSalida'
+    MasterFields = 'IdOrdenSalida'
+    Parameters = <
+      item
+        Name = 'IdOrdenSalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 432
+    Top = 409
+    object ADODtStFacturasCFDIIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      ReadOnly = True
+    end
+    object ADODtStFacturasCFDIIDOrdenSalida: TIntegerField
+      FieldName = 'IDOrdenSalida'
+    end
+    object ADODtStFacturasCFDIIdPersonaReceptor: TIntegerField
+      FieldName = 'IdPersonaReceptor'
+    end
+    object ADODtStFacturasCFDIIdClienteDomicilio: TIntegerField
+      FieldName = 'IdClienteDomicilio'
+    end
+  end
+  object dsFacturaCFDI: TDataSource
+    DataSet = ADODtStFacturasCFDI
+    Left = 532
+    Top = 408
+  end
+  object ADODtStTelefonos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = ADODtStTelefonosCalcFields
+    CommandText = 'Select * from Telefonos where IdPersona=:IdPersona'
+    DataSource = dsFacturaCFDI
+    IndexFieldNames = 'IdPersona;IdDomicilio'
+    MasterFields = 'IdPersonaReceptor;IdClienteDomicilio'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 592
+    Top = 489
+    object ADODtStTelefonosTelefono: TStringField
+      FieldName = 'Telefono'
+    end
+    object ADODtStTelefonosIdTelefono: TAutoIncField
+      FieldName = 'IdTelefono'
+      ReadOnly = True
+    end
+    object ADODtStTelefonosIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStTelefonosIdTelefonoTipo: TIntegerField
+      FieldName = 'IdTelefonoTipo'
+    end
+    object ADODtStTelefonosIdDomicilio: TIntegerField
+      FieldName = 'IdDomicilio'
+    end
+    object ADODtStTelefonosLada: TStringField
+      FieldName = 'Lada'
+      Size = 10
+    end
+    object ADODtStTelefonosPredeterminado: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+    object ADODtStTelefonosTeleconLada: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'TeleconLada'
+      Size = 40
+      Calculated = True
+    end
+  end
+  object ADODtStSalidasUbicaciones: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdSalidaUbicacion, IdProductoKardexS, IdProductoXEspacio,' +
+      #13#10' Cantidad, IdSalidaUbicacionEstatus from SalidasUbicaciones'
+    Parameters = <>
+    Left = 256
+    Top = 521
+    object AutoIncField1: TAutoIncField
+      FieldName = 'IdProductosKardex'
+      ReadOnly = True
+    end
+    object IntegerField1: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'IdOrdenSalidaItem'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'IdSeccion'
+    end
+    object IntegerField6: TIntegerField
+      FieldName = 'ReferenciaEspacio'
+    end
+    object StringField1: TStringField
+      FieldName = 'Contenedor'
+      Size = 30
+    end
+    object WideStringField1: TWideStringField
+      FieldName = 'Fecha'
+      Size = 10
+    end
+    object StringField2: TStringField
+      FieldName = 'Movimiento'
+      Size = 1
+    end
+    object FloatField1: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object FMTBCDField1: TFMTBCDField
       FieldName = 'Importe'
       Precision = 18
       Size = 6

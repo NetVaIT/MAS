@@ -44,7 +44,7 @@ procedure TfrmPersonasContactosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPersonasContactos.Create(Self);
-  TfrmPersonasContactos(gFormGrid).CerrarGrid := actCloseGrid;
+ // TfrmPersonasContactos(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

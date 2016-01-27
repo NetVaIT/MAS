@@ -128,7 +128,7 @@ end;
 procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
+  if DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger=2  then
      SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
   pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and  SpdBtnCambioEstatus.Visible;  // ene 11/16
   toolbutton10.Visible:= pnlMaster.Enabled;
@@ -354,9 +354,9 @@ var
 begin
   inherited;
 
-  if (DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger<3)then
+  if (DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger<3)then
   begin
-    if DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger=2  then
+    if DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger=2  then
     begin
       if RevisaFaltantes(DataSource.DataSet.FieldByName('idDocumentoSalida').AsInteger)then
       begin
@@ -377,7 +377,7 @@ begin
 
       if (DataSource.DataSet.State =dsBrowse) then
         DataSource.DataSet.Edit;
-      DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger:=DataSource.DataSet.FieldByName('IDTipoDocumentoSalida').AsInteger+1;
+      DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger:=DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger+1;
       DataSource.DataSet.Post;
     end;
   end;

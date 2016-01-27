@@ -59,6 +59,12 @@ type
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBLookupComboBox3: TcxDBLookupComboBox;
     ToolButton3: TToolButton;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label10: TLabel;
+    Label12: TLabel;
+    cxDBTextEdit7: TcxDBTextEdit;
+    Label13: TLabel;
+    cxDBTextEdit8: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -193,7 +199,7 @@ procedure TfrmProductosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmProductos.Create(Self);
-  TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
+ // TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
   dmProductosFotos := TdmProductosFotos.Create(nil); //Pa fotos
 
  // DataSourceFotos.DataSet.Open;

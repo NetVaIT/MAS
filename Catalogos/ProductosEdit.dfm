@@ -1,9 +1,7 @@
 inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
-  OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -51,54 +49,10 @@ inherited frmProductosEdit: TfrmProductosEdit
         Height = 498
         ExplicitHeight = 498
         inherited tbarData: TToolBar
-          object ToolButton3: TToolButton [2]
-            Left = 31
+          object ToolButton3: TToolButton
+            Left = 254
             Top = 0
             Action = DataSetEdit
-          end
-          inherited ToolButton12: TToolButton
-            Left = 54
-            ExplicitLeft = 54
-          end
-          inherited ToolButton13: TToolButton
-            Left = 77
-            ExplicitLeft = 77
-          end
-          inherited ToolButton14: TToolButton
-            Left = 85
-            ExplicitLeft = 85
-          end
-          inherited ToolButton15: TToolButton
-            Left = 108
-            ExplicitLeft = 108
-          end
-          inherited ToolButton16: TToolButton
-            Left = 131
-            ExplicitLeft = 131
-          end
-          inherited ToolButton17: TToolButton
-            Left = 154
-            ExplicitLeft = 154
-          end
-          inherited ToolButton18: TToolButton
-            Left = 177
-            ExplicitLeft = 177
-          end
-          inherited ToolButton19: TToolButton
-            Left = 200
-            ExplicitLeft = 200
-          end
-          inherited ToolButton20: TToolButton
-            Left = 223
-            ExplicitLeft = 223
-          end
-          inherited ToolButton1: TToolButton
-            Left = 246
-            ExplicitLeft = 246
-          end
-          inherited ToolButton2: TToolButton
-            Left = 254
-            ExplicitLeft = 254
           end
         end
         inherited pnlMaster: TPanel
@@ -106,11 +60,13 @@ inherited frmProductosEdit: TfrmProductosEdit
           ExplicitHeight = 471
           object PnlFotos: TPanel
             Left = 0
-            Top = 213
+            Top = 273
             Width = 746
-            Height = 258
+            Height = 198
             Align = alClient
             TabOrder = 0
+            ExplicitTop = 213
+            ExplicitHeight = 258
             object ImgFoto: TImage
               Left = 23
               Top = 18
@@ -242,69 +198,90 @@ inherited frmProductosEdit: TfrmProductosEdit
             Left = 0
             Top = 0
             Width = 746
-            Height = 213
+            Height = 273
             Align = alTop
             TabOrder = 1
             object Label1: TLabel
               Left = 24
-              Top = 22
+              Top = 71
               Width = 54
               Height = 13
-              Caption = 'Descripcion'
+              Caption = 'Descripci'#243'n'
               FocusControl = cxDBTextEdit1
             end
             object Label2: TLabel
               Left = 24
-              Top = 62
+              Top = 114
               Width = 69
               Height = 13
               Caption = 'Precio Unitario'
             end
             object Label3: TLabel
-              Left = 24
-              Top = 102
+              Left = 210
+              Top = 114
               Width = 36
               Height = 13
               Caption = 'M'#225'ximo'
             end
             object Label4: TLabel
-              Left = 170
-              Top = 102
+              Left = 356
+              Top = 114
               Width = 32
               Height = 13
               Caption = 'M'#237'nimo'
             end
             object Label5: TLabel
-              Left = 318
-              Top = 102
+              Left = 504
+              Top = 114
               Width = 72
               Height = 13
               Caption = 'Punto Reorden'
             end
             object Label6: TLabel
               Left = 24
-              Top = 143
+              Top = 160
               Width = 70
               Height = 13
               Caption = 'Unidad Medida'
             end
             object Label7: TLabel
-              Left = 250
-              Top = 143
+              Left = 24
+              Top = 208
               Width = 66
               Height = 13
               Caption = 'Producto Tipo'
             end
             object Label8: TLabel
-              Left = 526
-              Top = 145
+              Left = 356
+              Top = 162
               Width = 82
               Height = 13
               Caption = 'Producto Estatus'
             end
+            object Label10: TLabel
+              Left = 24
+              Top = 27
+              Width = 70
+              Height = 13
+              Caption = 'Identificador 1'
+            end
+            object Label12: TLabel
+              Left = 191
+              Top = 27
+              Width = 70
+              Height = 13
+              Caption = 'Identificador 2'
+            end
+            object Label13: TLabel
+              Left = 356
+              Top = 29
+              Width = 70
+              Height = 13
+              Caption = 'Identificador 3'
+            end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 24
-              Top = 38
+              Top = 87
               DataBinding.DataField = 'Descripcion'
               DataBinding.DataSource = DataSource
               TabOrder = 0
@@ -312,31 +289,31 @@ inherited frmProductosEdit: TfrmProductosEdit
             end
             object cxDBTextEdit2: TcxDBTextEdit
               Left = 24
-              Top = 78
+              Top = 130
               DataBinding.DataField = 'PrecioUnitario'
               DataBinding.DataSource = DataSource
               TabOrder = 1
               Width = 121
             end
             object cxDBTextEdit3: TcxDBTextEdit
-              Left = 24
-              Top = 118
+              Left = 210
+              Top = 130
               DataBinding.DataField = 'Maximo'
               DataBinding.DataSource = DataSource
               TabOrder = 2
               Width = 121
             end
             object cxDBTextEdit4: TcxDBTextEdit
-              Left = 170
-              Top = 118
+              Left = 357
+              Top = 130
               DataBinding.DataField = 'Minimo'
               DataBinding.DataSource = DataSource
               TabOrder = 3
               Width = 121
             end
             object cxDBTextEdit5: TcxDBTextEdit
-              Left = 318
-              Top = 118
+              Left = 504
+              Top = 130
               DataBinding.DataField = 'PuntoReorden'
               DataBinding.DataSource = DataSource
               TabOrder = 4
@@ -344,7 +321,7 @@ inherited frmProductosEdit: TfrmProductosEdit
             end
             object cxDBLookupComboBox1: TcxDBLookupComboBox
               Left = 24
-              Top = 160
+              Top = 177
               DataBinding.DataField = 'UnidadMedida'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdUnidadMedida'
@@ -353,11 +330,11 @@ inherited frmProductosEdit: TfrmProductosEdit
                   FieldName = 'Descripcion'
                 end>
               TabOrder = 5
-              Width = 199
+              Width = 207
             end
             object cxDBLookupComboBox2: TcxDBLookupComboBox
-              Left = 250
-              Top = 160
+              Left = 24
+              Top = 225
               DataBinding.DataField = 'ProductoTipo'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdProductoTipo'
@@ -366,11 +343,11 @@ inherited frmProductosEdit: TfrmProductosEdit
                   FieldName = 'Descripcion'
                 end>
               TabOrder = 6
-              Width = 241
+              Width = 207
             end
             object cxDBLookupComboBox3: TcxDBLookupComboBox
-              Left = 526
-              Top = 160
+              Left = 356
+              Top = 177
               DataBinding.DataField = 'ProductoEstatus'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdProductoEstatus'
@@ -379,6 +356,30 @@ inherited frmProductosEdit: TfrmProductosEdit
                   FieldName = 'Descripcion'
                 end>
               TabOrder = 7
+              Width = 145
+            end
+            object cxDBTextEdit6: TcxDBTextEdit
+              Left = 24
+              Top = 46
+              DataBinding.DataField = 'Identificador1'
+              DataBinding.DataSource = DataSource
+              TabOrder = 8
+              Width = 145
+            end
+            object cxDBTextEdit7: TcxDBTextEdit
+              Left = 191
+              Top = 46
+              DataBinding.DataField = 'Identificador2'
+              DataBinding.DataSource = DataSource
+              TabOrder = 9
+              Width = 145
+            end
+            object cxDBTextEdit8: TcxDBTextEdit
+              Left = 356
+              Top = 46
+              DataBinding.DataField = 'Identificador3'
+              DataBinding.DataSource = DataSource
+              TabOrder = 10
               Width = 145
             end
           end
@@ -393,7 +394,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -542,7 +543,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000
@@ -1085,8 +1086,8 @@ inherited frmProductosEdit: TfrmProductosEdit
     DataSet = dmProductos.adodsProductoFotos
     OnStateChange = datasourceFotosStateChange
     OnDataChange = DataSourceFotosDataChange
-    Left = 326
-    Top = 288
+    Left = 502
+    Top = 304
   end
   object DSDocumento: TDataSource
     DataSet = dmProductos.ADODsDocumento

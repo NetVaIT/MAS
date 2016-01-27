@@ -1,16 +1,9 @@
 inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   Caption = 'frmPersonasContactosEdit'
-  OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
           object Label1: TLabel
@@ -48,7 +41,7 @@ inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -189,7 +182,7 @@ inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -64,7 +64,7 @@ procedure TFrmPersonasCSDEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPersonasCSDFormGrid.Create(Self);
-  TfrmPersonasCSDFormGrid(gFormGrid).CerrarGrid := actCloseGrid;
+  // TfrmPersonasCSDFormGrid(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 procedure TFrmPersonasCSDEdit.SetUpdateFileCER(const Value: TBasicAction);

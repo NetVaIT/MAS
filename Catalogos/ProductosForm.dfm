@@ -1,15 +1,58 @@
 inherited frmProductos: TfrmProductos
   Caption = 'Productos'
-  ExplicitWidth = 750
+  ClientWidth = 800
+  ExplicitWidth = 800
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 800
+  end
+  inherited splDetail2: TSplitter
+    Width = 800
+  end
+  inherited splDetail1: TSplitter
+    Width = 800
+  end
+  inherited pnlClose: TPanel
+    Width = 800
+  end
+  inherited pnlDetail3: TPanel
+    Width = 800
+  end
+  inherited pnlDetail2: TPanel
+    Width = 800
+  end
+  inherited pnlDetail1: TPanel
+    Width = 800
+  end
+  inherited pnltoolbar: TPanel
+    Width = 800
+  end
+  inherited tbarGrid: TToolBar
+    Width = 800
+    ExplicitTop = 8
+  end
   inherited pnlMaster: TPanel
+    Width = 800
     inherited cxGrid: TcxGrid
+      Width = 800
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
           Visible = False
+        end
+        object tvMasterIdentificador1: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador1'
+          Width = 140
+        end
+        object tvMasterIdentificador2: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador2'
+          Width = 140
+        end
+        object tvMasterIdentificador3: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador3'
+          Width = 140
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
@@ -63,7 +106,7 @@ inherited frmProductos: TfrmProductos
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400940010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400980010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -204,7 +247,7 @@ inherited frmProductos: TfrmProductos
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

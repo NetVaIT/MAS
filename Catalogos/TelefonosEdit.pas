@@ -49,7 +49,7 @@ procedure TfrmTelefonosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmTelefonos.Create(Self);
-  TfrmTelefonos(gFormGrid).CerrarGrid := actCloseGrid;
+  //TfrmTelefonos(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

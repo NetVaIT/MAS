@@ -40,6 +40,9 @@ type
     tvMasterUnidadMedida: TcxGridDBColumn;
     tvMasterProductoTipo: TcxGridDBColumn;
     tvMasterProductoEstatus: TcxGridDBColumn;
+    tvMasterIdentificador1: TcxGridDBColumn;
+    tvMasterIdentificador2: TcxGridDBColumn;
+    tvMasterIdentificador3: TcxGridDBColumn;
   private
     { Private declarations }
   public

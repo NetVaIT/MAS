@@ -6,10 +6,10 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdDocumentoSalida, IdTipoDocumentoSalida, IdPersona,'#13#10' Id' +
+      'SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,'#13#10' Id' +
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
-      'te'#13#10' FROM DocumentosSalidas where IdTipoDocumentoSalida=:TipoDoc' +
+      'te'#13#10' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDoc' +
       'to'
     Parameters = <
       item
@@ -24,10 +24,6 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsMasterIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
       ReadOnly = True
-      Visible = False
-    end
-    object adodsMasterIdTipoDocumentoSalida: TIntegerField
-      FieldName = 'IdTipoDocumentoSalida'
       Visible = False
     end
     object adodsMasterIdPersona: TIntegerField
@@ -103,15 +99,6 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 15
       Lookup = True
     end
-    object adodsMasterTipoDocumento: TStringField
-      FieldKind = fkLookup
-      FieldName = 'TipoDocumento'
-      LookupDataSet = ADOdsTipoDocumento
-      LookupKeyFields = 'IdDocumentoSalidaTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdTipoDocumentoSalida'
-      Lookup = True
-    end
     object adodsMasterIdDomicilioCliente: TIntegerField
       FieldName = 'IdDomicilioCliente'
     end
@@ -123,6 +110,18 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupResultField = 'DirCompleta'
       KeyFields = 'IdDomicilioCliente'
       Size = 300
+      Lookup = True
+    end
+    object adodsMasterIdDocumentoSalidaTipo: TIntegerField
+      FieldName = 'IdDocumentoSalidaTipo'
+    end
+    object adodsMasterTipoDocumento: TStringField
+      FieldKind = fkLookup
+      FieldName = 'TipoDocumento'
+      LookupDataSet = ADOdsTipoDocumento
+      LookupKeyFields = 'IdDocumentoSalidaTipo'
+      LookupResultField = 'IdDocumentoSalidaTipo'
+      KeyFields = 'IdDocumentoSalidaTipo'
       Lookup = True
     end
   end
@@ -219,6 +218,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsClientes: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -244,6 +244,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -266,6 +267,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'

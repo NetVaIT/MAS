@@ -47,7 +47,7 @@ procedure TfrmEmailEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmEmail.Create(Self);
-  TfrmEmail(gFormGrid).CerrarGrid := actCloseGrid;
+ // TfrmEmail(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 end.

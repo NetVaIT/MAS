@@ -102,10 +102,58 @@ type
     ADODtStProductosKardexMovimiento: TStringField;
     ADODtStProductosKardexCantidad: TFloatField;
     ADODtStProductosKardexImporte: TFMTBCDField;
+    ADODtStInformacionEnvio: TADODataSet;
+    ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField;
+    ADODtStInformacionEnvioIdCFDI: TLargeintField;
+    ADODtStInformacionEnvioIDPersonaCliente: TIntegerField;
+    ADODtStInformacionEnvioIDPersonaDomicilio: TIntegerField;
+    ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField;
+    ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField;
+    ADODtStInformacionEnvioFechaRealEnt: TWideStringField;
+    ADODtStInformacionEnvioCondicionEntrega: TStringField;
+    ADODtStInformacionEnvioObservaciones: TStringField;
+    ADODtStInformacionEnvioEstatusEntrega: TStringField;
+    ADODtStInformacionEnvioIdTelefono: TIntegerField;
+    ADODtStInformacionEnvioContenido: TStringField;
+    ADODtStInformacionEnvioConducto: TStringField;
+    ADODtStInformacionEnvioServicio: TStringField;
+    ADODtStInformacionEnvioPagoFlete: TBooleanField;
+    ADODtStInformacionEnvioValor: TFloatField;
+    ADODtStInformacionEnvioAsegurado: TBooleanField;
+    ADODtStFacturasCFDI: TADODataSet;
+    ADODtStFacturasCFDIIdCFDI: TLargeintField;
+    ADODtStFacturasCFDIIDOrdenSalida: TIntegerField;
+    dsFacturaCFDI: TDataSource;
+    ADODtStTelefonos: TADODataSet;
+    ADODtStFacturasCFDIIdPersonaReceptor: TIntegerField;
+    ADODtStTelefonosTelefono: TStringField;
+    ADODtStTelefonosIdTelefono: TAutoIncField;
+    ADODtStTelefonosIdPersona: TIntegerField;
+    ADODtStTelefonosIdTelefonoTipo: TIntegerField;
+    ADODtStTelefonosIdDomicilio: TIntegerField;
+    ADODtStTelefonosLada: TStringField;
+    ADODtStTelefonosPredeterminado: TBooleanField;
+    ADODtStFacturasCFDIIdClienteDomicilio: TIntegerField;
+    ADODtStTelefonosTeleconLada: TStringField;
+    ADODtStInformacionEnvioTelefonoCompleto: TStringField;
+    ADODtStSalidasUbicaciones: TADODataSet;
+    AutoIncField1: TAutoIncField;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    IntegerField4: TIntegerField;
+    IntegerField5: TIntegerField;
+    IntegerField6: TIntegerField;
+    StringField1: TStringField;
+    WideStringField1: TWideStringField;
+    StringField2: TStringField;
+    FloatField1: TFloatField;
+    FMTBCDField1: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemBeforePost(DataSet: TDataSet);
+    procedure ADODtStTelefonosCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
 
@@ -192,6 +240,12 @@ begin
     //Aca se supone que deberia habilitar para hacer el ajuste en el documento salida original
     Ajustar:=True;//Nov 26/15
   end;
+end;
+
+procedure TDMOrdenesSalidas.ADODtStTelefonosCalcFields(DataSet: TDataSet);
+begin
+  inherited;
+  DAtaset.FieldByName('telConLada').AsString:=dataset.FieldByName('Lada').AsString+'-'+ dataset.FieldByName('Telefono').AsString;
 end;
 
 procedure TDMOrdenesSalidas.DataModuleCreate(Sender: TObject);

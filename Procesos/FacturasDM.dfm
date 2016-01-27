@@ -634,6 +634,7 @@ inherited DMFacturas: TDMFacturas
     end
   end
   object ADODtStPersonaReceptor: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -928,6 +929,7 @@ inherited DMFacturas: TDMFacturas
     end
   end
   object ADODtStMetodoPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -990,6 +992,7 @@ inherited DMFacturas: TDMFacturas
     end
   end
   object ADODtStMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, IdPais, Identificador, Descripcion from Monedas'
@@ -998,6 +1001,7 @@ inherited DMFacturas: TDMFacturas
     Top = 272
   end
   object ADODtStTiposDocumentos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1026,6 +1030,7 @@ inherited DMFacturas: TDMFacturas
     end
   end
   object ADODtStCFDIEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1141,6 +1146,7 @@ inherited DMFacturas: TDMFacturas
     end
   end
   object ADODtStFormasPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1346,5 +1352,83 @@ inherited DMFacturas: TDMFacturas
     Parameters = <>
     Left = 304
     Top = 529
+  end
+  object ADODtStInformacionEnvio: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from InformacionEntregas where IdCFDI=:IDCFDI'
+    DataSource = DSMaster
+    IndexFieldNames = 'IdCFDI'
+    MasterFields = 'IdCFDI'
+    Parameters = <
+      item
+        Name = 'IDCFDI'
+        Attributes = [paSigned]
+        DataType = ftLargeint
+        Precision = 19
+        Size = 8
+        Value = Null
+      end>
+    Left = 536
+    Top = 521
+    object ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField
+      FieldName = 'IdInfoEntrega'
+      ReadOnly = True
+    end
+    object ADODtStInformacionEnvioIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStInformacionEnvioIDPersonaCliente: TIntegerField
+      FieldName = 'IDPersonaCliente'
+    end
+    object ADODtStInformacionEnvioIDPersonaDomicilio: TIntegerField
+      FieldName = 'IDPersonaDomicilio'
+    end
+    object ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField
+      FieldName = 'IDResponsableEntrega'
+    end
+    object ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField
+      FieldName = 'FechaProgramadaEnt'
+      Size = 10
+    end
+    object ADODtStInformacionEnvioFechaRealEnt: TWideStringField
+      FieldName = 'FechaRealEnt'
+      Size = 10
+    end
+    object ADODtStInformacionEnvioCondicionEntrega: TStringField
+      FieldName = 'CondicionEntrega'
+      Size = 300
+    end
+    object ADODtStInformacionEnvioObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 100
+    end
+    object ADODtStInformacionEnvioEstatusEntrega: TStringField
+      FieldName = 'EstatusEntrega'
+    end
+    object ADODtStInformacionEnvioIdTelefono: TIntegerField
+      FieldName = 'IdTelefono'
+    end
+    object ADODtStInformacionEnvioContenido: TStringField
+      FieldName = 'Contenido'
+      Size = 500
+    end
+    object ADODtStInformacionEnvioConducto: TStringField
+      FieldName = 'Conducto'
+      Size = 100
+    end
+    object ADODtStInformacionEnvioServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object ADODtStInformacionEnvioPagoFlete: TBooleanField
+      FieldName = 'PagoFlete'
+    end
+    object ADODtStInformacionEnvioValor: TFloatField
+      FieldName = 'Valor'
+    end
+    object ADODtStInformacionEnvioAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
   end
 end

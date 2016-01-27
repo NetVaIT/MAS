@@ -21,7 +21,8 @@ uses
   Vcl.DBGrids, cxDBEdit, Vcl.StdCtrls, Vcl.Buttons, Vcl.DBCtrls, cxTextEdit,
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
-  Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls;
+  Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxGroupBox, cxRadioGroup,
+  cxCheckBox;
 
 type
   TFrmOrdenesSalida = class(T_frmStandarGFormEdit)
@@ -108,6 +109,28 @@ type
     DBLkupCmbBxAutoriza: TDBLookupComboBox;
     BitBtn6: TBitBtn;
     BtBtnAutoriza: TBitBtn;
+    PnlInformacionEntrega: TPanel;
+    DSInformacionEntrega: TDataSource;
+    Label2: TLabel;
+    Label5: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
+    Label6: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
+    Label7: TLabel;
+    cxDBCheckBox1: TcxDBCheckBox;
+    cxDBCheckBox2: TcxDBCheckBox;
+    Label9: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
+    cxDBDateEdit1: TcxDBDateEdit;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Label8: TLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
+    Label21: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    PnlSalidasUbicacion: TPanel;
+    cxDBRadioGroup1: TcxDBRadioGroup;
+    BtBtnAcepta: TBitBtn;
+    BitBtn8: TBitBtn;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -206,8 +229,9 @@ begin
   //Si es 4 autorizo bien... Se debe generar la Factura directamente
   if Estatus<>-1 then //Cambio a 4
   begin
-    showmessage('Mandar generacion de Factura');
+   //showmessage('Mandar generacion de Factura');
     Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger);
+    PnlInformacionEntrega.Visible:=True;
     //Si no se genera hay que hacer algo para que se pueda generar en otro punto!!! ??
   end;
 end;
@@ -283,6 +307,7 @@ end;
 procedure TFrmOrdenesSalida.BtBtnIniciarProceso(Sender: TObject);
 begin
   inherited;
+
  case (Sender as TBitBtn).tag of
     1:begin
         BtBtnRecolecta.Visible:=False;
@@ -333,6 +358,7 @@ begin
                             (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
                             (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
 
+    PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4);
 
     PnlRecolecta.Visible:=False;
     PnlRevisa.Visible:=False;

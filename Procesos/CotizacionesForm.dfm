@@ -180,6 +180,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                 item
                   Expanded = False
                   FieldName = 'ClaveProducto'
+                  Title.Caption = 'Clave Producto'
                   Width = 176
                   Visible = True
                 end
@@ -215,6 +216,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                 item
                   Expanded = False
                   FieldName = 'Importe'
+                  Width = 64
                   Visible = True
                 end>
             end
@@ -229,16 +231,16 @@ inherited frmCotizaciones: TfrmCotizaciones
             object Label1: TLabel
               Left = 40
               Top = 16
-              Width = 69
+              Width = 72
               Height = 13
-              Caption = 'FechaRegistro'
+              Caption = 'Fecha Registro'
             end
             object Label5: TLabel
               Left = 442
               Top = 106
-              Width = 59
+              Width = 62
               Height = 13
-              Caption = 'VigenciaDias'
+              Caption = 'Vigencia D'#237'as'
               FocusControl = cxDBSpinEdit1
             end
             object Label7: TLabel
@@ -268,9 +270,9 @@ inherited frmCotizaciones: TfrmCotizaciones
             object Label10: TLabel
               Left = 231
               Top = 17
-              Width = 74
+              Width = 77
               Height = 13
-              Caption = 'TipoDocumento'
+              Caption = 'Tipo Documento'
               FocusControl = DBLookupComboBox4
             end
             object SpdBtnCambioEstatus: TSpeedButton
@@ -454,7 +456,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -660,7 +662,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C0028C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
