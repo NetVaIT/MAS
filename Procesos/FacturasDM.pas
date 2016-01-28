@@ -666,9 +666,9 @@ begin
     ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
     ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
     ADODtStInformacionEnvio.Fieldbyname('FechaProgramadaEntrega').AsDateTime:= Now+10;
-    ADODtStInformacionEnvio.Fieldbyname('Servicio').AsInteger:= 'Domicilio';
+    ADODtStInformacionEnvio.Fieldbyname('Servicio').AsString:= 'Domicilio';
     ADODtStInformacionEnvio.Fieldbyname('PagoFlete').AsInteger:= 0;
-    ADODtStInformacionEnvio.Fieldbyname('Valor').AsInteger:=  adodsMaster.FieldByName('Total').ASFloat;
+    ADODtStInformacionEnvio.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
     ADODtStInformacionEnvio.Fieldbyname('Asegurado').AsInteger:= 0;
     ADODtStInformacionEnvio.Post;
 
@@ -678,7 +678,7 @@ begin
     ADODtStInformacionEnvio.Edit;
  //   ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
     ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
-    ADODtStInformacionEnvio.Fieldbyname('Valor').AsInteger:=  adodsMaster.FieldByName('Total').ASFloat;
+    ADODtStInformacionEnvio.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
     ADODtStInformacionEnvio.Post;
   end;
   ADODtStInformacionEnvio.Close;
