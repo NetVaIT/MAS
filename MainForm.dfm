@@ -2,14 +2,15 @@ inherited frmMain: TfrmMain
   Caption = 'MAS -Principal'
   ClientWidth = 936
   Font.Height = -32
+  OnDestroy = FormDestroy
   ExplicitWidth = 952
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
     Width = 936
+    OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -40,7 +41,10 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab5: TdxRibbonTab
       Caption = 'Compras'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'dxBarManagerBar2'
+        end>
       Index = 4
     end
     object dxRibbon1Tab6: TdxRibbonTab
@@ -49,7 +53,6 @@ inherited frmMain: TfrmMain
       Index = 5
     end
     object dxRibbon1Tab7: TdxRibbonTab
-      Active = True
       Caption = 'Reportes'
       Groups = <
         item
@@ -60,9 +63,22 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonBackstageView1: TdxRibbonBackstageView
     inherited dxRibbonBackstageViewTabSheet1: TdxRibbonBackstageViewTabSheet
+      Active = False
+      TabVisible = False
       inherited cxLabel1: TcxLabel
         Style.IsFontAssigned = True
       end
+    end
+    object dxtshConfiguracion: TdxRibbonBackstageViewTabSheet
+      Left = 132
+      Top = 0
+      Active = True
+      Caption = 'Configuraci'#243'n'
+    end
+    object dxtshUsuarios: TdxRibbonBackstageViewTabSheet
+      Left = 132
+      Top = 0
+      Caption = 'Usuario'
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
@@ -75,6 +91,8 @@ inherited frmMain: TfrmMain
     ExplicitWidth = 936
   end
   inherited dxBarManager: TdxBarManager
+    Left = 608
+    Top = 248
     DockControlHeights = (
       0
       0
@@ -186,7 +204,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 74
-      FloatClientHeight = 42
+      FloatClientHeight = 54
       ItemLinks = <
         item
           Visible = True
@@ -205,12 +223,32 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 970
       FloatTop = 8
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 118
+      FloatClientHeight = 54
       ItemLinks = <
         item
           Visible = True
           ItemName = 'dxBarLargeButton19'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManagerBar2: TdxBar [6]
+      Caption = 'Compras'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 970
+      FloatTop = 8
+      FloatClientWidth = 109
+      FloatClientHeight = 54
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton20'
         end>
       OneOnRow = True
       Row = 0
@@ -279,11 +317,11 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton11: TdxBarLargeButton
-      Action = ActOrdenSalida
+      Action = actOrdenSalida
       Category = 0
     end
     object dxBarLargeButton17: TdxBarLargeButton
-      Action = ActEmisor
+      Action = actEmisor
       Category = 0
     end
     object dxBarLargeButton18: TdxBarLargeButton
@@ -294,17 +332,26 @@ inherited frmMain: TfrmMain
       Action = actRptVentasUnidades
       Category = 0
     end
+    object dxBarLargeButton20: TdxBarLargeButton
+      Action = actOrdenCompra
+      Category = 0
+    end
+  end
+  inherited dxSkinController: TdxSkinController
+    Left = 608
+    Top = 184
   end
   inherited cxSmallImages: TcxImageList
     FormatVersion = 1
-    DesignInfo = 1049244
+    DesignInfo = 20447836
   end
   inherited cxLargeImages: TcxImageList
     FormatVersion = 1
-    DesignInfo = 1049204
+    DesignInfo = 20447732
   end
   inherited ActionList: TActionList
-    Left = 528
+    Left = 496
+    Top = 248
     object actCatalogo: TAction [0]
       Category = 'Catalogo'
       Caption = 'Catalogo'
@@ -394,7 +441,7 @@ inherited frmMain: TfrmMain
       ImageIndex = 21
       OnExecute = actCatalogoExecute
     end
-    object ActOrdenSalida: TAction
+    object actOrdenSalida: TAction
       Tag = 22
       Category = 'Ventas'
       Caption = 'Ordenes Salida'
@@ -408,7 +455,7 @@ inherited frmMain: TfrmMain
       ImageIndex = 33
       OnExecute = actCatalogoExecute
     end
-    object ActEmisor: TAction
+    object actEmisor: TAction
       Tag = 11
       Category = 'Catalogo'
       Caption = 'Emisor'
@@ -429,8 +476,17 @@ inherited frmMain: TfrmMain
       ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
+    object actOrdenCompra: TAction
+      Tag = 40
+      Category = 'Compras'
+      Caption = 'Orden de compra'
+      Hint = 'Orden de compra'
+      ImageIndex = 0
+      OnExecute = actCatalogoExecute
+    end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository
-    Left = 448
+    Left = 496
+    Top = 187
   end
 end

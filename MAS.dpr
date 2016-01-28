@@ -111,7 +111,18 @@ uses
   EspaciosForm in 'Catalogos\EspaciosForm.pas' {frmEspacios},
   ImpresosSalidasDM in 'Procesos\ImpresosSalidasDM.pas' {DMImpresosSalidas: TDataModule},
   rptVentasUnidadesDM in 'Reportes\rptVentasUnidadesDM.pas' {dmrptVentasUnidades: TDataModule},
-  rptVentasUnidadesForm in 'Reportes\rptVentasUnidadesForm.pas' {frmrptVentasUnidades};
+  rptVentasUnidadesForm in 'Reportes\rptVentasUnidadesForm.pas' {frmrptVentasUnidades},
+  DocumentosEntradasDM in 'Procesos\DocumentosEntradasDM.pas' {dmDocumentosEntradas: TDataModule},
+  DocumentosEntradasForm in 'Procesos\DocumentosEntradasForm.pas' {frmDocumentosEntradas},
+  DocumentosEntradasGrid in 'Procesos\DocumentosEntradasGrid.pas' {frmDocumentosEntradasGrid},
+  DocumentosEntradasDetalleGrid in 'Procesos\DocumentosEntradasDetalleGrid.pas' {frmDocumentosEntradasDetalleGrid},
+  DocumentosEntradasDetalleForm in 'Procesos\DocumentosEntradasDetalleForm.pas' {frmDocumentosEntradasDetalle},
+  UsuariosDM in 'Catalogos\UsuariosDM.pas' {dmUsuarios: TDataModule},
+  UsuariosEdit in 'Catalogos\UsuariosEdit.pas' {frmUsuariosEdit},
+  UsuariosForm in 'Catalogos\UsuariosForm.pas' {frmUsuarios},
+  ConfiguracionDM in 'Catalogos\ConfiguracionDM.pas' {dmConfiguracion: TDataModule},
+  ConfiguracionesEdit in 'Catalogos\ConfiguracionesEdit.pas' {frmConfiguracionesEdit},
+  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones};
 
 {$R *.res}
 
@@ -123,5 +134,6 @@ begin
   Application.CreateForm(T_frmMain, _frmMain);
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
+  Application.CreateForm(TdmConfiguracion, dmConfiguracion);
   Application.Run;
 end.

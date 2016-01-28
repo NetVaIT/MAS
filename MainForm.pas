@@ -21,7 +21,7 @@ uses
   dxBar, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.ImgList, dxSkinsForm,
   Vcl.ExtCtrls, dxStatusBar, dxRibbonStatusBar, cxLabel, dxGallery,
   dxGalleryControl, dxRibbonBackstageViewGalleryControl, dxRibbonBackstageView,
-  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit;
+  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit, UsuariosDM;
 
 type
   TfrmMain = class(T_frmMainRibbon)
@@ -62,8 +62,8 @@ type
     dxBarLargeButton15: TdxBarLargeButton;
     dxBarLargeButton16: TdxBarLargeButton;
     dxBarLargeButton11: TdxBarLargeButton;
-    ActOrdenSalida: TAction;
-    ActEmisor: TAction;
+    actOrdenSalida: TAction;
+    actEmisor: TAction;
     dxBarLargeButton17: TdxBarLargeButton;
     dxbAlmacenes: TdxBar;
     actAlmacenes: TAction;
@@ -72,12 +72,25 @@ type
     dxbReportes: TdxBar;
     dxBarLargeButton19: TdxBarLargeButton;
     actRptVentasUnidades: TAction;
+    dxBarManagerBar2: TdxBar;
+    dxBarLargeButton20: TdxBarLargeButton;
+    actOrdenCompra: TAction;
+    dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
+    dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
     procedure actCatalogoExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
+      var AHandled: Boolean);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   protected
     gModulo: T_dmStandar;
+//    gReport: T_dmReport;
+    dmUsuarios: TdmUsuarios;
     procedure CreateModule(pModulo: Integer; pCaption: String); override;
+    procedure ConfigControls; override;
     procedure DestroyModule; override;
   public
     { Public declarations }
@@ -92,7 +105,8 @@ implementation
 
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
-  OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM;
+  OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
+  DocumentosEntradasDM, ConfiguracionDM;
 
 { TfrmMain }
 
@@ -137,6 +151,7 @@ begin
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
    30: gModulo := TdmAlmacenes.Create(Self);
+   40: gModulo := TdmDocumentosEntradas.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
   end;
   if Assigned(gModulo) then
@@ -145,11 +160,67 @@ begin
     Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription;
   end;
 end;
+procedure TfrmMain.ConfigControls;
+begin
+  inherited;
+//  actCFDI.Enabled:= Conected and _dmConection.EnabledAction(actCFDI.Tag);
+  actBancos.Enabled             := Conected;
+  actMonedas.Enabled            := Conected;
+  actUbicaciones.Enabled        := Conected;
+  actCotizacionMonedas.Enabled  := Conected;
+  actUnidadMedida.Enabled       := Conected;
+  actMetodosPagos.Enabled       := Conected;
+  actClientes.Enabled           := Conected;
+  actProveedores.Enabled        := Conected;
+  actEmpleados.Enabled          := Conected;
+  actProductos.Enabled          := Conected;
+  actCotizaciones.Enabled       := Conected;
+  actPedidos.Enabled            := Conected;
+  actOrdenSalida.Enabled        := Conected;
+  actFacturacion.Enabled        := Conected;
+  actEmisor.Enabled             := Conected;
+  actAlmacenes.Enabled          := Conected;
+  actRptVentasUnidades.Enabled  := Conected;
+  actOrdenCompra.Enabled        := Conected;
+end;
 
 procedure TfrmMain.DestroyModule;
 begin
   inherited;
   if Assigned(gModulo) then FreeAndNil(gModulo);
+end;
+
+procedure TfrmMain.dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
+  var AHandled: Boolean);
+begin
+  inherited;
+  if Conected then
+    dmConfiguracion.OpenDataSet
+  else
+    dmConfiguracion.CloseDataSet;
+  if Conected then
+    dmUsuarios.OpenDataSet
+  else
+    dmUsuarios.CloseDataSet;
+end;
+
+procedure TfrmMain.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dmUsuarios:= TdmUsuarios.Create(nil);
+end;
+
+procedure TfrmMain.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmUsuarios);
+end;
+
+procedure TfrmMain.FormShow(Sender: TObject);
+begin
+  inherited;
+  dmConfiguracion.ShowModule(dxtshConfiguracion, '');
+  dmUsuarios.ShowModule(dxtshUsuarios, '');
 end;
 
 end.
