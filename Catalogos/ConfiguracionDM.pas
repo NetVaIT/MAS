@@ -30,8 +30,10 @@ type
     function GetRutaFactura: string;
     function GetRutaPago: string;
     function GetDiaPagoActual: TDateTime;
+    function GetIdMoneda: Integer;
   public
     { Public declarations }
+    property IdMoneda: Integer read GetIdMoneda;
     property IdPeridoActual: Integer read GetIdPeridoActual;
     property DiaPagoActual: TDateTime read GetDiaPagoActual;
     property RutaFacturas: string read GetRutaFactura;
@@ -67,6 +69,11 @@ begin
   finally
     adoqGetDiaPagoActual.Close;
   end;
+end;
+
+function TdmConfiguracion.GetIdMoneda: Integer;
+begin
+  Result:= adodsMasterIdMoneda.Value;
 end;
 
 function TdmConfiguracion.GetIdPeridoActual: Integer;

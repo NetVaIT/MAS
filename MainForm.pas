@@ -77,6 +77,8 @@ type
     actOrdenCompra: TAction;
     dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
     dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
+    actRequisicionCompra: TAction;
+    dxBarLargeButton21: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -151,7 +153,8 @@ begin
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
    30: gModulo := TdmAlmacenes.Create(Self);
-   40: gModulo := TdmDocumentosEntradas.Create(Self);
+   40: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
+   41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
   end;
   if Assigned(gModulo) then

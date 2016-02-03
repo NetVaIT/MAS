@@ -58,12 +58,12 @@ end;
 
 procedure TdmrptVentasUnidades.SetFilter;
 var
-  IdPeriodo: Integer;
+//  IdPeriodo: Integer;
   Mes: Integer;
   Anio: Integer;
 begin
   inherited;
-  IdPeriodo:= TfrmrptVentasUnidades(gGridForm).IdPeriodo;
+//  IdPeriodo:= TfrmrptVentasUnidades(gGridForm).IdPeriodo;
   Mes:= adodsPeriodoMes.Value;
   Anio:= adodsPeriodoAnio.Value;
   adodsMaster.Parameters[0].Value:= Mes;

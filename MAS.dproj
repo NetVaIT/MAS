@@ -390,7 +390,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ListaProductosForm.pas">
-            <Form>FrmListaProductos</Form>
+            <Form>frmListaProductos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\DocumentosDM.pas">

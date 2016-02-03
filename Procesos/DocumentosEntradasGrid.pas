@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.Menus;
 
 type
   TfrmDocumentosEntradasGrid = class(T_frmStandarGFormGrid)
@@ -34,7 +34,6 @@ type
     tvMasterIdUsuario: TcxGridDBColumn;
     tvMasterTipo: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
-    tvMasterProvedor: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterTipoCambio: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
@@ -43,6 +42,7 @@ type
     tvMasterTotal: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
+    tvMasterProvedor: TcxGridDBColumn;
   private
     { Private declarations }
   public

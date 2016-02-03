@@ -21,7 +21,8 @@ uses
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxMemo,
   cxDBEdit, cxLabel, cxDBLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls;
+  cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox;
 
 type
   TfrmDocumentosEntradas = class(T_frmStandarGFormEdit)
@@ -32,7 +33,6 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
     DBLookupComboBox2: TDBLookupComboBox;
     DBLookupComboBox3: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
@@ -47,6 +47,7 @@ type
     cxDBTextEdit3: TcxDBTextEdit;
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBMemo1: TcxDBMemo;
+    cxDBLookupComboBox1: TcxDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -58,7 +59,7 @@ implementation
 
 {$R *.dfm}
 
-uses DocumentosEntradasGrid;
+uses DocumentosEntradasGrid, DocumentosEntradasDM;
 
 procedure TfrmDocumentosEntradas.FormCreate(Sender: TObject);
 begin

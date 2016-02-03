@@ -22,7 +22,7 @@ uses
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,Data.Win.ADODB;
 
 type
-  TFrmListaProductos = class(TForm)
+  TfrmListaProductos = class(TForm)
     pnlMaster: TPanel;
     cxGrid: TcxGrid;
     tvMaster: TcxGridDBTableView;
@@ -41,16 +41,26 @@ type
     procedure SpdBtnBuscarClick(Sender: TObject);
   private
     { Private declarations }
+    FDataSet: TDataSet;
+    FactBuscar: TBasicAction;
+    procedure SetDataSet(const Value: TDataSet);
+    function GetIdentificador: string;
+    function GetIdProducto: Integer;
+    function GetPrecio: Double;
+    function GetClave: string;
+    procedure SetClave(const Value: string);
+    procedure SetactBuscar(const Value: TBasicAction);
   public
     { Public declarations }
-    Identificador:String; //Verificar cual?
-    IDProducto:Integer;
+//    Identificador:String; //Verificar cual?
     Descripcion:String;
-    Precio:Double;
+    property DataSet: TDataSet read FDataSet write SetDataSet;
+    property Clave: string read GetClave write SetClave;
+    property IdProducto: Integer read GetIdProducto;
+    property Identificador: string read GetIdentificador;
+    property Precio: Double read GetPrecio;
+    property actBuscar: TBasicAction read FactBuscar write SetactBuscar;
   end;
-
-var
-  FrmListaProductos: TFrmListaProductos;
 
 implementation
 
@@ -58,7 +68,47 @@ implementation
 
 uses ProductosDM, CotizacionesDM;
 
-procedure TFrmListaProductos.SpdBtnBuscarClick(Sender: TObject);
+function TfrmListaProductos.GetClave: string;
+begin
+  Result:= EdtBuscar.Text;
+end;
+
+function TfrmListaProductos.GetIdentificador: string;
+var
+  Identi: string;
+begin
+  Identi:=RdGrpUsoIdentificador.Items[RdGrpUsoIdentificador.ItemIndex];
+  Result:= DataSet.FieldByName(Identi).AsString;
+end;
+
+function TfrmListaProductos.GetIdProducto: Integer;
+begin
+  Result:= DataSet.FieldByName('IdProducto').AsInteger;
+end;
+
+function TfrmListaProductos.GetPrecio: Double;
+begin
+  Result:= DataSet.FieldByName('PrecioUnitario').AsFloat;
+end;
+
+procedure TfrmListaProductos.SetactBuscar(const Value: TBasicAction);
+begin
+  FactBuscar := Value;
+  SpdBtnBuscar.Action:= Value;
+end;
+
+procedure TfrmListaProductos.SetClave(const Value: string);
+begin
+  EdtBuscar.Text:= Value;
+end;
+
+procedure TfrmListaProductos.SetDataSet(const Value: TDataSet);
+begin
+  FDataSet := Value;
+  DataSource.DataSet:= Value;
+end;
+
+procedure TfrmListaProductos.SpdBtnBuscarClick(Sender: TObject);
 var
    idProd:String;
 begin
@@ -77,15 +127,14 @@ begin
   end;
 end;
 
-procedure TFrmListaProductos.tvMasterDblClick(Sender: TObject);
-var Identi:String;
+procedure TfrmListaProductos.tvMasterDblClick(Sender: TObject);
+//var Identi:String;
 begin
-  Identi:=RdGrpUsoIdentificador.Items[RdGrpUsoIdentificador.ItemIndex];
-  Identificador:= Datasource.DataSet.FieldByName(Identi).AsString;
-  IDProducto:=Datasource.DataSet.FieldByName('IdProducto').AsInteger;
-  Descripcion:=Datasource.DataSet.FieldByName('Descripcion').AsString;
-  Precio:=Datasource.DataSet.FieldByName('PrecioUnitario').AsFloat;
-
+//  Identi:=RdGrpUsoIdentificador.Items[RdGrpUsoIdentificador.ItemIndex];
+//  Identificador:= Datasource.DataSet.FieldByName(Identi).AsString;
+//  IDProducto:=Datasource.DataSet.FieldByName('IdProducto').AsInteger;
+//  Descripcion:=Datasource.DataSet.FieldByName('Descripcion').AsString;
+//  Precio:=Datasource.DataSet.FieldByName('PrecioUnitario').AsFloat;
   Close;
 end;
 

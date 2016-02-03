@@ -74,7 +74,7 @@ uses
   CuentasBancariasForm in 'Catalogos\CuentasBancariasForm.pas' {frmCuentasBancarias},
   CotizacionesForm in 'Procesos\CotizacionesForm.pas' {frmCotizaciones},
   CotizacionesFormGrid in 'Procesos\CotizacionesFormGrid.pas' {frmCotizacionesGrid},
-  ListaProductosForm in 'Catalogos\ListaProductosForm.pas' {FrmListaProductos},
+  ListaProductosForm in 'Catalogos\ListaProductosForm.pas' {frmListaProductos},
   DocumentosDM in 'Catalogos\DocumentosDM.pas' {dmDocumentos: TDataModule},
   DocumentosEdit in 'Catalogos\DocumentosEdit.pas' {frmDocumentosEdit},
   DocumentosForm in 'Catalogos\DocumentosForm.pas' {frmDocumentos},

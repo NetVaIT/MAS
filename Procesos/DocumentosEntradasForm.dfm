@@ -9,46 +9,71 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   inherited splDetail3: TSplitter
     Top = 515
     Width = 800
+    ExplicitTop = 515
+    ExplicitWidth = 800
   end
   inherited splDetail2: TSplitter
     Top = 471
     Width = 800
+    ExplicitTop = 471
+    ExplicitWidth = 800
   end
   inherited splDetail1: TSplitter
     Top = 427
     Width = 800
+    ExplicitTop = 427
+    ExplicitWidth = 800
   end
   inherited pnlClose: TPanel
     Top = 559
     Width = 800
+    ExplicitTop = 559
+    ExplicitWidth = 800
   end
   inherited pnlDetail3: TPanel
     Top = 518
     Width = 800
+    ExplicitTop = 518
+    ExplicitWidth = 800
   end
   inherited pnlDetail2: TPanel
     Top = 474
     Width = 800
+    ExplicitTop = 474
+    ExplicitWidth = 800
   end
   inherited pnlDetail1: TPanel
     Top = 430
     Width = 800
+    ExplicitTop = 430
+    ExplicitWidth = 800
   end
   inherited pcMain: TcxPageControl
     Width = 800
     Height = 427
+    ExplicitWidth = 800
+    ExplicitHeight = 427
     ClientRectBottom = 426
     ClientRectRight = 799
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 798
+      ExplicitHeight = 425
       inherited cxScrollBox1: TcxScrollBox
         Width = 798
         Height = 425
+        ExplicitWidth = 798
+        ExplicitHeight = 425
         inherited tbarData: TToolBar
           Width = 796
+          ExplicitWidth = 796
         end
         inherited pnlMaster: TPanel
           Width = 796
           Height = 398
+          ExplicitWidth = 796
+          ExplicitHeight = 398
           object pnlDetail: TPanel
             Left = 0
             Top = 105
@@ -57,9 +82,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitTop = 152
-            ExplicitWidth = 746
-            ExplicitHeight = 177
+            ExplicitLeft = -1
           end
           object pnlEncabezado: TPanel
             Left = 0
@@ -81,7 +104,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Width = 44
               Height = 13
               Caption = 'Provedor'
-              FocusControl = DBLookupComboBox1
+              FocusControl = cxDBLookupComboBox1
             end
             object Label8: TLabel
               Left = 9
@@ -102,19 +125,10 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             object Label10: TLabel
               Left = 566
               Top = 9
-              Width = 74
+              Width = 20
               Height = 13
-              Caption = 'TipoDocumento'
+              Caption = 'Tipo'
               FocusControl = DBLookupComboBox4
-            end
-            object DBLookupComboBox1: TDBLookupComboBox
-              Left = 160
-              Top = 27
-              Width = 400
-              Height = 21
-              DataField = 'Provedor'
-              DataSource = DataSource
-              TabOrder = 1
             end
             object DBLookupComboBox2: TDBLookupComboBox
               Left = 9
@@ -123,7 +137,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 4
+              TabOrder = 3
             end
             object DBLookupComboBox3: TDBLookupComboBox
               Left = 160
@@ -141,7 +155,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Height = 21
               DataField = 'Tipo'
               DataSource = DataSource
-              TabOrder = 3
+              TabOrder = 2
               Visible = False
             end
             object cxDBDateEdit1: TcxDBDateEdit
@@ -159,6 +173,25 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 184
+            end
+            object cxDBLookupComboBox1: TcxDBLookupComboBox
+              Left = 160
+              Top = 27
+              DataBinding.DataField = 'Provedor'
+              DataBinding.DataSource = DataSource
+              Properties.KeyFieldNames = 'IdPersona'
+              Properties.ListColumns = <
+                item
+                  Width = 300
+                  FieldName = 'Provedor'
+                end
+                item
+                  Width = 100
+                  FieldName = 'Moneda'
+                end>
+              Properties.ListOptions.SyncMode = True
+              TabOrder = 1
+              Width = 400
             end
           end
           object pnlPie: TPanel
@@ -240,9 +273,12 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmDocumentosEntradas.adodsMaster
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -383,7 +419,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

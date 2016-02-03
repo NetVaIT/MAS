@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, _StandarGFormEdit, dxSkinsCore,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.UITypes, _StandarGFormEdit, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
@@ -157,17 +157,18 @@ begin
 end;
 
 procedure TfrmCotizaciones.DBGrid1DblClick(Sender: TObject);
+var
+  FrmListaProductos:TFrmListaProductos;
 begin
   inherited;
-
   if DataSourceDetail.State in [dsinsert,dsedit] then
   begin
     FrmListaProductos:=TFrmListaProductos.Create(Self);
-    FrmListaProductos.DataSource:=DSAuxiliar;
+    FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
     if DataSourceDetail.State=dsEdit then
     begin
-      FrmListaProductos.Identificador:=DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString;
-      FrmListaProductos.EdtBuscar.Text:=FrmListaProductos.Identificador;
+      FrmListaProductos.Clave:=DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString;
+//      FrmListaProductos.EdtBuscar.Text:=FrmListaProductos.Identificador;
       FrmListaProductos.SpdBtnBuscarClick(FrmListaProductos.SpdBtnBuscar);
     end;
     FrmListaProductos.ShowModal;
@@ -176,8 +177,6 @@ begin
   //  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
     DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
     DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
-
-
     FrmListaProductos.Free;
   end;
 end;
@@ -248,10 +247,10 @@ begin
 end;
 
 function TfrmCotizaciones.GenerarOrdenSalida(idDocumento: Integer): Boolean; //Nov 18/15
-var
-  id:integer;
+//var
+//  id:integer;
 begin
-  Result:=False;
+//  Result:=False;
 
   dsordenSalida.DataSet.Open;
   DSOrdenSalidaItems.DataSet.Open;
@@ -266,7 +265,7 @@ begin
   dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
   dsordenSalida.DataSet.Post;
 
-  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;
+//  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;
 
   while not DataSourceDetail.DataSet.eof do
   begin

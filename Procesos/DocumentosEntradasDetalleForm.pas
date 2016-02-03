@@ -24,10 +24,13 @@ uses
 type
   TfrmDocumentosEntradasDetalle = class(T_frmStandarGFormEdit)
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    FactSeleccionarProducto: TBasicAction;
   public
     { Public declarations }
+    property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write FactSeleccionarProducto;
   end;
 
 implementation
@@ -40,7 +43,14 @@ procedure TfrmDocumentosEntradasDetalle.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmDocumentosEntradasDetalleGrid.Create(Self);
+end;
+
+procedure TfrmDocumentosEntradasDetalle.FormShow(Sender: TObject);
+begin
+  inherited;
+  TfrmDocumentosEntradasDetalleGrid(gFormGrid).actSeleccionarProducto:= actSeleccionarProducto;
   actShowGrid.Execute;
+
 end;
 
 end.

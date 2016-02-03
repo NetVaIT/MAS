@@ -1,9 +1,9 @@
-object FrmListaProductos: TFrmListaProductos
+object frmListaProductos: TfrmListaProductos
   Left = 0
   Top = 0
-  Caption = 'ListaProductos'
+  Caption = 'Lista de productos'
   ClientHeight = 315
-  ClientWidth = 568
+  ClientWidth = 772
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,24 +16,21 @@ object FrmListaProductos: TFrmListaProductos
   object pnlMaster: TPanel
     Left = 0
     Top = 0
-    Width = 568
+    Width = 772
     Height = 315
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -224
-    ExplicitTop = -127
-    ExplicitWidth = 792
-    ExplicitHeight = 442
+    ExplicitWidth = 568
     object cxGrid: TcxGrid
       Left = 0
       Top = 50
-      Width = 568
+      Width = 772
       Height = 265
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitTop = 46
+      ExplicitWidth = 568
       object tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         Navigator.Buttons.CustomButtons = <>
@@ -76,11 +73,11 @@ object FrmListaProductos: TFrmListaProductos
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 568
+      Width = 772
       Height = 50
       Align = alTop
       TabOrder = 1
-      ExplicitWidth = 792
+      ExplicitWidth = 568
       object RdGrpUsoIdentificador: TRadioGroup
         Left = 263
         Top = -1
@@ -145,7 +142,7 @@ object FrmListaProductos: TFrmListaProductos
     end
   end
   object DataSource: TDataSource
-    DataSet = dmCotizaciones.ADODSAuxiliar
+    AutoEdit = False
     Left = 524
     Top = 72
   end

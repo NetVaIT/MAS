@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus;
 
 type
   TfrmDocumentosEntradasDetalleGrid = class(T_frmStandarGFormGrid)
@@ -36,10 +36,14 @@ type
     tvMasterCantidadPendiente: TcxGridDBColumn;
     tvMasterPrecio: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
+    FactSeleccionarProducto: TBasicAction;
+    procedure SetactSeleccionarProducto(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write SetactSeleccionarProducto;
   end;
 
 implementation
@@ -47,5 +51,18 @@ implementation
 {$R *.dfm}
 
 uses DocumentosEntradasDM;
+
+procedure TfrmDocumentosEntradasDetalleGrid.FormCreate(Sender: TObject);
+begin
+  inherited;
+  ApplyBestFit:= False;
+end;
+
+procedure TfrmDocumentosEntradasDetalleGrid.SetactSeleccionarProducto(
+  const Value: TBasicAction);
+begin
+  FactSeleccionarProducto := Value;
+  tvMasterClaveProducto.Properties.Buttons[0].Action:= Value;
+end;
 
 end.

@@ -4,6 +4,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -83,7 +84,6 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 936
-    ExplicitTop = 32000
     ExplicitWidth = 936
   end
   inherited pnlMain: TPanel
@@ -99,8 +99,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -243,12 +241,16 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 970
       FloatTop = 8
-      FloatClientWidth = 109
-      FloatClientHeight = 54
+      FloatClientWidth = 137
+      FloatClientHeight = 108
       ItemLinks = <
         item
           Visible = True
           ItemName = 'dxBarLargeButton20'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton21'
         end>
       OneOnRow = True
       Row = 0
@@ -333,6 +335,10 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton20: TdxBarLargeButton
+      Action = actRequisicionCompra
+      Category = 0
+    end
+    object dxBarLargeButton21: TdxBarLargeButton
       Action = actOrdenCompra
       Category = 0
     end
@@ -476,8 +482,15 @@ inherited frmMain: TfrmMain
       ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
-    object actOrdenCompra: TAction
+    object actRequisicionCompra: TAction
       Tag = 40
+      Category = 'Compras'
+      Caption = 'Requisici'#243'n de compra'
+      ImageIndex = 0
+      OnExecute = actCatalogoExecute
+    end
+    object actOrdenCompra: TAction
+      Tag = 41
       Category = 'Compras'
       Caption = 'Orden de compra'
       Hint = 'Orden de compra'

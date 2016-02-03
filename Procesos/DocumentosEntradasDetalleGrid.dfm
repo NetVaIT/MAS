@@ -1,34 +1,49 @@
 inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   Caption = 'frmDocumentosEntradasDetalleGrid'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
+        NewItemRow.InfoText = 'Presiona aqu'#237' para uno nuevo'
+        OptionsBehavior.FocusCellOnTab = True
+        OptionsBehavior.FocusFirstCellOnNewRecord = True
+        OptionsData.Editing = True
+        OptionsData.Inserting = True
         object tvMasterIdDocumentoentradaDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoentradaDetalle'
           Visible = False
+          Options.Editing = False
         end
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntrada'
           Visible = False
+          Options.Editing = False
         end
         object tvMasterIdAlmacen: TcxGridDBColumn
           DataBinding.FieldName = 'IdAlmacen'
           Visible = False
+          Options.Editing = False
         end
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
           Visible = False
+          Options.Editing = False
         end
         object tvMasterClaveProducto: TcxGridDBColumn
           DataBinding.FieldName = 'ClaveProducto'
+          PropertiesClassName = 'TcxButtonEditProperties'
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
           Width = 200
         end
         object tvMasterProducto: TcxGridDBColumn
           DataBinding.FieldName = 'Producto'
+          Options.Focusing = False
           Width = 304
         end
         object tvMasterCantidad: TcxGridDBColumn
@@ -36,19 +51,25 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
         end
         object tvMasterCantidadPendiente: TcxGridDBColumn
           DataBinding.FieldName = 'CantidadPendiente'
+          Options.Focusing = False
         end
         object tvMasterPrecio: TcxGridDBColumn
           DataBinding.FieldName = 'Precio'
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
+          Options.Editing = False
+          Options.Focusing = False
         end
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmDocumentosEntradas.adodsDocumentosDetalles
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400CC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -191,6 +212,9 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
     inherited DataSetInsert: TDataSetInsert
       Visible = True
     end
+    inherited DataSetEdit: TDataSetEdit
+      Visible = True
+    end
     inherited DataSetDelete: TDataSetDelete
       Visible = True
     end
@@ -200,7 +224,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
