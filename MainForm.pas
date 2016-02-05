@@ -73,12 +73,16 @@ type
     dxBarLargeButton19: TdxBarLargeButton;
     actRptVentasUnidades: TAction;
     dxBarManagerBar2: TdxBar;
-    dxBarLargeButton20: TdxBarLargeButton;
     actOrdenCompra: TAction;
     dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
     dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
     actRequisicionCompra: TAction;
-    dxBarLargeButton21: TdxBarLargeButton;
+    actProforma: TAction;
+    actBackorderEntrada: TAction;
+    dxBarLargeButton20: TdxBarLargeButton;
+    dxBarButton1: TdxBarButton;
+    dxBarButton2: TdxBarButton;
+    dxBarButton3: TdxBarButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -108,7 +112,7 @@ implementation
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
-  DocumentosEntradasDM, ConfiguracionDM;
+  ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM;
 
 { TfrmMain }
 
@@ -153,8 +157,10 @@ begin
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
    30: gModulo := TdmAlmacenes.Create(Self);
-   40: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
-   41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
+   40: gModulo := TdmBackorderEntradas.Create(Self);
+   41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
+   42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
+   43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tProforma);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
   end;
   if Assigned(gModulo) then
@@ -184,7 +190,10 @@ begin
   actEmisor.Enabled             := Conected;
   actAlmacenes.Enabled          := Conected;
   actRptVentasUnidades.Enabled  := Conected;
+  actBackorderEntrada.Enabled   := Conected;
+  actRequisicionCompra.Enabled  := Conected;
   actOrdenCompra.Enabled        := Conected;
+  actProforma.Enabled           := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;

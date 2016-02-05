@@ -122,7 +122,10 @@ uses
   UsuariosForm in 'Catalogos\UsuariosForm.pas' {frmUsuarios},
   ConfiguracionDM in 'Catalogos\ConfiguracionDM.pas' {dmConfiguracion: TDataModule},
   ConfiguracionesEdit in 'Catalogos\ConfiguracionesEdit.pas' {frmConfiguracionesEdit},
-  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones};
+  ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones},
+  BackorderEntradasDM in 'Procesos\BackorderEntradasDM.pas' {dmBackorderEntradas: TDataModule},
+  BackorderEntradasForm in 'Procesos\BackorderEntradasForm.pas' {frmBackorderEntradas},
+  BackorderEntradasDetallesForm in 'Procesos\BackorderEntradasDetallesForm.pas' {frmBackorderEntradasDetalles};
 
 {$R *.res}
 

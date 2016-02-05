@@ -10,7 +10,8 @@ resourcestring
   strErrorClave = 'No encontro el artículo para este proveedor, favor de teclear uno valido.';
 
 type
-  TPTipo = (tNone, tRequisicion, tOrdenCompra, tDevolucion);
+  TPTipo = (tNone, tRequisicion, tOrdenCompra, tProforma, tDevolucion);
+  TPEstatus = (eNone, eAbierto, eCerrado, eAutorizado, eCancelado);
   TdmDocumentosEntradas = class(T_dmStandar)
     adodsMasterIdDocumentoEntrada: TAutoIncField;
     adodsMasterIdDocumentoEntradaTipo: TIntegerField;
@@ -66,6 +67,8 @@ type
     adodsListaProductosDescripcion: TStringField;
     adodsListaProductosPrecioUnitario: TFMTBCDField;
     actBuscarProducto: TAction;
+    actAutorizar: TAction;
+    adopAutorizar: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -77,6 +80,8 @@ type
     procedure adodsDocumentosDetallesAfterPost(DataSet: TDataSet);
     procedure adodsDocumentosDetallesPrecioChange(Sender: TField);
     procedure actBuscarProductoExecute(Sender: TObject);
+    procedure actAutorizarExecute(Sender: TObject);
+    procedure actAutorizarUpdate(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -102,6 +107,21 @@ uses DocumentosEntradasForm, DocumentosEntradasDetalleForm, ConfiguracionDM,
   _ConectionDmod, _Utils;
 
 {$R *.dfm}
+
+procedure TdmDocumentosEntradas.actAutorizarExecute(Sender: TObject);
+begin
+  inherited;
+  adopAutorizar.Parameters.ParamByName('@IdDocumentoEntrada').Value:= adodsMasterIdDocumentoEntrada.Value;
+  adopAutorizar.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+  adopAutorizar.ExecProc;
+  RefreshADODS(adodsMaster, adodsMasterIdDocumentoEntrada);
+end;
+
+procedure TdmDocumentosEntradas.actAutorizarUpdate(Sender: TObject);
+begin
+  inherited;
+  actAutorizar.Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAbierto));
+end;
 
 procedure TdmDocumentosEntradas.actBuscarProductoExecute(Sender: TObject);
 begin
@@ -197,6 +217,7 @@ begin
   case Tipo of
     tRequisicion: adodsMasterIdDocumentoEntradaTipo.Value:= Ord(tRequisicion);
     tOrdenCompra: adodsMasterIdDocumentoEntradaTipo.Value:= Ord(tOrdenCompra);
+    tProforma: adodsMasterIdDocumentoEntradaTipo.Value:= Ord(tProforma);
   end;
   adodsMasterIdDocumentoEntradaEstatus.Value:= 1;
   adodsMasterIdMoneda.Value:= dmConfiguracion.IdMoneda;
@@ -217,10 +238,12 @@ begin
   case Tipo of
     tRequisicion: adodsMaster.Parameters.ParamByName('IdDocumentoEntradaTipo').Value:= Ord(tRequisicion);
     tOrdenCompra: adodsMaster.Parameters.ParamByName('IdDocumentoEntradaTipo').Value:= Ord(tOrdenCompra);
+    tProforma: adodsMaster.Parameters.ParamByName('IdDocumentoEntradaTipo').Value:= Ord(tProforma);
   end;
   if adodsDocumentosDetalles.CommandText <> EmptyStr then adodsDocumentosDetalles.Open;
   gGridEditForm:= TfrmDocumentosEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  TfrmDocumentosEntradas(gGridEditForm).actAutorizar:= actAutorizar;
   gFormDetail1:= TfrmDocumentosEntradasDetalle.Create(Self);
   gFormDetail1.DataSet:= adodsDocumentosDetalles;
   TfrmDocumentosEntradasDetalle(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;

@@ -22,7 +22,7 @@ uses
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxMemo,
   cxDBEdit, cxLabel, cxDBLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox;
+  cxDBLookupComboBox, Vcl.Menus, cxButtons;
 
 type
   TfrmDocumentosEntradas = class(T_frmStandarGFormEdit)
@@ -35,7 +35,6 @@ type
     Label10: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
     DBLookupComboBox3: TDBLookupComboBox;
-    DBLookupComboBox4: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBLabel1: TcxDBLabel;
     pnlPie: TPanel;
@@ -48,11 +47,15 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBMemo1: TcxDBMemo;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
+    btnAutorizar: TcxButton;
     procedure FormCreate(Sender: TObject);
   private
+    FactAutorizar: TBasicAction;
+    procedure SetactAutorizar(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
   end;
 
 implementation
@@ -66,6 +69,12 @@ begin
   inherited;
   gFormGrid := TfrmDocumentosEntradasGrid.Create(Self);
   ContainerDetail1:= pnlDetail;
+end;
+
+procedure TfrmDocumentosEntradas.SetactAutorizar(const Value: TBasicAction);
+begin
+  FactAutorizar := Value;
+  btnAutorizar.Action:= Value;
 end;
 
 end.

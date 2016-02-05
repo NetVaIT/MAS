@@ -242,7 +242,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 137
-      FloatClientHeight = 108
+      FloatClientHeight = 76
       ItemLinks = <
         item
           Visible = True
@@ -250,7 +250,15 @@ inherited frmMain: TfrmMain
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton21'
+          ItemName = 'dxBarButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton2'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton3'
         end>
       OneOnRow = True
       Row = 0
@@ -335,11 +343,19 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton20: TdxBarLargeButton
+      Action = actBackorderEntrada
+      Category = 0
+    end
+    object dxBarButton1: TdxBarButton
       Action = actRequisicionCompra
       Category = 0
     end
-    object dxBarLargeButton21: TdxBarLargeButton
+    object dxBarButton2: TdxBarButton
       Action = actOrdenCompra
+      Category = 0
+    end
+    object dxBarButton3: TdxBarButton
+      Action = actProforma
       Category = 0
     end
   end
@@ -482,18 +498,32 @@ inherited frmMain: TfrmMain
       ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
-    object actRequisicionCompra: TAction
+    object actBackorderEntrada: TAction
       Tag = 40
+      Category = 'Compras'
+      Caption = 'Backorders'
+      ImageIndex = 7
+      OnExecute = actCatalogoExecute
+    end
+    object actRequisicionCompra: TAction
+      Tag = 41
       Category = 'Compras'
       Caption = 'Requisici'#243'n de compra'
       ImageIndex = 0
       OnExecute = actCatalogoExecute
     end
     object actOrdenCompra: TAction
-      Tag = 41
+      Tag = 42
       Category = 'Compras'
       Caption = 'Orden de compra'
       Hint = 'Orden de compra'
+      ImageIndex = 0
+      OnExecute = actCatalogoExecute
+    end
+    object actProforma: TAction
+      Tag = 43
+      Category = 'Compras'
+      Caption = 'Proforma'
       ImageIndex = 0
       OnExecute = actCatalogoExecute
     end

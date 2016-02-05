@@ -82,7 +82,6 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitLeft = -1
           end
           object pnlEncabezado: TPanel
             Left = 0
@@ -128,7 +127,6 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Width = 20
               Height = 13
               Caption = 'Tipo'
-              FocusControl = DBLookupComboBox4
             end
             object DBLookupComboBox2: TDBLookupComboBox
               Left = 9
@@ -137,7 +135,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 3
+              TabOrder = 2
             end
             object DBLookupComboBox3: TDBLookupComboBox
               Left = 160
@@ -146,17 +144,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Height = 21
               DataField = 'Estatus'
               DataSource = DataSource
-              TabOrder = 5
-            end
-            object DBLookupComboBox4: TDBLookupComboBox
-              Left = 566
-              Top = 28
-              Width = 184
-              Height = 21
-              DataField = 'Tipo'
-              DataSource = DataSource
-              TabOrder = 2
-              Visible = False
+              TabOrder = 4
             end
             object cxDBDateEdit1: TcxDBDateEdit
               Left = 9
@@ -172,7 +160,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               DataBinding.DataField = 'Tipo'
               DataBinding.DataSource = DataSource
               Height = 21
-              Width = 184
+              Width = 124
             end
             object cxDBLookupComboBox1: TcxDBLookupComboBox
               Left = 160
@@ -192,6 +180,14 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Properties.ListOptions.SyncMode = True
               TabOrder = 1
               Width = 400
+            end
+            object btnAutorizar: TcxButton
+              Left = 707
+              Top = 25
+              Width = 75
+              Height = 25
+              Caption = 'btnAutorizar'
+              TabOrder = 5
             end
           end
           object pnlPie: TPanel
@@ -278,7 +274,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -419,7 +415,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

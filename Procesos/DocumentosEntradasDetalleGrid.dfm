@@ -1,6 +1,8 @@
 inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   Caption = 'frmDocumentosEntradasDetalleGrid'
   OnCreate = FormCreate
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -51,6 +53,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
         end
         object tvMasterCantidadPendiente: TcxGridDBColumn
           DataBinding.FieldName = 'CantidadPendiente'
+          Visible = False
           Options.Focusing = False
         end
         object tvMasterPrecio: TcxGridDBColumn
@@ -69,7 +72,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -224,7 +227,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

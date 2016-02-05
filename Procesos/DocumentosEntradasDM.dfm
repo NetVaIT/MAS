@@ -135,6 +135,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Caption = 'actBuscarProducto'
       OnExecute = actBuscarProductoExecute
     end
+    object actAutorizar: TAction
+      Caption = 'Autorizar'
+      OnExecute = actAutorizarExecute
+      OnUpdate = actAutorizarUpdate
+    end
   end
   object adodsTipos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -438,6 +443,34 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Value = Null
       end>
     Left = 48
+    Top = 368
+  end
+  object adopAutorizar: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetDocumentosEntradasAutorizar;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdDocumentoEntrada'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 160
     Top = 368
   end
 end
