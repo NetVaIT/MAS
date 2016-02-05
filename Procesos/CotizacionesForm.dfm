@@ -36,26 +36,30 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited pcMain: TcxPageControl
     Width = 960
     ExplicitWidth = 960
-    ClientRectRight = 959
+    ClientRectRight = 956
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 958
-      ExplicitHeight = 475
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 952
+      ExplicitHeight = 469
       inherited cxScrollBox1: TcxScrollBox
-        Width = 958
-        ExplicitWidth = 958
+        Width = 952
+        Height = 469
+        ExplicitWidth = 952
+        ExplicitHeight = 469
         inherited tbarData: TToolBar
-          Width = 956
-          ExplicitWidth = 956
+          Width = 950
+          ExplicitWidth = 950
         end
         inherited pnlMaster: TPanel
-          Width = 956
-          ExplicitWidth = 956
+          Width = 950
+          Height = 442
+          ExplicitWidth = 950
+          ExplicitHeight = 442
           object pnlDetail: TPanel
             Left = 0
             Top = 152
-            Width = 956
+            Width = 950
             Height = 177
             Align = alTop
             BevelOuter = bvNone
@@ -63,7 +67,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
-              Width = 956
+              Width = 950
               Height = 29
               Images = ilAction
               TabOrder = 0
@@ -149,7 +153,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object DBGrid1: TDBGrid
               Left = 0
               Top = 29
-              Width = 956
+              Width = 950
               Height = 148
               Align = alClient
               DataSource = DataSourceDetail
@@ -179,14 +183,15 @@ inherited frmCotizaciones: TfrmCotizaciones
                   Visible = False
                 end
                 item
+                  ButtonStyle = cbsEllipsis
                   Expanded = False
                   FieldName = 'ClaveProducto'
-                  Title.Caption = 'Clave Producto'
+                  Title.Caption = 'Identificador'
                   Width = 176
                   Visible = True
                 end
                 item
-                  ButtonStyle = cbsEllipsis
+                  ButtonStyle = cbsNone
                   Expanded = False
                   FieldName = 'Producto'
                   Width = 289
@@ -195,6 +200,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                 item
                   Expanded = False
                   FieldName = 'ExistenciaActual'
+                  ReadOnly = True
                   Width = 92
                   Visible = True
                 end
@@ -217,7 +223,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 item
                   Expanded = False
                   FieldName = 'Importe'
-                  Width = 64
                   Visible = True
                 end>
             end
@@ -225,7 +230,7 @@ inherited frmCotizaciones: TfrmCotizaciones
           object PnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 956
+            Width = 950
             Height = 152
             Align = alTop
             TabOrder = 1
@@ -290,6 +295,40 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 13
               Caption = 'Direcci'#243'n Cliente'
               FocusControl = DBLkpCmbBxDirCliente
+            end
+            object SpdBtnGenPDFCotiza: TSpeedButton
+              Left = 608
+              Top = 36
+              Width = 97
+              Height = 22
+              Caption = 'Cotizaci'#243'n PDF '
+              Glyph.Data = {
+                36030000424D3603000000000000360000002800000010000000100000000100
+                1800000000000003000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                00000000000000000000000000000000BC7B49BB7A48BA7845B87745B87543B7
+                7442B67340B5723FB4703DB36F3CB36E3BB16D3A000000000000000000000000
+                BE834DF9EDE0F9ECDFF9EBDEF8EADDF8EADCF8E9DB241CEDF7E8D9F7E7D8F7E7
+                D7B4703D000000000000000000000000C18752FCF1E6FBF1E5FBEFE4FBEFE2FA
+                EEE1FAEDE0241CEDF9ECDEF9EBDDF9EBDDB67340000000000000000000000000
+                C48A56FEF4EBFDF4EBFDF3E9FDF2E9FDF2E7FCF1E6241CED241CED241CEDFBEE
+                E1B87744000000000000000000000000C78F5AFFF9F2FFF7F0FFF7EFFEF7EEFE
+                F6ECFEF5EC241CEDFEF3E9FDF3E8FCEFE3BB7A47000000000000000000000000
+                CA935EFFFAF4FFF9F3FFF9F2241CED241CED241CEDFFFFFF241CED241CED241C
+                EDBE814B000000000000000000000000CD9663FFFAF6FFFAF5FFFAF4241CEDFF
+                F9F3FFF9F2241CEDFEF5ECFCF1E6FAEDE0C18550000000000000000000000000
+                CF9B68241CEDFFFBF6FFFAF5241CEDFFFAF5FFF9F3241CEDFCF2E8FAEDE1F7E8
+                D9C38954000000000000000000000000D29F6C241CEDFFFBF8FFFBF7241CEDFF
+                FBF6FEF7F1241CEDFAEFE3F7E8DBF5E2D1C78D58000000000000000000000000
+                D5A371241CED241CED241CEDFFFFFF241CED241CED241CEDF6E7DAF4E1D0F0DA
+                C6C9915D000000000000000000000000D9A776241CEDFFFDFBFFFDFA241CEDFC
+                F5EEFAF0E7F7EBDFD09A67CF9865CE9764CC9561000000000000000000000000
+                DBAB7B241CEDFFFEFBFEFAF7241CEDFAF1E9F7EADFF5E6D8D29E6BFFFCF97574
+                72000000000000000000000000000000DDAF83241CED241CED241CED241CEDF7
+                EBE1F4E5D7F2E0D0D5A270747070000000000000000000000000000000000000
+                E0B387DFB185DFB083DDAE82DCAD80DBAB7BDAAA79D8A877D8A6750000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000}
             end
             object cxDBSpinEdit1: TcxDBSpinEdit
               Left = 442
@@ -377,7 +416,7 @@ inherited frmCotizaciones: TfrmCotizaciones
           object Panel1: TPanel
             Left = 0
             Top = 329
-            Width = 956
+            Width = 950
             Height = 111
             Align = alTop
             TabOrder = 2
@@ -457,7 +496,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -663,7 +702,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011600C0029C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600C002A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1467,13 +1506,11 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DataSourceDetail: TDataSource
     DataSet = dmCotizaciones.adodsCotizacionesDetalle
-    OnStateChange = DataSourceDetailStateChange
     Left = 616
     Top = 112
   end
   object DSAuxiliar: TDataSource
     DataSet = dmCotizaciones.ADODSAuxiliar
-    OnStateChange = DataSourceDetailStateChange
     Left = 688
     Top = 112
   end
@@ -1489,13 +1526,11 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSQryBorrar: TDataSource
     DataSet = dmCotizaciones.ADOQryAuxiliar
-    OnStateChange = DataSourceDetailStateChange
     Left = 904
     Top = 192
   end
   object DSDireccioncliente: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccAuxiliar
-    OnStateChange = DataSourceDetailStateChange
     Left = 856
     Top = 128
   end

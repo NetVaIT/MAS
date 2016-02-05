@@ -22,7 +22,8 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Shellapi, Vcl.StdCtrls,Data.Win.ADODB, Vcl.CheckLst, math;
+  Vcl.ExtCtrls, Shellapi, Vcl.StdCtrls,Data.Win.ADODB, Vcl.CheckLst, math,
+  Vcl.Menus;
 
 type
   TfrmFacturasGrid = class(T_frmStandarGFormGrid)

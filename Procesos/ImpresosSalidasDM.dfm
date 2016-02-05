@@ -1,7 +1,7 @@
 object DMImpresosSalidas: TDMImpresosSalidas
   OldCreateOrder = False
   Height = 610
-  Width = 490
+  Width = 843
   object ppRprtOrdenSalida: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
@@ -184,8 +184,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 118004
-        mmTop = 38629
+        mmLeft = 103188
+        mmTop = 45244
         mmWidth = 16140
         BandType = 0
         LayerName = Foreground
@@ -203,8 +203,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnGenerales'
         mmHeight = 4763
-        mmLeft = 136261
-        mmTop = 38629
+        mmLeft = 121444
+        mmTop = 45244
         mmWidth = 48683
         BandType = 0
         LayerName = Foreground
@@ -366,7 +366,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Picture.Data = {
           0B546478504E47496D61676589504E470D0A1A0A0000000D494844520000038C
           000001F50802000000321AE7D5000000017352474200AECE1CE9000000046741
-          4D410000B18F0BFC6105000000097048597300000EBD00000EBD0147FB90AD00
+          4D410000B18F0BFC6105000000097048597300000EBC00000EBC0195BC724900
           00FFA549444154785EEC9D3F681BC917C755B8709142450A152922F81527B822
           8214274813418A135C71822B4E70451057049122982B824973982B0E93E23029
           824911708A8053049C22E034015F11F01501A70838450A152954B850E142BFEF
@@ -3326,6 +3326,43 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 0
         LayerName = Foreground
       end
+      object ppLabel37: TppLabel
+        UserName = 'Label37'
+        AutoSize = False
+        Caption = 'C'#243'digo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 118004
+        mmTop = 38629
+        mmWidth = 16140
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText16: TppDBText
+        UserName = 'DBText16'
+        DataField = 'Identificador'
+        DataPipeline = ppDBPplnGenerales
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnGenerales'
+        mmHeight = 4763
+        mmLeft = 136261
+        mmTop = 38629
+        mmWidth = 48683
+        BandType = 0
+        LayerName = Foreground
+      end
     end
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -3593,6 +3630,13 @@ object DMImpresosSalidas: TDMImpresosSalidas
       DisplayWidth = 100
       Position = 17
     end
+    object ppDBPplnGeneralesppField19: TppField
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 18
+    end
   end
   object ppDBPplnItemsOrdenSalida: TppDBPipeline
     DataSource = DSOrdenSalidaItems
@@ -3606,7 +3650,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       FieldName = 'IdOrdenSalidaItem'
       FieldLength = 0
       DataType = dtLongint
-      DisplayWidth = 0
+      DisplayWidth = 10
       Position = 0
     end
     object ppDBPplnItemsOrdenSalidappField2: TppField
@@ -3799,6 +3843,15 @@ object DMImpresosSalidas: TDMImpresosSalidas
       Size = 100
       Lookup = True
     end
+    object ADODtStOrdenSalidaIdentificador: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Identificador'
+      LookupDataSet = adodSDocumentoSalida
+      LookupKeyFields = 'IdDocumentoSalida'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdDocumentoSalida'
+      Lookup = True
+    end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
     Active = True
@@ -3820,8 +3873,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Precision = 10
         Value = Null
       end>
-    Left = 176
-    Top = 266
+    Left = 160
+    Top = 258
     object ADODtStOrdenSalidaItemIdOrdenSalidaItem: TAutoIncField
       FieldName = 'IdOrdenSalidaItem'
       ReadOnly = True
@@ -3890,8 +3943,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'select IdOrdenEstatus, Identificador, Descripcion from OrdenesEs' +
       'tatus'
     Parameters = <>
-    Left = 40
-    Top = 258
+    Left = 48
+    Top = 274
     object ADODtStOrdenSalEstatusIdOrdenEstatus: TIntegerField
       FieldName = 'IdOrdenEstatus'
     end
@@ -3906,19 +3959,22 @@ object DMImpresosSalidas: TDMImpresosSalidas
   end
   object DSOrdenSalidaItems: TDataSource
     DataSet = ADODtStOrdenSalidaItem
-    Left = 284
+    Left = 268
     Top = 274
   end
   object adodSDocumentoSalida: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,'#13#10' Id' +
-      'Moneda, IdUsuario, FechaRegistro,'#13#10' IVA, SubTotal, Total, Vigenc' +
-      'iaDias, Observaciones,IdDomicilioCliente, DSE.Descripcion as Est' +
-      'atus'#13#10' FROM DocumentosSalidas ds'#13#10'inner join DocumentosSalidasEs' +
-      'tatus DSE  '#13#10'on DSE.IdDocumentoSalidaEstatus= ds.IdDocumentoSali' +
-      'daEstatus'#13#10'where '#13#10#13#10'IdDocumentoSalida=:IdDocumentoSalida'
+      'SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, ds.IdPersona,'#13#10 +
+      ' IdMoneda, IdUsuario, FechaRegistro,'#13#10' IVA, SubTotal, Total, Vig' +
+      'enciaDias, Observaciones,IdDomicilioCliente, DSE.Descripcion as ' +
+      'Estatus, PD.Identificador'#13#10' FROM DocumentosSalidas ds'#13#10'inner joi' +
+      'n DocumentosSalidasEstatus DSE  '#13#10'on DSE.IdDocumentoSalidaEstatu' +
+      's= ds.IdDocumentoSalidaEstatus'#13#10'inner join PersonasDomicilios PD' +
+      ' on PD.IdPersonaDomicilio= ds.IdDomicilioCliente'#13#10#13#10'where '#13#10#13#10'Id' +
+      'DocumentoSalida=:IdDocumentoSalida'
     DataSource = DSOrdenSalida
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -4004,6 +4060,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object adodSDocumentoSalidaEstatus: TStringField
       FieldName = 'Estatus'
       Size = 50
+    end
+    object adodSDocumentoSalidaIdentificador: TIntegerField
+      FieldName = 'Identificador'
     end
   end
   object adodsProductos: TADODataSet
@@ -4319,7 +4378,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 50
+    Left = 66
     Top = 362
     Version = '15.0'
     mmColumnWidth = 0
@@ -7454,6 +7513,26 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 0
         LayerName = Foreground1
       end
+      object ppDBText15: TppDBText
+        UserName = 'DBText15'
+        DataField = 'Identificador'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Name = 'Arial'
+        Font.Size = 14
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 4763
+        mmLeft = 92869
+        mmTop = 54240
+        mmWidth = 26988
+        BandType = 0
+        LayerName = Foreground1
+      end
     end
     object ppDetailBand2: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -7885,10 +7964,231 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object ppDBPplnEtiquetas: TppDBPipeline
     DataSource = DSDatosEtiqueta
     UserName = 'Etiqueta'
-    Left = 50
-    Top = 494
+    Left = 66
+    Top = 422
+    object ppDBPplnEtiquetasppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 0
+      Position = 0
+    end
+    object ppDBPplnEtiquetasppField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
+      Position = 1
+    end
+    object ppDBPplnEtiquetasppField3: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 2
+    end
+    object ppDBPplnEtiquetasppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+    object ppDBPplnEtiquetasppField5: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 4
+    end
+    object ppDBPplnEtiquetasppField6: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 5
+    end
+    object ppDBPplnEtiquetasppField7: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 6
+    end
+    object ppDBPplnEtiquetasppField8: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 7
+    end
+    object ppDBPplnEtiquetasppField9: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 8
+    end
+    object ppDBPplnEtiquetasppField10: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 9
+    end
+    object ppDBPplnEtiquetasppField11: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 10
+    end
+    object ppDBPplnEtiquetasppField12: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 500
+      DisplayWidth = 500
+      Position = 11
+    end
+    object ppDBPplnEtiquetasppField13: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 12
+    end
+    object ppDBPplnEtiquetasppField14: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 13
+    end
+    object ppDBPplnEtiquetasppField15: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 14
+    end
+    object ppDBPplnEtiquetasppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtDouble
+      DisplayWidth = 10
+      Position = 15
+    end
+    object ppDBPplnEtiquetasppField17: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 16
+    end
+    object ppDBPplnEtiquetasppField18: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 17
+    end
+    object ppDBPplnEtiquetasppField19: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 18
+    end
+    object ppDBPplnEtiquetasppField20: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 19
+    end
+    object ppDBPplnEtiquetasppField21: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 20
+    end
+    object ppDBPplnEtiquetasppField22: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 21
+    end
+    object ppDBPplnEtiquetasppField23: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 22
+    end
+    object ppDBPplnEtiquetasppField24: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 23
+    end
+    object ppDBPplnEtiquetasppField25: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 24
+    end
+    object ppDBPplnEtiquetasppField26: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 13
+      DisplayWidth = 13
+      Position = 25
+    end
+    object ppDBPplnEtiquetasppField27: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 26
+    end
+    object ppDBPplnEtiquetasppField28: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 27
+    end
+    object ppDBPplnEtiquetasppField29: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 28
+    end
   end
   object ADODtStDatosEtiqueta: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDatosEtiquetaCalcFields
@@ -7900,18 +8200,19 @@ object DMImpresosSalidas: TDMImpresosSalidas
       #13#10'      ,  EstatusEntrega  '#13#10'      ,IE.  IdTelefono  '#13#10'      ,  ' +
       'Contenido  '#13#10'      ,  Conducto  '#13#10'      ,  Servicio  '#13#10'      ,  ' +
       'PagoFlete  '#13#10'      ,  Valor  '#13#10'      ,  Asegurado  ,'#13#10'      P.Ra' +
-      'zonSocial, D.Calle, D.NoExterior, D.NoInterior, D.Colonia,D.Codi' +
-      'goPostal, e.Descripcion  as Estado,M.Descripcion Municipio,'#13#10'P.R' +
-      'FC, T.Telefono'#13#10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner joi' +
-      'n CFDI CI on CI.IdCFDI=IE.IdCFDI'#13#10'inner join OrdenesSalidas OS o' +
-      'n os.idOrdenSalida=Ci. idOrdenSalida'#13#10'  inner join Personas P on' +
-      ' P.IdPersona=IE.IDPersonaCliente'#13#10'  inner join PersonasDomicilio' +
-      's PD on PD.IdPersonaDomicilio=IE.IDPersonaDomicilio'#13#10'  inner joi' +
-      'n Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner join Mun' +
-      'icipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inner join Estados E' +
-      ' on E.IdEstado=D.IdEstado  '#13#10'  inner join Personas PR on PR.IdPe' +
-      'rsona=IE.IDResponsableEntrega'#13#10'  inner join Telefonos T on T.IdT' +
-      'elefono=IE.IdTelefono'#13#10' where ci.idOrdenSalida=:idOrdenSalida'
+      'zonSocial, PD.Identificador,D.Calle, D.NoExterior, D.NoInterior,' +
+      ' D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripcio' +
+      'n Municipio,'#13#10'P.RFC, T.Telefono'#13#10'  FROM   InformacionEntregas   ' +
+      'IE'#13#10#13#10'  inner join CFDI CI on CI.IdCFDI=IE.IdCFDI'#13#10'inner join Or' +
+      'denesSalidas OS on os.idOrdenSalida=Ci. idOrdenSalida'#13#10'  inner j' +
+      'oin Personas P on P.IdPersona=IE.IDPersonaCliente'#13#10'  inner join ' +
+      'PersonasDomicilios PD on PD.IdPersonaDomicilio=IE.IDPersonaDomic' +
+      'ilio'#13#10'  inner join Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13 +
+      #10'  inner join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inn' +
+      'er join Estados E on E.IdEstado=D.IdEstado  '#13#10'  inner join Perso' +
+      'nas PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  inner join Tel' +
+      'efonos T on T.IdTelefono=IE.IdTelefono'#13#10' where ci.idOrdenSalida=' +
+      ':idOrdenSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -7921,8 +8222,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Size = 4
         Value = Null
       end>
-    Left = 160
-    Top = 430
+    Left = 184
+    Top = 366
     object ADODtStDatosEtiquetaIdInfoEntrega: TAutoIncField
       FieldName = 'IdInfoEntrega'
       ReadOnly = True
@@ -8027,10 +8328,13 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ADODtStDatosEtiquetaTelefono: TStringField
       FieldName = 'Telefono'
     end
+    object ADODtStDatosEtiquetaIdentificador: TIntegerField
+      FieldName = 'Identificador'
+    end
   end
   object DSDatosEtiqueta: TDataSource
     DataSet = ADODtStDatosEtiqueta
-    Left = 268
-    Top = 430
+    Left = 284
+    Top = 366
   end
 end

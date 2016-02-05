@@ -34,12 +34,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     ExplicitWidth = 942
   end
   inherited pnltoolbar: TPanel
-    Top = 33
+    Top = 0
     Width = 942
-    Height = 40
-    ExplicitTop = 33
+    Height = 44
+    Align = alTop
+    Visible = True
+    ExplicitTop = 0
     ExplicitWidth = 942
-    ExplicitHeight = 40
+    ExplicitHeight = 44
     object Label1: TLabel
       Left = 327
       Top = 6
@@ -53,7 +55,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Left = 0
       Top = 0
       Width = 321
-      Height = 40
+      Height = 44
       Align = alLeft
       Columns = 4
       ItemIndex = 3
@@ -64,12 +66,13 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         'Todo')
       TabOrder = 0
       OnClick = RdGrpSeleccionClick
+      ExplicitHeight = 40
     end
     object ChckLstImpresion: TCheckListBox
       Left = 409
       Top = 6
       Width = 269
-      Height = 41
+      Height = 35
       Columns = 2
       ItemHeight = 13
       Items.Strings = (
@@ -81,114 +84,19 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       OnClick = ChckLstImpresionClick
     end
   end
-  inherited tbarGrid: TToolBar
-    Top = 0
-    Width = 942
-    Height = 33
-    ButtonHeight = 33
-    OnClick = tbarGridClick
-    ExplicitTop = 0
-    ExplicitWidth = 942
-    ExplicitHeight = 33
-    inherited ToolButton1: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton2: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton3: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton4: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton5: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton6: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton7: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton8: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton9: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton21: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton22: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited ToolButton10: TToolButton
-      ExplicitHeight = 33
-    end
-    inherited tbtnCerrar: TToolButton
-      Hint = 'Visualiza Factura Actual'
-      ParentShowHint = False
-      ExplicitHeight = 33
-    end
-    object ToolButton11: TToolButton
-      Left = 239
-      Top = 0
-      Width = 58
-      Caption = 'ToolButton11'
-      ImageIndex = 0
-      Style = tbsSeparator
-    end
-    object TlBtnPrefactura: TToolButton
-      Left = 297
-      Top = 0
-      Hint = 'Prefacturaci'#243'n'
-      ImageIndex = 12
-      Visible = False
-    end
-    object TlBtnConsulta: TToolButton
-      Left = 320
-      Top = 0
-      Hint = 'Consulta por Estatus'
-      Caption = 'TlBtnConsulta'
-      ImageIndex = 14
-      ParentShowHint = False
-      ShowHint = True
-      OnClick = TlBtnConsultaClick
-    end
-    object ToolButton12: TToolButton
-      Left = 343
-      Top = 0
-      Width = 74
-      Caption = 'ToolButton12'
-      ImageIndex = 15
-      Style = tbsSeparator
-    end
-    object TlBtnRegPDF: TToolButton
-      Left = 417
-      Top = 0
-      Hint = 'Impresi'#243'n de Facturas por Departamento'
-      Caption = 'TlBtnRegPDF'
-      ImageIndex = 13
-      ParentShowHint = False
-      ShowHint = True
-      OnMouseDown = TlBtnRegPDFMouseDown
-    end
-  end
   inherited pnlMaster: TPanel
-    Top = 73
+    Top = 44
     Width = 942
-    Height = 404
-    ExplicitTop = 73
+    Height = 433
     ExplicitWidth = 942
-    ExplicitHeight = 404
+    ExplicitHeight = 437
     inherited cxGrid: TcxGrid
+      Top = 33
       Width = 942
-      Height = 404
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      Height = 400
+      ExplicitTop = 32
       ExplicitWidth = 942
-      ExplicitHeight = 404
+      ExplicitHeight = 402
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
@@ -244,6 +152,99 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         end
       end
     end
+    inherited tbarGrid: TToolBar
+      Width = 942
+      Height = 33
+      ButtonHeight = 33
+      OnClick = tbarGridClick
+      ExplicitTop = 6
+      ExplicitWidth = 942
+      ExplicitHeight = 33
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited ToolButton10: TToolButton
+        ExplicitHeight = 33
+      end
+      inherited tbtnCerrar: TToolButton
+        Hint = 'Visualiza Factura Actual'
+        ParentShowHint = False
+        ExplicitHeight = 33
+      end
+      object ToolButton11: TToolButton
+        Left = 239
+        Top = 0
+        Width = 58
+        Caption = 'ToolButton11'
+        ImageIndex = 0
+        Style = tbsSeparator
+      end
+      object TlBtnPrefactura: TToolButton
+        Left = 297
+        Top = 0
+        Hint = 'Prefacturaci'#243'n'
+        ImageIndex = 12
+        Visible = False
+      end
+      object TlBtnConsulta: TToolButton
+        Left = 320
+        Top = 0
+        Hint = 'Consulta por Estatus'
+        Caption = 'TlBtnConsulta'
+        ImageIndex = 14
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = TlBtnConsultaClick
+      end
+      object ToolButton12: TToolButton
+        Left = 343
+        Top = 0
+        Width = 74
+        Caption = 'ToolButton12'
+        ImageIndex = 15
+        Style = tbsSeparator
+      end
+      object TlBtnRegPDF: TToolButton
+        Left = 417
+        Top = 0
+        Hint = 'Impresi'#243'n de Facturas por Departamento'
+        Caption = 'TlBtnRegPDF'
+        ImageIndex = 13
+        ParentShowHint = False
+        ShowHint = True
+        OnMouseDown = TlBtnRegPDFMouseDown
+      end
+    end
   end
   inherited DataSource: TDataSource
     DataSet = DMFacturas.adodsMaster
@@ -254,7 +255,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -401,7 +402,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01010F00D001400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F00D001440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

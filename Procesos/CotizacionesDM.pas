@@ -4,7 +4,9 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, dxGDIPlusClasses, ppCtrls, ppPrnabl, ppClass, ppDB,
+  ppBands, ppCache, ppDBPipe, ppParameter, ppDesignLayer, ppComm, ppRelatv,
+  ppProd, ppReport, ppStrtch, ppMemo;
 
 type
   TdmCotizaciones = class(T_dmStandar)
@@ -141,6 +143,58 @@ type
     StringField10: TStringField;
     adodsMasterIdDocumentoSalidaTipo: TIntegerField;
     adodsMasterTipoDocumento: TStringField;
+    ppRprtCotizacion: TppReport;
+    ppParameterList1: TppParameterList;
+    ppDBPplnItemsCotizacion: TppDBPipeline;
+    ppDBPplnGenerales: TppDBPipeline;
+    DSCotizacionDetalle: TDataSource;
+    ppShape1: TppShape;
+    ppShape7: TppShape;
+    ppShape8: TppShape;
+    ppLabel10: TppLabel;
+    ppLabel11: TppLabel;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel18: TppLabel;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLabel35: TppLabel;
+    ppDBText11: TppDBText;
+    ppDBText19: TppDBText;
+    ppLine9: TppLine;
+    ppDBMemo1: TppDBMemo;
+    ppLabel1: TppLabel;
+    ppDBText1: TppDBText;
+    ppLabel2: TppLabel;
+    ppLabel4: TppLabel;
+    ppLabel5: TppLabel;
+    ppLabel6: TppLabel;
+    ppLabel7: TppLabel;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel16: TppLabel;
+    ppLabel17: TppLabel;
+    ppDBText2: TppDBText;
+    ppDBText4: TppDBText;
+    ppDBText10: TppDBText;
+    ppDBText12: TppDBText;
+    ppDBText13: TppDBText;
+    ppDBText14: TppDBText;
+    ppLabel19: TppLabel;
+    ppLabel20: TppLabel;
+    ppDBText30: TppDBText;
+    ppDBText31: TppDBText;
+    ppDBText32: TppDBText;
+    ppLabel21: TppLabel;
+    ppLine1: TppLine;
+    ppDBText15: TppDBText;
+    adodsMasterIdentificadorCte: TStringField;
+    ActGenPDFCotizacion: TAction;
+    adodsMasterRFCCte: TStringField;
+    ppLabel22: TppLabel;
+    adodsMasterTotalenLetra: TStringField;
+    ppLabel23: TppLabel;
+    ppDBText16: TppDBText;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -152,12 +206,15 @@ type
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleBeforeInsert(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
+    procedure ActGenPDFCotizacionExecute(Sender: TObject);
+    procedure adodsMasterCalcFields(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
       var ID:Integer): String;
     function CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA:Double;var AMontoIva,ASubtotal,ATotal:Double):Boolean;
     procedure SetTipoDoc(const Value: Integer);
+    procedure PrintPDFFile(Mostrar: Boolean);
     { Private declarations }
   public
     { Public declarations }
@@ -168,9 +225,16 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CotizacionesForm;
+uses CotizacionesForm, _Utils;
 
 {$R *.dfm}
+
+procedure TdmCotizaciones.ActGenPDFCotizacionExecute(Sender: TObject);
+begin
+  inherited;
+  PrintPDFFile(True);
+  // ver que hace y ver como se muestr directo como PDF , luego hay que ver si se hace envio..
+end;
 
 procedure TdmCotizaciones.adodsCotizacionesDetalleAfterPost(DataSet: TDataSet);
 const PIVA=0.16;
@@ -264,6 +328,19 @@ begin
   dataset.FieldByName('cantidadpendiente').AsFloat:=1;
 end;
 
+procedure TdmCotizaciones.adodsMasterCalcFields(DataSet: TDataSet);
+var
+  vTotal: Double;
+  Centavos : String;
+begin
+  inherited;
+  vTotal:= StrToFloat(FormatFloat('0.00',dataset.FieldByName('Total').AsFloat));
+
+  Centavos := FormatFloat('.00',Frac(vTotal));
+  Delete(Centavos,1,1);
+  dataset.FieldByName('TotalenLetra').AsString:= xIntToLletras(Trunc(vTotal)) + ' PESOS ' + Centavos + '/100 M. N. ';
+end;
+
 procedure TdmCotizaciones.adodsMasterNewRecord(DataSet: TDataSet);
 begin  //Nov 6/15
   inherited;
@@ -279,9 +356,9 @@ procedure TdmCotizaciones.ADODtStDireccionesClienteCalcFields(
   DataSet: TDataSet);
 begin
   inherited;
-  dataset.FieldByName('DirCompleta').AsString:= dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString+
-                                                '. '+dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
-                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString;
+  dataset.FieldByName('DirCompleta').AsString:= Uppercase(dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
+                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString+
+                                                '. '+dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString);
 
 end;
 
@@ -361,9 +438,32 @@ begin
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15
-
+  TfrmCotizaciones(gGridEditForm).ActGenPDFCotiza := ActGenPDFCotizacion; //Dic 22/15
 
 
 end;
+
+
+procedure TdmCotizaciones.PrintPDFFile(Mostrar:Boolean);
+var                       // Modificado
+  vPDFFileName: TFileName;
+begin
+    // Configura el reporte
+
+    ppRprtCotizacion.ShowPrintDialog:= False;
+    ppRprtCotizacion.ShowCancelDialog:= False;
+    ppRprtCotizacion.AllowPrintToArchive:= False;
+    if Mostrar then
+       ppRprtCotizacion.DeviceType:= 'Screen'
+    else
+      ppRprtCotizacion.DeviceType:= 'Printer';
+//    ppReport.PrinterSetup.Copies:= 1;
+// DES ABAN eNE7/16      ppReport.PrinterSetup.DocumentName:= ExtractFileName(vPDFFileName);
+    ppRprtCotizacion.Print;
+
+//  else
+//    raise Exception.Create(smNotExistFile);
+end;
+
 
 end.

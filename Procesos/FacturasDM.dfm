@@ -793,13 +793,16 @@ inherited DMFacturas: TDMFacturas
       ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
       'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where idP' +
       'ersonaDomicilio=:IdClienteDomicilio'#13#10#13#10#13#10
+    DataSource = DSMaster
+    IndexFieldNames = 'IdPersonaDomicilio'
+    MasterFields = 'IdClienteDomicilio'
     Parameters = <
       item
         Name = 'IdClienteDomicilio'
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Value = 684
+        Value = Null
       end>
     Left = 456
     Top = 96

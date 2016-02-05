@@ -86,8 +86,8 @@ type
     LblDirCliente: TLabel;
     DSDireccioncliente: TDataSource;
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
+    SpdBtnGenPDFCotiza: TSpeedButton;
     procedure FormCreate(Sender: TObject);
-    procedure DataSourceDetailStateChange(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -98,30 +98,36 @@ type
     procedure DataSourceStateChange(Sender: TObject);
   private
     FTipoDoc: Integer;
+    GenPDFCotiza: TBasicAction; //Feb4/16
+
     procedure SetTipoDoc(const Value: Integer);
     function GenerarOrdenSalida(IDDocumento:Integer):Boolean;
     function RevisaFaltantes(IDDocumento:Integer):Boolean; //si se partio el pedido en varias ordenes de salida //Nov 23/15
-    function ActualizaPedidoXSurtirEnInventario(IdProducto:Integer; Cantidad:Double):Boolean;// Ene12/16
+    function ActualizaPedidoXSurtirEnInventario(IdProducto:Integer; Cantidad:Double):Boolean;
+    procedure SetGenPDFCotiza(const Value: TBasicAction);// Ene12/16
+
     { Private declarations }
   public
     { Public declarations }
 
     Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
+
+    property ActGenPDFCotiza : TBasicAction read GenPDFCotiza write SetGenPDFCotiza; //Feb 4/16
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm,
-  GeneraOrdenSalida;
+uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm
+  ;    //    ,GeneraOrdenSalida
 
 function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
 begin
   dsQryBorrar.DataSet.Close;
   TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
-  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cantidad)+' where IDProducto='+intToStr(idProducto));
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cantidad)+' where IDProducto='+intToStr(idProducto) );//Pendiente de agregar almacen feb 2/16
   TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
 end;
 
@@ -131,37 +137,23 @@ begin
   if DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger=2  then
      SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
   pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and  SpdBtnCambioEstatus.Visible;  // ene 11/16
-  toolbutton10.Visible:= pnlMaster.Enabled;
-  toolbutton12.visible:=pnlMaster.Enabled;
-end;
-
-procedure TfrmCotizaciones.DataSourceDetailStateChange(Sender: TObject);
-begin
-  inherited;
- (* TlbtnInserta.Enabled:= DataSourceDetail.State=dsBrowse;
-  TlbtnEdita.Enabled:= (DataSourceDetail.State=dsBrowse) and (DataSourceDetail.DataSet.RecordCount>0) ;
-  TlbtnBorra.Enabled:= (DataSourceDetail.State=dsBrowse) and (DataSourceDetail.DataSet.RecordCount>0) ;
-  TlbtnGuarda.Enabled:= DataSourceDetail.State in [dsinsert,dsedit];
-  TlbtnCancela.Enabled:= DataSourceDetail.State in [dsinsert,dsedit];       *)
-
-  //DBGrid1EditButtonClick(nil);
-
-
+  toolbutton10.enabled:= pnlMaster.Enabled;
+  toolbutton12.Enabled:=pnlMaster.Enabled;
 end;
 
 procedure TfrmCotizaciones.DataSourceStateChange(Sender: TObject);
 begin
-  inherited;
-  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State=dsInsert) and(SpdBtnCambioEstatus.Enabled);
+  inherited;                                                      //Agregado edit verificar ene28/16
+  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled);
 
 end;
 
 procedure TfrmCotizaciones.DBGrid1DblClick(Sender: TObject);
-var
-  FrmListaProductos:TFrmListaProductos;
+//var
+//  FrmListaProductos:TFrmListaProductos;
 begin
   inherited;
-  if DataSourceDetail.State in [dsinsert,dsedit] then
+(*  if DataSourceDetail.State in [dsinsert,dsedit] then
   begin
     FrmListaProductos:=TFrmListaProductos.Create(Self);
     FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
@@ -172,34 +164,55 @@ begin
       FrmListaProductos.SpdBtnBuscarClick(FrmListaProductos.SpdBtnBuscar);
     end;
     FrmListaProductos.ShowModal;
+    if FrmListaProductos.ModalResult=mrOk then
+    begin
     //Tomar datos y colocar
-    DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger:=FrmListaProductos.IDProducto;
-  //  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
-    DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
-    DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
+      DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
+      DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger:=FrmListaProductos.IDProducto;
+    //  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
+      DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
+
+    end
+    else
+      if DataSourceDetail.State in [dsEdit, dsInsert] then
+          DataSourceDetail.DataSet.cancel;
     FrmListaProductos.Free;
-  end;
+  end;*)
 end;
 
 procedure TfrmCotizaciones.DBGrid1EditButtonClick(Sender: TObject);
-
+var
+  FrmListaProductos:TFrmListaProductos;
 begin
   inherited;
-(*  FrmListaProductos:=TFrmListaProductos.Create(Self);
-  FrmListaProductos.DataSource:=DSAuxiliar;
+  FrmListaProductos:=TFrmListaProductos.Create(Self);
+  FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
+  FrmListaProductos.DataSet.Close;  //Adicional par evitar consulta anterior
+  if DataSourceDetail.State=dsEdit then
+  begin
+    FrmListaProductos.Clave:=DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString;
+//      FrmListaProductos.EdtBuscar.Text:=FrmListaProductos.Identificador;
+    FrmListaProductos.SpdBtnBuscarClick(FrmListaProductos.SpdBtnBuscar);
+  end;
   FrmListaProductos.ShowModal;
-  //Tomar datos y colocar
-  if DataSourceDetail.DataSet.State=dsBrowse then
-     DataSourceDetail.DataSet.Edit;
-  DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger:=FrmListaProductos.IDProducto;
-//  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
-  DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
-  DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
+  if FrmListaProductos.Acepto then
+  begin
+    //Tomar datos y colocar
+    if DataSourceDetail.DataSet.State=dsBrowse then
+       DataSourceDetail.DataSet.Edit;
+    DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
+    DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger:=FrmListaProductos.IDProducto;
+  //  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
+    DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
 
+  end
+  else
+    if DataSourceDetail.State in [dsEdit, dsInsert] then
+      DataSourceDetail.DataSet.Cancel;
 
   FrmListaProductos.Free;
 
-  *)
+
   //ShowMessage('Entro al evento');
 end;
 
@@ -207,7 +220,7 @@ procedure TfrmCotizaciones.DBLookupComboBox1Click(Sender: TObject);
 begin
   inherited;
   //Para que abra la de direcciones //ene11/2016
-   if DataSource.State=dsInsert then
+   if DataSource.State in [dsInsert,dsEdit] then //Por si cambia de cliente
    begin
      dsDireccionCliente.dataset.close;
      TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
@@ -235,6 +248,7 @@ begin
 //  DBLkpCmbBxDirCliente.Visible:=false;
   case FTipoDoc of
     1:SpdBtnCambioEstatus.Caption:='Acepta Cotización';
+
     2:begin
        SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
 
@@ -243,6 +257,7 @@ begin
       end;
     3:SpdBtnCambioEstatus.Visible:=False;
   end;
+  SpdBtnGenPDFCotiza.visible:= SpdBtnCambioEstatus.Caption='Acepta Cotización';
 
 end;
 
@@ -337,6 +352,13 @@ begin //Nov 23/15
   TADODataset(dsAuxiliar.dataset).CommandText:='Select Sum(CantidadPendiente) Pendiente From DocumentosSalidasDetalles where IdDocumentoSalida='+intTosTR(IDDocumento);
   dsAuxiliar.dataset.Open;
   Result:=dsAuxiliar.DataSet.FieldByName('Pendiente').AsFloat >0;
+
+end;
+
+procedure TfrmCotizaciones.SetGenPDFCotiza(const Value: TBasicAction);
+begin
+  GenPDFCotiza:=Value;
+  SpdBtnGenPDFCotiza.Action:=Value;
 
 end;
 

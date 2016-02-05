@@ -52,18 +52,15 @@ type
     adodsProductos: TADODataSet;
     ADODtStOrdenSalidaItemProducto: TStringField;
     DSMaster: TDataSource;
-    ADODtStPersonaRecolectaClaveUsuario: TStringField;
     ADODtStPersonaRevisaIdPersona: TAutoIncField;
     ADODtStPersonaRevisaIdRol: TIntegerField;
     ADODtStPersonaRevisaIdPersonaEstatus: TIntegerField;
     ADODtStPersonaRevisaRazonSocial: TStringField;
-    ADODtStPersonaRevisaClaveUsuario: TStringField;
     ADODtStPersonaRevisaPermiso: TStringField;
     ADODtStPersonaEmpacaIdPersona: TAutoIncField;
     ADODtStPersonaEmpacaIdRol: TIntegerField;
     ADODtStPersonaEmpacaIdPersonaEstatus: TIntegerField;
     ADODtStPersonaEmpacaRazonSocial: TStringField;
-    ADODtStPersonaEmpacaClaveUsuario: TStringField;
     ADODtStPersonaEmpacaPermiso: TStringField;
     ADODtStPersonaRecolectaPermiso: TStringField;
     adodsMasterClaveURecolecta: TStringField;
@@ -83,7 +80,6 @@ type
     ADODtStPersonaAutorizaIdRol: TIntegerField;
     ADODtStPersonaAutorizaIdPersonaEstatus: TIntegerField;
     ADODtStPersonaAutorizaRazonSocial: TStringField;
-    ADODtStPersonaAutorizaClaveUsuario: TStringField;
     ADODtStPersonaAutorizaPermiso: TStringField;
     adodsMasterIdPersonaAutoriza: TIntegerField;
     adodsMasterFechaAutoriza: TDateTimeField;
@@ -137,29 +133,56 @@ type
     ADODtStTelefonosTeleconLada: TStringField;
     ADODtStInformacionEnvioTelefonoCompleto: TStringField;
     ADODtStSalidasUbicaciones: TADODataSet;
-    AutoIncField1: TAutoIncField;
-    IntegerField1: TIntegerField;
-    IntegerField2: TIntegerField;
-    IntegerField3: TIntegerField;
-    IntegerField4: TIntegerField;
-    IntegerField5: TIntegerField;
-    IntegerField6: TIntegerField;
-    StringField1: TStringField;
-    WideStringField1: TWideStringField;
-    StringField2: TStringField;
-    FloatField1: TFloatField;
-    FMTBCDField1: TFMTBCDField;
+    ADODtStPersonaAutorizaPassword: TStringField;
+    ADODtStPersonaEmpacaPassword: TStringField;
+    ADODtStPersonaRevisaPassword: TStringField;
+    ADODtStPersonaRecolectaPassword: TStringField;
+    ADODtStSalidasUbicacionesIdSalidaUbicacion: TAutoIncField;
+    ADODtStSalidasUbicacionesIdProductoKardexS: TIntegerField;
+    ADODtStSalidasUbicacionesIdProductoXEspacio: TIntegerField;
+    ADODtStSalidasUbicacionesCantidad: TFloatField;
+    ADODtStSalidasUbicacionesIdSalidaUbicacionEstatus: TIntegerField;
+    ADODtStSalidasUbicacionesIdOrdenSalidaItem: TIntegerField;
+    DSOrdenSalidaItem: TDataSource;
+    ADODtStProductosXEspacio: TADODataSet;
+    ADODtStProductosXEspacioIdProductoXEspacio: TAutoIncField;
+    ADODtStProductosXEspacioIdEspacio: TIntegerField;
+    ADODtStProductosXEspacioIdProductoKardexE: TIntegerField;
+    ADODtStProductosXEspacioIdProducto: TIntegerField;
+    ADODtStProductosXEspacioCantidad: TFloatField;
+    ADODtStProductosXEspacioIdCategoria: TIntegerField;
+    ADODtStProductosXEspacioIdAlmacen: TIntegerField;
+    ADODtStProductosXEspacioEspacio: TStringField;
+    ADODtStSalidasUbicacionesIdOrdenSalida: TIntegerField;
+    ADODtStSalidasUbicacionesIdProducto: TIntegerField;
+    ADODtStSalidasUbicacionesproducto: TStringField;
+    ADODtStSalidasUbicacionesEspacio: TStringField;
+    ADODtStSalidasUbicacionesDisponible: TFloatField;
+    ADOCmdInsertaProductoKardex: TADOCommand;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemBeforePost(DataSet: TDataSet);
     procedure ADODtStTelefonosCalcFields(DataSet: TDataSet);
+    procedure ADODtStSalidasUbicacionesEspacioChange(Sender: TField);
+    procedure ADODtStInformacionEnvioBeforeOpen(DataSet: TDataSet);
+    procedure ADODtStSalidasUbicacionesCantidadChange(Sender: TField);
+    procedure ADODtStSalidasUbicacionesAfterPost(DataSet: TDataSet);
+    procedure ADODtStSalidasUbicacionesCantidadSetText(Sender: TField;
+      const Text: string);
+    procedure ADODtStSalidasUbicacionesBeforePost(DataSet: TDataSet);
+    procedure ADODtStSalidasUbicacionesAfterDelete(DataSet: TDataSet);
   private
+    CantAGuardar:Double;
+    function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
+      var LaCantidad: Double): Integer;
+    function VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
+    function ValorMaximoPosible(valorAct: Double; idOrdenItem: Integer; idSalidaUbicacion:integer): Double;
     { Private declarations }
 
   public
     { Public declarations }
-    Ajustar:Boolean;
+    Ajustar,CambioCantidad:Boolean;
   end;
 
 var
@@ -172,6 +195,14 @@ implementation
 uses OrdenesSalidaForm;
 
 {$R *.dfm}
+
+procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
+  DataSet: TDataSet);
+begin
+  inherited;
+  ADODtStFacturasCFDI.Open;
+  ADODtStTelefonos.Open;
+end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
 var idDocSalida, IDDocItem:Integer;
@@ -230,7 +261,7 @@ begin
 
 end;
 
-procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemCantidadDespachadaChange(
+procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemCantidadDespachadaChange(   //Verificar por que esta cambiando esta
   Sender: TField);
 begin
   inherited;
@@ -241,6 +272,181 @@ begin
     Ajustar:=True;//Nov 26/15
   end;
 end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterDelete(
+  DataSet: TDataSet);
+var
+  valornvo:Double;
+begin
+  inherited;
+
+  Valornvo:=ValorMaximoPosible(-1,ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger,ADODtStSalidasUbicaciones.FieldByName('idsalidaUbicacion').AsInteger);
+  if ValorNvo>0 then
+     Showmessage('Registro incompleto');
+end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterPost(
+  DataSet: TDataSet);
+var IdOrdenSalItem, IdSalidaUbicacion:integer;
+    cantidad:Double;
+begin
+  inherited;
+  if CambioCantidad then
+  begin
+    IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
+    Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
+    IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger; //Feb 3/16
+    VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion);
+                                     //Verificar que tenga el valor actual
+
+    CambioCantidad:=False;
+    ADODtStSalidasUbicaciones.Close;
+    ADODtStSalidasUbicaciones.open;
+
+  end;
+end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesBeforePost(
+  DataSet: TDataSet);
+var valor:Double;
+begin
+  inherited;
+  valor:=ValorMaximoPosible(CantAGuardar,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
+  if valor <CantAGuardar then
+  begin
+    abort;
+    Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
+  end;
+end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadChange(
+  Sender: TField);
+var
+  CantOrdenItem:Double;
+begin
+  inherited;   //No entra
+  //Verifica y crea
+ // Showmessage('valor Cantidad Change '+ ADODtStSalidasUbicaciones.fieldbyname('Cantidad').asString);
+  if ADODtStSalidasUbicaciones.State=dsEdit  then
+  begin
+ (*   ADOQryAuxiliar.close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.ADD('SElect CantidadDespachada from OrdenesSalidasItems where IdOrdenSalidaItem='+ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsString);
+    ADOQryAuxiliar.Open;
+    CantOrdenItem:= ADOQryAuxiliar.FieldByName('CantidadDespachada').AsFloat;
+
+         *)
+    CambioCantidad:=True;
+  end;
+
+end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadSetText(
+  Sender: TField; const Text: string);
+var valor:Double;
+begin
+  inherited;
+
+  CantAGuardar:= StrTofloat(Text);
+
+  CambioCantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat<>CantAGuardar;
+  sender.AsString:=Text;
+ (*
+//  Showmessage('valor SEtText'+ Text);
+ valor:=ValorMaximoPosible(StrTofloat(Text),ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').ASInteger,ADODtStSalidasUbicaciones.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
+ //Solo para validar y enviar msg
+
+   if valor < StrTofloat(Text) then
+       Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
+//    ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat:= valor;
+
+   *)
+end;
+
+Function TDMOrdenesSalidas.ValorMaximoPosible(valorAct:Double; idOrdenItem:Integer; idSalidaUbicacion:integer):Double;
+var
+  ValOrden, ValSalida:Double;
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  AdoQryAuxiliar.SQL.add('Select cantidadDespachada from OrdenesSalidasItems where idOrdenSalidaItem= '+ intToStr(idOrdenItem)) ;   //Mantiene el valor anterior
+  AdoQryAuxiliar.open;
+  ValOrden:=  AdoQryAuxiliar.Fieldbyname('cantidadDespachada').AsFloat;
+
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  AdoQryAuxiliar.SQL.add('Select Sum(Cantidad) as Total from SalidasUbicaciones where idOrdenSalidaItem= '+ intToStr(idOrdenItem));
+  if valorAct<>-1 then  //Para buscar resto es -1  //Feb 3/16
+    AdoQryAuxiliar.SQL.add(' and idSalidaUbicacion <> '+intToStr(idSalidaUbicacion)) ;   //Mantiene el valor anterior
+
+  AdoQryAuxiliar.open;                        //Los registrados // Verificar si se usan los diferentes de id //Pendiente de terminar
+  ValSalida:= AdoQryAuxiliar.Fieldbyname('Total').asFloat;
+
+  if ValSalida+ValorAct>ValOrden then //No deberia pasarse
+  begin
+   // Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(ValOrden-ValSalida));
+    Result:=ValOrden-ValSalida;
+  end
+  else
+    if valorAct<>-1 then  //Para buscar resto es -1  //Feb 3/16
+       result:= valorAct
+    else
+      Result:= ValOrden-ValSalida; //Resto //Feb 3/16
+end;
+
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesEspacioChange(
+  Sender: TField);
+var
+  Cantidad:Double;
+  idProdXEsp:integer;
+begin
+  inherited;
+  if adodtstSalidasUbicaciones.State in [dsEdit,dsInsert] then
+  begin
+    IdProdXEsp:=EncuentraProdXEspacio(adodtstSalidasUbicaciones.FieldByName('Espacio').ASString,adodtstOrdenSalidaItem.FieldByName('IDProducto').ASInteger, Cantidad);
+    if IdProdXEsp<>-1 then
+    begin
+      adodtstSalidasUbicaciones.FieldByName('IdProductoXEspacio').AsInteger:= IdProdXEsp;
+      if not adodtstSalidasUbicaciones.FieldByName('IdProductoXEspacio').isnull then
+      begin
+        adodtstSalidasUbicaciones.FieldByName('Disponible').AsFloat:=Cantidad;
+    //    adodtstSalidasUbicaciones.FieldByName('IdProducto').asInteger:=idproducto;
+    //    adodtstSalidasUbicaciones.FieldByName('Importe').AsFloat:=ValUni* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
+      end;
+    end
+    else
+    begin
+      Showmessage('No existe el producto en ese almacen');
+      adodtstSalidasUbicaciones.FieldByName('Espacio').ASString:='';
+    end;
+  end;
+end;
+
+
+function TDMOrdenesSalidas.EncuentraProdXEspacio(TextoEspacio:String;IDProd:Integer; var LaCantidad:Double):Integer;
+begin
+  Result:=-1;
+  if TextoEspacio<>'' then
+  begin
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Add('Select Pe.*,E.Descripcion as Espacio from ProductosXEspacio PE'+
+    ' inner join Espacios E on Pe.idEspacio =E.IdEspacio where PE.IdProducto='+intToStr(IDProd)
+    +' and E.Descripcion='''+TextoEspacio+'''');
+    ADOQryAuxiliar.open;
+    if not ADOQryAuxiliar.eof then
+    begin
+      LaCantidad:= ADOQryAuxiliar.FieldByName('Cantidad').AsFloat;
+      Result:=ADOQryAuxiliar.FieldByName('IdProductoXEspacio').asinteger ; //Valor del IDinterno
+//      Result:=ADOQryAuxiliar.FieldByName('Descripcion').AsString;
+
+    end;
+  end;
+  ADOQryAuxiliar.Close;
+end;
+
+
+
 
 procedure TDMOrdenesSalidas.ADODtStTelefonosCalcFields(DataSet: TDataSet);
 begin
@@ -261,6 +467,26 @@ begin
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15*)
+end;
+
+function TDMOrdenesSalidas.VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
+var
+  valornvo:Double;
+begin
+  REsult:=False;            //Para que sume todo y ve acuanto le queda
+  Valornvo:=ValorMaximoPosible(-1,IdOrdenSalItem,idsalidaUbicacion);
+  if ValorNvo>0 then
+  begin
+    AdoQryauxiliar.Close;
+    AdoQryauxiliar.SQL.Clear;
+    AdoQryauxiliar.SQL.Add('INSERT INTO SalidasUbicaciones (IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, Cantidad) ');
+    AdoQryauxiliar.SQL.Add('SElect  IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, '+ floatToSTR(valorNvo)+' from  SalidasUbicaciones Where IdSalidaUbicacion='+intToStr(idsalidaubicacion));
+    AdoQryauxiliar.ExecSQL;
+    Result:=True;
+  end
+  else
+    ShowMessage('Completo. Asigne las ubicaciones');
+
 end;
 
 end.

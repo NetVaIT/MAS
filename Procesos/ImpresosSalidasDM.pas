@@ -192,6 +192,12 @@ type
     ADODtStDatosEtiquetaDireccioncompleta: TStringField;
     ppDBText14: TppDBText;
     ADODtStDatosEtiquetaTelefono: TStringField;
+    ADODtStDatosEtiquetaIdentificador: TIntegerField;
+    ppDBText15: TppDBText;
+    adodSDocumentoSalidaIdentificador: TIntegerField;
+    ADODtStOrdenSalidaIdentificador: TStringField;
+    ppLabel37: TppLabel;
+    ppDBText16: TppDBText;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
   private
     procedure PrintPDFFile(IDReporte: Integer);

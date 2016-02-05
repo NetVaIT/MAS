@@ -37,11 +37,24 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Width = 890
     ExplicitWidth = 890
   end
+  inherited tbarGrid: TToolBar
+    Width = 890
+    ExplicitWidth = 890
+    inherited ToolButton3: TToolButton [1]
+      Left = 23
+      ExplicitLeft = 23
+    end
+    inherited ToolButton2: TToolButton [2]
+      Left = 46
+      ExplicitLeft = 46
+    end
+  end
   inherited pnlMaster: TPanel
     Width = 890
     ExplicitWidth = 890
     inherited cxGrid: TcxGrid
       Width = 890
+      ExplicitTop = -3
       ExplicitWidth = 890
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFechaRegistro: TcxGridDBColumn
@@ -75,10 +88,6 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
           DataBinding.FieldName = 'VigenciaDias'
         end
       end
-    end
-    inherited tbarGrid: TToolBar
-      Width = 890
-      ExplicitWidth = 890
     end
   end
   inherited DataSource: TDataSource

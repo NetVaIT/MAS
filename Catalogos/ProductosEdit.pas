@@ -23,7 +23,7 @@ uses
   Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC, Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, ProductosFotosDM, dxGDIPlusClasses, Vcl.Imaging.jpeg,
-  cxSpinEdit;
+  cxSpinEdit, shellApi;
 
 type
   TfrmProductosEdit = class(T_frmStandarGFormEdit)
@@ -65,6 +65,7 @@ type
     cxDBTextEdit7: TcxDBTextEdit;
     Label13: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
+    SpdBtnVerArchivo: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -78,6 +79,8 @@ type
     procedure bbtnCancelaClick(Sender: TObject);
     procedure datasourceFotosStateChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure DBText1DblClick(Sender: TObject);
+    procedure SpdBtnVerArchivoClick(Sender: TObject);
   private
     FEditFile: TBasicAction;
     FInsertFile: TBasicAction;
@@ -160,12 +163,16 @@ var
   NombreA:  TFileName; //Nov 12/15
 begin
   inherited;
-   // ShowMessage('En Construccion') ;
- if fileExists( dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
- begin                  //DataSourceFotos .
-  NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
-  ImgFoto.Picture.LoadFromFile(NombreA);
- end;
+  if fileExists( dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin                  //DataSourceFotos .
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    SpdBtnVerArchivo.Visible:= (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX');//Feb 3/16
+    try
+      ImgFoto.Picture.LoadFromFile(NombreA);
+    Except
+      ImgFoto.Picture:=ImgVacio.Picture;
+    end;
+  end;
 end;
 
 procedure TfrmProductosEdit.datasourceFotosStateChange(Sender: TObject);
@@ -181,12 +188,33 @@ var
   NombreA:  TFileName;
 begin
   inherited;
- // ShowMessage('En Construccion') ;
- if fileExists( dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
- begin                  //DataSourceFotos .
-  NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
-  ImgFoto.Picture.LoadFromFile(NombreA);
- end;
+  if fileExists( dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin                  //DataSourceFotos .
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    SpdBtnVerArchivo.Visible:= (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX'); //Feb 3/16
+    try
+      ImgFoto.Picture.LoadFromFile(NombreA);
+    Except
+      ImgFoto.Picture:=ImgVacio.Picture;
+    end;
+  end;
+end;
+
+procedure TfrmProductosEdit.DBText1DblClick(Sender: TObject);
+Var
+  nombreA:String;  //Feb 3/16
+begin
+  inherited;
+  if fileExists(dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    if (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX') then
+      ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
+    else
+      ShowMessage('no se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
+
+
+  end;
 end;
 
 procedure TfrmProductosEdit.FormActivate(Sender: TObject);
@@ -223,7 +251,12 @@ begin
   if(not DataSourceFotos.dataset.Eof) and fileExists(DataSourceFotos.DataSet.FieldByName('NombreArchivo').AsString) then
   begin
     NombreA:=DataSourceFotos.DataSet.FieldByName('NombreArchivo').AsString;
-    ImgFoto.Picture.LoadFromFile(NombreA);
+    SpdBtnVerArchivo.Visible:= (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX');  //Feb 3/16
+    try
+      ImgFoto.Picture.LoadFromFile(NombreA);
+    Except
+      ImgFoto.Picture:=ImgVacio.Picture;
+    end;
   end;
 
 end;
@@ -237,6 +270,24 @@ end;
 procedure TfrmProductosEdit.SetInsertFile(const Value: TBasicAction);
 begin
   FInsertFile := Value;
+end;
+
+procedure TfrmProductosEdit.SpdBtnVerArchivoClick(Sender: TObject);
+Var
+  nombreA:String;  //Feb 3/16
+begin
+  inherited;
+  if fileExists(dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    if (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX') then
+      ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
+    else
+      ShowMessage('no se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
+
+
+  end;
+
 end;
 
 end.

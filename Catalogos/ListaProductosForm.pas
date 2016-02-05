@@ -39,10 +39,12 @@ type
     SpdBtnBuscar: TBitBtn;
     procedure tvMasterDblClick(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     FDataSet: TDataSet;
     FactBuscar: TBasicAction;
+    fAcepto: Boolean;
     procedure SetDataSet(const Value: TDataSet);
     function GetIdentificador: string;
     function GetIdProducto: Integer;
@@ -52,7 +54,7 @@ type
     procedure SetactBuscar(const Value: TBasicAction);
   public
     { Public declarations }
-//    Identificador:String; //Verificar cual?
+//    Identificador:String;
     Descripcion:String;
     property DataSet: TDataSet read FDataSet write SetDataSet;
     property Clave: string read GetClave write SetClave;
@@ -60,6 +62,7 @@ type
     property Identificador: string read GetIdentificador;
     property Precio: Double read GetPrecio;
     property actBuscar: TBasicAction read FactBuscar write SetactBuscar;
+    property Acepto:Boolean read fAcepto write fAcepto;
   end;
 
 implementation
@@ -67,6 +70,11 @@ implementation
 {$R *.dfm}
 
 uses ProductosDM, CotizacionesDM;
+
+procedure TfrmListaProductos.FormCreate(Sender: TObject);
+begin
+  FAcepto:=False;
+end;
 
 function TfrmListaProductos.GetClave: string;
 begin
@@ -122,7 +130,7 @@ begin
   if DataSource.DataSet.Eof then
   begin
     DataSource.DataSet.Close;
-    TAdoDataset(DataSource.DataSet).commandText:='Select * from Productos where Descripcion like '''+IDProd+ '%''';
+    TAdoDataset(DataSource.DataSet).commandText:='Select * from Productos where Descripcion like ''%'+IDProd+ '%''';
     DataSource.DataSet.open;
   end;
 end;
@@ -135,6 +143,7 @@ begin
 //  IDProducto:=Datasource.DataSet.FieldByName('IdProducto').AsInteger;
 //  Descripcion:=Datasource.DataSet.FieldByName('Descripcion').AsString;
 //  Precio:=Datasource.DataSet.FieldByName('PrecioUnitario').AsFloat;
+  Acepto:=True;
   Close;
 end;
 

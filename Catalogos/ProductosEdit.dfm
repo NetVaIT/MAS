@@ -2,20 +2,21 @@ inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
   OnDestroy = FormDestroy
+  ExplicitTop = -81
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 588
+    Top = 629
     ExplicitTop = 588
   end
   inherited splDetail2: TSplitter
-    Top = 544
+    Top = 585
     ExplicitTop = 544
   end
   inherited splDetail1: TSplitter
-    Top = 500
+    Top = 541
     ExplicitTop = 500
   end
   inherited pnlClose: TPanel
@@ -25,30 +26,34 @@ inherited frmProductosEdit: TfrmProductosEdit
     ExplicitHeight = 18
   end
   inherited pnlDetail3: TPanel
-    Top = 591
-    ExplicitTop = 591
+    Top = 632
+    Height = 0
+    ExplicitTop = 632
+    ExplicitHeight = 0
   end
   inherited pnlDetail2: TPanel
-    Top = 547
+    Top = 588
     ExplicitTop = 547
   end
   inherited pnlDetail1: TPanel
-    Top = 503
+    Top = 544
     ExplicitTop = 503
   end
   inherited pcMain: TcxPageControl
-    Height = 500
+    Height = 541
     ExplicitHeight = 500
-    ClientRectBottom = 499
+    ClientRectBottom = 537
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 498
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 742
+      ExplicitHeight = 492
       inherited cxScrollBox1: TcxScrollBox
-        Height = 498
-        ExplicitHeight = 498
+        Width = 742
+        Height = 533
+        ExplicitHeight = 492
         inherited tbarData: TToolBar
+          Width = 740
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -56,17 +61,20 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Height = 471
-          ExplicitHeight = 471
+          Width = 740
+          Height = 506
+          ExplicitHeight = 465
           object PnlFotos: TPanel
             Left = 0
             Top = 273
-            Width = 746
-            Height = 198
+            Width = 740
+            Height = 233
             Align = alClient
             TabOrder = 0
-            ExplicitTop = 213
-            ExplicitHeight = 258
+            ExplicitLeft = -1
+            ExplicitTop = 272
+            ExplicitWidth = 746
+            ExplicitHeight = 192
             object ImgFoto: TImage
               Left = 23
               Top = 18
@@ -146,6 +154,30 @@ inherited frmProductosEdit: TfrmProductosEdit
               AutoSize = True
               DataField = 'NombreArchivo'
               DataSource = DSDocumento
+              OnDblClick = DBText1DblClick
+            end
+            object SpdBtnVerArchivo: TSpeedButton
+              Left = 120
+              Top = 104
+              Width = 103
+              Height = 22
+              Caption = 'Ver Documento'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              Visible = False
+              OnClick = SpdBtnVerArchivoClick
             end
             object DBNavigatorFotos: TDBNavigator
               Left = 103
@@ -160,14 +192,14 @@ inherited frmProductosEdit: TfrmProductosEdit
             object BtBtnFotos: TBitBtn
               Left = 377
               Top = 151
-              Width = 100
+              Width = 112
               Height = 25
-              Caption = 'Agregar Fotos'
+              Caption = 'Agregar Documentos'
               TabOrder = 1
               OnClick = BtBtnFotosClick
             end
             object BBtnGuardaNota: TBitBtn
-              Left = 483
+              Left = 492
               Top = 151
               Width = 100
               Height = 25
@@ -197,7 +229,7 @@ inherited frmProductosEdit: TfrmProductosEdit
           object PnlProducto: TPanel
             Left = 0
             Top = 0
-            Width = 746
+            Width = 740
             Height = 273
             Align = alTop
             TabOrder = 1
@@ -394,7 +426,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -543,7 +575,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0080027C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

@@ -11,6 +11,7 @@ object frmListaProductos: TfrmListaProductos
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMaster: TPanel
@@ -21,7 +22,6 @@ object frmListaProductos: TfrmListaProductos
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 568
     object cxGrid: TcxGrid
       Left = 0
       Top = 50
@@ -30,7 +30,6 @@ object frmListaProductos: TfrmListaProductos
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitWidth = 568
       object tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         Navigator.Buttons.CustomButtons = <>
@@ -77,7 +76,6 @@ object frmListaProductos: TfrmListaProductos
       Height = 50
       Align = alTop
       TabOrder = 1
-      ExplicitWidth = 568
       object RdGrpUsoIdentificador: TRadioGroup
         Left = 263
         Top = -1

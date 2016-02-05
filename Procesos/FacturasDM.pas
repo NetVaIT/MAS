@@ -311,7 +311,8 @@ type
     fidordenSal: Integer;
     ffiltro: String;
     fImpresion: Integer;
-    ArrBinario:TArrDinamico;//Ene7/16
+    ArrBinario:TArrDinamico;
+    fCreoCFDI: Boolean;//Ene7/16
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
     procedure actXMLaPDFExecute(Sender: TObject);
@@ -329,6 +330,8 @@ type
     property IDordenSalida:Integer read fidordenSal write fIdOrdenSal;
     property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
     property DMImpresion:Integer read GetfImpresion write FImpresion;
+
+    property CreoCFDI:Boolean read fCreoCFDI write fCreoCFDI; //Ene29/16
   end;
 
 var
@@ -360,7 +363,7 @@ procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);
 begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
   inherited;
     //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
-
+ try
   adodsMaster.Open;
   ADODtStOrdenSalida.Parameters.ParamByName('IdOrdenSalida').Value:=IDordenSalida;  //Enviar el parametro
   ADODtStOrdenSalida.Open;
@@ -382,7 +385,10 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 //    adodsMaster.FieldByName('IDPersonaEmisor').AsInteger:=SacarEmisor;  //ADODtStOrdenSalida.FieldByName('Total').AsFloat;
 
     adodsMaster.FieldByName('IDPersonaReceptor').AsInteger := ADODtStOrdenSalida.FieldByName('IDPersonaCliente').ASInteger;
-    adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').ASInteger;
+    if  not ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').IsNull then //Ene 29/16
+      adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').ASInteger
+    else
+       adodsMaster.FieldByName('IdMetodoPago').AsInteger :=4; //No identificado   //Ene 29/16
     if  not ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').Isnull then
       adodsMaster.FieldByName('IdClienteDomicilio').AsInteger := ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').ASInteger;
                                                           //Verificar que tenga algo
@@ -414,6 +420,10 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
     end;
 //    ADODtStOrdenSalida.Next;
 //  end;
+    fCreoCFDI:=True;
+ except
+   fCreoCFDI:=False;
+ end;
 end;
 
 procedure TDMFacturas.ActProcesaFacturaExecute(Sender: TObject);
@@ -478,7 +488,14 @@ begin
     end
     else //Dic 29/15 ya se intento pero no se genero
     begin
-      FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
+      if FechaAux-adodsMasterFecha.AsDateTime >3 then
+      begin
+        adodsMaster.Edit;
+        adodsMasterFecha.AsDateTime:=FechaAux;
+        adodsMaster.Post
+      end
+      else
+        FechaAux:=adodsMasterFecha.AsDateTime; //Para que use esa con los datos que tiene
     end;
    // ScreenCursorProc(-11);  //Deshabilitado Dic 29/15
     DecodeDate(Now, Anio, Mes, Dia);
@@ -660,17 +677,17 @@ procedure TDMFacturas.LlenaDatosEnvio; //Ene 27/16
 begin
 
   ADODtStInformacionEnvio.Open;
-  if ADODtStInformacionEnvio.eof then
+  if ADODtStInformacionEnvio.eof then     //Verificar o cambiar....
   begin
     ADODtStInformacionEnvio.Insert;
     ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
     ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
-    ADODtStInformacionEnvio.Fieldbyname('FechaProgramadaEntrega').AsDateTime:= Now+10;
+    ADODtStInformacionEnvio.Fieldbyname('FechaProgramadaEnt').AsDateTime:= Date+10;
     ADODtStInformacionEnvio.Fieldbyname('Servicio').AsString:= 'Domicilio';
-    ADODtStInformacionEnvio.Fieldbyname('PagoFlete').AsInteger:= 0;
+    ADODtStInformacionEnvio.Fieldbyname('PagoFlete').AsBoolean:= False;
     ADODtStInformacionEnvio.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
-    ADODtStInformacionEnvio.Fieldbyname('Asegurado').AsInteger:= 0;
-    ADODtStInformacionEnvio.Post;
+    ADODtStInformacionEnvio.Fieldbyname('Asegurado').AsBoolean:= False;
+    ADODtStInformacionEnvio.Post; //Errror de operacion en varios pasos
 
   end
   else      //Por si hubiese algún cambio
@@ -835,6 +852,7 @@ end;
 procedure TDMFacturas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
+  try
   DataSet.FieldByName('IDCFDIEstatus').AsInteger:=1; //Prefactura
   DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:=1; //Factura
   DataSet.FieldByName('TipoComp').AsString:='ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
@@ -848,6 +866,9 @@ begin
   DataSet.FieldByName('IDMoneda').AsInteger:=106;
 
   DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger; //Debe estar abierta y debe tener una direccion fiscal
+  Except
+    Raise;
+  end;
 end;
 
 procedure TDMFacturas.ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
