@@ -36,6 +36,8 @@ type
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterTipoDocumento: TcxGridDBColumn;
+    tvMasterIdDocumentoSalida: TcxGridDBColumn;
+    tvMasterIdentificadorCte: TcxGridDBColumn;
   private
     { Private declarations }
   public

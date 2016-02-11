@@ -4,12 +4,14 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
   Width = 733
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    AfterOpen = adodsMasterAfterOpen
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAuto' +
-      'riza, FechaAutoriza,'#13#10' Subtotal, IVA'#13#10'from OrdenesSalidas '
+      'riza, FechaAutoriza,'#13#10' Subtotal, IVA'#13#10'from OrdenesSalidas '#13#10'Orde' +
+      'r by IdOrdenEstatus,FechaRegistro Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -171,6 +173,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdPersonaAutoriza'
       Lookup = True
     end
+    object adodsMasterIdentificadorCte: TStringField
+      FieldKind = fkLookup
+      FieldName = 'IdentificadorCte'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'IdentificadorCte'
+      KeyFields = 'IdDocumentoSalida'
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 416
@@ -197,8 +208,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = Null
+        Value = 10
       end>
     Left = 56
     Top = 96
@@ -253,6 +263,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStOrdenSalidaItemClaveProducto: TStringField
       FieldName = 'ClaveProducto'
       Size = 50
+    end
+    object ADODtStOrdenSalidaItemIDAlmacen: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'IDAlmacen'
+      LookupDataSet = ADODtStDocumentoDetalleItem
+      LookupKeyFields = 'IdDocumentoSalidaDetalle'
+      LookupResultField = 'IdAlmacen'
+      KeyFields = 'IdDocumentoSalidaDetalle'
+      Lookup = True
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
@@ -418,6 +437,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldName = 'RazonSocial'
       Size = 300
     end
+    object ADODtStDatosDocumentoSalidaIdentificadorCte: TStringField
+      FieldKind = fkLookup
+      FieldName = 'IdentificadorCte'
+      LookupDataSet = ADODtStIdentificadores
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdPersona'
+      Lookup = True
+    end
   end
   object DSDatosDocSalida: TDataSource
     DataSet = ADODtStDatosDocumentoSalida
@@ -487,7 +515,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select * from ProductosKardex'
+    CommandText = 'select * from ProductosKardex '
     Parameters = <>
     Left = 632
     Top = 129
@@ -608,6 +636,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtStInformacionEnvioValor: TFloatField
       FieldName = 'Valor'
+      currency = True
     end
     object ADODtStInformacionEnvioAsegurado: TBooleanField
       FieldName = 'Asegurado'
@@ -622,13 +651,25 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 40
       Lookup = True
     end
+    object ADODtStInformacionEnvioOcurre: TBooleanField
+      FieldKind = fkCalculated
+      FieldName = 'OcurreChk'
+      Calculated = True
+    end
+    object ADODtStInformacionEnvioDomicilioChk: TBooleanField
+      FieldKind = fkCalculated
+      FieldName = 'DomicilioChk'
+      Calculated = True
+    end
   end
   object ADODtStFacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdCFDI, IDOrdenSalida, IdPersonaReceptor, IdClienteDomici' +
-      'lio  from CFDI'#13#10' where IdOrdenSalida=:IdOrdenSalida'#13#10
+      'select PD.IDDomicilio, IdCFDI, IDOrdenSalida, IdPersonaReceptor,' +
+      #13#10' IdClienteDomicilio  from CFDI'#13#10'inner join PersonasDomicilios ' +
+      'PD on PD.idPersonaDomicilio=IdClienteDomicilio '#13#10' where IdOrdenS' +
+      'alida=:IdOrdenSalida'#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IDOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -638,8 +679,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = Null
+        Value = 10
       end>
     Left = 432
     Top = 409
@@ -656,6 +696,9 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStFacturasCFDIIdClienteDomicilio: TIntegerField
       FieldName = 'IdClienteDomicilio'
     end
+    object ADODtStFacturasCFDIIDDomicilio: TIntegerField
+      FieldName = 'IDDomicilio'
+    end
   end
   object dsFacturaCFDI: TDataSource
     DataSet = ADODtStFacturasCFDI
@@ -663,22 +706,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 408
   end
   object ADODtStTelefonos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStTelefonosCalcFields
-    CommandText = 'Select * from Telefonos where IdPersona=:IdPersona'
+    CommandText = 'Select * from Telefonos'
     DataSource = dsFacturaCFDI
     IndexFieldNames = 'IdPersona;IdDomicilio'
-    MasterFields = 'IdPersonaReceptor;IdClienteDomicilio'
-    Parameters = <
-      item
-        Name = 'IdPersona'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
+    MasterFields = 'IdPersonaReceptor;IDDomicilio'
+    Parameters = <>
     Left = 592
     Top = 489
     object ADODtStTelefonosTelefono: TStringField
@@ -724,7 +760,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'Salida'
     DataSource = DSMaster
     IndexFieldNames = 'IdOrdenSalida'
-    MasterFields = 'idOrdenSalida'
+    MasterFields = 'IdOrdenSalida'
     Parameters = <
       item
         Name = 'IdOrdenSalida'
@@ -735,7 +771,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Value = Null
       end>
     Left = 248
-    Top = 497
+    Top = 481
     object ADODtStSalidasUbicacionesIdSalidaUbicacion: TAutoIncField
       FieldName = 'IdSalidaUbicacion'
       ReadOnly = True
@@ -779,22 +815,21 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 150
       Lookup = True
     end
-    object ADODtStSalidasUbicacionesEspacio: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Espacio'
-      LookupDataSet = ADODtStProductosXEspacio
-      LookupKeyFields = 'IdProductoXEspacio'
-      LookupResultField = 'Espacio'
-      KeyFields = 'IdProductoXEspacio'
-      Size = 50
-      Lookup = True
-    end
     object ADODtStSalidasUbicacionesDisponible: TFloatField
       FieldKind = fkLookup
       FieldName = 'Disponible'
       LookupDataSet = ADODtStProductosXEspacio
       LookupKeyFields = 'IdProductoXEspacio'
       LookupResultField = 'Cantidad'
+      KeyFields = 'IdProductoXEspacio'
+      Lookup = True
+    end
+    object ADODtStSalidasUbicacionesEspacioA: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EspacioA'
+      LookupDataSet = ADODtStProductosXEspacio
+      LookupKeyFields = 'IdProductoXEspacio'
+      LookupResultField = 'Espacio'
       KeyFields = 'IdProductoXEspacio'
       Lookup = True
     end
@@ -809,7 +844,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CursorType = ctStatic
     CommandText = 
       'select Pe.*, E.Descripcion as Espacio from ProductosXEspacio PE'#13 +
-      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'#13#10#13#10
+      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'
     Parameters = <>
     Left = 248
     Top = 545
@@ -840,10 +875,101 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldName = 'Cantidad'
     end
   end
-  object ADOCmdInsertaProductoKardex: TADOCommand
+  object DSInsertaKardex: TDataSource
+    DataSet = ADODtStDatosDocumentoSalida
+    Left = 620
+    Top = 240
+  end
+  object ADOQryInsertaProductoKardex: TADOQuery
     Connection = _dmConection.ADOConnection
+    Parameters = <
+      item
+        Name = 'IdOrdenSalidaItem1'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdAlmacen'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdOrdenSalidaItem2'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'if not Exists(Select IDProductoKardex from ProductosKardex where' +
+        ' IdOrdenSalidaItem=:IdOrdenSalidaItem1)'
+      
+        'Insert inTo  ProductosKardex(IdProducto,IdOrdenSalidaItem,IdMone' +
+        'da,IdProductoKardexEstatus,Fecha,Movimiento,Cantidad,Importe,IdA' +
+        'lmacen)'
+      ''
+      
+        'SELECT   osi.IdProducto, osi.IdOrdenSalidaItem,DS.IdMoneda, 1, G' +
+        'ETDATE() , '#39'S'#39','
+      'OSI.CantidadDespachada, osi.Importe, :IdAlmacen'
+      ''
+      'FROM         OrdenesSalidasItems OSI '
+      
+        'inner join DocumentosSalidasDEtalles DSD on DSD.idDocumentoSalid' +
+        'aDEtalle=OSI.IdDocumentoSalidaDetalle'
+      
+        'inner join DocumentosSalidas DS on DS.idDocumentoSalida=DSD.IdDo' +
+        'cumentoSalida'
+      ''
+      ''
+      'Where OSI.IdOrdenSalidaItem =:IdOrdenSalidaItem2')
+    Left = 620
+    Top = 297
+  end
+  object ADODtStIdentificadores: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
+      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
+      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
+      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
+      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
+      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
+      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
+      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
+      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10#13#10#13#10
     Parameters = <>
-    Left = 632
-    Top = 200
+    Left = 616
+    Top = 352
+  end
+  object DSSalidaUbicacion: TDataSource
+    DataSet = ADODtStSalidasUbicaciones
+    Left = 108
+    Top = 480
+  end
+  object ADODtStDocumentoDetalleItem: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    BeforePost = ADODtStOrdenSalidaItemBeforePost
+    AfterPost = ADODtStOrdenSalidaItemAfterPost
+    CommandText = 
+      'select IdDocumentoSalidaDetalle,IdAlmacen, IDProducto  from Docu' +
+      'mentosSalidasDetalles '#13#10
+    Parameters = <>
+    Left = 80
+    Top = 312
+    object ADODtStDocumentoDetalleItemIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object ADODtStDocumentoDetalleItemIDProducto: TIntegerField
+      FieldName = 'IDProducto'
+    end
+    object ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField
+      FieldName = 'IdDocumentoSalidaDetalle'
+      ReadOnly = True
+    end
   end
 end

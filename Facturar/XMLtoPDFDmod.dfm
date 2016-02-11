@@ -972,7 +972,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 80167
+        mmLeft = 91032
         mmTop = 61648
         mmWidth = 15346
         BandType = 0
@@ -991,7 +991,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3969
-        mmLeft = 62440
+        mmLeft = 73305
         mmTop = 61648
         mmWidth = 15346
         BandType = 0
@@ -999,6 +999,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       end
       object ppDBText20: TppDBText
         UserName = 'DBText20'
+        AutoSize = True
         DataField = 'Domicilio_calle'
         DataPipeline = ppDBPipelineDatosFactura
         Font.Charset = DEFAULT_CHARSET
@@ -1009,10 +1010,10 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
-        mmHeight = 3704
-        mmLeft = 19313
+        mmHeight = 3969
+        mmLeft = 19315
         mmTop = 61648
-        mmWidth = 42069
+        mmWidth = 22489
         BandType = 0
         LayerName = Foreground
       end

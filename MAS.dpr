@@ -85,7 +85,6 @@ uses
   OrdenesSalidaFormGrid in 'Procesos\OrdenesSalidaFormGrid.pas' {FrmOrdenesSalidaGrid},
   GeneraOrdenSalida in 'Procesos\GeneraOrdenSalida.pas' {FrmGeneraOrdenSalida},
   OrdenesSalidaForm in 'Procesos\OrdenesSalidaForm.pas' {FrmOrdenesSalida},
-  FacturasDM in 'Procesos\FacturasDM.pas' {DMFacturas: TDataModule},
   FacturasFormEdit in 'Procesos\FacturasFormEdit.pas' {frmFacturasFormEdit},
   FacturasFormGrid in 'Procesos\FacturasFormGrid.pas' {frmFacturasGrid},
   DocComprobanteFiscal in 'Facturar\DocComprobanteFiscal.pas',
@@ -125,7 +124,8 @@ uses
   ConfiguracionesForm in 'Catalogos\ConfiguracionesForm.pas' {frmConfiguraciones},
   BackorderEntradasDM in 'Procesos\BackorderEntradasDM.pas' {dmBackorderEntradas: TDataModule},
   BackorderEntradasForm in 'Procesos\BackorderEntradasForm.pas' {frmBackorderEntradas},
-  BackorderEntradasDetallesForm in 'Procesos\BackorderEntradasDetallesForm.pas' {frmBackorderEntradasDetalles};
+  BackorderEntradasDetallesForm in 'Procesos\BackorderEntradasDetallesForm.pas' {frmBackorderEntradasDetalles},
+  FacturasDM in 'Procesos\FacturasDM.pas' {DMFacturas: TDataModule};
 
 {$R *.res}
 

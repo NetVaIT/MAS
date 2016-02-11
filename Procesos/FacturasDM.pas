@@ -45,7 +45,6 @@ type
     adodsMasterIdDocumentoCBB: TIntegerField;
     adodsMasterIdDocumentoXML: TIntegerField;
     adodsMasterIdDocumentoPDF: TIntegerField;
-    adodsMasterIdOrdenSalida2: TIntegerField;
     adodsMasterIdCFDIEstatus: TIntegerField;
     adodsMasterIdCFDIFacturaGral: TLargeintField;
     adodsMasterCuentaCte: TStringField;
@@ -298,6 +297,24 @@ type
     ADODtStInformacionEnvioPagoFlete: TBooleanField;
     ADODtStInformacionEnvioValor: TFloatField;
     ADODtStInformacionEnvioAsegurado: TBooleanField;
+    ADODtStIdentificadores: TADODataSet;
+    adodsMasterIdentificadorCte: TStringField;
+    adodsMasterIdOrdenSalida: TIntegerField;
+    ADOQryActualizaInventario: TADOQuery;
+    ADODtStDatosActInv: TADODataSet;
+    ADODtStDatosActInvIdCFDIConcepto: TLargeintField;
+    ADODtStDatosActInvIdCFDI: TLargeintField;
+    ADODtStDatosActInvIdProducto: TIntegerField;
+    ADODtStDatosActInvIdUnidadMedida: TIntegerField;
+    ADODtStDatosActInvIdOrdenSalidaItem: TIntegerField;
+    ADODtStDatosActInvCantidad: TFloatField;
+    ADODtStDatosActInvUnidad: TStringField;
+    ADODtStDatosActInvDescripcion: TStringField;
+    ADODtStDatosActInvNoIdentifica: TStringField;
+    ADODtStDatosActInvValorUnitario: TFMTBCDField;
+    ADODtStDatosActInvImporte: TFMTBCDField;
+    ADODtStDatosActInvIdAlmacen: TIntegerField;
+    ADODtStDatosActInvIdProductoKardex: TAutoIncField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -307,12 +324,14 @@ type
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure ActRegeneraPDFExecute(Sender: TObject);
     procedure ActBuscarExecute(Sender: TObject);
+    procedure adodsMasterAfterOpen(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
     fImpresion: Integer;
     ArrBinario:TArrDinamico;
-    fCreoCFDI: Boolean;//Ene7/16
+    fCreoCFDI: Boolean;
+    FMuestra: Boolean;//Ene7/16
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
     procedure actXMLaPDFExecute(Sender: TObject);
@@ -323,6 +342,8 @@ type
 
     procedure ConvierteBinADec(Numero: integer; var B:TArrDinamico);
     procedure LlenaDatosEnvio; //Ene7/16
+    procedure ActualizaInventario(IDOrdenSalida,IDCFDI:Integer);  //Feb 8/16
+    procedure SetMuestra(const Value: Boolean);
     { Private declarations }
   public
     { Public declarations }
@@ -332,6 +353,9 @@ type
     property DMImpresion:Integer read GetfImpresion write FImpresion;
 
     property CreoCFDI:Boolean read fCreoCFDI write fCreoCFDI; //Ene29/16
+//
+    constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean); virtual;
+    property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
   end;
 
 var
@@ -649,10 +673,14 @@ begin
           adodsMasterIdDocumentoCBB.Value := CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
 
           adodsMaster.Post;
-          Showmessage('CFDI Generado');//Dic 29/15
+          //Actualiza inventario
+          ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
+
+        //  Showmessage('CFDI Generado');//Dic 29/15
 
           if FileExists(RutaPDF) then
             ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
+          ShowMessage('Envio a Cliente por Correo Electronico en proceso');
         end
         else
           Showmessage('Error Generando CFDI '+TimbreCFDI.MensajeError);//Dic 29/15
@@ -800,6 +828,64 @@ begin
   //Aun no guarda de nuevo.. (Verificar)
 end;
 
+procedure TDMFacturas.ActualizaInventario(IDOrdenSalida, IDCFDI: Integer);
+var
+   texto:String;
+begin
+  ADODtStDatosActInv.Close;
+  ADODtStDatosActInv.Parameters.ParamByName('IDCFDI').Value:= idcfdi;
+  ADODtStDatosActInv.OPEN;
+  //
+  try
+    ADODtStDatosActInv.Connection.BeginTrans;
+    while not ADODtStDatosActInv.EOF do
+    begin
+      ADOQryActualizaInventario.SQL.Clear;
+      ADOQryActualizaInventario.SQL.Add('Update Inventario SET PedidoXSurtir  =PedidoXSurtir-'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' ,Existencia =Existencia- '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' Where IdProducto='+ADODtStDatosActInv.FieldByName('IDProducto').AsString
+                                       +' and IDALmacen= '+ADODtStDatosActInv.FieldByName('IDAlmacen').ASString);
+
+      ADOQryActualizaInventario.ExecSQL;
+      Texto:='Actualizo inventario';
+      ADOQryActualizaInventario.SQL.Clear;
+      ADOQryActualizaInventario.SQL.Add('Update SalidasUbicaciones SET IdSalidaUbicacionEstatus=3  where IdOrdenSalidaItem='
+                                        +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
+      ADOQryActualizaInventario.ExecSQL;
+       Texto:=Texto +' Actualizo SalidasUbicacion';
+
+      ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
+                                       +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString);
+
+      ADOQryActualizaInventario.ExecSQL;
+
+      Texto:=Texto +' Actualizo ProductoEspacio';
+
+      ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 3  '
+                                       +' where IDProductoKardex='+ ADODtStDatosActInv.FieldByName('IdProductoKardex').ASString);
+
+      ADOQryActualizaInventario.ExecSQL;
+
+      Texto:=Texto +' Actualizo Producto Kardex';
+
+
+      ADODtStDatosActInv.Next;
+    end;
+     ADODtStDatosActInv.Connection.CommitTrans;
+   //  ShowMessage('bien '+Texto);
+  except
+     ADODtStDatosActInv.Connection.RollbackTrans;
+     ShowMessage('Error'+ Texto);
+  end;
+
+
+
+
+
+
+end;
+
 procedure TDMFacturas.ConvierteBinADec(Numero: integer; var B: TArrDinamico); //Ene 7/16
 var      // Este convierte Decimal a Binario
   aux,i:integer;
@@ -848,6 +934,18 @@ begin
    Result:=Dato2;
 end;
 
+
+constructor TDMFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean);
+begin
+  FMuestra:=Muestra;
+  inherited Create(AOwner);
+end;
+
+procedure TDMFacturas.adodsMasterAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  adodtstIdentificadores.Open; //Feb 8/16
+end;
 
 procedure TDMFacturas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
@@ -901,10 +999,11 @@ begin
   ADODtStCFDIConceptos.open;
   ADODtStCFDIImpuestos.Open; //Dic 21/15
 
-  gGridEditForm:= TfrmFacturasFormEdit.Create(Self);
+ // gGridEditForm:= TfrmFacturasFormEdit.Create(Self);
+  gGridEditForm:= TfrmFacturasFormEdit.CreateWMostrar(Self,Muestra);
 //  adodsMaster.Parameters.ParamByName('TipoDocto').Value:=FTipoDoc;
   gGridEditForm.DataSet := adodsMaster;
-
+ // TfrmFacturasFormEdit(gGridEditForm).Mostrar:=Muestra;
   TfrmFacturasFormEdit(gGridEditForm).FacturarCtas := actProcesaFactura;
   TfrmFacturasFormEdit(gGridEditForm).ActPreFacturas := ActCrearPrefacturas;
   TfrmFacturasFormEdit(gGridEditForm).ActRegPdf := ActRegeneraPDF; //Dic 22/15
@@ -989,6 +1088,11 @@ begin
   adodsDocumento.Post;
   Result := adodsDocumentoIdDocumento.Value;
   adodsDocumento.Close;
+end;
+
+procedure TDMFacturas.SetMuestra(const Value: Boolean);
+begin
+  FMuestra := Value;
 end;
 
 procedure TDMFacturas.SubirXMLPDFaFS(FileName: TFileName);

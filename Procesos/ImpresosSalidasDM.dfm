@@ -3,6 +3,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
   Height = 610
   Width = 843
   object ppRprtOrdenSalida: TppReport
+    AutoStop = False
+    DataPipeline = ppDBPplnItemsOrdenSalida
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
@@ -58,10 +60,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
     Top = 26
     Version = '15.0'
     mmColumnWidth = 0
+    DataPipelineName = 'ppDBPplnItemsOrdenSalida'
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 57415
+      mmHeight = 62177
       mmPrintPosition = 0
       object ppLabel24: TppLabel
         UserName = 'Label1'
@@ -70,8 +73,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
@@ -101,19 +104,18 @@ object DMImpresosSalidas: TDMImpresosSalidas
       end
       object ppLabel26: TppLabel
         UserName = 'Label2'
-        AutoSize = False
         Caption = 'Fecha Registro:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 103452
+        mmLeft = 104511
         mmTop = 30427
-        mmWidth = 30692
+        mmWidth = 29633
         BandType = 0
         LayerName = Foreground
       end
@@ -143,8 +145,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
@@ -179,12 +181,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 103188
+        mmLeft = 118004
         mmTop = 45244
         mmWidth = 16140
         BandType = 0
@@ -203,7 +205,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnGenerales'
         mmHeight = 4763
-        mmLeft = 121444
+        mmLeft = 136261
         mmTop = 45244
         mmWidth = 48683
         BandType = 0
@@ -212,17 +214,17 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel29: TppLabel
         UserName = 'Label7'
         AutoSize = False
-        Caption = 'Ubicacion'
+        Caption = 'Posible Ubicacion'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 109538
-        mmTop = 51858
-        mmWidth = 26988
+        mmLeft = 107421
+        mmTop = 56893
+        mmWidth = 33867
         BandType = 0
         LayerName = Foreground
       end
@@ -233,12 +235,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 84138
-        mmTop = 51858
+        mmTop = 56893
         mmWidth = 20108
         BandType = 0
         LayerName = Foreground
@@ -250,12 +252,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 4233
-        mmTop = 51858
+        mmTop = 56893
         mmWidth = 23019
         BandType = 0
         LayerName = Foreground
@@ -267,12 +269,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 31750
-        mmTop = 51858
+        mmTop = 56893
         mmWidth = 23813
         BandType = 0
         LayerName = Foreground
@@ -284,8 +286,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
@@ -316,16 +318,16 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel34: TppLabel
         UserName = 'Label10'
         AutoSize = False
-        Caption = 'Surtido'
+        Caption = 'Ubicaci'#243'n Real'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
         mmLeft = 145257
-        mmTop = 51858
+        mmTop = 56893
         mmWidth = 26988
         BandType = 0
         LayerName = Foreground
@@ -333,17 +335,17 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel35: TppLabel
         UserName = 'Label101'
         AutoSize = False
-        Caption = 'Completo'
+        Caption = 'Cantidad Surtida'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 11
+        Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 176742
-        mmTop = 51858
-        mmWidth = 26988
+        mmLeft = 174096
+        mmTop = 56893
+        mmWidth = 29633
         BandType = 0
         LayerName = Foreground
       end
@@ -352,7 +354,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Weight = 0.750000000000000000
         mmHeight = 3969
         mmLeft = 4233
-        mmTop = 56886
+        mmTop = 61921
         mmWidth = 199496
         BandType = 0
         LayerName = Foreground
@@ -3333,8 +3335,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
+        Font.Size = 11
+        Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
@@ -3368,7 +3370,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       Background1.Brush.Style = bsClear
       Background2.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 7938
+      mmHeight = 10054
       mmPrintPosition = 0
       object ppDBText5: TppDBText
         UserName = 'DBText5'
@@ -3377,14 +3379,14 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
         mmHeight = 4763
         mmLeft = 4498
-        mmTop = 1323
+        mmTop = 2648
         mmWidth = 25929
         BandType = 4
         LayerName = Foreground
@@ -3396,34 +3398,36 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
         mmHeight = 4763
         mmLeft = 84138
-        mmTop = 1323
+        mmTop = 2648
         mmWidth = 18785
         BandType = 4
         LayerName = Foreground
       end
       object ppDBText7: TppDBText
         UserName = 'DBText7'
-        DataField = 'Precio'
+        DataField = 'Ubicacion'
         DataPipeline = ppDBPplnItemsOrdenSalida
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
+        WordWrap = True
+        VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
-        mmHeight = 4763
-        mmLeft = 109538
-        mmTop = 1323
-        mmWidth = 30692
+        mmHeight = 7408
+        mmLeft = 107156
+        mmTop = 1588
+        mmWidth = 37042
         BandType = 4
         LayerName = Foreground
       end
@@ -3434,26 +3438,15 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
         mmHeight = 4763
         mmLeft = 31750
-        mmTop = 1323
+        mmTop = 2648
         mmWidth = 51329
-        BandType = 4
-        LayerName = Foreground
-      end
-      object myCheckBox6: TmyCheckBox
-        UserName = 'CheckBox1'
-        Checked = False
-        CheckBoxColor = clBlack
-        mmHeight = 7144
-        mmLeft = 182034
-        mmTop = 265
-        mmWidth = 8996
         BandType = 4
         LayerName = Foreground
       end
@@ -3461,8 +3454,25 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ppFooterBand1: TppFooterBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 48683
+      mmHeight = 17463
       mmPrintPosition = 0
+      object ppLabel38: TppLabel
+        UserName = 'Label38'
+        AutoSize = False
+        Caption = 'Recolect'#243': ____________________________________________'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 8467
+        mmLeft = 92604
+        mmTop = 8996
+        mmWidth = 101600
+        BandType = 8
+        LayerName = Foreground
+      end
     end
     object ppDesignLayers1: TppDesignLayers
       object ppDesignLayer1: TppDesignLayer
@@ -3479,164 +3489,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Generales'
     Left = 354
     Top = 146
-    object ppDBPplnGeneralesppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'idOrdenSalida'
-      FieldName = 'idOrdenSalida'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPplnGeneralesppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalida'
-      FieldName = 'IdDocumentoSalida'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object ppDBPplnGeneralesppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdOrdenEstatus'
-      FieldName = 'IdOrdenEstatus'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnGeneralesppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdPersonaRecolecta'
-      FieldName = 'IdPersonaRecolecta'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPplnGeneralesppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdPersonaRevisa'
-      FieldName = 'IdPersonaRevisa'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnGeneralesppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdPersonaEmpaca'
-      FieldName = 'IdPersonaEmpaca'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPplnGeneralesppField7: TppField
-      FieldAlias = 'FechaRegistro'
-      FieldName = 'FechaRegistro'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 6
-    end
-    object ppDBPplnGeneralesppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Total'
-      FieldName = 'Total'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 7
-    end
-    object ppDBPplnGeneralesppField9: TppField
-      FieldAlias = 'FechaIniRecolecta'
-      FieldName = 'FechaIniRecolecta'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 8
-    end
-    object ppDBPplnGeneralesppField10: TppField
-      FieldAlias = 'Estatus'
-      FieldName = 'Estatus'
-      FieldLength = 15
-      DisplayWidth = 15
-      Position = 9
-    end
-    object ppDBPplnGeneralesppField11: TppField
-      FieldAlias = 'FechaFinRecolecta'
-      FieldName = 'FechaFinRecolecta'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 10
-    end
-    object ppDBPplnGeneralesppField12: TppField
-      FieldAlias = 'FechaIniRevisa'
-      FieldName = 'FechaIniRevisa'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 11
-    end
-    object ppDBPplnGeneralesppField13: TppField
-      FieldAlias = 'FechaFinRevisa'
-      FieldName = 'FechaFinRevisa'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 12
-    end
-    object ppDBPplnGeneralesppField14: TppField
-      FieldAlias = 'FechaIniEmpaca'
-      FieldName = 'FechaIniEmpaca'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 13
-    end
-    object ppDBPplnGeneralesppField15: TppField
-      FieldAlias = 'FechaFinEmpaca'
-      FieldName = 'FechaFinEmpaca'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 14
-    end
-    object ppDBPplnGeneralesppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Subtotal'
-      FieldName = 'Subtotal'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 15
-    end
-    object ppDBPplnGeneralesppField17: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IVA'
-      FieldName = 'IVA'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 16
-    end
-    object ppDBPplnGeneralesppField18: TppField
-      FieldAlias = 'Cliente'
-      FieldName = 'Cliente'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 17
-    end
-    object ppDBPplnGeneralesppField19: TppField
-      FieldAlias = 'Identificador'
-      FieldName = 'Identificador'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 18
-    end
   end
   object ppDBPplnItemsOrdenSalida: TppDBPipeline
     DataSource = DSOrdenSalidaItems
@@ -3644,113 +3496,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
     Left = 354
     Top = 98
     MasterDataPipelineName = 'ppDBPplnGenerales'
-    object ppDBPplnItemsOrdenSalidappField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdOrdenSalidaItem'
-      FieldName = 'IdOrdenSalidaItem'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 10
-      Position = 0
-    end
-    object ppDBPplnItemsOrdenSalidappField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdOrdenSalida'
-      FieldName = 'IdOrdenSalida'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object ppDBPplnItemsOrdenSalidappField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalidaDetalle'
-      FieldName = 'IdDocumentoSalidaDetalle'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnItemsOrdenSalidappField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdProducto'
-      FieldName = 'IdProducto'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPplnItemsOrdenSalidappField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'CantidadDespachada'
-      FieldName = 'CantidadDespachada'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnItemsOrdenSalidappField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'CantidadSolicitada'
-      FieldName = 'CantidadSolicitada'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPplnItemsOrdenSalidappField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Precio'
-      FieldName = 'Precio'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 6
-    end
-    object ppDBPplnItemsOrdenSalidappField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Importe'
-      FieldName = 'Importe'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 7
-    end
-    object ppDBPplnItemsOrdenSalidappField9: TppField
-      FieldAlias = 'Observaciones'
-      FieldName = 'Observaciones'
-      FieldLength = 500
-      DisplayWidth = 500
-      Position = 8
-    end
-    object ppDBPplnItemsOrdenSalidappField10: TppField
-      FieldAlias = 'Producto'
-      FieldName = 'Producto'
-      FieldLength = 150
-      DisplayWidth = 150
-      Position = 9
-    end
-    object ppDBPplnItemsOrdenSalidappField11: TppField
-      FieldAlias = 'ClaveProducto'
-      FieldName = 'ClaveProducto'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 10
-    end
-    object ppDBPplnItemsOrdenSalidappField12: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdUnidadMedida'
-      FieldName = 'IdUnidadMedida'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 11
-    end
   end
   object ADODtStOrdenSalida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterOpen = ADODtStOrdenSalidaAfterOpen
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
@@ -3764,7 +3514,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = Null
+        Value = 13
       end>
     Left = 48
     Top = 194
@@ -3854,17 +3604,14 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnCalcFields = ADODtStOrdenSalidaItemCalcFields
     CommandText = 
       'select IdOrdenSalidaItem, IdOrdenSalida, IdDocumentoSalidaDetall' +
       'e, IdUnidadMedida,'#13#10' IdProducto, CantidadDespachada, Precio, Imp' +
       'orte, CantidadSolicitada, Observaciones'#13#10', ClaveProducto from Or' +
-      'denesSalidasItems where idOrdenSalida=:IdOrdenSalida'
-    DataSource = DSOrdenSalida
-    IndexFieldNames = 'IdOrdenSalida'
-    MasterFields = 'IdOrdenSalida'
+      'denesSalidasItems '#13#10'Where idordenSalida=:IdOrdenSalida'
     Parameters = <
       item
         Name = 'IdOrdenSalida'
@@ -3929,6 +3676,21 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
     end
+    object ADODtStOrdenSalidaItemUbicacion: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'Ubicacion'
+      Size = 300
+      Calculated = True
+    end
+    object ADODtStOrdenSalidaItemIDAlmacen: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'IDAlmacen'
+      LookupDataSet = ADODtStDocumentoDetalleItem
+      LookupKeyFields = 'IdDocumentoSalidaDetalle'
+      LookupResultField = 'IdAlmacen'
+      KeyFields = 'IdDocumentoSalidaDetalle'
+      Lookup = True
+    end
   end
   object DSOrdenSalida: TDataSource
     DataSet = ADODtStOrdenSalida
@@ -3936,7 +3698,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     Top = 194
   end
   object ADODtStOrdenSalEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -3963,7 +3724,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     Top = 274
   end
   object adodSDocumentoSalida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -3973,8 +3733,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'Estatus, PD.Identificador'#13#10' FROM DocumentosSalidas ds'#13#10'inner joi' +
       'n DocumentosSalidasEstatus DSE  '#13#10'on DSE.IdDocumentoSalidaEstatu' +
       's= ds.IdDocumentoSalidaEstatus'#13#10'inner join PersonasDomicilios PD' +
-      ' on PD.IdPersonaDomicilio= ds.IdDomicilioCliente'#13#10#13#10'where '#13#10#13#10'Id' +
-      'DocumentoSalida=:IdDocumentoSalida'
+      ' on PD.IdPersonaDomicilio= ds.IdDomicilioCliente'#13#10'where '#13#10'IdDocu' +
+      'mentoSalida=:IdDocumentoSalida'
     DataSource = DSOrdenSalida
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -3984,7 +3744,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Size = 4
         Value = Null
       end>
     Left = 56
@@ -4066,7 +3825,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4079,7 +3837,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     Top = 88
   end
   object adodsClientes: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4105,7 +3862,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
   end
   object ADODtStDireccionesCliente: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -7362,9 +7118,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 6085
-        mmLeft = 39403
-        mmTop = 7940
-        mmWidth = 80433
+        mmLeft = 38101
+        mmTop = 7938
+        mmWidth = 83081
         BandType = 0
         LayerName = Foreground1
       end
@@ -7778,58 +7534,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = Foreground1
       end
-      object myCheckBox1: TmyCheckBox
-        UserName = 'ChckBxServOcurre'
-        CheckBoxColor = clBlack
-        mmHeight = 6350
-        mmLeft = 56886
-        mmTop = 108514
-        mmWidth = 6350
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object myCheckBox2: TmyCheckBox
-        UserName = 'ChckBxServDomicilio'
-        Checked = False
-        CheckBoxColor = clBlack
-        mmHeight = 6350
-        mmLeft = 105855
-        mmTop = 108514
-        mmWidth = 6350
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object myCheckBox3: TmyCheckBox
-        UserName = 'ChckBxFleteCobra'
-        CheckBoxColor = clBlack
-        mmHeight = 6350
-        mmLeft = 56886
-        mmTop = 118039
-        mmWidth = 6350
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object myCheckBox4: TmyCheckBox
-        UserName = 'ChckBxFletePagado'
-        Checked = False
-        CheckBoxColor = clBlack
-        mmHeight = 6350
-        mmLeft = 105855
-        mmTop = 118039
-        mmWidth = 6350
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object myCheckBox5: TmyCheckBox
-        UserName = 'ChckBxAsegura'
-        CheckBoxColor = clBlack
-        mmHeight = 6350
-        mmLeft = 105855
-        mmTop = 128358
-        mmWidth = 6350
-        BandType = 4
-        LayerName = Foreground1
-      end
       object ppLabel7: TppLabel
         UserName = 'Label7'
         AutoSize = False
@@ -7941,6 +7645,158 @@ object DMImpresosSalidas: TDMImpresosSalidas
         mmLeft = 32544
         mmTop = 25400
         mmWidth = 84931
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText17: TppDBText
+        UserName = 'DBText17'
+        DataField = 'Telefono'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 4763
+        mmLeft = 32544
+        mmTop = 53975
+        mmWidth = 39423
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object myDBCheckBox1: TmyDBCheckBox
+        UserName = 'DBCheckBox1'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        DataPipeline = ppDBPplnEtiquetas
+        DataField = 'Asegurado'
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 6350
+        mmLeft = 105834
+        mmTop = 128323
+        mmWidth = 6350
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object myDBCheckBox2: TmyDBCheckBox
+        UserName = 'DBCheckBox2'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        DataPipeline = ppDBPplnEtiquetas
+        DataField = 'PagoFlete'
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 6350
+        mmLeft = 105834
+        mmTop = 118004
+        mmWidth = 6350
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText18: TppDBText
+        UserName = 'DBText18'
+        DataField = 'Valor'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 4763
+        mmLeft = 32544
+        mmTop = 129911
+        mmWidth = 39423
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText19: TppDBText
+        UserName = 'DBText19'
+        DataField = 'Conducto'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 4763
+        mmLeft = 37571
+        mmTop = 64294
+        mmWidth = 76465
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText20: TppDBText
+        UserName = 'DBText20'
+        DataField = 'Contenido'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 18256
+        mmLeft = 9790
+        mmTop = 81227
+        mmWidth = 104246
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object myDBCheckBox3: TmyDBCheckBox
+        UserName = 'DBCheckBox3'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        DataPipeline = ppDBPplnEtiquetas
+        DataField = 'DomicilioChk'
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 6350
+        mmLeft = 105834
+        mmTop = 108479
+        mmWidth = 6350
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object myDBCheckBox4: TmyDBCheckBox
+        UserName = 'DBCheckBox4'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        DataPipeline = ppDBPplnEtiquetas
+        DataField = 'OcurreChk'
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 6350
+        mmLeft = 60590
+        mmTop = 108479
+        mmWidth = 6350
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object myDBCheckBox5: TmyDBCheckBox
+        UserName = 'DBCheckBox5'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        DataPipeline = ppDBPplnEtiquetas
+        DataField = 'CobrarChk'
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 6350
+        mmLeft = 60590
+        mmTop = 118004
+        mmWidth = 6350
         BandType = 4
         LayerName = Foreground1
       end
@@ -8186,6 +8042,30 @@ object DMImpresosSalidas: TDMImpresosSalidas
       DisplayWidth = 10
       Position = 28
     end
+    object ppDBPplnEtiquetasppField30: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 29
+    end
+    object ppDBPplnEtiquetasppField31: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 30
+    end
+    object ppDBPplnEtiquetasppField32: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 31
+    end
   end
   object ADODtStDatosEtiqueta: TADODataSet
     Active = True
@@ -8209,10 +8089,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'PersonasDomicilios PD on PD.IdPersonaDomicilio=IE.IDPersonaDomic' +
       'ilio'#13#10'  inner join Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13 +
       #10'  inner join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inn' +
-      'er join Estados E on E.IdEstado=D.IdEstado  '#13#10'  inner join Perso' +
-      'nas PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  inner join Tel' +
-      'efonos T on T.IdTelefono=IE.IdTelefono'#13#10' where ci.idOrdenSalida=' +
-      ':idOrdenSalida'
+      'er join Estados E on E.IdEstado=D.IdEstado  '#13#10'  Left join Person' +
+      'as PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  Left join Telef' +
+      'onos T on T.IdTelefono=IE.IdTelefono'#13#10' where ci.idOrdenSalida=:i' +
+      'dOrdenSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -8279,6 +8159,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStDatosEtiquetaValor: TFloatField
       FieldName = 'Valor'
+      DisplayFormat = '###,##0.00'
+      currency = True
     end
     object ADODtStDatosEtiquetaAsegurado: TBooleanField
       FieldName = 'Asegurado'
@@ -8331,10 +8213,93 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ADODtStDatosEtiquetaIdentificador: TIntegerField
       FieldName = 'Identificador'
     end
+    object ADODtStDatosEtiquetaOcurreChk: TBooleanField
+      FieldKind = fkCalculated
+      FieldName = 'OcurreChk'
+      Calculated = True
+    end
+    object ADODtStDatosEtiquetaDomicilioChk: TBooleanField
+      FieldKind = fkCalculated
+      FieldName = 'DomicilioChk'
+      Calculated = True
+    end
+    object ADODtStDatosEtiquetaCobrarChk: TBooleanField
+      FieldKind = fkCalculated
+      FieldName = 'CobrarChk'
+      Calculated = True
+    end
   end
   object DSDatosEtiqueta: TDataSource
     DataSet = ADODtStDatosEtiqueta
     Left = 284
     Top = 366
+  end
+  object ADODtStBuscaUbicacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select PE.Cantidad, PE.IDCategoria,E.Descripcion '#13#10'from Producto' +
+      'sXEspacio PE '#13#10'inner join Espacios E on E.idEspacio=PE.IdEspacio' +
+      #13#10'where IDProducto=:IdProducto and IdAlmacen=:IdAlmacen'
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdAlmacen'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 416
+    Top = 266
+    object ADODtStBuscaUbicacionCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
+    object ADODtStBuscaUbicacionIDCategoria: TIntegerField
+      FieldName = 'IDCategoria'
+    end
+    object ADODtStBuscaUbicacionDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
+    end
+  end
+  object ADODtStDocumentoDetalleItem: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumentoSalidaDetalle,IdAlmacen, IDProducto  '#13#10'from Do' +
+      'cumentosSalidasDetalles where idDocumentoSalida =:IdDocumentoSal' +
+      'ida'#13#10
+    DataSource = DSOrdenSalidaItems
+    IndexFieldNames = 'IdDocumentoSalidaDetalle'
+    Parameters = <
+      item
+        Name = 'IdDocumentoSalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 464
+    Top = 352
+    object ADODtStDocumentoDetalleItemIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object ADODtStDocumentoDetalleItemIDProducto: TIntegerField
+      FieldName = 'IDProducto'
+    end
+    object ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField
+      FieldName = 'IdDocumentoSalidaDetalle'
+      ReadOnly = True
+    end
   end
 end

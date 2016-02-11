@@ -37,26 +37,17 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Width = 890
     ExplicitWidth = 890
   end
-  inherited tbarGrid: TToolBar
-    Width = 890
-    ExplicitWidth = 890
-    inherited ToolButton3: TToolButton [1]
-      Left = 23
-      ExplicitLeft = 23
-    end
-    inherited ToolButton2: TToolButton [2]
-      Left = 46
-      ExplicitLeft = 46
-    end
-  end
   inherited pnlMaster: TPanel
     Width = 890
     ExplicitWidth = 890
     inherited cxGrid: TcxGrid
       Width = 890
-      ExplicitTop = -3
       ExplicitWidth = 890
       inherited tvMaster: TcxGridDBTableView
+        object tvMasterIdDocumentoSalida: TcxGridDBColumn
+          Caption = 'No.'
+          DataBinding.FieldName = 'IdDocumentoSalida'
+        end
         object tvMasterFechaRegistro: TcxGridDBColumn
           DataBinding.FieldName = 'FechaRegistro'
         end
@@ -65,6 +56,10 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
         end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
+        end
+        object tvMasterIdentificadorCte: TcxGridDBColumn
+          DataBinding.FieldName = 'IdentificadorCte'
+          Width = 93
         end
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -89,13 +84,17 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
         end
       end
     end
+    inherited tbarGrid: TToolBar
+      Width = 890
+      ExplicitWidth = 890
+    end
   end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400D00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -236,7 +235,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00C001F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

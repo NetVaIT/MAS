@@ -120,6 +120,7 @@ type
     Label12: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
     Splitter2: TSplitter;
+    cxDBLabel14: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -130,13 +131,16 @@ type
     Consulta: TBasicAction;
     ffiltro: String; //Dic 29/15
     fImpresionED: integer;
+    FMostrar: Boolean; //Feb 10/16
+
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
 
     procedure SetRegeneraPDF(const Value: TBasicAction);
 
     procedure SetConsulta(const Value: TBasicAction);  //Dic 29/15
-    function GetfImpresioned: integer;  //ene 7/16
+    function GetfImpresioned: integer;
+    procedure SetMostrar(const Value: Boolean);  //ene 7/16
 
     { Private declarations }
   public
@@ -148,7 +152,8 @@ type
     property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
     property MiImpresion:integer read GetfImpresionEd write fImpresionEd;
 
-
+    constructor CreateWMostrar(AOwner: TComponent; Mostrar:Boolean); virtual;
+    property Mostrar:Boolean read FMostrar write SetMostrar;//Feb 10/16
   end;
 
 var
@@ -162,6 +167,13 @@ uses FacturasFormGrid, FacturasDM;
 
 
 
+constructor TfrmFacturasFormEdit.CreateWMostrar(AOwner: TComponent;
+  Mostrar: Boolean);
+begin
+  FMostrar:=Mostrar;
+  inherited Create(AOwner);
+end;
+
 procedure TfrmFacturasFormEdit.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
@@ -174,7 +186,8 @@ end;
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TfrmFacturasGrid.Create(Self);
+  if Mostrar then
+    gFormGrid := TfrmFacturasGrid.Create(Self);
   //TFrmFacturasGrid(gFormGrid).CerrarGrid := actCloseGrid;
 
 end;
@@ -187,6 +200,8 @@ begin
   // TADODataSet(DSDAtosCliente.DataSet).Parameters.ParamByName('IDClienteDomicilio').Value:= DataSource.DataSet.FieldByName('IDClienteDomicilio').AsInteger;    // vre comportamiento
   //TADODataSet(DSDAtosCliente.DataSet).Parameters.ParamByName('IDClienteDomicilio').Value;      //Se habilito el de arriba ene 29/16
   DSDatosCliente.DataSet.Open;
+ (* if not Mostrar then
+     Hide;*)
 
 end;
 
@@ -211,6 +226,11 @@ begin
   TlBtnGeneraCFDI.Action:=Value;
   TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
 
+end;
+
+procedure TfrmFacturasFormEdit.SetMostrar(const Value: Boolean);
+begin
+  FMostrar := Value;
 end;
 
 procedure TfrmFacturasFormEdit.SetPreFacturas(const Value: TBasicAction);

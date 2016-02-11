@@ -121,11 +121,6 @@ type
     ppLabel22: TppLabel;
     ppLabel23: TppLabel;
     ppLabel25: TppLabel;
-    myCheckBox1: TmyCheckBox;
-    myCheckBox2: TmyCheckBox;
-    myCheckBox3: TmyCheckBox;
-    myCheckBox4: TmyCheckBox;
-    myCheckBox5: TmyCheckBox;
     ppShape1: TppShape;
     ppDBPplnEtiquetas: TppDBPipeline;
     ADODtStDatosEtiqueta: TADODataSet;
@@ -155,7 +150,6 @@ type
     ppDBText6: TppDBText;
     ppDBText7: TppDBText;
     ppDBText8: TppDBText;
-    myCheckBox6: TmyCheckBox;
     ppFooterBand1: TppFooterBand;
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
@@ -198,11 +192,39 @@ type
     ADODtStOrdenSalidaIdentificador: TStringField;
     ppLabel37: TppLabel;
     ppDBText16: TppDBText;
+    ADODtStOrdenSalidaItemUbicacion: TStringField;
+    ADODtStBuscaUbicacion: TADODataSet;
+    ppLabel38: TppLabel;
+    ADODtStDocumentoDetalleItem: TADODataSet;
+    ADODtStDocumentoDetalleItemIdAlmacen: TIntegerField;
+    ADODtStDocumentoDetalleItemIDProducto: TIntegerField;
+    ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField;
+    ADODtStOrdenSalidaItemIDAlmacen: TIntegerField;
+    ADODtStBuscaUbicacionCantidad: TFloatField;
+    ADODtStBuscaUbicacionIDCategoria: TIntegerField;
+    ADODtStBuscaUbicacionDescripcion: TStringField;
+    ppDBText17: TppDBText;
+    myDBCheckBox1: TmyDBCheckBox;
+    myDBCheckBox2: TmyDBCheckBox;
+    ppDBText18: TppDBText;
+    ppDBText19: TppDBText;
+    ppDBText20: TppDBText;
+    ADODtStDatosEtiquetaOcurreChk: TBooleanField;
+    ADODtStDatosEtiquetaDomicilioChk: TBooleanField;
+    ADODtStDatosEtiquetaCobrarChk: TBooleanField;
+    myDBCheckBox3: TmyDBCheckBox;
+    myDBCheckBox4: TmyDBCheckBox;
+    myDBCheckBox5: TmyDBCheckBox;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
   private
-    procedure PrintPDFFile(IDReporte: Integer);
+
+    function ConcatenaUbicaciones (idProd,IdAlm:Integer):String;
+
     { Private declarations }
   public
+    procedure PrintPDFFile(IDReporte: Integer);
     { Public declarations }
   end;
 
@@ -219,6 +241,41 @@ begin
   Dataset.FieldByName('DireccionCompleta').AsString:=Dataset.FieldByName('Calle').AsString+' '
   + Dataset.FieldByName('NoExterior').AsString+' '+ Dataset.FieldByName('NoInterior').AsString
   +' '+ Dataset.FieldByName('Colonia').AsString+' CP:'+ Dataset.FieldByName('CodigoPostal').AsString;
+
+  Dataset.FieldByName('ocurrechk').AsBoolean:=dataset.FieldByName('Servicio').AsString='Ocurre';
+  Dataset.FieldByName('Domiciliochk').AsBoolean:=dataset.FieldByName('Servicio').AsString='Domicilio';
+  Dataset.FieldByName('Cobrarchk').AsBoolean:=not dataset.FieldByName('PagoFlete').AsBoolean;
+
+end;
+
+procedure TDMImpresosSalidas.ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
+begin
+
+  ADODtStDocumentoDetalleItem.Open;
+end;
+
+procedure TDMImpresosSalidas.ADODtStOrdenSalidaItemCalcFields(
+  DataSet: TDataSet);                                                                                                    //     Dataset.FieldByName('IdAlmacen').AsInteger
+begin                                                                                                         //Almacen por defalult
+  DataSet.FieldByName('Ubicacion').AsString:=ConcatenaUbicaciones(Dataset.FieldByName('IDProducto').AsInteger,1);
+end;
+
+function TDMImpresosSalidas.ConcatenaUbicaciones(idProd,
+  IdAlm: Integer): String;
+var Texto:String;
+begin
+  Texto:='';
+  ADODtStBuscaUbicacion.Close;
+  ADODtStBuscaUbicacion.Parameters.ParamByName('IDProducto').Value:=IdProd;
+  ADODtStBuscaUbicacion.Parameters.ParamByName('IDAlmacen').VAlue:=IdAlm;
+  ADODtStBuscaUbicacion.open;
+  while (not ADODtStBuscaUbicacion.Eof) do
+  begin
+    Texto:=Texto+ ADODtStBuscaUbicacion.FieldByName('Descripcion').AsString+ ',';
+    ADODtStBuscaUbicacion.Next;
+  end;
+  ADODtStBuscaUbicacion.Close;
+  Result:=Texto;
 end;
 
 procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer);
@@ -236,9 +293,15 @@ begin
     // DES ABAN eNE7/16      ppReport.PrinterSetup.DocumentName:= ExtractFileName(vPDFFileName);
       ppRprtOrdenSalida.Print;
     end;
+  2:begin  //Feb 11/16
+      ppRprtEtiquetaEnvio.ShowPrintDialog:= False;
+      ppRprtEtiquetaEnvio.ShowCancelDialog:= False;
+      ppRprtEtiquetaEnvio.AllowPrintToArchive:= False;
+      ppRprtEtiquetaEnvio.DeviceType:= 'Screen';
 
+      ppRprtEtiquetaEnvio.Print;
+    end;
 
   end;
 end;
-
 end.

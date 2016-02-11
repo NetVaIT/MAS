@@ -3,8 +3,8 @@ inherited dmCotizaciones: TdmCotizaciones
   Height = 628
   Width = 886
   inherited adodsMaster: TADODataSet
-    Active = True
     CursorType = ctStatic
+    AfterOpen = adodsMasterAfterOpen
     OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
@@ -12,7 +12,7 @@ inherited dmCotizaciones: TdmCotizaciones
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
       'te'#13#10' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDoc' +
-      'to'
+      'to'#13#10'order by idDocumentoSalidaEstatus, FechaRegistro Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -126,15 +126,6 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdDocumentoSalidaTipo'
       Lookup = True
     end
-    object adodsMasterIdentificadorCte: TStringField
-      FieldKind = fkLookup
-      FieldName = 'IdentificadorCte'
-      LookupDataSet = ADODtStDireccionesCliente
-      LookupKeyFields = 'IdPersonaDomicilio'
-      LookupResultField = 'Identificador'
-      KeyFields = 'IdDomicilioCliente'
-      Lookup = True
-    end
     object adodsMasterRFCCte: TStringField
       FieldKind = fkLookup
       FieldName = 'RFCCte'
@@ -151,6 +142,15 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 500
       Calculated = True
     end
+    object adodsMasterIdentificadorCte: TStringField
+      FieldKind = fkLookup
+      FieldName = 'IdentificadorCte'
+      LookupDataSet = ADODtStIdentificadores
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdDomicilioCliente'
+      Lookup = True
+    end
   end
   inherited ActionList: TActionList
     object ActGenPDFCotizacion: TAction
@@ -159,7 +159,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionesDetalle: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     BeforeInsert = adodsCotizacionesDetalleBeforeInsert
@@ -167,9 +166,9 @@ inherited dmCotizaciones: TdmCotizaciones
     AfterDelete = adodsCotizacionesDetalleAfterPost
     OnNewRecord = adodsCotizacionesDetalleNewRecord
     CommandText = 
-      'SELECT  IdDocumentoSalidaDetalle, IdDocumentoSalida, IdProducto,' +
-      ' ClaveProducto, Cantidad, CantidadPendiente, PrecioUnitario, Imp' +
-      'orte'#13#10' FROM DocumentosSalidasDetalles'
+      'SELECT IdAlmacen, IdDocumentoSalidaDetalle, IdDocumentoSalida, I' +
+      'dProducto, ClaveProducto, Cantidad, CantidadPendiente, PrecioUni' +
+      'tario, Importe'#13#10' FROM DocumentosSalidasDetalles'
     DataSource = DSMaster
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -230,6 +229,9 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdProducto'
       Lookup = True
     end
+    object adodsCotizacionesDetalleIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
   end
   object adodsUsuario: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -240,7 +242,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 224
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -253,7 +254,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 144
   end
   object adodsClientes: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -279,7 +279,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -302,7 +301,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -319,7 +317,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4720,272 +4717,33 @@ inherited dmCotizaciones: TdmCotizaciones
     Left = 674
     Top = 98
     MasterDataPipelineName = 'ppDBPplnGenerales'
-    object ppDBPplnItemsCotizacionppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalidaDetalle'
-      FieldName = 'IdDocumentoSalidaDetalle'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPplnItemsCotizacionppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalida'
-      FieldName = 'IdDocumentoSalida'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object ppDBPplnItemsCotizacionppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdProducto'
-      FieldName = 'IdProducto'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnItemsCotizacionppField4: TppField
-      FieldAlias = 'ClaveProducto'
-      FieldName = 'ClaveProducto'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 3
-    end
-    object ppDBPplnItemsCotizacionppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Cantidad'
-      FieldName = 'Cantidad'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnItemsCotizacionppField6: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'CantidadPendiente'
-      FieldName = 'CantidadPendiente'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPplnItemsCotizacionppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'PrecioUnitario'
-      FieldName = 'PrecioUnitario'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 6
-    end
-    object ppDBPplnItemsCotizacionppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Importe'
-      FieldName = 'Importe'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 7
-    end
-    object ppDBPplnItemsCotizacionppField9: TppField
-      FieldAlias = 'Producto'
-      FieldName = 'Producto'
-      FieldLength = 150
-      DisplayWidth = 150
-      Position = 8
-    end
-    object ppDBPplnItemsCotizacionppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'ExistenciaActual'
-      FieldName = 'ExistenciaActual'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 9
-    end
   end
   object ppDBPplnGenerales: TppDBPipeline
     DataSource = DSMaster
     UserName = 'Generales'
     Left = 674
     Top = 154
-    object ppDBPplnGeneralesppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalida'
-      FieldName = 'IdDocumentoSalida'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPplnGeneralesppField2: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdPersona'
-      FieldName = 'IdPersona'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 1
-    end
-    object ppDBPplnGeneralesppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdMoneda'
-      FieldName = 'IdMoneda'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnGeneralesppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdUsuario'
-      FieldName = 'IdUsuario'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPplnGeneralesppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalidaEstatus'
-      FieldName = 'IdDocumentoSalidaEstatus'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnGeneralesppField6: TppField
-      FieldAlias = 'FechaRegistro'
-      FieldName = 'FechaRegistro'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 5
-    end
-    object ppDBPplnGeneralesppField7: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IVA'
-      FieldName = 'IVA'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 6
-    end
-    object ppDBPplnGeneralesppField8: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'SubTotal'
-      FieldName = 'SubTotal'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 7
-    end
-    object ppDBPplnGeneralesppField9: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Total'
-      FieldName = 'Total'
-      FieldLength = 6
-      DataType = dtDouble
-      DisplayWidth = 19
-      Position = 8
-    end
-    object ppDBPplnGeneralesppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'VigenciaDias'
-      FieldName = 'VigenciaDias'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 9
-    end
-    object ppDBPplnGeneralesppField11: TppField
-      FieldAlias = 'Observaciones'
-      FieldName = 'Observaciones'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 10
-    end
-    object ppDBPplnGeneralesppField12: TppField
-      FieldAlias = 'Cliente'
-      FieldName = 'Cliente'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 11
-    end
-    object ppDBPplnGeneralesppField13: TppField
-      FieldAlias = 'Moneda'
-      FieldName = 'Moneda'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 12
-    end
-    object ppDBPplnGeneralesppField14: TppField
-      FieldAlias = 'Estatus'
-      FieldName = 'Estatus'
-      FieldLength = 15
-      DisplayWidth = 15
-      Position = 13
-    end
-    object ppDBPplnGeneralesppField15: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDomicilioCliente'
-      FieldName = 'IdDomicilioCliente'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 14
-    end
-    object ppDBPplnGeneralesppField16: TppField
-      FieldAlias = 'Direccioncliente'
-      FieldName = 'Direccioncliente'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 15
-    end
-    object ppDBPplnGeneralesppField17: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdDocumentoSalidaTipo'
-      FieldName = 'IdDocumentoSalidaTipo'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 16
-    end
-    object ppDBPplnGeneralesppField18: TppField
-      FieldAlias = 'TipoDocumento'
-      FieldName = 'TipoDocumento'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 17
-    end
-    object ppDBPplnGeneralesppField19: TppField
-      FieldAlias = 'IdentificadorCte'
-      FieldName = 'IdentificadorCte'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 18
-    end
-    object ppDBPplnGeneralesppField20: TppField
-      FieldAlias = 'RFCCte'
-      FieldName = 'RFCCte'
-      FieldLength = 15
-      DisplayWidth = 15
-      Position = 19
-    end
-    object ppDBPplnGeneralesppField21: TppField
-      FieldAlias = 'TotalenLetra'
-      FieldName = 'TotalenLetra'
-      FieldLength = 500
-      DisplayWidth = 500
-      Position = 20
-    end
   end
   object DSCotizacionDetalle: TDataSource
     DataSet = adodsCotizacionesDetalle
     Left = 524
     Top = 96
+  end
+  object ADODtStIdentificadores: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
+      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
+      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
+      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
+      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
+      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
+      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
+      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
+      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10#13#10#13#10
+    Parameters = <>
+    Left = 640
+    Top = 264
   end
 end

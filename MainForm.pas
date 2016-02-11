@@ -153,8 +153,8 @@ begin
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
   23: begin   //Se supone que listo para Facturar
-         gModulo := TDMFacturas.Create(Self);
-        // TdmCotizaciones(gModulo).TipoDocumento:=3;
+         gModulo := TDMFacturas.CreateWMostrar(Self,True);
+                // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
    30: gModulo := TdmAlmacenes.Create(Self);
    40: gModulo := TdmBackorderEntradas.Create(Self);

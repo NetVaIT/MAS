@@ -156,9 +156,22 @@ type
     ADODtStSalidasUbicacionesIdOrdenSalida: TIntegerField;
     ADODtStSalidasUbicacionesIdProducto: TIntegerField;
     ADODtStSalidasUbicacionesproducto: TStringField;
-    ADODtStSalidasUbicacionesEspacio: TStringField;
     ADODtStSalidasUbicacionesDisponible: TFloatField;
-    ADOCmdInsertaProductoKardex: TADOCommand;
+    DSInsertaKardex: TDataSource;
+    ADOQryInsertaProductoKardex: TADOQuery;
+    ADODtStDatosDocumentoSalidaIdentificadorCte: TStringField;
+    ADODtStIdentificadores: TADODataSet;
+    adodsMasterIdentificadorCte: TStringField;
+    DSSalidaUbicacion: TDataSource;
+    ADODtStSalidasUbicacionesEspacioA: TStringField;
+    ADODtStDocumentoDetalleItem: TADODataSet;
+    ADODtStDocumentoDetalleItemIdAlmacen: TIntegerField;
+    ADODtStDocumentoDetalleItemIDProducto: TIntegerField;
+    ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField;
+    ADODtStOrdenSalidaItemIDAlmacen: TIntegerField;
+    ADODtStFacturasCFDIIDDomicilio: TIntegerField;
+    ADODtStInformacionEnvioOcurre: TBooleanField;
+    ADODtStInformacionEnvioDomicilioChk: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -172,6 +185,7 @@ type
       const Text: string);
     procedure ADODtStSalidasUbicacionesBeforePost(DataSet: TDataSet);
     procedure ADODtStSalidasUbicacionesAfterDelete(DataSet: TDataSet);
+    procedure adodsMasterAfterOpen(DataSet: TDataSet);
   private
     CantAGuardar:Double;
     function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
@@ -195,6 +209,12 @@ implementation
 uses OrdenesSalidaForm;
 
 {$R *.dfm}
+
+procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  adodtstIdentificadores.Open; //Feb 8/16
+end;
 
 procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
   DataSet: TDataSet);
@@ -451,7 +471,7 @@ end;
 procedure TDMOrdenesSalidas.ADODtStTelefonosCalcFields(DataSet: TDataSet);
 begin
   inherited;
-  DAtaset.FieldByName('telConLada').AsString:=dataset.FieldByName('Lada').AsString+'-'+ dataset.FieldByName('Telefono').AsString;
+  DAtaset.FieldByName('TeleConLada').AsString:=dataset.FieldByName('Lada').AsString+'-'+ dataset.FieldByName('Telefono').AsString;
 end;
 
 procedure TDMOrdenesSalidas.DataModuleCreate(Sender: TObject);
@@ -462,6 +482,10 @@ begin
  // adodsMaster.Parameters.ParamByName('TipoDocto').Value:=FTipoDoc;
   gGridEditForm.DataSet := adodsMaster;
   TFrmOrdenesSalida(gGridEditForm).DtSrcOrdenSalItem.DataSet:=ADODtStOrdenSalidaItem;
+
+  TFrmOrdenesSalida(gGridEditForm).DSInsertaKardex.DataSet:=ADOQryInsertaProductoKardex;//Feb 5/16
+
+
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15

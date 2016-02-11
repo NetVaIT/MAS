@@ -188,13 +188,15 @@ type
     ppLabel21: TppLabel;
     ppLine1: TppLine;
     ppDBText15: TppDBText;
-    adodsMasterIdentificadorCte: TStringField;
     ActGenPDFCotizacion: TAction;
     adodsMasterRFCCte: TStringField;
     ppLabel22: TppLabel;
     adodsMasterTotalenLetra: TStringField;
     ppLabel23: TppLabel;
     ppDBText16: TppDBText;
+    ADODtStIdentificadores: TADODataSet;
+    adodsMasterIdentificadorCte: TStringField;
+    adodsCotizacionesDetalleIdAlmacen: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -208,6 +210,7 @@ type
     procedure ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
     procedure ActGenPDFCotizacionExecute(Sender: TObject);
     procedure adodsMasterCalcFields(DataSet: TDataSet);
+    procedure adodsMasterAfterOpen(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
@@ -326,6 +329,15 @@ begin
   inherited;
   dataset.FieldByName('cantidad').AsFloat:=1;
   dataset.FieldByName('cantidadpendiente').AsFloat:=1;
+  dataset.FieldByName('IdAlmacen').AsInteger:=1; //Debe ir como un valor Variable
+
+end;
+
+procedure TdmCotizaciones.adodsMasterAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  //FEb 8/16
+  ADODtStIdentificadores.Open;
 end;
 
 procedure TdmCotizaciones.adodsMasterCalcFields(DataSet: TDataSet);

@@ -87,6 +87,15 @@ type
     DSDireccioncliente: TDataSource;
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     SpdBtnGenPDFCotiza: TSpeedButton;
+    cxDBLabel2: TcxDBLabel;
+    LblNoCotiza: TLabel;
+    Label11: TLabel;
+    cxDBLabel3: TcxDBLabel;
+    cxDBLabel4: TcxDBLabel;
+    ToolButton5: TToolButton;
+    TlBtnCambioEstatus: TToolButton;
+    TlBtnGenCotizaPDF: TToolButton;
+    ToolButton8: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);
@@ -135,16 +144,18 @@ procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   if DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger=2  then
-     SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);
-  pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and  SpdBtnCambioEstatus.Visible;  // ene 11/16
+    SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);// TlBtnCambioEstatus //Feb 9/16   SpdBtnCambioEstatus;
+                                                        //Feb 9/16
+  pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.visible;// SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.Visible;  // ene 11/16
   toolbutton10.enabled:= pnlMaster.Enabled;
   toolbutton12.Enabled:=pnlMaster.Enabled;
+
 end;
 
 procedure TfrmCotizaciones.DataSourceStateChange(Sender: TObject);
 begin
   inherited;                                                      //Agregado edit verificar ene28/16
-  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled);
+  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled);  //  SpdBtnCambioEstatus
 
 end;
 
@@ -239,6 +250,7 @@ begin
  // TfrmCotizacionesGrid(gFormGrid).CerrarGrid := actCloseGrid;  //Se vaa acolocar en el estandar hay que quitarlo de aca Ene 13/16
   DataSource.DataSet.open;
   DataSourceDetail.DataSet.Open;
+
 end;
 
 procedure TfrmCotizaciones.FormShow(Sender: TObject);
@@ -247,17 +259,23 @@ begin
 //  LblDirCliente.Visible:=False;
 //  DBLkpCmbBxDirCliente.Visible:=false;
   case FTipoDoc of
-    1:SpdBtnCambioEstatus.Caption:='Acepta Cotización';
-
+    1:begin
+        SpdBtnCambioEstatus.Caption:='Acepta Cotización';
+     //   TlBtnCambioEstatus.Hint:='Aceptar Cotización' ;   //Feb 9/16
+        LblNoCotiza.Caption:='No.Cotización';
+      end;
     2:begin
-       SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
-
+        SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
+        //   TlBtnCambioEstatus.Hint:= 'Generar Orden Salida';  //Feb 9/16
+        LblNoCotiza.Caption:='No.Pedido';
 //       LblDirCliente.Visible:=True;
 //       DBLkpCmbBxDirCliente.Visible:=True;
       end;
-    3:SpdBtnCambioEstatus.Visible:=False;
+    3:SpdBtnCambioEstatus.Visible:=False; //SpdBtnCambioEstatus
   end;
-  SpdBtnGenPDFCotiza.visible:= SpdBtnCambioEstatus.Caption='Acepta Cotización';
+ // TlBtnGenCotizaPDF.visible:= TlBtnCambioEstatus.Hint='Acepta Cotización'; //Feb 9/16    SpdBtnCambioEstatus.Caption
+    SpdBtnGenPDFCotiza .visible:= SpdBtnCambioEstatus.Caption= 'Acepta Cotización';
+
 
 end;
 
@@ -358,8 +376,12 @@ end;
 procedure TfrmCotizaciones.SetGenPDFCotiza(const Value: TBasicAction);
 begin
   GenPDFCotiza:=Value;
-  SpdBtnGenPDFCotiza.Action:=Value;
 
+ (* deshabilitado no funciona
+  TlBtnGenCotizaPDF.Action:=Value;
+  TlBtnGenCotizaPDF.ImageIndex:=23;
+  TlBtnGenCotizaPDF.Hint:='Genera Cotización en PDF';*)
+  SpdBtnGenPDFCotiza.Action:=Value;
 end;
 
 procedure TfrmCotizaciones.SetTipoDoc(const Value: Integer);
