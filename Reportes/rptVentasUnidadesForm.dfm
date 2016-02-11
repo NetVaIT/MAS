@@ -7,15 +7,19 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 702
+    ExplicitWidth = 702
   end
   inherited splDetail1: TSplitter
     Width = 702
+    ExplicitWidth = 702
   end
   inherited splDetail2: TSplitter
     Width = 702
+    ExplicitWidth = 702
   end
   inherited pnlMaster: TPanel
     Width = 702
+    ExplicitWidth = 702
     inherited cxGrid: TcxGrid
       Width = 702
       ExplicitWidth = 702
@@ -42,22 +46,30 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
         object tvMasterCantidadF: TcxGridDBColumn
           DataBinding.FieldName = 'CantidadF'
         end
+        object tvMasterBacKorder: TcxGridDBColumn
+          DataBinding.FieldName = 'BacKorder'
+        end
       end
     end
   end
   inherited pnlDetail3: TPanel
     Width = 702
+    ExplicitWidth = 702
   end
   inherited pnlDetail2: TPanel
     Width = 702
+    ExplicitWidth = 702
   end
   inherited pnlDetail1: TPanel
     Width = 702
+    ExplicitWidth = 702
   end
   inherited pnlClose: TPanel
     Width = 702
+    ExplicitWidth = 702
     inherited btnClose: TButton
       Left = 617
+      ExplicitLeft = 617
     end
   end
   inherited dxBarManager: TdxBarManager
@@ -103,7 +115,6 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

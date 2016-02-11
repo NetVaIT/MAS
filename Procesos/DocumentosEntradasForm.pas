@@ -48,14 +48,18 @@ type
     cxDBMemo1: TcxDBMemo;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     btnAutorizar: TcxButton;
+    btnImprimir: TcxButton;
     procedure FormCreate(Sender: TObject);
   private
     FactAutorizar: TBasicAction;
+    FactImprimir: TBasicAction;
     procedure SetactAutorizar(const Value: TBasicAction);
+    procedure SetactImprimir(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
+    property actImprimir: TBasicAction read FactImprimir write SetactImprimir;
   end;
 
 implementation
@@ -75,6 +79,12 @@ procedure TfrmDocumentosEntradas.SetactAutorizar(const Value: TBasicAction);
 begin
   FactAutorizar := Value;
   btnAutorizar.Action:= Value;
+end;
+
+procedure TfrmDocumentosEntradas.SetactImprimir(const Value: TBasicAction);
+begin
+  FactImprimir := Value;
+  btnImprimir.Action:= value
 end;
 
 end.

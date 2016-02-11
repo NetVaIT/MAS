@@ -189,6 +189,14 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               Caption = 'btnAutorizar'
               TabOrder = 5
             end
+            object btnImprimir: TcxButton
+              Left = 707
+              Top = 56
+              Width = 75
+              Height = 25
+              Caption = 'btnImprimir'
+              TabOrder = 6
+            end
           end
           object pnlPie: TPanel
             Left = 0
@@ -274,7 +282,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -415,7 +423,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

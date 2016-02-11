@@ -7,21 +7,22 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
       'nventario.Existencia, ISNULL(PPA.SalidaCantidad,0) AS CantidadA,' +
       ' ISNULL(PPM.SalidaCantidad,0) AS CantidadM, '#13#10'ISNULL(PPA.SalidaC' +
       'antidad/:mes,0) AS CantidadP, ISNULL(Inventario.Existencia/(PPA.' +
-      'SalidaCantidad/:mes),0) AS CantidadF'#13#10'FROM            Inventario' +
-      ' INNER JOIN'#13#10'                         Productos ON Inventario.Id' +
-      'Producto = Productos.IdProducto LEFT OUTER JOIN'#13#10#13#10'(SELECT      ' +
-      '  ProductosPeriodos.IdProducto, SUM(ProductosPeriodos.SalidaCant' +
-      'idad) AS SalidaCantidad'#13#10'FROM            ProductosPeriodos INNER' +
-      ' JOIN'#13#10'                         Periodos ON ProductosPeriodos.Id' +
-      'Periodo = Periodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes <= :mes' +
-      ') AND (Periodos.Anio = :anio)'#13#10'GROUP BY ProductosPeriodos.IdProd' +
-      'ucto) AS PPA ON Productos.IdProducto = PPA.IdProducto LEFT OUTER' +
-      ' JOIN'#13#10#13#10'(SELECT        ProductosPeriodos.IdProducto, ProductosP' +
-      'eriodos.SalidaCantidad'#13#10'FROM            ProductosPeriodos INNER ' +
-      'JOIN'#13#10'                         Periodos ON ProductosPeriodos.IdP' +
-      'eriodo = Periodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes = :mes) ' +
-      'AND (Periodos.Anio = :anio)) AS PPM ON Productos.IdProducto = PP' +
-      'M.IdProducto'#13#10#13#10'ORDER BY Productos.Identificador1'#13#10#13#10
+      'SalidaCantidad/:mes),0) AS CantidadF, dbo.GetBackorder(Productos' +
+      '.IdProducto) AS BacKorder'#13#10'FROM            Inventario INNER JOIN' +
+      #13#10'                         Productos ON Inventario.IdProducto = ' +
+      'Productos.IdProducto LEFT OUTER JOIN'#13#10#13#10'(SELECT        Productos' +
+      'Periodos.IdProducto, SUM(ProductosPeriodos.SalidaCantidad) AS Sa' +
+      'lidaCantidad'#13#10'FROM            ProductosPeriodos INNER JOIN'#13#10'    ' +
+      '                     Periodos ON ProductosPeriodos.IdPeriodo = P' +
+      'eriodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes <= :mes) AND (Peri' +
+      'odos.Anio = :anio)'#13#10'GROUP BY ProductosPeriodos.IdProducto) AS PP' +
+      'A ON Productos.IdProducto = PPA.IdProducto LEFT OUTER JOIN'#13#10#13#10'(S' +
+      'ELECT        ProductosPeriodos.IdProducto, ProductosPeriodos.Sal' +
+      'idaCantidad'#13#10'FROM            ProductosPeriodos INNER JOIN'#13#10'     ' +
+      '                    Periodos ON ProductosPeriodos.IdPeriodo = Pe' +
+      'riodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes = :mes) AND (Period' +
+      'os.Anio = :anio)) AS PPM ON Productos.IdProducto = PPM.IdProduct' +
+      'o'#13#10#13#10'ORDER BY Productos.Identificador1'#13#10#13#10
     Parameters = <
       item
         Name = 'mes'
@@ -90,6 +91,11 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
       DisplayLabel = 'Futuro en meses'
       FieldName = 'CantidadF'
       ReadOnly = True
+    end
+    object adodsMasterBacKorder: TStringField
+      FieldName = 'BacKorder'
+      ReadOnly = True
+      Size = 255
     end
   end
   object adodsPeriodo: TADODataSet

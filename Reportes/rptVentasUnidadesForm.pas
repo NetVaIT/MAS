@@ -40,6 +40,7 @@ type
     tvMasterCantidadF: TcxGridDBColumn;
     cxedtPeriodo: TcxBarEditItem;
     dsPeriodos: TDataSource;
+    tvMasterBacKorder: TcxGridDBColumn;
   private
     FDataSetPeriodo: TDataSet;
     function GetIdPeriodo: Integer;

@@ -4,7 +4,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
-  ExplicitHeight = 518
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -99,8 +99,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -243,8 +241,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 970
       FloatTop = 8
-      FloatClientWidth = 120
-      FloatClientHeight = 76
+      FloatClientWidth = 137
+      FloatClientHeight = 216
       ItemLinks = <
         item
           Visible = True
@@ -252,15 +250,19 @@ inherited frmMain: TfrmMain
         end
         item
           Visible = True
-          ItemName = 'dxBarButton1'
+          ItemName = 'dxBarLargeButton21'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton2'
+          ItemName = 'dxBarLargeButton22'
         end
         item
           Visible = True
-          ItemName = 'dxBarButton3'
+          ItemName = 'dxBarLargeButton23'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton24'
         end>
       OneOnRow = True
       Row = 0
@@ -345,19 +347,23 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton20: TdxBarLargeButton
-      Action = actBackorderEntrada
-      Category = 0
-    end
-    object dxBarButton1: TdxBarButton
       Action = actRequisicionCompra
       Category = 0
     end
-    object dxBarButton2: TdxBarButton
+    object dxBarLargeButton21: TdxBarLargeButton
       Action = actOrdenCompra
       Category = 0
     end
-    object dxBarButton3: TdxBarButton
-      Action = actProforma
+    object dxBarLargeButton22: TdxBarLargeButton
+      Action = actBackorderEntrada
+      Category = 0
+    end
+    object dxBarLargeButton23: TdxBarLargeButton
+      Action = actInvoice
+      Category = 0
+    end
+    object dxBarLargeButton24: TdxBarLargeButton
+      Action = actOrdenesEntrada
       Category = 0
     end
   end
@@ -500,13 +506,6 @@ inherited frmMain: TfrmMain
       ImageIndex = 15
       OnExecute = actCatalogoExecute
     end
-    object actBackorderEntrada: TAction
-      Tag = 40
-      Category = 'Compras'
-      Caption = 'Backorders'
-      ImageIndex = 7
-      OnExecute = actCatalogoExecute
-    end
     object actRequisicionCompra: TAction
       Tag = 41
       Category = 'Compras'
@@ -522,12 +521,22 @@ inherited frmMain: TfrmMain
       ImageIndex = 0
       OnExecute = actCatalogoExecute
     end
-    object actProforma: TAction
-      Tag = 43
+    object actBackorderEntrada: TAction
+      Tag = 40
       Category = 'Compras'
-      Caption = 'Proforma'
-      ImageIndex = 0
+      Caption = 'Backorders'
+      ImageIndex = 7
       OnExecute = actCatalogoExecute
+    end
+    object actInvoice: TAction
+      Category = 'Compras'
+      Caption = 'Facturas'
+      ImageIndex = 33
+    end
+    object actOrdenesEntrada: TAction
+      Category = 'Compras'
+      Caption = 'Ordenes de entrada'
+      ImageIndex = 45
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

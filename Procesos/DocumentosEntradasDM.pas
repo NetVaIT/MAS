@@ -4,7 +4,10 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList, Data.Win.ADODB, Vcl.Dialogs, ListaProductosForm;
+  Vcl.ActnList, Data.Win.ADODB, Vcl.Dialogs, ListaProductosForm, ppDB, ppDBPipe,
+  ppParameter, ppDesignLayer, ppBands, ppStrtch, ppMemo, ppCtrls,
+  dxGDIPlusClasses, ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd,
+  ppReport;
 
 resourcestring
   strErrorClave = 'No encontro el artículo para este proveedor, favor de teclear uno valido.';
@@ -69,6 +72,65 @@ type
     actBuscarProducto: TAction;
     actAutorizar: TAction;
     adopAutorizar: TADOStoredProc;
+    dsDetalle: TDataSource;
+    ppRptDocumento: TppReport;
+    ppHeaderBand1: TppHeaderBand;
+    ppImage1: TppImage;
+    ppShape1: TppShape;
+    ppShape7: TppShape;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLabel35: TppLabel;
+    ppDBText11: TppDBText;
+    ppDBText19: TppDBText;
+    ppLine9: TppLine;
+    ppDBText5: TppDBText;
+    ppDBText6: TppDBText;
+    ppDBText7: TppDBText;
+    ppDBText8: TppDBText;
+    ppDBText9: TppDBText;
+    ppShape8: TppShape;
+    ppLabel10: TppLabel;
+    ppLabel11: TppLabel;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel18: TppLabel;
+    ppDBMemo1: TppDBMemo;
+    ppLabel1: TppLabel;
+    ppDBText1: TppDBText;
+    ppLabel2: TppLabel;
+    ppLabel4: TppLabel;
+    ppLabel5: TppLabel;
+    ppLabel6: TppLabel;
+    ppLabel7: TppLabel;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel16: TppLabel;
+    ppDBText2: TppDBText;
+    ppDBText15: TppDBText;
+    ppDetailBand1: TppDetailBand;
+    ppDBText4: TppDBText;
+    ppDBText10: TppDBText;
+    ppDBText12: TppDBText;
+    ppDBText13: TppDBText;
+    ppDBText14: TppDBText;
+    ppFooterBand1: TppFooterBand;
+    ppLabel19: TppLabel;
+    ppLabel20: TppLabel;
+    ppDBText30: TppDBText;
+    ppDBText31: TppDBText;
+    ppDBText32: TppDBText;
+    ppLabel21: TppLabel;
+    ppLine1: TppLine;
+    ppLabel23: TppLabel;
+    ppDBText16: TppDBText;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
+    ppParameterList1: TppParameterList;
+    ppdbpDetalle: TppDBPipeline;
+    ppdbpMaster: TppDBPipeline;
+    actImprimir: TAction;
+    ppDBText3: TppDBText;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -82,6 +144,7 @@ type
     procedure actBuscarProductoExecute(Sender: TObject);
     procedure actAutorizarExecute(Sender: TObject);
     procedure actAutorizarUpdate(Sender: TObject);
+    procedure actImprimirExecute(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -132,6 +195,12 @@ begin
   adodsListaProductos.Parameters.ParamByName('Clave2').Value:= frmListaProductos.Clave;
   adodsListaProductos.Parameters.ParamByName('Clave3').Value:= frmListaProductos.Clave;
   adodsListaProductos.Open
+end;
+
+procedure TdmDocumentosEntradas.actImprimirExecute(Sender: TObject);
+begin
+  inherited;
+  ppRptDocumento.Print;
 end;
 
 procedure TdmDocumentosEntradas.actSeleccionaProductoExecute(Sender: TObject);
@@ -244,6 +313,7 @@ begin
   gGridEditForm:= TfrmDocumentosEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   TfrmDocumentosEntradas(gGridEditForm).actAutorizar:= actAutorizar;
+  TfrmDocumentosEntradas(gGridEditForm).actImprimir := actImprimir;
   gFormDetail1:= TfrmDocumentosEntradasDetalle.Create(Self);
   gFormDetail1.DataSet:= adodsDocumentosDetalles;
   TfrmDocumentosEntradasDetalle(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;

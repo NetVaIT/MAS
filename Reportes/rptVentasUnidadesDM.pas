@@ -20,6 +20,7 @@ type
     adodsPeriodoDescripcion: TStringField;
     adodsPeriodoMes: TIntegerField;
     adodsPeriodoAnio: TIntegerField;
+    adodsMasterBacKorder: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

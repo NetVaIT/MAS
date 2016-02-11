@@ -77,12 +77,14 @@ type
     dxtshConfiguracion: TdxRibbonBackstageViewTabSheet;
     dxtshUsuarios: TdxRibbonBackstageViewTabSheet;
     actRequisicionCompra: TAction;
-    actProforma: TAction;
     actBackorderEntrada: TAction;
     dxBarLargeButton20: TdxBarLargeButton;
-    dxBarButton1: TdxBarButton;
-    dxBarButton2: TdxBarButton;
-    dxBarButton3: TdxBarButton;
+    dxBarLargeButton21: TdxBarLargeButton;
+    dxBarLargeButton22: TdxBarLargeButton;
+    dxBarLargeButton23: TdxBarLargeButton;
+    actInvoice: TAction;
+    actOrdenesEntrada: TAction;
+    dxBarLargeButton24: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -160,7 +162,6 @@ begin
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
-   43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tProforma);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
   end;
   if Assigned(gModulo) then
@@ -193,7 +194,6 @@ begin
   actBackorderEntrada.Enabled   := Conected;
   actRequisicionCompra.Enabled  := Conected;
   actOrdenCompra.Enabled        := Conected;
-  actProforma.Enabled           := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;
