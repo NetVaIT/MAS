@@ -4,9 +4,9 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio, IdDomicilioTi' +
-      'po, Predeterminado FROM PersonasDomicilios WHERE IdPersona = :Id' +
-      'Persona'
+      'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
+      'Tipo, IdEnvioTipo ,Predeterminado'#13#10' FROM PersonasDomicilios '#13#10'WH' +
+      'ERE IdPersona = :IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -60,6 +60,19 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
     object adodsMasterPredeterminado: TBooleanField
       FieldName = 'Predeterminado'
+    end
+    object adodsMasterIdEnvioTipo: TIntegerField
+      FieldName = 'IdEnvioTipo'
+    end
+    object adodsMasterEnvioTipo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EnvioTipo'
+      LookupDataSet = ADODtStEnvioTipo
+      LookupKeyFields = 'IdEnvioTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdEnvioTipo'
+      Size = 50
+      Lookup = True
     end
   end
   inherited ActionList: TActionList
@@ -137,5 +150,13 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     DataSet = adodsMaster
     Left = 36
     Top = 80
+  end
+  object ADODtStEnvioTipo: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdEnvioTipo, Descripcion from EnviosTipos'
+    Parameters = <>
+    Left = 304
+    Top = 168
   end
 end

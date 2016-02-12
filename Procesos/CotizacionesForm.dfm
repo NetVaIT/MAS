@@ -13,6 +13,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited splDetail2: TSplitter
     Top = 569
     Width = 960
+    ExplicitTop = 569
     ExplicitWidth = 960
   end
   inherited splDetail1: TSplitter
@@ -40,35 +41,36 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited pnlDetail2: TPanel
     Top = 572
     Width = 960
+    ExplicitTop = 572
     ExplicitWidth = 960
   end
   inherited pnlDetail1: TPanel
     Top = 528
     Width = 960
+    ExplicitTop = 528
     ExplicitWidth = 960
   end
   inherited pcMain: TcxPageControl
     Width = 960
     Height = 525
-    ExplicitTop = -3
     ExplicitWidth = 960
     ExplicitHeight = 525
-    ClientRectBottom = 521
-    ClientRectRight = 956
+    ClientRectBottom = 524
+    ClientRectRight = 959
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 952
-      ExplicitHeight = 469
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 958
+      ExplicitHeight = 523
       inherited cxScrollBox1: TcxScrollBox
-        Width = 952
-        Height = 517
-        ExplicitWidth = 952
-        ExplicitHeight = 469
+        Width = 958
+        Height = 523
+        ExplicitWidth = 958
+        ExplicitHeight = 523
         inherited tbarData: TToolBar
-          Width = 950
+          Width = 956
           ParentShowHint = False
-          ExplicitWidth = 950
+          ExplicitWidth = 956
           inherited ToolButton14: TToolButton
             AutoSize = True
             ExplicitWidth = 27
@@ -139,28 +141,25 @@ inherited frmCotizaciones: TfrmCotizaciones
           end
         end
         inherited pnlMaster: TPanel
-          Width = 950
-          Height = 490
-          ExplicitWidth = 950
-          ExplicitHeight = 442
+          Width = 956
+          Height = 496
+          ExplicitWidth = 956
+          ExplicitHeight = 496
           object pnlDetail: TPanel
             Left = 0
             Top = 161
-            Width = 950
-            Height = 218
+            Width = 956
+            Height = 224
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitTop = 152
-            ExplicitHeight = 177
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
-              Width = 950
+              Width = 956
               Height = 29
               Images = ilAction
               TabOrder = 0
-              ExplicitTop = -6
               object TlBtnInserta: TToolButton
                 Left = 0
                 Top = 0
@@ -243,8 +242,8 @@ inherited frmCotizaciones: TfrmCotizaciones
             object DBGrid1: TDBGrid
               Left = 0
               Top = 29
-              Width = 950
-              Height = 189
+              Width = 956
+              Height = 195
               Align = alClient
               DataSource = DataSourceDetail
               Options = [dgEditing, dgAlwaysShowEditor, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -322,11 +321,10 @@ inherited frmCotizaciones: TfrmCotizaciones
           object PnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 950
+            Width = 956
             Height = 161
             Align = alTop
             TabOrder = 1
-            ExplicitTop = 6
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -508,18 +506,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataSource = DataSource
               TabOrder = 7
             end
-            object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
-              Left = 370
-              Top = 77
-              Width = 439
-              Height = 21
-              DataField = 'IdDomicilioCliente'
-              DataSource = DataSource
-              KeyField = 'IdPersonaDomicilio'
-              ListField = 'DirCompleta'
-              ListSource = DSDireccioncliente
-              TabOrder = 8
-            end
             object cxDBLabel2: TcxDBLabel
               Left = 193
               Top = 33
@@ -548,16 +534,34 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 25
               Width = 149
             end
+            object cxDBLabel5: TcxDBLabel
+              Left = 370
+              Top = 77
+              DataBinding.DataField = 'Direccioncliente'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 439
+            end
+            object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
+              Left = 370
+              Top = 77
+              Width = 439
+              Height = 21
+              DataField = 'IdDomicilioCliente'
+              DataSource = DataSource
+              KeyField = 'IdPersonaDomicilio'
+              ListField = 'DirCompleta'
+              ListSource = DSDireccioncliente
+              TabOrder = 8
+            end
           end
           object Panel1: TPanel
             Left = 0
-            Top = 379
-            Width = 950
+            Top = 385
+            Width = 956
             Height = 111
             Align = alBottom
             TabOrder = 2
-            ExplicitLeft = -1
-            ExplicitTop = 335
             object Label2: TLabel
               Left = 530
               Top = 49
@@ -634,7 +638,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -840,7 +844,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -96,6 +96,7 @@ type
     TlBtnCambioEstatus: TToolButton;
     TlBtnGenCotizaPDF: TToolButton;
     ToolButton8: TToolButton;
+    cxDBLabel5: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);

@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, dxGDIPlusClasses, ppCtrls, ppPrnabl, ppClass, ppDB,
   ppBands, ppCache, ppDBPipe, ppParameter, ppDesignLayer, ppComm, ppRelatv,
-  ppProd, ppReport, ppStrtch, ppMemo;
+  ppProd, ppReport, ppStrtch, ppMemo, dialogs;
 
 type
   TdmCotizaciones = class(T_dmStandar)
@@ -236,6 +236,7 @@ procedure TdmCotizaciones.ActGenPDFCotizacionExecute(Sender: TObject);
 begin
   inherited;
   PrintPDFFile(True);
+  ShowMessage('Envio por correo al cliente  en construcción');
   // ver que hace y ver como se muestr directo como PDF , luego hay que ver si se hace envio..
 end;
 

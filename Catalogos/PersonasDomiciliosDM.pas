@@ -23,6 +23,9 @@ type
     DSPersona: TDataSource;
     ADODtStPersona: TADODataSet;
     dsmaster: TDataSource;
+    ADODtStEnvioTipo: TADODataSet;
+    adodsMasterIdEnvioTipo: TIntegerField;
+    adodsMasterEnvioTipo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

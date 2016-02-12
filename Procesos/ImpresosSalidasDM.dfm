@@ -3720,7 +3720,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   end
   object DSOrdenSalidaItems: TDataSource
     DataSet = ADODtStOrdenSalidaItem
-    Left = 268
+    Left = 284
     Top = 274
   end
   object adodSDocumentoSalida: TADODataSet
@@ -7822,250 +7822,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta'
     Left = 66
     Top = 422
-    object ppDBPplnEtiquetasppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdInfoEntrega'
-      FieldName = 'IdInfoEntrega'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPplnEtiquetasppField2: TppField
-      FieldAlias = 'IdCFDI'
-      FieldName = 'IdCFDI'
-      FieldLength = 0
-      DataType = dtLargeInt
-      DisplayWidth = 15
-      Position = 1
-    end
-    object ppDBPplnEtiquetasppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDPersonaCliente'
-      FieldName = 'IDPersonaCliente'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPplnEtiquetasppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDPersonaDomicilio'
-      FieldName = 'IDPersonaDomicilio'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPplnEtiquetasppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDResponsableEntrega'
-      FieldName = 'IDResponsableEntrega'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPplnEtiquetasppField6: TppField
-      FieldAlias = 'FechaProgramadaEnt'
-      FieldName = 'FechaProgramadaEnt'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPplnEtiquetasppField7: TppField
-      FieldAlias = 'FechaRealEnt'
-      FieldName = 'FechaRealEnt'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 6
-    end
-    object ppDBPplnEtiquetasppField8: TppField
-      FieldAlias = 'CondicionEntrega'
-      FieldName = 'CondicionEntrega'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 7
-    end
-    object ppDBPplnEtiquetasppField9: TppField
-      FieldAlias = 'Observaciones'
-      FieldName = 'Observaciones'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 8
-    end
-    object ppDBPplnEtiquetasppField10: TppField
-      FieldAlias = 'EstatusEntrega'
-      FieldName = 'EstatusEntrega'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 9
-    end
-    object ppDBPplnEtiquetasppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdTelefono'
-      FieldName = 'IdTelefono'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 10
-    end
-    object ppDBPplnEtiquetasppField12: TppField
-      FieldAlias = 'Contenido'
-      FieldName = 'Contenido'
-      FieldLength = 500
-      DisplayWidth = 500
-      Position = 11
-    end
-    object ppDBPplnEtiquetasppField13: TppField
-      FieldAlias = 'Conducto'
-      FieldName = 'Conducto'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 12
-    end
-    object ppDBPplnEtiquetasppField14: TppField
-      FieldAlias = 'Servicio'
-      FieldName = 'Servicio'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 13
-    end
-    object ppDBPplnEtiquetasppField15: TppField
-      FieldAlias = 'PagoFlete'
-      FieldName = 'PagoFlete'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 14
-    end
-    object ppDBPplnEtiquetasppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Valor'
-      FieldName = 'Valor'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 15
-    end
-    object ppDBPplnEtiquetasppField17: TppField
-      FieldAlias = 'Asegurado'
-      FieldName = 'Asegurado'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 16
-    end
-    object ppDBPplnEtiquetasppField18: TppField
-      FieldAlias = 'RazonSocial'
-      FieldName = 'RazonSocial'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 17
-    end
-    object ppDBPplnEtiquetasppField19: TppField
-      FieldAlias = 'Calle'
-      FieldName = 'Calle'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 18
-    end
-    object ppDBPplnEtiquetasppField20: TppField
-      FieldAlias = 'NoExterior'
-      FieldName = 'NoExterior'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 19
-    end
-    object ppDBPplnEtiquetasppField21: TppField
-      FieldAlias = 'NoInterior'
-      FieldName = 'NoInterior'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 20
-    end
-    object ppDBPplnEtiquetasppField22: TppField
-      FieldAlias = 'Colonia'
-      FieldName = 'Colonia'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 21
-    end
-    object ppDBPplnEtiquetasppField23: TppField
-      FieldAlias = 'CodigoPostal'
-      FieldName = 'CodigoPostal'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 22
-    end
-    object ppDBPplnEtiquetasppField24: TppField
-      FieldAlias = 'Estado'
-      FieldName = 'Estado'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 23
-    end
-    object ppDBPplnEtiquetasppField25: TppField
-      FieldAlias = 'Municipio'
-      FieldName = 'Municipio'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 24
-    end
-    object ppDBPplnEtiquetasppField26: TppField
-      FieldAlias = 'RFC'
-      FieldName = 'RFC'
-      FieldLength = 13
-      DisplayWidth = 13
-      Position = 25
-    end
-    object ppDBPplnEtiquetasppField27: TppField
-      FieldAlias = 'Direccioncompleta'
-      FieldName = 'Direccioncompleta'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 26
-    end
-    object ppDBPplnEtiquetasppField28: TppField
-      FieldAlias = 'Telefono'
-      FieldName = 'Telefono'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 27
-    end
-    object ppDBPplnEtiquetasppField29: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Identificador'
-      FieldName = 'Identificador'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 28
-    end
-    object ppDBPplnEtiquetasppField30: TppField
-      FieldAlias = 'OcurreChk'
-      FieldName = 'OcurreChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 29
-    end
-    object ppDBPplnEtiquetasppField31: TppField
-      FieldAlias = 'DomicilioChk'
-      FieldName = 'DomicilioChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 30
-    end
-    object ppDBPplnEtiquetasppField32: TppField
-      FieldAlias = 'CobrarChk'
-      FieldName = 'CobrarChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 31
-    end
   end
   object ADODtStDatosEtiqueta: TADODataSet
     Active = True
@@ -8232,7 +7988,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object DSDatosEtiqueta: TDataSource
     DataSet = ADODtStDatosEtiqueta
     Left = 284
-    Top = 366
+    Top = 342
   end
   object ADODtStBuscaUbicacion: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -8300,6 +8056,600 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField
       FieldName = 'IdDocumentoSalidaDetalle'
       ReadOnly = True
+    end
+  end
+  object ppRprtEtiquetaSobre: TppReport
+    PrinterSetup.BinName = 'Default'
+    PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Orientation = poLandscape
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = True
+    PrinterSetup.mmMarginBottom = 3704
+    PrinterSetup.mmMarginLeft = 3810
+    PrinterSetup.mmMarginRight = 3810
+    PrinterSetup.mmMarginTop = 3810
+    PrinterSetup.mmPaperHeight = 215900
+    PrinterSetup.mmPaperWidth = 279400
+    PrinterSetup.PaperSize = 1
+    PrinterSetup.DevMode = {
+      201000005200690063006F006800200032003000350031000000720073006100
+      6C00200044007200690076006500720000000000000000000000000000000000
+      0000000001040001DC00440F43FF8003020001006F08EA0A6400010002005802
+      0100010058020300000041003400000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000100000000000000
+      0100000002000000010000000100000000000000000000000000000000000000
+      202000008D1F0000000300000000000001000000000000000101000000000000
+      01000000000000000000000000000000EA0A00006F080000960A00001B080000
+      2A0000002A000000C8190000EC13000000190000241300006400000064000000
+      01000000EA0A00006F080000960A00001B0800002A0000002A000000C8190000
+      EC13000000190000241300006400000064000000010000000100000000000000
+      0000000064000000010000000100000001000000020003000000000000000000
+      04000B0001000100000001000000000001000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000200340800009A0B000000000000
+      0000000000000000000000003B03000091040000000000000000000000000000
+      0000000058025802010000000000000000000000010000000100000000000000
+      0000000000000000000000000000000000000000010000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000C0C0C000540069006D006500730020004E0065007700200052006F00
+      6D0061006E000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000048000000540069006D006500730020004E0065007700
+      200052006F006D0061006E000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000048000100000000000000000002010000
+      0000000000000000030000000000410066006900630069006F0020004D005000
+      2000350030003000320000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000010000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000100000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0100000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000007000000
+      00000000}
+    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Procesos\EtiquetaSobre.rtm'
+    Units = utScreenPixels
+    AllowPrintToFile = True
+    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
+    DeviceType = 'Screen'
+    DefaultFileDeviceType = 'PDF'
+    EmailSettings.ReportFormat = 'PDF'
+    LanguageID = 'Default'
+    OpenFile = False
+    OutlineSettings.CreateNode = True
+    OutlineSettings.CreatePageNodes = True
+    OutlineSettings.Enabled = True
+    OutlineSettings.Visible = True
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = True
+    ThumbnailSettings.DeadSpace = 30
+    PDFSettings.EmbedFontOptions = [efUseSubset]
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
+    PreviewFormSettings.WindowState = wsMaximized
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    TextFileName = '($MyDocuments)\Report.pdf'
+    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.Enabled = True
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
+    Left = 634
+    Top = 346
+    Version = '15.0'
+    mmColumnWidth = 0
+    object ppHeaderBand3: TppHeaderBand
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 41804
+      mmPrintPosition = 0
+    end
+    object ppDetailBand3: TppDetailBand
+      Background1.Brush.Style = bsClear
+      Background2.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 144992
+      mmPrintPosition = 0
+      object ppShape2: TppShape
+        UserName = 'Shape2'
+        mmHeight = 46302
+        mmLeft = 79375
+        mmTop = 25149
+        mmWidth = 91281
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText22: TppDBText
+        UserName = 'DBText10'
+        DataField = 'RazonSocial'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 8731
+        mmLeft = 82021
+        mmTop = 28324
+        mmWidth = 84931
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText24: TppDBText
+        UserName = 'DBText12'
+        DataField = 'Municipio'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 4763
+        mmLeft = 82021
+        mmTop = 55576
+        mmWidth = 39423
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText25: TppDBText
+        UserName = 'DBText13'
+        DataField = 'Estado'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 4763
+        mmLeft = 124090
+        mmTop = 55576
+        mmWidth = 44186
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText26: TppDBText
+        UserName = 'DBText14'
+        DataField = 'Direccioncompleta'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 14288
+        mmLeft = 82021
+        mmTop = 39172
+        mmWidth = 84931
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText28: TppDBText
+        UserName = 'DBText28'
+        DataField = 'Conducto'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 4763
+        mmLeft = 82021
+        mmTop = 63514
+        mmWidth = 87313
+        BandType = 4
+        LayerName = BandLayer3
+      end
+      object ppDBText21: TppDBText
+        UserName = 'DBText15'
+        DataField = 'Identificador'
+        DataPipeline = ppDBPplnEtiquetaSobre
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Name = 'Arial'
+        Font.Size = 14
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBPplnEtiquetaSobre'
+        mmHeight = 4763
+        mmLeft = 79375
+        mmTop = 19328
+        mmWidth = 26988
+        BandType = 4
+        LayerName = BandLayer3
+      end
+    end
+    object ppFooterBand3: TppFooterBand
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 0
+      mmPrintPosition = 0
+    end
+    object ppDesignLayers3: TppDesignLayers
+      object ppDesignLayer3: TppDesignLayer
+        UserName = 'BandLayer3'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList3: TppParameterList
+    end
+  end
+  object ppDBPplnEtiquetaSobre: TppDBPipeline
+    DataSource = DSDatosEtiqueta
+    UserName = 'EtiquetaSobre'
+    Left = 634
+    Top = 406
+    object ppDBPipeline1ppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 0
+      Position = 0
+    end
+    object ppDBPipeline1ppField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
+      Position = 1
+    end
+    object ppDBPipeline1ppField3: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 2
+    end
+    object ppDBPipeline1ppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+    object ppDBPipeline1ppField5: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 4
+    end
+    object ppDBPipeline1ppField6: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 5
+    end
+    object ppDBPipeline1ppField7: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 6
+    end
+    object ppDBPipeline1ppField8: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 7
+    end
+    object ppDBPipeline1ppField9: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 8
+    end
+    object ppDBPipeline1ppField10: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 9
+    end
+    object ppDBPipeline1ppField11: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 10
+    end
+    object ppDBPipeline1ppField12: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 500
+      DisplayWidth = 500
+      Position = 11
+    end
+    object ppDBPipeline1ppField13: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 12
+    end
+    object ppDBPipeline1ppField14: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 13
+    end
+    object ppDBPipeline1ppField15: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 14
+    end
+    object ppDBPipeline1ppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtDouble
+      DisplayWidth = 10
+      Position = 15
+    end
+    object ppDBPipeline1ppField17: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 16
+    end
+    object ppDBPipeline1ppField18: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 17
+    end
+    object ppDBPipeline1ppField19: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 18
+    end
+    object ppDBPipeline1ppField20: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 19
+    end
+    object ppDBPipeline1ppField21: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 20
+    end
+    object ppDBPipeline1ppField22: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 21
+    end
+    object ppDBPipeline1ppField23: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 22
+    end
+    object ppDBPipeline1ppField24: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 23
+    end
+    object ppDBPipeline1ppField25: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 24
+    end
+    object ppDBPipeline1ppField26: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 13
+      DisplayWidth = 13
+      Position = 25
+    end
+    object ppDBPipeline1ppField27: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 26
+    end
+    object ppDBPipeline1ppField28: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 27
+    end
+    object ppDBPipeline1ppField29: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 28
+    end
+    object ppDBPipeline1ppField30: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 29
+    end
+    object ppDBPipeline1ppField31: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 30
+    end
+    object ppDBPipeline1ppField32: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 31
     end
   end
 end

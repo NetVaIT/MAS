@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, PersonasDM;
+  Vcl.ExtCtrls, PersonasDM, Vcl.Menus;
 
 type
   TfrmPersonas = class(T_frmStandarGFormGrid)

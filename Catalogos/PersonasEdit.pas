@@ -182,10 +182,12 @@ begin
   dmCuentasBancarias.MasterSource := DataSource;
   dmCuentasBancarias.MasterFields := 'IdPersona';
   dmCuentasBancarias.ShowModule(tsCuentasBancarias,'');
+
   dmPersonasCSD.MasterSource:=DataSource;  //Dic 21/15
   dmPersonasCSD.MasterFields := 'IdPersona';   //Dic 21/15
   dmPersonasCSD.ShowModule(TSCertificadosCSD,''); //Dic 21/15
 
+  TSCertificadosCSD.TabVisible:=  Rol=rEmisor ;
 end;
 
 procedure TfrmPersonasEdit.MostrarPanel;

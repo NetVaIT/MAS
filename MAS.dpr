@@ -125,7 +125,8 @@ uses
   BackorderEntradasDM in 'Procesos\BackorderEntradasDM.pas' {dmBackorderEntradas: TDataModule},
   BackorderEntradasForm in 'Procesos\BackorderEntradasForm.pas' {frmBackorderEntradas},
   BackorderEntradasDetallesForm in 'Procesos\BackorderEntradasDetallesForm.pas' {frmBackorderEntradasDetalles},
-  FacturasDM in 'Procesos\FacturasDM.pas' {DMFacturas: TDataModule};
+  FacturasDM in 'Procesos\FacturasDM.pas' {DMFacturas: TDataModule},
+  UDMEnvioMail in 'Procesos\UDMEnvioMail.pas' {DMEnvioMails: TDataModule};
 
 {$R *.res}
 

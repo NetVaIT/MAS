@@ -1,8 +1,5 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
-  OnCreate = FormCreate
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
@@ -34,6 +31,14 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Width = 23
             Height = 22
           end
+          object Label3: TLabel
+            Left = 23
+            Top = 232
+            Width = 46
+            Height = 13
+            Caption = 'EnvioTipo'
+            FocusControl = DBLookupComboBox1
+          end
           object DBLookupComboBox2: TDBLookupComboBox
             Left = 23
             Top = 168
@@ -54,7 +59,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object cxDBLabel1: TcxDBLabel
             Left = 23
-            Top = 67
+            Top = 62
             DataBinding.DataField = 'Domicilio'
             DataBinding.DataSource = DataSource
             Height = 79
@@ -69,6 +74,15 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             TabOrder = 3
             Width = 500
           end
+          object DBLookupComboBox1: TDBLookupComboBox
+            Left = 23
+            Top = 251
+            Width = 314
+            Height = 21
+            DataField = 'EnvioTipo'
+            DataSource = DataSource
+            TabOrder = 4
+          end
         end
       end
     end
@@ -78,7 +92,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -219,7 +233,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
