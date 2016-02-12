@@ -25,14 +25,17 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
+      Required = True
       Visible = False
     end
     object adodsMasterIdDomicilio: TIntegerField
       FieldName = 'IdDomicilio'
+      Required = True
       Visible = False
     end
     object adodsMasterIdDomicilioTipo: TIntegerField
       FieldName = 'IdDomicilioTipo'
+      Required = True
       Visible = False
     end
     object adodsMasterDomicilio: TStringField
@@ -63,6 +66,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     object actUpdate: TAction
       Caption = '...'
       OnExecute = actUpdateExecute
+      OnUpdate = actUpdateUpdate
     end
   end
   object adodsDomiciliosTipos: TADODataSet

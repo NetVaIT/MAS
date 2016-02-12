@@ -8,19 +8,22 @@ uses
 
 type
   TdmrptVentasUnidades = class(T_dmStandar)
-    adodsMasterIdentificador1: TStringField;
-    adodsMasterDescripcion: TStringField;
-    adodsMasterExistencia: TFloatField;
-    adodsMasterCantidadA: TFloatField;
-    adodsMasterCantidadM: TFloatField;
-    adodsMasterCantidadP: TFloatField;
-    adodsMasterCantidadF: TFloatField;
     adodsPeriodo: TADODataSet;
     adodsPeriodoIdPeriodo: TAutoIncField;
     adodsPeriodoDescripcion: TStringField;
     adodsPeriodoMes: TIntegerField;
     adodsPeriodoAnio: TIntegerField;
-    adodsMasterBacKorder: TStringField;
+    adodsMasterIdProducto: TAutoIncField;
+    adodsMasterIdentificador1: TStringField;
+    adodsMasterIdentificador2: TStringField;
+    adodsMasterIdentificador3: TStringField;
+    adodsMasterDescripcion: TStringField;
+    adodsMasterExistencia: TFloatField;
+    adodsMasterCantidadAnual: TFloatField;
+    adodsMasterCantidadMensual: TFloatField;
+    adodsMasterCantidadPromedio: TFloatField;
+    adodsMasterCantidadFuturo: TFloatField;
+    adodsMasterBackorder: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -41,7 +44,6 @@ uses rptVentasUnidadesForm;
 procedure TdmrptVentasUnidades.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-
 //  FIdPeriodoActual := dmConfiguracion.IdPeridoActual;
   gGridForm:= TfrmrptVentasUnidades.Create(Self);
   gGridForm.DataSet:= adodsMaster;
@@ -51,28 +53,28 @@ begin
 //  'MetodoPago, BanorteID, Cobrador, BancoCobrador, CuentaBancariaCobrador, CLABECobrador, ' +
 //  'FechaProgramada, MontoProgramado, FechaAutorizacion, MontoAutorizado, FechaPago, MontoPagado ' +
 //  'FROM vCuentasXPagarPagos ';
-  gGridForm.actSearch:= actSearch;
-  adodsPeriodo.Open;
-  TfrmrptVentasUnidades(gGridForm).DataSetPeriodo:= adodsPeriodo;
-  TfrmrptVentasUnidades(gGridForm).IdPeriodo:= 1;
+//  gGridForm.actSearch:= actSearch;
+//  adodsPeriodo.Open;
+//  TfrmrptVentasUnidades(gGridForm).DataSetPeriodo:= adodsPeriodo;
+//  TfrmrptVentasUnidades(gGridForm).IdPeriodo:= 1;
 end;
 
 procedure TdmrptVentasUnidades.SetFilter;
-var
+//var
 //  IdPeriodo: Integer;
-  Mes: Integer;
-  Anio: Integer;
+//  Mes: Integer;
+//  Anio: Integer;
 begin
   inherited;
 //  IdPeriodo:= TfrmrptVentasUnidades(gGridForm).IdPeriodo;
-  Mes:= adodsPeriodoMes.Value;
-  Anio:= adodsPeriodoAnio.Value;
-  adodsMaster.Parameters[0].Value:= Mes;
-  adodsMaster.Parameters[1].Value:= Mes;
-  adodsMaster.Parameters[2].Value:= Mes;
-  adodsMaster.Parameters[3].Value:= Anio;
-  adodsMaster.Parameters[4].Value:= Mes;
-  adodsMaster.Parameters[5].Value:= Anio;
+//  Mes:= adodsPeriodoMes.Value;
+//  Anio:= adodsPeriodoAnio.Value;
+//  adodsMaster.Parameters[0].Value:= Mes;
+//  adodsMaster.Parameters[1].Value:= Mes;
+//  adodsMaster.Parameters[2].Value:= Mes;
+//  adodsMaster.Parameters[3].Value:= Anio;
+//  adodsMaster.Parameters[4].Value:= Mes;
+//  adodsMaster.Parameters[5].Value:= Anio;
 //  ParamByName('mes').Value:= Mes;
 //  adodsMaster.Parameters.ParamByName('anio').Value:= Anio;
 //  SQLWhere:= 'WHERE IdPeriodo = %d';

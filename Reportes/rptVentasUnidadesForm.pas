@@ -31,16 +31,19 @@ uses
 
 type
   TfrmrptVentasUnidades = class(T_frmGrid)
-    tvMasterIdentificador1: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterExistencia: TcxGridDBColumn;
-    tvMasterCantidadA: TcxGridDBColumn;
-    tvMasterCantidadM: TcxGridDBColumn;
-    tvMasterCantidadP: TcxGridDBColumn;
-    tvMasterCantidadF: TcxGridDBColumn;
     cxedtPeriodo: TcxBarEditItem;
     dsPeriodos: TDataSource;
-    tvMasterBacKorder: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterIdentificador1: TcxGridDBColumn;
+    tvMasterIdentificador2: TcxGridDBColumn;
+    tvMasterIdentificador3: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterExistencia: TcxGridDBColumn;
+    tvMasterCantidadAnual: TcxGridDBColumn;
+    tvMasterCantidadMensual: TcxGridDBColumn;
+    tvMasterCantidadPromedio: TcxGridDBColumn;
+    tvMasterCantidadFuturo: TcxGridDBColumn;
+    tvMasterBackorder: TcxGridDBColumn;
   private
     FDataSetPeriodo: TDataSet;
     function GetIdPeriodo: Integer;

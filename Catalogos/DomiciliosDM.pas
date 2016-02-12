@@ -77,7 +77,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses DomiciliosEdit, DomiciliosForm;
+uses DomiciliosForm, DomiciliosEdit;
 
 {$R *.dfm}
 
@@ -117,18 +117,17 @@ end;
 procedure TdmDomicilios.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-  gGridEditForm := TfrmDomiciliosEdit.Create(Self);
-  gGridEditForm.DataSet := adodsMaster;
-  TfrmDomiciliosEdit(gGridEditForm).DataSetPaises := adodsPaises;
-  TfrmDomiciliosEdit(gGridEditForm).DataSetEstados := adodsEstados;
-  TfrmDomiciliosEdit(gGridEditForm).DataSetMunicipios := adodsMunicipios;
-  TfrmDomiciliosEdit(gGridEditForm).DataSetPoblaciones := adodsPoblaciones;
-  gGridFormGrid := TfrmDomicilios.Create(Self);
-  gGridFormGrid.DataSet := adodsMaster;
-  TfrmDomicilios(gGridFormGrid).DataSetPaises := adodsPaises;
-  TfrmDomicilios(gGridFormGrid).DataSetEstados := adodsEstados;
-  TfrmDomicilios(gGridFormGrid).DataSetMunicipios := adodsMunicipios;
-  TfrmDomicilios(gGridFormGrid).DataSetPoblaciones := adodsPoblaciones;
+  frmEdit:= TfrmDomiciliosEdit.Create(Self);
+  TfrmDomiciliosEdit(frmEdit).DataSetPaises:= adodsPaises;
+  TfrmDomiciliosEdit(frmEdit).DataSetEstados:= adodsEstados;
+  TfrmDomiciliosEdit(frmEdit).DataSetMunicipios:= adodsMunicipios;
+  TfrmDomiciliosEdit(frmEdit).DataSetPoblaciones:= adodsPoblaciones;
+  gGridForm:= TfrmDomicilios.Create(Self);
+  gGridForm.DataSet:= adodsMaster;
+  TfrmDomicilios(gGridForm).DataSetPaises:= adodsPaises;
+  TfrmDomicilios(gGridForm).DataSetEstados:= adodsEstados;
+  TfrmDomicilios(gGridForm).DataSetMunicipios:= adodsMunicipios;
+  TfrmDomicilios(gGridForm).DataSetPoblaciones:= adodsPoblaciones;
   adodsPaises.Open;
   adodsEstados.Open;
   adodsMunicipios.Open;

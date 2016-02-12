@@ -26,6 +26,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure actUpdateUpdate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,23 +47,32 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDomicilios := TdmDomicilios.Create(nil);
-  Id := adodsMasterIdDomicilio.AsInteger;
-  if Id  <> 0 then
-  begin
-    dmDomicilios.Edit(Id);
-    adodsDomicilios.Requery();
-  end
-  else
-  begin
-    Id := dmDomicilios.Add;
-    if  Id <> 0 then
+  dmDomicilios := TdmDomicilios.Create(Self);
+  try
+    Id := adodsMasterIdDomicilio.AsInteger;
+    if Id  <> 0 then
     begin
+      dmDomicilios.Edit(Id);
       adodsDomicilios.Requery();
-      adodsMasterIdDomicilio.AsInteger:= Id;
+    end
+    else
+    begin
+      Id := dmDomicilios.Add;
+      if  Id <> 0 then
+      begin
+        adodsDomicilios.Requery();
+        adodsMasterIdDomicilio.AsInteger:= Id;
+      end;
     end;
+  finally
+    dmDomicilios.Free;
   end;
-  dmDomicilios.Free;
+end;
+
+procedure TdmPersonasDomicilios.actUpdateUpdate(Sender: TObject);
+begin
+  inherited;
+  actUpdate.Enabled:= (adodsMaster.State in [dsInsert, dsEdit]);
 end;
 
 procedure TdmPersonasDomicilios.adodsMasterNewRecord(DataSet: TDataSet);

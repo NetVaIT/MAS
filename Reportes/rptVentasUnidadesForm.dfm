@@ -24,30 +24,45 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
       Width = 702
       ExplicitWidth = 702
       inherited tvMaster: TcxGridDBTableView
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
+        end
         object tvMasterIdentificador1: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador1'
+          Width = 100
+        end
+        object tvMasterIdentificador2: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador2'
+          Visible = False
+          Width = 100
+        end
+        object tvMasterIdentificador3: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador3'
+          Visible = False
+          Width = 100
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
           Width = 304
         end
-        object tvMasterCantidadA: TcxGridDBColumn
-          DataBinding.FieldName = 'CantidadA'
-        end
-        object tvMasterCantidadM: TcxGridDBColumn
-          DataBinding.FieldName = 'CantidadM'
-        end
         object tvMasterExistencia: TcxGridDBColumn
           DataBinding.FieldName = 'Existencia'
         end
-        object tvMasterCantidadP: TcxGridDBColumn
-          DataBinding.FieldName = 'CantidadP'
+        object tvMasterCantidadAnual: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadAnual'
         end
-        object tvMasterCantidadF: TcxGridDBColumn
-          DataBinding.FieldName = 'CantidadF'
+        object tvMasterCantidadMensual: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadMensual'
         end
-        object tvMasterBacKorder: TcxGridDBColumn
-          DataBinding.FieldName = 'BacKorder'
+        object tvMasterCantidadPromedio: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadPromedio'
+        end
+        object tvMasterCantidadFuturo: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadFuturo'
+        end
+        object tvMasterBackorder: TcxGridDBColumn
+          DataBinding.FieldName = 'Backorder'
         end
       end
     end
@@ -88,7 +103,6 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
           Visible = True
           ItemName = 'dxbtnSearch'
         end>
-      Visible = True
     end
     object cxedtPeriodo: TcxBarEditItem
       Caption = 'Periodo'
@@ -115,6 +129,7 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

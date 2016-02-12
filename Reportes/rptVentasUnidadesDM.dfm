@@ -3,102 +3,68 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT        Productos.Identificador1, Productos.Descripcion, I' +
-      'nventario.Existencia, ISNULL(PPA.SalidaCantidad,0) AS CantidadA,' +
-      ' ISNULL(PPM.SalidaCantidad,0) AS CantidadM, '#13#10'ISNULL(PPA.SalidaC' +
-      'antidad/:mes,0) AS CantidadP, ISNULL(Inventario.Existencia/(PPA.' +
-      'SalidaCantidad/:mes),0) AS CantidadF, dbo.GetBackorder(Productos' +
-      '.IdProducto) AS BacKorder'#13#10'FROM            Inventario INNER JOIN' +
-      #13#10'                         Productos ON Inventario.IdProducto = ' +
-      'Productos.IdProducto LEFT OUTER JOIN'#13#10#13#10'(SELECT        Productos' +
-      'Periodos.IdProducto, SUM(ProductosPeriodos.SalidaCantidad) AS Sa' +
-      'lidaCantidad'#13#10'FROM            ProductosPeriodos INNER JOIN'#13#10'    ' +
-      '                     Periodos ON ProductosPeriodos.IdPeriodo = P' +
-      'eriodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes <= :mes) AND (Peri' +
-      'odos.Anio = :anio)'#13#10'GROUP BY ProductosPeriodos.IdProducto) AS PP' +
-      'A ON Productos.IdProducto = PPA.IdProducto LEFT OUTER JOIN'#13#10#13#10'(S' +
-      'ELECT        ProductosPeriodos.IdProducto, ProductosPeriodos.Sal' +
-      'idaCantidad'#13#10'FROM            ProductosPeriodos INNER JOIN'#13#10'     ' +
-      '                    Periodos ON ProductosPeriodos.IdPeriodo = Pe' +
-      'riodos.IdPeriodo'#13#10'WHERE        (Periodos.Mes = :mes) AND (Period' +
-      'os.Anio = :anio)) AS PPM ON Productos.IdProducto = PPM.IdProduct' +
-      'o'#13#10#13#10'ORDER BY Productos.Identificador1'#13#10#13#10
-    Parameters = <
-      item
-        Name = 'mes'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'mes'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'mes'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'anio'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'mes'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'anio'
-        DataType = ftInteger
-        Size = -1
-        Value = Null
-      end>
+      'SELECT        Productos.IdProducto, Productos.Identificador1, Pr' +
+      'oductos.Identificador2, Productos.Identificador3, Productos.Desc' +
+      'ripcion, v_ProductosCantidad.Existencia, v_ProductosCantidad.Can' +
+      'tidadAnual, '#13#10'                         v_ProductosCantidad.Canti' +
+      'dadMensual, v_ProductosCantidad.CantidadPromedio, v_ProductosCan' +
+      'tidad.CantidadFuturo, v_ProductosCantidad.Backorder'#13#10'FROM       ' +
+      '     v_ProductosCantidad INNER JOIN'#13#10'                         Pr' +
+      'oductos ON v_ProductosCantidad.IdProducto = Productos.IdProducto' +
+      #13#10'ORDER BY Productos.Identificador1'#13#10
+    object adodsMasterIdProducto: TAutoIncField
+      FieldName = 'IdProducto'
+      ReadOnly = True
+      Visible = False
+    end
     object adodsMasterIdentificador1: TStringField
-      DisplayLabel = 'Numero'
       FieldName = 'Identificador1'
       Size = 50
     end
+    object adodsMasterIdentificador2: TStringField
+      FieldName = 'Identificador2'
+      Visible = False
+      Size = 50
+    end
+    object adodsMasterIdentificador3: TStringField
+      FieldName = 'Identificador3'
+      Visible = False
+      Size = 50
+    end
     object adodsMasterDescripcion: TStringField
-      DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
       Size = 255
     end
     object adodsMasterExistencia: TFloatField
       FieldName = 'Existencia'
     end
-    object adodsMasterCantidadA: TFloatField
-      DisplayLabel = 'Ventas acumulada'
-      FieldName = 'CantidadA'
+    object adodsMasterCantidadAnual: TFloatField
+      DisplayLabel = 'Ventas acumuladas'
+      FieldName = 'CantidadAnual'
       ReadOnly = True
     end
-    object adodsMasterCantidadM: TFloatField
+    object adodsMasterCantidadMensual: TFloatField
       DisplayLabel = 'Ventas mes'
-      FieldName = 'CantidadM'
+      FieldName = 'CantidadMensual'
+      ReadOnly = True
     end
-    object adodsMasterCantidadP: TFloatField
+    object adodsMasterCantidadPromedio: TFloatField
       DisplayLabel = 'Promedio mensual'
-      FieldName = 'CantidadP'
+      FieldName = 'CantidadPromedio'
       ReadOnly = True
     end
-    object adodsMasterCantidadF: TFloatField
+    object adodsMasterCantidadFuturo: TFloatField
       DisplayLabel = 'Futuro en meses'
-      FieldName = 'CantidadF'
+      FieldName = 'CantidadFuturo'
       ReadOnly = True
     end
-    object adodsMasterBacKorder: TStringField
-      FieldName = 'BacKorder'
+    object adodsMasterBackorder: TStringField
+      FieldName = 'Backorder'
       ReadOnly = True
       Size = 255
     end
   end
-  object adodsPeriodo: TADODataSet
+  object adodsPeriodo: TADODataSet [2]
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPeriodo, Descripcion, Mes, Anio from Periodos'

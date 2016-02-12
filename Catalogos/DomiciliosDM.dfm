@@ -12,11 +12,11 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal'#13#10'FROM Domicilios '#13#10'LEFT JOIN Paises ON Domicilios.IdPais =' +
-      ' Paises.IdPais'#13#10'LEFT JOIN Estados ON Domicilios.IdEstado = Estad' +
-      'os.IdEstado'#13#10'LEFT JOIN Municipios ON Domicilios.IdMunicipio = Mu' +
-      'nicipios.IdMunicipio'#13#10'LEFT JOIN Poblaciones ON Domicilios.IdPobl' +
-      'acion = Poblaciones.IdPoblacion'
+      'ostal'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais ' +
+      '= Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEstado = Est' +
+      'ados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdMunicipio =' +
+      ' Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.Id' +
+      'Poblacion = Poblaciones.IdPoblacion'
     Left = 48
     Top = 32
     object adodsMasterIdDomicilio: TAutoIncField
@@ -105,12 +105,12 @@ inherited dmDomicilios: TdmDomicilios
       'ios.Colonia, Domicilios.Referencia, '#13#10'Paises.Descripcion AS Pais' +
       ', Estados.Descripcion AS Estado, Municipios.Descripcion AS Munic' +
       'ipio, '#13#10'Poblaciones.Descripcion AS Poblacion, Domicilios.CodigoP' +
-      'ostal'#13#10'FROM Domicilios '#13#10'Left JOIN Paises ON Domicilios.IdPais =' +
-      ' Paises.IdPais'#13#10'LEFT JOIN Estados ON Domicilios.IdEstado = Estad' +
-      'os.IdEstado'#13#10'LEFT JOIN Municipios ON Domicilios.IdMunicipio = Mu' +
-      'nicipios.IdMunicipio'#13#10'LEFT JOIN Poblaciones ON Domicilios.IdPobl' +
-      'acion = Poblaciones.IdPoblacion'#13#10'WHERE Domicilios.IdDomicilio = ' +
-      ':IdDomicilio'
+      'ostal'#13#10'FROM Domicilios '#13#10'INNER JOIN Paises ON Domicilios.IdPais ' +
+      '= Paises.IdPais'#13#10'INNER JOIN Estados ON Domicilios.IdEstado = Est' +
+      'ados.IdEstado'#13#10'INNER JOIN Municipios ON Domicilios.IdMunicipio =' +
+      ' Municipios.IdMunicipio'#13#10'INNER JOIN Poblaciones ON Domicilios.Id' +
+      'Poblacion = Poblaciones.IdPoblacion'#13#10'WHERE Domicilios.IdDomicili' +
+      'o = :IdDomicilio'
     Parameters = <
       item
         Name = 'IdDomicilio'
@@ -193,7 +193,7 @@ inherited dmDomicilios: TdmDomicilios
   object adodsPaises: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdPais, Descripcion FROM Paises'
+    CommandText = 'select IdPais, Descripcion from Paises'
     Parameters = <>
     Left = 56
     Top = 112
@@ -207,8 +207,8 @@ inherited dmDomicilios: TdmDomicilios
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdEstado, IdPais, Identificador, Descripcion FROM Estados' +
-      ' WHERE IdPais = :IdPais'
+      'select IdEstado, IdPais, Identificador, Descripcion from Estados' +
+      #13#10'where IdPais = :IdPais'
     DataSource = dsPaises
     MasterFields = 'IdPais'
     Parameters = <
@@ -217,7 +217,6 @@ inherited dmDomicilios: TdmDomicilios
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Size = 4
         Value = 1
       end>
     Left = 56
@@ -249,8 +248,8 @@ inherited dmDomicilios: TdmDomicilios
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdMunicipio, IdEstado, Identificador, Descripcion FROM Mu' +
-      'nicipios'#13#10'WHERE IdEstado = :IdEstado'
+      'select IdMunicipio, IdEstado, Identificador, Descripcion from Mu' +
+      'nicipios'#13#10'where IdEstado = :IdEstado'
     DataSource = dsEstados
     MasterFields = 'IdEstado'
     Parameters = <
@@ -259,7 +258,6 @@ inherited dmDomicilios: TdmDomicilios
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Size = 4
         Value = 1
       end>
     Left = 56
@@ -290,8 +288,8 @@ inherited dmDomicilios: TdmDomicilios
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPoblacion, IdMunicipio, Identificador, Descripcion FROM' +
-      ' Poblaciones'#13#10'WHERE IdMunicipio = :IdMunicipio'
+      'select IdPoblacion, IdMunicipio, Identificador, Descripcion from' +
+      ' Poblaciones'#13#10'where IdMunicipio = :IdMunicipio'
     DataSource = dsMunicipios
     MasterFields = 'IdMunicipio'
     Parameters = <
