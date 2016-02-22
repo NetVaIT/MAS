@@ -184,10 +184,59 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   inherited adodsUpdate: TADODataSet
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,'#13#10' Descrip' +
+      'cion, NombreArchivo, IdArchivo, Archivo FROM Documentos'#13#10'WHERE I' +
+      'dDocumento =:IdDocumento'
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 416
+    object adodsUpdateIdDocumento: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object adodsUpdateIdDocumentoTipo: TIntegerField
+      FieldName = 'IdDocumentoTipo'
+    end
+    object adodsUpdateIdDocumentoClase: TIntegerField
+      FieldName = 'IdDocumentoClase'
+    end
+    object adodsUpdateDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object adodsUpdateNombreArchivo: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
+    object adodsUpdateIdArchivo: TGuidField
+      FieldName = 'IdArchivo'
+      FixedChar = True
+      Size = 38
+    end
+    object adodsUpdateArchivo: TBlobField
+      FieldName = 'Archivo'
+    end
   end
   inherited ActionList: TActionList
     Left = 408
+    object ActCargarGuia: TAction
+      Caption = 'CargarGuia'
+      OnExecute = ActCargarGuiaExecute
+    end
+    object ActEnvioCorreoConArchivos: TAction
+      Caption = 'Enviar Gu'#237'a X Correo '
+      Hint = 'Enviar Correo'
+      OnExecute = ActEnvioCorreoConArchivosExecute
+    end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -661,15 +710,31 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldName = 'DomicilioChk'
       Calculated = True
     end
+    object ADODtStInformacionEnvioCantidadCajas: TIntegerField
+      FieldName = 'CantidadCajas'
+    end
+    object ADODtStInformacionEnvioIdDocumentoGuia: TIntegerField
+      FieldName = 'IdDocumentoGuia'
+    end
+    object ADODtStInformacionEnvioDocGuia: TStringField
+      FieldKind = fkLookup
+      FieldName = 'DocGuia'
+      LookupDataSet = adodsDocumento
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumentoGuia'
+      Size = 100
+      Lookup = True
+    end
   end
   object ADODtStFacturasCFDI: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select PD.IDDomicilio, IdCFDI, IDOrdenSalida, IdPersonaReceptor,' +
-      #13#10' IdClienteDomicilio  from CFDI'#13#10'inner join PersonasDomicilios ' +
-      'PD on PD.idPersonaDomicilio=IdClienteDomicilio '#13#10' where IdOrdenS' +
-      'alida=:IdOrdenSalida'#13#10
+      #13#10' IdClienteDomicilio, IdDocumentoXML, IdDocumentoPDF  from CFDI' +
+      #13#10'inner join PersonasDomicilios PD on PD.idPersonaDomicilio=IdCl' +
+      'ienteDomicilio '#13#10' where IdOrdenSalida=:IdOrdenSalida'#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IDOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -679,10 +744,11 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 10
       end>
     Left = 432
-    Top = 409
+    Top = 417
     object ADODtStFacturasCFDIIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
@@ -699,6 +765,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStFacturasCFDIIDDomicilio: TIntegerField
       FieldName = 'IDDomicilio'
     end
+    object ADODtStFacturasCFDIIdDocumentoXML: TIntegerField
+      FieldName = 'IdDocumentoXML'
+    end
+    object ADODtStFacturasCFDIIdDocumentoPDF: TIntegerField
+      FieldName = 'IdDocumentoPDF'
+    end
   end
   object dsFacturaCFDI: TDataSource
     DataSet = ADODtStFacturasCFDI
@@ -706,7 +778,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 408
   end
   object ADODtStTelefonos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStTelefonosCalcFields
@@ -970,6 +1041,22 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStDocumentoDetalleItemIdDocumentoSalidaDetalle: TAutoIncField
       FieldName = 'IdDocumentoSalidaDetalle'
       ReadOnly = True
+    end
+  end
+  object adodsDocumento: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
+    Parameters = <>
+    Left = 440
+    Top = 552
+    object adodsDocumentoIdDocumento: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object adodsDocumentoNombreArchivo: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
     end
   end
 end

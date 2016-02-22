@@ -211,7 +211,7 @@ begin
     if (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX') then
       ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
     else
-      ShowMessage('no se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
+      ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
 
 
   end;
@@ -283,11 +283,12 @@ begin
     if (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX') then
       ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
     else
-      ShowMessage('no se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
+      ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
 
 
   end;
 
 end;
+
 
 end.

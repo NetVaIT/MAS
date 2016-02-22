@@ -70,6 +70,7 @@ type
     ADOdsEstatusDescripcion: TStringField;
     adodsMasterEstatusPersona: TStringField;
     adodsMasterExigeCta: TIntegerField;
+    adodsMasterNumCtaPagoCliente: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

@@ -75,7 +75,7 @@ var
 begin
   inherited;
   dmDocumentos := TdmDocumentos.Create(nil);
-  dmDocumentos.FileAllowed := faAll;
+  dmDocumentos.FileAllowed := faJPG;
   Id := adodsProductoFotosIdDocumento.AsInteger;
   if Id  <> 0 then
   begin
@@ -93,7 +93,7 @@ var
 begin
   inherited;
   dmDocumentos := TdmDocumentos.Create(nil);
-  dmDocumentos.FileAllowed := faAll;
+  dmDocumentos.FileAllowed := faJPG;  //era ALL
   Id := dmDocumentos.Add;
   if  Id <> 0 then
   begin

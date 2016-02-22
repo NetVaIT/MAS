@@ -10,6 +10,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
+          ExplicitTop = 24
           object Label1: TLabel
             Left = 23
             Top = 16
@@ -34,10 +35,18 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           object Label3: TLabel
             Left = 23
             Top = 232
-            Width = 46
+            Width = 49
             Height = 13
-            Caption = 'EnvioTipo'
+            Caption = 'Envio Tipo'
             FocusControl = DBLookupComboBox1
+          end
+          object Label4: TLabel
+            Left = 363
+            Top = 149
+            Width = 69
+            Height = 13
+            Caption = 'C'#243'digo Cliente'
+            FocusControl = DBLookupComboBox2
           end
           object DBLookupComboBox2: TDBLookupComboBox
             Left = 23
@@ -82,6 +91,14 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             DataField = 'EnvioTipo'
             DataSource = DataSource
             TabOrder = 4
+          end
+          object cxDBLabel2: TcxDBLabel
+            Left = 363
+            Top = 168
+            DataBinding.DataField = 'Identificador'
+            DataBinding.DataSource = DataSource
+            Height = 27
+            Width = 131
           end
         end
       end

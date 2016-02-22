@@ -34,6 +34,8 @@ type
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     Label3: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
+    cxDBLabel2: TcxDBLabel;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
   private
     FUpdateDomicilio: TBasicAction;

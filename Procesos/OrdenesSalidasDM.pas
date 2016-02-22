@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB,Dialogs;
+  Data.DB, Data.Win.ADODB,Dialogs,System.IOUtils,Forms, windows;
 
 type
   TDMOrdenesSalidas = class(T_dmStandar)
@@ -172,6 +172,23 @@ type
     ADODtStFacturasCFDIIDDomicilio: TIntegerField;
     ADODtStInformacionEnvioOcurre: TBooleanField;
     ADODtStInformacionEnvioDomicilioChk: TBooleanField;
+    ADODtStInformacionEnvioCantidadCajas: TIntegerField;
+    ADODtStInformacionEnvioIdDocumentoGuia: TIntegerField;
+    ActCargarGuia: TAction;
+    adodsDocumento: TADODataSet;
+    ADODtStInformacionEnvioDocGuia: TStringField;
+    adodsDocumentoIdDocumento: TAutoIncField;
+    adodsDocumentoNombreArchivo: TStringField;
+    ADODtStFacturasCFDIIdDocumentoXML: TIntegerField;
+    ADODtStFacturasCFDIIdDocumentoPDF: TIntegerField;
+    adodsUpdateIdDocumento: TAutoIncField;
+    adodsUpdateIdDocumentoTipo: TIntegerField;
+    adodsUpdateIdDocumentoClase: TIntegerField;
+    adodsUpdateDescripcion: TStringField;
+    adodsUpdateNombreArchivo: TStringField;
+    adodsUpdateIdArchivo: TGuidField;
+    adodsUpdateArchivo: TBlobField;
+    ActEnvioCorreoConArchivos: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -186,12 +203,19 @@ type
     procedure ADODtStSalidasUbicacionesBeforePost(DataSet: TDataSet);
     procedure ADODtStSalidasUbicacionesAfterDelete(DataSet: TDataSet);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
+    procedure ActCargarGuiaExecute(Sender: TObject);
+    procedure ActEnvioCorreoConArchivosExecute(Sender: TObject);
   private
     CantAGuardar:Double;
     function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
       var LaCantidad: Double): Integer;
     function VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
     function ValorMaximoPosible(valorAct: Double; idOrdenItem: Integer; idSalidaUbicacion:integer): Double;
+    procedure ReadFile(FileName: TFileName);
+    function GetFileName(IdDocumento: Integer): TFileName;
+    function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;
+    function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean;
+
     { Private declarations }
 
   public
@@ -206,9 +230,102 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses OrdenesSalidaForm;
+uses OrdenesSalidaForm, DocumentosDM, UDMEnvioMail, _Utils;
 
 {$R *.dfm}
+
+procedure TDMOrdenesSalidas.ActCargarGuiaExecute(Sender: TObject);
+var        //Feb 15/16
+  dmDocumentos: TdmDocumentos;
+  Id : Integer;
+begin
+  inherited;
+  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos.FileAllowed := faall;
+  Id := ADODtStInformacionEnvioIdDocumentoGuia.AsInteger;
+  if Id  <> 0 then
+  begin
+    dmDocumentos.Edit(Id);
+    adodsDocumento.Requery();
+  end
+  else
+  begin
+    Id := dmDocumentos.Add;
+    if  Id <> 0 then
+    begin
+      adodsDocumento.Requery();
+      if ADODtStInformacionEnvio.State=dsBrowse then
+        ADODtStInformacionEnvio.Edit;
+      ADODtStInformacionEnvioIdDocumentoGuia.AsInteger := Id;
+      ADODtStInformacionEnvio.Post;//Para asegurar que se guarde Feb 15/16
+    end;
+  end;
+  dmDocumentos.Free;
+end;
+
+procedure TDMOrdenesSalidas.ActEnvioCorreoConArchivosExecute(Sender: TObject);
+var
+  DmEnvioMail:TDMEnvioMails;
+  ArcXml,ArcPDF, ArcGuia: TFileName;
+  IdDoc:Integer;
+  ADatosEmisor:TStringList;
+  CorreoRec:String;
+  ArchivosLista:TStringList; //Feb 22/16
+begin
+  inherited;
+  ADatosEmisor:=TStringList.Create;
+  ArchivosLista:=TStringList.Create;  //Feb 22/16
+  ShowProgress(10,100.1,'Preparando documentos ' + IntToStr(10) + '%');
+  ADODtStFacturasCFDI.Open;
+  if Application.MessageBox('¿Desea Enviar el CFDI y el PDF junto con la Guía?','Confirmación Archivos de Envio',MB_YESNO)=idYes then
+  begin
+  //Sacar CFDI y PDF si se require
+    ShowProgress(20,100.1,'Obteniendo documento  XML ' + IntToStr(10) + '%');
+    IdDoc:=ADODtStFacturasCFDIIdDocumentoXML.AsInteger;
+    ArcXml:=GetFileName(IdDoc);
+    ArchivosLista.Add(ArcXml);  //Feb 22/16
+    ShowProgress(30,100.1,'Obteniendo documento  PDF ' + IntToStr(30) + '%');
+    IdDoc:=ADODtStFacturasCFDIIdDocumentoPDF.AsInteger;
+    ArcPDF:=GetFileName(IdDoc);
+    ArchivosLista.Add(ArcPDF);   //Feb 22/16
+  end;
+  //Sacar Guia
+  ShowProgress(40,100.1,'Obteniendo documento  de Guia ' + IntToStr(40) + '%');
+  IdDoc:=ADODtStInformacionEnvioIdDocumentoGuia.AsInteger;
+  ArcGuia:=GetFileName(IdDoc);
+  ArchivosLista.Add(ArcGuia);  //Feb 22/16
+  ShowProgress(50,100.1,'Obteniendo datos del Receptor para envío ' + IntToStr(50) + '%');
+  if SacaCorreoEmisor(ADatosEmisor) and SacaCorreoReceptor(ADODtStFacturasCFDIIdPersonaReceptor.AsInteger,CorreoRec) then
+  begin //Sacar datos Correo Emisor           //SAcar datos Correo Receptor
+    DMEnvioMail:=TDMEnvioMails.Create(self);
+    ShowProgress(60,100.1,'Enviando Correo con archivos adjuntos ' + IntToStr(60) + '%');
+    if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Archivos de Orden','Envio de Archivos relacionados a la orden de Salida No.'+ adodsMasteridOrdenSalida.asstring,
+             ArcXml,ArcPDF,ArcGuia, ArchivosLista,ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+             'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+             StrToInt(ADatosEmisor.Values['ModSSL'])) then
+     begin
+       ShowProgress(100,100.1,'Proceso de Envio Terminado  ' + IntToStr(100) + '%');
+       ShowMessage('Datos enviados al Cliente');
+     end
+     else
+     begin
+       ShowProgress(100,100.1,'Error en Envio de correo...' + IntToStr(100) + '%');
+       ShowMessage('Error en envio del Correo. Verifique conexión a internet');
+     end;
+    DMEnvioMail.Free;
+  end
+  else
+  begin
+    ShowProgress(100,100.1,'Sin Datos suficicentes para enviar correo...' + IntToStr(100) + '%');
+    ShowMessage('No se pudo enviar el correo. Falta Información para el envio. '+#13+'Asegurese de tener definida la información del servidor de salida y el correo del Cliente.');
+  end;
+  ShowProgress(100,100);
+  ADatosEmisor.Free; //Feb 22/16
+  ArchivosLista.Free; //Feb 22/16
+end;
+
+
+
 
 procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
@@ -481,9 +598,11 @@ begin
   gGridEditForm:= TFrmOrdenesSalida.Create(Self);
  // adodsMaster.Parameters.ParamByName('TipoDocto').Value:=FTipoDoc;
   gGridEditForm.DataSet := adodsMaster;
+  TFrmOrdenesSalida(gGridEditForm).CargarDocGuia:=ActCargarGuia;
   TFrmOrdenesSalida(gGridEditForm).DtSrcOrdenSalItem.DataSet:=ADODtStOrdenSalidaItem;
 
   TFrmOrdenesSalida(gGridEditForm).DSInsertaKardex.DataSet:=ADOQryInsertaProductoKardex;//Feb 5/16
+  TFrmOrdenesSalida(gGridEditForm).EnviaCorreoConDocs:=ActEnvioCorreoConArchivos;//Feb 16/16
 
 
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
@@ -511,6 +630,85 @@ begin
   else
     ShowMessage('Completo. Asigne las ubicaciones');
 
+end;
+
+
+procedure TDMOrdenesSalidas.ReadFile(FileName: TFileName);
+var
+  Blob : TStream;
+  Fs: TFileStream;
+begin
+  Blob := adodsUpdate.CreateBlobStream(adodsUpdateArchivo, bmRead);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs := TFileStream.Create(FileName, fmCreate);
+    try
+      Fs.CopyFrom(Blob, Blob.Size);
+    finally
+      Fs.Free;
+    end;
+  finally
+    Blob.Free
+  end;
+end;
+
+function TDMOrdenesSalidas.SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.sql.add('Select * from Configuraciones');
+  ADOQryAuxiliar.Open;
+
+   if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('HostEnvio').ASString<>'') and (ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString<>'') and
+      (ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString<>'') and (ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString<>'') then
+  begin
+    ADatosCorreo.Values['emailNoti']    := ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString;
+    ADatosCorreo.Values['host']    := ADOQryAuxiliar.FieldByName('HostEnvio').ASString;
+    ADatosCorreo.Values['usuario'] :=ADOQryAuxiliar.FieldByName('UsuarioCorreo').ASString ;
+    ADatosCorreo.Values['contrasenia'] :=ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString ;
+    ADatosCorreo.Values['puerto']   :=ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString ;
+  //  ADatosCorreo.Values['QEnvia']   :='Notificador'; //ADOQryAuxiliar.FieldByName('').ASString ;
+    if not ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').IsNull then
+       ADatosCorreo.Values['MetSSL']   :=ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').ASString
+    else
+      ADatosCorreo.Values['MetSSL']   :='3'; //sslvTLSv1
+    if not ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').IsNull then
+      ADatosCorreo.Values['ModSSL']   :=ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').ASString
+    else
+      ADatosCorreo.Values['ModSSL']   :='0';//sslmUnassigned
+
+    Result:=True;
+  end;
+  ADOQryAuxiliar.Close;
+
+end;
+
+function TDMOrdenesSalidas.SacaCorreoReceptor(IdCliente: Integer;
+  var CorreoCliente: String): Boolean; //Feb 16/16
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;                                                                            //Notificador o preguntar cual???  o ver si el predeterminado
+  ADOQryAuxiliar.sql.add('Select * from Emails where idPersona='+IntToStr(IdCliente)+' and ((IdEmailTipo=3) or(Predeterminado=1))');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('email').ASString<>'') then
+  begin
+    CorreoCliente:=ADOQryAuxiliar.FieldByName('email').ASString;
+    REsult:=True;
+  end;
+end;
+
+function TDMOrdenesSalidas.GetFileName(IdDocumento: Integer): TFileName; //Copiado   de Documentos Feb 16/16
+var
+  FileName: TFileName;
+begin
+  adodsUpdate.Close;
+  adodsUpdate.Parameters[0].Value:= IdDocumento;
+  adodsUpdate.Open;
+  FileName:= TPath.GetTempPath + adodsUpdateNombreArchivo.AsString;
+  ReadFile(FileName);
+  Result:= FileName;
 end;
 
 end.

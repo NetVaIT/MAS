@@ -2,11 +2,12 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforePost = adodsMasterBeforePost
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
-      'Tipo, IdEnvioTipo ,Predeterminado'#13#10' FROM PersonasDomicilios '#13#10'WH' +
-      'ERE IdPersona = :IdPersona'
+      'Tipo, IdEnvioTipo ,Predeterminado, Identificador'#13#10' FROM Personas' +
+      'Domicilios '#13#10'WHERE IdPersona = :IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -25,17 +26,14 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
-      Required = True
       Visible = False
     end
     object adodsMasterIdDomicilio: TIntegerField
       FieldName = 'IdDomicilio'
-      Required = True
       Visible = False
     end
     object adodsMasterIdDomicilioTipo: TIntegerField
       FieldName = 'IdDomicilioTipo'
-      Required = True
       Visible = False
     end
     object adodsMasterDomicilio: TStringField
@@ -64,6 +62,9 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     object adodsMasterIdEnvioTipo: TIntegerField
       FieldName = 'IdEnvioTipo'
     end
+    object adodsMasterIdentificador: TIntegerField
+      FieldName = 'Identificador'
+    end
     object adodsMasterEnvioTipo: TStringField
       FieldKind = fkLookup
       FieldName = 'EnvioTipo'
@@ -79,7 +80,6 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     object actUpdate: TAction
       Caption = '...'
       OnExecute = actUpdateExecute
-      OnUpdate = actUpdateUpdate
     end
   end
   object adodsDomiciliosTipos: TADODataSet
@@ -152,11 +152,36 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 80
   end
   object ADODtStEnvioTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdEnvioTipo, Descripcion from EnviosTipos'
     Parameters = <>
     Left = 304
     Top = 168
+  end
+  object ADODtStVerifica: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select * from Personas where IdRol=1 and IdPersona=:IdPersona'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 64
+    Top = 264
+  end
+  object ADODtStMaximoNoCliente: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'Select  max(identificador) as Maximo from PersonasDomicilios'
+    Parameters = <>
+    Left = 176
+    Top = 264
   end
 end

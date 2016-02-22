@@ -95,26 +95,36 @@ type
     ToolButton5: TToolButton;
     TlBtnCambioEstatus: TToolButton;
     TlBtnGenCotizaPDF: TToolButton;
-    ToolButton8: TToolButton;
+    TlBtnEnvioCorreo: TToolButton;
     cxDBLabel5: TcxDBLabel;
+    DSDocumentoAux: TDataSource;
+    dsFotosAux: TDataSource;
+    LstBxAdjuntosMail: TListBox;
+    ChckBxAdjuntar: TCheckBox;
+    BtBtnAdjuntos: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);
-    procedure DBGrid1DblClick(Sender: TObject);
     procedure SpdBtnCambioEstatusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure DBLookupComboBox1Click(Sender: TObject);
     procedure DataSourceStateChange(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure TlBtnEnvioCorreoMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure BtBtnAdjuntosClick(Sender: TObject);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
-
+    EnviaCotizacion:TBasicAction; //Feb 18/16
     procedure SetTipoDoc(const Value: Integer);
     function GenerarOrdenSalida(IDDocumento:Integer):Boolean;
     function RevisaFaltantes(IDDocumento:Integer):Boolean; //si se partio el pedido en varias ordenes de salida //Nov 23/15
     function ActualizaPedidoXSurtirEnInventario(IdProducto:Integer; Cantidad:Double):Boolean;
-    procedure SetGenPDFCotiza(const Value: TBasicAction);// Ene12/16
+    procedure SetGenPDFCotiza(const Value: TBasicAction);
+    procedure SetEnviaCotizacion(const Value: TBasicAction); // Ene12/16
+    procedure CrearArchivos(ListaAdj: TListBox; RutaAdj: String); //Feb 22/16
 
     { Private declarations }
   public
@@ -123,14 +133,16 @@ type
     Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
 
     property ActGenPDFCotiza : TBasicAction read GenPDFCotiza write SetGenPDFCotiza; //Feb 4/16
-  end;
+    property ActEnviaCotizacion : TBasicAction read EnviaCotizacion write SetEnviaCotizacion; //Feb 18/16
+
+end;
 
 implementation
 
 {$R *.dfm}
 
 uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm
-  ;    //    ,GeneraOrdenSalida
+  , ProductosFotosMostrar;    //    ,GeneraOrdenSalida
 
 function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
@@ -141,6 +153,52 @@ begin
   TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
 end;
 
+procedure TfrmCotizaciones.BtBtnAdjuntosClick(Sender: TObject);
+begin
+  inherited;
+  CrearArchivos(LstBxAdjuntosMail,'AdjCorreo\');
+  btbtnAdjuntos.Font.Color:=clGreen;
+  LstBxAdjuntosMail.Clear;
+end;
+
+
+procedure TfrmCotizaciones.CrearArchivos(ListaAdj:TListBox;RutaAdj:String);
+var
+  Base:String;
+  i:Integer;
+
+  id:Integer;
+  parte:String;
+  NombreA: String;
+begin
+  Base:=ExtractFilePath(Application.ExeName)+Rutaadj;
+  if not DirectoryExists(Base) then
+  begin
+    ForceDirectories(Base);
+  end
+  else
+  begin
+    //Limpiar
+    BorraSoloArchivos(Base);
+    //Crear
+    for I := 0 to ListaAdj.Count-1 do
+    begin
+       Parte:=  ListaAdj.Items[I];
+       id:=pos('\',Parte);
+       if id>0  then
+          Parte:=Copy(Parte, id+1, length(Parte)-id);
+       Id:=StrToInt(Parte);
+       if dsFotosAux.DataSet.Locate('IDProductoFoto',ID,[]) then
+       begin
+         if fileExists( dsDocumentoaux.DataSet.FieldByName('NombreArchivo').AsString) then
+         begin                  //DataSourceFotos .
+           NombreA:=dsDocumentoaux.DataSet.FieldByName('NombreArchivo').AsString;
+           copyFile(Pchar(NombreA), Pchar(Base+ ExtractFileName(NombreA)),False);
+         end;
+       end;
+    end;
+  end;
+end;
 procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
@@ -150,7 +208,7 @@ begin
   pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.visible;// SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.Visible;  // ene 11/16
   toolbutton10.enabled:= pnlMaster.Enabled;
   toolbutton12.Enabled:=pnlMaster.Enabled;
-
+  LstBxAdjuntosMail.Clear;
 end;
 
 procedure TfrmCotizaciones.DataSourceStateChange(Sender: TObject);
@@ -161,35 +219,41 @@ begin
 end;
 
 procedure TfrmCotizaciones.DBGrid1DblClick(Sender: TObject);
-//var
-//  FrmListaProductos:TFrmListaProductos;
+var
+  i:Integer;
 begin
   inherited;
-(*  if DataSourceDetail.State in [dsinsert,dsedit] then
+  if LstBxAdjuntosMail.Visible then  //Para que  no se muestre en Pedido
   begin
-    FrmListaProductos:=TFrmListaProductos.Create(Self);
-    FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
-    if DataSourceDetail.State=dsEdit then
+    dsFotosAux.DataSet.first;
+    if  (not dsFotosAux.DataSet.eof) then
     begin
-      FrmListaProductos.Clave:=DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString;
-//      FrmListaProductos.EdtBuscar.Text:=FrmListaProductos.Identificador;
-      FrmListaProductos.SpdBtnBuscarClick(FrmListaProductos.SpdBtnBuscar);
-    end;
-    FrmListaProductos.ShowModal;
-    if FrmListaProductos.ModalResult=mrOk then
-    begin
-    //Tomar datos y colocar
-      DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat:=FrmListaProductos.Precio;
-      DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger:=FrmListaProductos.IDProducto;
-    //  DataSourceDetail.DataSet.FieldByName('Producto').AsInteger:=FrmListaProductos.Descripcion;
-      DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString:=FrmListaProductos.Identificador;
-
+      FrmMostrarForosProd:=TFrmMostrarForosProd.Create(Self);
+      FrmMostrarForosProd.datasourceFotos.DataSet:=dsFotosAux.DataSet;
+      FrmMostrarForosProd.DSDocumento.DataSet:=DSDocumentoAux.DataSet;
+      FrmMostrarForosProd.ChckLstBxProdFotos.Items.Clear;
+      FrmMostrarForosProd.datasourceFotos.DataSet.open;
+      FrmMostrarForosProd.DSDocumento.DataSet.Open;
+      while not FrmMostrarForosProd.datasourceFotos.DataSet.Eof do
+      begin
+        FrmMostrarForosProd.ChckLstBxProdFotos.Items.Add(FrmMostrarForosProd.DSDocumento.DataSet.FieldByName('NombreArchivo').asString+ ' \'+FrmMostrarForosProd.datasourceFotos.DataSet.FieldByName('IdProductoFoto').asString);
+        FrmMostrarForosProd.datasourceFotos.DataSet.next;
+      end;
+      FrmMostrarForosProd.ShowModal;
+      if FrmMostrarForosProd.UsarDatos then
+      begin
+        for i := 0 to FrmMostrarForosProd.ListaArc.Count-1 do
+        begin
+          if LstBxAdjuntosMail.Items.IndexOf(FrmMostrarForosProd.ListaArc.Strings[i])=-1 then
+            LstBxAdjuntosMail.Items.Add(FrmMostrarForosProd.ListaArc.Strings[i]);  //Verificar si ponerlos en carpeta o sacarlos justo antes de envair el correo.
+        end;
+        btbtnAdjuntos.Font.Color:=clRed;
+      end;
+      FrmMostrarForosProd.Free;
     end
     else
-      if DataSourceDetail.State in [dsEdit, dsInsert] then
-          DataSourceDetail.DataSet.cancel;
-    FrmListaProductos.Free;
-  end;*)
+      ShowMessage('El producto no tiene archivos asociados');
+  end;
 end;
 
 procedure TfrmCotizaciones.DBGrid1EditButtonClick(Sender: TObject);
@@ -275,8 +339,9 @@ begin
     3:SpdBtnCambioEstatus.Visible:=False; //SpdBtnCambioEstatus
   end;
  // TlBtnGenCotizaPDF.visible:= TlBtnCambioEstatus.Hint='Acepta Cotización'; //Feb 9/16    SpdBtnCambioEstatus.Caption
-    SpdBtnGenPDFCotiza .visible:= SpdBtnCambioEstatus.Caption= 'Acepta Cotización';
-
+  SpdBtnGenPDFCotiza .visible:= SpdBtnCambioEstatus.Caption= 'Acepta Cotización';
+  TlBtnEnvioCorreo.Visible:=SpdBtnGenPDFCotiza .visible;
+  LstBxAdjuntosMail.Visible:=SpdBtnGenPDFCotiza .visible;
 
 end;
 
@@ -374,6 +439,14 @@ begin //Nov 23/15
 
 end;
 
+procedure TfrmCotizaciones.SetEnviaCotizacion(const Value: TBasicAction);
+begin
+  EnviaCotizacion:=Value;
+  TlBtnEnvioCorreo.Action:=Value;
+  TlBtnEnvioCorreo.ImageIndex:=24;
+
+end;
+
 procedure TfrmCotizaciones.SetGenPDFCotiza(const Value: TBasicAction);
 begin
   GenPDFCotiza:=Value;
@@ -444,6 +517,17 @@ begin
   //Porque borra nin confirmar si no se tiene
    if MessageDlg(strAllowDelete, mtConfirmation, mbYesNo, 0) = mrYes then
      DataSourceDetail.DataSet.Delete;
+end;
+
+procedure TfrmCotizaciones.TlBtnEnvioCorreoMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if ChckBxAdjuntar.Checked then
+  begin
+    ShowMessage('Crear Archivos');
+
+  end;
 end;
 
 end.

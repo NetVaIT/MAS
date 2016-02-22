@@ -26,12 +26,16 @@ type
     ADODtStEnvioTipo: TADODataSet;
     adodsMasterIdEnvioTipo: TIntegerField;
     adodsMasterEnvioTipo: TStringField;
+    adodsMasterIdentificador: TIntegerField;
+    ADODtStVerifica: TADODataSet;
+    ADODtStMaximoNoCliente: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
-    procedure actUpdateUpdate(Sender: TObject);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
+    function EsCliente(idPersona:Integer;var  identificadorNvo:Integer):Boolean;
   public
     { Public declarations }
   end;
@@ -50,38 +54,44 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDomicilios := TdmDomicilios.Create(Self);
-  try
-    Id := adodsMasterIdDomicilio.AsInteger;
-    if Id  <> 0 then
+  dmDomicilios := TdmDomicilios.Create(nil);
+  Id := adodsMasterIdDomicilio.AsInteger;
+  if Id  <> 0 then
+  begin
+    dmDomicilios.Edit(Id);
+    adodsDomicilios.Requery();
+  end
+  else
+  begin
+    Id := dmDomicilios.Add;
+    if  Id <> 0 then
     begin
-      dmDomicilios.Edit(Id);
       adodsDomicilios.Requery();
-    end
-    else
-    begin
-      Id := dmDomicilios.Add;
-      if  Id <> 0 then
-      begin
-        adodsDomicilios.Requery();
-        adodsMasterIdDomicilio.AsInteger:= Id;
-      end;
+      adodsMasterIdDomicilio.AsInteger:= Id;
     end;
-  finally
-    dmDomicilios.Free;
   end;
+  dmDomicilios.Free;
 end;
 
-procedure TdmPersonasDomicilios.actUpdateUpdate(Sender: TObject);
+procedure TdmPersonasDomicilios.adodsMasterBeforePost(DataSet: TDataSet);
+var                           //Feb 15/16
+  IDNvo:Integer;
 begin
   inherited;
-  actUpdate.Enabled:= (adodsMaster.State in [dsInsert, dsEdit]);
+  //Poner el numero de cliente si es cliente
+  if (dataset.state =dsInsert) and Escliente(Dataset.fieldbyname('IdPersona').AsInteger,IDNvo ) then
+  begin
+    DataSet.FieldByName('Identificador').AsString:=IntToSTR(IdNvo);
+
+  End;
+
 end;
 
 procedure TdmPersonasDomicilios.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsMasterPredeterminado.Value:= False;
+
 end;
 
 procedure TdmPersonasDomicilios.DataModuleCreate(Sender: TObject);
@@ -90,6 +100,25 @@ begin
   gGridEditForm := TfrmPersonasDomiciliosEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   TfrmPersonasDomiciliosEdit(gGridEditForm).UpdateDomicilio := actUpdate;
+end;
+
+function TdmPersonasDomicilios.EsCliente(idPersona: Integer;var  identificadorNvo:Integer): Boolean;
+begin
+  Result:=False;
+  IdentificadorNvo:=-10;
+  ADODtStVerifica.Close;
+  ADODtStVerifica.Parameters.ParamByName('IdPersona').Value:=idPersona;
+  ADODtStVerifica.open;
+
+  if not ADODtStVerifica.eof then
+  begin
+    ADODtStMaximoNoCliente.Close;
+    ADODtStMaximoNoCliente.Open;
+    IdentificadorNvo:= ADODtStMaximoNoCliente.FieldByName('Maximo').ASInteger +1;
+    ADODtStMaximoNoCliente.Close;
+    Result:=True;
+  end;
+
 end;
 
 end.

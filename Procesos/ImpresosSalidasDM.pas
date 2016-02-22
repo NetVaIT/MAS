@@ -230,6 +230,14 @@ type
     ppDBPplnEtiquetaSobre: TppDBPipeline;
     ppDBText28: TppDBText;
     ppShape2: TppShape;
+    ppLabel39: TppLabel;
+    ppDBText23: TppDBText;
+    ADODtStDatosEtiquetaCantidadCajas: TIntegerField;
+    ADODtStDatosEtiquetaIdDocumentoGuia: TIntegerField;
+    ppLabel40: TppLabel;
+    ppLblCajaAct: TppLabel;
+    ppLabel42: TppLabel;
+    ppDBText27: TppDBText;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -239,7 +247,7 @@ type
 
     { Private declarations }
   public
-    procedure PrintPDFFile(IDReporte: Integer);
+    procedure PrintPDFFile(IDReporte: Integer; Cant:Integer=1);
     { Public declarations }
   end;
 
@@ -293,9 +301,10 @@ begin
   Result:=Texto;
 end;
 
-procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer);
+procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer;Cant:Integer=1);
 var                       // Modificado
   vPDFFileName: TFileName;
+  Actual:Integer;
 begin
    // Configura el reporte
   case IDReporte of
@@ -309,12 +318,17 @@ begin
       ppRprtOrdenSalida.Print;
     end;
   2:begin  //Feb 11/16
+
       ppRprtEtiquetaEnvio.ShowPrintDialog:= False;
       ppRprtEtiquetaEnvio.ShowCancelDialog:= False;
       ppRprtEtiquetaEnvio.AllowPrintToArchive:= False;
       ppRprtEtiquetaEnvio.DeviceType:= 'Screen';
+      for Actual:=1 to Cant do
+      begin
+        ppLblCajaAct.Caption:=intToStr(Actual);
+        ppRprtEtiquetaEnvio.Print;
+      end;
 
-      ppRprtEtiquetaEnvio.Print;
     end;
 
   end;

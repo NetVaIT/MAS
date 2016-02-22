@@ -1,7 +1,7 @@
 inherited DMFacturas: TDMFacturas
   OldCreateOrder = True
   Height = 650
-  Width = 703
+  Width = 718
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -258,6 +258,11 @@ inherited DMFacturas: TDMFacturas
     object ActBuscar: TAction
       Caption = 'ActBuscar'
       OnExecute = ActBuscarExecute
+    end
+    object ActEnvioCorreoFact: TAction
+      Caption = 'Enviar Correo con Factura'
+      Hint = 'Enviar Factura por Correo'
+      OnExecute = ActEnvioCorreoFactExecute
     end
   end
   object DSMaster: TDataSource
@@ -1522,5 +1527,11 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'IdProductoKardex'
       ReadOnly = True
     end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 60
+    Top = 297
   end
 end

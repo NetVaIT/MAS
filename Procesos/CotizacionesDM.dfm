@@ -20,7 +20,7 @@ inherited dmCotizaciones: TdmCotizaciones
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = Null
+        Value = 0
       end>
     Left = 64
     object adodsMasterIdDocumentoSalida: TAutoIncField
@@ -91,6 +91,9 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdMoneda'
       Lookup = True
     end
+    object adodsMasterIdDomicilioCliente: TIntegerField
+      FieldName = 'IdDomicilioCliente'
+    end
     object adodsMasterEstatus: TStringField
       FieldKind = fkLookup
       FieldName = 'Estatus'
@@ -100,9 +103,6 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdDocumentoSalidaEstatus'
       Size = 15
       Lookup = True
-    end
-    object adodsMasterIdDomicilioCliente: TIntegerField
-      FieldName = 'IdDomicilioCliente'
     end
     object adodsMasterDireccioncliente: TStringField
       FieldKind = fkLookup
@@ -157,10 +157,16 @@ inherited dmCotizaciones: TdmCotizaciones
       Caption = 'Cotizaci'#243'n PDF'
       OnExecute = ActGenPDFCotizacionExecute
     end
+    object ActEnviarXCorreo: TAction
+      Caption = 'Enviar Cotizaci'#243'n'
+      Hint = 'Enviar Cotizaci'#243'n por Correo'
+      OnExecute = ActEnviarXCorreoExecute
+    end
   end
   object adodsCotizacionesDetalle: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforeOpen = adodsCotizacionesDetalleBeforeOpen
     BeforeInsert = adodsCotizacionesDetalleBeforeInsert
     AfterPost = adodsCotizacionesDetalleAfterPost
     AfterDelete = adodsCotizacionesDetalleAfterPost
@@ -564,20 +570,11 @@ inherited dmCotizaciones: TdmCotizaciones
       ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
       'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
       ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
-      'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
-    Parameters = <
-      item
-        Name = 'IDPersona'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
+    Parameters = <>
     Left = 448
     Top = 392
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
@@ -4745,5 +4742,113 @@ inherited dmCotizaciones: TdmCotizaciones
     Parameters = <>
     Left = 640
     Top = 264
+  end
+  object adodsProductoFotos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
+      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+    DataSource = DSCotizacionDetalle
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 1
+      end>
+    Left = 640
+    Top = 392
+    object adodsProductoFotosIdProductoFoto: TIntegerField
+      FieldName = 'IdProductoFoto'
+    end
+    object adodsProductoFotosIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object adodsProductoFotosIdDocumento: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object adodsProductoFotosNotas: TStringField
+      FieldName = 'Notas'
+      Size = 500
+    end
+    object adodsProductoFotosNombreArchivo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'NombreArchivo'
+      LookupDataSet = ADODsDocumento
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumento'
+      Size = 150
+      Lookup = True
+    end
+  end
+  object dsProductosFotos: TDataSource
+    DataSet = adodsProductoFotos
+    OnDataChange = dsProductosFotosDataChange
+    Left = 728
+    Top = 368
+  end
+  object adodsProductoDoctos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoDocumento, IdProducto, IdDocumento, Notas from ' +
+      'ProductosDocumentos'
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <>
+    Left = 816
+    Top = 392
+  end
+  object ADODsDocumento: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
+      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
+      ' iddocumento=:IdDocumento'
+    DataSource = dsProductosFotos
+    IndexFieldNames = 'IdDocumento'
+    MasterFields = 'IdDocumento'
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 11
+      end>
+    Left = 728
+    Top = 464
+    object ADODsDocumentoIdDocumento: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object ADODsDocumentoIdDocumentoTipo: TIntegerField
+      FieldName = 'IdDocumentoTipo'
+    end
+    object ADODsDocumentoIdDocumentoClase: TIntegerField
+      FieldName = 'IdDocumentoClase'
+    end
+    object ADODsDocumentoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object ADODsDocumentoNombreArchivo: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
+    object ADODsDocumentoIdArchivo: TGuidField
+      FieldName = 'IdArchivo'
+      FixedChar = True
+      Size = 38
+    end
+    object ADODsDocumentoArchivo: TBlobField
+      FieldName = 'Archivo'
+    end
   end
 end

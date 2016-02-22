@@ -3,10 +3,10 @@ unit CotizacionesDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
+  winapi.windows, System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, dxGDIPlusClasses, ppCtrls, ppPrnabl, ppClass, ppDB,
   ppBands, ppCache, ppDBPipe, ppParameter, ppDesignLayer, ppComm, ppRelatv,
-  ppProd, ppReport, ppStrtch, ppMemo, dialogs;
+  ppProd, ppReport, ppStrtch, ppMemo, dialogs, ShellApi, Forms;
 
 type
   TdmCotizaciones = class(T_dmStandar)
@@ -197,6 +197,23 @@ type
     ADODtStIdentificadores: TADODataSet;
     adodsMasterIdentificadorCte: TStringField;
     adodsCotizacionesDetalleIdAlmacen: TIntegerField;
+    ActEnviarXCorreo: TAction;
+    adodsProductoFotos: TADODataSet;
+    adodsProductoFotosIdProductoFoto: TIntegerField;
+    adodsProductoFotosIdProducto: TIntegerField;
+    adodsProductoFotosIdDocumento: TIntegerField;
+    adodsProductoFotosNotas: TStringField;
+    adodsProductoFotosNombreArchivo: TStringField;
+    dsProductosFotos: TDataSource;
+    adodsProductoDoctos: TADODataSet;
+    ADODsDocumento: TADODataSet;
+    ADODsDocumentoIdDocumento: TAutoIncField;
+    ADODsDocumentoIdDocumentoTipo: TIntegerField;
+    ADODsDocumentoIdDocumentoClase: TIntegerField;
+    ADODsDocumentoDescripcion: TStringField;
+    ADODsDocumentoNombreArchivo: TStringField;
+    ADODsDocumentoIdArchivo: TGuidField;
+    ADODsDocumentoArchivo: TBlobField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -211,13 +228,22 @@ type
     procedure ActGenPDFCotizacionExecute(Sender: TObject);
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
+    procedure ActEnviarXCorreoExecute(Sender: TObject);
+    procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
+    procedure adodsCotizacionesDetalleBeforeOpen(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
       var ID:Integer): String;
     function CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA:Double;var AMontoIva,ASubtotal,ATotal:Double):Boolean;
     procedure SetTipoDoc(const Value: Integer);
-    procedure PrintPDFFile(Mostrar: Boolean);
+    procedure PrintPDFFile(Mostrar: Boolean;nombre:TFileName='');
+    function SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+    function SacaCorreoReceptor(IdCliente: Integer;
+      var CorreoCliente: String): Boolean;
+    procedure ReadFile(FileName: TFileName);
+    procedure AdjuntarArchivos(Listaadj: TStringList);
+   // function tamanoFichero(sFileToExamine: string): Longword;
     { Private declarations }
   public
     { Public declarations }
@@ -228,15 +254,100 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CotizacionesForm, _Utils;
+uses CotizacionesForm, _Utils, UDMEnvioMail;
 
 {$R *.dfm}
+
+procedure TdmCotizaciones.ActEnviarXCorreoExecute(Sender: TObject);
+var
+  DmEnvioMail:TDMEnvioMails;
+  ArcCotiza,ArcImagen, ArcDoc: TFileName;
+  IdDoc:Integer;
+  ADatosEmisor:TStringList;
+  CorreoRec,FechaText:String;
+  D,M,A:word;
+  ArchivosLista:TStringList; //Feb 22/16
+begin   //Feb 18/16
+  inherited;
+  ArchivosLista:=TStringList.Create;//Feb 22/16
+  ArcImagen:='';
+  ArcDoc:='';
+  decodedate(date,A,M,D);
+  FechaText:=IntToStr(d)+'_'+intToStr(m)+'_'+intToStr(A);
+  ArcCotiza:='Cotizacion_'+AdoDSMaster.FieldByName('idDocumentoSalida').ASString+FechaText+'.pdf';
+
+  ADatosEmisor:=TStringList.Create;
+  ShowProgress(10,100.1,'Preparando documentos ' + IntToStr(10) + '%');
+
+  PrintPDFFile(False,ArcCotiza);
+  //Verificar si se seleccionan Fotos o Documentos los productos (Hasta 3) ;
+  if FileExists(ArcCotiza) then
+    ShellExecute(application.Handle, 'open', PChar(ArcCotiza), nil, nil, SW_SHOWNORMAL);    //Quitar cuando funcione
+  ShowProgress(30,100.1,'Enviando Correo con archivos adjuntos ' + IntToStr(30) + '%');
+  ArchivosLista.Add(ArcCotiza);
+
+  AdjuntarArchivos(ArchivosLista);
+  if SacaCorreoEmisor(ADatosEmisor) and SacaCorreoReceptor(adodsMasterIdPersona.AsInteger,CorreoRec) then
+  begin //Sacar datos Correo Emisor           //SAcar datos Correo Receptor
+    DMEnvioMail:=TDMEnvioMails.Create(self);
+    ShowProgress(60,100.1,'Enviando Correo con Cotizacióm adjunta ' + IntToStr(60) + '%');
+    if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Cotización','Envio de Cotizacion No.'+ adodsMasterIdDocumentoSalida.asstring,
+             ArcCotiza,ArcImagen, ArcDoc,ArchivosLista,ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+             'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+             StrToInt(ADatosEmisor.Values['ModSSL'])) then
+     begin
+       ShowProgress(100,100.1,'Proceso de Envio Terminado  ' + IntToStr(100) + '%');
+       ShowMessage('Datos enviados al Cliente');
+     end
+     else
+     begin
+       ShowProgress(100,100.1,'Error en Envio de correo...' + IntToStr(100) + '%');
+       ShowMessage('Error en envio del Correo. Verifique conexión a internet');
+     end;
+    DMEnvioMail.Free;
+  end
+  else
+  begin
+    ShowProgress(100,100.1,'Sin Datos suficicentes para enviar correo...' + IntToStr(100) + '%');
+    ShowMessage('No se pudo enviar el correo. Falta Información para el envio. '+#13+'Asegurese de tener definida la información del servidor de salida y el correo del Cliente.');
+  end;
+  ShowProgress(100,100);
+  BorraSoloArchivos(ExtractFilePath(application.ExeName)+'Adjcorreo\');
+  ADatosEmisor.Free; //Feb 22/16
+  ArchivosLista.Free; //Feb 22/16
+end;
+
+procedure TdmCotizaciones.AdjuntarArchivos(Listaadj:TStringList);//
+var
+  Path: string;
+  F: TSearchRec;
+begin
+  try
+    Path:= ExtractFilePath(Application.exename)+'AdjCorreo\*.*';
+    if FindFirst(Path, faAnyFile, F) = 0 then begin
+      try
+        repeat
+         ListaAdj.add(ExtractFilePath(Application.exename) + 'AdjCorreo\' + F.Name);
+        until FindNext(F) <> 0;
+      finally
+        FindClose(F);
+      end;
+    end;
+
+  except
+    on e:exception do begin
+    end;
+  end;
+end;
+
+
+
 
 procedure TdmCotizaciones.ActGenPDFCotizacionExecute(Sender: TObject);
 begin
   inherited;
   PrintPDFFile(True);
-  ShowMessage('Envio por correo al cliente  en construcción');
+ //LLamar envio ShowMessage('Envio por correo al cliente  en construcción');
   // ver que hace y ver como se muestr directo como PDF , luego hay que ver si se hace envio..
 end;
 
@@ -267,6 +378,15 @@ begin
   inherited;
 end;
 
+procedure TdmCotizaciones.adodsCotizacionesDetalleBeforeOpen(DataSet: TDataSet);
+begin
+  inherited;
+//Feb 22/16
+  adodsProductoFotos.Open;
+  ADODsDocumento.open;
+
+end;
+
 procedure TdmCotizaciones.adodsCotizacionesDetalleCantidadChange(
   Sender: TField);
 begin
@@ -274,7 +394,7 @@ begin
   if adodsCotizacionesDetalle.State in [dsEdit,dsInsert] then
   begin
     adodsCotizacionesDetalle.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
-     adodsCotizacionesDetalle.FieldByName('Importe').AsFloat:=adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
+    adodsCotizacionesDetalle.FieldByName('Importe').AsFloat:=adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
   end;
 end;
 
@@ -339,6 +459,7 @@ begin
   inherited;
   //FEb 8/16
   ADODtStIdentificadores.Open;
+ // ADODtStDireccionesCliente.Open;
 end;
 
 procedure TdmCotizaciones.adodsMasterCalcFields(DataSet: TDataSet);
@@ -402,8 +523,6 @@ begin
                           +' where IDOrdenSalida ='+IntToStr(idDocSalida));
   ADOQryAuxiliar.ExecSQL;
 
-
-
 end;
 
 procedure TdmCotizaciones.ADODtStOrdenSalidaItemCantidadDespachadaChange(
@@ -452,13 +571,47 @@ begin
   TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15
   TfrmCotizaciones(gGridEditForm).ActGenPDFCotiza := ActGenPDFCotizacion; //Dic 22/15
-
+  TfrmCotizaciones(gGridEditForm).ActEnviaCotizacion := ActEnviarXCorreo;
+  TfrmCotizaciones(gGridEditForm).dsFotosAux.dataset:=adodsProductoFotos;
+  TfrmCotizaciones(gGridEditForm).dsDocumentoAux.DataSet:=ADODsDocumento;
 
 end;
 
 
-procedure TdmCotizaciones.PrintPDFFile(Mostrar:Boolean);
-var                       // Modificado
+procedure TdmCotizaciones.dsProductosFotosDataChange(Sender: TObject;
+  Field: TField);
+var Archivo :TFileName;
+begin                         //Para crear el actual archivo Feb19/16
+  inherited;
+  if not dsProductosFotos.DataSet.Eof then
+  begin
+    Archivo:=AdodsDocumento.FieldByName('NombreArchivo').AsString;
+    readfile(Archivo);
+  end;
+
+end;
+
+procedure TdmCotizaciones.ReadFile(FileName: TFileName);
+var
+  Blob : TStream;
+  Fs: TFileStream;
+begin
+  Blob:= ADODsDocumento.CreateBlobStream(ADODsDocumentoArchivo, bmRead);
+  try
+    Blob.Seek(0, soFromBeginning);
+    Fs:= TFileStream.Create(FileName, fmCreate);
+    try
+      Fs.CopyFrom(Blob, Blob.Size);
+    finally
+      Fs.Free;
+    end;
+  finally
+    Blob.Free
+  end;
+end;
+
+procedure TdmCotizaciones.PrintPDFFile(Mostrar:Boolean;nombre:TFileName='');
+var                       // Modificado                //Feb 18/16
   vPDFFileName: TFileName;
 begin
     // Configura el reporte
@@ -469,13 +622,65 @@ begin
     if Mostrar then
        ppRprtCotizacion.DeviceType:= 'Screen'
     else
+    if nombre<>'' then
+    begin
+      ppRprtCotizacion.DeviceType:= 'PDF';
+      ppRprtCotizacion.PDFSettings.OpenPDFFile := False;
+      ppRprtCotizacion.TextFileName:= nombre;
+    end
+    else
       ppRprtCotizacion.DeviceType:= 'Printer';
 //    ppReport.PrinterSetup.Copies:= 1;
 // DES ABAN eNE7/16      ppReport.PrinterSetup.DocumentName:= ExtractFileName(vPDFFileName);
     ppRprtCotizacion.Print;
 
-//  else
-//    raise Exception.Create(smNotExistFile);
+end;
+
+function TdmCotizaciones.SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.sql.add('Select * from Configuraciones');
+  ADOQryAuxiliar.Open;
+
+   if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('HostEnvio').ASString<>'') and (ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString<>'') and
+      (ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString<>'') and (ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString<>'') then
+  begin
+    ADatosCorreo.Values['emailNoti']    := ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString;
+    ADatosCorreo.Values['host']    := ADOQryAuxiliar.FieldByName('HostEnvio').ASString;
+    ADatosCorreo.Values['usuario'] :=ADOQryAuxiliar.FieldByName('UsuarioCorreo').ASString ;
+    ADatosCorreo.Values['contrasenia'] :=ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString ;
+    ADatosCorreo.Values['puerto']   :=ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString ;
+  //  ADatosCorreo.Values['QEnvia']   :='Notificador'; //ADOQryAuxiliar.FieldByName('').ASString ;
+    if not ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').IsNull then
+       ADatosCorreo.Values['MetSSL']   :=ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').ASString
+    else
+      ADatosCorreo.Values['MetSSL']   :='3'; //sslvTLSv1
+    if not ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').IsNull then
+      ADatosCorreo.Values['ModSSL']   :=ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').ASString
+    else
+      ADatosCorreo.Values['ModSSL']   :='0';//sslmUnassigned
+
+    Result:=True;
+  end;
+  ADOQryAuxiliar.Close;
+
+end;
+
+function TdmCotizaciones.SacaCorreoReceptor(IdCliente: Integer;
+  var CorreoCliente: String): Boolean; //Feb 16/16
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;                                                                            //Notificador o preguntar cual???  o ver si el predeterminado
+  ADOQryAuxiliar.sql.add('Select * from Emails where idPersona='+IntToStr(IdCliente)+' and ((IdEmailTipo=3) or(Predeterminado=1))');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('email').ASString<>'') then
+  begin
+    CorreoCliente:=ADOQryAuxiliar.FieldByName('email').ASString;
+    REsult:=True;
+  end;
 end;
 
 

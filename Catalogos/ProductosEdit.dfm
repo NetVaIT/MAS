@@ -2,9 +2,6 @@ inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
   OnDestroy = FormDestroy
-  ExplicitTop = -81
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -33,27 +30,25 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited pnlDetail2: TPanel
     Top = 588
-    ExplicitTop = 547
+    ExplicitTop = 588
   end
   inherited pnlDetail1: TPanel
     Top = 544
-    ExplicitTop = 503
+    ExplicitTop = 544
   end
   inherited pcMain: TcxPageControl
     Height = 541
-    ExplicitHeight = 500
-    ClientRectBottom = 537
+    ExplicitHeight = 541
+    ClientRectBottom = 540
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 742
-      ExplicitHeight = 492
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 748
+      ExplicitHeight = 539
       inherited cxScrollBox1: TcxScrollBox
-        Width = 742
-        Height = 533
-        ExplicitHeight = 492
+        Height = 539
+        ExplicitHeight = 539
         inherited tbarData: TToolBar
-          Width = 740
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -61,20 +56,15 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Width = 740
-          Height = 506
-          ExplicitHeight = 465
+          Height = 512
+          ExplicitHeight = 512
           object PnlFotos: TPanel
             Left = 0
             Top = 273
-            Width = 740
-            Height = 233
+            Width = 746
+            Height = 239
             Align = alClient
             TabOrder = 0
-            ExplicitLeft = -1
-            ExplicitTop = 272
-            ExplicitWidth = 746
-            ExplicitHeight = 192
             object ImgFoto: TImage
               Left = 23
               Top = 18
@@ -229,7 +219,7 @@ inherited frmProductosEdit: TfrmProductosEdit
           object PnlProducto: TPanel
             Left = 0
             Top = 0
-            Width = 740
+            Width = 746
             Height = 273
             Align = alTop
             TabOrder = 1
@@ -426,7 +416,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -575,7 +565,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F0080027C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

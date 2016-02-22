@@ -7748,10 +7748,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         WordWrap = True
         DataPipelineName = 'ppDBPplnEtiquetas'
-        mmHeight = 18256
+        mmHeight = 12435
         mmLeft = 9790
         mmTop = 81227
-        mmWidth = 104246
+        mmWidth = 106363
         BandType = 4
         LayerName = Foreground1
       end
@@ -7800,6 +7800,118 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = Foreground1
       end
+      object ppLabel39: TppLabel
+        UserName = 'Label39'
+        AutoSize = False
+        Caption = 'Total Cajas:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 12
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5292
+        mmLeft = 9790
+        mmTop = 96573
+        mmWidth = 26723
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText23: TppDBText
+        UserName = 'DBText23'
+        DataField = 'CantidadCajas'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 5292
+        mmLeft = 36248
+        mmTop = 96573
+        mmWidth = 16669
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppLabel40: TppLabel
+        UserName = 'Label40'
+        AutoSize = False
+        Caption = 'Caja'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 12
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5292
+        mmLeft = 67204
+        mmTop = 96573
+        mmWidth = 10848
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppLblCajaAct: TppLabel
+        UserName = 'LblCajaAct'
+        AutoSize = False
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5292
+        mmLeft = 79111
+        mmTop = 96573
+        mmWidth = 10848
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppLabel42: TppLabel
+        UserName = 'Label42'
+        AutoSize = False
+        Caption = 'de'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 12
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5292
+        mmLeft = 92869
+        mmTop = 96573
+        mmWidth = 7408
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText27: TppDBText
+        UserName = 'DBText27'
+        DataField = 'CantidadCajas'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 5292
+        mmLeft = 100806
+        mmTop = 96573
+        mmWidth = 15346
+        BandType = 4
+        LayerName = Foreground1
+      end
     end
     object ppFooterBand2: TppFooterBand
       Background.Brush.Style = bsClear
@@ -7822,6 +7934,268 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta'
     Left = 66
     Top = 422
+    object ppDBPplnEtiquetasppField1: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtLongint
+      DisplayWidth = 0
+      Position = 0
+    end
+    object ppDBPplnEtiquetasppField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
+      Position = 1
+    end
+    object ppDBPplnEtiquetasppField3: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 2
+    end
+    object ppDBPplnEtiquetasppField4: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 3
+    end
+    object ppDBPplnEtiquetasppField5: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 4
+    end
+    object ppDBPplnEtiquetasppField6: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 5
+    end
+    object ppDBPplnEtiquetasppField7: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 6
+    end
+    object ppDBPplnEtiquetasppField8: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 7
+    end
+    object ppDBPplnEtiquetasppField9: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 8
+    end
+    object ppDBPplnEtiquetasppField10: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 9
+    end
+    object ppDBPplnEtiquetasppField11: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 10
+    end
+    object ppDBPplnEtiquetasppField12: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 500
+      DisplayWidth = 500
+      Position = 11
+    end
+    object ppDBPplnEtiquetasppField13: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 100
+      DisplayWidth = 100
+      Position = 12
+    end
+    object ppDBPplnEtiquetasppField14: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 13
+    end
+    object ppDBPplnEtiquetasppField15: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 14
+    end
+    object ppDBPplnEtiquetasppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtDouble
+      DisplayWidth = 10
+      Position = 15
+    end
+    object ppDBPplnEtiquetasppField17: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 16
+    end
+    object ppDBPplnEtiquetasppField18: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 17
+    end
+    object ppDBPplnEtiquetasppField19: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 18
+    end
+    object ppDBPplnEtiquetasppField20: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 19
+    end
+    object ppDBPplnEtiquetasppField21: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 20
+    end
+    object ppDBPplnEtiquetasppField22: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 21
+    end
+    object ppDBPplnEtiquetasppField23: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 22
+    end
+    object ppDBPplnEtiquetasppField24: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 23
+    end
+    object ppDBPplnEtiquetasppField25: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 24
+    end
+    object ppDBPplnEtiquetasppField26: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 13
+      DisplayWidth = 13
+      Position = 25
+    end
+    object ppDBPplnEtiquetasppField27: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 300
+      DisplayWidth = 300
+      Position = 26
+    end
+    object ppDBPplnEtiquetasppField28: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 27
+    end
+    object ppDBPplnEtiquetasppField29: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 28
+    end
+    object ppDBPplnEtiquetasppField30: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 29
+    end
+    object ppDBPplnEtiquetasppField31: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 30
+    end
+    object ppDBPplnEtiquetasppField32: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 31
+    end
+    object ppDBPplnEtiquetasppField33: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'CantidadCajas'
+      FieldName = 'CantidadCajas'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 32
+    end
+    object ppDBPplnEtiquetasppField34: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'IdDocumentoGuia'
+      FieldName = 'IdDocumentoGuia'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 33
+    end
   end
   object ADODtStDatosEtiqueta: TADODataSet
     Active = True
@@ -7838,17 +8212,17 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'PagoFlete  '#13#10'      ,  Valor  '#13#10'      ,  Asegurado  ,'#13#10'      P.Ra' +
       'zonSocial, PD.Identificador,D.Calle, D.NoExterior, D.NoInterior,' +
       ' D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripcio' +
-      'n Municipio,'#13#10'P.RFC, T.Telefono'#13#10'  FROM   InformacionEntregas   ' +
-      'IE'#13#10#13#10'  inner join CFDI CI on CI.IdCFDI=IE.IdCFDI'#13#10'inner join Or' +
-      'denesSalidas OS on os.idOrdenSalida=Ci. idOrdenSalida'#13#10'  inner j' +
-      'oin Personas P on P.IdPersona=IE.IDPersonaCliente'#13#10'  inner join ' +
-      'PersonasDomicilios PD on PD.IdPersonaDomicilio=IE.IDPersonaDomic' +
-      'ilio'#13#10'  inner join Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13 +
-      #10'  inner join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inn' +
-      'er join Estados E on E.IdEstado=D.IdEstado  '#13#10'  Left join Person' +
-      'as PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  Left join Telef' +
-      'onos T on T.IdTelefono=IE.IdTelefono'#13#10' where ci.idOrdenSalida=:i' +
-      'dOrdenSalida'
+      'n Municipio,'#13#10'P.RFC, T.Telefono, CantidadCajas, IdDocumentoGuia'#13 +
+      #10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join CFDI CI on CI' +
+      '.IdCFDI=IE.IdCFDI'#13#10'inner join OrdenesSalidas OS on os.idOrdenSal' +
+      'ida=Ci. idOrdenSalida'#13#10'  inner join Personas P on P.IdPersona=IE' +
+      '.IDPersonaCliente'#13#10'  inner join PersonasDomicilios PD on PD.IdPe' +
+      'rsonaDomicilio=IE.IDPersonaDomicilio'#13#10'  inner join Domicilios D ' +
+      'on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner join Municipios M on M.' +
+      'IdMunicipio=D.IdMunicipio'#13#10'  inner join Estados E on E.IdEstado=' +
+      'D.IdEstado  '#13#10'  Left join Personas PR on PR.IdPersona=IE.IDRespo' +
+      'nsableEntrega'#13#10'  Left join Telefonos T on T.IdTelefono=IE.IdTele' +
+      'fono'#13#10' where ci.idOrdenSalida=:idOrdenSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -7983,6 +8357,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
       FieldKind = fkCalculated
       FieldName = 'CobrarChk'
       Calculated = True
+    end
+    object ADODtStDatosEtiquetaCantidadCajas: TIntegerField
+      FieldName = 'CantidadCajas'
+    end
+    object ADODtStDatosEtiquetaIdDocumentoGuia: TIntegerField
+      FieldName = 'IdDocumentoGuia'
     end
   end
   object DSDatosEtiqueta: TDataSource
@@ -8407,249 +8787,5 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'EtiquetaSobre'
     Left = 634
     Top = 406
-    object ppDBPipeline1ppField1: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdInfoEntrega'
-      FieldName = 'IdInfoEntrega'
-      FieldLength = 0
-      DataType = dtLongint
-      DisplayWidth = 0
-      Position = 0
-    end
-    object ppDBPipeline1ppField2: TppField
-      FieldAlias = 'IdCFDI'
-      FieldName = 'IdCFDI'
-      FieldLength = 0
-      DataType = dtLargeInt
-      DisplayWidth = 15
-      Position = 1
-    end
-    object ppDBPipeline1ppField3: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDPersonaCliente'
-      FieldName = 'IDPersonaCliente'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 2
-    end
-    object ppDBPipeline1ppField4: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDPersonaDomicilio'
-      FieldName = 'IDPersonaDomicilio'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 3
-    end
-    object ppDBPipeline1ppField5: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IDResponsableEntrega'
-      FieldName = 'IDResponsableEntrega'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 4
-    end
-    object ppDBPipeline1ppField6: TppField
-      FieldAlias = 'FechaProgramadaEnt'
-      FieldName = 'FechaProgramadaEnt'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 5
-    end
-    object ppDBPipeline1ppField7: TppField
-      FieldAlias = 'FechaRealEnt'
-      FieldName = 'FechaRealEnt'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 6
-    end
-    object ppDBPipeline1ppField8: TppField
-      FieldAlias = 'CondicionEntrega'
-      FieldName = 'CondicionEntrega'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 7
-    end
-    object ppDBPipeline1ppField9: TppField
-      FieldAlias = 'Observaciones'
-      FieldName = 'Observaciones'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 8
-    end
-    object ppDBPipeline1ppField10: TppField
-      FieldAlias = 'EstatusEntrega'
-      FieldName = 'EstatusEntrega'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 9
-    end
-    object ppDBPipeline1ppField11: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'IdTelefono'
-      FieldName = 'IdTelefono'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 10
-    end
-    object ppDBPipeline1ppField12: TppField
-      FieldAlias = 'Contenido'
-      FieldName = 'Contenido'
-      FieldLength = 500
-      DisplayWidth = 500
-      Position = 11
-    end
-    object ppDBPipeline1ppField13: TppField
-      FieldAlias = 'Conducto'
-      FieldName = 'Conducto'
-      FieldLength = 100
-      DisplayWidth = 100
-      Position = 12
-    end
-    object ppDBPipeline1ppField14: TppField
-      FieldAlias = 'Servicio'
-      FieldName = 'Servicio'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 13
-    end
-    object ppDBPipeline1ppField15: TppField
-      FieldAlias = 'PagoFlete'
-      FieldName = 'PagoFlete'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 14
-    end
-    object ppDBPipeline1ppField16: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Valor'
-      FieldName = 'Valor'
-      FieldLength = 0
-      DataType = dtDouble
-      DisplayWidth = 10
-      Position = 15
-    end
-    object ppDBPipeline1ppField17: TppField
-      FieldAlias = 'Asegurado'
-      FieldName = 'Asegurado'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 16
-    end
-    object ppDBPipeline1ppField18: TppField
-      FieldAlias = 'RazonSocial'
-      FieldName = 'RazonSocial'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 17
-    end
-    object ppDBPipeline1ppField19: TppField
-      FieldAlias = 'Calle'
-      FieldName = 'Calle'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 18
-    end
-    object ppDBPipeline1ppField20: TppField
-      FieldAlias = 'NoExterior'
-      FieldName = 'NoExterior'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 19
-    end
-    object ppDBPipeline1ppField21: TppField
-      FieldAlias = 'NoInterior'
-      FieldName = 'NoInterior'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 20
-    end
-    object ppDBPipeline1ppField22: TppField
-      FieldAlias = 'Colonia'
-      FieldName = 'Colonia'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 21
-    end
-    object ppDBPipeline1ppField23: TppField
-      FieldAlias = 'CodigoPostal'
-      FieldName = 'CodigoPostal'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 22
-    end
-    object ppDBPipeline1ppField24: TppField
-      FieldAlias = 'Estado'
-      FieldName = 'Estado'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 23
-    end
-    object ppDBPipeline1ppField25: TppField
-      FieldAlias = 'Municipio'
-      FieldName = 'Municipio'
-      FieldLength = 50
-      DisplayWidth = 50
-      Position = 24
-    end
-    object ppDBPipeline1ppField26: TppField
-      FieldAlias = 'RFC'
-      FieldName = 'RFC'
-      FieldLength = 13
-      DisplayWidth = 13
-      Position = 25
-    end
-    object ppDBPipeline1ppField27: TppField
-      FieldAlias = 'Direccioncompleta'
-      FieldName = 'Direccioncompleta'
-      FieldLength = 300
-      DisplayWidth = 300
-      Position = 26
-    end
-    object ppDBPipeline1ppField28: TppField
-      FieldAlias = 'Telefono'
-      FieldName = 'Telefono'
-      FieldLength = 20
-      DisplayWidth = 20
-      Position = 27
-    end
-    object ppDBPipeline1ppField29: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Identificador'
-      FieldName = 'Identificador'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 28
-    end
-    object ppDBPipeline1ppField30: TppField
-      FieldAlias = 'OcurreChk'
-      FieldName = 'OcurreChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 29
-    end
-    object ppDBPipeline1ppField31: TppField
-      FieldAlias = 'DomicilioChk'
-      FieldName = 'DomicilioChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 30
-    end
-    object ppDBPipeline1ppField32: TppField
-      FieldAlias = 'CobrarChk'
-      FieldName = 'CobrarChk'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 31
-    end
   end
 end

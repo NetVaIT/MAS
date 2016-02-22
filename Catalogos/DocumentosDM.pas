@@ -6,13 +6,13 @@ uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, Vcl.Dialogs,
   System.IOUtils,
-  Winapi.ShellAPI;
+  Winapi.ShellAPI, windows;
 
-  const                                                                                       //Dic 21/15
-  FileExts: array[0..8] of string = ('.xml', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv', '.cer', '.key');
+  const                                                                                       //Dic 21/15     //FEb 19/16
+  FileExts: array[0..9] of string = ('.xml', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.csv', '.cer', '.key','.jpg' );
 
-type                                                                       //Dic 21/15
-  TFileAllowed = (faAll, faXML, faDOC, faDOCx, faXLS, faXLSx, faTXT, faCSV,faCER, faKEY);
+type                                                                       //Dic 21/15   //FEb 19/16
+  TFileAllowed = (faAll, faXML, faDOC, faDOCx, faXLS, faXLSx, faTXT, faCSV,faCER, faKEY, faJPG);
   TFilesAllowed = set of TFileAllowed;
 
   TdmDocumentos = class(T_dmStandar)
@@ -55,6 +55,7 @@ type                                                                       //Dic
     procedure ReadFile(FileName: TFileName);
     procedure TuneOpenDialog;
     procedure SetFileAllowed(const Value: TFileAllowed);
+    function TamanoFichero(sFileToExamine: string): Longword; //Feb 19/16
   public
     { Public declarations }
     function GetFileName(IdDocumento: Integer): TFileName;
@@ -71,13 +72,22 @@ uses DocumentosForm, DocumentosEdit;
 {$R *.dfm}
 
 procedure TdmDocumentos.actLoadFileExecute(Sender: TObject);
+var
+ Tam:Longint;
 begin
   inherited;
   if OpenDialog.Execute then
   begin
+
     FFilename:= OpenDialog.FileName;
-    adodsUpdateNombreArchivo.AsString := ExtractFileName(FFilename);
-    WriteFile(FFilename);
+    Tam:= TamanoFichero(FFilename);
+    if tam<1000000 then
+    begin
+      adodsUpdateNombreArchivo.AsString := ExtractFileName(FFilename);
+      WriteFile(FFilename);
+    end
+    else
+      ShowMessage('El tamaño del archivo excede el permitido');
   end;
 end;
 
@@ -219,6 +229,10 @@ begin
     faAll: OpenDialog.Filter:= 'Todos los Archivos|*.*';
     faXLS: OpenDialog.Filter:= 'Archivo Microsoft Excel|*.xls';
     faXLSx: OpenDialog.Filter:= 'Archivo Microsoft Excel|*.xlsx';
+    faDOC,faDOCx:OpenDialog.Filter:= 'Archivo Documentos|*.doc;*.docx;*.jpg;*.pdf'; //D Feb 19/16
+    faKEY:OpenDialog.Filter:= 'Archivo KEY|*.key';
+    faCER:OpenDialog.Filter:= 'Archivo CER|*.cer';
+    faJPG:OpenDialog.Filter:= 'Archivo JPG|*.jpg';   //H Feb 19/16
   end;
 end;
 
@@ -229,4 +243,21 @@ end;
 //  FileName := ChangeFileExt(FileName, FileExts[Ord(FImportType)]);
 //end;
 
+function TdmDocumentos.TamanoFichero (sFileToExamine: string) : Longword;  //Feb 19/16
+var
+  FileHandle: THandle;
+  FileSize: Longword;
+  d1: Double;
+begin
+  FileHandle := CreateFile(PChar(sFileToExamine),
+    GENERIC_READ,
+    0, {exclusivo}
+    nil, {seguridad}
+    OPEN_EXISTING,
+    FILE_ATTRIBUTE_NORMAL,
+    0);
+  FileSize   := GetFileSize(FileHandle, nil);
+  Result     := FileSize;
+  CloseHandle(FileHandle);
+end;
 end.

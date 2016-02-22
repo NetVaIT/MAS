@@ -51,6 +51,7 @@ type
     Label1: TLabel;
     tvMasterEstatus: TcxGridDBColumn;
     ToolButton12: TToolButton;
+    TlBtnEnvioCorreo: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -62,12 +63,15 @@ type
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
     Consulta: TBasicAction;  //Dic 29/15
+    EnvioCorreo: TBasicAction;//Feb 17/16
     ffiltro: String;
     fImpresionGD: Integer; //Dic 29/15
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
     procedure setfimpresionGD(const Value: Integer); //Dic 29/15
+
+    procedure SetEnvioCorreo(const Value: TBasicAction); //Feb 17/16
 
 
     { Private declarations }
@@ -79,6 +83,7 @@ type
      property ActBusqueda : TBasicAction read Consulta write SetConsulta; //Dic 29/15
      property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
      property GRImpresion:Integer read fImpresionGD write setfimpresionGD;
+     property ActEnvioCorreo : TBasicAction read EnvioCorreo write SetEnvioCorreo; //Dic 29/15
 
      function SacaValor:Integer;
   end;
@@ -100,6 +105,8 @@ begin
   inherited;
   fImpresionGD:=SacaValor;
 end;
+
+
 
 procedure TfrmFacturasGrid.FormShow(Sender: TObject);
 var i :integer;
@@ -145,6 +152,15 @@ begin
 end;
 
 
+
+
+
+procedure TfrmFacturasGrid.SetEnvioCorreo(const Value: TBasicAction);
+begin //Feb 17/16
+  EnvioCorreo:=Value;
+  TlBtnEnvioCorreo.Action:=Value;
+  TlBtnEnvioCorreo.ImageIndex:=15;
+end;
 
 procedure TfrmFacturasGrid.setfimpresionGD(const Value: Integer);
 begin

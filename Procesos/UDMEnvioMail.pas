@@ -25,7 +25,8 @@ type
   public
     { Public declarations }
    Function SendEmail(const Recipients, Subject, Body, Attach1,
-      Attach2: string; AHost, AUserName, APassw, ANomEnvia: string; Apuerto,
+      Attach2, Attach3: string; AttachLista:TStringList; //Feb22/16
+      AHost, AUserName, APassw, ANomEnvia: string; Apuerto,
       AMetSSL, AModSSL: Integer):Boolean;
 
     property emfolio: String read ffolio write fFolio;
@@ -47,6 +48,8 @@ function TDMEnvioMails.SendEmail(const Recipients: string;
                     const Body: string;
                     const Attach1 :string;
                     const Attach2 : string;
+                    const Attach3 : string;
+                    AttachLista:TStringList; //Feb22/16
                     AHost,AUserName,APassw,ANomEnvia :string; Apuerto, AMetSSL , AModSSL:Integer):Boolean;
 var
   SMTP: TIdSMTP;
@@ -55,6 +58,7 @@ var
   htmpart,
   txtPart : TIdText;
   html : TStringList;
+  i:Integer; //Feb 22/16
 begin
   SMTP := TIdSMTP.Create(Application);
   Email := TIdMessage.Create(Application);
@@ -95,14 +99,23 @@ begin
   htmpart := TIdText.Create(email.MessageParts, html);
   htmpart.ContentType := 'text/html';
 
-    if Attach1<>'' then
+  for I:=0 to AttachLista.Count-1 do //Feb 22/16
+  begin
+     if AttachLista[i]<>'' then
+        if FileExists( AttachLista[i]) then
+          TIdAttachmentFile.Create(email.MessageParts,  AttachLista[i]);
+  end;
+  (*  if Attach1<>'' then
       if FileExists(Attach1) then
         TIdAttachmentFile.Create(email.MessageParts, Attach1);
 
     if Attach2<>'' then
       if FileExists(Attach2) then
         TIdAttachmentFile.Create(email.MessageParts, Attach2);
-
+    if Attach3<>'' then
+      if FileExists(Attach3) then
+        TIdAttachmentFile.Create(email.MessageParts, Attach3);
+   *)
     SMTP.Connect;
     SMTP.Send(Email);
     SMTP.Disconnect;

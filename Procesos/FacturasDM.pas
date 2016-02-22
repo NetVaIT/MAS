@@ -4,7 +4,8 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils,winapi.windows, ShellApi,dialogs,comCtrls;
+  Data.DB, Data.Win.ADODB,VirtualXML,Forms,dateutils,winapi.windows, ShellApi,
+  dialogs,comCtrls,System.IOUtils;
 
 type
   TArrDinamico= array of integer; //ene 7/16
@@ -315,6 +316,8 @@ type
     ADODtStDatosActInvImporte: TFMTBCDField;
     ADODtStDatosActInvIdAlmacen: TIntegerField;
     ADODtStDatosActInvIdProductoKardex: TAutoIncField;
+    ActEnvioCorreoFact: TAction;
+    ADOQryAuxiliar: TADOQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -325,6 +328,7 @@ type
     procedure ActRegeneraPDFExecute(Sender: TObject);
     procedure ActBuscarExecute(Sender: TObject);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
+    procedure ActEnvioCorreoFactExecute(Sender: TObject);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -345,6 +349,10 @@ type
     procedure ActualizaInventario(IDOrdenSalida,IDCFDI:Integer);  //Feb 8/16
     procedure SetMuestra(const Value: Boolean);
     { Private declarations }
+    function GetFileName(IdDocumento: Integer): TFileName;    //Feb 17/16
+    function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;   //Feb 17/16
+    function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean; //Feb 17/16
+
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -356,6 +364,7 @@ type
 //
     constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean); virtual;
     property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
+
   end;
 
 var
@@ -365,7 +374,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod, _Utils;
+uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod, _Utils,
+  UDMEnvioMail;
 
 {$R *.dfm}
 
@@ -448,6 +458,60 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
  except
    fCreoCFDI:=False;
  end;
+end;
+
+procedure TDMFacturas.ActEnvioCorreoFactExecute(Sender: TObject);
+var
+  DmEnvioMail:TDMEnvioMails;
+  ArcXml,ArcPDF, ArcGuia: TFileName;
+  IdDoc:Integer;
+  ADatosEmisor:TStringList;
+  CorreoRec:String;
+  ArchivosLista:TStringList;
+begin
+  inherited;
+  ADatosEmisor:=TStringList.Create;
+  ArchivosLista:=TStringList.Create;//Feb 22/16
+  adodsMaster.Open; //debe estar abierto
+  //Sacar CFDI y PDF si se require
+  ShowProgress(10,100.1,'Obteniendo información de documentos ' + IntToStr(10) + '%');
+  IdDoc:=adodsMasterIdDocumentoXML.AsInteger;
+  ArcXml:=GetFileName(IdDoc);
+  ArchivosLista.Add(ArcXml);
+  ShowProgress(20,100.1,'Obteniendo información de documentos ' + IntToStr(20) + '%');
+  IdDoc:=adodsMasterIdDocumentoPDF.AsInteger;
+  ArcPDF:=GetFileName(IdDoc);
+  ArchivosLista.Add(ArcPDF);
+  ShowProgress(30,100.1,'Obteniendo Datos de Receptor ' + IntToStr(30) + '%');
+  if SacaCorreoEmisor(ADatosEmisor) and SacaCorreoReceptor(adodsMasterIdPersonaReceptor.AsInteger,CorreoRec) then
+  begin //Sacar datos Correo Emisor           //SAcar datos Correo Receptor
+    DMEnvioMail:=TDMEnvioMails.Create(self);
+    ShowProgress(50,100.1,'Enviando Correo... ' + IntToStr(50) + '%');
+    if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Factura '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,'Envio Factura relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring,
+             ArcXml,ArcPDF,ArcGuia, ArchivosLista, ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+             'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+             StrToInt(ADatosEmisor.Values['ModSSL'])) then
+     begin
+       ShowProgress(90,100.1,'Finalizando envio de Correo... ' + IntToStr(90) + '%');
+       ShowProgress(100,100.1,'Proceso de envio de Correo Terminado... ' + IntToStr(100) + '%');
+       ShowMessage('Datos enviados al Cliente');
+     end
+     else
+     begin
+       ShowProgress(100,100.1,'Error en Proceso de envio de Correo ... ' + IntToStr(100) + '%');
+       ShowMessage('Error en envio del Correo. Verifique conexión a internet');
+     end;
+    DMEnvioMail.Free;
+  end
+  else
+  begin
+    ShowProgress(100,100.1,'Error en Proceso de envio de Correo ... ' + IntToStr(100) + '%');
+    ShowMessage('No se pudo enviar el Correo. Falta Información para el envio. '+#13 +'Asegurese de tener definida la información del servidor de salida y el correo del Cliente.');
+  end;
+  ShowProgress(100,100);
+  ADatosEmisor.Free; //Feb 22/16
+  ArchivosLista.Free; //Feb 22/16
+
 end;
 
 procedure TDMFacturas.ActProcesaFacturaExecute(Sender: TObject);
@@ -1011,7 +1075,24 @@ begin
   TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
   TfrmFacturasFormEdit(gGridEditForm).DSDatosCliente.DataSet:=ADODtStDireccionesCliente;
 //  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
+  TfrmFacturasFormEdit(gGridEditForm).EnviaCorreoConDocs := ActEnvioCorreoFact; //Feb 17/16
 
+
+end;
+
+function TDMFacturas.GetFileName(IdDocumento: Integer): TFileName;
+var             //Cambio Feb 17/16
+  FileName: TFileName;
+begin
+  adoDSDocumento.Close;
+  adoDSDocumento.filter:='IdDocumento='+intToSTR(IdDocumento);
+  adoDSDocumento.filtered:=True;
+  adoDSDocumento.open;
+  FileName:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+
+  FileName:= TPath.GetTempPath + FileName;
+  ReadFile(FileName);
+  Result:= FileName;
 end;
 
 function TDMFacturas.GetfImpresion: Integer;
@@ -1088,6 +1169,53 @@ begin
   adodsDocumento.Post;
   Result := adodsDocumentoIdDocumento.Value;
   adodsDocumento.Close;
+end;
+
+function TDMFacturas.SacaCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.sql.add('Select * from Configuraciones');
+  ADOQryAuxiliar.Open;
+
+   if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('HostEnvio').ASString<>'') and (ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString<>'') and
+      (ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString<>'') and (ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString<>'') then
+  begin
+    ADatosCorreo.Values['emailNoti']    := ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString;
+    ADatosCorreo.Values['host']    := ADOQryAuxiliar.FieldByName('HostEnvio').ASString;
+    ADatosCorreo.Values['usuario'] :=ADOQryAuxiliar.FieldByName('UsuarioCorreo').ASString ;
+    ADatosCorreo.Values['contrasenia'] :=ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString ;
+    ADatosCorreo.Values['puerto']   :=ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString ;
+  //  ADatosCorreo.Values['QEnvia']   :='Notificador'; //ADOQryAuxiliar.FieldByName('').ASString ;
+    if not ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').IsNull then
+       ADatosCorreo.Values['MetSSL']   :=ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').ASString
+    else
+      ADatosCorreo.Values['MetSSL']   :='3'; //sslvTLSv1
+    if not ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').IsNull then
+      ADatosCorreo.Values['ModSSL']   :=ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').ASString
+    else
+      ADatosCorreo.Values['ModSSL']   :='0';//sslmUnassigned
+
+    Result:=True;
+  end;
+  ADOQryAuxiliar.Close;
+end;
+
+function TDMFacturas.SacaCorreoReceptor(IdCliente: Integer;
+  var CorreoCliente: String): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;                                                                            //Notificador o preguntar cual???  o ver si el predeterminado
+  ADOQryAuxiliar.sql.add('Select * from Emails where idPersona='+IntToStr(IdCliente)+' and ((IdEmailTipo=3) or(Predeterminado=1))');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('email').ASString<>'') then
+  begin
+    CorreoCliente:=ADOQryAuxiliar.FieldByName('email').ASString;
+    REsult:=True;
+  end;
+
 end;
 
 procedure TDMFacturas.SetMuestra(const Value: Boolean);

@@ -121,6 +121,9 @@ type
     cxDBTextEdit8: TcxDBTextEdit;
     Splitter2: TSplitter;
     cxDBLabel14: TcxDBLabel;
+    TlBtnEnvioFactura: TToolButton;
+    ToolButton4: TToolButton;
+    TlBtnCancelaCFDI: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -131,7 +134,8 @@ type
     Consulta: TBasicAction;
     ffiltro: String; //Dic 29/15
     fImpresionED: integer;
-    FMostrar: Boolean; //Feb 10/16
+    FMostrar: Boolean;
+    FEnviaCorreoConDocs: TBasicAction; //Feb 10/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -140,7 +144,8 @@ type
 
     procedure SetConsulta(const Value: TBasicAction);  //Dic 29/15
     function GetfImpresioned: integer;
-    procedure SetMostrar(const Value: Boolean);  //ene 7/16
+    procedure SetMostrar(const Value: Boolean);
+    procedure SetEnviaCorreoConDocs(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -154,6 +159,7 @@ type
 
     constructor CreateWMostrar(AOwner: TComponent; Mostrar:Boolean); virtual;
     property Mostrar:Boolean read FMostrar write SetMostrar;//Feb 10/16
+    property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
   end;
 
 var
@@ -181,6 +187,7 @@ begin
   pnlmaster.Enabled:=  DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1;   //Prefactura
   TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled;
   ToolButton12.Enabled:=  pnlmaster.Enabled;
+  TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled;  //feb 17/16
 end;
 
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
@@ -218,6 +225,14 @@ begin
   TFrmFacturasGrid(gFormGrid).ActBusqueda:=value;
 
 
+end;
+
+procedure TfrmFacturasFormEdit.SetEnviaCorreoConDocs(const Value: TBasicAction);
+begin
+  FEnviaCorreoConDocs := Value;
+  TlBtnEnvioFactura.Action:=Value;
+  TlBtnEnvioFactura.ImageIndex:=24;
+  TFrmFacturasGrid(gFormGrid).ActEnvioCorreo:=Value; //Feb 17/16
 end;
 
 procedure TfrmFacturasFormEdit.SetFacturaCta(const Value: TBasicAction);

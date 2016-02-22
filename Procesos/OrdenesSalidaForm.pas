@@ -22,7 +22,7 @@ uses
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxGroupBox, cxRadioGroup,
-  cxCheckBox, Data.Win.ADODB;
+  cxCheckBox, Data.Win.ADODB, cxLabel, cxDBLabel, Vcl.Menus;
 
 type
   TFrmOrdenesSalida = class(T_frmStandarGFormEdit)
@@ -151,6 +151,13 @@ type
     ChckBxDatosEnvios: TCheckBox;
     BtBtnImprimeEtiqueta: TBitBtn;
     BtBtnAdjGuia: TBitBtn;
+    Label25: TLabel;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label26: TLabel;
+    cxDBLabel1: TcxDBLabel;
+    PppMnEnviar: TPopupMenu;
+    EnviarCorreoGuia: TMenuItem;
+    TlBtnEnvioFactura: TToolButton;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -169,17 +176,23 @@ type
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
     procedure BtBtnAdjGuiaClick(Sender: TObject);
   private
+    FCargarDocGuia: TBasicAction;
+    FEnviaCorreoConDocs: TBasicAction;
     procedure CrearSalidasUbicacion;
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
     function VerificaUbicacionProductos(idordenSalida: Integer): Boolean;
     procedure ImprimirOrdenSalida(idOrdenSalida,IDDocumentoSalida:Integer);
     procedure ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida: Integer);
+    procedure SetCargarDocGuia(const Value: TBasicAction);
+    procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean);
     Procedure ActualizaKardex(IdOrdenSalida:integer);
+    property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
+     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
   end;
 
 var
@@ -189,7 +202,8 @@ implementation
 
 {$R *.dfm}
 
-uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM;
+uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM,
+  UDMEnvioMail;
 
 procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);
 var                        //Feb 5/16
@@ -450,7 +464,7 @@ end;
 
 procedure TFrmOrdenesSalida.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
-  inherited;
+  inherited;  //Enviar Cantidad de  cajas e imprimir ese numero de etiquetas //Feb 15/16
   ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0);
 end;
 
@@ -508,6 +522,7 @@ begin
                             (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
                             (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
     ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4);//Feb 11/16
+    TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and (not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull); //Feb 17/16
     PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4)and ChckBxDatosEnvios.Checked;
     // ??PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4); //Ene 27/16
     PnlSalidasUbicacion.Visible:=False;  //Ene 28/16
@@ -624,6 +639,21 @@ begin
 
 end;
 
+procedure TFrmOrdenesSalida.SetCargarDocGuia(const Value: TBasicAction);
+begin
+  FCargarDocGuia := Value;
+  btbtnAdjGuia.Action := Value;
+end;
+
+procedure TFrmOrdenesSalida.SetEnviaCorreoConDocs(const Value: TBasicAction);
+begin                              //Feb 16/16
+  FEnviaCorreoConDocs := Value;
+  EnviarCorreoGuia.Action:=Value;
+  EnviarCorreoGuia.ImageIndex:=23;
+  TlBtnEnvioFactura.Action:= Value;
+  TlBtnEnvioFactura.ImageIndex:=23;
+end;
+
 procedure TFrmOrdenesSalida.TlBtnImprimirOrdenSalClick(Sender: TObject);
 begin
   inherited;
@@ -706,6 +736,7 @@ end;
 procedure TFrmOrdenesSalida.ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida: Integer);
 var
   DMImpresosSalidas:TDMImpresosSalidas;
+  Cuantos:Integer;
 begin
   DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
 
@@ -713,8 +744,8 @@ begin
   DMImpresosSalidas.ADODtStDatosEtiqueta. Close;
   DMImpresosSalidas.ADODtStDatosEtiqueta.Parameters.ParamByName('IdOrdenSalida').Value:=idOrdenSalida;
   DMImpresosSalidas.ADODtStDatosEtiqueta.Open;
-
-  DMImpresosSalidas.PrintPDFFile(2);
+  Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
+  DMImpresosSalidas.PrintPDFFile(2, cuantos);//Ajuste Feb 15/16
 
   DMImpresosSalidas.Free;
 
