@@ -21,10 +21,6 @@ object FrmMostrarForosProd: TFrmMostrarForosProd
     Height = 328
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = -111
-    ExplicitTop = 61
-    ExplicitWidth = 746
-    ExplicitHeight = 239
     object ImgFoto: TImage
       Left = 327
       Top = 18
@@ -40,10 +36,10 @@ object FrmMostrarForosProd: TFrmMostrarForosProd
       Caption = 'NombreArchivo'
     end
     object ImgVacio: TImage
-      Left = 682
-      Top = 206
-      Width = 72
-      Height = 49
+      Left = 653
+      Top = 165
+      Width = 188
+      Height = 124
       Picture.Data = {
         0A544A504547496D61676517050000FFD8FFE000104A46494600010101006000
         600000FFDB004300020101020101020202020202020203050303030303060404
@@ -131,8 +127,8 @@ object FrmMostrarForosProd: TFrmMostrarForosProd
     object DBText2: TDBText
       Left = 652
       Top = 87
-      Width = 211
-      Height = 39
+      Width = 41
+      Height = 13
       AutoSize = True
       DataField = 'Notas'
       DataSource = datasourceFotos
@@ -195,8 +191,8 @@ object FrmMostrarForosProd: TFrmMostrarForosProd
     end
   end
   object datasourceFotos: TDataSource
-    Left = 270
-    Top = 23
+    Left = 278
+    Top = 15
   end
   object DSDocumento: TDataSource
     Left = 358

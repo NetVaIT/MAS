@@ -57,6 +57,7 @@ var
   parte:String;
   NombreA:  TFileName;
 begin    //Mostrar el actual
+
   Parte:=  ChckLstBxProdFotos.Items[ChckLstBxProdFotos.ItemIndex];
   id:=pos('\',Parte);
   if id>0  then
