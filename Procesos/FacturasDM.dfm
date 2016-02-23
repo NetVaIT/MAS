@@ -1306,10 +1306,6 @@ inherited DMFacturas: TDMFacturas
     Parameters = <>
     Left = 72
     Top = 521
-    object ADODtStProductosKardexIdProductosKardex: TAutoIncField
-      FieldName = 'IdProductosKardex'
-      ReadOnly = True
-    end
     object ADODtStProductosKardexIdProducto: TIntegerField
       FieldName = 'IdProducto'
     end
@@ -1322,19 +1318,12 @@ inherited DMFacturas: TDMFacturas
     object ADODtStProductosKardexIdMoneda: TIntegerField
       FieldName = 'IdMoneda'
     end
-    object ADODtStProductosKardexIdSeccion: TIntegerField
-      FieldName = 'IdSeccion'
-    end
     object ADODtStProductosKardexReferenciaEspacio: TIntegerField
       FieldName = 'ReferenciaEspacio'
     end
     object ADODtStProductosKardexContenedor: TStringField
       FieldName = 'Contenedor'
       Size = 30
-    end
-    object ADODtStProductosKardexFecha: TWideStringField
-      FieldName = 'Fecha'
-      Size = 10
     end
     object ADODtStProductosKardexMovimiento: TStringField
       FieldName = 'Movimiento'
@@ -1347,6 +1336,19 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'Importe'
       Precision = 18
       Size = 6
+    end
+    object ADODtStProductosKardexIdProductoKardex: TAutoIncField
+      FieldName = 'IdProductoKardex'
+      ReadOnly = True
+    end
+    object ADODtStProductosKardexIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField
+      FieldName = 'IdProductoKardexEstatus'
+    end
+    object ADODtStProductosKardexFecha: TDateTimeField
+      FieldName = 'Fecha'
     end
   end
   object ADODtStInventario: TADODataSet
@@ -1363,7 +1365,7 @@ inherited DMFacturas: TDMFacturas
     CommandText = 'select * from InformacionEntregas where IdCFDI=:IDCFDI'
     DataSource = DSMaster
     IndexFieldNames = 'IdCFDI'
-    MasterFields = 'IdCFDI'
+    MasterFields = 'IDCFDI'
     Parameters = <
       item
         Name = 'IDCFDI'
@@ -1390,14 +1392,6 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField
       FieldName = 'IDResponsableEntrega'
-    end
-    object ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField
-      FieldName = 'FechaProgramadaEnt'
-      Size = 10
-    end
-    object ADODtStInformacionEnvioFechaRealEnt: TWideStringField
-      FieldName = 'FechaRealEnt'
-      Size = 10
     end
     object ADODtStInformacionEnvioCondicionEntrega: TStringField
       FieldName = 'CondicionEntrega'
@@ -1433,6 +1427,18 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStInformacionEnvioAsegurado: TBooleanField
       FieldName = 'Asegurado'
+    end
+    object ADODtStInformacionEnvioFechaProgramadaEnt: TDateTimeField
+      FieldName = 'FechaProgramadaEnt'
+    end
+    object ADODtStInformacionEnvioFechaRealEnt: TDateTimeField
+      FieldName = 'FechaRealEnt'
+    end
+    object ADODtStInformacionEnvioIdDocumentoGuia: TIntegerField
+      FieldName = 'IdDocumentoGuia'
+    end
+    object ADODtStInformacionEnvioCantidadCajas: TIntegerField
+      FieldName = 'CantidadCajas'
     end
   end
   object ADODtStIdentificadores: TADODataSet

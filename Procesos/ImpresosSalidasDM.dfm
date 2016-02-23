@@ -8198,7 +8198,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
   end
   object ADODtStDatosEtiqueta: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDatosEtiquetaCalcFields
@@ -8249,14 +8248,6 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStDatosEtiquetaIDResponsableEntrega: TIntegerField
       FieldName = 'IDResponsableEntrega'
-    end
-    object ADODtStDatosEtiquetaFechaProgramadaEnt: TWideStringField
-      FieldName = 'FechaProgramadaEnt'
-      Size = 10
-    end
-    object ADODtStDatosEtiquetaFechaRealEnt: TWideStringField
-      FieldName = 'FechaRealEnt'
-      Size = 10
     end
     object ADODtStDatosEtiquetaCondicionEntrega: TStringField
       FieldName = 'CondicionEntrega'
@@ -8363,6 +8354,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStDatosEtiquetaIdDocumentoGuia: TIntegerField
       FieldName = 'IdDocumentoGuia'
+    end
+    object ADODtStDatosEtiquetaFechaProgramadaEnt: TDateTimeField
+      FieldName = 'FechaProgramadaEnt'
+    end
+    object ADODtStDatosEtiquetaFechaRealEnt: TDateTimeField
+      FieldName = 'FechaRealEnt'
     end
   end
   object DSDatosEtiqueta: TDataSource

@@ -646,10 +646,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Parameters = <>
     Left = 64
     Top = 553
-    object ADODtStProductosKardexIdProductosKardex: TAutoIncField
-      FieldName = 'IdProductosKardex'
-      ReadOnly = True
-    end
     object ADODtStProductosKardexIdProducto: TIntegerField
       FieldName = 'IdProducto'
     end
@@ -668,13 +664,12 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStProductosKardexReferenciaEspacio: TIntegerField
       FieldName = 'ReferenciaEspacio'
     end
+    object ADODtStProductosKardexFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
     object ADODtStProductosKardexContenedor: TStringField
       FieldName = 'Contenedor'
       Size = 30
-    end
-    object ADODtStProductosKardexFecha: TWideStringField
-      FieldName = 'Fecha'
-      Size = 10
     end
     object ADODtStProductosKardexMovimiento: TStringField
       FieldName = 'Movimiento'
@@ -687,6 +682,16 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'Importe'
       Precision = 18
       Size = 6
+    end
+    object ADODtStProductosKardexIdProductoKardex: TAutoIncField
+      FieldName = 'IdProductoKardex'
+      ReadOnly = True
+    end
+    object ADODtStProductosKardexIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField
+      FieldName = 'IdProductoKardexEstatus'
     end
   end
   object ADODtStDireccAuxiliar: TADODataSet

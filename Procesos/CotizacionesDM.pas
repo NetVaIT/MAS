@@ -112,7 +112,6 @@ type
     adodsMasterDireccioncliente: TStringField;
     ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField;
     ADODtStProductosKardex: TADODataSet;
-    ADODtStProductosKardexIdProductosKardex: TAutoIncField;
     ADODtStProductosKardexIdProducto: TIntegerField;
     ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
     ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
@@ -120,7 +119,6 @@ type
     ADODtStProductosKardexIdSeccion: TIntegerField;
     ADODtStProductosKardexReferenciaEspacio: TIntegerField;
     ADODtStProductosKardexContenedor: TStringField;
-    ADODtStProductosKardexFecha: TWideStringField;
     ADODtStProductosKardexMovimiento: TStringField;
     ADODtStProductosKardexCantidad: TFloatField;
     ADODtStProductosKardexImporte: TFMTBCDField;
@@ -214,6 +212,10 @@ type
     ADODsDocumentoNombreArchivo: TStringField;
     ADODsDocumentoIdArchivo: TGuidField;
     ADODsDocumentoArchivo: TBlobField;
+    ADODtStProductosKardexIdProductoKardex: TAutoIncField;
+    ADODtStProductosKardexIdAlmacen: TIntegerField;
+    ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField;
+    ADODtStProductosKardexFecha: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);

@@ -245,9 +245,12 @@ inherited frmCotizaciones: TfrmCotizaciones
               Top = 29
               Width = 1273
               Height = 195
+              Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
               DataSource = DataSourceDetail
               Options = [dgEditing, dgAlwaysShowEditor, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+              ParentShowHint = False
+              ShowHint = True
               TabOrder = 1
               TitleFont.Charset = DEFAULT_CHARSET
               TitleFont.Color = clWindowText
@@ -578,6 +581,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 106
               Height = 25
               Caption = 'Preparar Adjuntos'
+              Enabled = False
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clRed
               Font.Height = -11

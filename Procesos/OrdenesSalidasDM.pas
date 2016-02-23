@@ -86,15 +86,12 @@ type
     adodsMasterPersonaAutoriza: TStringField;
     adodsMasterClaveUAutoriza: TStringField;
     ADODtStProductosKardex: TADODataSet;
-    ADODtStProductosKardexIdProductosKardex: TAutoIncField;
     ADODtStProductosKardexIdProducto: TIntegerField;
     ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
     ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
     ADODtStProductosKardexIdMoneda: TIntegerField;
-    ADODtStProductosKardexIdSeccion: TIntegerField;
     ADODtStProductosKardexReferenciaEspacio: TIntegerField;
     ADODtStProductosKardexContenedor: TStringField;
-    ADODtStProductosKardexFecha: TWideStringField;
     ADODtStProductosKardexMovimiento: TStringField;
     ADODtStProductosKardexCantidad: TFloatField;
     ADODtStProductosKardexImporte: TFMTBCDField;
@@ -104,8 +101,6 @@ type
     ADODtStInformacionEnvioIDPersonaCliente: TIntegerField;
     ADODtStInformacionEnvioIDPersonaDomicilio: TIntegerField;
     ADODtStInformacionEnvioIDResponsableEntrega: TIntegerField;
-    ADODtStInformacionEnvioFechaProgramadaEnt: TWideStringField;
-    ADODtStInformacionEnvioFechaRealEnt: TWideStringField;
     ADODtStInformacionEnvioCondicionEntrega: TStringField;
     ADODtStInformacionEnvioObservaciones: TStringField;
     ADODtStInformacionEnvioEstatusEntrega: TStringField;
@@ -189,6 +184,12 @@ type
     adodsUpdateIdArchivo: TGuidField;
     adodsUpdateArchivo: TBlobField;
     ActEnvioCorreoConArchivos: TAction;
+    ADODtStProductosKardexIdProductoKardex: TAutoIncField;
+    ADODtStProductosKardexIdAlmacen: TIntegerField;
+    ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField;
+    ADODtStProductosKardexFecha: TDateTimeField;
+    ADODtStInformacionEnvioFechaProgramadaEnt: TDateTimeField;
+    ADODtStInformacionEnvioFechaRealEnt: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);

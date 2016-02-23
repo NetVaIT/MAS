@@ -159,6 +159,7 @@ begin
   CrearArchivos(LstBxAdjuntosMail,'AdjCorreo\');
   btbtnAdjuntos.Font.Color:=clGreen;
   LstBxAdjuntosMail.Clear;
+  BtBtnAdjuntos.Enabled:= LstBxAdjuntosMail.Count>0;
 end;
 
 
@@ -254,6 +255,7 @@ begin
     else
       ShowMessage('El producto no tiene archivos asociados');
   end;
+  BtBtnAdjuntos.Enabled:= LstBxAdjuntosMail.Count>0;
 end;
 
 procedure TfrmCotizaciones.DBGrid1EditButtonClick(Sender: TObject);

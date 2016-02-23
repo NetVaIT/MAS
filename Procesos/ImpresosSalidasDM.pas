@@ -158,8 +158,6 @@ type
     ADODtStDatosEtiquetaIDPersonaCliente: TIntegerField;
     ADODtStDatosEtiquetaIDPersonaDomicilio: TIntegerField;
     ADODtStDatosEtiquetaIDResponsableEntrega: TIntegerField;
-    ADODtStDatosEtiquetaFechaProgramadaEnt: TWideStringField;
-    ADODtStDatosEtiquetaFechaRealEnt: TWideStringField;
     ADODtStDatosEtiquetaCondicionEntrega: TStringField;
     ADODtStDatosEtiquetaObservaciones: TStringField;
     ADODtStDatosEtiquetaEstatusEntrega: TStringField;
@@ -238,6 +236,8 @@ type
     ppLblCajaAct: TppLabel;
     ppLabel42: TppLabel;
     ppDBText27: TppDBText;
+    ADODtStDatosEtiquetaFechaProgramadaEnt: TDateTimeField;
+    ADODtStDatosEtiquetaFechaRealEnt: TDateTimeField;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
