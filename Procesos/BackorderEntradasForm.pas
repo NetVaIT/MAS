@@ -38,7 +38,9 @@ type
     tvMasterIdentificador1: TcxGridDBColumn;
     tvMasterProducto: TcxGridDBColumn;
     tvMasterOrdenada: TcxGridDBColumn;
-    tvMasterProforma: TcxGridDBColumn;
+    tvMasterFacturada: TcxGridDBColumn;
+    tvMasterEntrada: TcxGridDBColumn;
+    tvMasterTransito: TcxGridDBColumn;
     tvMasterPendiente: TcxGridDBColumn;
   private
     { Private declarations }

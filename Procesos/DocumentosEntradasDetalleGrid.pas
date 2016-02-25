@@ -22,7 +22,9 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus;
+  Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus, cxGridBandedTableView,
+  cxGridDBBandedTableView, dxLayoutContainer, cxGridLayoutView,
+  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView;
 
 type
   TfrmDocumentosEntradasDetalleGrid = class(T_frmStandarGFormGrid)
@@ -36,6 +38,17 @@ type
     tvMasterCantidadPendiente: TcxGridDBColumn;
     tvMasterPrecio: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
+    cxGridLevel2: TcxGridLevel;
+    tvMaster2: TcxGridDBTableView;
+    tvMaster2IdProducto: TcxGridDBColumn;
+    tvMaster2ClaveProducto: TcxGridDBColumn;
+    tvMaster2Producto: TcxGridDBColumn;
+    tvMaster2Existencia: TcxGridDBColumn;
+    tvMaster2CantidadAnual: TcxGridDBColumn;
+    tvMaster2CantidadMensual: TcxGridDBColumn;
+    tvMaster2CantidadPromedio: TcxGridDBColumn;
+    tvMaster2CantidadFuturo: TcxGridDBColumn;
+    tvMaster2BackOrder: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;

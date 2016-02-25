@@ -1,15 +1,17 @@
 inherited dmBackorderEntradas: TdmBackorderEntradas
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
       'SELECT BackorderEntradas.IdBackorderEntrada, BackorderEntradas.I' +
       'dPersona, BackorderEntradas.IdProducto, Personas.RazonSocial AS ' +
       'Provedor, Productos.Identificador1, Productos.Descripcion AS Pro' +
-      'ducto, '#13#10'BackorderEntradas.Ordenada, BackorderEntradas.Proforma,' +
-      ' BackorderEntradas.Pendiente'#13#10'FROM BackorderEntradas '#13#10'INNER JOI' +
-      'N Personas ON BackorderEntradas.IdPersona = Personas.IdPersona'#13#10 +
-      'INNER JOIN Productos ON BackorderEntradas.IdProducto = Productos' +
-      '.IdProducto'
+      'ducto, '#13#10'BackorderEntradas.Ordenada, BackorderEntradas.Facturada' +
+      ', BackorderEntradas.Entrada, BackorderEntradas.Transito, Backord' +
+      'erEntradas.Pendiente'#13#10'FROM BackorderEntradas '#13#10'INNER JOIN Person' +
+      'as ON BackorderEntradas.IdPersona = Personas.IdPersona'#13#10'INNER JO' +
+      'IN Productos ON BackorderEntradas.IdProducto = Productos.IdProdu' +
+      'cto'
     object adodsMasterIdBackorderEntrada: TAutoIncField
       FieldName = 'IdBackorderEntrada'
       ReadOnly = True
@@ -38,8 +40,14 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
     object adodsMasterOrdenada: TFloatField
       FieldName = 'Ordenada'
     end
-    object adodsMasterProforma: TFloatField
-      FieldName = 'Proforma'
+    object adodsMasterFacturada: TFloatField
+      FieldName = 'Facturada'
+    end
+    object adodsMasterEntrada: TFloatField
+      FieldName = 'Entrada'
+    end
+    object adodsMasterTransito: TFloatField
+      FieldName = 'Transito'
     end
     object adodsMasterPendiente: TFloatField
       FieldName = 'Pendiente'

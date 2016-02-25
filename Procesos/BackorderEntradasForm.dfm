@@ -38,8 +38,14 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
         object tvMasterOrdenada: TcxGridDBColumn
           DataBinding.FieldName = 'Ordenada'
         end
-        object tvMasterProforma: TcxGridDBColumn
-          DataBinding.FieldName = 'Proforma'
+        object tvMasterFacturada: TcxGridDBColumn
+          DataBinding.FieldName = 'Facturada'
+        end
+        object tvMasterEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'Entrada'
+        end
+        object tvMasterTransito: TcxGridDBColumn
+          DataBinding.FieldName = 'Transito'
         end
         object tvMasterPendiente: TcxGridDBColumn
           DataBinding.FieldName = 'Pendiente'
@@ -49,6 +55,9 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
   end
   inherited pnlDetail1: TPanel
     Align = alClient
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmBackorderEntradas.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -65,6 +74,7 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

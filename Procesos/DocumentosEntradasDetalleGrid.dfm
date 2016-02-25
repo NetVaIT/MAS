@@ -1,12 +1,11 @@
 inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   Caption = 'frmDocumentosEntradasDetalleGrid'
   OnCreate = FormCreate
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      RootLevelOptions.DetailTabsPosition = dtpTop
       inherited tvMaster: TcxGridDBTableView
         NewItemRow.InfoText = 'Presiona aqu'#237' para uno nuevo'
         OptionsBehavior.FocusCellOnTab = True
@@ -65,14 +64,86 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
           Options.Focusing = False
         end
       end
+      object tvMaster2: TcxGridDBTableView [1]
+        Navigator.Buttons.CustomButtons = <>
+        OnCellDblClick = tvMasterCellDblClick
+        DataController.DataSource = DataSource
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        NewItemRow.InfoText = 'Presiona aqu'#237' para uno nuevo'
+        OptionsBehavior.FocusCellOnTab = True
+        OptionsBehavior.FocusFirstCellOnNewRecord = True
+        OptionsBehavior.IncSearch = True
+        OptionsCustomize.ColumnsQuickCustomization = True
+        OptionsData.Deleting = False
+        OptionsView.NoDataToDisplayInfoText = ' '
+        OptionsView.GroupByBox = False
+        object tvMaster2IdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
+        end
+        object tvMaster2ClaveProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveProducto'
+          Options.Focusing = False
+          Width = 200
+        end
+        object tvMaster2Producto: TcxGridDBColumn
+          DataBinding.FieldName = 'Producto'
+          Options.Focusing = False
+          Width = 304
+        end
+        object tvMaster2Existencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Existencia'
+          Options.Focusing = False
+          Width = 100
+        end
+        object tvMaster2CantidadAnual: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadAnual'
+          Options.Focusing = False
+          Width = 100
+        end
+        object tvMaster2CantidadMensual: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadMensual'
+          Options.Focusing = False
+          Width = 100
+        end
+        object tvMaster2CantidadPromedio: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadPromedio'
+          Options.Focusing = False
+          Width = 100
+        end
+        object tvMaster2CantidadFuturo: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadFuturo'
+          Options.Focusing = False
+          Width = 100
+        end
+        object tvMaster2BackOrder: TcxGridDBColumn
+          DataBinding.FieldName = 'BackOrder'
+          Options.Focusing = False
+          Width = 300
+        end
+      end
+      inherited cxGridLevel1: TcxGridLevel
+        Caption = 'Captura'
+      end
+      object cxGridLevel2: TcxGridLevel
+        Caption = 'Ventas'
+        GridView = tvMaster2
+      end
+    end
+    inherited tbarGrid: TToolBar
+      inherited ToolButton4: TToolButton
+        Visible = True
+      end
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmDocumentosEntradas.adodsDocumentosDetalles
+    AutoEdit = False
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -221,13 +292,19 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
     inherited DataSetDelete: TDataSetDelete
       Visible = True
     end
+    inherited DataSetPost: TDataSetPost
+      Visible = True
+    end
+    inherited DataSetCancel: TDataSetCancel
+      Visible = True
+    end
     inherited actCloseGrid: TAction
       Visible = False
     end
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B8010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

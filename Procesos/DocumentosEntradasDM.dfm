@@ -6,10 +6,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdDocumentoEntrada, IdDocumentoEntradaTipo, IdDocumentoEn' +
-      'tradaEstatus, IdPersona, IdMoneda, IdUsuario, Fecha, TipoCambio,' +
-      ' SubTotal, IVA, Total, Observaciones from DocumentosEntradas'#13#10'wh' +
-      'ere IdDocumentoEntradaTipo = :IdDocumentoEntradaTipo'
+      'select IdDocumentoEntrada, IdDocumentoEntradaAnterior, IdDocumen' +
+      'toEntradaTipo, IdDocumentoEntradaEstatus, IdPersona, IdMoneda, I' +
+      'dUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, Observaciones' +
+      ' from DocumentosEntradas'#13#10'where IdDocumentoEntradaTipo = :IdDocu' +
+      'mentoEntradaTipo'
     Parameters = <
       item
         Name = 'IdDocumentoEntradaTipo'
@@ -22,6 +23,10 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     object adodsMasterIdDocumentoEntrada: TAutoIncField
       FieldName = 'IdDocumentoEntrada'
       ReadOnly = True
+      Visible = False
+    end
+    object adodsMasterIdDocumentoEntradaAnterior: TIntegerField
+      FieldName = 'IdDocumentoEntradaAnterior'
       Visible = False
     end
     object adodsMasterIdDocumentoEntradaTipo: TIntegerField
@@ -57,6 +62,17 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
     object adodsMasterFecha: TDateTimeField
       FieldName = 'Fecha'
+    end
+    object adodsMasterClaveProvedor: TStringField
+      DisplayLabel = 'Clave'
+      FieldKind = fkLookup
+      FieldName = 'ClaveProvedor'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdPersona'
+      Size = 10
+      Lookup = True
     end
     object adodsMasterProvedor: TStringField
       FieldKind = fkLookup
@@ -141,17 +157,34 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Caption = 'actBuscarProducto'
       OnExecute = actBuscarProductoExecute
     end
+    object actGenDocumento: TAction
+      Caption = 'Crear'
+      Hint = 'Crear documento'
+      ImageIndex = 11
+      OnExecute = actGenDocumentoExecute
+      OnUpdate = actGenDocumentoUpdate
+    end
     object actAutorizar: TAction
       Caption = 'Autorizar'
+      Hint = 'Permite autorizar el documento'
+      ImageIndex = 11
       OnExecute = actAutorizarExecute
       OnUpdate = actAutorizarUpdate
     end
     object actImprimir: TAction
       Caption = 'Imprimir'
+      Hint = 'Permite imprimir el documento'
+      ImageIndex = 12
       OnExecute = actImprimirExecute
+    end
+    object actGetTipoCambio: TAction
+      Caption = '...'
+      Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
+      OnExecute = actGetTipoCambioExecute
     end
   end
   object adodsTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -162,6 +195,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 168
   end
   object adodsEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -172,6 +206,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 216
   end
   object adodsPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -203,6 +238,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -211,6 +247,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 328
   end
   object adodsUsuarios: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'
@@ -220,6 +257,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   end
   object dsmaster: TDataSource
     DataSet = adodsMaster
+    OnDataChange = dsmasterDataChange
     Left = 96
     Top = 16
   end
@@ -229,18 +267,19 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     AfterPost = adodsDocumentosDetallesAfterPost
     AfterDelete = adodsDocumentosDetallesAfterPost
     CommandText = 
-      'select IdDocumentoentradaDetalle, IdDocumentoEntrada, IdAlmacen,' +
+      'SELECT IdDocumentoEntradaDetalle, IdDocumentoEntrada, IdAlmacen,' +
       ' IdProducto, ClaveProducto, Cantidad, CantidadPendiente, Precio,' +
-      ' Importe from DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntra' +
-      'da = :IdDocumentoEntrada'
+      ' Importe'#13#10'FROM DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntr' +
+      'ada = :IdDocumentoEntrada'
     DataSource = dsmaster
     MasterFields = 'IdDocumentoEntrada'
     Parameters = <
       item
         Name = 'IdDocumentoEntrada'
-        Attributes = [paSigned, paNullable]
+        Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 24
@@ -299,6 +338,65 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsDocumentosDetallesExistencia: TFloatField
+      FieldKind = fkLookup
+      FieldName = 'Existencia'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Existencia'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesCantidadAnual: TFloatField
+      DisplayLabel = 'Ventas acumuladas'
+      FieldKind = fkLookup
+      FieldName = 'CantidadAnual'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'CantidadAnual'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesCantidadMensual: TFloatField
+      DisplayLabel = 'Ventas mes'
+      FieldKind = fkLookup
+      FieldName = 'CantidadMensual'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'CantidadMensual'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesCantidadPromedio: TFloatField
+      DisplayLabel = 'Promedio mensual'
+      FieldKind = fkLookup
+      FieldName = 'CantidadPromedio'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'CantidadPromedio'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesCantidadFuturo: TFloatField
+      DisplayLabel = 'Futuro en meses'
+      FieldKind = fkLookup
+      FieldName = 'CantidadFuturo'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'CantidadFuturo'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesBackOrder: TStringField
+      FieldKind = fkLookup
+      FieldName = 'BackOrder'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Backorder'
+      KeyFields = 'IdProducto'
+      Size = 255
+      Lookup = True
     end
   end
   object adodsProductos: TADODataSet
@@ -455,9 +553,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Left = 40
     Top = 480
   end
-  object adopAutorizar: TADOStoredProc
+  object adopCambiarEstatus: TADOStoredProc
     Connection = _dmConection.ADOConnection
-    ProcedureName = 'p_SetDocumentosEntradasAutorizar;1'
+    ProcedureName = 'p_SetDocumentosEntradasEstatus;1'
     Parameters = <
       item
         Name = '@RETURN_VALUE'
@@ -4383,5 +4481,36 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     UserName = 'Generales'
     Left = 182
     Top = 18
+  end
+  object adodsCantidad: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        IdProducto, Existencia, CantidadAnual, CantidadMen' +
+      'sual, CantidadPromedio, CantidadFuturo, Backorder'#13#10'FROM         ' +
+      '   v_ProductosCantidad'
+    Parameters = <>
+    Left = 144
+    Top = 224
+  end
+  object adoqTipoCambio: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdMoneda'
+        DataType = ftFloat
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT dbo.GetCotizacionMoneda(:IdMoneda) AS Valor')
+    Left = 424
+    Top = 384
+    object adoqTipoCambioValor: TFMTBCDField
+      FieldName = 'Valor'
+      ReadOnly = True
+      Precision = 16
+    end
   end
 end

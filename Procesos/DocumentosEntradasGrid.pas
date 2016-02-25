@@ -43,6 +43,8 @@ type
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
     tvMasterProvedor: TcxGridDBColumn;
+    tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn;
+    tvMasterClaveProvedor: TcxGridDBColumn;
   private
     { Private declarations }
   public

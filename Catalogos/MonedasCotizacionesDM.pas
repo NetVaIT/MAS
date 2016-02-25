@@ -10,12 +10,12 @@ type
   TdmMonedasCotizaciones = class(T_dmStandar)
     adodsMasterIdMonedaCotizacion: TAutoIncField;
     adodsMasterIdMoneda: TIntegerField;
-    adodsMasterFecha: TWideStringField;
     adodsMasterImporte: TFMTBCDField;
     adodsMonedas: TADODataSet;
     adodsMonedasIdMoneda: TAutoIncField;
     adodsMonedasDescripcion: TStringField;
     adodsMasterMoneda: TStringField;
+    adodsMasterFecha: TDateTimeField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

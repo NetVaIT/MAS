@@ -1,5 +1,7 @@
 inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   Caption = 'frmDocumentosEntradasGrid'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -7,6 +9,10 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntrada'
+          Visible = False
+        end
+        object tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoEntradaAnterior'
           Visible = False
         end
         object tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn
@@ -32,8 +38,15 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
         end
+        object tvMasterEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'Estatus'
+          Width = 200
+        end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
+        end
+        object tvMasterClaveProvedor: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveProvedor'
         end
         object tvMasterProvedor: TcxGridDBColumn
           DataBinding.FieldName = 'Provedor'
@@ -45,10 +58,6 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
         end
         object tvMasterTipoCambio: TcxGridDBColumn
           DataBinding.FieldName = 'TipoCambio'
-        end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
-          Width = 200
         end
         object tvMasterSubTotal: TcxGridDBColumn
           DataBinding.FieldName = 'SubTotal'
@@ -74,7 +83,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -215,7 +224,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

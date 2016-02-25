@@ -162,6 +162,7 @@ begin
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
+   43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
   end;
   if Assigned(gModulo) then

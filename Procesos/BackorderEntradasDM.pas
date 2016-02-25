@@ -15,7 +15,6 @@ type
     adodsMasterIdentificador1: TStringField;
     adodsMasterProducto: TStringField;
     adodsMasterOrdenada: TFloatField;
-    adodsMasterProforma: TFloatField;
     adodsMasterPendiente: TFloatField;
     dsMaster: TDataSource;
     adodsDetalle: TADODataSet;
@@ -30,6 +29,9 @@ type
     adodsDetalleCantidad: TFloatField;
     adodsDetalleIdentificador1: TStringField;
     adodsDetalleProducto: TStringField;
+    adodsMasterFacturada: TFloatField;
+    adodsMasterTransito: TFloatField;
+    adodsMasterEntrada: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

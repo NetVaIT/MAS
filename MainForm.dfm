@@ -99,6 +99,8 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -529,9 +531,11 @@ inherited frmMain: TfrmMain
       OnExecute = actCatalogoExecute
     end
     object actInvoice: TAction
+      Tag = 43
       Category = 'Compras'
       Caption = 'Facturas'
       ImageIndex = 33
+      OnExecute = actCatalogoExecute
     end
     object actOrdenesEntrada: TAction
       Category = 'Compras'

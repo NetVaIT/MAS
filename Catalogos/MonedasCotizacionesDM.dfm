@@ -24,17 +24,19 @@ inherited dmMonedasCotizaciones: TdmMonedasCotizaciones
       Size = 80
       Lookup = True
     end
-    object adodsMasterFecha: TWideStringField
+    object adodsMasterFecha: TDateTimeField
       FieldName = 'Fecha'
-      Size = 10
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
+      DisplayFormat = '$,0.000000;-$,0.000000'
+      EditFormat = ',0.000000;-,0.000000'
       Precision = 18
       Size = 6
     end
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
