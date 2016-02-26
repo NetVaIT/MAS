@@ -85,6 +85,11 @@ type
     actInvoice: TAction;
     actOrdenesEntrada: TAction;
     dxBarLargeButton24: TdxBarLargeButton;
+    ActRegistroPagos: TAction;
+    dxBarManagerBar4: TdxBar;
+    dxBarLargeButton25: TdxBarLargeButton;
+    dxBarLargeButton26: TdxBarLargeButton;
+    ActAplicaciones: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -114,7 +119,7 @@ implementation
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
-  ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM;
+  ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM;
 
 { TfrmMain }
 
@@ -164,6 +169,8 @@ begin
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
+   60: gModulo := TdmPagos.create(Self); //Feb 24/16
+//   61: gModulo :=TdmAplicaciones.create(Self);
   end;
   if Assigned(gModulo) then
   begin

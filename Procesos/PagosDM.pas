@@ -73,10 +73,6 @@ type
     adodsMasterFolioPago: TIntegerField;
     adodsMasterSeriePago: TStringField;
     ADODtStConfiguraciones: TADODataSet;
-    IntegerField6: TIntegerField;
-    StringField4: TStringField;
-    StringField5: TStringField;
-    IntegerField7: TIntegerField;
     adodsMasterNombreCliente: TStringField;
     adodsMasterMetodoPago: TStringField;
     ADODtStBancosIdBanco: TAutoIncField;
@@ -85,7 +81,40 @@ type
     ADODtStBancosNombre: TStringField;
     adodsMasterBanco: TStringField;
     adodsMasterDomicilioCliente: TStringField;
+    adodsMasterIdentificador: TStringField;
+    ADODtStConfiguracionesUltimoFolioPago: TIntegerField;
+    ADODtStConfiguracionesUltimaSeriePago: TStringField;
+    ADODtStDireccAuxiliarDirCompleta: TStringField;
+    ADODtStAplicacionesPagos: TADODataSet;
+    ADODtStConFactPendientes: TADODataSet;
+    ADODtStAplicacionesPagosIdPagoAplicacion: TLargeintField;
+    ADODtStAplicacionesPagosIdPagoRegistro: TLargeintField;
+    ADODtStAplicacionesPagosIdCFDI: TLargeintField;
+    ADODtStAplicacionesPagosIdPersonaCliente: TIntegerField;
+    ADODtStAplicacionesPagosFecha: TDateTimeField;
+    ADODtStAplicacionesPagosImporte: TFloatField;
+    ADODtStConFactPendientesIdCFDI: TLargeintField;
+    ADODtStConFactPendientesIdCFDITipoDocumento: TIntegerField;
+    ADODtStConFactPendientesIdPersonaReceptor: TIntegerField;
+    ADODtStConFactPendientesIdOrdenSalida: TIntegerField;
+    ADODtStConFactPendientesIdCFDIEstatus: TIntegerField;
+    ADODtStConFactPendientesIdClienteDomicilio: TIntegerField;
+    ADODtStConFactPendientesTipoCambio: TStringField;
+    ADODtStConFactPendientesSerie: TStringField;
+    ADODtStConFactPendientesFolio: TLargeintField;
+    ADODtStConFactPendientesFecha: TDateTimeField;
+    ADODtStConFactPendientesTotal: TFloatField;
+    ADODtStConFactPendientesSaldoDocumento: TFloatField;
+    ADODtStAplicacionesPagosserieFactura: TStringField;
+    ADODtStAplicacionesPagosFolioFactura: TIntegerField;
+    ADOQryAuxiliar: TADOQuery;
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure adodsMasterAfterPost(DataSet: TDataSet);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);
+    procedure ADODtStAplicacionesPagosAfterPost(DataSet: TDataSet);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -99,7 +128,76 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses PagosEdit;
+
 {$R *.dfm}
+
+procedure TdmPagos.adodsMasterAfterPost(DataSet: TDataSet);
+var SErieAct:String;
+    FolioAct:Integer;
+begin
+  inherited;
+  //Verificar si aca
+
+  SerieAct:= adoDSMaster.FieldByName('SeriePago').AsString;
+  FolioAct:= adoDSMaster.FieldByName('FolioPago').AsInteger;
+  ADODtStConfiguraciones.Edit;
+  ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
+  ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
+  ADODtStConfiguraciones.Post;
+end;
+
+procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  if dataset.State=dsInsert then
+  begin
+    adodsMaster.FieldByName('Saldo').AsFloat:=adodsMaster.FieldByName('Importe').AsFloat;;
+  end;
+end;
+
+procedure TdmPagos.adodsMasterNewRecord(DataSet: TDataSet);
+var SErieAct:String;
+    FolioAct:Integer;
+begin  //Pagos
+  inherited;
+  DataSet.FieldByName('Fecha').AsDateTime:=Now;
+  SerieAct:= ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString;
+  FolioAct:= ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger;
+  DataSet.FieldByName('SeriePago').AsString:=SerieAct;
+  DataSet.FieldByName('FolioPago').asInteger:=FolioAct+1;
+ // DataSet.FieldByName('Fecha').AsDateTime:=Now;
+
+end;
+
+procedure TdmPagos.ADODtStAplicacionesPagosAfterPost(DataSet: TDataSet);
+
+begin
+  inherited;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET SALDODocumento=SALDODocumento - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDCFDI='+DAtaSEt.FieldByName('IDCFDI').ASString);
+  ADOQryAuxiliar.ExecSQL;
+
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE PagosRegistros SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
+                        +' where IDPagoRegistro='+DAtaSEt.FieldByName('IDPagoRegistro').ASString);
+  ADOQryAuxiliar.ExecSQL;
+
+
+
+end;
+
+procedure TdmPagos.ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  ADODtStAplicacionesPagos.FieldByName('Fecha').asDAteTime:=now;
+  ADODtStAplicacionesPagos.FieldByName('IDPagoRegistro').asInteger:=adodsMaster.Fieldbyname('IDPagoRegistro').AsInteger;
+  ADODtStAplicacionesPagos.FieldByName('Importe').asFLoat:=adodsMaster.FieldByName('Saldo').AsFloat; //Este se debe actualizar
+
+
+end;
 
 procedure TdmPagos.ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
 begin
@@ -108,6 +206,15 @@ begin
                                                 ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString+
                                                 '. '+dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString);
 
+end;
+
+procedure TdmPagos.DataModuleCreate(Sender: TObject);
+begin
+  inherited;
+  gGridEditForm:= TFrmPagosEdt.Create(Self);
+  gGridEditForm.DataSet := adodsMaster;
+  adodsMaster.open;
+  ADODtStConfiguraciones.open;
 end;
 
 end.

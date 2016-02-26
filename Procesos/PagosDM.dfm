@@ -1,6 +1,10 @@
 inherited dmPagos: TdmPagos
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforePost = adodsMasterBeforePost
+    AfterPost = adodsMasterAfterPost
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdPagoRegistro, IdBanco, IdMetodoPago, IdPersonaCliente, ' +
       #13#10'IdCuentaBancariaEstadoCuenta, Fecha, Referencia, Importe, Sald' +
@@ -93,10 +97,20 @@ inherited dmPagos: TdmPagos
       Size = 150
       Lookup = True
     end
+    object adodsMasterIdentificador: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Identificador'
+      LookupDataSet = ADODtStDireccionesCliente
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdDomicilioCliente'
+      Lookup = True
+    end
   end
   object ADODtStDireccAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnCalcFields = ADODtStDireccionesClienteCalcFields
     CommandText = 
       'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
@@ -174,8 +188,15 @@ inherited dmPagos: TdmPagos
       FieldName = 'Pais'
       Size = 100
     end
+    object ADODtStDireccAuxiliarDirCompleta: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DirCompleta'
+      Size = 150
+      Calculated = True
+    end
   end
   object ADODtStDireccionesCliente: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDireccionesClienteCalcFields
@@ -263,6 +284,7 @@ inherited dmPagos: TdmPagos
     Top = 16
   end
   object ADODtstMetodoPago: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -287,6 +309,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStClientes: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -334,6 +357,7 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStBancos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdBanco, IdPais, Identificador, Nombre  from Bancos'
@@ -363,19 +387,119 @@ inherited dmPagos: TdmPagos
     Parameters = <>
     Left = 316
     Top = 179
-    object IntegerField6: TIntegerField
-      FieldName = 'IdMetodoPago'
+    object ADODtStConfiguracionesUltimoFolioPago: TIntegerField
+      FieldName = 'UltimoFolioPago'
     end
-    object StringField4: TStringField
-      FieldName = 'Identificador'
+    object ADODtStConfiguracionesUltimaSeriePago: TStringField
+      FieldName = 'UltimaSeriePago'
+    end
+  end
+  object ADODtStAplicacionesPagos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = ADODtStAplicacionesPagosAfterPost
+    OnNewRecord = ADODtStAplicacionesPagosNewRecord
+    CommandText = 
+      'select IdPagoAplicacion, IdPagoRegistro, IdCFDI, IdPersonaClient' +
+      'e,'#13#10' Fecha, Importe from PagosAplicaciones'
+    Parameters = <>
+    Left = 60
+    Top = 251
+    object ADODtStAplicacionesPagosIdPagoAplicacion: TLargeintField
+      FieldName = 'IdPagoAplicacion'
+      ReadOnly = True
+    end
+    object ADODtStAplicacionesPagosIdPagoRegistro: TLargeintField
+      FieldName = 'IdPagoRegistro'
+    end
+    object ADODtStAplicacionesPagosIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object ADODtStAplicacionesPagosIdPersonaCliente: TIntegerField
+      FieldName = 'IdPersonaCliente'
+    end
+    object ADODtStAplicacionesPagosFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStAplicacionesPagosImporte: TFloatField
+      FieldName = 'Importe'
+    end
+    object ADODtStAplicacionesPagosserieFactura: TStringField
+      FieldKind = fkLookup
+      FieldName = 'serieFactura'
+      LookupDataSet = ADODtStConFactPendientes
+      LookupKeyFields = 'IdCFDI'
+      LookupResultField = 'Serie'
+      KeyFields = 'IdCFDI'
       Size = 10
+      Lookup = True
     end
-    object StringField5: TStringField
-      FieldName = 'Descripcion'
-      Size = 50
+    object ADODtStAplicacionesPagosFolioFactura: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'FolioFactura'
+      LookupDataSet = ADODtStConFactPendientes
+      LookupKeyFields = 'IdCFDI'
+      LookupResultField = 'Folio'
+      KeyFields = 'IdCFDI'
+      Lookup = True
     end
-    object IntegerField7: TIntegerField
-      FieldName = 'ExigeCuenta'
+  end
+  object ADODtStConFactPendientes: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select  IdCFDI, IdCFDITipoDocumento, IdPersonaReceptor, '#13#10'IdOrde' +
+      'nSalida, IdCFDIEstatus, IdClienteDomicilio, TipoCambio,'#13#10' Serie,' +
+      ' Folio, Fecha, Total, SaldoDocumento from CFDI where '#13#10'SaldoDocu' +
+      'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3)'#13#10
+    DataSource = DSMaster
+    IndexFieldNames = 'IdPersonaReceptor;IdClienteDomicilio'
+    MasterFields = 'IdPersonaCliente;IdDomicilioCliente'
+    Parameters = <>
+    Left = 196
+    Top = 251
+    object ADODtStConFactPendientesIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+      ReadOnly = True
     end
+    object ADODtStConFactPendientesIdCFDITipoDocumento: TIntegerField
+      FieldName = 'IdCFDITipoDocumento'
+    end
+    object ADODtStConFactPendientesIdPersonaReceptor: TIntegerField
+      FieldName = 'IdPersonaReceptor'
+    end
+    object ADODtStConFactPendientesIdOrdenSalida: TIntegerField
+      FieldName = 'IdOrdenSalida'
+    end
+    object ADODtStConFactPendientesIdCFDIEstatus: TIntegerField
+      FieldName = 'IdCFDIEstatus'
+    end
+    object ADODtStConFactPendientesIdClienteDomicilio: TIntegerField
+      FieldName = 'IdClienteDomicilio'
+    end
+    object ADODtStConFactPendientesTipoCambio: TStringField
+      FieldName = 'TipoCambio'
+    end
+    object ADODtStConFactPendientesSerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADODtStConFactPendientesFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADODtStConFactPendientesFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADODtStConFactPendientesTotal: TFloatField
+      FieldName = 'Total'
+    end
+    object ADODtStConFactPendientesSaldoDocumento: TFloatField
+      FieldName = 'SaldoDocumento'
+    end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 324
+    Top = 251
   end
 end
