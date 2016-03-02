@@ -1,6 +1,8 @@
 inherited frmPersonasEdit: TfrmPersonasEdit
   Caption = 'frmPersonasEdit'
   OnDestroy = FormDestroy
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlClose: TPanel
@@ -13,12 +15,12 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     TabOrder = 4
   end
   inherited pcMain: TcxPageControl
-    Top = 21
-    Height = 456
+    Top = 43
+    Height = 434
     Properties.HideTabs = False
-    ExplicitTop = 21
-    ExplicitHeight = 456
-    ClientRectBottom = 454
+    ExplicitTop = 43
+    ExplicitHeight = 434
+    ClientRectBottom = 432
     ClientRectLeft = 2
     ClientRectRight = 748
     ClientRectTop = 28
@@ -26,21 +28,21 @@ inherited frmPersonasEdit: TfrmPersonasEdit
       ExplicitLeft = 2
       ExplicitTop = 28
       ExplicitWidth = 746
-      ExplicitHeight = 426
+      ExplicitHeight = 404
       inherited cxScrollBox1: TcxScrollBox
         Width = 746
-        Height = 426
+        Height = 404
         ExplicitWidth = 746
-        ExplicitHeight = 426
+        ExplicitHeight = 404
         inherited tbarData: TToolBar
           Width = 744
           ExplicitWidth = 744
         end
         inherited pnlMaster: TPanel
           Width = 744
-          Height = 399
+          Height = 377
           ExplicitWidth = 744
-          ExplicitHeight = 399
+          ExplicitHeight = 377
           object pnlPersona: TPanel
             Left = 0
             Top = 0
@@ -323,13 +325,13 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             Left = 0
             Top = 353
             Width = 744
-            Height = 46
+            Height = 24
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 3
             Visible = False
             object LblCteCte: TLabel
-              Left = 210
+              Left = 223
               Top = 6
               Width = 71
               Height = 13
@@ -338,35 +340,36 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             end
             object Label13: TLabel
               Left = 18
-              Top = 4
+              Top = 7
               Width = 99
               Height = 13
               Caption = 'Metodo Pago Cliente'
               FocusControl = cxDBEdtCtaCliente
             end
-            object DBText1: TDBText
-              Left = 378
-              Top = 28
-              Width = 87
-              Height = 17
-              DataSource = DataSource
-            end
             object Label15: TLabel
-              Left = 378
-              Top = 9
+              Left = 493
+              Top = 6
               Width = 62
               Height = 13
               Caption = 'Saldo Cliente'
               FocusControl = cxDBEdtCtaCliente
             end
+            object Label4: TLabel
+              Left = 364
+              Top = 6
+              Width = 94
+              Height = 13
+              Caption = 'D'#237'as Cr'#233'dito Cliente'
+              FocusControl = cxDBTextEdit3
+            end
             object cxDBEdtCtaCliente: TcxDBTextEdit
-              Left = 210
-              Top = 25
+              Left = 223
+              Top = 22
               DataBinding.DataField = 'NumCtaPagoCliente'
               DataBinding.DataSource = DataSource
               Properties.OnEditValueChanged = edtNombrePropertiesEditValueChanged
               TabOrder = 0
-              Width = 146
+              Width = 119
             end
             object cxDBLkupCBxMetodoPago: TcxDBLookupComboBox
               Left = 18
@@ -383,6 +386,25 @@ inherited frmPersonasEdit: TfrmPersonasEdit
               TabOrder = 1
               Width = 186
             end
+            object cxDBTextEdit3: TcxDBTextEdit
+              Left = 364
+              Top = 22
+              DataBinding.DataField = 'DiasCreditoCliente'
+              DataBinding.DataSource = DataSource
+              Properties.OnEditValueChanged = edtNombrePropertiesEditValueChanged
+              TabOrder = 2
+              Width = 111
+            end
+            object cxDBLabel3: TcxDBLabel
+              Left = 493
+              Top = 19
+              DataBinding.DataField = 'SaldoCliente'
+              DataBinding.DataSource = DataSource
+              Properties.Alignment.Horz = taRightJustify
+              Height = 25
+              Width = 109
+              AnchorX = 602
+            end
           end
         end
       end
@@ -390,31 +412,55 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
     object tsContactos: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
     object TSCertificadosCSD: TcxTabSheet
       Caption = 'Certificados CSD'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 426
     end
   end
   object cxDBLabel1: TcxDBLabel [8]
     Left = 0
-    Top = 0
+    Top = 22
     Align = alTop
     DataBinding.DataField = 'RazonSocial'
     DataBinding.DataSource = DataSource
@@ -429,12 +475,29 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     Height = 21
     Width = 750
   end
+  object PnlTitulo: TPanel [9]
+    Left = 0
+    Top = 0
+    Width = 750
+    Height = 22
+    Align = alTop
+    Caption = 'Personas'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 6
+  end
   inherited DataSource: TDataSource
     DataSet = dmPersonas.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -575,7 +638,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1115,7 +1178,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   object DSMetodoPago: TDataSource
     DataSet = dmPersonas.ADOdsMetodoPago
-    Left = 480
-    Top = 400
+    Left = 672
+    Top = 392
   end
 end

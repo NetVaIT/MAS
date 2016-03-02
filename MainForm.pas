@@ -119,7 +119,8 @@ implementation
 uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
-  ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM;
+  ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
+  AplicacionesConsultaDM;
 
 { TfrmMain }
 
@@ -170,7 +171,7 @@ begin
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
-//   61: gModulo :=TdmAplicaciones.create(Self);
+   61: gModulo := TdmAplicacionesConsulta.create(Self);
   end;
   if Assigned(gModulo) then
   begin

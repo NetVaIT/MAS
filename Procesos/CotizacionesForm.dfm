@@ -52,11 +52,12 @@ inherited frmCotizaciones: TfrmCotizaciones
     ExplicitWidth = 1277
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 1277
-    Height = 525
+    Height = 503
     ExplicitWidth = 1277
     ExplicitHeight = 525
-    ClientRectBottom = 524
+    ClientRectBottom = 502
     ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -65,7 +66,7 @@ inherited frmCotizaciones: TfrmCotizaciones
       ExplicitHeight = 523
       inherited cxScrollBox1: TcxScrollBox
         Width = 1275
-        Height = 523
+        Height = 501
         ExplicitWidth = 1275
         ExplicitHeight = 523
         inherited tbarData: TToolBar
@@ -144,17 +145,18 @@ inherited frmCotizaciones: TfrmCotizaciones
         end
         inherited pnlMaster: TPanel
           Width = 1273
-          Height = 496
+          Height = 474
           ExplicitWidth = 1273
           ExplicitHeight = 496
           object pnlDetail: TPanel
             Left = 0
             Top = 161
             Width = 1273
-            Height = 224
+            Height = 202
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitHeight = 224
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -245,7 +247,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Left = 0
               Top = 29
               Width = 1273
-              Height = 195
+              Height = 173
               Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
               DataSource = DataSourceDetail
@@ -319,7 +321,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                   Expanded = False
                   FieldName = 'Importe'
                   ReadOnly = True
-                  Width = 64
                   Visible = True
                 end>
             end
@@ -596,11 +597,12 @@ inherited frmCotizaciones: TfrmCotizaciones
           end
           object Panel1: TPanel
             Left = 0
-            Top = 385
+            Top = 363
             Width = 1273
             Height = 111
             Align = alBottom
             TabOrder = 2
+            ExplicitTop = 385
             object Label2: TLabel
               Left = 530
               Top = 49
@@ -670,6 +672,26 @@ inherited frmCotizaciones: TfrmCotizaciones
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 1277
+    Height = 22
+    Align = alTop
+    Caption = 'Cotizaciones'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = 8
+    ExplicitTop = 8
+    ExplicitWidth = 990
+  end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
     OnStateChange = DataSourceStateChange
@@ -677,7 +699,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -883,7 +905,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011900C002E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

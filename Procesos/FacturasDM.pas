@@ -355,7 +355,7 @@ type
     function GetFileName(IdDocumento: Integer): TFileName;    //Feb 17/16
     function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;   //Feb 17/16
     function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean; //Feb 17/16
-
+    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double):Boolean;
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -740,6 +740,9 @@ begin
           adodsMasterIdDocumentoCBB.Value := CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
 
           adodsMaster.Post;
+          //Actualiza Saldos  Mar 1/16
+          ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value);
+
           //Actualiza inventario
           ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
 
@@ -950,6 +953,26 @@ begin
 
 
 
+
+end;
+
+function TDMFacturas.ActualizaSaldoCliente(IdCFDI, IDCliente,
+  IDDomicilioCliente: Integer;Importe :Double): Boolean;
+begin
+ try
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo + '+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
+  ADOQryAuxiliar.ExecSQL;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente + '+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
+  ADOQryAuxiliar.ExecSQL;
+   result:=true;
+  except
+    result:=False;
+ end;
 
 end;
 

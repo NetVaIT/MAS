@@ -36,6 +36,8 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBLabel2: TcxDBLabel;
     Label4: TLabel;
+    cxDBLabel3: TcxDBLabel;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
   private
     FUpdateDomicilio: TBasicAction;
@@ -57,7 +59,7 @@ procedure TfrmPersonasDomiciliosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPersonasDomicilios.Create(Self);
-  TfrmPersonasDomicilios(gFormGrid).CerrarGrid := actCloseGrid;
+  //TfrmPersonasDomicilios(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 procedure TfrmPersonasDomiciliosEdit.SetUpdateDomicilio(

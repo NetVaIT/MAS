@@ -44,6 +44,10 @@ type
     tvMasterPersonaTipo: TcxGridDBColumn;
     tvMasterSexo: TcxGridDBColumn;
     tvMasterEstadoCivil: TcxGridDBColumn;
+    tvMasterPais: TcxGridDBColumn;
+    tvMasterSaldoCliente: TcxGridDBColumn;
+    tvMasterMetodoPago: TcxGridDBColumn;
+    tvMasterDiasCreditoCliente: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
   private
     FRol: TPRol;

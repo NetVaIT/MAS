@@ -196,7 +196,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStDireccionesCliente: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDireccionesClienteCalcFields
@@ -284,7 +283,6 @@ inherited dmPagos: TdmPagos
     Top = 16
   end
   object ADODtstMetodoPago: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -309,7 +307,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStClientes: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -357,7 +354,6 @@ inherited dmPagos: TdmPagos
     end
   end
   object ADODtStBancos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdBanco, IdPais, Identificador, Nombre  from Bancos'

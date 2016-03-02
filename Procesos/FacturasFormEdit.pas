@@ -124,6 +124,7 @@ type
     TlBtnEnvioFactura: TToolButton;
     ToolButton4: TToolButton;
     TlBtnCancelaCFDI: TToolButton;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);

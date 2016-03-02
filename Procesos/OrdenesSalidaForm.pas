@@ -158,6 +158,7 @@ type
     PppMnEnviar: TPopupMenu;
     EnviarCorreoGuia: TMenuItem;
     TlBtnEnvioFactura: TToolButton;
+    PnlTitulo: TPanel;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);

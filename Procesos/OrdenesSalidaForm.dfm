@@ -58,11 +58,12 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ExplicitHeight = 18
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 1097
-    Height = 561
+    Height = 539
     ExplicitWidth = 1097
     ExplicitHeight = 561
-    ClientRectBottom = 560
+    ClientRectBottom = 538
     ClientRectRight = 1096
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -71,7 +72,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
       ExplicitHeight = 559
       inherited cxScrollBox1: TcxScrollBox
         Width = 1095
-        Height = 559
+        Height = 537
         ExplicitWidth = 1095
         ExplicitHeight = 559
         inherited tbarData: TToolBar
@@ -103,7 +104,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
         end
         inherited pnlMaster: TPanel
           Width = 1093
-          Height = 532
+          Height = 510
           ExplicitWidth = 1093
           ExplicitHeight = 532
           object Panel4: TPanel
@@ -1071,8 +1072,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               object Label26: TLabel
                 Left = 771
                 Top = 99
-                Width = 79
-                Height = 14
+                Width = 42
+                Height = 13
                 Caption = 'Doc Guia'
               end
               object cxDBTextEdit2: TcxDBTextEdit
@@ -1597,13 +1598,32 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 1097
+    Height = 22
+    Align = alTop
+    Caption = 'Ordenes de Salida'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -180
+    ExplicitWidth = 1277
+  end
   inherited DataSource: TDataSource
     DataSet = DMOrdenesSalidas.adodsMaster
     OnDataChange = DataSourceDataChange
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1809,7 +1829,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

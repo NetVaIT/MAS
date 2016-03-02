@@ -131,7 +131,10 @@ uses
   PagosEdit in 'Procesos\PagosEdit.pas' {FrmPagosEdt},
   ProductosFotosMostrar in 'Catalogos\ProductosFotosMostrar.pas' {FrmMostrarForosProd},
   PagosFormGrid in 'Procesos\PagosFormGrid.pas' {FrmPagosGrid},
-  AplicacionPagos in 'Procesos\AplicacionPagos.pas' {FrmAplicacionPago};
+  AplicacionPagos in 'Procesos\AplicacionPagos.pas' {FrmAplicacionPago},
+  AplicacionesConsultaInd in 'Procesos\AplicacionesConsultaInd.pas' {FrmAplicacionesConsultaInd},
+  AplicacionesConsultaDM in 'Procesos\AplicacionesConsultaDM.pas' {dmAplicacionesConsulta: TDataModule},
+  AplicacionesConsultaGrid in 'Procesos\AplicacionesConsultaGrid.pas' {FrmAplicacionesConsultaGrid};
 
 {$R *.res}
 

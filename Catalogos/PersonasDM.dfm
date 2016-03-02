@@ -8,8 +8,8 @@ inherited dmPersonas: TdmPersonas
       #10'IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor,'#13#10' IdPersona' +
       'Estatus, IdDocumentoLogoEmisor, RFC, CURP, '#13#10'RazonSocial, Nombre' +
       ', ApellidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNaci' +
-      'miento, '#13#10'NumCtaPagoCliente, SaldoCliente, '#13#10'NSSEmpleado'#13#10'FROM P' +
-      'ersonas'
+      'miento, '#13#10'NumCtaPagoCliente, SaldoCliente, '#13#10'NSSEmpleado, DiasCr' +
+      'editoCliente'#13#10'FROM Personas'
     Left = 32
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -125,6 +125,7 @@ inherited dmPersonas: TdmPersonas
     end
     object adodsMasterSaldoCliente: TFMTBCDField
       FieldName = 'SaldoCliente'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -173,6 +174,9 @@ inherited dmPersonas: TdmPersonas
     object adodsMasterNumCtaPagoCliente: TStringField
       FieldName = 'NumCtaPagoCliente'
       Size = 30
+    end
+    object adodsMasterDiasCreditoCliente: TIntegerField
+      FieldName = 'DiasCreditoCliente'
     end
   end
   object adodsPersonaTipo: TADODataSet

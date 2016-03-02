@@ -116,6 +116,8 @@ type
     procedure ADODtStAplicacionesPagosAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
+    function ActualizaSaldoCliente(IDCFDI, IDPagoRegistro: Integer;
+      Importe: Double): Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -145,6 +147,8 @@ begin
   ADODtStConfiguraciones.FieldByName('UltimaSeriePago').AsString:=SerieAct;
   ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
   ADODtStConfiguraciones.Post;
+
+
 end;
 
 procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);
@@ -184,8 +188,8 @@ begin
   ADOQryAuxiliar.SQL.Add('UPDATE PagosRegistros SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
                         +' where IDPagoRegistro='+DAtaSEt.FieldByName('IDPagoRegistro').ASString);
   ADOQryAuxiliar.ExecSQL;
-
-
+   //
+  // ActualizaSaldoCliente(DAtaSEt.FieldByName('IDCFDI').ASInteger,DAtaSEt.FieldByName('IDPagoRegistro').asInteger,DataSet.FieldByName('Importe').AsFloat );
 
 end;
 
@@ -217,4 +221,33 @@ begin
   ADODtStConfiguraciones.open;
 end;
 
+
+
+
+function TdmPagos.ActualizaSaldoCliente(IDCFDI,IDPagoRegistro: Integer;Importe :Double): Boolean;
+var IdDomiciliocliente, IdCliente  :Integer;
+begin
+  //Buscar con el CFDI Buscar el IdCliente y DomicilioCliente para actualizar luego
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Select IDCFDI, IdPersonaReceptor,IDClienteDomicilio from CFDI where IDCFDI='+intToStr(IDCFDI));
+  ADOQryAuxiliar.Open;
+  if not ADOQryAuxiliar.eof then
+  begin
+    IdDomiciliocliente:= ADOQryAuxiliar.FieldByName('IdClienteDomicilio').AsInteger;
+    IdCliente:= ADOQryAuxiliar.FieldByName('IdPersonaReceptor').AsInteger;
+
+
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.Sql.Clear;
+    ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo - '+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
+    ADOQryAuxiliar.ExecSQL;
+
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.Sql.Clear;
+    ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente - '+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
+    ADOQryAuxiliar.ExecSQL;
+
+    end;
+end;
 end.

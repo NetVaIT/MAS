@@ -6,6 +6,8 @@ inherited FrmPagosGrid: TFrmPagosGrid
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitLeft = 400
+      ExplicitTop = -27
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
@@ -16,26 +18,32 @@ inherited FrmPagosGrid: TFrmPagosGrid
           Width = 105
         end
         object tvMasterNombreCliente: TcxGridDBColumn
+          Caption = 'Raz'#243'n Social'
           DataBinding.FieldName = 'NombreCliente'
-          Width = 323
+          Width = 310
         end
         object tvMasterSeriePago: TcxGridDBColumn
+          Caption = 'Serie Pago'
           DataBinding.FieldName = 'SeriePago'
+          Width = 91
         end
         object tvMasterFolioPago: TcxGridDBColumn
+          Caption = 'Folio Pago'
           DataBinding.FieldName = 'FolioPago'
+          Width = 77
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
         end
-        object tvMasterBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'Banco'
-        end
-        object tvMasterMetodoPago: TcxGridDBColumn
-          DataBinding.FieldName = 'MetodoPago'
-        end
         object tvMasterSaldo: TcxGridDBColumn
           DataBinding.FieldName = 'Saldo'
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          Caption = 'M'#233'todo Pago'
+          DataBinding.FieldName = 'MetodoPago'
+        end
+        object tvMasterBanco: TcxGridDBColumn
+          DataBinding.FieldName = 'Banco'
         end
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
@@ -48,7 +56,7 @@ inherited FrmPagosGrid: TFrmPagosGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -189,7 +197,7 @@ inherited FrmPagosGrid: TFrmPagosGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

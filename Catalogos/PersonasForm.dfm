@@ -4,48 +4,63 @@ inherited frmPersonas: TfrmPersonas
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = 35
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPersona: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersona'
+          Visible = False
         end
         object tvMasterRFC: TcxGridDBColumn
           DataBinding.FieldName = 'RFC'
+          Width = 100
         end
         object tvMasterCURP: TcxGridDBColumn
           DataBinding.FieldName = 'CURP'
+          Width = 100
         end
         object tvMasterIdPersonaTipo: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaTipo'
+          Visible = False
         end
         object tvMasterIdSexo: TcxGridDBColumn
           DataBinding.FieldName = 'IdSexo'
+          Visible = False
         end
         object tvMasterIdEstadoCivil: TcxGridDBColumn
           DataBinding.FieldName = 'IdEstadoCivil'
+          Visible = False
         end
         object tvMasterIdPais: TcxGridDBColumn
           DataBinding.FieldName = 'IdPais'
+          Visible = False
         end
         object tvMasterRazonSocial: TcxGridDBColumn
           DataBinding.FieldName = 'RazonSocial'
+          Width = 300
         end
         object tvMasterNombre: TcxGridDBColumn
           DataBinding.FieldName = 'Nombre'
+          Visible = False
         end
         object tvMasterApellidoPaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoPaterno'
+          Visible = False
         end
         object tvMasterApellidoMaterno: TcxGridDBColumn
           DataBinding.FieldName = 'ApellidoMaterno'
+          Visible = False
         end
         object tvMasterLugarNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'LugarNacimiento'
+          Visible = False
         end
         object tvMasterFechaNacimiento: TcxGridDBColumn
           DataBinding.FieldName = 'FechaNacimiento'
+          Visible = False
         end
         object tvMasterIdRol: TcxGridDBColumn
           DataBinding.FieldName = 'IdRol'
+          Visible = False
         end
         object tvMasterRol: TcxGridDBColumn
           DataBinding.FieldName = 'Rol'
@@ -59,6 +74,18 @@ inherited frmPersonas: TfrmPersonas
         object tvMasterEstadoCivil: TcxGridDBColumn
           DataBinding.FieldName = 'EstadoCivil'
         end
+        object tvMasterPais: TcxGridDBColumn
+          DataBinding.FieldName = 'Pais'
+        end
+        object tvMasterSaldoCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'SaldoCliente'
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago'
+        end
+        object tvMasterDiasCreditoCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'DiasCreditoCliente'
+        end
       end
     end
   end
@@ -67,7 +94,7 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400940010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -208,7 +235,7 @@ inherited frmPersonas: TfrmPersonas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C003001A00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C003001A80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

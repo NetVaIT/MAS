@@ -1,5 +1,7 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
@@ -10,6 +12,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
+          ExplicitLeft = -1
           ExplicitTop = 24
           object Label1: TLabel
             Left = 23
@@ -43,9 +46,17 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           object Label4: TLabel
             Left = 363
             Top = 149
-            Width = 69
+            Width = 61
             Height = 13
-            Caption = 'C'#243'digo Cliente'
+            Caption = 'Identificador'
+            FocusControl = DBLookupComboBox2
+          end
+          object Label5: TLabel
+            Left = 363
+            Top = 226
+            Width = 26
+            Height = 13
+            Caption = 'Saldo'
             FocusControl = DBLookupComboBox2
           end
           object DBLookupComboBox2: TDBLookupComboBox
@@ -100,6 +111,16 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Height = 27
             Width = 131
           end
+          object cxDBLabel3: TcxDBLabel
+            Left = 363
+            Top = 245
+            DataBinding.DataField = 'Saldo'
+            DataBinding.DataSource = DataSource
+            Properties.Alignment.Horz = taRightJustify
+            Height = 27
+            Width = 131
+            AnchorX = 494
+          end
         end
       end
     end
@@ -109,7 +130,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -250,7 +271,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

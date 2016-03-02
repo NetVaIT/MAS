@@ -55,11 +55,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     ExplicitHeight = 18
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 990
-    Height = 592
+    Height = 570
     ExplicitWidth = 990
     ExplicitHeight = 592
-    ClientRectBottom = 591
+    ClientRectBottom = 569
     ClientRectRight = 989
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -68,7 +69,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
       ExplicitHeight = 590
       inherited cxScrollBox1: TcxScrollBox
         Width = 988
-        Height = 590
+        Height = 568
         ExplicitWidth = 988
         ExplicitHeight = 590
         inherited tbarData: TToolBar
@@ -114,7 +115,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
         end
         inherited pnlMaster: TPanel
           Width = 986
-          Height = 563
+          Height = 541
           ExplicitWidth = 986
           ExplicitHeight = 563
           object Splitter1: TSplitter
@@ -127,7 +128,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object Splitter2: TSplitter
             Left = 0
-            Top = 485
+            Top = 463
             Width = 986
             Height = 2
             Cursor = crVSplit
@@ -558,10 +559,11 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Left = 0
             Top = 315
             Width = 986
-            Height = 170
+            Height = 148
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitHeight = 170
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -644,7 +646,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Left = 0
               Top = 29
               Width = 986
-              Height = 141
+              Height = 119
               Align = alClient
               DataSource = DSCFDIConceptos
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -716,11 +718,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object Panel1: TPanel
             Left = 0
-            Top = 487
+            Top = 465
             Width = 986
             Height = 76
             Align = alBottom
             TabOrder = 2
+            ExplicitTop = 487
             object Label13: TLabel
               Left = 586
               Top = 48
@@ -804,6 +807,25 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 990
+    Height = 22
+    Align = alTop
+    Caption = 'Facturas'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = 1
+    ExplicitTop = -4
+  end
   inherited DataSource: TDataSource
     DataSet = DMFacturas.adodsMaster
     OnDataChange = DataSourceDataChange
@@ -814,7 +836,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1024,7 +1046,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002D80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002DC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -67,11 +67,14 @@ type
     LblCteCte: TLabel;
     cxDBLkupCBxMetodoPago: TcxDBLookupComboBox;
     Label13: TLabel;
-    DBText1: TDBText;
     Label15: TLabel;
     DSMetodoPago: TDataSource;
     cxDBLabel1: TcxDBLabel;
     TSCertificadosCSD: TcxTabSheet;
+    Label4: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBLabel3: TcxDBLabel;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -188,6 +191,14 @@ begin
   dmPersonasCSD.ShowModule(TSCertificadosCSD,''); //Dic 21/15
 
   TSCertificadosCSD.TabVisible:=  Rol=rEmisor ;
+  case Rol of   //Mar 2/16
+    rCliente: PnlTitulo.Caption:='Clientes';
+    rProveedor: PnlTitulo.Caption:='Proveedores';
+    rEmpleado: PnlTitulo.Caption:='Empleados';
+    rEmisor: PnlTitulo.Caption:='Emisor';
+  end;
+   //Titulo
+
 end;
 
 procedure TfrmPersonasEdit.MostrarPanel;

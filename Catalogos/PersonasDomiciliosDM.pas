@@ -29,6 +29,7 @@ type
     adodsMasterIdentificador: TIntegerField;
     ADODtStVerifica: TADODataSet;
     ADODtStMaximoNoCliente: TADODataSet;
+    adodsMasterSaldo: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

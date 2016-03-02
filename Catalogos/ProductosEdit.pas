@@ -66,6 +66,7 @@ type
     Label13: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
     SpdBtnVerArchivo: TSpeedButton;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);

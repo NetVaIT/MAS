@@ -71,6 +71,7 @@ type
     adodsMasterEstatusPersona: TStringField;
     adodsMasterExigeCta: TIntegerField;
     adodsMasterNumCtaPagoCliente: TStringField;
+    adodsMasterDiasCreditoCliente: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -143,7 +144,7 @@ begin
   TfrmPersonasEdit(gGridEditForm).Rol := Rol;
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEstatus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, ApellidoPaterno, ' +
-  'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado ' +
+  'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado, DiasCreditoCliente ' +
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   actSearch.Execute;

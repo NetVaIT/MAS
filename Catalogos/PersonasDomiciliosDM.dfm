@@ -6,8 +6,8 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
-      'Tipo, IdEnvioTipo ,Predeterminado, Identificador'#13#10' FROM Personas' +
-      'Domicilios '#13#10'WHERE IdPersona = :IdPersona'
+      'Tipo, IdEnvioTipo ,Predeterminado, Identificador, Saldo'#13#10' FROM P' +
+      'ersonasDomicilios '#13#10'WHERE IdPersona = :IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -74,6 +74,12 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       KeyFields = 'IdEnvioTipo'
       Size = 50
       Lookup = True
+    end
+    object adodsMasterSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      currency = True
+      Precision = 18
+      Size = 6
     end
   end
   inherited ActionList: TActionList

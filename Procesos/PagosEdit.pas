@@ -58,6 +58,7 @@ type
     DSAplicacion: TDataSource;
     dsConFacturasPendientes: TDataSource;
     ToolButton3: TToolButton;
+    PnlTitulo: TPanel;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cxDBTxtEdtImporteExit(Sender: TObject);

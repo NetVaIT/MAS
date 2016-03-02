@@ -2,6 +2,8 @@ inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
   OnDestroy = FormDestroy
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -37,16 +39,17 @@ inherited frmProductosEdit: TfrmProductosEdit
     ExplicitTop = 544
   end
   inherited pcMain: TcxPageControl
-    Height = 541
+    Top = 22
+    Height = 519
     ExplicitHeight = 541
-    ClientRectBottom = 540
+    ClientRectBottom = 518
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
       ExplicitHeight = 539
       inherited cxScrollBox1: TcxScrollBox
-        Height = 539
+        Height = 517
         ExplicitHeight = 539
         inherited tbarData: TToolBar
           object ToolButton3: TToolButton
@@ -56,15 +59,16 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Height = 512
+          Height = 490
           ExplicitHeight = 512
           object PnlFotos: TPanel
             Left = 0
             Top = 273
             Width = 746
-            Height = 239
+            Height = 217
             Align = alClient
             TabOrder = 0
+            ExplicitHeight = 239
             object ImgFoto: TImage
               Left = 23
               Top = 18
@@ -409,6 +413,25 @@ inherited frmProductosEdit: TfrmProductosEdit
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 750
+    Height = 22
+    Align = alTop
+    Caption = 'Productos'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -527
+    ExplicitWidth = 1277
+  end
   inherited DataSource: TDataSource
     AutoEdit = False
     DataSet = dmProductos.adodsMaster
@@ -416,7 +439,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -565,7 +588,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0080028C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

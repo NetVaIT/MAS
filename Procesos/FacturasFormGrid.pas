@@ -52,6 +52,7 @@ type
     tvMasterEstatus: TcxGridDBColumn;
     ToolButton12: TToolButton;
     TlBtnEnvioCorreo: TToolButton;
+    PnlFiltros: TPanel;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
