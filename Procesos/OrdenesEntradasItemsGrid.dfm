@@ -1,5 +1,6 @@
-inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
-  Caption = 'frmDocumentosEntradasGrid'
+inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
+  Caption = 'frmOrdenesEntradasItemsGrid'
+  OnCreate = FormCreate
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -7,83 +8,67 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterIdDocumentoEntrada: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntrada'
+        OptionsBehavior.FocusFirstCellOnNewRecord = True
+        OptionsBehavior.GoToNextCellOnEnter = True
+        OptionsData.Editing = True
+        OptionsData.Inserting = True
+        object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaItem'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaAnterior'
+        object tvMasterIdOrdenEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntrada'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaTipo'
+        object tvMasterIdDocumentoEntradaDetalle: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoEntradaDetalle'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaEstatus'
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
           Visible = False
         end
-        object tvMasterIdPersona: TcxGridDBColumn
-          DataBinding.FieldName = 'IdPersona'
-          Visible = False
-        end
-        object tvMasterIdMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'IdMoneda'
-          Visible = False
-        end
-        object tvMasterIdUsuario: TcxGridDBColumn
-          DataBinding.FieldName = 'IdUsuario'
-          Visible = False
-        end
-        object tvMasterTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'Tipo'
-        end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
+        object tvMasterClaveProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveProducto'
+          PropertiesClassName = 'TcxButtonEditProperties'
+          Properties.Buttons = <
+            item
+              Default = True
+              Kind = bkEllipsis
+            end>
           Width = 200
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'Producto'
+          Options.Focusing = False
+          Width = 300
         end
-        object tvMasterClaveProvedor: TcxGridDBColumn
-          DataBinding.FieldName = 'ClaveProvedor'
+        object tvMasterCantidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Cantidad'
         end
-        object tvMasterProvedor: TcxGridDBColumn
-          DataBinding.FieldName = 'Provedor'
-          Width = 304
+        object tvMasterCantidadSolicitada: TcxGridDBColumn
+          DataBinding.FieldName = 'CantidadSolicitada'
+          Visible = False
+          Options.Focusing = False
         end
-        object tvMasterMoneda: TcxGridDBColumn
-          DataBinding.FieldName = 'Moneda'
-          Width = 200
+        object tvMasterPrecio: TcxGridDBColumn
+          DataBinding.FieldName = 'Precio'
         end
-        object tvMasterTipoCambio: TcxGridDBColumn
-          DataBinding.FieldName = 'TipoCambio'
-        end
-        object tvMasterSubTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'SubTotal'
-        end
-        object tvMasterIVA: TcxGridDBColumn
-          DataBinding.FieldName = 'IVA'
-        end
-        object tvMasterTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Total'
-        end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
-          Width = 304
-        end
-        object tvMasterUsuario: TcxGridDBColumn
-          DataBinding.FieldName = 'Usuario'
+        object tvMasterImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'Importe'
+          Options.Focusing = False
         end
       end
     end
-  end
-  inherited DataSource: TDataSource
-    DataSet = dmDocumentosEntradas.adodsMaster
+    inherited tbarGrid: TToolBar
+      inherited ToolButton4: TToolButton
+        Visible = True
+      end
+    end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -222,9 +207,29 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    inherited DataSetInsert: TDataSetInsert
+      Visible = True
+    end
+    inherited DataSetEdit: TDataSetEdit
+      Visible = True
+    end
+    inherited DataSetDelete: TDataSetDelete
+      Visible = True
+    end
+    inherited DataSetPost: TDataSetPost
+      Visible = True
+    end
+    inherited DataSetCancel: TDataSetCancel
+      Visible = True
+    end
+    inherited actCloseGrid: TAction
+      Visible = False
+    end
+  end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8014C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

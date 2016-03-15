@@ -34,14 +34,14 @@ type
     tvMasterIdBackorderEntradaDetalle: TcxGridDBColumn;
     tvMasterIdBackorderEntrada: TcxGridDBColumn;
     tvMasterIdDocumentoEntradaDetalle: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn;
     tvMasterIdProducto: TcxGridDBColumn;
-    tvMasterIdDocumentoEntrada: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
     tvMasterTipo: TcxGridDBColumn;
     tvMasterCantidad: TcxGridDBColumn;
     tvMasterIdentificador1: TcxGridDBColumn;
     tvMasterProducto: TcxGridDBColumn;
+    tvMasterIdOrdenEntradaItem: TcxGridDBColumn;
+    tvMasterIdBackorderEntradaTipo: TcxGridDBColumn;
   private
     { Private declarations }
   public

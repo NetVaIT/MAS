@@ -120,7 +120,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
-  AplicacionesConsultaDM;
+  AplicacionesConsultaDM, OrdenesEntradasDM;
 
 { TfrmMain }
 
@@ -169,6 +169,7 @@ begin
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
+   44: gModulo := TdmOrdenesEntradas.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
@@ -203,6 +204,8 @@ begin
   actBackorderEntrada.Enabled   := Conected;
   actRequisicionCompra.Enabled  := Conected;
   actOrdenCompra.Enabled        := Conected;
+  actInvoice.Enabled            := Conected;
+  actOrdenesEntrada.Enabled     := Conected;
 end;
 
 procedure TfrmMain.DestroyModule;

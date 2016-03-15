@@ -1,4 +1,4 @@
-unit DocumentosEntradasGrid;
+unit OrdenesEntradasGrid;
 
 interface
 
@@ -18,33 +18,33 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, cxGridCustomPopupMenu, cxGridPopupMenu,
-  cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus, cxContainer, cxLabel, cxDBLabel;
+  cxNavigator, Data.DB, cxDBData, Vcl.Menus, cxGridCustomPopupMenu,
+  cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
+  Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, Vcl.ExtCtrls, cxContainer, cxLabel;
 
 type
-  TfrmDocumentosEntradasGrid = class(T_frmStandarGFormGrid)
+  TfrmOrdenesEntradasGrid = class(T_frmStandarGFormGrid)
+    tvMasterIdOrdenEntrada: TcxGridDBColumn;
     tvMasterIdDocumentoEntrada: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaEstatus: TcxGridDBColumn;
+    tvMasterIdAlmacen: TcxGridDBColumn;
+    tvMasterIdOrdenEstatus: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdMoneda: TcxGridDBColumn;
     tvMasterIdUsuario: TcxGridDBColumn;
-    tvMasterTipo: TcxGridDBColumn;
+    tvMasterEstatus: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
+    tvMasterAlmacen: TcxGridDBColumn;
+    tvMasterCLaveProvedor: TcxGridDBColumn;
+    tvMasterProvedor: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterTipoCambio: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
     tvMasterSubTotal: TcxGridDBColumn;
     tvMasterIVA: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
-    tvMasterProvedor: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn;
-    tvMasterClaveProvedor: TcxGridDBColumn;
   private
     { Private declarations }
   public
@@ -55,6 +55,6 @@ implementation
 
 {$R *.dfm}
 
-uses DocumentosEntradasDM;
+uses OrdenesEntradasDM;
 
 end.

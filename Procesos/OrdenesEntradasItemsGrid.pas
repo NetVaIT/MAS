@@ -1,4 +1,4 @@
-unit DocumentosEntradasGrid;
+unit OrdenesEntradasItemsGrid;
 
 interface
 
@@ -22,39 +22,49 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus, cxContainer, cxLabel, cxDBLabel;
+  Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus, cxGridBandedTableView,
+  cxGridDBBandedTableView, dxLayoutContainer, cxGridLayoutView,
+  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView;
 
 type
-  TfrmDocumentosEntradasGrid = class(T_frmStandarGFormGrid)
-    tvMasterIdDocumentoEntrada: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaEstatus: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdMoneda: TcxGridDBColumn;
-    tvMasterIdUsuario: TcxGridDBColumn;
-    tvMasterTipo: TcxGridDBColumn;
-    tvMasterFecha: TcxGridDBColumn;
-    tvMasterMoneda: TcxGridDBColumn;
-    tvMasterTipoCambio: TcxGridDBColumn;
-    tvMasterEstatus: TcxGridDBColumn;
-    tvMasterSubTotal: TcxGridDBColumn;
-    tvMasterIVA: TcxGridDBColumn;
-    tvMasterTotal: TcxGridDBColumn;
-    tvMasterObservaciones: TcxGridDBColumn;
-    tvMasterUsuario: TcxGridDBColumn;
-    tvMasterProvedor: TcxGridDBColumn;
-    tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn;
-    tvMasterClaveProvedor: TcxGridDBColumn;
+  TfrmOrdenesEntradasItemsGrid = class(T_frmStandarGFormGrid)
+    tvMasterIdOrdenEntradaItem: TcxGridDBColumn;
+    tvMasterIdOrdenEntrada: TcxGridDBColumn;
+    tvMasterIdDocumentoEntradaDetalle: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterClaveProducto: TcxGridDBColumn;
+    tvMasterProducto: TcxGridDBColumn;
+    tvMasterCantidad: TcxGridDBColumn;
+    tvMasterCantidadSolicitada: TcxGridDBColumn;
+    tvMasterPrecio: TcxGridDBColumn;
+    tvMasterImporte: TcxGridDBColumn;
+    procedure FormCreate(Sender: TObject);
   private
+    FactSeleccionarProducto: TBasicAction;
+    procedure SetactSeleccionarProducto(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write SetactSeleccionarProducto;
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses DocumentosEntradasDM;
+uses OrdenesEntradasDM;
+
+procedure TfrmOrdenesEntradasItemsGrid.FormCreate(Sender: TObject);
+begin
+  inherited;
+  ApplyBestFit:= False;
+end;
+
+procedure TfrmOrdenesEntradasItemsGrid.SetactSeleccionarProducto(
+  const Value: TBasicAction);
+begin
+  FactSeleccionarProducto := Value;
+  tvMasterClaveProducto.Properties.Buttons[0].Action:= Value;
+end;
 
 end.

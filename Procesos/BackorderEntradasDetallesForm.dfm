@@ -19,16 +19,16 @@ inherited frmBackorderEntradasDetalles: TfrmBackorderEntradasDetalles
           DataBinding.FieldName = 'IdDocumentoEntradaDetalle'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaTipo'
+        object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaItem'
+          Visible = False
+        end
+        object tvMasterIdBackorderEntradaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdBackorderEntradaTipo'
           Visible = False
         end
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
-          Visible = False
-        end
-        object tvMasterIdDocumentoEntrada: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntrada'
           Visible = False
         end
         object tvMasterFecha: TcxGridDBColumn

@@ -1,5 +1,5 @@
 inherited frmDocumentosEntradas: TfrmDocumentosEntradas
-  Caption = 'frmDocumentosEntradas'
+  Caption = 'Documentos'
   ClientHeight = 600
   ClientWidth = 800
   ExplicitWidth = 800
@@ -49,18 +49,19 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
     ExplicitWidth = 800
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 800
-    Height = 427
+    Height = 405
     ExplicitWidth = 800
     ExplicitHeight = 427
-    ClientRectBottom = 426
+    ClientRectBottom = 404
     ClientRectRight = 799
     inherited tsGeneral: TcxTabSheet
       ExplicitWidth = 798
       ExplicitHeight = 425
       inherited cxScrollBox1: TcxScrollBox
         Width = 798
-        Height = 425
+        Height = 403
         ExplicitWidth = 798
         ExplicitHeight = 425
         inherited tbarData: TToolBar
@@ -74,37 +75,40 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             ImageIndex = 12
             Style = tbsSeparator
           end
-          object btnGenDocumento: TToolButton
+          object btnImprimir: TToolButton
             Left = 262
             Top = 0
-            Caption = 'btnGenDocumento'
-            ImageIndex = 14
+            Action = dmDocumentosEntradas.actImprimir
           end
-          object btnAutorizar: TToolButton
+          object btnGenDocumento: TSpeedButton
             Left = 285
             Top = 0
-            Caption = 'Autorizar'
+            Width = 75
+            Height = 22
+            Action = dmDocumentosEntradas.actGenDocumento
           end
-          object btnImprimir: TToolButton
-            Left = 308
+          object btnAutorizar: TSpeedButton
+            Left = 360
             Top = 0
-            Caption = 'btnImprimir'
-            ImageIndex = 13
+            Width = 75
+            Height = 22
+            Action = dmDocumentosEntradas.actAutorizar
           end
         end
         inherited pnlMaster: TPanel
           Width = 796
-          Height = 398
+          Height = 376
           ExplicitWidth = 796
           ExplicitHeight = 398
           object pnlDetail: TPanel
             Left = 0
             Top = 147
             Width = 796
-            Height = 140
+            Height = 118
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitHeight = 140
           end
           object pnlEncabezado: TPanel
             Left = 0
@@ -260,11 +264,12 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
           end
           object pnlPie: TPanel
             Left = 0
-            Top = 287
+            Top = 265
             Width = 796
             Height = 111
             Align = alBottom
             TabOrder = 2
+            ExplicitTop = 287
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -337,9 +342,35 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 800
+    Height = 22
+    Align = alTop
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -477
+    ExplicitWidth = 1277
+    object cxDBLabel3: TcxDBLabel
+      Left = 9
+      Top = 1
+      DataBinding.DataField = 'Tipo'
+      DataBinding.DataSource = DataSource
+      Height = 21
+      Width = 124
+    end
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -480,7 +511,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D002803BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

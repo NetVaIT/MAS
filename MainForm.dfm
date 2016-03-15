@@ -4,7 +4,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
-  ExplicitHeight = 518
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -12,11 +12,9 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Catalogos'
       Groups = <
         item
@@ -104,8 +102,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -9557,9 +9553,11 @@ inherited frmMain: TfrmMain
       OnExecute = actCatalogoExecute
     end
     object actOrdenesEntrada: TAction
+      Tag = 44
       Category = 'Compras'
       Caption = 'Ordenes de entrada'
       ImageIndex = 45
+      OnExecute = actCatalogoExecute
     end
     object ActRegistroPagos: TAction
       Tag = 60

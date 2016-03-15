@@ -30,7 +30,6 @@ type
   TfrmDocumentosEntradasDetalleGrid = class(T_frmStandarGFormGrid)
     tvMasterIdDocumentoentradaDetalle: TcxGridDBColumn;
     tvMasterIdDocumentoEntrada: TcxGridDBColumn;
-    tvMasterIdAlmacen: TcxGridDBColumn;
     tvMasterIdProducto: TcxGridDBColumn;
     tvMasterClaveProducto: TcxGridDBColumn;
     tvMasterProducto: TcxGridDBColumn;

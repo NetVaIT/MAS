@@ -1,6 +1,8 @@
 inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   Caption = 'frmDocumentosEntradasDetalleGrid'
   OnCreate = FormCreate
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -19,11 +21,6 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
         end
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntrada'
-          Visible = False
-          Options.Editing = False
-        end
-        object tvMasterIdAlmacen: TcxGridDBColumn
-          DataBinding.FieldName = 'IdAlmacen'
           Visible = False
           Options.Editing = False
         end
@@ -143,7 +140,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -304,7 +301,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8013C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

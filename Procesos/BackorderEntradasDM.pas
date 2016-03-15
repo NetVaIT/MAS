@@ -21,9 +21,7 @@ type
     adodsDetalleIdBackorderEntradaDetalle: TAutoIncField;
     adodsDetalleIdBackorderEntrada: TIntegerField;
     adodsDetalleIdDocumentoEntradaDetalle: TIntegerField;
-    adodsDetalleIdDocumentoEntradaTipo: TIntegerField;
     adodsDetalleIdProducto: TIntegerField;
-    adodsDetalleIdDocumentoEntrada: TAutoIncField;
     adodsDetalleFecha: TDateTimeField;
     adodsDetalleTipo: TStringField;
     adodsDetalleCantidad: TFloatField;
@@ -32,6 +30,8 @@ type
     adodsMasterFacturada: TFloatField;
     adodsMasterTransito: TFloatField;
     adodsMasterEntrada: TFloatField;
+    adodsDetalleIdOrdenEntradaItem: TIntegerField;
+    adodsDetalleIdBackorderEntradaTipo: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

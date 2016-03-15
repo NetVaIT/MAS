@@ -65,21 +65,17 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
     CommandText = 
       'SELECT BackorderEntradasDetalles.IdBackorderEntradaDetalle, Back' +
       'orderEntradasDetalles.IdBackorderEntrada, BackorderEntradasDetal' +
-      'les.IdDocumentoEntradaDetalle, '#13#10'BackorderEntradasDetalles.IdDoc' +
-      'umentoEntradaTipo, BackorderEntradasDetalles.IdProducto, Documen' +
-      'tosEntradas.IdDocumentoEntrada, BackorderEntradasDetalles.Fecha,' +
-      ' '#13#10'DocumentosEntradasTipos.Descripcion AS Tipo, BackorderEntrada' +
-      'sDetalles.Cantidad, Productos.Identificador1, Productos.Descripc' +
-      'ion AS Producto'#13#10'FROM BackorderEntradasDetalles'#13#10'INNER JOIN Docu' +
-      'mentosEntradasDetalles ON BackorderEntradasDetalles.IdDocumentoE' +
-      'ntradaDetalle = DocumentosEntradasDetalles.IdDocumentoEntradaDet' +
-      'alle'#13#10'INNER JOIN DocumentosEntradas ON DocumentosEntradasDetalle' +
-      's.IdDocumentoEntrada = DocumentosEntradas.IdDocumentoEntrada'#13#10'IN' +
-      'NER JOIN DocumentosEntradasTipos ON BackorderEntradasDetalles.Id' +
-      'DocumentoEntradaTipo = DocumentosEntradasTipos.IdDocumentoEntrad' +
-      'aTipo'#13#10'INNER JOIN Productos ON BackorderEntradasDetalles.IdProdu' +
-      'cto = Productos.IdProducto'#13#10'WHERE BackorderEntradasDetalles.IdBa' +
-      'ckorderEntrada = :IdBackorderEntrada'
+      'les.IdDocumentoEntradaDetalle, BackorderEntradasDetalles.IdOrden' +
+      'EntradaItem, '#13#10'BackorderEntradasDetalles.IdBackorderEntradaTipo,' +
+      ' BackorderEntradasDetalles.IdProducto, BackorderEntradasDetalles' +
+      '.Fecha, BackorderEntradasTipos.Descripcion AS Tipo, '#13#10'BackorderE' +
+      'ntradasDetalles.Cantidad, Productos.Identificador1, Productos.De' +
+      'scripcion AS Producto'#13#10'FROM BackorderEntradasDetalles'#13#10'INNER JOI' +
+      'N BackorderEntradasTipos ON BackorderEntradasDetalles.IdBackorde' +
+      'rEntradaTipo = BackorderEntradasTipos.IdBackorderEntradaTipo'#13#10'IN' +
+      'NER JOIN Productos ON BackorderEntradasDetalles.IdProducto = Pro' +
+      'ductos.IdProducto'#13#10'WHERE BackorderEntradasDetalles.IdBackorderEn' +
+      'trada = :IdBackorderEntrada'
     DataSource = dsMaster
     MasterFields = 'IdBackorderEntrada'
     Parameters = <
@@ -88,6 +84,7 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 6
       end>
     Left = 32
@@ -105,17 +102,16 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
       FieldName = 'IdDocumentoEntradaDetalle'
       Visible = False
     end
-    object adodsDetalleIdDocumentoEntradaTipo: TIntegerField
-      FieldName = 'IdDocumentoEntradaTipo'
+    object adodsDetalleIdOrdenEntradaItem: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+      Visible = False
+    end
+    object adodsDetalleIdBackorderEntradaTipo: TIntegerField
+      FieldName = 'IdBackorderEntradaTipo'
       Visible = False
     end
     object adodsDetalleIdProducto: TIntegerField
       FieldName = 'IdProducto'
-      Visible = False
-    end
-    object adodsDetalleIdDocumentoEntrada: TAutoIncField
-      FieldName = 'IdDocumentoEntrada'
-      ReadOnly = True
       Visible = False
     end
     object adodsDetalleFecha: TDateTimeField

@@ -1,4 +1,4 @@
-unit DocumentosEntradasForm;
+unit OrdenesEntradasForm;
 
 interface
 
@@ -22,21 +22,19 @@ uses
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxMemo,
   cxDBEdit, cxLabel, cxDBLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, Vcl.Menus, cxButtons, cxButtonEdit, Vcl.Buttons;
+  cxDBLookupComboBox, Vcl.Menus, cxButtons, cxButtonEdit;
 
 type
-  TfrmDocumentosEntradas = class(T_frmStandarGFormEdit)
+  TfrmOrdenesEntradas = class(T_frmStandarGFormEdit)
     pnlDetail: TPanel;
     pnlEncabezado: TPanel;
     Label1: TLabel;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
-    Label10: TLabel;
     DBLookupComboBox2: TDBLookupComboBox;
     DBLookupComboBox3: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
-    cxDBLabel1: TcxDBLabel;
     pnlPie: TPanel;
     Label2: TLabel;
     Label3: TLabel;
@@ -50,31 +48,27 @@ type
     Label5: TLabel;
     cxDBLabel2: TcxDBLabel;
     ToolButton3: TToolButton;
+    btnAutorizar: TToolButton;
+    btnImprimir: TToolButton;
     Label11: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label12: TLabel;
     edtTipoCambio: TcxDBButtonEdit;
-    btnAutorizar: TSpeedButton;
-    btnGenDocumento: TSpeedButton;
-    btnImprimir: TToolButton;
+    btnGenDocumento: TToolButton;
+    Label13: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
     PnlTitulo: TPanel;
-    cxDBLabel3: TcxDBLabel;
+    cxLabel1: TcxLabel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    FactAutorizar: TBasicAction;
-    FactImprimir: TBasicAction;
     FactTipoCambio: TBasicAction;
-    FactGenDocumento: TBasicAction;
-    procedure SetactAutorizar(const Value: TBasicAction);
-    procedure SetactImprimir(const Value: TBasicAction);
+    FactCrearOrden: TBasicAction;
+    procedure SetactCrearOrden(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
-    procedure SetactGenDocumento(const Value: TBasicAction);
   public
     { Public declarations }
-    property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
-    property actGenDocumento: TBasicAction read FactGenDocumento write SetactGenDocumento;
-    property actImprimir: TBasicAction read FactImprimir write SetactImprimir;
+    property actCrearOrden: TBasicAction read FactCrearOrden write SetactCrearOrden;
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
   end;
 
@@ -82,34 +76,40 @@ implementation
 
 {$R *.dfm}
 
-uses DocumentosEntradasGrid, DocumentosEntradasDM;
+uses OrdenesEntradasDM, OrdenesEntradasGrid;
 
-procedure TfrmDocumentosEntradas.FormCreate(Sender: TObject);
+procedure TfrmOrdenesEntradas.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TfrmDocumentosEntradasGrid.Create(Self);
+  gFormGrid := TfrmOrdenesEntradasGrid.Create(Self);
   ContainerDetail1:= pnlDetail;
 end;
 
-procedure TfrmDocumentosEntradas.SetactAutorizar(const Value: TBasicAction);
+//procedure TfrmOrdenesEntradas.SetactAutorizar(const Value: TBasicAction);
+//begin
+//  FactAutorizar := Value;
+//  btnAutorizar.Action:= Value;
+//end;
+//
+//procedure TfrmOrdenesEntradas.SetactGenDocumento(const Value: TBasicAction);
+//begin
+//  FactGenDocumento := Value;
+//  btnGenDocumento.Action:= Value;
+//end;
+//
+//procedure TfrmOrdenesEntradas.SetactImprimir(const Value: TBasicAction);
+//begin
+//  FactImprimir := Value;
+//  btnImprimir.Action:= value
+//end;
+
+procedure TfrmOrdenesEntradas.SetactCrearOrden(const Value: TBasicAction);
 begin
-  FactAutorizar := Value;
-  btnAutorizar.Action:= Value;
+  FactCrearOrden := Value;
+  ToolButton10.Action:= Value;
 end;
 
-procedure TfrmDocumentosEntradas.SetactGenDocumento(const Value: TBasicAction);
-begin
-  FactGenDocumento := Value;
-  btnGenDocumento.Action:= Value;
-end;
-
-procedure TfrmDocumentosEntradas.SetactImprimir(const Value: TBasicAction);
-begin
-  FactImprimir := Value;
-  btnImprimir.Action:= value
-end;
-
-procedure TfrmDocumentosEntradas.SetactTipoCambio(const Value: TBasicAction);
+procedure TfrmOrdenesEntradas.SetactTipoCambio(const Value: TBasicAction);
 begin
   FactTipoCambio := Value;
   edtTipoCambio.Properties.Buttons[0].Action:= Value;

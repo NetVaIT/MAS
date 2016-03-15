@@ -43,7 +43,6 @@ type
     adodsDocumentosDetalles: TADODataSet;
     adodsDocumentosDetallesIdDocumentoentradaDetalle: TAutoIncField;
     adodsDocumentosDetallesIdDocumentoEntrada: TIntegerField;
-    adodsDocumentosDetallesIdAlmacen: TIntegerField;
     adodsDocumentosDetallesIdProducto: TIntegerField;
     adodsDocumentosDetallesClaveProducto: TStringField;
     adodsDocumentosDetallesCantidad: TFloatField;

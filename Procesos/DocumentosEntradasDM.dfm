@@ -60,6 +60,16 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Size = 15
       Lookup = True
     end
+    object adodsMasterEstatus: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Estatus'
+      LookupDataSet = adodsEstatus
+      LookupKeyFields = 'IdDocumentoEntradaEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdDocumentoEntradaEstatus'
+      Size = 50
+      Lookup = True
+    end
     object adodsMasterFecha: TDateTimeField
       FieldName = 'Fecha'
     end
@@ -97,19 +107,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     object adodsMasterTipoCambio: TFMTBCDField
       DisplayLabel = 'Tipo de cambio'
       FieldName = 'TipoCambio'
-      currency = True
       Precision = 18
       Size = 6
-    end
-    object adodsMasterEstatus: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Estatus'
-      LookupDataSet = adodsEstatus
-      LookupKeyFields = 'IdDocumentoEntradaEstatus'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdDocumentoEntradaEstatus'
-      Size = 50
-      Lookup = True
     end
     object adodsMasterSubTotal: TFMTBCDField
       FieldName = 'SubTotal'
@@ -267,10 +266,10 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     AfterPost = adodsDocumentosDetallesAfterPost
     AfterDelete = adodsDocumentosDetallesAfterPost
     CommandText = 
-      'SELECT IdDocumentoEntradaDetalle, IdDocumentoEntrada, IdAlmacen,' +
-      ' IdProducto, ClaveProducto, Cantidad, CantidadPendiente, Precio,' +
-      ' Importe'#13#10'FROM DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntr' +
-      'ada = :IdDocumentoEntrada'
+      'SELECT IdDocumentoEntradaDetalle, IdDocumentoEntrada, IdProducto' +
+      ', ClaveProducto, Cantidad, CantidadPendiente, Precio, Importe'#13#10'F' +
+      'ROM DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntrada = :IdDo' +
+      'cumentoEntrada'
     DataSource = dsmaster
     MasterFields = 'IdDocumentoEntrada'
     Parameters = <
@@ -291,10 +290,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
     object adodsDocumentosDetallesIdDocumentoEntrada: TIntegerField
       FieldName = 'IdDocumentoEntrada'
-      Visible = False
-    end
-    object adodsDocumentosDetallesIdAlmacen: TIntegerField
-      FieldName = 'IdAlmacen'
       Visible = False
     end
     object adodsDocumentosDetallesIdProducto: TIntegerField

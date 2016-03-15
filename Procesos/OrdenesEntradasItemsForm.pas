@@ -1,4 +1,4 @@
-unit DocumentosEntradasDetalleForm;
+unit OrdenesEntradasItemsForm;
 
 interface
 
@@ -22,7 +22,7 @@ uses
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls;
 
 type
-  TfrmDocumentosEntradasDetalle = class(T_frmStandarGFormEdit)
+  TfrmOrdenesEntradasItems = class(T_frmStandarGFormEdit)
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -37,18 +37,18 @@ implementation
 
 {$R *.dfm}
 
-uses DocumentosEntradasDetalleGrid;
+uses OrdenesEntradasItemsGrid;
 
-procedure TfrmDocumentosEntradasDetalle.FormCreate(Sender: TObject);
+procedure TfrmOrdenesEntradasItems.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TfrmDocumentosEntradasDetalleGrid.Create(Self);
+  gFormGrid := TfrmOrdenesEntradasItemsGrid.Create(Self);
 end;
 
-procedure TfrmDocumentosEntradasDetalle.FormShow(Sender: TObject);
+procedure TfrmOrdenesEntradasItems.FormShow(Sender: TObject);
 begin
   inherited;
-  TfrmDocumentosEntradasDetalleGrid(gFormGrid).actSeleccionarProducto:= actSeleccionarProducto;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).actSeleccionarProducto:= actSeleccionarProducto;
   actShowGrid.Execute;
 end;
 

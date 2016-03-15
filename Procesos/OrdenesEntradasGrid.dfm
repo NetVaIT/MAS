@@ -1,5 +1,5 @@
-inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
-  Caption = 'frmDocumentosEntradasGrid'
+inherited frmOrdenesEntradasGrid: TfrmOrdenesEntradasGrid
+  Caption = 'frmOrdenesEntradasGrid'
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -7,20 +7,20 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
+        object tvMasterIdOrdenEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntrada'
+          Visible = False
+        end
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntrada'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaAnterior: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaAnterior'
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
           Visible = False
         end
-        object tvMasterIdDocumentoEntradaTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaTipo'
-          Visible = False
-        end
-        object tvMasterIdDocumentoEntradaEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentoEntradaEstatus'
+        object tvMasterIdOrdenEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEstatus'
           Visible = False
         end
         object tvMasterIdPersona: TcxGridDBColumn
@@ -35,18 +35,19 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
           DataBinding.FieldName = 'IdUsuario'
           Visible = False
         end
-        object tvMasterTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'Tipo'
-        end
         object tvMasterEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'Estatus'
-          Width = 200
+          Width = 100
         end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterClaveProvedor: TcxGridDBColumn
-          DataBinding.FieldName = 'ClaveProvedor'
+        object tvMasterAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'Almacen'
+          Width = 304
+        end
+        object tvMasterCLaveProvedor: TcxGridDBColumn
+          DataBinding.FieldName = 'CLaveProvedor'
         end
         object tvMasterProvedor: TcxGridDBColumn
           DataBinding.FieldName = 'Provedor'
@@ -54,7 +55,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
         end
         object tvMasterMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'Moneda'
-          Width = 200
+          Width = 100
         end
         object tvMasterTipoCambio: TcxGridDBColumn
           DataBinding.FieldName = 'TipoCambio'
@@ -70,7 +71,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
         end
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
-          Width = 304
+          Width = 300
         end
         object tvMasterUsuario: TcxGridDBColumn
           DataBinding.FieldName = 'Usuario'
@@ -78,12 +79,9 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmDocumentosEntradas.adodsMaster
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -224,7 +222,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
