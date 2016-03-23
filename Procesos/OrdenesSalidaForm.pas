@@ -159,6 +159,17 @@ type
     EnviarCorreoGuia: TMenuItem;
     TlBtnEnvioFactura: TToolButton;
     PnlTitulo: TPanel;
+    BtBtnRegresaEstado: TBitBtn;
+    DBRdGrpGenerar: TDBRadioGroup;
+    DBChckBxAcumula: TDBCheckBox;
+    DsCambiosREgreso: TDataSource;
+    PnlRegresaEstado: TPanel;
+    Label27: TLabel;
+    Label28: TLabel;
+    EdtContraRev: TEdit;
+    BtBtnAceptaReg: TBitBtn;
+    DBLookupComboBox2: TDBLookupComboBox;
+    BitBtn9: TBitBtn;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -176,6 +187,11 @@ type
     procedure ChckBxDatosEnviosClick(Sender: TObject);
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
     procedure BtBtnAdjGuiaClick(Sender: TObject);
+    procedure BtBtnRegresaEstadoClick(Sender: TObject);
+    procedure DBRdGrpGenerarClick(Sender: TObject);
+    procedure BtBtnAceptaRegClick(Sender: TObject);
+    procedure BitBtn9Click(Sender: TObject);
+
   private
     FCargarDocGuia: TBasicAction;
     FEnviaCorreoConDocs: TBasicAction;
@@ -240,6 +256,51 @@ procedure TFrmOrdenesSalida.BtBtnAdjGuiaClick(Sender: TObject);
 begin
   inherited;
   ShowMessage('Adjuntar Guia Escaneada..... Proceso en Construcción');
+end;
+
+procedure TFrmOrdenesSalida.BtBtnRegresaEstadoClick(Sender: TObject);
+var
+  IdEstatusAct:Integer;
+begin
+  inherited;
+  DsCambiosREgreso.DataSet.open;
+  IdEstatusAct:=datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger;
+  case IdEstatusAct of
+  3:begin
+      ShowMessage('Está en revisión. Acá queda cuando se cancela una Factura');
+       //Pedir Usuario y Contraseña, Cambiar Estatus,Borrar quien y cuando , grabar usuario y fecha en tabla nueva.
+      PnlRegresaEstado.Visible:=True;    //Mar 17/16
+
+      DsCambiosREgreso.DataSet.Insert;
+      DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
+      DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalida').Asinteger:=DataSource.DataSet.FieldByName('idordenSalida').AsInteger;
+      DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').Asinteger:=2; //??
+
+    end;
+  2:begin
+      ShowMessage('Está en Recolección. Se puede dejar en Generada.... Quitar la asignación de Ubicaciones');
+      PnlRegresaEstado.Visible:=True;    //Mar 17/16
+      DsCambiosREgreso.DataSet.Insert;
+      DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
+      DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalida').Asinteger:=DataSource.DataSet.FieldByName('idordenSalida').AsInteger;
+      DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').Asinteger:=1; //??
+    end;
+
+  end;
+
+end;
+
+procedure TFrmOrdenesSalida.BitBtn9Click(Sender: TObject);
+begin
+  inherited;
+  //Cancela Regreso
+  if DsCambiosREgreso.State in [dsInsert,dsedit] then      //Mar 18/16
+  begin
+    dsCambiosRegreso.DataSet.Cancel;
+    PnlRegresaEstado.Visible:=False;    //Mar 17/16
+    EdtContraRev.Clear;
+  end;
+
 end;
 
 procedure TFrmOrdenesSalida.BtBtnAceptaInfoEntClick(Sender: TObject);
@@ -355,6 +416,62 @@ begin
 
     //Si no se genera hay que hacer algo para que se pueda generar en otro punto!!! ??
   end;
+end;
+
+procedure TFrmOrdenesSalida.BtBtnAceptaRegClick(Sender: TObject);
+var
+  Clave, CampoPersona, CampoFecha1, campoFecha2:String;
+
+begin
+  inherited;
+  clave:=EdtContraRev.Text;
+  //Acepta regreso
+  //Verificar Usuario y cntraseña.. ver que tenga permiso de regresar..
+  case datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger of
+    2:begin
+        CampoPersona:='IDPersonaRecolecta';
+        CampoFecha1:='FechaIniRecolecta';
+        campoFecha2:='FechaFinRecolecta';
+    end;
+    3:begin
+        CampoPersona:='IDPersonaRevisa';
+        CampoFecha1:='FechaIniRevisa';
+        campoFecha2:='FechaFinRevisa';
+    end;
+  end;
+
+  if DsCambiosREgreso.State=dsInsert then
+  begin
+//    DsCambiosREgreso.DataSet.FieldByName('') ??
+    if (clave<>'') and (not DsCambiosREgreso.DataSet.FieldByName('IDPersonaAutCambio').IsNull) then
+    begin
+      if  DsCambiosREgreso.DataSet.FieldByName('ClaveUsr').AsString =Clave then
+      begin
+        if DsCambiosREgreso.DataSet.State =dsBrowse then
+          DsCambiosREgreso.DataSet.Edit;
+        DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
+
+        DsCambiosREgreso.DataSet.Post;
+        if datasource.DataSet.state=dsBrowse then   //Mar 18/16
+          datasource.DataSet.Edit;
+        datasource.DataSet.FieldByName(CampoPersona).Value:=Null;
+        datasource.DataSet.FieldByName(CampoFecha1).Value:=Null;
+        datasource.DataSet.FieldByName(CampoFecha2).Value:=Null;
+
+        datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger:=DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').asInteger;
+        datasource.DataSet.Post;
+        datasource.DataSet.Refresh;
+        PnlRegresaEstado.Visible:=False;
+        EdtContraRev.Clear;
+      end
+      else
+        ShowMessage('Contraseña incorrecta');
+    end
+    else
+        ShowMessage('Debe seleccionar el usuario que autoriza el cambio y su contraseña');
+  end;
+
+
 end;
 
 procedure TFrmOrdenesSalida.BtBtnCancelaClick(Sender: TObject);
@@ -487,6 +604,7 @@ begin
     3:begin //Dic 15/15
         BtBtnAutoriza.Visible:=False;
         PnlAutorizaYFactura.Visible:=True;
+
       end;
 
     4:begin
@@ -500,6 +618,7 @@ procedure TFrmOrdenesSalida.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
+  EdtContraRev.Clear;
   if Datasource.state=dsBrowse then
   begin
     BtBtnRecolecta.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=1) and
@@ -555,6 +674,7 @@ begin
       LblEmpaco.Caption:='Empacando:'
     else
       LblEmpaco.Caption:='Empacó:';
+    BtBtnRegresaEstado.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>1)and(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4); //Mar 4/16
 
   end;
 end;
@@ -566,6 +686,17 @@ begin
   dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
   dsProductosXEspacio.DataSet.Filtered:=True;
 //  showmessage('IdProducto '+  dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString);
+
+end;
+
+procedure TFrmOrdenesSalida.DBRdGrpGenerarClick(Sender: TObject);
+begin
+  inherited;
+ DBChckBxAcumula.visible:=DBRdGrpGenerar.itemindex=1;
+ case DBRdGrpGenerar.itemindex of
+ 0: Dataset.FieldByName('Acumula').ASBoolean:= False;
+ 1: Dataset.FieldByName('Acumula').ASBoolean:= True;
+ end;
 
 end;
 
@@ -590,7 +721,7 @@ procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean);
 
 begin
   dmFacturas := TdmFacturas.CreateWMostrar(nil,True);  //Era false pero verificar  a ver si no da el aV
-  dmFActuras.IDordenSalida:=IDOrden;
+  dmFActuras.PIDordenSalida:=IDOrden;
   dmFacturas.ActCrearPrefacturas.Execute;
  // dmFActuras.Muestra:=False;
   CFDICreado:= dmFActuras.CreoCFDI;

@@ -125,6 +125,8 @@ type
     ToolButton4: TToolButton;
     TlBtnCancelaCFDI: TToolButton;
     PnlTitulo: TPanel;
+    cxDBLabel15: TcxDBLabel;
+    Label29: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -136,7 +138,8 @@ type
     ffiltro: String; //Dic 29/15
     fImpresionED: integer;
     FMostrar: Boolean;
-    FEnviaCorreoConDocs: TBasicAction; //Feb 10/16
+    FEnviaCorreoConDocs: TBasicAction;
+    FCancelaCFDI: TBasicAction; //Feb 10/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -146,7 +149,8 @@ type
     procedure SetConsulta(const Value: TBasicAction);  //Dic 29/15
     function GetfImpresioned: integer;
     procedure SetMostrar(const Value: Boolean);
-    procedure SetEnviaCorreoConDocs(const Value: TBasicAction);  //ene 7/16
+    procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
+    procedure SetCancelaCFDI(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -157,6 +161,7 @@ type
     property ActBusqueda : TBasicAction read Consulta write SetConsulta; //Dic 29/15
     property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
     property MiImpresion:integer read GetfImpresionEd write fImpresionEd;
+    property ActCancelaCFDi : TBasicAction read FCancelaCFDI write SetCancelaCFDI;
 
     constructor CreateWMostrar(AOwner: TComponent; Mostrar:Boolean); virtual;
     property Mostrar:Boolean read FMostrar write SetMostrar;//Feb 10/16
@@ -189,6 +194,7 @@ begin
   TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled;
   ToolButton12.Enabled:=  pnlmaster.Enabled;
   TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled;  //feb 17/16
+  TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat);
 end;
 
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
@@ -218,6 +224,14 @@ function TfrmFacturasFormEdit.GetfImpresioned: integer;
 begin
   fImpresioned:= TFrmFacturasGrid(gFormGrid).GRImpresion;  //Cambiado a ver si se pone bien   el de GR viene bien
   Result:= fImpresioned;
+end;
+
+procedure TfrmFacturasFormEdit.SetCancelaCFDI(const Value: TBasicAction);
+begin   //Mar 3/16
+  FCancelaCFDI := Value;
+  TlBtnCancelaCFDI.Action:=Value;
+  TlBtnCancelaCFDI.Imageindex:=25;
+
 end;
 
 procedure TfrmFacturasFormEdit.SetConsulta(const Value: TBasicAction);

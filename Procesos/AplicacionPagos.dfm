@@ -1,7 +1,7 @@
 object FrmAplicacionPago: TFrmAplicacionPago
   Left = 0
   Top = 0
-  Caption = 'FrmAplicacionPago'
+  Caption = 'Aplicaci'#243'n Pago'
   ClientHeight = 380
   ClientWidth = 786
   Color = clBtnFace
@@ -23,8 +23,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Height = 146
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 63
     object Label3: TLabel
       Left = 174
       Top = 52
@@ -191,7 +189,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfStandard
-    ExplicitTop = 248
     object tvMaster: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsConFacturasPendientes
@@ -320,8 +317,6 @@ object FrmAplicacionPago: TFrmAplicacionPago
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 3
-    ExplicitLeft = 8
-    ExplicitTop = 215
   end
   object DSPago: TDataSource
     DataSet = dmPagos.adodsMaster

@@ -216,6 +216,13 @@ type
     ADODtStProductosKardexIdAlmacen: TIntegerField;
     ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField;
     ADODtStProductosKardexFecha: TDateTimeField;
+    adodsClientesDiasCreditoCliente: TIntegerField;
+    adodsMasterDiasCredito: TIntegerField;
+    adodsClientesSaldoCliente: TFMTBCDField;
+    adodsMasterSaldoxRFC: TFloatField;
+    ADODtStDireccionesClienteSaldo: TFMTBCDField;
+    ADODtStDireccAuxiliarSaldo: TFMTBCDField;
+    adodsMasterSaldoDir: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);

@@ -103,6 +103,11 @@ type
     ChckBxAdjuntar: TCheckBox;
     BtBtnAdjuntos: TBitBtn;
     PnlTitulo: TPanel;
+    cxDBLabel6: TcxDBLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    cxDBLabel7: TcxDBLabel;
+    cxDBLabel8: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrid1EditButtonClick(Sender: TObject);
@@ -331,13 +336,13 @@ begin
         SpdBtnCambioEstatus.Caption:='Acepta Cotización';
      //   TlBtnCambioEstatus.Hint:='Aceptar Cotización' ;   //Feb 9/16
         LblNoCotiza.Caption:='No.Cotización';
-        PnlTitulo.Caption:='Cotizaciones';
+        PnlTitulo.Caption:='    Cotizaciones';
       end;
     2:begin
         SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
         //   TlBtnCambioEstatus.Hint:= 'Generar Orden Salida';  //Feb 9/16
         LblNoCotiza.Caption:='No.Pedido';
-        PnlTitulo.Caption:='Pedidos';
+        PnlTitulo.Caption:='    Pedidos';
 //       LblDirCliente.Visible:=True;
 //       DBLkpCmbBxDirCliente.Visible:=True;
       end;

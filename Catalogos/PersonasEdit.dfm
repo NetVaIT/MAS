@@ -412,50 +412,26 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
     object tsCorreo: TcxTabSheet
       Caption = 'Correo'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
     object tsContactos: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
     object TSCertificadosCSD: TcxTabSheet
       Caption = 'Certificados CSD'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 426
     end
   end
   object cxDBLabel1: TcxDBLabel [8]
@@ -481,7 +457,8 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     Width = 750
     Height = 22
     Align = alTop
-    Caption = 'Personas'
+    Alignment = taLeftJustify
+    Caption = '    Personas'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -497,7 +474,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -638,7 +615,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

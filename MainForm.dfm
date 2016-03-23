@@ -41,6 +41,7 @@ inherited frmMain: TfrmMain
       Index = 3
     end
     object dxRibbon1Tab5: TdxRibbonTab
+      Active = True
       Caption = 'Compras'
       Groups = <
         item

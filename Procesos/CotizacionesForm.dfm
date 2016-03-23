@@ -332,6 +332,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 161
             Align = alTop
             TabOrder = 1
+            ExplicitTop = -6
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -340,7 +341,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'Fecha Registro'
             end
             object Label5: TLabel
-              Left = 265
+              Left = 223
               Top = 106
               Width = 62
               Height = 13
@@ -442,8 +443,22 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 13
               Caption = 'IdentificadorCte'
             end
+            object Label12: TLabel
+              Left = 719
+              Top = 106
+              Width = 58
+              Height = 13
+              Caption = 'D'#237'as Cr'#233'dito'
+            end
+            object Label13: TLabel
+              Left = 824
+              Top = 106
+              Width = 26
+              Height = 13
+              Caption = 'Saldo'
+            end
             object cxDBSpinEdit1: TcxDBSpinEdit
-              Left = 265
+              Left = 223
               Top = 125
               DataBinding.DataField = 'VigenciaDias'
               DataBinding.DataSource = DataSource
@@ -594,6 +609,30 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 15
               OnClick = BtBtnAdjuntosClick
             end
+            object cxDBLabel6: TcxDBLabel
+              Left = 719
+              Top = 125
+              DataBinding.DataField = 'DiasCredito'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 90
+            end
+            object cxDBLabel7: TcxDBLabel
+              Left = 824
+              Top = 125
+              DataBinding.DataField = 'SaldoxRFC'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 78
+            end
+            object cxDBLabel8: TcxDBLabel
+              Left = 908
+              Top = 125
+              DataBinding.DataField = 'SaldoDir'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 62
+            end
           end
           object Panel1: TPanel
             Left = 0
@@ -678,7 +717,8 @@ inherited frmCotizaciones: TfrmCotizaciones
     Width = 1277
     Height = 22
     Align = alTop
-    Caption = 'Cotizaciones'
+    Alignment = taLeftJustify
+    Caption = '    Cotizaciones'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -1866,8 +1906,8 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSDireccioncliente: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccAuxiliar
-    Left = 856
-    Top = 128
+    Left = 936
+    Top = 112
   end
   object DSDocumentoAux: TDataSource
     Left = 886

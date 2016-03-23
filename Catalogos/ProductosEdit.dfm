@@ -419,7 +419,8 @@ inherited frmProductosEdit: TfrmProductosEdit
     Width = 750
     Height = 22
     Align = alTop
-    Caption = 'Productos'
+    Alignment = taLeftJustify
+    Caption = '    Productos'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite

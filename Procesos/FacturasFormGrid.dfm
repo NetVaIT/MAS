@@ -82,13 +82,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       TabOrder = 1
       OnClick = ChckLstImpresionClick
     end
-    object PnlFiltros: TPanel
-      Left = 615
-      Top = 1
-      Width = 327
-      Height = 41
-      TabOrder = 2
-    end
   end
   inherited pnlMaster: TPanel
     Top = 44

@@ -15,8 +15,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Top = 582
     Width = 1097
     Height = 18
-    ExplicitTop = 582
-    ExplicitWidth = 974
+    ExplicitLeft = -1
+    ExplicitTop = 588
+    ExplicitWidth = 1097
     ExplicitHeight = 18
   end
   inherited splDetail1: TSplitter
@@ -61,20 +62,21 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Top = 22
     Width = 1097
     Height = 539
+    ExplicitTop = 22
     ExplicitWidth = 1097
-    ExplicitHeight = 561
+    ExplicitHeight = 539
     ClientRectBottom = 538
     ClientRectRight = 1096
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1095
-      ExplicitHeight = 559
+      ExplicitHeight = 537
       inherited cxScrollBox1: TcxScrollBox
         Width = 1095
         Height = 537
         ExplicitWidth = 1095
-        ExplicitHeight = 559
+        ExplicitHeight = 537
         inherited tbarData: TToolBar
           Width = 1093
           ExplicitWidth = 1093
@@ -106,7 +108,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           Width = 1093
           Height = 510
           ExplicitWidth = 1093
-          ExplicitHeight = 532
+          ExplicitHeight = 510
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -369,6 +371,30 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Font.Style = [fsBold]
               ParentFont = False
             end
+            object BtBtnRegresaEstado: TBitBtn
+              Tag = 4
+              Left = 337
+              Top = 77
+              Width = 156
+              Height = 25
+              Caption = 'Regresar Estado Anterior'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                3333333333FFFFF3333333333999993333333333F77777FFF333333999999999
+                3333333777333777FF33339993707399933333773337F3777FF3399933000339
+                9933377333777F3377F3399333707333993337733337333337FF993333333333
+                399377F33333F333377F993333303333399377F33337FF333373993333707333
+                333377F333777F333333993333101333333377F333777F3FFFFF993333000399
+                999377FF33777F77777F3993330003399993373FF3777F37777F399933000333
+                99933773FF777F3F777F339993707399999333773F373F77777F333999999999
+                3393333777333777337333333999993333333333377777333333}
+              NumGlyphs = 2
+              TabOrder = 16
+              OnClick = BtBtnRegresaEstadoClick
+            end
             object cxDBDateEdit2: TcxDBDateEdit
               Left = 136
               Top = 34
@@ -490,7 +516,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object BtBtnRecolecta: TBitBtn
               Tag = 1
-              Left = 30
+              Left = 33
               Top = 77
               Width = 103
               Height = 25
@@ -629,8 +655,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object BtBtnRevisa: TBitBtn
               Tag = 2
-              Left = 31
-              Top = 122
+              Left = 30
+              Top = 124
               Width = 103
               Height = 25
               Caption = 'Revisar'
@@ -877,16 +903,16 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               OnClick = BtBtnFinGenProcesoClick
             end
             object PnlAutorizaYFactura: TPanel
-              Left = 0
-              Top = 156
-              Width = 684
+              Left = -2
+              Top = 152
+              Width = 769
               Height = 50
               BevelOuter = bvNone
               TabOrder = 11
               Visible = False
               object Label3: TLabel
-                Left = 320
-                Top = 0
+                Left = 262
+                Top = 3
                 Width = 65
                 Height = 13
                 Caption = 'Contrase'#241'a'
@@ -911,17 +937,17 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 ParentFont = False
               end
               object EdtContraAutoriza: TEdit
-                Left = 325
-                Top = 19
-                Width = 153
+                Left = 262
+                Top = 22
+                Width = 110
                 Height = 21
                 PasswordChar = '*'
                 TabOrder = 0
               end
               object BitBtn5: TBitBtn
                 Tag = 3
-                Left = 498
-                Top = 15
+                Left = 569
+                Top = 18
                 Width = 83
                 Height = 25
                 Caption = 'Aceptar'
@@ -943,9 +969,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 OnClick = BtBtnAceptaProcesosClick
               end
               object DBLkupCmbBxAutoriza: TDBLookupComboBox
-                Left = 33
-                Top = 19
-                Width = 282
+                Left = 34
+                Top = 21
+                Width = 222
                 Height = 21
                 DataField = 'PersonaAutoriza'
                 DataSource = DataSource
@@ -953,8 +979,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
               object BitBtn6: TBitBtn
                 Tag = 3
-                Left = 597
-                Top = 15
+                Left = 668
+                Top = 18
                 Width = 83
                 Height = 25
                 Caption = 'Cancelar'
@@ -975,11 +1001,39 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 TabOrder = 3
                 OnClick = BtBtnCancelaProcClick
               end
+              object DBRdGrpGenerar: TDBRadioGroup
+                Left = 390
+                Top = 9
+                Width = 92
+                Height = 41
+                Caption = 'Generar'
+                DataField = 'IdGeneraCFDITipoDoc'
+                DataSource = DataSource
+                Items.Strings = (
+                  'Factura'
+                  'Nota Venta')
+                TabOrder = 4
+                Values.Strings = (
+                  '1'
+                  '4')
+                OnClick = DBRdGrpGenerarClick
+              end
+              object DBChckBxAcumula: TDBCheckBox
+                Left = 488
+                Top = 26
+                Width = 75
+                Height = 17
+                Caption = 'Acumula'
+                DataField = 'Acumula'
+                DataSource = DataSource
+                TabOrder = 5
+                Visible = False
+              end
             end
             object BtBtnAutoriza: TBitBtn
               Tag = 3
-              Left = 31
-              Top = 171
+              Left = 32
+              Top = 173
               Width = 99
               Height = 25
               Caption = 'Autorizar'
@@ -1291,7 +1345,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object PnlSalidasUbicacion: TPanel
               Left = 320
-              Top = 54
+              Top = 51
               Width = 638
               Height = 223
               TabOrder = 14
@@ -1433,6 +1487,106 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Caption = 'Mostrar Datos de Envio'
               TabOrder = 15
               OnClick = ChckBxDatosEnviosClick
+            end
+            object PnlRegresaEstado: TPanel
+              Left = 321
+              Top = 63
+              Width = 769
+              Height = 50
+              BevelOuter = bvNone
+              TabOrder = 17
+              Visible = False
+              object Label27: TLabel
+                Left = 262
+                Top = 3
+                Width = 65
+                Height = 13
+                Caption = 'Contrase'#241'a'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object Label28: TLabel
+                Left = 33
+                Top = 2
+                Width = 50
+                Height = 13
+                Caption = 'Regresa '
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object EdtContraRev: TEdit
+                Left = 262
+                Top = 22
+                Width = 110
+                Height = 21
+                PasswordChar = '*'
+                TabOrder = 0
+              end
+              object BtBtnAceptaReg: TBitBtn
+                Tag = 3
+                Left = 413
+                Top = 15
+                Width = 83
+                Height = 25
+                Caption = 'Aceptar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+                  555555555555555555555555555555555555555555FF55555555555559055555
+                  55555555577FF5555555555599905555555555557777F5555555555599905555
+                  555555557777FF5555555559999905555555555777777F555555559999990555
+                  5555557777777FF5555557990599905555555777757777F55555790555599055
+                  55557775555777FF5555555555599905555555555557777F5555555555559905
+                  555555555555777FF5555555555559905555555555555777FF55555555555579
+                  05555555555555777FF5555555555557905555555555555777FF555555555555
+                  5990555555555555577755555555555555555555555555555555}
+                NumGlyphs = 2
+                TabOrder = 1
+                OnClick = BtBtnAceptaRegClick
+              end
+              object DBLookupComboBox2: TDBLookupComboBox
+                Left = 34
+                Top = 21
+                Width = 222
+                Height = 21
+                DataField = 'PersonaCambio'
+                DataSource = DsCambiosREgreso
+                TabOrder = 2
+              end
+              object BitBtn9: TBitBtn
+                Tag = 3
+                Left = 502
+                Top = 15
+                Width = 83
+                Height = 25
+                Caption = 'Cancelar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                  999333777FF37FF377733339993000399933333777F777F77733333399970799
+                  93333333777F7377733333333999399933333333377737773333333333990993
+                  3333333333737F73333333333331013333333333333777FF3333333333910193
+                  333333333337773FF3333333399000993333333337377737FF33333399900099
+                  93333333773777377FF333399930003999333337773777F777FF339993370733
+                  9993337773337333777333333333333333333333333333333333333333333333
+                  3333333333333333333333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 3
+                OnClick = BitBtn9Click
+              end
             end
           end
           object Panel3: TPanel
@@ -1604,7 +1758,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1097
     Height = 22
     Align = alTop
-    Caption = 'Ordenes de Salida'
+    Alignment = taLeftJustify
+    Caption = '    Ordenes de Salida'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -1614,8 +1769,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -180
-    ExplicitWidth = 1277
   end
   inherited DataSource: TDataSource
     DataSet = DMOrdenesSalidas.adodsMaster
@@ -1623,7 +1776,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1829,7 +1982,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2788,8 +2941,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DSProductosXEspacio: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStProductosXEspacio
-    Left = 780
-    Top = 184
+    Left = 788
+    Top = 128
   end
   object DSInsertaKardex: TDataSource
     DataSet = DMOrdenesSalidas.ADOQryInsertaProductoKardex
@@ -2803,5 +2956,10 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
       Tag = 200
       Caption = 'Enviar Gu'#237'a'
     end
+  end
+  object DsCambiosREgreso: TDataSource
+    DataSet = DMOrdenesSalidas.ADODtStCambioEstadoInv
+    Left = 1052
+    Top = 336
   end
 end

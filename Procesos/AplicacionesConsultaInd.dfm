@@ -8,16 +8,20 @@ inherited FrmAplicacionesConsultaInd: TFrmAplicacionesConsultaInd
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 455
+    ExplicitTop = 22
+    ExplicitHeight = 455
     ClientRectBottom = 454
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Height = 453
+        ExplicitHeight = 453
         inherited pnlMaster: TPanel
           Height = 426
+          ExplicitHeight = 426
           object Label1: TLabel
             Left = 178
             Top = 22
@@ -178,7 +182,8 @@ inherited FrmAplicacionesConsultaInd: TFrmAplicacionesConsultaInd
     Width = 750
     Height = 22
     Align = alTop
-    Caption = 'Aplicaciones de Pagos'
+    Alignment = taLeftJustify
+    Caption = '    Aplicaciones de Pagos'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -188,15 +193,13 @@ inherited FrmAplicacionesConsultaInd: TFrmAplicacionesConsultaInd
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -527
-    ExplicitWidth = 1277
   end
   inherited DataSource: TDataSource
     DataSet = dmAplicacionesConsulta.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -337,7 +340,7 @@ inherited FrmAplicacionesConsultaInd: TFrmAplicacionesConsultaInd
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

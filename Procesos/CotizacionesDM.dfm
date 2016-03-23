@@ -151,6 +151,33 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdDomicilioCliente'
       Lookup = True
     end
+    object adodsMasterDiasCredito: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'DiasCredito'
+      LookupDataSet = adodsClientes
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'DiasCreditoCliente'
+      KeyFields = 'IdPersona'
+      Lookup = True
+    end
+    object adodsMasterSaldoxRFC: TFloatField
+      FieldKind = fkLookup
+      FieldName = 'SaldoxRFC'
+      LookupDataSet = adodsClientes
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'SaldoCliente'
+      KeyFields = 'IdPersona'
+      Lookup = True
+    end
+    object adodsMasterSaldoDir: TFloatField
+      FieldKind = fkLookup
+      FieldName = 'SaldoDir'
+      LookupDataSet = ADODtStDireccionesCliente
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'Saldo'
+      KeyFields = 'IdDomicilioCliente'
+      Lookup = True
+    end
   end
   inherited ActionList: TActionList
     object ActGenPDFCotizacion: TAction
@@ -263,8 +290,8 @@ inherited dmCotizaciones: TdmCotizaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol '#13#10'FROM Personas' +
-      ' P'#13#10#13#10'where P.IdRol=1  '
+      'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,'#13#10' P.DiasCredit' +
+      'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  '
     Parameters = <>
     Left = 192
     Top = 40
@@ -283,8 +310,17 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsClientesIDRol: TIntegerField
       FieldName = 'IDRol'
     end
+    object adodsClientesDiasCreditoCliente: TIntegerField
+      FieldName = 'DiasCreditoCliente'
+    end
+    object adodsClientesSaldoCliente: TFMTBCDField
+      FieldName = 'SaldoCliente'
+      Precision = 18
+      Size = 6
+    end
   end
   object adodsCotizacionEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -307,6 +343,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -323,6 +360,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -566,11 +604,12 @@ inherited dmCotizaciones: TdmCotizaciones
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
-      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
-      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
+      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
+      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
+      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
+      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
+      #13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -638,6 +677,11 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 300
       Calculated = True
     end
+    object ADODtStDireccionesClienteSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -703,12 +747,12 @@ inherited dmCotizaciones: TdmCotizaciones
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
-      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
-      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
-      'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
+      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
+      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
+      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
+      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
+      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -780,6 +824,11 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'DirCompleta'
       Size = 300
       Calculated = True
+    end
+    object ADODtStDireccAuxiliarSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
     end
   end
   object ppRprtCotizacion: TppReport
@@ -4732,6 +4781,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 96
   end
   object ADODtStIdentificadores: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

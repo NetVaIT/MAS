@@ -117,7 +117,7 @@ type
     procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     function ActualizaSaldoCliente(IDCFDI, IDPagoRegistro: Integer;
-      Importe: Double): Boolean;
+      Importe: Double;operacion:String): Boolean;
     { Private declarations }
   public
     { Public declarations }
@@ -189,7 +189,7 @@ begin
                         +' where IDPagoRegistro='+DAtaSEt.FieldByName('IDPagoRegistro').ASString);
   ADOQryAuxiliar.ExecSQL;
    //
-  // ActualizaSaldoCliente(DAtaSEt.FieldByName('IDCFDI').ASInteger,DAtaSEt.FieldByName('IDPagoRegistro').asInteger,DataSet.FieldByName('Importe').AsFloat );
+  ActualizaSaldoCliente(DAtaSEt.FieldByName('IDCFDI').ASInteger,DAtaSEt.FieldByName('IDPagoRegistro').asInteger,DataSet.FieldByName('Importe').AsFloat,'- ' );//habilitado mar 7/16
 
 end;
 
@@ -224,7 +224,7 @@ end;
 
 
 
-function TdmPagos.ActualizaSaldoCliente(IDCFDI,IDPagoRegistro: Integer;Importe :Double): Boolean;
+function TdmPagos.ActualizaSaldoCliente(IDCFDI,IDPagoRegistro: Integer;Importe :Double;operacion:String): Boolean;
 var IdDomiciliocliente, IdCliente  :Integer;
 begin
   //Buscar con el CFDI Buscar el IdCliente y DomicilioCliente para actualizar luego
@@ -240,12 +240,12 @@ begin
 
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.Sql.Clear;
-    ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo - '+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
+    ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo '+operacion+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
     ADOQryAuxiliar.ExecSQL;
 
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.Sql.Clear;
-    ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente - '+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
+    ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente '+operacion+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
     ADOQryAuxiliar.ExecSQL;
 
     end;

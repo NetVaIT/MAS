@@ -58,20 +58,21 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Top = 22
     Width = 990
     Height = 570
+    ExplicitTop = 22
     ExplicitWidth = 990
-    ExplicitHeight = 592
+    ExplicitHeight = 570
     ClientRectBottom = 569
     ClientRectRight = 989
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 988
-      ExplicitHeight = 590
+      ExplicitHeight = 568
       inherited cxScrollBox1: TcxScrollBox
         Width = 988
         Height = 568
         ExplicitWidth = 988
-        ExplicitHeight = 590
+        ExplicitHeight = 568
         inherited tbarData: TToolBar
           Width = 986
           ExplicitWidth = 986
@@ -117,7 +118,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           Width = 986
           Height = 541
           ExplicitWidth = 986
-          ExplicitHeight = 563
+          ExplicitHeight = 541
           object Splitter1: TSplitter
             Left = 0
             Top = 313
@@ -327,6 +328,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 13
               Caption = 'Tipo Cambio'
               FocusControl = DBLookupComboBox2
+            end
+            object Label29: TLabel
+              Left = 823
+              Top = 121
+              Width = 83
+              Height = 13
+              Caption = 'Saldo Documento'
+              FocusControl = cxDBTextEdit13
             end
             object DBLookupComboBox1: TDBLookupComboBox
               Left = 40
@@ -554,6 +563,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 25
               Width = 59
             end
+            object cxDBLabel15: TcxDBLabel
+              Left = 823
+              Top = 140
+              DataBinding.DataField = 'SaldoDocumento'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 135
+            end
           end
           object Panel3: TPanel
             Left = 0
@@ -563,7 +580,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 170
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -723,7 +739,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Height = 76
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 487
             object Label13: TLabel
               Left = 586
               Top = 48
@@ -813,7 +828,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Width = 990
     Height = 22
     Align = alTop
-    Caption = 'Facturas'
+    Alignment = taLeftJustify
+    Caption = '     Facturas'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
@@ -823,8 +839,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = 1
-    ExplicitTop = -4
   end
   inherited DataSource: TDataSource
     DataSet = DMFacturas.adodsMaster
@@ -836,7 +850,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C0101020004007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1046,7 +1060,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002DC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

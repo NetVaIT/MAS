@@ -1,17 +1,21 @@
 inherited DMOrdenesSalidas: TDMOrdenesSalidas
   OldCreateOrder = True
-  Height = 614
-  Width = 733
+  Height = 615
+  Width = 957
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    Filter = 'IdOrdenEstatus <8'
+    Filtered = True
     AfterOpen = adodsMasterAfterOpen
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAuto' +
-      'riza, FechaAutoriza,'#13#10' Subtotal, IVA'#13#10'from OrdenesSalidas '#13#10'Orde' +
-      'r by IdOrdenEstatus,FechaRegistro Desc'
+      'riza, FechaAutoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10' Subtotal, I' +
+      'VA'#13#10'from OrdenesSalidas '#13#10'Order by IdOrdenEstatus,FechaRegistro ' +
+      'Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -182,6 +186,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdDocumentoSalida'
       Lookup = True
     end
+    object adodsMasterIdGeneraCFDITipoDoc: TIntegerField
+      FieldName = 'IdGeneraCFDITipoDoc'
+    end
+    object adodsMasterAcumula: TBooleanField
+      FieldName = 'Acumula'
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -324,6 +334,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -345,6 +356,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRecolecta: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -378,6 +390,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRevisa: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -411,6 +424,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaEmpaca: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -466,6 +480,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 241
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -528,6 +543,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 240
   end
   object ADODtStPersonaAutoriza: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -778,7 +794,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 408
   end
   object ADODtStTelefonos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStTelefonosCalcFields
@@ -1001,6 +1016,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 297
   end
   object ADODtStIdentificadores: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1045,7 +1061,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object adodsDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
@@ -1059,6 +1074,90 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object adodsDocumentoNombreArchivo: TStringField
       FieldName = 'NombreArchivo'
       Size = 200
+    end
+  end
+  object ADODtStCambioEstadoInv: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = ADODtStCambioEstadoInvAfterPost
+    CommandText = 
+      'select IdOrdenSCambioEstatus, IdOrdenSalida, IdPersonaAutCambio'#13 +
+      #10', IdOrdenSalidaEstatusNvo, FechaCambio, Observaciones'#13#10' from  O' +
+      'rdenesSCambiosEstatus'
+    Parameters = <>
+    Left = 776
+    Top = 473
+    object ADODtStCambioEstadoInvIdOrdenSCambioEstatus: TIntegerField
+      FieldName = 'IdOrdenSCambioEstatus'
+    end
+    object ADODtStCambioEstadoInvIdOrdenSalida: TIntegerField
+      FieldName = 'IdOrdenSalida'
+    end
+    object ADODtStCambioEstadoInvIdPersonaAutCambio: TIntegerField
+      FieldName = 'IdPersonaAutCambio'
+    end
+    object ADODtStCambioEstadoInvIdOrdenSalidaEstatusNvo: TIntegerField
+      FieldName = 'IdOrdenSalidaEstatusNvo'
+    end
+    object ADODtStCambioEstadoInvFechaCambio: TDateTimeField
+      FieldName = 'FechaCambio'
+    end
+    object ADODtStCambioEstadoInvObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
+    end
+    object ADODtStCambioEstadoInvPersonaCambio: TStringField
+      FieldKind = fkLookup
+      FieldName = 'PersonaCambio'
+      LookupDataSet = ADODtStUsuarioRegresa
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersonaAutCambio'
+      Size = 150
+      Lookup = True
+    end
+    object ADODtStCambioEstadoInvClaveUsr: TStringField
+      FieldKind = fkLookup
+      FieldName = 'ClaveUsr'
+      LookupDataSet = ADODtStUsuarioRegresa
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Password'
+      KeyFields = 'IdPersonaAutCambio'
+      Lookup = True
+    end
+  end
+  object ADODtStUsuarioRegresa: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select P.IdPersona, IdRol, IdPersonaEstatus, RazonSocial , U.Pas' +
+      'sword,U.Permiso'#13#10'from Personas P inner join Usuarios U on P.IdPe' +
+      'rsona =U.idPersona'#13#10'where P.idRol=3 and U.IDUsuarioEstatus=1'#13#10'--' +
+      ' and U.Permiso like '#39'%Aut%'#39
+    Parameters = <>
+    Left = 776
+    Top = 400
+    object AutoIncField1: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object IntegerField1: TIntegerField
+      FieldName = 'IdRol'
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'IdPersonaEstatus'
+    end
+    object StringField1: TStringField
+      FieldName = 'RazonSocial'
+      Size = 300
+    end
+    object StringField2: TStringField
+      FieldName = 'Permiso'
+      Size = 255
+    end
+    object StringField3: TStringField
+      FieldName = 'Password'
+      Size = 15
     end
   end
 end

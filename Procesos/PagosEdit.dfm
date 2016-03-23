@@ -337,7 +337,8 @@ inherited FrmPagosEdt: TFrmPagosEdt
     Width = 880
     Height = 22
     Align = alTop
-    Caption = 'Pagos'
+    Alignment = taLeftJustify
+    Caption = '    Registro de Pagos'
     Color = 5553385
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite

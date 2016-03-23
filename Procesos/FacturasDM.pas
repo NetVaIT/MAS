@@ -321,6 +321,10 @@ type
     ADODtStInformacionEnvioFechaRealEnt: TDateTimeField;
     ADODtStInformacionEnvioIdDocumentoGuia: TIntegerField;
     ADODtStInformacionEnvioCantidadCajas: TIntegerField;
+    ActCancelarCFDI: TAction;
+    adodsMasterRFCEmisor: TStringField;
+    ADODtStDatosActInvIDOrdenSalida: TIntegerField;
+    adopCopiaOrdenSalida: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -332,6 +336,7 @@ type
     procedure ActBuscarExecute(Sender: TObject);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActEnvioCorreoFactExecute(Sender: TObject);
+    procedure ActCancelarCFDIExecute(Sender: TObject);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -355,11 +360,12 @@ type
     function GetFileName(IdDocumento: Integer): TFileName;    //Feb 17/16
     function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;   //Feb 17/16
     function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean; //Feb 17/16
-    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double):Boolean;
+    Function ActualizaSaldoCliente(IdCFDI, IDCliente, IDDomicilioCliente:Integer;Importe :Double; operacion:String):Boolean;
+    procedure RevertirInventario(IDOrdenSalida, IDCFDI: Integer);
   public
     { Public declarations }
     EsProduccion:Boolean;
-    property IDordenSalida:Integer read fidordenSal write fIdOrdenSal;
+    property PIDordenSalida:Integer read fidordenSal write fIdOrdenSal;
     property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
     property DMImpresion:Integer read GetfImpresion write FImpresion;
 
@@ -378,7 +384,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses FacturasFormEdit, DocComprobanteFiscal, FacturaTipos, XMLtoPDFDmod, _Utils,
-  UDMEnvioMail;
+  UDMEnvioMail, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -396,13 +402,121 @@ begin
 
 end;
 
+procedure TDMFacturas.ActCancelarCFDIExecute(Sender: TObject);
+var
+  Certificado: TFECertificado;
+  FileCertificado, FileKey : TFileName;
+  Clave, RutaBase, carpeta, Respuesta, ArchivoSal,dato, motivo : String;
+  Anio,dia,mes:Word;
+  F:TextFile;
+begin
+  inherited;
+  dato:= '¿Está seguro CANCELAR el documento con Folio:'
+           +adodsMaster.fieldbyname('Folio').ASString+' Serie: '
+           +adodsMaster.fieldbyname('Serie').ASString +'?';
+      //Borrar luego
+      motivo:= ' ';
+  if (Application.MessageBox(pChar(dato),'Confirmación',MB_YESNO)=IDYES) and(inputQuery('Motivo Cancelación','Motivo cancelacion',motivo)) then
+  begin
+    adodsArchivosCerKey.Close;
+
+    adodsArchivosCerKey.Parameters.ParamByName('IdPersona').Value := adodsMaster.FieldByName('IdPersonaEmisor').asInteger;
+    adodsArchivosCerKey.Open;
+
+    DecodeDate(Now, Anio, Mes, Dia);
+
+    //Poner Proceso para Cancelar
+    FileCertificado := ExtractFilePath(application.ExeName)+ adodsArchivosCerKeyNomCert.AsString;
+    FileKey := ExtractFilePath(application.ExeName)+  adodsArchivosCerKeyNomKey.AsString;  //  TPath.GetTempPath +
+    ReadFileCERKEY(FileCertificado,FileKey);
+
+    Clave := adodsArchivosCerKeyClave.AsString;
+    Certificado.RFCAlQuePertenece:= adodsMasterRFCEmisor.AsString;
+    Certificado.Ruta := FileCertificado;
+    Certificado.LlavePrivada.Ruta := FileKey;
+    Certificado.LlavePrivada.Clave := Clave;
+
+    RutaBase:=ExtractFilePath(application.ExeName);
+    Carpeta := RutaBase+'Canceladas\';
+    ArchivoSal:= UpperCase(System.SysUtils.FormatSettings.ShortMonthNames[MonthOfTheYear(Now)]) +
+                IntToStr(Anio) +'_'+adodsmasterserie.AsString +adodsMasterFolio.asstring+'.txt' ;
+
+
+    Esproduccion:=FileExists(RutaBase+'EnProduccion.txt'); //Temporal Dic 8/15
+    // := RutaBase + ADODtStPersonaEmisorRFC.AsString + SubCarpeta;
+    if not DirectoryExists (Carpeta) then
+       ForceDirectories(Carpeta);
+    if DirectoryExists (Carpeta) then
+    begin
+      if cancelarCFDI(adodsMasterUUID_TB.Value,carpeta+ArchivoSal,Certificado,Respuesta,Esproduccion) then
+      begin
+        dato:=Respuesta;
+
+        Assignfile(F,carpeta+ArchivoSal);
+        reset(F);
+        readln(F,Respuesta);
+        CloseFile(F);
+        if pos('previamente',Respuesta)>0 then
+        begin
+          adodsMaster.Edit;
+          adodsMasterFechaCancelacion.AsDateTime:=Now;
+          adodsMasterIdCFDIEstatus.AsInteger:=3;
+          adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' Previo '+ motivo+' '+ respuesta;
+          adodsMaster.Post;
+           //Actualiza Inventario y demás   //Mar 7/16
+          RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+          //Actualiza datos
+          ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+          //Actualizar Saldo Cliente //No debio actualizar antes
+
+          ShowMessage('El comprobante ya habia sido cancelado anteriormente');
+        end
+        else
+           if pos('UUID CANCELADO CORRECTAMENTE' ,Respuesta)>0 then
+           begin
+             adodsMaster.Edit;
+             adodsMasterFechaCancelacion.AsDateTime:=Now;
+             adodsMasterIdCFDIEstatus.AsInteger:=3;
+             adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta;
+             adodsMaster.Post;
+
+               //Actualiza Inventario y demás   //Mar 7/16
+             RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+             //Actualizar Saldo Cliente
+             ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+             ShowMessage(adodsMasterUUID_TB.Value + #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación');
+
+           end
+           else
+             if (not EsProduccion) and (pos('74305F11-FFFF-FFFF-FFFF-BD200698C5EA', respuesta)>0) then
+             begin
+               adodsMaster.Edit;
+               adodsMasterFechaCancelacion.AsDateTime:=Now;
+               adodsMasterIdCFDIEstatus.AsInteger:=3;
+               adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta;
+               adodsMaster.Post;
+                 //Actualiza Inventario y demás   //Mar 7/16
+                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+                //Actualizar Saldo Cliente
+               ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+               ShowMessage(adodsMasterUUID_TB.Value + #13+'Prueba de Cancelación ');
+             end
+             else
+               ShowMessage(Respuesta);
+      end
+      else
+        ShowMessage('Ocurrio un error Cancelando el CFDI . Error '+DAto);
+    end; // No existe carpeta. nDS
+  end; //else Cancelada por usuario
+end;
+
 procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);
 begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
   inherited;
     //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
  try
   adodsMaster.Open;
-  ADODtStOrdenSalida.Parameters.ParamByName('IdOrdenSalida').Value:=IDordenSalida;  //Enviar el parametro
+  ADODtStOrdenSalida.Parameters.ParamByName('IdOrdenSalida').Value:=PIDordenSalida;  //Enviar el parametro
   ADODtStOrdenSalida.Open;
   ADODtStOrdenSalidaItem.Open;
 
@@ -740,8 +854,8 @@ begin
           adodsMasterIdDocumentoCBB.Value := CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG Factura ' + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
 
           adodsMaster.Post;
-          //Actualiza Saldos  Mar 1/16
-          ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value);
+          //Actualiza Saldos  Mar 1/16                                                                                                                 //Mar 7/16
+          ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
 
           //Actualiza inventario
           ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
@@ -924,6 +1038,7 @@ begin
       ADOQryActualizaInventario.ExecSQL;
        Texto:=Texto +' Actualizo SalidasUbicacion';
 
+      ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
       ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                        +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
                                        +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString);
@@ -931,7 +1046,7 @@ begin
       ADOQryActualizaInventario.ExecSQL;
 
       Texto:=Texto +' Actualizo ProductoEspacio';
-
+      ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
       ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 3  '
                                        +' where IDProductoKardex='+ ADODtStDatosActInv.FieldByName('IdProductoKardex').ASString);
 
@@ -949,6 +1064,81 @@ begin
      ShowMessage('Error'+ Texto);
   end;
 
+end;
+
+procedure TDMFacturas.RevertirInventario(IDOrdenSalida, IDCFDI: Integer);//Por Cancelación FActura Mar 7/16
+var                                                     //
+   texto:String;
+begin
+  ADODtStDatosActInv.Close;
+  ADODtStDatosActInv.Parameters.ParamByName('IDCFDI').Value:= idcfdi;
+  ADODtStDatosActInv.OPEN;
+  //
+  try
+    ADODtStDatosActInv.Connection.BeginTrans;
+    ADOQryActualizaInventario.SQL.Clear; // Mar 8/16
+     //  Cancela  OrdenSalida  //Verificar si a los registros de Items de OrdenSalida se les quita el IDDocumentoDetalle..
+    ADOQryActualizaInventario.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus = 8  , FechaCancela = getdate() ' //Cancelada
+                                       +' where IDOrdenSalida='+ intToStr(IDOrdenSalida));   //Ajustado mar 17/16
+
+    ADOQryActualizaInventario.ExecSQL;
+
+    Texto:='Cancela Orden Salida ';
+    while not ADODtStDatosActInv.EOF do
+    begin
+      ADOQryActualizaInventario.SQL.Clear;                                                  //se puso en el pedido
+      ADOQryActualizaInventario.SQL.Add('Update Inventario SET PedidoXSurtir  =PedidoXSurtir+'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' ,Existencia =Existencia+ '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' Where IdProducto='+ADODtStDatosActInv.FieldByName('IDProducto').AsString
+                                       +' and IDALmacen= '+ADODtStDatosActInv.FieldByName('IDAlmacen').ASString);
+
+      ADOQryActualizaInventario.ExecSQL;
+      Texto:='Revierte inventario';
+      ADOQryActualizaInventario.SQL.Clear;                                                 //Cancelado
+      ADOQryActualizaInventario.SQL.Add('Update SalidasUbicaciones SET IdSalidaUbicacionEstatus=4  where IdOrdenSalidaItem='
+                                        +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
+      ADOQryActualizaInventario.ExecSQL;
+      Texto:=Texto +' Cancela SalidasUbicacion';
+
+      ADOQryActualizaInventario.SQL.Clear;            //Aca se regresa la sumatoria C. Mar 18/16
+      ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad + '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                       +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
+                                       +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString);
+
+      ADOQryActualizaInventario.ExecSQL;
+
+      Texto:=Texto +' Revierte ProductoEspacio';
+
+      ADOQryActualizaInventario.SQL.Clear; //No estaba                        //Cancelar registro
+      ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 4  '
+                                       +' where IDProductoKardex='+ ADODtStDatosActInv.FieldByName('IdProductoKardex').ASString);
+
+      ADOQryActualizaInventario.ExecSQL;
+
+      Texto:=Texto +' Cancela Producto Kardex';
+
+
+
+
+
+
+      ADODtStDatosActInv.Next;
+    end;
+    // Copiar Orden de Salida en nuevo registro con Estatus y cantidades respectivos.. verificar.
+    //LLamar al procedimiento almacenado creado y ver que más se requiere
+    adopCopiaOrdenSalida.Parameters.ParamByName('@IdOrdenSalida').Value:= IDOrdenSalida;
+    adopCopiaOrdenSalida.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+    adopCopiaOrdenSalida.ExecProc;
+
+
+
+    ADODtStDatosActInv.Connection.CommitTrans;
+   //  ShowMessage('bien '+Texto);
+  except
+     ADODtStDatosActInv.Connection.RollbackTrans;
+     ShowMessage('Error'+ Texto);
+  end;
+
 
 
 
@@ -956,18 +1146,21 @@ begin
 
 end;
 
+
+
+
 function TDMFacturas.ActualizaSaldoCliente(IdCFDI, IDCliente,
-  IDDomicilioCliente: Integer;Importe :Double): Boolean;
+    IDDomicilioCliente: Integer;Importe :Double; operacion:String): Boolean;
 begin
  try
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.Sql.Clear;
-  ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo + '+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
+  ADOQryAuxiliar.Sql.add('Update PersonasDomicilios set Saldo =Saldo '+operacion+floatToStr(Importe)+' where IDPersonaDomicilio='+intToStr(IdDomiciliocliente));
   ADOQryAuxiliar.ExecSQL;
 
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.Sql.Clear;
-  ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente + '+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
+  ADOQryAuxiliar.Sql.add('Update Personas set SaldoCliente =SaldoCliente '+operacion+floatToStr(Importe)+' where IDPersona='+intToStr(IdCliente));
   ADOQryAuxiliar.ExecSQL;
    result:=true;
   except
@@ -1102,7 +1295,7 @@ begin
   TfrmFacturasFormEdit(gGridEditForm).DSDatosCliente.DataSet:=ADODtStDireccionesCliente;
 //  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
   TfrmFacturasFormEdit(gGridEditForm).EnviaCorreoConDocs := ActEnvioCorreoFact; //Feb 17/16
-
+  TfrmFacturasFormEdit(gGridEditForm).ActCancelaCFDi := ActCancelarCFDI; //Mar 3/16
 
 end;
 

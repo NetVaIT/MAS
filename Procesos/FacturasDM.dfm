@@ -1,7 +1,7 @@
 inherited DMFacturas: TDMFacturas
   OldCreateOrder = True
-  Height = 650
-  Width = 718
+  Height = 663
+  Width = 772
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -238,6 +238,15 @@ inherited DMFacturas: TDMFacturas
     object adodsMasterIdOrdenSalida: TIntegerField
       FieldName = 'IdOrdenSalida'
     end
+    object adodsMasterRFCEmisor: TStringField
+      FieldKind = fkLookup
+      FieldName = 'RFCEmisor'
+      LookupDataSet = ADODtStPersonaEmisor
+      LookupKeyFields = 'idpersona'
+      LookupResultField = 'RFC'
+      KeyFields = 'IdPersonaEmisor'
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     OnNewRecord = adodsMasterNewRecord
@@ -263,6 +272,10 @@ inherited DMFacturas: TDMFacturas
       Caption = 'Enviar Correo con Factura'
       Hint = 'Enviar Factura por Correo'
       OnExecute = ActEnvioCorreoFactExecute
+    end
+    object ActCancelarCFDI: TAction
+      Hint = 'Cancelar CFDI'
+      OnExecute = ActCancelarCFDIExecute
     end
   end
   object DSMaster: TDataSource
@@ -1471,9 +1484,11 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SElect Co.*, PK.IdAlmacen,PK.IdProductoKardex from CFDIConceptos' +
-      ' co'#13#10'  inner Join ProductosKardex PK on PK.IdOrdenSalidaItem=Co.' +
-      'IdOrdenSalidaItem'#13#10'where Co.IdCFDI =:IDCFDI        '
+      'SElect Co.*, PK.IdAlmacen,PK.IdProductoKardex,OSI.IDOrdenSalida ' +
+      #13#10'from CFDIConceptos co'#13#10'inner Join ProductosKardex PK on PK.IdO' +
+      'rdenSalidaItem=Co.IdOrdenSalidaItem'#13#10'inner Join OrdenesSalidasIt' +
+      'ems OSI  on OSI.IDOrdenSalidaItem= PK.IDordenSalidaItem'#13#10' where ' +
+      'Co.IdCFDI =:IDCFDI        '#13#10
     Parameters = <
       item
         Name = 'IDCFDI'
@@ -1483,7 +1498,7 @@ inherited DMFacturas: TDMFacturas
         Size = 8
         Value = Null
       end>
-    Left = 528
+    Left = 536
     Top = 585
     object ADODtStDatosActInvIdCFDIConcepto: TLargeintField
       FieldName = 'IdCFDIConcepto'
@@ -1533,11 +1548,42 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'IdProductoKardex'
       ReadOnly = True
     end
+    object ADODtStDatosActInvIDOrdenSalida: TIntegerField
+      FieldName = 'IDOrdenSalida'
+    end
   end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
     Left = 60
     Top = 297
+  end
+  object adopCopiaOrdenSalida: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_ReplicaOrdenSalida;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdOrdenSalida'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 656
+    Top = 584
   end
 end

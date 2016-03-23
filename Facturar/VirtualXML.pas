@@ -451,6 +451,7 @@ begin
       PWideChar(ArchivoOUT));
     end;
     Result:= (Valor=0);
+    Respuesta:=intToStr(valor);
   finally
     VirtualXML_Free(hXML);
     FreeLibrary(Hbar);

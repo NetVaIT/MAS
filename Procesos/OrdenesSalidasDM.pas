@@ -190,6 +190,24 @@ type
     ADODtStProductosKardexFecha: TDateTimeField;
     ADODtStInformacionEnvioFechaProgramadaEnt: TDateTimeField;
     ADODtStInformacionEnvioFechaRealEnt: TDateTimeField;
+    adodsMasterIdGeneraCFDITipoDoc: TIntegerField;
+    adodsMasterAcumula: TBooleanField;
+    ADODtStCambioEstadoInv: TADODataSet;
+    ADODtStCambioEstadoInvIdOrdenSCambioEstatus: TIntegerField;
+    ADODtStCambioEstadoInvIdOrdenSalida: TIntegerField;
+    ADODtStCambioEstadoInvIdPersonaAutCambio: TIntegerField;
+    ADODtStCambioEstadoInvIdOrdenSalidaEstatusNvo: TIntegerField;
+    ADODtStCambioEstadoInvFechaCambio: TDateTimeField;
+    ADODtStCambioEstadoInvObservaciones: TStringField;
+    ADODtStUsuarioRegresa: TADODataSet;
+    AutoIncField1: TAutoIncField;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    ADODtStCambioEstadoInvPersonaCambio: TStringField;
+    ADODtStCambioEstadoInvClaveUsr: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -206,6 +224,8 @@ type
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActCargarGuiaExecute(Sender: TObject);
     procedure ActEnvioCorreoConArchivosExecute(Sender: TObject);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
   private
     CantAGuardar:Double;
     function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
@@ -332,6 +352,24 @@ procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodtstIdentificadores.Open; //Feb 8/16
+end;
+
+procedure TDMOrdenesSalidas.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  Dataset.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1; //Generar Factura
+  Dataset.FieldByName('Acumula').ASBoolean:=False; //No acumula
+
+end;
+
+procedure TDMOrdenesSalidas.ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
+begin
+  inherited;              //Mar 18/16
+  //Se debe eliminar de SalidasUbicacion el registro
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Delete From  SalidasUbicaciones Where idOrdenSalida='+ dataset.FieldByName('IdOrdenSalida').asstring);
+  ADOQryAuxiliar.ExecSQL;
 end;
 
 procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
@@ -481,7 +519,7 @@ end;
 
 procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadSetText(
   Sender: TField; const Text: string);
-var valor:Double;
+//var valor:Double;
 begin
   inherited;
 
