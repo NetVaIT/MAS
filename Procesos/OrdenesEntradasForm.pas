@@ -22,7 +22,7 @@ uses
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxMemo,
   cxDBEdit, cxLabel, cxDBLabel, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, Vcl.DBCtrls, Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, Vcl.Menus, cxButtons, cxButtonEdit;
+  cxDBLookupComboBox, Vcl.Menus, cxButtons, cxButtonEdit, Vcl.Buttons;
 
 type
   TfrmOrdenesEntradas = class(T_frmStandarGFormEdit)
@@ -48,28 +48,29 @@ type
     Label5: TLabel;
     cxDBLabel2: TcxDBLabel;
     ToolButton3: TToolButton;
-    btnAutorizar: TToolButton;
-    btnImprimir: TToolButton;
     Label11: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     Label12: TLabel;
     edtTipoCambio: TcxDBButtonEdit;
-    btnGenDocumento: TToolButton;
     Label13: TLabel;
     DBLookupComboBox4: TDBLookupComboBox;
     PnlTitulo: TPanel;
     cxLabel1: TcxLabel;
+    btnAutorizar: TSpeedButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     FactTipoCambio: TBasicAction;
     FactCrearOrden: TBasicAction;
+    FactAutorizar: TBasicAction;
     procedure SetactCrearOrden(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
+    procedure SetactAutorizar(const Value: TBasicAction);
   public
     { Public declarations }
-    property actCrearOrden: TBasicAction read FactCrearOrden write SetactCrearOrden;
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
+    property actCrearOrden: TBasicAction read FactCrearOrden write SetactCrearOrden;
+    property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
   end;
 
 implementation
@@ -85,23 +86,11 @@ begin
   ContainerDetail1:= pnlDetail;
 end;
 
-//procedure TfrmOrdenesEntradas.SetactAutorizar(const Value: TBasicAction);
-//begin
-//  FactAutorizar := Value;
-//  btnAutorizar.Action:= Value;
-//end;
-//
-//procedure TfrmOrdenesEntradas.SetactGenDocumento(const Value: TBasicAction);
-//begin
-//  FactGenDocumento := Value;
-//  btnGenDocumento.Action:= Value;
-//end;
-//
-//procedure TfrmOrdenesEntradas.SetactImprimir(const Value: TBasicAction);
-//begin
-//  FactImprimir := Value;
-//  btnImprimir.Action:= value
-//end;
+procedure TfrmOrdenesEntradas.SetactAutorizar(const Value: TBasicAction);
+begin
+  FactAutorizar := Value;
+  btnAutorizar.Action:= Value;
+end;
 
 procedure TfrmOrdenesEntradas.SetactCrearOrden(const Value: TBasicAction);
 begin

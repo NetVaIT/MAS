@@ -9,7 +9,7 @@ uses
 resourcestring
   strErrorClave = 'No encontro el artículo para este proveedor, favor de teclear uno valido.';
   strAllowGenDocumento = '¿Desea crear el documento?';
-//  strAllowApprove = '¿Deasea autorizar el documento?';
+  strAllowApprove = '¿Deasea aplicar la orden de entrada?';
 
 type
   TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada);
@@ -87,6 +87,8 @@ type
     adodsListaProductosDescripcion: TStringField;
     adodsListaProductosPrecioUnitario: TFMTBCDField;
     adoqGetIdProductoPendiente: TFloatField;
+    actAplicarEntrada: TAction;
+    adopSetEstatus: TADOStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -99,6 +101,9 @@ type
     procedure adodsItemsClaveProductoValidate(Sender: TField);
     procedure adodsItemsPrecioChange(Sender: TField);
     procedure actBuscarProductoExecute(Sender: TObject);
+    procedure actAplicarEntradaExecute(Sender: TObject);
+    procedure actAplicarEntradaUpdate(Sender: TObject);
+    procedure dsmasterDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -107,14 +112,17 @@ type
     fCantidadSolicitada: Double;
     FMostrarCantidad: Boolean;
     FMostarImporte: Boolean;
+    FBloquear: Boolean;
     function GetIdProducto(IdPersona: Integer; Clave: String;
       var Precio: Double; var CantidadSolicitada: Double): Integer;
     procedure SetMostrarCantidad(const Value: Boolean);
     procedure SetMostarImporte(const Value: Boolean);
+    procedure SetBloquear(const Value: Boolean);
   public
     { Public declarations }
     property MostrarCantidad: Boolean read FMostrarCantidad write SetMostrarCantidad default False;
     property MostarImporte: Boolean read FMostarImporte write SetMostarImporte default False;
+    property Bloquear: Boolean read FBloquear write SetBloquear;
   end;
 
 implementation
@@ -140,6 +148,24 @@ begin
       adoqTipoCambio.Close;
     end;
   end;
+end;
+
+procedure TdmOrdenesEntradas.actAplicarEntradaExecute(Sender: TObject);
+begin
+  inherited;
+  if MessageDlg(strAllowApprove, mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    adopSetEstatus.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
+    adopSetEstatus.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+    adopSetEstatus.ExecProc;
+    RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+  end;
+end;
+
+procedure TdmOrdenesEntradas.actAplicarEntradaUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eGenerada));
 end;
 
 procedure TdmOrdenesEntradas.actBuscarProductoExecute(Sender: TObject);
@@ -265,8 +291,9 @@ begin
   if adodsItems.CommandText <> EmptyStr then adodsItems.Open;
   gGridEditForm:= TfrmOrdenesEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
-  TfrmOrdenesEntradas(gGridEditForm).actCrearOrden:= actCrearOrden;
   TfrmOrdenesEntradas(gGridEditForm).actTipoCambio:= actGetTipoCambio;
+  TfrmOrdenesEntradas(gGridEditForm).actCrearOrden:= actCrearOrden;
+  TfrmOrdenesEntradas(gGridEditForm).actAutorizar:= actAplicarEntrada;
   gFormDetail1:= TfrmOrdenesEntradasItems.Create(Self);
   gFormDetail1.DataSet:= adodsItems;
   TfrmOrdenesEntradasItems(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;
@@ -281,6 +308,12 @@ begin
   inherited;
   adodsItems.Close;
   frmListaProductos.Free;
+end;
+
+procedure TdmOrdenesEntradas.dsmasterDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  Bloquear:= (adodsMasterIdOrdenEstatus.Value <> Ord(eGenerada));
 end;
 
 function TdmOrdenesEntradas.GetIdProducto(IdPersona: Integer; Clave: String;
@@ -306,6 +339,14 @@ begin
   finally
     adoqGetIdProducto.Close;
   end;
+end;
+
+procedure TdmOrdenesEntradas.SetBloquear(const Value: Boolean);
+begin
+  FBloquear := Value;
+  TfrmOrdenesEntradas(gGridEditForm).pnlEncabezado.Enabled:= not Value;
+  gFormDetail1.ReadOnlyGrid:= Value;
+  TfrmOrdenesEntradas(gGridEditForm).pnlPie.Enabled:= not Value
 end;
 
 procedure TdmOrdenesEntradas.SetMostarImporte(const Value: Boolean);

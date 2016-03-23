@@ -149,9 +149,16 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       ImageIndex = 4
       OnExecute = actCrearOrdenExecute
     end
+    object actAplicarEntrada: TAction
+      Caption = 'Aplicar entrada'
+      Hint = 'Permite generar las aplicaciones de entrada'
+      OnExecute = actAplicarEntradaExecute
+      OnUpdate = actAplicarEntradaUpdate
+    end
   end
   object dsmaster: TDataSource
     DataSet = adodsMaster
+    OnDataChange = dsmasterDataChange
     Left = 96
     Top = 16
   end
@@ -579,5 +586,30 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       Precision = 18
       Size = 6
     end
+  end
+  object adopSetEstatus: TADOStoredProc
+    Connection = _dmConection.ADOConnection
+    ProcedureName = 'p_SetOrdenesEntradasEstatus;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@IdOrdenEntrada'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@IdUsuario'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 296
+    Top = 480
   end
 end

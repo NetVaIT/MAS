@@ -78,22 +78,13 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
             ImageIndex = 12
             Style = tbsSeparator
           end
-          object btnGenDocumento: TToolButton
+          object btnAutorizar: TSpeedButton
             Left = 262
             Top = 0
-            Caption = 'btnGenDocumento'
-            ImageIndex = 14
-          end
-          object btnAutorizar: TToolButton
-            Left = 285
-            Top = 0
-            Caption = 'Autorizar'
-          end
-          object btnImprimir: TToolButton
-            Left = 308
-            Top = 0
-            Caption = 'btnImprimir'
-            ImageIndex = 13
+            Width = 90
+            Height = 22
+            Hint = 'Permite generar las aplicaciones de entrada'
+            Caption = 'Aplicar entrada'
           end
         end
         inherited pnlMaster: TPanel
@@ -373,7 +364,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -514,7 +505,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D002803D40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803D80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000
