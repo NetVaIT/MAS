@@ -127,9 +127,15 @@ type
     PnlTitulo: TPanel;
     cxDBLabel15: TcxDBLabel;
     Label29: TLabel;
+    ToolButton5: TToolButton;
+    DSAuxiliar: TDataSource;
+    DSDireccioncliente: TDataSource;
+    TlBtnEdit: TToolButton;
+    DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure DBLookupComboBox1Click(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
@@ -139,7 +145,8 @@ type
     fImpresionED: integer;
     FMostrar: Boolean;
     FEnviaCorreoConDocs: TBasicAction;
-    FCancelaCFDI: TBasicAction; //Feb 10/16
+    FCancelaCFDI: TBasicAction;
+    FTipoDoc: Integer; //Feb 10/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -150,7 +157,8 @@ type
     function GetfImpresioned: integer;
     procedure SetMostrar(const Value: Boolean);
     procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
-    procedure SetCancelaCFDI(const Value: TBasicAction);  //ene 7/16
+    procedure SetCancelaCFDI(const Value: TBasicAction);
+    procedure SetTipoDoc(const Value: Integer);  //ene 7/16
 
     { Private declarations }
   public
@@ -166,6 +174,7 @@ type
     constructor CreateWMostrar(AOwner: TComponent; Mostrar:Boolean); virtual;
     property Mostrar:Boolean read FMostrar write SetMostrar;//Feb 10/16
     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
+    Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc; //Mar 29/16
   end;
 
 var
@@ -191,10 +200,39 @@ procedure TfrmFacturasFormEdit.DataSourceDataChange(Sender: TObject;
 begin
   inherited;
   pnlmaster.Enabled:=  DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1;   //Prefactura
-  TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled;
-  ToolButton12.Enabled:=  pnlmaster.Enabled;
-  TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled;  //feb 17/16
+  TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4); //Mod. Mar 28/16
+  ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
+  TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4);  //feb 17/16
   TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat);
+  DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ); //Mar 28/16    //Se dejo para determinar el movimiento
+  if DBLkupCmbBxDirAuxiliar.Visible then
+  begin
+    if DataSource.State=dsedit then
+    begin
+      dsDireccionCliente.dataset.close;
+      TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
+      dsDireccionCliente.dataset.Open;
+    end;
+    dsDatoscliente.DataSet:=dsDireccionCliente.DataSet
+  end
+  else
+     dsDatoscliente.DataSet:= dsAuxiliar.DataSet; (*//DMFacturas.ADODtStDireccionesCliente*)
+end;
+
+procedure TfrmFacturasFormEdit.DBLookupComboBox1Click(Sender: TObject);
+begin
+  inherited;
+ //Copiado de Cotizacion//Mar 28/16
+  //Para que abra la de direcciones
+   if DataSource.State in [dsInsert,dsEdit] then //Por si cambia de cliente
+   begin
+     dsDireccionCliente.dataset.close;
+     TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
+     dsDireccionCliente.dataset.Open;
+     if dsDireccionCliente.dataset.RecordCount >=1 then
+        DataSource.DataSet.FieldByName('IdClienteDomicilio').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
+                                      //FActura cambia
+   end;
 end;
 
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
@@ -216,6 +254,13 @@ begin
   DSDatosCliente.DataSet.Open;
  (* if not Mostrar then
      Hide;*)
+  TlBtnEdit.Left:=23;
+  case ftipoDoc of
+  1:pnlTitulo.Caption:='  Facturas';
+  2:pnlTitulo.Caption:='  Notas de Crédito';
+  3:pnlTitulo.Caption:='  Notas de Cargo';
+  4:pnlTitulo.Caption:='  Notas de Venta';
+  end;
 
 end;
 
@@ -275,6 +320,11 @@ begin
   RegeneraPDF:=Value;
   TFrmFacturasGrid(gFormGrid).ActRegPDF:=value;
 
+end;
+
+procedure TfrmFacturasFormEdit.SetTipoDoc(const Value: Integer);
+begin
+  FTipoDoc := Value;
 end;
 
 end.

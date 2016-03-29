@@ -1589,7 +1589,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
             end
           end
-          object Panel3: TPanel
+          object PnlDetalle: TPanel
             Left = 0
             Top = 416
             Width = 1093
@@ -1608,6 +1608,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 Left = 0
                 Top = 0
                 Action = DatasetInsert1
+                Visible = False
               end
               object ToolButton32: TToolButton
                 Left = 23
@@ -1666,7 +1667,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               object ToolButton41: TToolButton
                 Left = 185
                 Top = 0
-                Action = DatasetRefresh1
+                Action = DatasetPost1
               end
               object ToolButton42: TToolButton
                 Left = 208
@@ -1776,7 +1777,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1982,7 +1983,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

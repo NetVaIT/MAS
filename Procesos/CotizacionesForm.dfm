@@ -55,20 +55,21 @@ inherited frmCotizaciones: TfrmCotizaciones
     Top = 22
     Width = 1277
     Height = 503
+    ExplicitTop = 22
     ExplicitWidth = 1277
-    ExplicitHeight = 525
+    ExplicitHeight = 503
     ClientRectBottom = 502
     ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1275
-      ExplicitHeight = 523
+      ExplicitHeight = 501
       inherited cxScrollBox1: TcxScrollBox
         Width = 1275
         Height = 501
         ExplicitWidth = 1275
-        ExplicitHeight = 523
+        ExplicitHeight = 501
         inherited tbarData: TToolBar
           Width = 1273
           ParentShowHint = False
@@ -147,7 +148,7 @@ inherited frmCotizaciones: TfrmCotizaciones
           Width = 1273
           Height = 474
           ExplicitWidth = 1273
-          ExplicitHeight = 496
+          ExplicitHeight = 474
           object pnlDetail: TPanel
             Left = 0
             Top = 161
@@ -156,7 +157,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitHeight = 224
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -290,15 +290,27 @@ inherited frmCotizaciones: TfrmCotizaciones
                   ButtonStyle = cbsNone
                   Expanded = False
                   FieldName = 'Producto'
-                  Width = 289
+                  Width = 263
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Disponible'
+                  Width = 73
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Apartado'
+                  Width = 75
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'ExistenciaActual'
                   ReadOnly = True
-                  Width = 92
-                  Visible = True
+                  Width = -1
+                  Visible = False
                 end
                 item
                   Expanded = False
@@ -332,7 +344,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 161
             Align = alTop
             TabOrder = 1
-            ExplicitTop = -6
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -641,7 +652,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 111
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 385
             object Label2: TLabel
               Left = 530
               Top = 49
@@ -728,9 +738,6 @@ inherited frmCotizaciones: TfrmCotizaciones
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 990
   end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
@@ -739,7 +746,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -945,7 +952,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011900C002E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002EC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

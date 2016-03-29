@@ -2,6 +2,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   Caption = 'frmFacturasFormEdit'
   ClientWidth = 990
   ExplicitWidth = 990
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -76,8 +77,61 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
         inherited tbarData: TToolBar
           Width = 986
           ExplicitWidth = 986
-          object ToolButton3: TToolButton
+          object TlBtnEdit: TToolButton [1]
+            Left = 23
+            Top = 0
+            Action = DataSetEdit
+          end
+          inherited ToolButton11: TToolButton
+            Left = 46
+            ExplicitLeft = 46
+          end
+          inherited ToolButton12: TToolButton
+            Left = 54
+            ExplicitLeft = 54
+          end
+          inherited ToolButton13: TToolButton
+            Left = 77
+            ExplicitLeft = 77
+          end
+          inherited ToolButton14: TToolButton
+            Left = 85
+            ExplicitLeft = 85
+          end
+          inherited ToolButton15: TToolButton
+            Left = 108
+            ExplicitLeft = 108
+          end
+          inherited ToolButton16: TToolButton
+            Left = 131
+            ExplicitLeft = 131
+          end
+          inherited ToolButton17: TToolButton
+            Left = 154
+            ExplicitLeft = 154
+          end
+          inherited ToolButton18: TToolButton
+            Left = 177
+            ExplicitLeft = 177
+          end
+          inherited ToolButton19: TToolButton
+            Left = 200
+            ExplicitLeft = 200
+          end
+          inherited ToolButton20: TToolButton
+            Left = 223
+            ExplicitLeft = 223
+          end
+          inherited ToolButton1: TToolButton
+            Left = 246
+            ExplicitLeft = 246
+          end
+          inherited ToolButton2: TToolButton
             Left = 254
+            ExplicitLeft = 254
+          end
+          object ToolButton3: TToolButton
+            Left = 277
             Top = 0
             Width = 275
             Caption = 'ToolButton3'
@@ -85,7 +139,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Style = tbsSeparator
           end
           object TlBtnGeneraCFDI: TToolButton
-            Left = 529
+            Left = 552
             Top = 0
             Hint = 'Generar CFDI'
             ImageIndex = 23
@@ -93,13 +147,13 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             ShowHint = True
           end
           object TlBtnCancelaCFDI: TToolButton
-            Left = 552
+            Left = 575
             Top = 0
             Caption = 'Cancelar CFDI'
             ImageIndex = 25
           end
           object ToolButton4: TToolButton
-            Left = 575
+            Left = 598
             Top = 0
             Width = 51
             Caption = 'ToolButton4'
@@ -108,7 +162,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object TlBtnEnvioFactura: TToolButton
             Tag = 300
-            Left = 626
+            Left = 649
             Top = 0
             Caption = 'TlBtnEnvioFactura'
             ImageIndex = 24
@@ -337,6 +391,18 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Caption = 'Saldo Documento'
               FocusControl = cxDBTextEdit13
             end
+            object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
+              Left = 499
+              Top = 127
+              Width = 22
+              Height = 21
+              DataField = 'IdClienteDomicilio'
+              DataSource = DataSource
+              KeyField = 'IdPersonaDomicilio'
+              ListField = 'DirCompleta'
+              ListSource = DSDireccioncliente
+              TabOrder = 26
+            end
             object DBLookupComboBox1: TDBLookupComboBox
               Left = 40
               Top = 83
@@ -345,6 +411,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataField = 'Cliente'
               DataSource = DataSource
               TabOrder = 0
+              OnClick = DBLookupComboBox1Click
             end
             object DBLookupComboBox3: TDBLookupComboBox
               Left = 593
@@ -587,8 +654,13 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 29
               Images = ilAction
               TabOrder = 0
-              object ToolButton32: TToolButton
+              object ToolButton5: TToolButton
                 Left = 0
+                Top = 0
+                Action = DatasetItemInsert
+              end
+              object ToolButton32: TToolButton
+                Left = 23
                 Top = 0
                 Width = 8
                 Caption = 'ToolButton2'
@@ -596,13 +668,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
                 Style = tbsSeparator
               end
               object ToolButton33: TToolButton
-                Left = 8
+                Left = 31
                 Top = 0
                 Action = DatasetItemDelete
-                Visible = False
               end
               object ToolButton34: TToolButton
-                Left = 31
+                Left = 54
                 Top = 0
                 Width = 8
                 Caption = 'ToolButton3'
@@ -610,12 +681,12 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
                 Style = tbsSeparator
               end
               object ToolButton35: TToolButton
-                Left = 39
+                Left = 62
                 Top = 0
                 Action = DatasetItemEdit
               end
               object ToolButton36: TToolButton
-                Left = 62
+                Left = 85
                 Top = 0
                 Width = 8
                 Caption = 'ToolButton4'
@@ -623,37 +694,37 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
                 Style = tbsSeparator
               end
               object ToolButton38: TToolButton
-                Left = 70
+                Left = 93
                 Top = 0
-                Action = DataSetFirst
+                Action = DatasetItemFirst
               end
               object ToolButton39: TToolButton
-                Left = 93
+                Left = 116
                 Top = 0
                 Action = DatasetItemPrior
               end
               object ToolButton40: TToolButton
-                Left = 116
+                Left = 139
                 Top = 0
                 Action = DatasetItemNext
               end
               object ToolButton41: TToolButton
-                Left = 139
+                Left = 162
                 Top = 0
                 Action = DatasetItemLast
               end
               object ToolButton42: TToolButton
-                Left = 162
+                Left = 185
                 Top = 0
                 Action = DatasetItemRefresh
               end
               object ToolButton37: TToolButton
-                Left = 185
+                Left = 208
                 Top = 0
                 Action = DatasetItemPost
               end
               object ToolButton31: TToolButton
-                Left = 208
+                Left = 231
                 Top = 0
                 Action = DatasetItemCancel
               end
@@ -813,6 +884,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             object cxDBMemo1: TcxDBMemo
               Left = 104
               Top = 6
+              DataBinding.DataField = 'Observaciones'
+              DataBinding.DataSource = DataSource
               TabOrder = 4
               Height = 59
               Width = 441
@@ -841,6 +914,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     TabOrder = 5
   end
   inherited DataSource: TDataSource
+    AutoEdit = False
     DataSet = DMFacturas.adodsMaster
     OnDataChange = DataSourceDataChange
     Left = 750
@@ -850,7 +924,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -997,60 +1071,70 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
       Caption = '&Primero'
       Hint = 'Primero'
       ImageIndex = 12
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemPrior: TDataSetPrior
       Category = 'DatasetDetalle'
       Caption = '&Anterior'
       Hint = 'Prior'
       ImageIndex = 13
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemNext: TDataSetNext
       Category = 'DatasetDetalle'
       Caption = '&Siguiente'
       Hint = 'Next'
       ImageIndex = 14
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemLast: TDataSetLast
       Category = 'DatasetDetalle'
       Caption = '&'#218'ltimo'
       Hint = 'Last'
       ImageIndex = 15
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemInsert: TDataSetInsert
       Category = 'DatasetDetalle'
       Caption = '&Insert'
       Hint = 'Insert'
       ImageIndex = 16
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemDelete: TDataSetDelete
       Category = 'DatasetDetalle'
       Caption = '&Delete'
       Hint = 'Delete'
       ImageIndex = 17
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemEdit: TDataSetEdit
       Category = 'DatasetDetalle'
       Caption = '&Edit'
       Hint = 'Edit'
       ImageIndex = 18
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemPost: TDataSetPost
       Category = 'DatasetDetalle'
       Caption = 'P&ost'
       Hint = 'Post'
       ImageIndex = 19
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemCancel: TDataSetCancel
       Category = 'DatasetDetalle'
       Caption = '&Cancel'
       Hint = 'Cancel'
       ImageIndex = 20
+      DataSource = DSCFDIConceptos
     end
     object DatasetItemRefresh: TDataSetRefresh
       Category = 'DatasetDetalle'
       Caption = '&Refresh'
       Hint = 'Refresh'
       ImageIndex = 21
+      DataSource = DSCFDIConceptos
     end
     object Action1: TAction
       Caption = 'Action1'
@@ -1060,7 +1144,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2005,5 +2089,15 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     DataSet = DMFacturas.ADODtStDireccionesCliente
     Left = 900
     Top = 336
+  end
+  object DSAuxiliar: TDataSource
+    DataSet = DMFacturas.ADODtStDireccionesCliente
+    Left = 536
+    Top = 192
+  end
+  object DSDireccioncliente: TDataSource
+    DataSet = DMFacturas.ADODtStDireccAuxiliar
+    Left = 928
+    Top = 208
   end
 end

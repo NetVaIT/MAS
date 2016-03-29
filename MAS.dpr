@@ -140,7 +140,9 @@ uses
   OrdenesEntradasGrid in 'Procesos\OrdenesEntradasGrid.pas' {frmOrdenesEntradasGrid},
   OrdenesEntradasItemsForm in 'Procesos\OrdenesEntradasItemsForm.pas' {frmOrdenesEntradasItems},
   OrdenesEntradasItemsGrid in 'Procesos\OrdenesEntradasItemsGrid.pas' {frmOrdenesEntradasItemsGrid},
-  OrdenesEntradasSeleccionGrid in 'Procesos\OrdenesEntradasSeleccionGrid.pas' {frmOrdenesEntradasSeleccionGrid};
+  OrdenesEntradasSeleccionGrid in 'Procesos\OrdenesEntradasSeleccionGrid.pas' {frmOrdenesEntradasSeleccionGrid},
+  rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
+  rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule};
 
 {$R *.res}
 

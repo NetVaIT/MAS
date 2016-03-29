@@ -64,7 +64,7 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
       Size = 255
     end
   end
-  object adodsPeriodo: TADODataSet [2]
+  object adodsPeriodo: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPeriodo, Descripcion, Mes, Anio from Periodos'

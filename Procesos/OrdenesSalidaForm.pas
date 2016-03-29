@@ -78,7 +78,7 @@ type
     DatasetPost1: TDataSetPost;
     DatasetCancel1: TDataSetCancel;
     DatasetRefresh1: TDataSetRefresh;
-    Panel3: TPanel;
+    PnlDetalle: TPanel;
     ToolBar2: TToolBar;
     ToolButton31: TToolButton;
     ToolButton32: TToolButton;
@@ -205,8 +205,8 @@ type
     procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
     { Private declarations }
   public
-    { Public declarations }
-    procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean);
+    { Public declarations }                                  // Mod. Mar 28/16
+    procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer);
     Procedure ActualizaKardex(IdOrdenSalida:integer);
     property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
      property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
@@ -390,9 +390,9 @@ begin
   //Si es 4 autorizo bien... Se debe generar la Factura directamente
   if Estatus<>-1 then //Cambio a 4
   begin
-   //showmessage('Mandar generacion de Factura');
-    ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verificando si existe o no ?
-    Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI);
+   //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
+    ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verificando si existe o no ?                //Mod. Mar 28/16
+    Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
     if CreoCFDI then
     begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
       DSInformacionEntrega.DataSet.Close;
@@ -411,6 +411,8 @@ begin
       datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
       datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
       datasource.DataSet.Post;
+
+      //deberia quitar Kardex y posibles dattos de CFDIs
       ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
     end;
 
@@ -677,6 +679,7 @@ begin
     BtBtnRegresaEstado.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>1)and(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4); //Mar 4/16
 
   end;
+  PnlDetalle.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4);
 end;
 
 procedure TFrmOrdenesSalida.DBGrid1CellClick(Column: TColumn);
@@ -717,15 +720,15 @@ begin
     DSSalidasUbicaciones.DataSet.Refresh;
 end;
 
-procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean);
+procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //Mod Mar 28/16
 
-begin
-  dmFacturas := TdmFacturas.CreateWMostrar(nil,True);  //Era false pero verificar  a ver si no da el aV
+begin                                               //Mar 29/16
+  dmFacturas := TdmFacturas.CreateWMostrar(nil,True,IDGenTipoDoc);  //Era false pero verificar  a ver si no da el aV
   dmFActuras.PIDordenSalida:=IDOrden;
   dmFacturas.ActCrearPrefacturas.Execute;
  // dmFActuras.Muestra:=False;
-  CFDICreado:= dmFActuras.CreoCFDI;
-  if CFDICreado then
+  CFDICreado:= dmFActuras.CreoCFDI; //Solo trae valor
+  if CFDICreado and (IDGenTipoDoc<>4) then   //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
 
   FreeAndNil(dmFacturas);

@@ -90,6 +90,14 @@ type
     dxBarLargeButton25: TdxBarLargeButton;
     dxBarLargeButton26: TdxBarLargeButton;
     ActAplicaciones: TAction;
+    dxBarLargeButton27: TdxBarLargeButton;
+    actAntiguedadSaldos: TAction;
+    dxBarLargeButton28: TdxBarLargeButton;
+    dxBarLargeButton29: TdxBarLargeButton;
+    dxBarLargeButton30: TdxBarLargeButton;
+    ActNotasVenta: TAction;
+    ActNotasCredito: TAction;
+    ActNotasCargo: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -120,7 +128,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
-  AplicacionesConsultaDM, OrdenesEntradasDM;
+  AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM;
 
 { TfrmMain }
 
@@ -156,14 +164,19 @@ begin
          TdmCotizaciones(gModulo).TipoDocumento:=2;
        end;
 
-  22: begin//Orden Salida
+   22: begin//Orden Salida
          gModulo := TDMOrdenesSalidas.Create(Self);
         // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
-  23: begin   //Se supone que listo para Facturar
-         gModulo := TDMFacturas.CreateWMostrar(Self,True);
+   23: begin   //Se supone que listo para Facturar
+         gModulo := TDMFacturas.CreateWMostrar(Self,True,1);
                 // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
+
+   24:   gModulo := TDMFacturas.CreateWMostrar(Self,True,4);//Nota Venta Mar 29/16
+   25:   gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
+   26:   gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
+
    30: gModulo := TdmAlmacenes.Create(Self);
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
@@ -173,6 +186,7 @@ begin
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
+   62: gModulo := TdmRptAntiguedadSaldos.create(Self); //Mar23/16
   end;
   if Assigned(gModulo) then
   begin

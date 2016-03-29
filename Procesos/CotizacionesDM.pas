@@ -223,6 +223,8 @@ type
     ADODtStDireccionesClienteSaldo: TFMTBCDField;
     ADODtStDireccAuxiliarSaldo: TFMTBCDField;
     adodsMasterSaldoDir: TFloatField;
+    adodsCotizacionesDetalleDisponible: TFloatField;
+    adodsCotizacionesDetalleApartado: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);

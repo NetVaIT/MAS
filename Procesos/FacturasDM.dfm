@@ -4,6 +4,8 @@ inherited DMFacturas: TDMFacturas
   Width = 772
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    Filter = ' IdCFDITipoDocumento=1'
+    Filtered = True
     AfterOpen = adodsMasterAfterOpen
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
@@ -295,7 +297,6 @@ inherited DMFacturas: TDMFacturas
       'dOrdenSalida=:IdOrdenSalida'#13#10
     DataSource = DSDatosDocSalida
     IndexFieldNames = 'IdDocumentoSalida'
-    MasterFields = 'IDDocumentoSalida'
     Parameters = <
       item
         Name = 'IdOrdenSalida'
@@ -379,6 +380,12 @@ inherited DMFacturas: TDMFacturas
     object ADODtStOrdenSalidaIDPersonaCliente: TAutoIncField
       FieldName = 'IDPersonaCliente'
       ReadOnly = True
+    end
+    object ADODtStOrdenSalidaIdGeneraCFDITipoDoc: TIntegerField
+      FieldName = 'IdGeneraCFDITipoDoc'
+    end
+    object ADODtStOrdenSalidaAcumula: TBooleanField
+      FieldName = 'Acumula'
     end
   end
   object DSOrdenSalida: TDataSource
@@ -467,10 +474,12 @@ inherited DMFacturas: TDMFacturas
   object ADODtStCFDIConceptos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterPost = ADODtStCFDIConceptosAfterPost
     CommandText = 
-      'select IdCFDI, IdProducto, IdUnidadMedida, Cantidad, Unidad,'#13#10' D' +
-      'escripcion, NoIdentifica, ValorUnitario, Importe, IdOrdenSalidaI' +
-      'tem  '#13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFDI'
+      'select IdCFDIConcepto, IdCFDI, IdProducto, IdUnidadMedida, Canti' +
+      'dad, Unidad,'#13#10' Descripcion, NoIdentifica, ValorUnitario, Importe' +
+      ', IdOrdenSalidaItem  '#13#10'from  CFDIConceptos'#13#10' Where IdCFDI=:IdCFD' +
+      'I'
     DataSource = DSMaster
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IdCFDI'
@@ -496,6 +505,7 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStCFDIConceptosCantidad: TFloatField
       FieldName = 'Cantidad'
+      OnChange = ADODtStCFDIConceptosValorUnitarioChange
     end
     object ADODtStCFDIConceptosUnidad: TStringField
       FieldName = 'Unidad'
@@ -511,6 +521,7 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStCFDIConceptosValorUnitario: TFMTBCDField
       FieldName = 'ValorUnitario'
+      OnChange = ADODtStCFDIConceptosValorUnitarioChange
       Precision = 18
       Size = 6
     end
@@ -521,6 +532,10 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStCFDIConceptosIdOrdenSalidaItem: TIntegerField
       FieldName = 'IdOrdenSalidaItem'
+    end
+    object ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField
+      FieldName = 'IdCFDIConcepto'
+      ReadOnly = True
     end
   end
   object ADODtStCFDIImpuestos: TADODataSet
@@ -761,8 +776,8 @@ inherited DMFacturas: TDMFacturas
       'e'#13#10#13#10' from DocumentosSalidas DS'#13#10' inner join Personas P on P.IDp' +
       'ersona =DS.IdPersona'
     Parameters = <>
-    Left = 168
-    Top = 283
+    Left = 176
+    Top = 291
     object ADODtStDatosDocumentoSalidaIdPersona: TIntegerField
       FieldName = 'IdPersona'
     end
@@ -1556,7 +1571,7 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     Parameters = <>
     Left = 60
-    Top = 297
+    Top = 289
   end
   object adopCopiaOrdenSalida: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -1585,5 +1600,98 @@ inherited DMFacturas: TDMFacturas
       end>
     Left = 656
     Top = 584
+  end
+  object ADODtStDireccAuxiliar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = ADODtStDireccionesClienteCalcFields
+    CommandText = 
+      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
+      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
+      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
+      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
+      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
+      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
+      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
+      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
+      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
+      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+    Parameters = <
+      item
+        Name = 'IDPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 72
+    Top = 608
+    object AutoIncField2: TAutoIncField
+      FieldName = 'IdPersonaDomicilio'
+      ReadOnly = True
+    end
+    object IntegerField9: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object IntegerField10: TIntegerField
+      FieldName = 'IdDomicilio'
+    end
+    object IntegerField11: TIntegerField
+      FieldName = 'IdDomicilioTipo'
+    end
+    object IntegerField12: TIntegerField
+      FieldName = 'Identificador'
+    end
+    object BooleanField1: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+    object StringField2: TStringField
+      FieldName = 'Calle'
+      Size = 50
+    end
+    object StringField3: TStringField
+      FieldName = 'NoExterior'
+      Size = 10
+    end
+    object StringField4: TStringField
+      FieldName = 'NoInterior'
+      Size = 10
+    end
+    object StringField5: TStringField
+      FieldName = 'Colonia'
+      Size = 50
+    end
+    object StringField6: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object StringField7: TStringField
+      FieldName = 'Municipio'
+      Size = 50
+    end
+    object StringField8: TStringField
+      FieldName = 'Poblacion'
+      Size = 150
+    end
+    object StringField9: TStringField
+      FieldName = 'Estado'
+      Size = 50
+    end
+    object StringField10: TStringField
+      FieldName = 'Pais'
+      Size = 100
+    end
+    object StringField11: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DirCompleta'
+      Size = 300
+      Calculated = True
+    end
+    object ADODtStDireccAuxiliarSaldo: TFMTBCDField
+      FieldName = 'Saldo'
+      Precision = 18
+      Size = 6
+    end
   end
 end

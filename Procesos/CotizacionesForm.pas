@@ -515,7 +515,7 @@ begin
   Datasource.dataset.close;
   Datasource.dataset.Open;
   Datasource.dataset.Locate('idDocumentoSalida',id,[]); //Ene 14/16
-
+  DataSourceDetail.DataSet.refresh; //Mar 29/16
   //Si se ven deberia ubicarse en la modificada
 
 end;

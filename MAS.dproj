@@ -589,58 +589,71 @@
         </DCCReference>
         <DCCReference Include="Procesos\UDMEnvioMail.pas">
             <Form>DMEnvioMails</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\PagosDM.pas">
             <Form>dmPagos</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\PagosEdit.pas">
             <Form>FrmPagosEdt</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Catalogos\ProductosFotosMostrar.pas">
             <Form>FrmMostrarForosProd</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\PagosFormGrid.pas">
             <Form>FrmPagosGrid</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionPagos.pas">
             <Form>FrmAplicacionPago</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaInd.pas">
             <Form>FrmAplicacionesConsultaInd</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaDM.pas">
             <Form>dmAplicacionesConsulta</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\AplicacionesConsultaGrid.pas">
             <Form>FrmAplicacionesConsultaGrid</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasDM.pas">
             <Form>dmOrdenesEntradas</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasForm.pas">
             <Form>frmOrdenesEntradas</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasGrid.pas">
             <Form>frmOrdenesEntradasGrid</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasItemsForm.pas">
             <Form>frmOrdenesEntradasItems</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasItemsGrid.pas">
             <Form>frmOrdenesEntradasItemsGrid</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Procesos\OrdenesEntradasSeleccionGrid.pas">
             <Form>frmOrdenesEntradasSeleccionGrid</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptAntiguedadSaldosForm.pas">
+            <Form>frmRptAntiguedadSaldos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptAntiguedadSaldosDM.pas">
+            <Form>dmRptAntiguedadSaldos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

@@ -325,6 +325,27 @@ type
     adodsMasterRFCEmisor: TStringField;
     ADODtStDatosActInvIDOrdenSalida: TIntegerField;
     adopCopiaOrdenSalida: TADOStoredProc;
+    ADODtStOrdenSalidaIdGeneraCFDITipoDoc: TIntegerField;
+    ADODtStOrdenSalidaAcumula: TBooleanField;
+    ADODtStDireccAuxiliar: TADODataSet;
+    AutoIncField2: TAutoIncField;
+    IntegerField9: TIntegerField;
+    IntegerField10: TIntegerField;
+    IntegerField11: TIntegerField;
+    IntegerField12: TIntegerField;
+    BooleanField1: TBooleanField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    StringField6: TStringField;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    StringField9: TStringField;
+    StringField10: TStringField;
+    StringField11: TStringField;
+    ADODtStDireccAuxiliarSaldo: TFMTBCDField;
+    ADODtStCFDIConceptosIdCFDIConcepto: TLargeintField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -337,6 +358,8 @@ type
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure ActEnvioCorreoFactExecute(Sender: TObject);
     procedure ActCancelarCFDIExecute(Sender: TObject);
+    procedure ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
+    procedure ADODtStCFDIConceptosAfterPost(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -344,6 +367,7 @@ type
     ArrBinario:TArrDinamico;
     fCreoCFDI: Boolean;
     FMuestra: Boolean;//Ene7/16
+    FTipoDoc:Integer;//Mar 29/16
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
     procedure actXMLaPDFExecute(Sender: TObject);
@@ -371,8 +395,9 @@ type
 
     property CreoCFDI:Boolean read fCreoCFDI write fCreoCFDI; //Ene29/16
 //
-    constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean); virtual;
+    constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean;TipoDoc:Integer); virtual;
     property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
+    property TipoDocumento:Integer read FTipoDoc write FTipoDoc; //Mar 28/16
 
   end;
 
@@ -510,7 +535,7 @@ begin
   end; //else Cancelada por usuario
 end;
 
-procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);
+procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);   (*SOLO USAR PARA FACTURAS Y NOTAS DE VENTA *)
 begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
   inherited;
     //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
@@ -526,7 +551,13 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 //  while not ADODtStOrdenSalida.eof do //Dic 16/15
 //  begin
 
-    adodsMaster.Insert;                                   //Verificar si se coloca autopmatica por la relacion
+    adodsMaster.Insert;
+    //Desde Mar 28/16 Cambiar datos cuando no es una Factura sino una Nota de Venta
+   //Puede ser que exista una Factura que  no se relacione con Orden de Salida, no se genera por aca
+    adodsMaster.FieldByName('IDCFDITipoDocumento').AsInteger :=ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger;//Mod. Mar 28/16
+    //Verificar el tipo de comprobante(ingreso egreso)
+   
+                                                 //Verificar si se coloca autopmatica por la relacion
     adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
     adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
     adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat;
@@ -571,6 +602,41 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
     end;
 //    ADODtStOrdenSalida.Next;
 //  end;
+    //Se movio aca por evitar error de edicion mar 29/16
+    if adodsMaster.FieldByName('IDCFDITipoDocumento').AsInteger=4 then//Nota Venta  //Si esta debe existir el registro en Tipos
+    begin
+      //Poner SerieFolio
+      ADODtStBuscaFolioSerie.Close;
+      ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
+      ADODtStBuscaFolioSerie.Open;
+      if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
+      begin
+        adodsMaster.Edit;
+        adodsMasterFecha.AsDateTime:=now;
+        adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
+        adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
+        adodsMaster.Post;
+
+        ADODtStBuscaFolioSerie.Edit;
+        ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
+        ADODtStBuscaFolioSerie.Post;
+      end
+      else
+      begin
+        adodsMaster.Edit;
+        adodsMasterFecha.AsDateTime:=now;
+        adodsMasterFolio.AsInteger:= 1;
+        adodsMasterSerie.AsString:= 'NV';
+        adodsMaster.Post;
+
+        ADODtStBuscaFolioSerie.Edit;
+        ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= 2;
+        ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString:='NV';
+        ADODtStBuscaFolioSerie.Post;
+      end;
+    end;
+    //Hata aca Mar 28/16
+
     fCreoCFDI:=True;
  except
    fCreoCFDI:=False;
@@ -1083,7 +1149,7 @@ begin
 
     ADOQryActualizaInventario.ExecSQL;
 
-    Texto:='Cancela Orden Salida ';
+    Texto:='Cancela Orden Salida ';  //Verificar existencia de Producto Almacen para  asegurarse que se agreguen.. sino dar error... mar 28/16
     while not ADODtStDatosActInv.EOF do
     begin
       ADOQryActualizaInventario.SQL.Clear;                                                  //se puso en el pedido
@@ -1218,9 +1284,10 @@ begin
 end;
 
 
-constructor TDMFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean);
+constructor TDMFacturas.CreateWMostrar(AOwner: TComponent; Muestra: Boolean;TipoDoc:Integer);
 begin
   FMuestra:=Muestra;
+  FTipoDoc:=TipoDoc;
   inherited Create(AOwner);
 end;
 
@@ -1235,7 +1302,8 @@ begin
   inherited;
   try
   DataSet.FieldByName('IDCFDIEstatus').AsInteger:=1; //Prefactura
-  DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:=1; //Factura
+                                                       //Modificado Mar 29/16
+  DataSet.FieldByName('IDCFDITipoDocumento').AsInteger:=TipoDocumento; //Factura    //ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger;//Mod. Mar 28/16
   DataSet.FieldByName('TipoComp').AsString:='ingreso'; //columna TipoComprobante de Tabla CFDItipoDocumento
   //Verificar si serie yFolio se colocan aca o se colocan justo antes de generar el CFDI
   DataSet.FieldByName('Folio').AsInteger:=0; //Sin asignar aun
@@ -1250,6 +1318,46 @@ begin
   Except
     Raise;
   end;
+end;
+
+procedure TDMFacturas.ADODtStCFDIConceptosAfterPost(DataSet: TDataSet);
+var
+  idDocCFDI, IDDocItem:Integer;
+  Subtotal:Double;
+begin
+  inherited;  //Mar 29/16     //Verificar que no intertfiera con el  proceso normal de facturacion
+
+  //Verificar si aca actualizar el item respectivo del detalle del documento
+  IDDocItem:=DataSet.FieldByName('IDCFDIConcepto').AsInteger;
+  idDocCFDI:=DataSet.FieldByName('IDCFDI').AsInteger;
+
+  //Siempre actualizar
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From CFDIConceptos where IDCFDI='+intToStr(idDocCFDI));
+  ADOQryAuxiliar.open;
+
+  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE CFDI SET Subtotal='+FloattoSTR(subtotal)+' , TotalImpuestoTrasladado='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16) +', SaldoDocumento='+FloatToSTR(subtotal*1.16)
+                          +' where IDCFDI ='+IntToStr(idDocCFDI));
+  ADOQryAuxiliar.ExecSQL;
+
+
+  AdoDSMaster.Refresh;
+end;
+
+procedure TDMFacturas.ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
+begin
+  inherited;  //Mar 29/16
+  if (ADODtStCFDIConceptos.State in [dsEdit,dsInsert]) and (ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat <>0) and (ADODtStCFDIConceptos.FieldByName('Cantidad').AsFloat<>0) then
+  begin
+    ADODtStCFDIConceptos.FieldByName('Importe').AsFloat:=ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat* ADODtStCFDIConceptos.FieldByName('CAntidad').AsFloat;
+  end;
+
 end;
 
 procedure TDMFacturas.ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -1276,7 +1384,10 @@ end;
 
 procedure TDMFacturas.DataModuleCreate(Sender: TObject);
 begin
+
   inherited;
+  adodsMaster.Filter:= 'IdCFDITipoDocumento='+ intToStr(TipoDocumento);
+  adodsMaster.Filtered:= True;
   ADODtStPersonaEmisor.Open;
 
   ADODtStCFDIConceptos.open;
@@ -1296,7 +1407,7 @@ begin
 //  TfrmFacturasFormEdit(gGridEditForm).DSCFDIConceptos.DataSet:=ADODtStCFDIConceptos;
   TfrmFacturasFormEdit(gGridEditForm).EnviaCorreoConDocs := ActEnvioCorreoFact; //Feb 17/16
   TfrmFacturasFormEdit(gGridEditForm).ActCancelaCFDi := ActCancelarCFDI; //Mar 3/16
-
+  TfrmFacturasFormEdit(gGridEditForm).TipoDocumento:=TipoDocumento;
 end;
 
 function TDMFacturas.GetFileName(IdDocumento: Integer): TFileName;
