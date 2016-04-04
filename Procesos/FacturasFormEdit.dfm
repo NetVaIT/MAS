@@ -77,58 +77,10 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
         inherited tbarData: TToolBar
           Width = 986
           ExplicitWidth = 986
-          object TlBtnEdit: TToolButton [1]
-            Left = 23
+          object TlBtnEdit: TToolButton
+            Left = 254
             Top = 0
             Action = DataSetEdit
-          end
-          inherited ToolButton11: TToolButton
-            Left = 46
-            ExplicitLeft = 46
-          end
-          inherited ToolButton12: TToolButton
-            Left = 54
-            ExplicitLeft = 54
-          end
-          inherited ToolButton13: TToolButton
-            Left = 77
-            ExplicitLeft = 77
-          end
-          inherited ToolButton14: TToolButton
-            Left = 85
-            ExplicitLeft = 85
-          end
-          inherited ToolButton15: TToolButton
-            Left = 108
-            ExplicitLeft = 108
-          end
-          inherited ToolButton16: TToolButton
-            Left = 131
-            ExplicitLeft = 131
-          end
-          inherited ToolButton17: TToolButton
-            Left = 154
-            ExplicitLeft = 154
-          end
-          inherited ToolButton18: TToolButton
-            Left = 177
-            ExplicitLeft = 177
-          end
-          inherited ToolButton19: TToolButton
-            Left = 200
-            ExplicitLeft = 200
-          end
-          inherited ToolButton20: TToolButton
-            Left = 223
-            ExplicitLeft = 223
-          end
-          inherited ToolButton1: TToolButton
-            Left = 246
-            ExplicitLeft = 246
-          end
-          inherited ToolButton2: TToolButton
-            Left = 254
-            ExplicitLeft = 254
           end
           object ToolButton3: TToolButton
             Left = 277
@@ -454,7 +406,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'TipoDocumento'
               DataSource = DataSource
-              TabOrder = 6
+              TabOrder = 4
             end
             object cxDBLabel3: TcxDBLabel
               Left = 177
@@ -471,13 +423,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 114
+              AnchorX = 411
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 593
               Top = 88
               DataBinding.DataField = 'CondPago'
               DataBinding.DataSource = DataSource
-              TabOrder = 9
+              TabOrder = 7
               Width = 365
             end
             object cxDBLabel5: TcxDBLabel
@@ -495,7 +448,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'MetodoPago'
               DataSource = DataSource
-              TabOrder = 10
+              TabOrder = 8
             end
             object PnlCtaPago: TPanel
               Left = 820
@@ -503,7 +456,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Width = 144
               Height = 57
               BevelOuter = bvNone
-              TabOrder = 11
+              TabOrder = 9
               object Label26: TLabel
                 Left = 3
                 Top = 10
@@ -531,7 +484,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               KeyField = 'IdPersonaDomicilio'
               ListField = 'DirCompleta'
               ListSource = DSDatosCliente
-              TabOrder = 13
+              TabOrder = 11
             end
             object cxDBLabel6: TcxDBLabel
               Left = 54
@@ -604,14 +557,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 21
+              TabOrder = 19
             end
             object cxDBTextEdit8: TcxDBTextEdit
               Left = 762
               Top = 254
               DataBinding.DataField = 'TipoCambio'
               DataBinding.DataSource = DataSource
-              TabOrder = 23
+              TabOrder = 21
               Width = 105
             end
             object cxDBLabel1: TcxDBLabel
@@ -627,7 +580,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Top = 81
               DataBinding.DataField = 'IdentificadorCte'
               DataBinding.DataSource = DataSource
-              Height = 25
+              Height = 21
               Width = 59
             end
             object cxDBLabel15: TcxDBLabel
@@ -637,6 +590,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 135
+              AnchorX = 958
             end
           end
           object Panel3: TPanel
@@ -924,7 +878,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1144,7 +1098,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002F00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

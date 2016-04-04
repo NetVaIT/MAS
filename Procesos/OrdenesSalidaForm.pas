@@ -209,7 +209,7 @@ type
     procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer);
     Procedure ActualizaKardex(IdOrdenSalida:integer);
     property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
-     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
+    property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
   end;
 
 var
@@ -267,7 +267,7 @@ begin
   IdEstatusAct:=datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger;
   case IdEstatusAct of
   3:begin
-      ShowMessage('Está en revisión. Acá queda cuando se cancela una Factura');
+   //   ShowMessage('Está en revisión. Acá queda cuando se cancela una Factura');
        //Pedir Usuario y Contraseña, Cambiar Estatus,Borrar quien y cuando , grabar usuario y fecha en tabla nueva.
       PnlRegresaEstado.Visible:=True;    //Mar 17/16
 
@@ -278,7 +278,7 @@ begin
 
     end;
   2:begin
-      ShowMessage('Está en Recolección. Se puede dejar en Generada.... Quitar la asignación de Ubicaciones');
+    //  ShowMessage('Está en Recolección. Se puede dejar en Generada.... Quitar la asignación de Ubicaciones');
       PnlRegresaEstado.Visible:=True;    //Mar 17/16
       DsCambiosREgreso.DataSet.Insert;
       DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
@@ -391,7 +391,7 @@ begin
   if Estatus<>-1 then //Cambio a 4
   begin
    //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
-    ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verificando si existe o no ?                //Mod. Mar 28/16
+    ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
     Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
     if CreoCFDI then
     begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
@@ -411,6 +411,13 @@ begin
       datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
       datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
       datasource.DataSet.Post;
+      if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then //Abr 1/16
+      begin //Ver si se borra el CFDI (regresar valores de folios??)
+        if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
+        begin
+
+        end;
+      end;
 
       //deberia quitar Kardex y posibles dattos de CFDIs
       ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
@@ -730,7 +737,8 @@ begin                                               //Mar 29/16
   CFDICreado:= dmFActuras.CreoCFDI; //Solo trae valor
   if CFDICreado and (IDGenTipoDoc<>4) then   //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
-
+  if IDGenTipoDoc=4 then
+     dmFActuras.actImpNotasVenta.Execute;
   FreeAndNil(dmFacturas);
 
 end;

@@ -48,10 +48,14 @@ type
     TlBtnConsulta: TToolButton;
     RdGrpSeleccion: TRadioGroup;
     ChckLstImpresion: TCheckListBox;
-    Label1: TLabel;
+    LblImpresion: TLabel;
     tvMasterEstatus: TcxGridDBColumn;
     ToolButton12: TToolButton;
     TlBtnEnvioCorreo: TToolButton;
+    TlBtnGenFactDiaria: TToolButton;
+    ToolButton14: TToolButton;
+    RdGrpNotasVentas: TRadioGroup;
+    TlBtnImpNotaVenta: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -59,6 +63,8 @@ type
     procedure ChckLstImpresionClick(Sender: TObject);
     procedure TlBtnRegPDFMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure RdGrpNotasVentasClick(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -66,12 +72,18 @@ type
     EnvioCorreo: TBasicAction;//Feb 17/16
     ffiltro: String;
     fImpresionGD: Integer; //Dic 29/15
+    ftipoDoc:Integer;
+    FCFDIDiario: TBasicAction;   //Mar 30/16
+    ImprimeNotaVenta: TBasicAction;  //Abr 4/16
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
     procedure setfimpresionGD(const Value: Integer); //Dic 29/15
 
-    procedure SetEnvioCorreo(const Value: TBasicAction); //Feb 17/16
+    procedure SetEnvioCorreo(const Value: TBasicAction);
+    procedure SetFCFDIDiario(const Value: TBasicAction);
+
+    procedure SetImprimeNotaVenta(const Value: TBasicAction); //Feb 17/16
 
 
     { Private declarations }
@@ -84,8 +96,10 @@ type
      property FiltroCon:String read ffiltro write ffiltro; //Dic 29/15
      property GRImpresion:Integer read fImpresionGD write setfimpresionGD;
      property ActEnvioCorreo : TBasicAction read EnvioCorreo write SetEnvioCorreo; //Dic 29/15
-
+     property tipoDocumento:Integer read ftipoDoc write fTipoDoc;  //Mar 30/16
      function SacaValor:Integer;
+     property ActFacturaDiaria : TBasicAction read FCFDIDiario write SetFCFDIDiario; //Mar 31/16
+     Property ActImprimeNotaVenta: TBasicAction read ImprimeNotaVenta write SetImprimeNotaVenta;  //Abr 4/16
   end;
 
 var
@@ -108,6 +122,13 @@ end;
 
 
 
+procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  TlBtnRegPDF.Enabled:= DataSource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=2;//Solo vigentes //ver si canceladasa tambien
+  TlBtnEnvioCorreo.Enabled:= DataSource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=2;
+end;
+
 procedure TfrmFacturasGrid.FormShow(Sender: TObject);
 var i :integer;
 begin
@@ -117,6 +138,31 @@ begin
     ChckLstImpresion.Checked[i]:=true;
   end;
   RdGrpSeleccion.Repaint;
+
+  RdGrpNotasVentas.Visible:= tipoDocumento=4; //Mar 30/16
+  RdGrpSeleccion.Visible:= tipoDocumento<>4;  //Mar 30/16
+  ChckLstImpresion.Visible:= tipoDocumento<>4; //Mar 30/16
+  LblImpresion.Visible:= tipoDocumento<>4;//Mar 30/16
+  TlBtnGenFactDiaria.Visible:= tipoDocumento=4; //Mar 30/16
+  TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
+  TlBtnImpNotaVenta.Enabled:=  tipoDocumento=4;
+end;
+
+
+
+procedure TfrmFacturasGrid.RdGrpNotasVentasClick(Sender: TObject);
+begin
+  inherited; //Mar 30/16
+   case RdGrpNotasVentas.itemindex of
+    0:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus= 1 and IdCFDIFacturaGral is NULL and fecha >(getDATE()-1)and Fecha <GETDATE()+1';
+    1:ffiltro:='where IdCFDITipoDocumento=4 and IdCFDIFacturaGral is not NULL order by IdCFDIFacturaGral';
+    2:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus<>5' ; //Ya que esos son presupuestos
+    3:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus=5' ; //Presupuestos
+   end;
+
+  TlBtnConsultaClick(TlBtnConsulta);
+  TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
+
 end;
 
 procedure TfrmFacturasGrid.RdGrpSeleccionClick(Sender: TObject);
@@ -162,12 +208,29 @@ begin //Feb 17/16
   TlBtnEnvioCorreo.ImageIndex:=15;
 end;
 
+procedure TfrmFacturasGrid.SetFCFDIDiario(const Value: TBasicAction);
+begin
+  FCFDIDiario := Value;
+  TlBtnGenFactDiaria.Action:=Value;
+  TlBtnGenFactDiaria.Imageindex:=16;
+  TlBtnGenFactDiaria.Hint:='Genera Factura Diaria';
+  TlBtnGenFactDiaria.ShowHint:=true;
+end;
+
 procedure TfrmFacturasGrid.setfimpresionGD(const Value: Integer);
 begin
 
   fImpresionGD := Value;
     //Ver si aca saca valor
 
+end;
+
+procedure TfrmFacturasGrid.SetImprimeNotaVenta(const Value: TBasicAction);   //Abr 4/16
+begin
+  ImprimeNotaVenta:=Value;
+  TlBtnImpNotaVenta.Action:=Value;
+  TlBtnImpNotaVenta.ImageIndex:=17;
+  TlBtnImpNotaVenta.hint:='Imprimir Nota Venta';
 end;
 
 procedure TfrmFacturasGrid.SetPreFacturas(const Value: TBasicAction);

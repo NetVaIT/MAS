@@ -255,8 +255,8 @@ type
     procedure SetFileIMG(const Value: string);
 //    procedure SetDocumentType(const Value: Integer);
   public
-    { Public declarations }
-    function GeneratePDFFile(pXMLFileName: TFileName;Etiqueta:String=''): TFileName;
+    { Public declarations }                          //Mar 31/16
+    function GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String=''): TFileName;
     procedure PrintPDFFile(pXMLFileName: TFileName);
     procedure ModifyDocument;
     property FileRTM: string read FFileRTM write SetFileRTM;
@@ -306,8 +306,8 @@ begin
   end;
 end;
 
-function TdmodXMLtoPDF.GeneratePDFFile(pXMLFileName: TFileName;Etiqueta:String=''): TFileName;
-var
+function TdmodXMLtoPDF.GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String=''): TFileName;
+var                                                             //Mar 31/16
   vPDFFileName: TFileName;
 begin
   Result:= EmptyStr;
@@ -331,6 +331,7 @@ begin
     ppReport.ShowCancelDialog := False;
 
     ppReport.DeviceType:= 'PDF';
+    ppLblTipoDoc.Caption:= ATipoDoc;  //Mar 31/16
     //Para que cambie etiqueta
     ppLblEtiqueta.Caption:=Etiqueta;
     if Etiqueta<>'' then

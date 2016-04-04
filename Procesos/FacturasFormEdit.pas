@@ -146,7 +146,9 @@ type
     FMostrar: Boolean;
     FEnviaCorreoConDocs: TBasicAction;
     FCancelaCFDI: TBasicAction;
-    FTipoDoc: Integer; //Feb 10/16
+    FTipoDoc: Integer;
+    FCFDIDiario: TBasicAction; //Feb 10/16
+    ImprimeNotaVenta: TBasicAction; //Abr 4/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -158,7 +160,9 @@ type
     procedure SetMostrar(const Value: Boolean);
     procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
     procedure SetCancelaCFDI(const Value: TBasicAction);
-    procedure SetTipoDoc(const Value: Integer);  //ene 7/16
+    procedure SetTipoDoc(const Value: Integer);
+    procedure SetFCFDIDiario(const Value: TBasicAction);
+    procedure SetImprimeNotaVenta(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -175,6 +179,9 @@ type
     property Mostrar:Boolean read FMostrar write SetMostrar;//Feb 10/16
     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
     Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc; //Mar 29/16
+
+    property ActFActuraDiaria : TBasicAction read FCFDIDiario write SetFCFDIDiario; //Mar 31/16
+    Property ActImprimeNotaVenta: TBasicAction read ImprimeNotaVenta write SetImprimeNotaVenta;  //Abr 4/16
   end;
 
 var
@@ -240,7 +247,8 @@ begin
   inherited;
   if Mostrar then
     gFormGrid := TfrmFacturasGrid.Create(Self);
-  //TFrmFacturasGrid(gFormGrid).CerrarGrid := actCloseGrid;
+
+
 
 end;
 
@@ -262,6 +270,7 @@ begin
   4:pnlTitulo.Caption:='  Notas de Venta';
   end;
 
+  TFrmFacturasGrid(gFormGrid).tipoDocumento := tipoDocumento;   //Mar 30/16
 end;
 
 
@@ -270,6 +279,8 @@ begin
   fImpresioned:= TFrmFacturasGrid(gFormGrid).GRImpresion;  //Cambiado a ver si se pone bien   el de GR viene bien
   Result:= fImpresioned;
 end;
+
+
 
 procedure TfrmFacturasFormEdit.SetCancelaCFDI(const Value: TBasicAction);
 begin   //Mar 3/16
@@ -301,6 +312,18 @@ begin
   TlBtnGeneraCFDI.Action:=Value;
   TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
 
+end;
+
+procedure TfrmFacturasFormEdit.SetFCFDIDiario(const Value: TBasicAction);
+begin
+  FCFDIDiario := Value;
+  TFrmFacturasGrid(gFormGrid).ActFacturaDiaria:=Value;
+end;
+
+procedure TfrmFacturasFormEdit.SetImprimeNotaVenta(const Value: TBasicAction);
+begin
+  ImprimeNotaVenta:=Value;
+  TFrmFacturasGrid(gFormGrid).ActImprimeNotaVenta:=Value;
 end;
 
 procedure TfrmFacturasFormEdit.SetMostrar(const Value: Boolean);
