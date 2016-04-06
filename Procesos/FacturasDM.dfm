@@ -314,6 +314,10 @@ inherited DMFacturas: TDMFacturas
       Caption = 'Impresi'#243'n Notas Venta'
       OnExecute = ActImpNotasVentaExecute
     end
+    object ActEnvioCorreoNotasVenta: TAction
+      Caption = 'ActEnvioCorreoNotasVenta'
+      OnExecute = ActEnvioCorreoNotasVentaExecute
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster

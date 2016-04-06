@@ -422,6 +422,7 @@ type
     adodsMasterDirCompletaCte: TStringField;
     adodsMasterTotalEnLetra: TStringField;
     ActImpNotasVenta: TAction;
+    ActEnvioCorreoNotasVenta: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -439,6 +440,7 @@ type
     procedure ActPreFacturaNotaVentaExecute(Sender: TObject);
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure ActImpNotasVentaExecute(Sender: TObject);
+    procedure ActEnvioCorreoNotasVentaExecute(Sender: TObject);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -729,10 +731,11 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
                               adodsMaster.FieldByName('IdClienteDomicilio').AsInteger, adodsMaster.FieldByName('SaldoDocumento').AsFloat,'+');
         ActualizaInventario(adodsMaster.FieldByName('IDOrdenSalida').AsInteger,adodsMaster.FieldByName('IDCFDI').AsInteger);
         LlenaDatosEnvio;
-      end;
 
+      end;
+      //Se imprime afuera.
     end;
-    //Hata aca Mar 28/16
+    //Hasta aca Mar 28/16
 
     fCreoCFDI:=True;
  except
@@ -794,10 +797,83 @@ begin
 
 end;
 
+procedure TDMFacturas.ActEnvioCorreoNotasVentaExecute(Sender: TObject);
+var         //Abr 6/16
+  nombreNV:TFileName;
+  DmEnvioMail:TDMEnvioMails;
+  ADatosEmisor:TStringList;
+  CorreoRec:String;
+  ArchivosLista:TStringList;
+begin   //Envio Correo de Notas venta y Presupuestos
+  inherited;
+  if Application.MessageBox('¿Desea enviar correo al Cliente?','Confirmación',MB_YESNO)=IdYes  then
+  begin
+    nombreNV:=ExtractFilepath(Application.Exename)+'Adjcorreo\'+ adodsMasterRFC.AsString+'_'+adodsMasterSerie.AsString+adodsMasterFolio.AsString+'.pdf';
+    ADatosEmisor:=TStringList.Create;
+    ArchivosLista:=TStringList.Create;
+    if FileExists(nombreNV) then
+    begin
+      ArchivosLista.Add(nombreNV);
+      ShowProgress(30,100.1,'Obteniendo Datos de Receptor ' + IntToStr(30) + '%');
+      if SacaCorreoEmisor(ADatosEmisor) then
+      begin //Sacar datos Correo Emisor           //SAcar datos Correo Receptor
+       if not SacaCorreoReceptor(adodsMasterIdPersonaReceptor.AsInteger,CorreoRec) then
+         InputQuery('Solicitud Correo','No tiene correo registrado para ese Cliente. Indique un correo hacer el envio', CorreoRec);
+       if CorreoRec<>'' then
+       begin
+         DMEnvioMail:=TDMEnvioMails.Create(self);
+         ShowProgress(50,100.1,'Enviando Correo... ' + IntToStr(50) + '%');
+         if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Factura '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,'Envio Factura relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring,
+             '','','', ArchivosLista, ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+             'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+             StrToInt(ADatosEmisor.Values['ModSSL'])) then
+         begin
+           ShowProgress(90,100.1,'Finalizando envio de Correo... ' + IntToStr(90) + '%');
+           ShowProgress(100,100.1,'Proceso de envio de Correo Terminado... ' + IntToStr(100) + '%');
+           ShowMessage('Datos enviados al Cliente');
+         end
+         else
+         begin
+           ShowProgress(100,100.1,'Error en Proceso de envio de Correo ... ' + IntToStr(100) + '%');
+           ShowMessage('Error en envio del Correo. Verifique conexión a internet');
+         end;
+         DMEnvioMail.Free;
+       end
+       else
+       begin
+         ShowProgress(100,100.1,'No se tiene datos  de Cliente para envio de Correo ... ' + IntToStr(100) + '%');
+         ShowMessage('Cancelación de envio por falta de datos de cliente');
+       end;
+      end
+      else
+      begin
+        ShowProgress(100,100.1,'Error. No existe configuración del Correo Emisor ... ' + IntToStr(100) + '%');
+        ShowMessage('Cancelación de envio por falta de datos del correo Emisor');
+      end;
+      ShowProgress(100,100);
+    end
+    else
+      //No existe el archivo
+       ShowMessage('No se encontro el archivo pare enviar');
+
+    ADatosEmisor.Free; //Feb 22/16
+    ArchivosLista.Free;
+  end;
+end;
+
 procedure TDMFacturas.ActImpNotasVentaExecute(Sender: TObject);
+var
+   nombreNV:TFileName;
 begin   //Impresiones de Notas venta y Presupuestos
   inherited;
-  ImprimeNotaVPDF(true,'');
+  if Directoryexists(ExtractFilePath(application.ExeName)+'Adjcorreo\') then
+     BorraSoloArchivos(ExtractFilePath(application.ExeName)+'Adjcorreo\')
+  else
+    ForceDirectories(ExtractFilePath(application.ExeName)+'Adjcorreo\');
+  nombreNV:=ExtractFilepath(Application.Exename)+'Adjcorreo\'+ adodsMasterRFC.AsString+'_'+adodsMasterSerie.AsString+adodsMasterFolio.AsString+'.pdf';
+  ImprimeNotaVPDF(false,nombreNV);  //Era true pero no lo crea como archivo
+  ShellExecute(application.Handle, 'open', PChar(nombreNV), nil, nil, SW_SHOWNORMAL);  //Para que se muestre
+  ActEnvioCorreoNotasVenta.Execute; // Ahi se pregunta si se quiere enviar  o no//Abr 6/16
 end;
 
 procedure TDMFacturas.ActPreFacturaNotaVentaExecute(Sender: TObject);
@@ -1107,7 +1183,9 @@ begin
 
           if FileExists(RutaPDF) then
             ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
-          ShowMessage('Envio a Cliente por Correo Electronico en proceso');
+          ActEnvioCorreoFact.Execute; //verificar  Abr5/16
+
+          //ShowMessage('Envio a Cliente por Correo Electronico en proceso');
         end
         else
           Showmessage('Error Generando CFDI '+TimbreCFDI.MensajeError);//Dic 29/15

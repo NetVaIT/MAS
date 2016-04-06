@@ -738,7 +738,12 @@ begin                                               //Mar 29/16
   if CFDICreado and (IDGenTipoDoc<>4) then   //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
   if IDGenTipoDoc=4 then
-     dmFActuras.actImpNotasVenta.Execute;
+  begin
+     dmFActuras.actImpNotasVenta.Execute;  //Se incluira el envio aca
+     //Verificar si se envia por correo
+    // DmFacturas.ActEnvioCorreoNotasVenta.Execute;
+
+  end;
   FreeAndNil(dmFacturas);
 
 end;
