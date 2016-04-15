@@ -83,7 +83,7 @@ type
     dxBarLargeButton22: TdxBarLargeButton;
     dxBarLargeButton23: TdxBarLargeButton;
     actInvoice: TAction;
-    actEntrada: TAction;
+    actOrdenesEntrada: TAction;
     dxBarLargeButton24: TdxBarLargeButton;
     ActRegistroPagos: TAction;
     dxBarManagerBar4: TdxBar;
@@ -98,8 +98,8 @@ type
     ActNotasVenta: TAction;
     ActNotasCredito: TAction;
     ActNotasCargo: TAction;
-    actOrdenesEntrada: TAction;
-    dxBarLargeButton31: TdxBarLargeButton;
+    dxBarLrgBtnCI: TdxBarLargeButton;
+    ActRptCostoInventario: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -130,7 +130,8 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   UnidadMedidaDM, MetodosPagosDM, PersonasDM, ProductosDM, CotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
-  AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM;
+  AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
+  rptCostoInventarioDM;
 
 { TfrmMain }
 
@@ -184,12 +185,14 @@ begin
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
-   44: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, tEntradaMercacia);
-   45: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, TOrdenEntrada);
+   44: gModulo := TdmOrdenesEntradas.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
+   51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
+
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
    62: gModulo := TdmRptAntiguedadSaldos.create(Self); //Mar23/16
+
   end;
   if Assigned(gModulo) then
   begin
@@ -222,7 +225,6 @@ begin
   actRequisicionCompra.Enabled  := Conected;
   actOrdenCompra.Enabled        := Conected;
   actInvoice.Enabled            := Conected;
-  actEntrada.Enabled            := Conected;
   actOrdenesEntrada.Enabled     := Conected;
 end;
 

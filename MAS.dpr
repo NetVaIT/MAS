@@ -145,7 +145,9 @@ uses
   ProductosProveedoresEdit in 'Catalogos\ProductosProveedoresEdit.pas' {frmProductosProveedoresEdit},
   ProductosProveedoresForm in 'Catalogos\ProductosProveedoresForm.pas' {frmProductosProveedores},
   rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
-  rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule};
+  rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule},
+  rptCostoInventarioForm in 'Reportes\rptCostoInventarioForm.pas' {rptCostoInventario},
+  rptCostoInventarioDM in 'Reportes\rptCostoInventarioDM.pas' {DMrptCostoInventario: TDataModule};
 
 {$R *.res}
 

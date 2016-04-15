@@ -663,6 +663,15 @@
             <Form>dmRptAntiguedadSaldos</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Reportes\rptCostoInventarioForm.pas">
+            <Form>rptCostoInventario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\rptCostoInventarioDM.pas">
+            <Form>DMrptCostoInventario</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
