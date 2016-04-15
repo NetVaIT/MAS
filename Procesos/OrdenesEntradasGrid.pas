@@ -36,7 +36,7 @@ type
     tvMasterEstatus: TcxGridDBColumn;
     tvMasterFecha: TcxGridDBColumn;
     tvMasterAlmacen: TcxGridDBColumn;
-    tvMasterCLaveProvedor: TcxGridDBColumn;
+    tvMasterClaveProvedor: TcxGridDBColumn;
     tvMasterProvedor: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterTipoCambio: TcxGridDBColumn;
@@ -46,9 +46,12 @@ type
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
   private
+    FMostrarImporte: Boolean;
+    procedure SetMostrarImporte(const Value: Boolean);
     { Private declarations }
   public
     { Public declarations }
+    property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
   end;
 
 implementation
@@ -56,5 +59,22 @@ implementation
 {$R *.dfm}
 
 uses OrdenesEntradasDM;
+
+{ TfrmOrdenesEntradasGrid }
+
+procedure TfrmOrdenesEntradasGrid.SetMostrarImporte(const Value: Boolean);
+begin
+  FMostrarImporte := Value;
+  tvMasterMoneda.Visible:= Value;
+  tvMasterMoneda.VisibleForCustomization := Value;
+  tvMasterTipoCambio.Visible:= Value;
+  tvMasterTipoCambio.VisibleForCustomization:= Value;
+  tvMasterSubTotal.Visible:= Value;
+  tvMasterSubTotal.VisibleForCustomization:= Value;
+  tvMasterIVA.Visible:= Value;
+  tvMasterIVA.VisibleForCustomization:= Value;
+  tvMasterTotal.Visible:= Value;
+  tvMasterTotal.VisibleForCustomization:= Value;
+end;
 
 end.

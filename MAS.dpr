@@ -141,6 +141,9 @@ uses
   OrdenesEntradasItemsForm in 'Procesos\OrdenesEntradasItemsForm.pas' {frmOrdenesEntradasItems},
   OrdenesEntradasItemsGrid in 'Procesos\OrdenesEntradasItemsGrid.pas' {frmOrdenesEntradasItemsGrid},
   OrdenesEntradasSeleccionGrid in 'Procesos\OrdenesEntradasSeleccionGrid.pas' {frmOrdenesEntradasSeleccionGrid},
+  OrdenesEntradasCostosDM in 'Procesos\OrdenesEntradasCostosDM.pas' {dmOrdenesEntradasCostos: TDataModule},
+  ProductosProveedoresEdit in 'Catalogos\ProductosProveedoresEdit.pas' {frmProductosProveedoresEdit},
+  ProductosProveedoresForm in 'Catalogos\ProductosProveedoresForm.pas' {frmProductosProveedores},
   rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
   rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule};
 

@@ -28,9 +28,19 @@ type
   private
     { Private declarations }
     FactSeleccionarProducto: TBasicAction;
+    FMostrarImporte: Boolean;
+    FMostrarCantidad: Boolean;
+    FactModificarGastos: TBasicAction;
+    FactModificarArancel: TBasicAction;
+    procedure SetMostrarImporte(const Value: Boolean);
+    procedure SetMostrarCantidad(const Value: Boolean);
   public
     { Public declarations }
     property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write FactSeleccionarProducto;
+    property actModificarArancel: TBasicAction read FactModificarArancel write FactModificarArancel;
+    property actModificarGastos: TBasicAction read FactModificarGastos write FactModificarGastos;
+    property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
+    property MostrarCantidad: Boolean read FMostrarCantidad write SetMostrarCantidad default False;
   end;
 
 implementation
@@ -48,8 +58,22 @@ end;
 procedure TfrmOrdenesEntradasItems.FormShow(Sender: TObject);
 begin
   inherited;
-  TfrmOrdenesEntradasItemsGrid(gFormGrid).actSeleccionarProducto:= actSeleccionarProducto;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).actSeleccionarProducto := actSeleccionarProducto;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).actModificarArancel := actModificarArancel;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).actModificarGastos := actModificarGastos;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).MostrarCantidad := MostrarCantidad;
+  TfrmOrdenesEntradasItemsGrid(gFormGrid).MostrarImporte := MostrarImporte;
   actShowGrid.Execute;
+end;
+
+procedure TfrmOrdenesEntradasItems.SetMostrarCantidad(const Value: Boolean);
+begin
+  FMostrarCantidad := Value;
+end;
+
+procedure TfrmOrdenesEntradasItems.SetMostrarImporte(const Value: Boolean);
+begin
+  FMostrarImporte := Value;
 end;
 
 end.

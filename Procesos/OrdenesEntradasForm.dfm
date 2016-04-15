@@ -78,13 +78,17 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
             ImageIndex = 12
             Style = tbsSeparator
           end
-          object btnAutorizar: TSpeedButton
+          object btnRecibr: TSpeedButton
             Left = 262
             Top = 0
             Width = 90
             Height = 22
-            Hint = 'Permite generar las aplicaciones de entrada'
-            Caption = 'Aplicar entrada'
+          end
+          object btnAplicar: TSpeedButton
+            Left = 352
+            Top = 0
+            Width = 90
+            Height = 22
           end
         end
         inherited pnlMaster: TPanel
@@ -123,13 +127,13 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Caption = 'Provedor'
               FocusControl = cxDBLookupComboBox1
             end
-            object Label8: TLabel
+            object lblMoneda: TLabel
               Left = 9
               Top = 133
               Width = 38
               Height = 13
               Caption = 'Moneda'
-              FocusControl = DBLookupComboBox2
+              FocusControl = edtMoneda
             end
             object Label9: TLabel
               Left = 139
@@ -154,7 +158,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Caption = 'Clave'
               FocusControl = DBLookupComboBox1
             end
-            object Label12: TLabel
+            object lblTipoCambio: TLabel
               Left = 160
               Top = 133
               Width = 71
@@ -170,7 +174,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Caption = 'Almacen'
               FocusControl = DBLookupComboBox4
             end
-            object DBLookupComboBox2: TDBLookupComboBox
+            object edtMoneda: TDBLookupComboBox
               Left = 9
               Top = 149
               Width = 145
@@ -269,6 +273,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Height = 13
               Caption = 'IVA'
               FocusControl = cxDBTextEdit2
+              Visible = False
             end
             object Label3: TLabel
               Left = 579
@@ -277,6 +282,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Height = 13
               Caption = 'Subtotal'
               FocusControl = cxDBTextEdit3
+              Visible = False
             end
             object Label4: TLabel
               Left = 597
@@ -285,6 +291,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Height = 13
               Caption = 'Total'
               FocusControl = cxDBTextEdit4
+              Visible = False
             end
             object Label6: TLabel
               Left = 7
@@ -300,6 +307,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               DataBinding.DataSource = DataSource
               Enabled = False
               TabOrder = 2
+              Visible = False
               Width = 121
             end
             object cxDBTextEdit3: TcxDBTextEdit
@@ -309,6 +317,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               DataBinding.DataSource = DataSource
               Enabled = False
               TabOrder = 1
+              Visible = False
               Width = 121
             end
             object cxDBTextEdit4: TcxDBTextEdit
@@ -318,6 +327,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               DataBinding.DataSource = DataSource
               Enabled = False
               TabOrder = 3
+              Visible = False
               Width = 121
             end
             object cxDBMemo1: TcxDBMemo
@@ -364,7 +374,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -505,7 +515,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D002803D80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

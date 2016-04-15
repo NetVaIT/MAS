@@ -1,4 +1,4 @@
-unit ProductosForm;
+unit ProductosProveedoresForm;
 
 interface
 
@@ -18,31 +18,21 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, cxGridCustomPopupMenu, cxGridPopupMenu,
-  cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  cxNavigator, Data.DB, cxDBData, Vcl.Menus, cxGridCustomPopupMenu,
+  cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
+  Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmProductos = class(T_frmStandarGFormGrid)
+  TfrmProductosProveedores = class(T_frmStandarGFormGrid)
+    tvMasterIdProductoProveedor: TcxGridDBColumn;
     tvMasterIdProducto: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterIdUnidadMedida: TcxGridDBColumn;
-    tvMasterPrecioUnitario: TcxGridDBColumn;
-    tvMasterIdUbicacion: TcxGridDBColumn;
-    tvMasterMaximo: TcxGridDBColumn;
-    tvMasterMinimo: TcxGridDBColumn;
-    tvMasterPuntoReorden: TcxGridDBColumn;
-    tvMasterIdProductoTipo: TcxGridDBColumn;
-    tvMasterIdProductoEstatus: TcxGridDBColumn;
-    tvMasterIdDocumentos: TcxGridDBColumn;
-    tvMasterUnidadMedida: TcxGridDBColumn;
-    tvMasterProductoTipo: TcxGridDBColumn;
-    tvMasterProductoEstatus: TcxGridDBColumn;
-    tvMasterIdentificador1: TcxGridDBColumn;
-    tvMasterIdentificador2: TcxGridDBColumn;
-    tvMasterIdentificador3: TcxGridDBColumn;
+    tvMasterIdPersonaProveedor: TcxGridDBColumn;
+    tvMasterProveedor: TcxGridDBColumn;
+    tvMasterUltimaCompra: TcxGridDBColumn;
+    tvMasterUltimoPrecio: TcxGridDBColumn;
+    tvMasterTipoCambio: TcxGridDBColumn;
   private
     { Private declarations }
   public

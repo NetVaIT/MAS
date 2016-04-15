@@ -13,25 +13,9 @@ inherited dmProductos: TdmProductos
       FieldName = 'IdProducto'
       Visible = False
     end
-    object adodsMasterDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 255
-    end
     object adodsMasterIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
       Visible = False
-    end
-    object adodsMasterPrecioUnitario: TFloatField
-      FieldName = 'PrecioUnitario'
-    end
-    object adodsMasterMaximo: TFloatField
-      FieldName = 'Maximo'
-    end
-    object adodsMasterMinimo: TFloatField
-      FieldName = 'Minimo'
-    end
-    object adodsMasterPuntoReorden: TFloatField
-      FieldName = 'PuntoReorden'
     end
     object adodsMasterIdProductoTipo: TIntegerField
       FieldName = 'IdProductoTipo'
@@ -41,7 +25,45 @@ inherited dmProductos: TdmProductos
       FieldName = 'IdProductoEstatus'
       Visible = False
     end
+    object adodsMasterIdentificador1: TStringField
+      DisplayLabel = 'Identificador 1'
+      FieldName = 'Identificador1'
+      Size = 50
+    end
+    object adodsMasterIdentificador2: TStringField
+      DisplayLabel = 'Identificador 2'
+      FieldName = 'Identificador2'
+      Size = 50
+    end
+    object adodsMasterIdentificador3: TStringField
+      DisplayLabel = 'Identificador 3'
+      FieldName = 'Identificador3'
+      Size = 50
+    end
+    object adodsMasterDescripcion: TStringField
+      DisplayLabel = 'Descripci'#243'n'
+      FieldName = 'Descripcion'
+      Size = 255
+    end
+    object adodsMasterPrecioUnitario: TFloatField
+      DisplayLabel = 'Precio unitario'
+      FieldName = 'PrecioUnitario'
+      currency = True
+    end
+    object adodsMasterMaximo: TFloatField
+      DisplayLabel = 'M'#225'ximo'
+      FieldName = 'Maximo'
+    end
+    object adodsMasterMinimo: TFloatField
+      DisplayLabel = 'M'#237'nimo'
+      FieldName = 'Minimo'
+    end
+    object adodsMasterPuntoReorden: TFloatField
+      DisplayLabel = 'Punto reorden'
+      FieldName = 'PuntoReorden'
+    end
     object adodsMasterUnidadMedida: TStringField
+      DisplayLabel = 'Unidad de medida'
       FieldKind = fkLookup
       FieldName = 'UnidadMedida'
       LookupDataSet = adodsUnidadMedida
@@ -52,6 +74,7 @@ inherited dmProductos: TdmProductos
       Lookup = True
     end
     object adodsMasterProductoTipo: TStringField
+      DisplayLabel = 'Tipo'
       FieldKind = fkLookup
       FieldName = 'ProductoTipo'
       LookupDataSet = adodsProductoTipo
@@ -62,6 +85,7 @@ inherited dmProductos: TdmProductos
       Lookup = True
     end
     object adodsMasterProductoEstatus: TStringField
+      DisplayLabel = 'Estatus'
       FieldKind = fkLookup
       FieldName = 'ProductoEstatus'
       LookupDataSet = adodsProductoEstatus
@@ -70,18 +94,6 @@ inherited dmProductos: TdmProductos
       KeyFields = 'IdProductoEstatus'
       Size = 50
       Lookup = True
-    end
-    object adodsMasterIdentificador1: TStringField
-      FieldName = 'Identificador1'
-      Size = 50
-    end
-    object adodsMasterIdentificador2: TStringField
-      FieldName = 'Identificador2'
-      Size = 50
-    end
-    object adodsMasterIdentificador3: TStringField
-      FieldName = 'Identificador3'
-      Size = 50
     end
   end
   inherited ActionList: TActionList
@@ -99,24 +111,24 @@ inherited dmProductos: TdmProductos
     CursorType = ctStatic
     CommandText = 'SELECT IdUnidadMedida, Descripcion FROM UnidadesMedida'
     Parameters = <>
-    Left = 160
-    Top = 56
+    Left = 104
+    Top = 64
   end
   object adodsProductoTipo: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoTipo, Descripcion FROM ProductosTipos'
     Parameters = <>
-    Left = 160
-    Top = 112
+    Left = 104
+    Top = 120
   end
   object adodsProductoEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoEstatus, Descripcion FROM ProductosEstatus'
     Parameters = <>
-    Left = 160
-    Top = 168
+    Left = 104
+    Top = 176
   end
   object adodsProductoFotos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -124,7 +136,7 @@ inherited dmProductos: TdmProductos
     CommandText = 
       'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
       'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
-    DataSource = DataSourceMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdProducto'
     MasterFields = 'IdProducto'
     Parameters = <
@@ -135,8 +147,8 @@ inherited dmProductos: TdmProductos
         Precision = 10
         Value = 40
       end>
-    Left = 160
-    Top = 264
+    Left = 56
+    Top = 248
     object adodsProductoFotosIdProductoFoto: TIntegerField
       FieldName = 'IdProductoFoto'
     end
@@ -161,7 +173,7 @@ inherited dmProductos: TdmProductos
       Lookup = True
     end
   end
-  object DataSourceMaster: TDataSource
+  object dsMaster: TDataSource
     DataSet = adodsMaster
     Left = 110
     Top = 16
@@ -172,12 +184,12 @@ inherited dmProductos: TdmProductos
     CommandText = 
       'select IdProductoDocumento, IdProducto, IdDocumento, Notas from ' +
       'ProductosDocumentos'
-    DataSource = DataSourceMaster
+    DataSource = dsMaster
     IndexFieldNames = 'IdProducto'
     MasterFields = 'IdProducto'
     Parameters = <>
-    Left = 368
-    Top = 256
+    Left = 160
+    Top = 304
   end
   object ADODsDocumento: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -197,8 +209,8 @@ inherited dmProductos: TdmProductos
         Precision = 10
         Value = 5
       end>
-    Left = 160
-    Top = 336
+    Left = 56
+    Top = 304
     object ADODsDocumentoIdDocumento: TAutoIncField
       FieldName = 'IdDocumento'
       ReadOnly = True
@@ -229,7 +241,97 @@ inherited dmProductos: TdmProductos
   object dsProductosFotos: TDataSource
     DataSet = adodsProductoFotos
     OnDataChange = dsProductosFotosDataChange
-    Left = 256
-    Top = 264
+    Left = 160
+    Top = 248
+  end
+  object adodsProductosProveedores: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoProveedor, IdProducto, IdPersonaProveedor, Ulti' +
+      'maCompra, UltimoPrecio, TipoCambio from ProductosProveedores'#13#10'wh' +
+      'ere IdProducto = :IdProducto'
+    DataSource = dsMaster
+    MasterFields = 'IdProducto'
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 1
+      end>
+    Left = 56
+    Top = 376
+    object adodsProductosProveedoresIdProductoProveedor: TAutoIncField
+      FieldName = 'IdProductoProveedor'
+      ReadOnly = True
+      Visible = False
+    end
+    object adodsProductosProveedoresIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+      Visible = False
+    end
+    object adodsProductosProveedoresIdPersonaProveedor: TIntegerField
+      FieldName = 'IdPersonaProveedor'
+      Visible = False
+    end
+    object adodsProductosProveedoresProveedor: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Proveedor'
+      LookupDataSet = adodsPersonas
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'Provedor'
+      KeyFields = 'IdPersonaProveedor'
+      Size = 300
+      Lookup = True
+    end
+    object adodsProductosProveedoresUltimaCompra: TDateTimeField
+      DisplayLabel = #218'ltima compra'
+      FieldName = 'UltimaCompra'
+    end
+    object adodsProductosProveedoresUltimoPrecio: TFMTBCDField
+      DisplayLabel = #218'ltimo precio'
+      FieldName = 'UltimoPrecio'
+      Precision = 18
+      Size = 6
+    end
+    object adodsProductosProveedoresTipoCambio: TFMTBCDField
+      DisplayLabel = 'Tipo de cambio'
+      FieldName = 'TipoCambio'
+      Precision = 18
+      Size = 6
+    end
+  end
+  object adodsPersonas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT        Personas.IdPersona, Personas.IdMoneda, Personas.Id' +
+      'entificador, Personas.RazonSocial AS Provedor, Monedas.Descripci' +
+      'on AS Moneda'#13#10'FROM            Personas INNER JOIN'#13#10'             ' +
+      '            Monedas ON Personas.IdMoneda = Monedas.IdMoneda'
+    Parameters = <>
+    Left = 168
+    Top = 376
+    object adodsPersonasIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object adodsPersonasIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object adodsPersonasIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 5
+    end
+    object adodsPersonasProvedor: TStringField
+      FieldName = 'Provedor'
+      Size = 300
+    end
+    object adodsPersonasMoneda: TStringField
+      FieldName = 'Moneda'
+      Size = 80
+    end
   end
 end

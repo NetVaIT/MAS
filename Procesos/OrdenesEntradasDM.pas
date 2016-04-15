@@ -8,11 +8,13 @@ uses
 
 resourcestring
   strErrorClave = 'No encontro el artículo para este proveedor, favor de teclear uno valido.';
-  strAllowGenDocumento = '¿Desea crear el documento?';
-  strAllowApprove = '¿Deasea aplicar la orden de entrada?';
+  strAllowGenDocumento = '¿Desea crear la orden de entrada?';
+  strAllowReceive = '¿Deasea recibir la orden de entrada?';
+  strAllowApply = '¿Deasea aplicar la orden de entrada?';
 
 type
-  TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada);
+  TPTipo    = (tNone, tEntradaMercacia, TOrdenEntrada);
+  TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada, eAplicada);
   TdmOrdenesEntradas = class(T_dmStandar)
     dsmaster: TDataSource;
     adodsMasterIdOrdenEntrada: TAutoIncField;
@@ -89,6 +91,14 @@ type
     adoqGetIdProductoPendiente: TFloatField;
     actAplicarEntrada: TAction;
     adopSetEstatus: TADOStoredProc;
+    adodsItemsImporteMonedaLocal: TFMTBCDField;
+    adodsItemsImpuestoArancelario: TFMTBCDField;
+    adodsItemsGastos: TFMTBCDField;
+    adodsItemsImporteTotal: TFMTBCDField;
+    adodsItemsCostoAproximado: TFMTBCDField;
+    actModificarArancel: TAction;
+    actModificarGastos: TAction;
+    actRecibirMercancia: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -96,7 +106,6 @@ type
     procedure adodsItemsAfterPost(DataSet: TDataSet);
     procedure DataModuleDestroy(Sender: TObject);
     procedure actCrearOrdenExecute(Sender: TObject);
-    procedure adodsItemsCantidadChange(Sender: TField);
     procedure adodsItemsClaveProductoChange(Sender: TField);
     procedure adodsItemsClaveProductoValidate(Sender: TField);
     procedure adodsItemsPrecioChange(Sender: TField);
@@ -104,24 +113,33 @@ type
     procedure actAplicarEntradaExecute(Sender: TObject);
     procedure actAplicarEntradaUpdate(Sender: TObject);
     procedure dsmasterDataChange(Sender: TObject; Field: TField);
+    procedure actModificarArancelExecute(Sender: TObject);
+    procedure actModificarGastosExecute(Sender: TObject);
+    procedure actRecibirMercanciaExecute(Sender: TObject);
+    procedure actRecibirMercanciaUpdate(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
     FIdProducto: Integer;
     FPrecio: Double;
-    fCantidadSolicitada: Double;
+    FCantidadSolicitada: Double;
     FMostrarCantidad: Boolean;
-    FMostarImporte: Boolean;
+    FMostrarImporte: Boolean;
     FBloquear: Boolean;
+    FTipo: TPTipo;
     function GetIdProducto(IdPersona: Integer; Clave: String;
       var Precio: Double; var CantidadSolicitada: Double): Integer;
     procedure SetMostrarCantidad(const Value: Boolean);
-    procedure SetMostarImporte(const Value: Boolean);
+    procedure SetMostrarImporte(const Value: Boolean);
     procedure SetBloquear(const Value: Boolean);
+    procedure CalcularItemsImportes;
+    procedure SetTipo(const Value: TPTipo);
   public
     { Public declarations }
+    constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
+    property Tipo: TPTipo read FTipo write SetTipo;
     property MostrarCantidad: Boolean read FMostrarCantidad write SetMostrarCantidad default False;
-    property MostarImporte: Boolean read FMostarImporte write SetMostarImporte default False;
+    property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
     property Bloquear: Boolean read FBloquear write SetBloquear;
   end;
 
@@ -150,10 +168,84 @@ begin
   end;
 end;
 
+procedure TdmOrdenesEntradas.actModificarArancelExecute(Sender: TObject);
+var
+  strValor: string;
+  dValor: Double;
+begin
+  inherited;
+  if InputQuery('Impuesto arancelario','¿Cual es el impuesto arancelario para cada producto?', strValor) then
+    if TryStrToFloat(strValor,dValor) then
+    begin
+      adodsItems.DisableControls;
+      try
+        adodsItems.First;
+        while not adodsItems.Eof do
+        begin
+          adodsItems.Edit;
+          adodsItemsImpuestoArancelario.AsFloat:= dValor;
+          adodsItems.Post;
+          adodsItems.Next;
+        end;
+        adodsItems.First;
+      finally
+        adodsItems.EnableControls;
+      end;
+    end
+    else
+      MessageDlg('El valor ingresado no es valido.', mtError, [mbOK], 0);
+end;
+
+procedure TdmOrdenesEntradas.actModificarGastosExecute(Sender: TObject);
+var
+  strValor: string;
+  dValor: Double;
+begin
+  inherited;
+  if InputQuery('Gastos aproximados','¿Cual es el porcentaje de gastos aproximados?', strValor) then
+    if TryStrToFloat(strValor,dValor) and ((dValor >= -100) and (dValor <= 100)) then
+    begin
+      adodsItems.DisableControls;
+      try
+        adodsItems.First;
+        while not adodsItems.Eof do
+        begin
+          adodsItems.Edit;
+          adodsItemsGastos.AsFloat := (adodsItemsImporteMonedaLocal.AsFloat*(dValor/100));
+          adodsItems.Post;
+          adodsItems.Next;
+        end;
+        adodsItems.First;
+      finally
+        adodsItems.EnableControls;
+      end;
+    end
+    else
+      MessageDlg('El valor ingresado no es valido.', mtError, [mbOK], 0);
+end;
+
+procedure TdmOrdenesEntradas.actRecibirMercanciaExecute(Sender: TObject);
+begin
+  inherited;
+  if MessageDlg(strAllowReceive, mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    adopSetEstatus.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
+    adopSetEstatus.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+    adopSetEstatus.ExecProc;
+    RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+  end;
+end;
+
+procedure TdmOrdenesEntradas.actRecibirMercanciaUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eGenerada));
+end;
+
 procedure TdmOrdenesEntradas.actAplicarEntradaExecute(Sender: TObject);
 begin
   inherited;
-  if MessageDlg(strAllowApprove, mtConfirmation, mbYesNo, 0) = mrYes then
+  if MessageDlg(strAllowApply, mtConfirmation, mbYesNo, 0) = mrYes then
   begin
     adopSetEstatus.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
     adopSetEstatus.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
@@ -165,7 +257,8 @@ end;
 procedure TdmOrdenesEntradas.actAplicarEntradaUpdate(Sender: TObject);
 begin
   inherited;
-  TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eGenerada));
+  TAction(Sender).Visible:= (Tipo = TOrdenEntrada);
+  TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eRecibida));
 end;
 
 procedure TdmOrdenesEntradas.actBuscarProductoExecute(Sender: TObject);
@@ -229,16 +322,6 @@ begin
   RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
 end;
 
-procedure TdmOrdenesEntradas.adodsItemsCantidadChange(Sender: TField);
-begin
-  inherited;
-  if adodsItems.State in [dsEdit,dsInsert] then
-  begin
-//    adodsItemsCantidadSolicitada .Value:= adodsItemsCantidad.Value;
-    adodsItemsImporte.Value:= adodsItemsPrecio.Value * adodsItemsCantidad.Value;
-  end;
-end;
-
 procedure TdmOrdenesEntradas.adodsItemsClaveProductoChange(Sender: TField);
 begin
   inherited;
@@ -249,7 +332,7 @@ begin
       adodsItemsIdProducto.Value:= FIdProducto;
       adodsItemsPrecio.Value:= FPrecio;
       adodsItemsCantidadSolicitada.Value:= FCantidadSolicitada;
-      adodsItemsImporte.Value:= adodsItemsPrecio.Value * adodsItemsCantidad.Value;
+      CalcularItemsImportes;
     end;
   end;
 end;
@@ -270,9 +353,7 @@ procedure TdmOrdenesEntradas.adodsItemsPrecioChange(Sender: TField);
 begin
   inherited;
   if adodsItems.State in [dsEdit,dsInsert] then
-  begin
-    adodsItemsImporte.Value:= adodsItemsPrecio.Value * adodsItemsCantidad.Value;
-  end;
+    CalcularItemsImportes;
 end;
 
 procedure TdmOrdenesEntradas.adodsMasterNewRecord(DataSet: TDataSet);
@@ -285,18 +366,47 @@ begin
   adodsMasterFecha.Value:= Date;
 end;
 
+procedure TdmOrdenesEntradas.CalcularItemsImportes;
+begin
+  adodsItemsImporte.Value := adodsItemsPrecio.Value * adodsItemsCantidad.Value;
+  adodsItemsImporteMonedaLocal.Value := adodsItemsImporte.Value*adodsMasterTipoCambio.Value;
+  adodsItemsImporteTotal.Value := adodsItemsImporteMonedaLocal.Value + adodsItemsImpuestoArancelario.Value + adodsItemsGastos.Value;
+  if adodsItemsCantidad.Value <> 0 then
+    adodsItemsCostoAproximado.Value := adodsItemsImporteTotal.Value / adodsItemsCantidad.Value;
+end;
+
+constructor TdmOrdenesEntradas.CreateWTipo(AOwner: TComponent; Tipo: TPTipo);
+begin
+  FTipo := Tipo;
+  inherited Create(AOwner);
+end;
+
 procedure TdmOrdenesEntradas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  MostrarImporte:= (Tipo = TOrdenEntrada);
+  MostrarCantidad:= (Tipo = TOrdenEntrada);
+  //Coloca el filtrado
+  SQLSelect:= 'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, IdOrdenEstatus, IdPersona, IdMoneda, IdUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, Observaciones from OrdenesEntradas';
+  if (Tipo = tEntradaMercacia) then
+    SQLWhere:= Format('WHERE IdOrdenEstatus = %d', [Ord(eGenerada)])
+  else
+    SQLWhere:= '';
   if adodsItems.CommandText <> EmptyStr then adodsItems.Open;
   gGridEditForm:= TfrmOrdenesEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  TfrmOrdenesEntradas(gGridEditForm).MostrarImporte:= MostrarImporte;
   TfrmOrdenesEntradas(gGridEditForm).actTipoCambio:= actGetTipoCambio;
   TfrmOrdenesEntradas(gGridEditForm).actCrearOrden:= actCrearOrden;
-  TfrmOrdenesEntradas(gGridEditForm).actAutorizar:= actAplicarEntrada;
+  TfrmOrdenesEntradas(gGridEditForm).actRecibir := actRecibirMercancia;
+  TfrmOrdenesEntradas(gGridEditForm).actAplicar := actAplicarEntrada;
   gFormDetail1:= TfrmOrdenesEntradasItems.Create(Self);
   gFormDetail1.DataSet:= adodsItems;
-  TfrmOrdenesEntradasItems(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;
+  TfrmOrdenesEntradasItems(gFormDetail1).MostrarCantidad := MostrarCantidad;
+  TfrmOrdenesEntradasItems(gFormDetail1).MostrarImporte := MostrarImporte;
+  TfrmOrdenesEntradasItems(gFormDetail1).actSeleccionarProducto := actSeleccionaProducto;
+  TfrmOrdenesEntradasItems(gFormDetail1).actModificarArancel := actModificarArancel;
+  TfrmOrdenesEntradasItems(gFormDetail1).actModificarGastos := actModificarGastos;
   //Creacion de la lista de producto
   frmListaProductos:= TFrmListaProductos.Create(Self);
   frmListaProductos.DataSet:= adodsListaProductos;
@@ -313,7 +423,7 @@ end;
 procedure TdmOrdenesEntradas.dsmasterDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  Bloquear:= (adodsMasterIdOrdenEstatus.Value <> Ord(eGenerada));
+  Bloquear:= (adodsMasterIdOrdenEstatus.Value = Ord(eAplicada));
 end;
 
 function TdmOrdenesEntradas.GetIdProducto(IdPersona: Integer; Clave: String;
@@ -346,23 +456,26 @@ begin
   FBloquear := Value;
   TfrmOrdenesEntradas(gGridEditForm).pnlEncabezado.Enabled:= not Value;
   gFormDetail1.ReadOnlyGrid:= Value;
-  TfrmOrdenesEntradas(gGridEditForm).pnlPie.Enabled:= not Value
+  TfrmOrdenesEntradas(gGridEditForm).pnlPie.Enabled:= not Value;
+  actModificarArancel.Enabled := not Value;
+  actModificarGastos.Enabled := not Value;
 end;
 
-procedure TdmOrdenesEntradas.SetMostarImporte(const Value: Boolean);
+procedure TdmOrdenesEntradas.SetMostrarImporte(const Value: Boolean);
 begin
-  FMostarImporte := Value;
-  adodsItemsPrecio.Visible:= Value;
-  adodsItemsImporte.Visible:= Value;
-  adodsMasterSubTotal.Visible:= Value;
-  adodsMasterIVA.Visible:= Value;
-  adodsMasterTotal.Visible:= Value;
+  FMostrarImporte := Value;
+  actModificarArancel.Visible := Value;
+  actModificarGastos.Visible := Value;
+end;
+
+procedure TdmOrdenesEntradas.SetTipo(const Value: TPTipo);
+begin
+  FTipo := Value;
 end;
 
 procedure TdmOrdenesEntradas.SetMostrarCantidad(const Value: Boolean);
 begin
   FMostrarCantidad := Value;
-  adodsItemsCantidadSolicitada.Visible:= Value;
 end;
 
 end.

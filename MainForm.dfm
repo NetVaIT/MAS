@@ -11,7 +11,6 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
@@ -32,7 +31,6 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
-      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -88,7 +86,6 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 936
-    ExplicitTop = 32000
     ExplicitWidth = 936
   end
   inherited pnlMain: TPanel
@@ -104,8 +101,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -261,7 +256,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 137
-      FloatClientHeight = 216
+      FloatClientHeight = 270
       ItemLinks = <
         item
           Visible = True
@@ -282,6 +277,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton24'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton31'
         end>
       OneOnRow = True
       Row = 0
@@ -410,7 +409,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton24: TdxBarLargeButton
-      Action = actOrdenesEntrada
+      Action = actEntrada
       Category = 0
     end
     object dxBarLargeButton25: TdxBarLargeButton
@@ -435,6 +434,10 @@ inherited frmMain: TfrmMain
     end
     object dxBarLargeButton30: TdxBarLargeButton
       Action = ActNotasCargo
+      Category = 0
+    end
+    object dxBarLargeButton31: TdxBarLargeButton
+      Action = actOrdenesEntrada
       Category = 0
     end
   end
@@ -10268,10 +10271,10 @@ inherited frmMain: TfrmMain
       ImageIndex = 33
       OnExecute = actCatalogoExecute
     end
-    object actOrdenesEntrada: TAction
+    object actEntrada: TAction
       Tag = 44
       Category = 'Compras'
-      Caption = 'Ordenes de entrada'
+      Caption = 'Entrada de mercancia'
       ImageIndex = 45
       OnExecute = actCatalogoExecute
     end
@@ -10315,6 +10318,13 @@ inherited frmMain: TfrmMain
       Category = 'Ventas'
       Caption = 'Notas Cargo'
       ImageIndex = 52
+      OnExecute = actCatalogoExecute
+    end
+    object actOrdenesEntrada: TAction
+      Tag = 45
+      Category = 'Compras'
+      Caption = 'Ordenes de entrada'
+      ImageIndex = 45
       OnExecute = actCatalogoExecute
     end
   end

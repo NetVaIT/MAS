@@ -1,0 +1,2 @@
+inherited dmOrdenesEntradasCostos: TdmOrdenesEntradasCostos
+end

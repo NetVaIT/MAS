@@ -646,13 +646,21 @@
             <Form>frmOrdenesEntradasSeleccionGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\OrdenesEntradasCostosDM.pas">
+            <Form>dmOrdenesEntradasCostos</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosProveedoresEdit.pas">
+            <Form>frmProductosProveedoresEdit</Form>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosProveedoresForm.pas">
+            <Form>frmProductosProveedores</Form>
+        </DCCReference>
         <DCCReference Include="Reportes\rptAntiguedadSaldosForm.pas">
             <Form>frmRptAntiguedadSaldos</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Reportes\rptAntiguedadSaldosDM.pas">
             <Form>dmRptAntiguedadSaldos</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">

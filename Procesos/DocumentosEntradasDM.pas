@@ -145,6 +145,7 @@ type
     actGetTipoCambio: TAction;
     adoqTipoCambioValor: TFMTBCDField;
     actGenDocumento: TAction;
+    adodsDocumentosDetallesImporteMonedaLocal: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -163,6 +164,7 @@ type
     procedure actGenDocumentoExecute(Sender: TObject);
     procedure actGenDocumentoUpdate(Sender: TObject);
     procedure actAutorizarUpdate(Sender: TObject);
+    procedure adodsDocumentosDetallesCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -295,6 +297,14 @@ begin
   adopUpdDocumento.Parameters.ParamByName('@IdDocumentoEntrada').Value:= adodsMasterIdDocumentoEntrada.Value;
   adopUpdDocumento.ExecProc;
   RefreshADODS(adodsMaster, adodsMasterIdDocumentoEntrada);
+end;
+
+procedure TdmDocumentosEntradas.adodsDocumentosDetallesCalcFields(
+  DataSet: TDataSet);
+begin
+  inherited;
+  if adodsMaster.Active then
+    adodsDocumentosDetallesImporteMonedaLocal.Value:= adodsDocumentosDetallesImporte.AsFloat * adodsMasterTipoCambio.AsFloat;
 end;
 
 procedure TdmDocumentosEntradas.adodsDocumentosDetallesCantidadChange(

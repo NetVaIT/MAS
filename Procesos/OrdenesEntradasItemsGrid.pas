@@ -24,7 +24,8 @@ uses
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus, cxGridBandedTableView,
   cxGridDBBandedTableView, dxLayoutContainer, cxGridLayoutView,
-  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView;
+  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView,
+  Vcl.Buttons;
 
 type
   TfrmOrdenesEntradasItemsGrid = class(T_frmStandarGFormGrid)
@@ -38,14 +39,33 @@ type
     tvMasterCantidadSolicitada: TcxGridDBColumn;
     tvMasterPrecio: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
+    tvMasterImporteMonedaLocal: TcxGridDBColumn;
+    tvMasterImpuestoArancelario: TcxGridDBColumn;
+    tvMasterGastos: TcxGridDBColumn;
+    tvMasterImporteTotal: TcxGridDBColumn;
+    tvMasterCostoAproximado: TcxGridDBColumn;
+    btnArancel: TSpeedButton;
+    btnGastos: TSpeedButton;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
+    FMostrarImporte: Boolean;
+    FMostrarCantidad: Boolean;
+    FactModificarArancel: TBasicAction;
+    FactModificarGastos: TBasicAction;
     procedure SetactSeleccionarProducto(const Value: TBasicAction);
+    procedure SetMostrarImporte(const Value: Boolean);
+    procedure SetMostrarCantidad(const Value: Boolean);
+    procedure SetactModificarArancel(const Value: TBasicAction);
+    procedure SetactModificarGastos(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write SetactSeleccionarProducto;
+    property actModificarArancel: TBasicAction read FactModificarArancel write SetactModificarArancel;
+    property actModificarGastos: TBasicAction read FactModificarGastos write SetactModificarGastos;
+    property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
+    property MostrarCantidad: Boolean read FMostrarCantidad write SetMostrarCantidad default False;
   end;
 
 implementation
@@ -60,11 +80,52 @@ begin
   ApplyBestFit:= False;
 end;
 
+procedure TfrmOrdenesEntradasItemsGrid.SetactModificarArancel(
+  const Value: TBasicAction);
+begin
+  FactModificarArancel := Value;
+  btnArancel.Action := Value;
+end;
+
+procedure TfrmOrdenesEntradasItemsGrid.SetactModificarGastos(
+  const Value: TBasicAction);
+begin
+  FactModificarGastos := Value;
+  btnGastos.Action := Value;
+end;
+
 procedure TfrmOrdenesEntradasItemsGrid.SetactSeleccionarProducto(
   const Value: TBasicAction);
 begin
   FactSeleccionarProducto := Value;
   tvMasterClaveProducto.Properties.Buttons[0].Action:= Value;
+end;
+
+procedure TfrmOrdenesEntradasItemsGrid.SetMostrarCantidad(const Value: Boolean);
+begin
+  FMostrarCantidad := Value;
+  tvMasterCantidadSolicitada.Visible:= Value;
+  tvMasterCantidadSolicitada.VisibleForCustomization:= Value;
+end;
+
+procedure TfrmOrdenesEntradasItemsGrid.SetMostrarImporte(const Value: Boolean);
+begin
+  FMostrarImporte := Value;
+  tvMasterPrecio.Visible:= Value;
+  tvMasterPrecio.VisibleForCustomization:= Value;
+  tvMasterImporte.Visible:= Value;
+  tvMasterImporte.VisibleForCustomization:= Value;
+  //
+  tvMasterImporteMonedaLocal.Visible:= Value;
+  tvMasterImporteMonedaLocal.VisibleForCustomization:= Value;
+  tvMasterImpuestoArancelario.Visible:= Value;
+  tvMasterImpuestoArancelario.VisibleForCustomization:= Value;
+  tvMasterGastos.Visible:= Value;
+  tvMasterGastos.VisibleForCustomization:= Value;
+  tvMasterImporteTotal.Visible:= Value;
+  tvMasterImporteTotal.VisibleForCustomization:= Value;
+  tvMasterCostoAproximado.Visible:= Value;
+  tvMasterCostoAproximado.VisibleForCustomization:= Value;
 end;
 
 end.

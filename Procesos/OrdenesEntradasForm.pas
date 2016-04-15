@@ -30,9 +30,9 @@ type
     pnlEncabezado: TPanel;
     Label1: TLabel;
     Label7: TLabel;
-    Label8: TLabel;
+    lblMoneda: TLabel;
     Label9: TLabel;
-    DBLookupComboBox2: TDBLookupComboBox;
+    edtMoneda: TDBLookupComboBox;
     DBLookupComboBox3: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
     pnlPie: TPanel;
@@ -50,27 +50,35 @@ type
     ToolButton3: TToolButton;
     Label11: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
-    Label12: TLabel;
+    lblTipoCambio: TLabel;
     edtTipoCambio: TcxDBButtonEdit;
     Label13: TLabel;
     DBLookupComboBox4: TDBLookupComboBox;
     PnlTitulo: TPanel;
     cxLabel1: TcxLabel;
-    btnAutorizar: TSpeedButton;
+    btnRecibr: TSpeedButton;
+    btnAplicar: TSpeedButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FactTipoCambio: TBasicAction;
     FactCrearOrden: TBasicAction;
-    FactAutorizar: TBasicAction;
+    FMostrarImporte: Boolean;
+    FactAplicar: TBasicAction;
+    FactRecibir: TBasicAction;
     procedure SetactCrearOrden(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
-    procedure SetactAutorizar(const Value: TBasicAction);
+    procedure SetMostrarImporte(const Value: Boolean);
+    procedure SetactAplicar(const Value: TBasicAction);
+    procedure SetactRecibir(const Value: TBasicAction);
   public
     { Public declarations }
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
     property actCrearOrden: TBasicAction read FactCrearOrden write SetactCrearOrden;
-    property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
+    property actRecibir: TBasicAction read FactRecibir write SetactRecibir;
+    property actAplicar: TBasicAction read FactAplicar write SetactAplicar;
+    property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
   end;
 
 implementation
@@ -86,10 +94,16 @@ begin
   ContainerDetail1:= pnlDetail;
 end;
 
-procedure TfrmOrdenesEntradas.SetactAutorizar(const Value: TBasicAction);
+procedure TfrmOrdenesEntradas.FormShow(Sender: TObject);
 begin
-  FactAutorizar := Value;
-  btnAutorizar.Action:= Value;
+  inherited;
+  TfrmOrdenesEntradasGrid(gFormGrid).MostrarImporte:= MostrarImporte;
+end;
+
+procedure TfrmOrdenesEntradas.SetactAplicar(const Value: TBasicAction);
+begin
+  FactAplicar := Value;
+  btnAplicar.Action := Value;
 end;
 
 procedure TfrmOrdenesEntradas.SetactCrearOrden(const Value: TBasicAction);
@@ -98,10 +112,25 @@ begin
   ToolButton10.Action:= Value;
 end;
 
+procedure TfrmOrdenesEntradas.SetactRecibir(const Value: TBasicAction);
+begin
+  FactRecibir := Value;
+  btnRecibr.Action := Value;
+end;
+
 procedure TfrmOrdenesEntradas.SetactTipoCambio(const Value: TBasicAction);
 begin
   FactTipoCambio := Value;
   edtTipoCambio.Properties.Buttons[0].Action:= Value;
+end;
+
+procedure TfrmOrdenesEntradas.SetMostrarImporte(const Value: Boolean);
+begin
+  FMostrarImporte := Value;
+  lblMoneda.Visible:= Value;
+  edtMoneda.Visible:= Value;
+  lblTipoCambio.Visible:= Value;
+  edtTipoCambio.Visible:= Value;
 end;
 
 end.

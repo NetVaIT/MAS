@@ -27,7 +27,7 @@ type
     adodsMasterIdentificador2: TStringField;
     adodsMasterIdentificador3: TStringField;
     adodsProductoFotos: TADODataSet;
-    DataSourceMaster: TDataSource;
+    dsMaster: TDataSource;
     adodsProductoDoctos: TADODataSet;
     ADODsDocumento: TADODataSet;
     adodsProductoFotosIdProductoFoto: TIntegerField;
@@ -45,26 +45,37 @@ type
     ADODsDocumentoArchivo: TBlobField;
     adodsProductoFotosNombreArchivo: TStringField;
     dsProductosFotos: TDataSource;
-
-
+    adodsProductosProveedores: TADODataSet;
+    adodsProductosProveedoresIdProductoProveedor: TAutoIncField;
+    adodsProductosProveedoresIdProducto: TIntegerField;
+    adodsProductosProveedoresIdPersonaProveedor: TIntegerField;
+    adodsProductosProveedoresUltimaCompra: TDateTimeField;
+    adodsProductosProveedoresUltimoPrecio: TFMTBCDField;
+    adodsProductosProveedoresTipoCambio: TFMTBCDField;
+    adodsPersonas: TADODataSet;
+    adodsPersonasIdPersona: TAutoIncField;
+    adodsPersonasIdMoneda: TIntegerField;
+    adodsPersonasIdentificador: TStringField;
+    adodsPersonasProvedor: TStringField;
+    adodsPersonasMoneda: TStringField;
+    adodsProductosProveedoresProveedor: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
     procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
+    procedure DataModuleDestroy(Sender: TObject);
   private
-    procedure ReadFile(FileName: TFileName);
-
     { Private declarations }
+    procedure ReadFile(FileName: TFileName);
   public
     { Public declarations }
-
   end;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ProductosEdit, DocumentosDM;
+uses ProductosEdit, DocumentosDM, ProductosProveedoresEdit;
 
 {$R *.dfm}
 
@@ -83,7 +94,6 @@ begin
     adodsDocumento.Requery();
   end;
   dmDocumentos.Free;
-
 end;
 
 procedure TdmProductos.actNuevoDocumentoExecute(Sender: TObject);
@@ -103,25 +113,33 @@ begin
     adodsProductoFotos.Post;
   end;
   dmDocumentos.Free;
-
 end;
 
 procedure TdmProductos.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  if adodsProductosProveedores.CommandText <> EmptyStr then adodsProductosProveedores.Open;
   gGridEditForm := TfrmProductosEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
- // TfrmProductosEdit(gGridEditForm).InsertFile := actNuevoDocumento;
- // TfrmProductosEdit(gGridEditForm).EditFile := actEditaDocumento;
-  adodsMaster.open;
+//  TfrmProductosEdit(gGridEditForm).InsertFile := actNuevoDocumento;
+//  TfrmProductosEdit(gGridEditForm).EditFile := actEditaDocumento;
+//  adodsMaster.open;
   TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset:=adodsProductoFotos;
   TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset.open;
   TfrmProductosEdit(gGridEditForm).DSDocumento.Dataset:=ADODsDocumento;
   AdoDSProductoFotos.Open;     //Ya viene abierto
   ADODsDocumento.open;    //Ya viene abierto
+  gFormDetail1:= TfrmProductosProveedoresEdit.Create(Self);
+  gFormDetail1.DataSet:= adodsProductosProveedores;
 end;
 
-
+procedure TdmProductos.DataModuleDestroy(Sender: TObject);
+begin
+  inherited;
+  adodsProductosProveedores.Close;
+  AdoDSProductoFotos.Close;
+  ADODsDocumento.Close;
+end;
 
 procedure TdmProductos.dsProductosFotosDataChange(Sender: TObject;
   Field: TField);
@@ -134,7 +152,6 @@ begin
     readfile(Archivo);
   end;
 end;
-
 
 procedure TdmProductos.ReadFile(FileName: TFileName);
 var
@@ -154,4 +171,5 @@ begin
     Blob.Free
   end;
 end;
+
 end.

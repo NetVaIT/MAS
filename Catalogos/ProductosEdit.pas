@@ -67,6 +67,7 @@ type
     cxDBTextEdit8: TcxDBTextEdit;
     SpdBtnVerArchivo: TSpeedButton;
     PnlTitulo: TPanel;
+    tsProductoProveedor: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -83,17 +84,14 @@ type
     procedure DBText1DblClick(Sender: TObject);
     procedure SpdBtnVerArchivoClick(Sender: TObject);
   private
+    { Private declarations }
     FEditFile: TBasicAction;
     FInsertFile: TBasicAction;
- //   dmProductosFotos:TDmProductosFotos;
-
+    dmProductosFotos: TdmProductosFotos;
     procedure SetEditFile(const Value: TBasicAction);
     procedure SetInsertFile(const Value: TBasicAction);
-
-    { Private declarations }
   public
     { Public declarations }
-
     property InsertFile : TBasicAction read FInsertFile write SetInsertFile;
     property EditFile : TBasicAction read FEditFile write SetEditFile;
   end;
@@ -131,8 +129,6 @@ begin
   dmProductosFotos.ShowModule(nil,'');
   DataSourceFotos.DataSet.Close;
   DataSourceFotos.DataSet.Open;
-
-
 end;
 
 procedure TfrmProductosEdit.DataSetEditExecute(Sender: TObject);
@@ -149,8 +145,6 @@ end;
 
 procedure TfrmProductosEdit.DataSourceDataChange(Sender: TObject;
   Field: TField);
-var
-  NombreA:  TFileName;
 begin
   inherited;
   ImgFoto.Picture:=ImgVacio.Picture;
@@ -213,8 +207,6 @@ begin
       ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
     else
       ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
-
-
   end;
 end;
 
@@ -228,12 +220,10 @@ procedure TfrmProductosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmProductos.Create(Self);
+  ContainerDetail1:= tsProductoProveedor;
  // TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
   dmProductosFotos := TdmProductosFotos.Create(nil); //Pa fotos
-
  // DataSourceFotos.DataSet.Open;
-
-
 end;
 
 
@@ -259,7 +249,6 @@ begin
       ImgFoto.Picture:=ImgVacio.Picture;
     end;
   end;
-
 end;
 
 //Nov 9/15
@@ -285,11 +274,7 @@ begin
       ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
     else
       ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
-
-
   end;
-
 end;
-
 
 end.

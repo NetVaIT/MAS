@@ -7,39 +7,65 @@ inherited frmProductos: TfrmProductos
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 800
+    ExplicitWidth = 800
   end
   inherited splDetail2: TSplitter
     Width = 800
+    ExplicitWidth = 800
   end
   inherited splDetail1: TSplitter
     Width = 800
+    ExplicitWidth = 800
   end
   inherited pnlClose: TPanel
     Width = 800
+    ExplicitWidth = 800
   end
   inherited pnlDetail3: TPanel
     Width = 800
+    ExplicitWidth = 800
   end
   inherited pnlDetail2: TPanel
     Width = 800
+    ExplicitWidth = 800
   end
   inherited pnlDetail1: TPanel
     Width = 800
+    ExplicitWidth = 800
   end
   inherited pnltoolbar: TPanel
     Width = 800
-  end
-  inherited tbarGrid: TToolBar
-    Width = 800
-    ExplicitTop = 8
+    ExplicitWidth = 800
   end
   inherited pnlMaster: TPanel
     Width = 800
+    ExplicitWidth = 800
     inherited cxGrid: TcxGrid
       Width = 800
+      ExplicitWidth = 800
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
+          Visible = False
+        end
+        object tvMasterIdUnidadMedida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUnidadMedida'
+          Visible = False
+        end
+        object tvMasterIdUbicacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUbicacion'
+          Visible = False
+        end
+        object tvMasterIdProductoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoTipo'
+          Visible = False
+        end
+        object tvMasterIdProductoEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoEstatus'
+          Visible = False
+        end
+        object tvMasterIdDocumentos: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentos'
           Visible = False
         end
         object tvMasterIdentificador1: TcxGridDBColumn
@@ -56,17 +82,10 @@ inherited frmProductos: TfrmProductos
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
-        end
-        object tvMasterIdUnidadMedida: TcxGridDBColumn
-          DataBinding.FieldName = 'IdUnidadMedida'
-          Visible = False
+          Width = 304
         end
         object tvMasterPrecioUnitario: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioUnitario'
-        end
-        object tvMasterIdUbicacion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdUbicacion'
-          Visible = False
         end
         object tvMasterMaximo: TcxGridDBColumn
           DataBinding.FieldName = 'Maximo'
@@ -77,28 +96,23 @@ inherited frmProductos: TfrmProductos
         object tvMasterPuntoReorden: TcxGridDBColumn
           DataBinding.FieldName = 'PuntoReorden'
         end
-        object tvMasterIdProductoTipo: TcxGridDBColumn
-          DataBinding.FieldName = 'IdProductoTipo'
-          Visible = False
-        end
-        object tvMasterIdProductoEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'IdProductoEstatus'
-          Visible = False
-        end
-        object tvMasterIdDocumentos: TcxGridDBColumn
-          DataBinding.FieldName = 'IdDocumentos'
-          Visible = False
-        end
         object tvMasterUnidadMedida: TcxGridDBColumn
           DataBinding.FieldName = 'UnidadMedida'
+          Width = 200
         end
         object tvMasterProductoTipo: TcxGridDBColumn
           DataBinding.FieldName = 'ProductoTipo'
+          Width = 200
         end
         object tvMasterProductoEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'ProductoEstatus'
+          Width = 200
         end
       end
+    end
+    inherited tbarGrid: TToolBar
+      Width = 800
+      ExplicitWidth = 800
     end
   end
   inherited DataSource: TDataSource
@@ -106,7 +120,7 @@ inherited frmProductos: TfrmProductos
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400980010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -247,7 +261,7 @@ inherited frmProductos: TfrmProductos
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

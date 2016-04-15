@@ -62,8 +62,9 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       Lookup = True
     end
     object adodsMasterCLaveProvedor: TStringField
+      DisplayLabel = 'Clave'
       FieldKind = fkLookup
-      FieldName = 'CLaveProvedor'
+      FieldName = 'ClaveProvedor'
       LookupDataSet = adodsPersonas
       LookupKeyFields = 'IdPersona'
       LookupResultField = 'Identificador'
@@ -92,6 +93,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       Lookup = True
     end
     object adodsMasterTipoCambio: TFMTBCDField
+      DisplayLabel = 'Tipo de cambio'
       FieldName = 'TipoCambio'
       Precision = 18
       Size = 6
@@ -149,11 +151,24 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       ImageIndex = 4
       OnExecute = actCrearOrdenExecute
     end
+    object actRecibirMercancia: TAction
+      Caption = 'Recibir'
+      OnExecute = actRecibirMercanciaExecute
+      OnUpdate = actRecibirMercanciaUpdate
+    end
     object actAplicarEntrada: TAction
       Caption = 'Aplicar entrada'
       Hint = 'Permite generar las aplicaciones de entrada'
       OnExecute = actAplicarEntradaExecute
       OnUpdate = actAplicarEntradaUpdate
+    end
+    object actModificarArancel: TAction
+      Caption = 'Modificar arancel'
+      OnExecute = actModificarArancelExecute
+    end
+    object actModificarGastos: TAction
+      Caption = 'Modificar gastos'
+      OnExecute = actModificarGastosExecute
     end
   end
   object dsmaster: TDataSource
@@ -233,8 +248,9 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     CommandText = 
       'select IdOrdenEntradaItem, IdOrdenEntrada, IdDocumentoEntradaDet' +
       'alle, IdProducto, ClaveProducto, Cantidad, CantidadSolicitada, P' +
-      'recio, Importe from OrdenesEntradasItems'#13#10'where IdOrdenEntrada  ' +
-      '= :IdOrdenEntrada'
+      'recio, Importe,'#13#10'ImporteMonedaLocal, ImpuestoArancelario, Gastos' +
+      ', ImporteTotal, CostoAproximado'#13#10'from OrdenesEntradasItems'#13#10'wher' +
+      'e IdOrdenEntrada  = :IdOrdenEntrada'
     DataSource = dsmaster
     MasterFields = 'IdOrdenEntrada'
     Parameters = <
@@ -243,6 +259,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 24
@@ -283,7 +300,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     end
     object adodsItemsCantidad: TFloatField
       FieldName = 'Cantidad'
-      OnChange = adodsItemsCantidadChange
+      OnChange = adodsItemsPrecioChange
     end
     object adodsItemsCantidadSolicitada: TFloatField
       DisplayLabel = 'Solicitada'
@@ -302,6 +319,42 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       Precision = 18
       Size = 6
     end
+    object adodsItemsImporteMonedaLocal: TFMTBCDField
+      DisplayLabel = 'Importe moneda local'
+      FieldName = 'ImporteMonedaLocal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsItemsImpuestoArancelario: TFMTBCDField
+      DisplayLabel = 'Impuesto arancelario'
+      FieldName = 'ImpuestoArancelario'
+      OnChange = adodsItemsPrecioChange
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsItemsGastos: TFMTBCDField
+      FieldName = 'Gastos'
+      OnChange = adodsItemsPrecioChange
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsItemsImporteTotal: TFMTBCDField
+      DisplayLabel = 'Importe total'
+      FieldName = 'ImporteTotal'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsItemsCostoAproximado: TFMTBCDField
+      DisplayLabel = 'Costo aproximado'
+      FieldName = 'CostoAproximado'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
   end
   object dsItems: TDataSource
     DataSet = adodsItems
@@ -309,6 +362,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     Top = 80
   end
   object adodsProductos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProducto, Descripcion from Productos'
@@ -596,18 +650,21 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdOrdenEntrada'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdUsuario'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 296
     Top = 480

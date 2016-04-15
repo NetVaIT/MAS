@@ -8,8 +8,10 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
+        OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
         OptionsBehavior.GoToNextCellOnEnter = True
+        OptionsBehavior.FocusCellOnCycle = True
         OptionsData.Editing = True
         OptionsData.Inserting = True
         object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
@@ -58,17 +60,50 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
           DataBinding.FieldName = 'Importe'
           Options.Focusing = False
         end
+        object tvMasterImporteMonedaLocal: TcxGridDBColumn
+          DataBinding.FieldName = 'ImporteMonedaLocal'
+          Options.Focusing = False
+        end
+        object tvMasterImpuestoArancelario: TcxGridDBColumn
+          DataBinding.FieldName = 'ImpuestoArancelario'
+        end
+        object tvMasterGastos: TcxGridDBColumn
+          DataBinding.FieldName = 'Gastos'
+        end
+        object tvMasterImporteTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'ImporteTotal'
+          Options.Focusing = False
+        end
+        object tvMasterCostoAproximado: TcxGridDBColumn
+          DataBinding.FieldName = 'CostoAproximado'
+          Options.Focusing = False
+        end
       end
     end
     inherited tbarGrid: TToolBar
       inherited ToolButton4: TToolButton
         Visible = True
       end
+      object btnArancel: TSpeedButton
+        Left = 308
+        Top = 0
+        Width = 90
+        Height = 22
+      end
+      object btnGastos: TSpeedButton
+        Left = 398
+        Top = 0
+        Width = 90
+        Height = 22
+      end
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmOrdenesEntradas.adodsItems
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -229,7 +264,7 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B8014C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

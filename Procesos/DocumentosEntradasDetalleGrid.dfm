@@ -12,6 +12,8 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
         NewItemRow.InfoText = 'Presiona aqu'#237' para uno nuevo'
         OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
+        OptionsBehavior.GoToNextCellOnEnter = True
+        OptionsBehavior.FocusCellOnCycle = True
         OptionsData.Editing = True
         OptionsData.Inserting = True
         object tvMasterIdDocumentoentradaDetalle: TcxGridDBColumn
@@ -59,6 +61,10 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
           DataBinding.FieldName = 'Importe'
           Options.Editing = False
           Options.Focusing = False
+        end
+        object tvMasterImporteMonedaLocal: TcxGridDBColumn
+          DataBinding.FieldName = 'ImporteMonedaLocal'
+          Visible = False
         end
       end
       object tvMaster2: TcxGridDBTableView [1]
@@ -140,7 +146,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -301,7 +307,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B8013C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

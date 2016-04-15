@@ -1,5 +1,5 @@
-inherited frmOrdenesEntradasItems: TfrmOrdenesEntradasItems
-  Caption = 'frmOrdenesEntradasItems'
+inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
+  Caption = 'frmProductosProveedoresEdit'
   ExplicitWidth = 750
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -10,11 +10,82 @@ inherited frmOrdenesEntradasItems: TfrmOrdenesEntradasItems
       ExplicitTop = 1
       ExplicitWidth = 748
       ExplicitHeight = 475
+      inherited cxScrollBox1: TcxScrollBox
+        inherited pnlMaster: TPanel
+          ExplicitLeft = -104
+          ExplicitTop = -111
+          object Label1: TLabel
+            Left = 40
+            Top = 40
+            Width = 50
+            Height = 13
+            Caption = 'Proveedor'
+            FocusControl = DBLookupComboBox1
+          end
+          object Label2: TLabel
+            Left = 40
+            Top = 80
+            Width = 67
+            Height = 13
+            Caption = #218'ltima compra'
+            FocusControl = cxDBDateEdit1
+          end
+          object Label3: TLabel
+            Left = 40
+            Top = 120
+            Width = 61
+            Height = 13
+            Caption = #218'ltimo precio'
+            FocusControl = cxDBTextEdit1
+          end
+          object Label4: TLabel
+            Left = 40
+            Top = 160
+            Width = 71
+            Height = 13
+            Caption = 'Tipo de cambio'
+            FocusControl = cxDBTextEdit2
+          end
+          object DBLookupComboBox1: TDBLookupComboBox
+            Left = 40
+            Top = 56
+            Width = 304
+            Height = 21
+            DataField = 'Proveedor'
+            DataSource = DataSource
+            TabOrder = 0
+          end
+          object cxDBDateEdit1: TcxDBDateEdit
+            Left = 40
+            Top = 96
+            DataBinding.DataField = 'UltimaCompra'
+            DataBinding.DataSource = DataSource
+            TabOrder = 1
+            Width = 121
+          end
+          object cxDBTextEdit1: TcxDBTextEdit
+            Left = 40
+            Top = 136
+            DataBinding.DataField = 'UltimoPrecio'
+            DataBinding.DataSource = DataSource
+            TabOrder = 2
+            Width = 121
+          end
+          object cxDBTextEdit2: TcxDBTextEdit
+            Left = 40
+            Top = 176
+            DataBinding.DataField = 'TipoCambio'
+            DataBinding.DataSource = DataSource
+            TabOrder = 3
+            Width = 121
+          end
+        end
+      end
     end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -155,7 +226,7 @@ inherited frmOrdenesEntradasItems: TfrmOrdenesEntradasItems
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

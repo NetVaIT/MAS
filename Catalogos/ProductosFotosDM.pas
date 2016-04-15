@@ -33,16 +33,12 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure dsMasterDataChange(Sender: TObject; Field: TField);
   private
-    procedure ReadFile(FileName: TFileName);
     { Private declarations }
+    procedure ReadFile(FileName: TFileName);
   public
     { Public declarations }
-
-        procedure WriteFile(FileName: TFileName);
+    procedure WriteFile(FileName: TFileName);
   end;
-
-var
-  dmProductosFotos: TdmProductosFotos;
 
 implementation
 
@@ -100,9 +96,8 @@ begin
   ADODsDocumento.Open;
 end;
 
-
 procedure TdmProductosFotos.dsMasterDataChange(Sender: TObject; Field: TField);
-var Archivo :TFileName;
+//var Archivo :TFileName;
 begin
   inherited;
  // Archivo:=ADODsDocumento.FieldByName('NombreArchivo').AsString;   //No tiene nada

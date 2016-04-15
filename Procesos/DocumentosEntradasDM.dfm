@@ -265,6 +265,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     CursorType = ctStatic
     AfterPost = adodsDocumentosDetallesAfterPost
     AfterDelete = adodsDocumentosDetallesAfterPost
+    OnCalcFields = adodsDocumentosDetallesCalcFields
     CommandText = 
       'SELECT IdDocumentoEntradaDetalle, IdDocumentoEntrada, IdProducto' +
       ', ClaveProducto, Cantidad, CantidadPendiente, Precio, Importe'#13#10'F' +
@@ -333,6 +334,16 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsDocumentosDetallesImporteMonedaLocal: TFMTBCDField
+      DisplayLabel = 'Importe moneda local'
+      FieldKind = fkCalculated
+      FieldName = 'ImporteMonedaLocal'
+      Visible = False
+      currency = True
+      Precision = 18
+      Size = 6
+      Calculated = True
     end
     object adodsDocumentosDetallesExistencia: TFloatField
       FieldKind = fkLookup

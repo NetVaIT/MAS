@@ -83,7 +83,7 @@ type
     dxBarLargeButton22: TdxBarLargeButton;
     dxBarLargeButton23: TdxBarLargeButton;
     actInvoice: TAction;
-    actOrdenesEntrada: TAction;
+    actEntrada: TAction;
     dxBarLargeButton24: TdxBarLargeButton;
     ActRegistroPagos: TAction;
     dxBarManagerBar4: TdxBar;
@@ -98,6 +98,8 @@ type
     ActNotasVenta: TAction;
     ActNotasCredito: TAction;
     ActNotasCargo: TAction;
+    actOrdenesEntrada: TAction;
+    dxBarLargeButton31: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -182,7 +184,8 @@ begin
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
-   44: gModulo := TdmOrdenesEntradas.Create(Self);
+   44: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, tEntradaMercacia);
+   45: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, TOrdenEntrada);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
@@ -219,6 +222,7 @@ begin
   actRequisicionCompra.Enabled  := Conected;
   actOrdenCompra.Enabled        := Conected;
   actInvoice.Enabled            := Conected;
+  actEntrada.Enabled            := Conected;
   actOrdenesEntrada.Enabled     := Conected;
 end;
 
