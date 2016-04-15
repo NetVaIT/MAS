@@ -572,7 +572,8 @@ begin
           adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' Previo '+ motivo+' '+ respuesta;
           adodsMaster.Post;
            //Actualiza Inventario y demás   //Mar 7/16
-          RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+          if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+             RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
           //Actualiza datos
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
           //Actualizar Saldo Cliente //No debio actualizar antes
@@ -589,7 +590,8 @@ begin
              adodsMaster.Post;
 
                //Actualiza Inventario y demás   //Mar 7/16
-             RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+             if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
              //Actualizar Saldo Cliente
              ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
              ShowMessage(adodsMasterUUID_TB.Value + #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación');
@@ -604,6 +606,7 @@ begin
                adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta;
                adodsMaster.Post;
                  //Actualiza Inventario y demás   //Mar 7/16
+             if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
                 RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
                 //Actualizar Saldo Cliente
                ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
@@ -725,14 +728,14 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
         ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString:='NV';
         ADODtStBuscaFolioSerie.Post;
       end;
-      if adodsMaster.FieldByName('IDCFDIEstatus').AsInteger=5 then //Abr 1/16
+      if adodsMaster.FieldByName('IDCFDIEstatus').AsInteger=5 then //Abr 1/16   //Presupuesto
       begin
         ActualizaSaldoCliente(adodsMaster.FieldByName('IDCFDI').AsInteger,adodsMaster.FieldByName('IDPersonaReceptor').AsInteger,
                               adodsMaster.FieldByName('IdClienteDomicilio').AsInteger, adodsMaster.FieldByName('SaldoDocumento').AsFloat,'+');
-        ActualizaInventario(adodsMaster.FieldByName('IDOrdenSalida').AsInteger,adodsMaster.FieldByName('IDCFDI').AsInteger);
-        LlenaDatosEnvio;
 
+        ActualizaInventario(adodsMaster.FieldByName('IDOrdenSalida').AsInteger,adodsMaster.FieldByName('IDCFDI').AsInteger);
       end;
+      LlenaDatosEnvio; //Para que se haga siempre que sea 4 (Nota de Venta o Presupuesto) se movio Abr 8/16
       //Se imprime afuera.
     end;
     //Hasta aca Mar 28/16
@@ -885,6 +888,8 @@ begin      //Mar 31/16
   inherited;
   ListaOrdenSalidas:='|';
   ADODSNotasVenta.Close;
+  ADODtStConceptosNotasVenta.Close;
+  ADODSNotasVenta.CommandText:= TAdoDataSet(DSMaster.DataSet).CommandText;                                          //Ojo cambiar la consulta por la del master
   ADODSNotasVenta.open; //Tiene listo lo de hoy y no FActurado
   ADODtStConceptosNotasVenta.open;
   adodsMaster.Close;
@@ -895,6 +900,13 @@ begin      //Mar 31/16
     adodsMaster.Insert;
     //DAtos Factura VentaDiaria
     adodsMasterIdPersonaReceptor.AsInteger:=-1;
+    ADODtStConsultaDirecciones.Close;   //Este esta filtrado por el receptor Abr 14/16
+ //   ADODtStConsultaDirecciones.Filter:='IDPersona=-1';
+ //   ADODtStConsultaDirecciones.Filtered:=True;
+    ADODtStConsultaDirecciones.Open;     //para que ponga el domicilio por default.
+    if not ADODtStConsultaDirecciones.Eof then
+       adodsMasterIdClienteDomicilio.AsInteger:= ADODtStConsultaDirecciones.FieldByName('IDPersonaDomicilio').AsInteger;
+
     adodsMasterIdCFDITipoDocumento.AsInteger:=1; //Siempre esta sera Factura
     adodsMasterTipoComp.AsString:=  adodsMasterTipoComprobante.AsString; //??
 
@@ -1177,7 +1189,9 @@ begin
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
 
           //Actualiza inventario
-          ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
+
+          if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+            ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
 
         //  Showmessage('CFDI Generado');//Dic 29/15
 
@@ -1237,8 +1251,8 @@ begin
       ADODtStInformacionEnvio.Post;
     end;
     ADODtStInformacionEnvio.Close;
-  end
-  else  //Abr 1/16
+  end;
+(*  else  //Abr 1/16  //Es posible que aca ya no se requiera , ya que esto se haria al final del día Abr 8/16 DEshabilitado
   begin
     if SacaListaDatos(IdCFDI,DatosDireccion) then
     begin
@@ -1273,7 +1287,7 @@ begin
 
       end;
     end;
-  end;
+  end;*)
 
 end;
 
@@ -1380,7 +1394,7 @@ end;
 procedure TDMFacturas.ActualizaInventario(IDOrdenSalida, IDCFDI: Integer);
 var                //No se modifico porque se asocia con los IdOrdenSalidaItem que son los mismos.  Ab. 1/16
    texto:String;
-   cont:Integer;   //Abr 1/16
+   cont, IDPXE:Integer;   //Abr 1/16    //Abr 14/16
 begin
   ADODtStDatosActInv.Close;
   ADODtStDatosActInv.Parameters.ParamByName('IDCFDI').Value:= idcfdi;
@@ -1403,8 +1417,8 @@ begin
       end;
       if cont=0 then
       begin
-        ADOQryActualizaInventario.SQL.Clear;
-        ADOQryActualizaInventario.SQL.Add('Update Inventario SET PedidoXSurtir  =PedidoXSurtir-'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+        ADOQryActualizaInventario.SQL.Clear;                   // PedidoXSurtir  =PedidoXSurtir cambio //Abr 11/16
+        ADOQryActualizaInventario.SQL.Add('Update Inventario SET Apartado  =Apartado-'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' ,Existencia =Existencia- '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' Where IdProducto='+ADODtStDatosActInv.FieldByName('IDProducto').AsString
                                          +' and IDALmacen= '+ADODtStDatosActInv.FieldByName('IDAlmacen').ASString);
@@ -1417,11 +1431,20 @@ begin
         ADOQryActualizaInventario.ExecSQL;
          Texto:=Texto +' Actualizo SalidasUbicacion';
 
+        AdoQryAuxiliar.Close; //desde Abr. 14/16
+        AdoQryAuxiliar.SQL.Clear;
+        AdoQryAuxiliar.SQL.Add('Select * from SalidasUbicaciones  where IdOrdenSalidaItem='
+                                          +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
+        AdoQryAuxiliar.Open;  //Hasta Abr. 14/16
+        if not AdoQryAuxiliar.eof then
+          IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
+
+        //necesitamos el id de productoXEspacio producto
         ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
         ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
-                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString);
-
+                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString+' and IDProductoXEspacio='+intToStr(IDPXE));
+                                                                                                                   //Agregado Ab. 14, por si hay mas ubicaciones
         ADOQryActualizaInventario.ExecSQL;
 
         Texto:=Texto +' Actualizo ProductoEspacio';
@@ -1432,6 +1455,7 @@ begin
         ADOQryActualizaInventario.ExecSQL;
 
         Texto:=Texto +' Actualizo Producto Kardex';
+
 
       end; //Ab 1/16
       ADODtStDatosActInv.Next;
@@ -1454,22 +1478,33 @@ end;
 procedure TDMFacturas.RevertirInventario(IDOrdenSalida, IDCFDI: Integer);//Por Cancelación FActura Mar 7/16
 var                                                     //
    texto:String;
-   cont:Integer;
+   cont,IDPXE, idReceptor, IDTipoDoc:Integer;
 begin
+   //Abr 14/16   Para traer el idPersonaReceptor
+  AdoQryAuxiliar.Close;
+  AdoQryAuxiliar.SQL.Clear;
+  AdoQryAuxiliar.SQL.Add('Select IDPersonaReceptor, IDCFDITipoDocumento from CFDI where IdCFDI='+intToStr(idcfdi));
+  AdoQryAuxiliar.Open;
+  IDReceptor:=  AdoQryAuxiliar.FieldByName('IdPersonaReceptor').AsInteger;      //Abr 14/16
+  IDTipoDoc:= AdoQryAuxiliar.FieldByName('IDCFDITipoDocumento').AsInteger; //Abr 15/16
+
   ADODtStDatosActInv.Close;
   ADODtStDatosActInv.Parameters.ParamByName('IDCFDI').Value:= idcfdi;
   ADODtStDatosActInv.OPEN;
   cont :=0;//abr 1/16
   try
     ADODtStDatosActInv.Connection.BeginTrans;
-    ADOQryActualizaInventario.SQL.Clear; // Mar 8/16
-     //  Cancela  OrdenSalida  //Verificar si a los registros de Items de OrdenSalida se les quita el IDDocumentoDetalle..
-    ADOQryActualizaInventario.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus = 8  , FechaCancela = getdate() ' //Cancelada
-                                       +' where IDOrdenSalida='+ intToStr(IDOrdenSalida));   //Ajustado mar 17/16
+    if (idreceptor<>-1) and (IDTipoDoc=1) then
+    begin
+      ADOQryActualizaInventario.SQL.Clear; // Mar 8/16
+       //  Cancela  OrdenSalida  //Verificar si a los registros de Items de OrdenSalida se les quita el IDDocumentoDetalle..
+      ADOQryActualizaInventario.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus = 8  , FechaCancela = getdate() ' //Cancelada
+                                         +' where IDOrdenSalida='+ intToStr(IDOrdenSalida));   //Ajustado mar 17/16
 
-    ADOQryActualizaInventario.ExecSQL;
-   
-    Texto:='Cancela Orden Salida ';  //Verificar existencia de Producto Almacen para  asegurarse que se agreguen.. sino dar error... mar 28/16
+      ADOQryActualizaInventario.ExecSQL;
+
+      Texto:='Cancela Orden Salida ';  //Verificar existencia de Producto Almacen para  asegurarse que se agreguen.. sino dar error... mar 28/16
+    end;
     while not ADODtStDatosActInv.EOF do
     begin
     //verificar existencia en inventario Abr 1/16
@@ -1483,49 +1518,69 @@ begin
         cont:=Cont+1;
       end;
       if Cont=0 then
-      begin
-        ADOQryActualizaInventario.SQL.Clear;                                                  //se puso en el pedido
-        ADOQryActualizaInventario.SQL.Add('Update Inventario SET PedidoXSurtir  =PedidoXSurtir+'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+      begin                                                                                    //se puso en el pedido
+        ADOQryActualizaInventario.SQL.Clear;                  // PedidoXSurtir  =PedidoXSurtir cambio //Abr 11/16
+        ADOQryActualizaInventario.SQL.Add('Update Inventario SET Apartado  =Apartado+'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' ,Existencia =Existencia+ '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' Where IdProducto='+ADODtStDatosActInv.FieldByName('IDProducto').AsString
                                          +' and IDALmacen= '+ADODtStDatosActInv.FieldByName('IDAlmacen').ASString);
 
         ADOQryActualizaInventario.ExecSQL;
         Texto:='Revierte inventario';
-        ADOQryActualizaInventario.SQL.Clear;                                                 //Cancelado
-        ADOQryActualizaInventario.SQL.Add('Update SalidasUbicaciones SET IdSalidaUbicacionEstatus=4  where IdOrdenSalidaItem='
+         if idreceptor<>-1 then   //Abr 14/16
+        begin
+          ADOQryActualizaInventario.SQL.Clear;                                                 //Cancelado
+          ADOQryActualizaInventario.SQL.Add('Update SalidasUbicaciones SET IdSalidaUbicacionEstatus=4  where IdOrdenSalidaItem='
+                                            +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
+          ADOQryActualizaInventario.ExecSQL;
+          Texto:=Texto +' Cancela SalidasUbicacion';
+        end;
+
+        AdoQryAuxiliar.Close; //desde Abr. 14/16
+        AdoQryAuxiliar.SQL.Clear;
+        AdoQryAuxiliar.SQL.Add('Select * from SalidasUbicaciones  where IdOrdenSalidaItem='
                                           +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
-        ADOQryActualizaInventario.ExecSQL;
-        Texto:=Texto +' Cancela SalidasUbicacion';
+        AdoQryAuxiliar.Open;  //Hasta Abr. 14/16
+        if not AdoQryAuxiliar.eof then
+          IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
+
+        //Necesitamos el espacio  //Abr 14/16
 
         ADOQryActualizaInventario.SQL.Clear;            //Aca se regresa la sumatoria C. Mar 18/16
         ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad + '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
-                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString);
+                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString +' and IDProductoXEspacio='+intToStr(IDPXE));
+                                                                                                                   //Agregado Ab. 14, por si hay mas ubicaciones);
 
         ADOQryActualizaInventario.ExecSQL;
 
         Texto:=Texto +' Revierte ProductoEspacio';
 
-        ADOQryActualizaInventario.SQL.Clear; //No estaba                        //Cancelar registro
-        ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 4  '
-                                         +' where IDProductoKardex='+ ADODtStDatosActInv.FieldByName('IdProductoKardex').ASString);
+        if idreceptor<>-1 then
+        begin
+          ADOQryActualizaInventario.SQL.Clear; //No estaba                        //Cancelar registro
+          ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 4  '
+                                           +' where IDProductoKardex='+ ADODtStDatosActInv.FieldByName('IdProductoKardex').ASString);
 
-        ADOQryActualizaInventario.ExecSQL;
+          ADOQryActualizaInventario.ExecSQL;
 
-        Texto:=Texto +' Cancela Producto Kardex';
+          Texto:=Texto +' Cancela Producto Kardex';
+        end;
+
        end;
 
        ADODtStDatosActInv.Next;
     end;
-    if Cont=0 then //Abr 1/16
+    if (Cont=0) then //Abr 1/16
     begin
       // Copiar Orden de Salida en nuevo registro con Estatus y cantidades respectivos.. verificar.
       //LLamar al procedimiento almacenado creado y ver que más se requiere
-      adopCopiaOrdenSalida.Parameters.ParamByName('@IdOrdenSalida').Value:= IDOrdenSalida;
-      adopCopiaOrdenSalida.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
-      adopCopiaOrdenSalida.ExecProc;
-
+      if (idreceptor<>-1 )then  //Ajuste abr 14/16
+      begin
+        adopCopiaOrdenSalida.Parameters.ParamByName('@IdOrdenSalida').Value:= IDOrdenSalida;
+        adopCopiaOrdenSalida.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adopCopiaOrdenSalida.ExecProc;
+      end;
 
 
       ADODtStDatosActInv.Connection.CommitTrans;

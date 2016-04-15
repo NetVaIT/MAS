@@ -247,12 +247,22 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Hint = 'Enviar Correo'
       OnExecute = ActEnvioCorreoConArchivosExecute
     end
+    object ActActualizaApartado: TAction
+      Caption = 'ActActualizaApartado'
+      OnExecute = ActActualizaApartadoExecute
+    end
+    object ActRevierteApartado: TAction
+      Caption = 'ActRevierteApartado'
+      OnExecute = ActRevierteApartadoExecute
+    end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     BeforePost = ADODtStOrdenSalidaItemBeforePost
     AfterPost = ADODtStOrdenSalidaItemAfterPost
+    BeforeDelete = ADODtStOrdenSalidaItemBeforeDelete
+    AfterDelete = ADODtStOrdenSalidaItemAfterDelete
     CommandText = 
       'select IdOrdenSalidaItem, IdOrdenSalida, IdDocumentoSalidaDetall' +
       'e,'#13#10' IdProducto, CantidadDespachada, Precio, Importe, CantidadSo' +

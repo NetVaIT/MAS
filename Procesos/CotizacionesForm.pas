@@ -66,7 +66,7 @@ type
     ToolButton3: TToolButton;
     TlBtnGuarda: TToolButton;
     TlBtnCancela: TToolButton;
-    DBGrid1: TDBGrid;
+    DBGrdDetalles: TDBGrid;
     DatasetDetalleFirst: TDataSetFirst;
     DatasetDetallePrior: TDataSetPrior;
     DatasetDetalleNext: TDataSetNext;
@@ -110,13 +110,13 @@ type
     cxDBLabel8: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
-    procedure DBGrid1EditButtonClick(Sender: TObject);
+    procedure DBGrdDetallesEditButtonClick(Sender: TObject);
     procedure SpdBtnCambioEstatusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure DBLookupComboBox1Click(Sender: TObject);
     procedure DataSourceStateChange(Sender: TObject);
-    procedure DBGrid1DblClick(Sender: TObject);
+    procedure DBGrdDetallesDblClick(Sender: TObject);
     procedure TlBtnEnvioCorreoMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure BtBtnAdjuntosClick(Sender: TObject);
@@ -154,8 +154,8 @@ function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
 begin
   dsQryBorrar.DataSet.Close;
-  TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
-  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cantidad)+' where IDProducto='+intToStr(idProducto) );//Pendiente de agregar almacen feb 2/16
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;                                                                                                                      //SE agrego lo del Almacen en 1 //Abr 11/16
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cantidad)+' where IDProducto='+intToStr(idProducto) + ' and IdAlmacen= 1' );//Pendiente de agregar almacen feb 2/16
   TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
 end;
 
@@ -225,7 +225,7 @@ begin
 
 end;
 
-procedure TfrmCotizaciones.DBGrid1DblClick(Sender: TObject);
+procedure TfrmCotizaciones.DBGrdDetallesDblClick(Sender: TObject);
 var
   i:Integer;
 begin
@@ -264,7 +264,7 @@ begin
   BtBtnAdjuntos.Enabled:= LstBxAdjuntosMail.Count>0;
 end;
 
-procedure TfrmCotizaciones.DBGrid1EditButtonClick(Sender: TObject);
+procedure TfrmCotizaciones.DBGrdDetallesEditButtonClick(Sender: TObject);
 var
   FrmListaProductos:TFrmListaProductos;
 begin
@@ -337,12 +337,16 @@ begin
      //   TlBtnCambioEstatus.Hint:='Aceptar Cotización' ;   //Feb 9/16
         LblNoCotiza.Caption:='No.Cotización';
         PnlTitulo.Caption:='    Cotizaciones';
+     (*   DBGrdDetalles.Columns[9].ReadOnly:=False;   //Abr 13/16
+        DBGrdDetalles.Columns[10].ReadOnly:=True;*)
       end;
     2:begin
         SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
         //   TlBtnCambioEstatus.Hint:= 'Generar Orden Salida';  //Feb 9/16
         LblNoCotiza.Caption:='No.Pedido';
         PnlTitulo.Caption:='    Pedidos';
+     (*   DBGrdDetalles.Columns[9].ReadOnly:=true; //???  //Abr 13/16
+        DBGrdDetalles.Columns[10].ReadOnly:=false;     *)
 //       LblDirCliente.Visible:=True;
 //       DBLkpCmbBxDirCliente.Visible:=True;
       end;
@@ -375,7 +379,7 @@ begin
   dsordenSalida.DataSet.Post;
 
 //  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;
-
+  DataSourceDetail.DataSet.first; //Para aseguarase que ponga todos //Abr 13/16
   while not DataSourceDetail.DataSet.eof do
   begin
     if DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat>0 then

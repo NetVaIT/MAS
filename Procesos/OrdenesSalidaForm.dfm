@@ -3,7 +3,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1097
   OnActivate = FormActivate
   ExplicitWidth = 1097
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -371,6 +370,28 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
               ParentFont = False
+            end
+            object Label29: TLabel
+              Left = 990
+              Top = 16
+              Width = 98
+              Height = 13
+              Caption = 'No. Pedido Origen'
+              FocusControl = DBLookupComboBox5
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object DBText6: TDBText
+              Left = 990
+              Top = 35
+              Width = 65
+              Height = 17
+              DataField = 'IdDocumentoSalida'
+              DataSource = DataSource
             end
             object BtBtnRegresaEstado: TBitBtn
               Tag = 4
@@ -938,7 +959,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 ParentFont = False
               end
               object EdtContraAutoriza: TEdit
-                Left = 262
+                Left = 264
                 Top = 22
                 Width = 110
                 Height = 21
@@ -1345,8 +1366,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
             end
             object PnlSalidasUbicacion: TPanel
-              Left = 320
-              Top = 48
+              Left = 412
+              Top = 54
               Width = 638
               Height = 223
               TabOrder = 14
@@ -1491,7 +1512,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object PnlRegresaEstado: TPanel
               Left = 321
-              Top = 63
+              Top = 58
               Width = 769
               Height = 50
               BevelOuter = bvNone
@@ -1623,6 +1644,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 Left = 31
                 Top = 0
                 Action = DatasetDelete1
+                OnClick = ToolButton33Click
               end
               object ToolButton34: TToolButton
                 Left = 54
@@ -1778,7 +1800,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1923,60 +1945,70 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
       Caption = '&First'
       Hint = 'First'
       ImageIndex = 12
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetPrior1: TDataSetPrior
       Category = 'DatasetDetalle'
       Caption = '&Prior'
       Hint = 'Prior'
       ImageIndex = 13
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetNext1: TDataSetNext
       Category = 'DatasetDetalle'
       Caption = '&Next'
       Hint = 'Next'
       ImageIndex = 14
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetLast1: TDataSetLast
       Category = 'DatasetDetalle'
       Caption = '&Last'
       Hint = 'Last'
       ImageIndex = 15
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetInsert1: TDataSetInsert
       Category = 'DatasetDetalle'
       Caption = '&Insert'
       Hint = 'Insert'
       ImageIndex = 16
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetDelete1: TDataSetDelete
       Category = 'DatasetDetalle'
       Caption = '&Delete'
       Hint = 'Delete'
       ImageIndex = 17
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetEdit1: TDataSetEdit
       Category = 'DatasetDetalle'
       Caption = '&Edit'
       Hint = 'Edit'
       ImageIndex = 18
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetPost1: TDataSetPost
       Category = 'DatasetDetalle'
       Caption = 'P&ost'
       Hint = 'Post'
       ImageIndex = 19
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetCancel1: TDataSetCancel
       Category = 'DatasetDetalle'
       Caption = '&Cancel'
       Hint = 'Cancel'
       ImageIndex = 20
+      DataSource = DtSrcOrdenSalItem
     end
     object DatasetRefresh1: TDataSetRefresh
       Category = 'DatasetDetalle'
       Caption = '&Refresh'
       Hint = 'Refresh'
       ImageIndex = 21
+      DataSource = DtSrcOrdenSalItem
     end
     object actActualizaKardex: TAction
       Caption = 'actActualizaKardex'
@@ -1984,7 +2016,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002CC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002D40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

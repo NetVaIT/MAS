@@ -170,6 +170,8 @@ type
     BtBtnAceptaReg: TBitBtn;
     DBLookupComboBox2: TDBLookupComboBox;
     BitBtn9: TBitBtn;
+    Label29: TLabel;
+    DBText6: TDBText;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -191,10 +193,13 @@ type
     procedure DBRdGrpGenerarClick(Sender: TObject);
     procedure BtBtnAceptaRegClick(Sender: TObject);
     procedure BitBtn9Click(Sender: TObject);
+    procedure ToolButton33Click(Sender: TObject);
 
   private
     FCargarDocGuia: TBasicAction;
     FEnviaCorreoConDocs: TBasicAction;
+    FActApartado: TBasicAction;
+    FRevApartado: TBasicAction; //Abr 11/16
     procedure CrearSalidasUbicacion;
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
@@ -203,6 +208,9 @@ type
     procedure ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida: Integer);
     procedure SetCargarDocGuia(const Value: TBasicAction);
     procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
+    procedure SetActApartado(const Value: TBasicAction);
+    procedure SetRevApartado(const Value: TBasicAction);
+    function RevisaGenerado(IDOrden: Integer): Boolean;
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -210,6 +218,9 @@ type
     Procedure ActualizaKardex(IdOrdenSalida:integer);
     property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
+    property ActualizaApartado: TBasicAction read FActApartado write SetActApartado; //Abr 11/16
+    property RevierteApartado: TBasicAction read FRevApartado write SetRevApartado; //Abr 11/16
+
   end;
 
 var
@@ -220,9 +231,9 @@ implementation
 {$R *.dfm}
 
 uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM,
-  UDMEnvioMail;
+  UDMEnvioMail, _Utils;
 
-procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);
+procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);  //Kardex + Salidas_Ubicaciones
 var                        //Feb 5/16
   idProdKdx:Integer;
 begin
@@ -255,7 +266,7 @@ end;
 procedure TFrmOrdenesSalida.BtBtnAdjGuiaClick(Sender: TObject);
 begin
   inherited;
-  ShowMessage('Adjuntar Guia Escaneada..... Proceso en Construcción');
+  //ShowMessage('Adjuntar Guia Escaneada..... Proceso en Construcción');
 end;
 
 procedure TFrmOrdenesSalida.BtBtnRegresaEstadoClick(Sender: TObject);
@@ -266,6 +277,14 @@ begin
   DsCambiosREgreso.DataSet.open;
   IdEstatusAct:=datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger;
   case IdEstatusAct of
+  1:begin //Abr 13/16
+       PnlRegresaEstado.Visible:=True;
+
+      DsCambiosREgreso.DataSet.Insert;
+      DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
+      DsCambiosREgreso.DataSet.FieldByName('Observaciones').AsString:='Borrar OS :'+DataSource.DataSet.FieldByName('idordenSalida').AsString;
+
+  end;
   3:begin
    //   ShowMessage('Está en revisión. Acá queda cuando se cancela una Factura');
        //Pedir Usuario y Contraseña, Cambiar Estatus,Borrar quien y cuando , grabar usuario y fecha en tabla nueva.
@@ -297,10 +316,10 @@ begin
   if DsCambiosREgreso.State in [dsInsert,dsedit] then      //Mar 18/16
   begin
     dsCambiosRegreso.DataSet.Cancel;
-    PnlRegresaEstado.Visible:=False;    //Mar 17/16
+
     EdtContraRev.Clear;
   end;
-
+  PnlRegresaEstado.Visible:=False;    //Mar 17/16
 end;
 
 procedure TFrmOrdenesSalida.BtBtnAceptaInfoEntClick(Sender: TObject);
@@ -402,7 +421,7 @@ begin
    //   PnlInformacionEntrega.Visible:=True;
 
     end
-    else
+    else //Solo cuando no se crea el CFDI
     begin
       //Regresar al estatus anterior
       if datasource.DataSet.State =dsBrowse then
@@ -419,7 +438,7 @@ begin
         end;
       end;
 
-      //deberia quitar Kardex y posibles dattos de CFDIs
+      //deberia quitar Kardex y posibles datos de CFDIs
       ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
     end;
 
@@ -430,13 +449,30 @@ end;
 procedure TFrmOrdenesSalida.BtBtnAceptaRegClick(Sender: TObject);
 var
   Clave, CampoPersona, CampoFecha1, campoFecha2:String;
-
+  eliminar, Escambio:Boolean; //Abr 13/16
 begin
   inherited;
+  eliminar:=False;
+  EsCambio:=True;
   clave:=EdtContraRev.Text;
   //Acepta regreso
   //Verificar Usuario y cntraseña.. ver que tenga permiso de regresar..
   case datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger of
+    1:begin // Para Eliminar la orden y regresar al Pedido   //Abr 13/16
+        //Eliminar items y regresar Pedidos XSurtir
+       EsCambio:=False;
+       if application.MessageBox('Está seguro de regresar al Pedido?. La Orden de Salida será eliminada', 'Confirmación ',MB_YESNO)=idYes then
+       begin
+         eliminar:=true;
+       end
+       else
+       begin
+         if DsCambiosREgreso.State=dsInsert then
+            DsCambiosREgreso.dataset.Cancel;
+         EdtContraRev.Clear;
+         PnlRegresaEstado.Visible:=False;
+       end;
+    end;
     2:begin
         CampoPersona:='IDPersonaRecolecta';
         CampoFecha1:='FechaIniRecolecta';
@@ -446,32 +482,62 @@ begin
         CampoPersona:='IDPersonaRevisa';
         CampoFecha1:='FechaIniRevisa';
         campoFecha2:='FechaFinRevisa';
+
+    end;
+    4: begin  //Solo para las que generan notas de Venta
+        CampoPersona:='IDPersonaautoriza';
+        CampoFecha1:='FechaAutoriza';
+        campoFecha2:='';
+    end;
+    5:begin //Empaque ver cuando  y que se regresa.. (Informacion Entrega)
+        CampoPersona:='IDPersonaEmpaca';
+        CampoFecha1:='FechaIniempaca';
+        campoFecha2:='FechaFinEmpaca';
     end;
   end;
 
   if DsCambiosREgreso.State=dsInsert then
-  begin
-//    DsCambiosREgreso.DataSet.FieldByName('') ??
+  begin                                                        //and TienePermisoRegreso(DsCambiosREgreso.DataSet.FieldByName('IDPersonaAutCambio').asinteger)
     if (clave<>'') and (not DsCambiosREgreso.DataSet.FieldByName('IDPersonaAutCambio').IsNull) then
     begin
       if  DsCambiosREgreso.DataSet.FieldByName('ClaveUsr').AsString =Clave then
       begin
-        if DsCambiosREgreso.DataSet.State =dsBrowse then
-          DsCambiosREgreso.DataSet.Edit;
+      (*  if DsCambiosREgreso.DataSet.State =dsBrowse then
+          DsCambiosREgreso.DataSet.Edit;*)
         DsCambiosREgreso.DataSet.FieldByName('FechaCambio').AsDateTime:=Now;
 
         DsCambiosREgreso.DataSet.Post;
-        if datasource.DataSet.state=dsBrowse then   //Mar 18/16
-          datasource.DataSet.Edit;
-        datasource.DataSet.FieldByName(CampoPersona).Value:=Null;
-        datasource.DataSet.FieldByName(CampoFecha1).Value:=Null;
-        datasource.DataSet.FieldByName(CampoFecha2).Value:=Null;
-
-        datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger:=DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').asInteger;
-        datasource.DataSet.Post;
-        datasource.DataSet.Refresh;
+      if eliminar then
+      begin
+        DtSrcOrdenSalItem.DataSet.First;
+        while not DtSrcOrdenSalItem.Dataset.eof do
+        begin
+          DtSrcOrdenSalItem.DataSet.Delete;
+        end;
+        datasource.DataSet.delete;
         PnlRegresaEstado.Visible:=False;
-        EdtContraRev.Clear;
+      end
+      else
+        if EsCambio then
+        begin
+
+          if datasource.DataSet.state=dsBrowse then   //Mar 18/16
+            datasource.DataSet.Edit;
+          datasource.DataSet.FieldByName(CampoPersona).Value:=Null;
+          datasource.DataSet.FieldByName(CampoFecha1).Value:=Null;
+          if CampoFecha2<>'' then //Ya que algunos no fecha fin
+             datasource.DataSet.FieldByName(CampoFecha2).Value:=Null;
+
+          datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger:=DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').asInteger;
+          datasource.DataSet.Post;
+          datasource.DataSet.Refresh;
+          //Actualiza Apartado y Pendiente XSurtir si es el Estatus 2 el nuevo
+          if DsCambiosREgreso.DataSet.FieldByName('IdOrdenSalidaEstatusNvo').asInteger=2 then   //Abr 12/16
+            RevierteApartado.Execute;
+
+          PnlRegresaEstado.Visible:=False;
+          EdtContraRev.Clear;
+        end;
       end
       else
         ShowMessage('Contraseña incorrecta');
@@ -526,6 +592,7 @@ procedure TFrmOrdenesSalida.BtBtnFinGenProcesoClick(Sender: TObject);
 var EstatusNvo:integer;
     CampoFecha:String;
     Esperar:Boolean;
+    Cont:integer; //Aban Abr 8/16
 begin
   inherited;
   Esperar:=False;
@@ -581,13 +648,62 @@ begin
   begin
     if datasource.DataSet.State =dsBrowse then
         datasource.DataSet.Edit;
-      datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
-      datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=EstatusNvo;
-      datasource.DataSet.Post;
+    datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+    datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=EstatusNvo;
+    datasource.DataSet.Post;
+    if EstatusNvo=5  then //Abr 7/16
+    begin
+       Cont:=-1;
+       //Revisar y dar por cerrados Pedidos completados
+       dsQryAuxiliar.DataSet.Close;
+       TADOQuery(dsQryAuxiliar.DataSet).sql.clear;
+       TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect DS.IdDocumentoSalida , Sum(DSD.CantidadPendiente) as suma, COUNT(*) as registros from DocumentosSalidasDetalles DSD '
+                                                +' inner join DocumentosSalidas DS on DSD.idDocumentoSalida=DS.idDocumentoSalida'
+                                                +' where DS.idDocumentoSalida='+ DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring
+                                                +' group by DS.IdDocumentoSalida'); //Ver si con una sola se puede
+       TADOQuery(dsQryAuxiliar.DataSet).open;
+       if not dsQryAuxiliar.DataSet.eof  and (dsQryAuxiliar.DataSet.fieldbyname('Registros').AsInteger >0) and
+          (dsQryAuxiliar.DataSet.fieldbyname('suma').AsInteger =0) then //Pasa primera condicion
+       begin
+         dsQryAuxiliar.DataSet.Close;
+         TADOQuery(dsQryAuxiliar.DataSet).sql.clear;   //Abr 8/16
+         TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect OS.IdOrdenEstatus, OS.idOrdenSalida, OS.IdOrdenSalidaOrigen from OrdenesSalidas OS '
+                                                 +' where os.idDocumentoSalida=' + DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring
+                                                 +' and OS.IdOrdenEstatus<>8  ');//Verfificar
+         TADOQuery(dsQryAuxiliar.DataSet).open;
+         if not dsQryAuxiliar.DataSet.Eof then
+           cont:=0;
+         while not  dsQryAuxiliar.DataSet.Eof do
+         begin //Contar para actualizar
+           if dsQryAuxiliar.DataSet.fieldbyname('IdOrdenEstatus').AsInteger <>5 then // no esta Empacado
+             Cont:= Cont+1;
+           dsQryAuxiliar.DataSet.next;
+         end;
+         if Cont=0 then //Todo lo encontrado es 5
+         begin
+           //Actualizar estatus de Documento como cerrado
+           dsQryAuxiliar.DataSet.Close;
+           TADOQuery(dsQryAuxiliar.DataSet).sql.clear;   //Abr 8/16                           //Cerrado
+           TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('UPDATE DocumentosSalidas SET IdDocumentoSalidaEstatus=2 '
+                                                   +'where idDocumentoSalida=' + DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring);
+           TADOQuery(dsQryAuxiliar.DataSet).execSQL;
+         end;
+
+
+       end;
+     end
+     else
+       if EstatusNvo=3 then //Abr 11/16
+       begin  //poner de PedidosXSurtir  a Apartado
+         ActualizaApartado.Execute;
+       end;
+
    //   Pnlaux.Visible:=False;
    //   btnAux.Visible:=true;
   end;
 end;
+
+
 
 procedure TFrmOrdenesSalida.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
@@ -596,6 +712,8 @@ begin
 end;
 
 procedure TFrmOrdenesSalida.BtBtnIniciarProceso(Sender: TObject);
+var
+  Editando:Boolean;
 begin
   inherited;
 
@@ -613,6 +731,18 @@ begin
     3:begin //Dic 15/15
         BtBtnAutoriza.Visible:=False;
         PnlAutorizaYFactura.Visible:=True;
+        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then
+        begin
+          Editando:= not (datasource.Dataset.state=dsBrowse);
+          if datasource.Dataset.state=dsBrowse then
+            datasource.DataSet.Edit;
+
+          datasource.DataSet.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1;
+          datasource.DataSet.FieldByName('Acumula').AsBoolean:=False;
+          if NOT Editando then
+            datasource.DataSet.post;
+
+        end;
 
       end;
 
@@ -677,17 +807,29 @@ begin
    //Hasta
 
 
-
     LblEmpaco.Visible:=not(Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
     if LblEmpaco.Visible and (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull) then
       LblEmpaco.Caption:='Empacando:'
     else
-      LblEmpaco.Caption:='Empacó:';
-    BtBtnRegresaEstado.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>1)and(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4); //Mar 4/16
-
+      LblEmpaco.Caption:='Empacó:';                                                        //Se habilito el 1 para borrar todo //Abr 13/16
+    BtBtnRegresaEstado.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>=1)and((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4) //Mar 4/16
+                                or ((Datasource.DataSet.FieldByName('IdGeneraCFDITipoDoc').AsInteger=4)and
+                                  (not RevisaGenerado(Datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger))));// Abr 12/16
   end;
   PnlDetalle.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4);
 end;
+
+function TFrmOrdenesSalida.RevisaGenerado(IDOrden:Integer):Boolean;
+begin  //Verifica si es una nota que no se haya generado ya en una Factura Diaria
+  TadoQuery(DSQryAuxiliar.DataSet).Close;
+  TadoQuery(DSQryAuxiliar.DataSet).SQL.Clear;
+  TadoQuery(DSQryAuxiliar.DataSet).SQL.ADD('Select IDCFDI, IdCFDIEstatus, IdCFDIFacturaGral from CFDI where IdOrdenSalida=  '+ intToStr(IDOrden)+
+                                           ' and (IDCFDIEstatus =4) and (IdCFDIFacturaGral is not null)');
+  TadoQuery(DSQryAuxiliar.DataSet).Open;
+  result := not DSQryAuxiliar.DataSet.eof; //Si esta generado
+
+end;
+
 
 procedure TFrmOrdenesSalida.DBGrid1CellClick(Column: TColumn);
 begin
@@ -737,12 +879,9 @@ begin                                               //Mar 29/16
   CFDICreado:= dmFActuras.CreoCFDI; //Solo trae valor
   if CFDICreado and (IDGenTipoDoc<>4) then   //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
-  if IDGenTipoDoc=4 then
+  if CFDICreado and (IDGenTipoDoc=4) then //Reporte, impresion y envio  //Abr 7/16
   begin
-     dmFActuras.actImpNotasVenta.Execute;  //Se incluira el envio aca
-     //Verificar si se envia por correo
-    // DmFacturas.ActEnvioCorreoNotasVenta.Execute;
-
+     dmFActuras.actImpNotasVenta.Execute;  //Incluye el envio aca //Abr 6/16
   end;
   FreeAndNil(dmFacturas);
 
@@ -787,6 +926,11 @@ begin
 
 end;
 
+procedure TFrmOrdenesSalida.SetActApartado(const Value: TBasicAction);
+begin
+  FActApartado := Value;
+end;
+
 procedure TFrmOrdenesSalida.SetCargarDocGuia(const Value: TBasicAction);
 begin
   FCargarDocGuia := Value;
@@ -802,10 +946,22 @@ begin                              //Feb 16/16
   TlBtnEnvioFactura.ImageIndex:=23;
 end;
 
+procedure TFrmOrdenesSalida.SetRevApartado(const Value: TBasicAction);
+begin
+  FRevApartado := Value;
+end;
+
 procedure TFrmOrdenesSalida.TlBtnImprimirOrdenSalClick(Sender: TObject);
 begin
   inherited;
   ImprimirOrdenSalida(datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdDocumentoSalida').AsInteger);
+end;
+
+procedure TFrmOrdenesSalida.ToolButton33Click(Sender: TObject);
+begin
+  if MessageDlg(strAllowDelete, mtConfirmation, mbYesNo, 0) = mrYes then
+    DtSrcOrdenSalItem.DataSet.Delete;
+
 end;
 
 procedure TFrmOrdenesSalida.ChckBxDatosEnviosClick(Sender: TObject);

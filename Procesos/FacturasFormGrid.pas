@@ -23,7 +23,8 @@ uses
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, Shellapi, Vcl.StdCtrls,Data.Win.ADODB, Vcl.CheckLst, math,
-  Vcl.Menus;
+  Vcl.Menus, cxContainer, dxCore, cxDateUtils, cxTextEdit, cxMaskEdit,
+  cxDropDownEdit, cxCalendar;
 
 type
   TfrmFacturasGrid = class(T_frmStandarGFormGrid)
@@ -56,6 +57,7 @@ type
     ToolButton14: TToolButton;
     RdGrpNotasVentas: TRadioGroup;
     TlBtnImpNotaVenta: TToolButton;
+    cxDtEdtDia: TcxDateEdit;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -65,6 +67,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure RdGrpNotasVentasClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure cxDtEdtDiaPropertiesChange(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -122,6 +125,17 @@ end;
 
 
 
+procedure TfrmFacturasGrid.cxDtEdtDiaPropertiesChange(Sender: TObject);
+begin
+  inherited;  //Verificar que el rdg este en 0
+  if (RdGrpNotasVentas.itemindex=0) and cxDtEdtDia.Visible then
+  begin
+    ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus= 1 and IdCFDIFacturaGral is NULL and fecha >'''+DateToStr(cxDtEdtDia.Date -1)+''' and Fecha <'''+DateToStr(cxDtEdtDia.Date +1)+'''';
+    TlBtnConsultaClick(TlBtnConsulta);
+    TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
+  end;
+end;
+
 procedure TfrmFacturasGrid.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
@@ -146,6 +160,7 @@ begin
   TlBtnGenFactDiaria.Visible:= tipoDocumento=4; //Mar 30/16
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
   TlBtnImpNotaVenta.Enabled:=  tipoDocumento=4;
+  cxDtEdtDia.Date:=date;
 end;
 
 
@@ -153,8 +168,14 @@ end;
 procedure TfrmFacturasGrid.RdGrpNotasVentasClick(Sender: TObject);
 begin
   inherited; //Mar 30/16
-   case RdGrpNotasVentas.itemindex of
-    0:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus= 1 and IdCFDIFacturaGral is NULL and fecha >(getDATE()-1)and Fecha <GETDATE()+1';
+  cxDtEdtDia.Date:=Date;
+  case RdGrpNotasVentas.itemindex of
+    0:begin
+        if date=cxDtEdtDia.Date then
+          ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus= 1 and IdCFDIFacturaGral is NULL and fecha >(getDATE()-1)and Fecha <GETDATE()+1'
+        else
+          ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus= 1 and IdCFDIFacturaGral is NULL and fecha >'''+DateToStr(cxDtEdtDia.Date -1)+''' and Fecha <'''+DateToStr(cxDtEdtDia.Date +1)+'''';
+    end;
     1:ffiltro:='where IdCFDITipoDocumento=4 and IdCFDIFacturaGral is not NULL order by IdCFDIFacturaGral';
     2:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus<>5' ; //Ya que esos son presupuestos
     3:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus=5' ; //Presupuestos
@@ -162,7 +183,7 @@ begin
 
   TlBtnConsultaClick(TlBtnConsulta);
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
-
+  cxDtEdtDia.Visible:= (RdGrpNotasVentas.itemindex=0);
 end;
 
 procedure TfrmFacturasGrid.RdGrpSeleccionClick(Sender: TObject);
@@ -175,6 +196,8 @@ begin
     3:ffiltro:='' ;    //Todos
   end;
   TlBtnConsulta.hint:=ffiltro;
+  TlBtnConsultaClick(TlBtnConsulta);  //Ver si algo másAbr 12/16
+
 end;
 
 function TfrmFacturasGrid.SacaValor: Integer;

@@ -208,6 +208,8 @@ type
     StringField3: TStringField;
     ADODtStCambioEstadoInvPersonaCambio: TStringField;
     ADODtStCambioEstadoInvClaveUsr: TStringField;
+    ActActualizaApartado: TAction;
+    ActRevierteApartado: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -226,8 +228,15 @@ type
     procedure ActEnvioCorreoConArchivosExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
+    procedure ActActualizaApartadoExecute(Sender: TObject);
+    procedure ActRevierteApartadoExecute(Sender: TObject);
+    procedure ADODtStOrdenSalidaItemBeforeDelete(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaItemAfterDelete(DataSet: TDataSet);
   private
     CantAGuardar:Double;
+    IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
+    cantSol: Double;//Abr 13/16 Actu despues de borrar
+
     function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
       var LaCantidad: Double): Integer;
     function VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
@@ -242,6 +251,7 @@ type
   public
     { Public declarations }
     Ajustar,CambioCantidad:Boolean;
+
   end;
 
 var
@@ -254,6 +264,27 @@ implementation
 uses OrdenesSalidaForm, DocumentosDM, UDMEnvioMail, _Utils;
 
 {$R *.dfm}
+
+procedure TDMOrdenesSalidas.ActActualizaApartadoExecute(Sender: TObject);
+var           //Abr 11/16
+  cant:Double;
+begin
+  inherited;
+  ADODtStOrdenSalidaItem.First;
+  AdoQryAuxiliar.Close;
+  while not ADODtStOrdenSalidaItem.eof do
+  begin
+  //Actualizar inventario de varios
+    cant:=ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
+    AdoQryAuxiliar.sql.clear;
+    AdoQryAuxiliar.Sql.ADD('Update Inventario SET PedidoXSurtir=PedidoXSurtir -'+floatToStr(Cant)+', Apartado=Apartado + '+floatToStr(Cant)
+                           +'  where IDProducto='+ADODtStOrdenSalidaItem.FieldByName('IdProducto').AsString
+                           +' and IdAlmacen= '+ADODtStOrdenSalidaItem.FieldByName('IdAlmacen').AsString) ;
+    AdoQryAuxiliar.execSQL;
+    ADODtStOrdenSalidaItem.next;
+  end;
+  ADODtStOrdenSalidaItem.First;
+end;
 
 procedure TDMOrdenesSalidas.ActCargarGuiaExecute(Sender: TObject);
 var        //Feb 15/16
@@ -348,6 +379,28 @@ end;
 
 
 
+procedure TDMOrdenesSalidas.ActRevierteApartadoExecute(Sender: TObject);
+var           //Abr 11/16
+  cant:Double;
+begin
+  inherited;
+  ADODtStOrdenSalidaItem.First;
+  AdoQryAuxiliar.Close;
+  while not ADODtStOrdenSalidaItem.eof do
+  begin
+  //Revierte los Apartados hacia Los pendientesXSurtir
+    cant:=ADODtStOrdenSalidaItem.FieldByName('CantidadDespachada').AsFloat;
+    AdoQryAuxiliar.sql.clear;
+    AdoQryAuxiliar.Sql.ADD('Update Inventario SET PedidoXSurtir=PedidoXSurtir +'+floatToStr(Cant)+', Apartado=Apartado - '+floatToStr(Cant)
+                           +'  where IDProducto='+ADODtStOrdenSalidaItem.FieldByName('IdProducto').AsString
+                           +' and IdAlmacen= '+ADODtStOrdenSalidaItem.FieldByName('IdAlmacen').AsString) ;
+    AdoQryAuxiliar.execSQL;
+    ADODtStOrdenSalidaItem.next;
+  end;
+  ADODtStOrdenSalidaItem.First;
+
+end;
+
 procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
@@ -365,11 +418,14 @@ end;
 procedure TDMOrdenesSalidas.ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
 begin
   inherited;              //Mar 18/16
-  //Se debe eliminar de SalidasUbicacion el registro
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('Delete From  SalidasUbicaciones Where idOrdenSalida='+ dataset.FieldByName('IdOrdenSalida').asstring);
-  ADOQryAuxiliar.ExecSQL;
+  //Se debe eliminar de SalidasUbicacion el registro                  //Ya que si pasa a estado 2(recolectada) es donde se ponen las ubicaciones
+  if dataset.FieldByName('IdOrdenSalidaEstatusNvo').AsInteger=1 then //Solo debe hacerse si el estatus nuevo es menor que 2 . Abr 12/16
+  begin                 //El acabado de guardar
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('Delete From  SalidasUbicaciones Where idOrdenSalida='+ dataset.FieldByName('IdOrdenSalida').asstring);
+    ADOQryAuxiliar.ExecSQL;
+  end;
 end;
 
 procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
@@ -378,6 +434,50 @@ begin
   inherited;
   ADODtStFacturasCFDI.Open;
   ADODtStTelefonos.Open;
+end;
+
+procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterDelete(
+  DataSet: TDataSet);
+var Subtotal:Double;
+    IDAlmacen, IDProducto:Integer;
+begin
+  inherited;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select Sum(Importe) as ValorST From OrdenesSalidasItems where idOrdenSalida='+intToStr(idDocSal));
+  ADOQryAuxiliar.open;
+
+  Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16)
+                          +' where IDOrdenSalida ='+IntToStr(idDocSal));
+  ADOQryAuxiliar.ExecSQL;
+
+
+  adodsMaster.refresh; //OK
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * From DocumentosSalidasDetalles where IDDocumentoSalidaDetalle ='+IntToStr(idDocDet));
+  ADOQryAuxiliar.open;
+
+   IDAlmacen:=ADOQryAuxiliar.FieldByName('IDAlmacen').Asinteger ;
+   IDProducto:=  ADOQryAuxiliar.FieldByName('IDProducto').Asinteger ;
+
+   ADOQryAuxiliar.Close;
+   ADOQryAuxiliar.SQL.Clear;                                                                             //Es la diferencia
+   ADOQryAuxiliar.SQL.Add('UPDATE Inventario SET PedidoXSurtir= PedidoXSurtir-'+FloattoSTR(cantSol)
+                          +' where IDAlmacen ='+IntToStr(IDAlmacen)+' and IDProducto ='+IntToStr(IDProducto));
+   ADOQryAuxiliar.ExecSQL;
+
+   ADOQryAuxiliar.Close;
+   ADOQryAuxiliar.SQL.Clear;                                                                             //Es la diferencia
+   ADOQryAuxiliar.SQL.Add('UPDATE DocumentosSalidasDetalles SET CantidadPendiente= CantidadPendiente+'+FloattoSTR(cantSol)
+                          +' where IDDocumentoSalidaDetalle ='+IntToStr(idDocDet));
+   ADOQryAuxiliar.ExecSQL;
+
 end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -414,7 +514,7 @@ begin
   adodsMaster.refresh; //OK
 
   if ajustar then
-  begin
+  begin  //Actualizar DocumentoSalidaItem
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;                                                                             //Es la diferencia
     ADOQryAuxiliar.SQL.Add('UPDATE DocumentosSalidasDetalles SET CantidadPendiente= CantidadPendiente+'+FloattoSTR(Cant2)
@@ -422,7 +522,19 @@ begin
     ADOQryAuxiliar.ExecSQL;
     ajustar:=False;
   end;
-  //Actualizar DocumentoSalidaItem
+
+end;
+
+procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemBeforeDelete(
+  DataSet: TDataSet);
+begin
+  inherited;
+  //Guardar datos para poder ajustar Pedido Luego
+  IdDocDet:= DataSet.FieldByName('IDDocumentoSalidaDetalle').AsInteger;
+  cantSol:=DataSet.FieldByName('CantidadSolicitada').AsFloat;
+  IdDocSal:= DataSet.FieldByName('IDOrdenSalida').AsInteger; //OrdenSalida
+
+
 end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemBeforePost(DataSet: TDataSet);
@@ -642,7 +754,8 @@ begin
 
   TFrmOrdenesSalida(gGridEditForm).DSInsertaKardex.DataSet:=ADOQryInsertaProductoKardex;//Feb 5/16
   TFrmOrdenesSalida(gGridEditForm).EnviaCorreoConDocs:=ActEnvioCorreoConArchivos;//Feb 16/16
-
+  TFrmOrdenesSalida(gGridEditForm).ActualizaApartado :=ActActualizaApartado;//Abr 11/16
+  TFrmOrdenesSalida(gGridEditForm).RevierteApartado :=ActRevierteApartado;//Abr 11/16
 
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;

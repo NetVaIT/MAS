@@ -37,6 +37,7 @@ type
     tvMasteridOrdenSalida: TcxGridDBColumn;
     tvMasterNombreCliente: TcxGridDBColumn;
     tvMasterIdentificadorCte: TcxGridDBColumn;
+    tvMasterIdDocumentoSalida: TcxGridDBColumn;
   private
     { Private declarations }
   public

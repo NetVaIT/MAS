@@ -2,6 +2,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   Caption = 'FrmOrdenesSalidaGrid'
   ClientWidth = 936
   ExplicitWidth = 936
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -46,7 +47,12 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         object tvMasteridOrdenSalida: TcxGridDBColumn
           Caption = 'No.Orden Salida'
           DataBinding.FieldName = 'idOrdenSalida'
-          Width = 89
+          Width = 86
+        end
+        object tvMasterIdDocumentoSalida: TcxGridDBColumn
+          Caption = 'No.Pedido Origen'
+          DataBinding.FieldName = 'IdDocumentoSalida'
+          Width = 92
         end
         object tvMasterIdentificadorCte: TcxGridDBColumn
           DataBinding.FieldName = 'IdentificadorCte'
@@ -104,7 +110,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 704
     Top = 0
     Bitmap = {
-      494C010102000400D40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -251,7 +257,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 768
     Top = 0
     Bitmap = {
-      494C01010C00C001F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

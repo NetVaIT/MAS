@@ -2,7 +2,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   Caption = 'frmFacturasGrid'
   ClientWidth = 942
   ExplicitWidth = 942
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -97,6 +96,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         'Presupuestos')
       TabOrder = 2
       OnClick = RdGrpNotasVentasClick
+    end
+    object cxDtEdtDia: TcxDateEdit
+      Left = 291
+      Top = 17
+      Properties.OnChange = cxDtEdtDiaPropertiesChange
+      TabOrder = 3
+      Visible = False
+      Width = 121
     end
   end
   inherited pnlMaster: TPanel
@@ -311,7 +318,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -458,7 +465,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01011200D001880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011200D001900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -224,7 +224,8 @@ type
     ADODtStDireccAuxiliarSaldo: TFMTBCDField;
     adodsMasterSaldoDir: TFloatField;
     adodsCotizacionesDetalleDisponible: TFloatField;
-    adodsCotizacionesDetalleApartado: TFloatField;
+    adodsCotizacionesDetalleApartadoPorSurtir: TFloatField;
+    adodsCotizacionesDetalleApartadoPorFacturar: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -404,8 +405,13 @@ begin
   inherited;
   if adodsCotizacionesDetalle.State in [dsEdit,dsInsert] then
   begin
-    adodsCotizacionesDetalle.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
-    adodsCotizacionesDetalle.FieldByName('Importe').AsFloat:=adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
+  //  if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat<= adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then  //Abr 11/16
+  //  begin
+      adodsCotizacionesDetalle.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
+      adodsCotizacionesDetalle.FieldByName('Importe').AsFloat:=adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
+//    end
+//    else
+//      ShowMessage('No es posible asignar un valor mayor al disponible'); //Abr 11/16
   end;
 end;
 

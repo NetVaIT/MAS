@@ -2,7 +2,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'frmCotizaciones'
   ClientWidth = 1277
   ExplicitWidth = 1277
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -243,7 +242,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                 Action = DatasetDetalleCancel
               end
             end
-            object DBGrid1: TDBGrid
+            object DBGrdDetalles: TDBGrid
               Left = 0
               Top = 29
               Width = 1273
@@ -260,8 +259,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               TitleFont.Height = -11
               TitleFont.Name = 'Tahoma'
               TitleFont.Style = []
-              OnDblClick = DBGrid1DblClick
-              OnEditButtonClick = DBGrid1EditButtonClick
+              OnDblClick = DBGrdDetallesDblClick
+              OnEditButtonClick = DBGrdDetallesEditButtonClick
               Columns = <
                 item
                   Expanded = False
@@ -301,26 +300,34 @@ inherited frmCotizaciones: TfrmCotizaciones
                 end
                 item
                   Expanded = False
-                  FieldName = 'Apartado'
-                  Width = 75
+                  FieldName = 'ApartadoPorSurtir'
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'ApartadoPorFacturar'
+                  Width = 68
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'ExistenciaActual'
                   ReadOnly = True
-                  Width = -1
                   Visible = False
                 end
                 item
                   Expanded = False
                   FieldName = 'Cantidad'
-                  Width = 107
+                  Title.Caption = 'Cantidad Solicitada'
+                  Width = 99
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'CantidadPendiente'
+                  ReadOnly = True
+                  Title.Caption = 'Cantidad Pendiente'
+                  Width = -1
                   Visible = False
                 end
                 item
@@ -746,7 +753,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -952,7 +959,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011900C002EC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002F80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -4,7 +4,6 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
-  ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -89,6 +88,7 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Width = 936
+    ExplicitTop = 32000
     ExplicitWidth = 936
   end
   inherited pnlMain: TPanel
@@ -177,7 +177,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 674
       FloatTop = 8
       FloatClientWidth = 94
-      FloatClientHeight = 216
+      FloatClientHeight = 378
       ItemLinks = <
         item
           Visible = True
@@ -296,8 +296,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 970
       FloatTop = 8
-      FloatClientWidth = 94
-      FloatClientHeight = 108
+      FloatClientWidth = 115
+      FloatClientHeight = 162
       ItemLinks = <
         item
           Visible = True
