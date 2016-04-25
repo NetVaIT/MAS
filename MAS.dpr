@@ -147,7 +147,10 @@ uses
   rptAntiguedadSaldosForm in 'Reportes\rptAntiguedadSaldosForm.pas' {frmRptAntiguedadSaldos},
   rptAntiguedadSaldosDM in 'Reportes\rptAntiguedadSaldosDM.pas' {dmRptAntiguedadSaldos: TDataModule},
   rptCostoInventarioForm in 'Reportes\rptCostoInventarioForm.pas' {rptCostoInventario},
-  rptCostoInventarioDM in 'Reportes\rptCostoInventarioDM.pas' {DMrptCostoInventario: TDataModule};
+  rptCostoInventarioDM in 'Reportes\rptCostoInventarioDM.pas' {DMrptCostoInventario: TDataModule},
+  UsuariosPerfilesDM in 'Catalogos\UsuariosPerfilesDM.pas' {DmPerfilesUsuario: TDataModule},
+  UsuariosPerfilesEdit in 'Catalogos\UsuariosPerfilesEdit.pas' {frmUsuariosPerfiles},
+  UsuariosPerfilesForm in 'Catalogos\UsuariosPerfilesForm.pas' {frmUsuariosPerfilesGrid};
 
 {$R *.res}
 

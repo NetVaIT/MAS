@@ -4,6 +4,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
+  ExplicitHeight = 518
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -11,11 +12,11 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
-    object dxRibbon1Tab2: TdxRibbonTab
-      Caption = 'Catalogos'
+    object dxRbnTbCatalogos: TdxRibbonTab
+      Tag = 1000
+      Caption = 'Cat'#225'logos'
       Groups = <
         item
           Caption = ''
@@ -24,6 +25,7 @@ inherited frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
+      Tag = 3000
       Caption = 'Almac'#233'n'
       Groups = <
         item
@@ -32,6 +34,7 @@ inherited frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
+      Tag = 2000
       Caption = 'Ventas'
       Groups = <
         item
@@ -41,6 +44,7 @@ inherited frmMain: TfrmMain
       Index = 3
     end
     object dxRibbon1Tab5: TdxRibbonTab
+      Tag = 4000
       Caption = 'Compras'
       Groups = <
         item
@@ -49,6 +53,7 @@ inherited frmMain: TfrmMain
       Index = 4
     end
     object dxRibbon1Tab6: TdxRibbonTab
+      Tag = 6000
       Caption = 'Cuentas X Cobrar'
       Groups = <
         item
@@ -57,7 +62,7 @@ inherited frmMain: TfrmMain
       Index = 5
     end
     object dxRibbon1Tab7: TdxRibbonTab
-      Active = True
+      Tag = 5000
       Caption = 'Reportes'
       Groups = <
         item
@@ -92,6 +97,7 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 936
+    ExplicitTop = 161
     ExplicitWidth = 936
   end
   inherited dxBarManager: TdxBarManager
@@ -103,8 +109,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -116,7 +120,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 674
       FloatTop = 8
       FloatClientWidth = 140
-      FloatClientHeight = 432
+      FloatClientHeight = 486
       ItemLinks = <
         item
           Visible = True
@@ -161,6 +165,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton17'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton31'
         end>
       OneOnRow = True
       Row = 0
@@ -320,43 +328,56 @@ inherited frmMain: TfrmMain
       Visible = True
       WholeRow = False
     end
+    inherited bbExit: TdxBarLargeButton
+      Tag = -1
+    end
     object dxBarLargeButton1: TdxBarLargeButton
+      Tag = 1
       Action = actBancos
       Category = 0
     end
     object dxBarLargeButton2: TdxBarLargeButton
+      Tag = 2
       Action = actMonedas
       Category = 0
     end
     object dxBarLargeButton3: TdxBarLargeButton
+      Tag = 3
       Action = actUbicaciones
       Category = 0
     end
     object dxBarLargeButton4: TdxBarLargeButton
+      Tag = 4
       Action = actCotizacionMonedas
       Category = 0
     end
     object dxBarLargeButton5: TdxBarLargeButton
+      Tag = 5
       Action = actUnidadMedida
       Category = 0
     end
     object dxBarLargeButton6: TdxBarLargeButton
+      Tag = 6
       Action = actMetodosPagos
       Category = 0
     end
     object dxBarLargeButton7: TdxBarLargeButton
+      Tag = 7
       Action = actClientes
       Category = 0
     end
     object dxBarLargeButton8: TdxBarLargeButton
+      Tag = 8
       Action = actProveedores
       Category = 0
     end
     object dxBarLargeButton9: TdxBarLargeButton
+      Tag = 9
       Action = actEmpleados
       Category = 0
     end
     object dxBarLargeButton10: TdxBarLargeButton
+      Tag = 10
       Action = actProductos
       Category = 0
     end
@@ -369,82 +390,106 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton14: TdxBarLargeButton
+      Tag = 20
       Action = actCotizaciones
       Category = 0
     end
     object dxBarLargeButton15: TdxBarLargeButton
+      Tag = 21
       Action = actPedidos
       Category = 0
     end
     object dxBarLargeButton16: TdxBarLargeButton
+      Tag = 23
       Action = actFacturacion
       Category = 0
     end
     object dxBarLargeButton11: TdxBarLargeButton
+      Tag = 22
       Action = actOrdenSalida
       Category = 0
     end
     object dxBarLargeButton17: TdxBarLargeButton
+      Tag = 11
       Action = actEmisor
       Category = 0
     end
     object dxBarLargeButton18: TdxBarLargeButton
+      Tag = 30
       Action = actAlmacenes
       Category = 0
     end
     object dxBarLargeButton19: TdxBarLargeButton
+      Tag = 50
       Action = actRptVentasUnidades
       Category = 0
     end
     object dxBarLargeButton20: TdxBarLargeButton
+      Tag = 41
       Action = actRequisicionCompra
       Category = 0
     end
     object dxBarLargeButton21: TdxBarLargeButton
+      Tag = 42
       Action = actOrdenCompra
       Category = 0
     end
     object dxBarLargeButton22: TdxBarLargeButton
+      Tag = 40
       Action = actBackorderEntrada
       Category = 0
     end
     object dxBarLargeButton23: TdxBarLargeButton
+      Tag = 43
       Action = actInvoice
       Category = 0
     end
     object dxBarLargeButton24: TdxBarLargeButton
+      Tag = 44
       Action = actOrdenesEntrada
       Category = 0
     end
     object dxBarLargeButton25: TdxBarLargeButton
+      Tag = 60
       Action = ActRegistroPagos
       Category = 0
     end
     object dxBarLargeButton26: TdxBarLargeButton
+      Tag = 61
       Action = ActAplicaciones
       Category = 0
     end
     object dxBarLargeButton27: TdxBarLargeButton
+      Tag = 62
       Action = actAntiguedadSaldos
       Category = 0
     end
     object dxBarLargeButton28: TdxBarLargeButton
+      Tag = 24
       Action = ActNotasVenta
       Category = 0
     end
     object dxBarLargeButton29: TdxBarLargeButton
+      Tag = 25
       Action = ActNotasCredito
       Category = 0
     end
     object dxBarLargeButton30: TdxBarLargeButton
+      Tag = 26
       Action = ActNotasCargo
       Category = 0
     end
     object dxBarLrgBtnCI: TdxBarLargeButton
+      Tag = 51
       Action = ActRptCostoInventario
       Category = 0
       SyncImageIndex = False
       ImageIndex = -1
+    end
+    object dxBarLargeButton31: TdxBarLargeButton
+      Tag = 12
+      Action = ActPerfilUsuario
+      Category = 0
     end
   end
   inherited dxSkinController: TdxSkinController
@@ -10501,6 +10546,13 @@ inherited frmMain: TfrmMain
       Category = 'Reportes'
       Caption = 'Costo de Inventario'
       ImageIndex = 53
+      OnExecute = actCatalogoExecute
+    end
+    object ActPerfilUsuario: TAction
+      Tag = 12
+      Category = 'Catalogo'
+      Caption = 'Perfiles'
+      ImageIndex = 17
       OnExecute = actCatalogoExecute
     end
   end

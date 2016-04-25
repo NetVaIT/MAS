@@ -521,7 +521,12 @@ begin
   Datasource.dataset.Locate('idDocumentoSalida',id,[]); //Ene 14/16
   DataSourceDetail.DataSet.refresh; //Mar 29/16
   //Si se ven deberia ubicarse en la modificada
+ (* if res then // Abr 18/16
+  begin
+    if application.MessageBox('¿Ubicarse en la Orden de Salida Generada?') =idyes then
 
+
+  end;*)
 end;
 
 procedure TfrmCotizaciones.TlBtnBorraClick(Sender: TObject);

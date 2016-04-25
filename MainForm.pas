@@ -25,7 +25,7 @@ uses
 
 type
   TfrmMain = class(T_frmMainRibbon)
-    dxRibbon1Tab2: TdxRibbonTab;
+    dxRbnTbCatalogos: TdxRibbonTab;
     dxBarManagerBar1: TdxBar;
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarLargeButton2: TdxBarLargeButton;
@@ -100,6 +100,8 @@ type
     ActNotasCargo: TAction;
     dxBarLrgBtnCI: TdxBarLargeButton;
     ActRptCostoInventario: TAction;
+    dxBarLargeButton31: TdxBarLargeButton;
+    ActPerfilUsuario: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -107,6 +109,7 @@ type
       var AHandled: Boolean);
     procedure FormCreate(Sender: TObject);
   private
+    procedure UsarPermisos;
     { Private declarations }
   protected
     gModulo: T_dmStandar;
@@ -117,6 +120,7 @@ type
     procedure DestroyModule; override;
   public
     { Public declarations }
+
   end;
 
 var
@@ -131,7 +135,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
-  rptCostoInventarioDM;
+  rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod;
 
 { TfrmMain }
 
@@ -158,6 +162,7 @@ begin
     9: gModulo := TdmPersonas.CreateWRol(Self, rEmpleado);
    10: gModulo := TdmProductos.Create(Self);
    11: gModulo := TdmPersonas.CreateWRol(Self, rEmisor); //Dic 14/15
+   12: gModulo := TDmPerfilesUsuario.create(Self); //Abr 21/16
    20: begin
          gModulo := TdmCotizaciones.Create(Self);
          TdmCotizaciones(gModulo).TipoDocumento:=1;
@@ -226,8 +231,33 @@ begin
   actOrdenCompra.Enabled        := Conected;
   actInvoice.Enabled            := Conected;
   actOrdenesEntrada.Enabled     := Conected;
-end;
 
+  UsarPermisos; //Abr 25/16
+end;
+procedure TfrmMain.UsarPermisos;
+var
+  i, tagAux:Integer;
+   MenuTxt, OpcionTxt, aux:String;
+begin
+  MenuTxt:=_dmConection.PerMenu;
+  OpcionTxt:=_dmConection.PerOpcion;
+
+  for I := 0 to ComponentCount -1 do
+  begin
+    if (components[i] is TdxRibbonTab)  then
+    begin
+      tagAux:=(components[i] as TdxRibbonTab).Tag;                                           //Al inicio
+      (components[i] as TdxRibbonTab).visible:= (pos('|'+intToStr(tagAux)+'|', MenuTxt)>0) or(pos(intToStr(tagAux)+'|', MenuTxt)=1);
+    end;                                         //Para evitar lo que van fijos
+    if (components[i] is TdxBarLargeButton) and ((components[i] as TdxBarLargeButton).Tag<>-1) then
+    begin
+      tagAux:=(components[i] as TdxBarLargeButton).Tag;
+      (components[i] as TdxBarLargeButton).enabled:= (pos('|'+intToStr(tagAux)+'|', OpcionTxt)>0) or(pos(intToStr(tagAux)+'|', OpcionTxt)=1);
+    end;
+  end;
+
+
+end;
 procedure TfrmMain.DestroyModule;
 begin
   inherited;

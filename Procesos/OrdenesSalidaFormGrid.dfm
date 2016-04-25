@@ -1,48 +1,54 @@
 inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   Caption = 'FrmOrdenesSalidaGrid'
-  ClientWidth = 936
-  ExplicitWidth = 936
+  ClientWidth = 1255
+  OnCreate = FormCreate
+  ExplicitWidth = 1255
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited splDetail2: TSplitter
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited splDetail1: TSplitter
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnlClose: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnlDetail3: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnlDetail2: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnlDetail1: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnltoolbar: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
   end
   inherited pnlMaster: TPanel
-    Width = 936
+    Width = 1255
     ExplicitWidth = 936
     inherited cxGrid: TcxGrid
-      Width = 936
+      Top = 46
+      Width = 1255
+      Height = 425
+      ExplicitLeft = 8
+      ExplicitTop = 40
       ExplicitWidth = 936
+      ExplicitHeight = 425
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridOrdenSalida: TcxGridDBColumn
           Caption = 'No.Orden Salida'
@@ -97,20 +103,163 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 936
+      Width = 1255
+      Height = 46
+      ButtonHeight = 44
       ExplicitWidth = 936
+      ExplicitHeight = 46
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton10: TToolButton
+        Width = 100
+        ExplicitWidth = 100
+        ExplicitHeight = 44
+      end
+      inherited tbtnCerrar: TToolButton
+        Left = 377
+        ExplicitLeft = 377
+        ExplicitHeight = 44
+      end
+      object TlBtn: TToolButton
+        Left = 400
+        Top = 0
+        Width = 137
+        Caption = 'TlBtn'
+        ImageIndex = 12
+        Style = tbsSeparator
+      end
+      object RdGrpEstado: TRadioGroup
+        Left = 537
+        Top = 0
+        Width = 330
+        Height = 44
+        Caption = 'Estado'
+        Columns = 4
+        ItemIndex = 0
+        Items.Strings = (
+          'Todos'
+          'Generado'
+          'Recolectado'
+          'Revisado'
+          'Autorizado'
+          'Empacado'
+          
+            'Enviado                                                         ' +
+            '                                 ')
+        ParentBackground = False
+        TabOrder = 1
+        OnClick = RdGrpEstadoClick
+      end
+      object PnlFechas: TPanel
+        Left = 867
+        Top = 0
+        Width = 368
+        Height = 44
+        BevelInner = bvLowered
+        ParentBackground = False
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 21
+          Top = 4
+          Width = 30
+          Height = 13
+          Caption = 'Desde'
+          Transparent = True
+        end
+        object Label2: TLabel
+          Left = 181
+          Top = 4
+          Width = 28
+          Height = 13
+          Caption = 'Hasta'
+          Transparent = True
+        end
+        object SpdBtnConsulta: TSpeedButton
+          Left = 331
+          Top = 15
+          Width = 25
+          Height = 25
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            8000008000000080800080000000800080008080000080808000C0C0C0000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+            33033333333333333F7F3333333333333000333333333333F777333333333333
+            000333333333333F777333333333333000333333333333F77733333333333300
+            033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+            33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
+            333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
+            33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
+            333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
+            333333773FF77333333333370007333333333333777333333333}
+          NumGlyphs = 2
+          OnClick = SpdBtnConsultaClick
+        end
+        object cxDtEdtDesde: TcxDateEdit
+          Left = 16
+          Top = 17
+          TabOrder = 0
+          Width = 145
+        end
+        object cxDtEdtHasta: TcxDateEdit
+          Left = 176
+          Top = 17
+          TabOrder = 1
+          Width = 137
+        end
+      end
     end
   end
   inherited DataSource: TDataSource
     DataSet = DMOrdenesSalidas.adodsMaster
-    Left = 672
-    Top = 0
+    Left = 696
+    Top = 88
   end
   inherited ilPageControl: TImageList
-    Left = 704
-    Top = 0
+    Left = 736
+    Top = 80
     Bitmap = {
-      494C010102000400D80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -250,14 +399,14 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited ActionList: TActionList
-    Left = 736
-    Top = 0
+    Left = 784
+    Top = 80
   end
   inherited ilAction: TImageList
-    Left = 768
-    Top = 0
+    Left = 816
+    Top = 80
     Bitmap = {
-      494C01010C00C001F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -793,12 +942,16 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
-    Left = 632
-    Top = 0
+    Left = 624
+    Top = 88
     PixelsPerInch = 96
   end
   inherited cxGridPopupMenu: TcxGridPopupMenu
-    Left = 800
-    Top = 0
+    Left = 856
+    Top = 80
+  end
+  inherited PopupMenu: TPopupMenu
+    Left = 568
+    Top = 88
   end
 end

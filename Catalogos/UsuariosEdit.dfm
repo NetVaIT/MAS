@@ -3,7 +3,7 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
   ClientHeight = 334
   ClientWidth = 480
   ExplicitWidth = 486
-  ExplicitHeight = 363
+  ExplicitHeight = 362
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
@@ -48,6 +48,14 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
         Caption = 'Password'
         FocusControl = cxDBTextEdit2
       end
+      object Label5: TLabel
+        Left = 24
+        Top = 176
+        Width = 60
+        Height = 13
+        Caption = 'PerfilUsuario'
+        FocusControl = DBLookupComboBox1
+      end
       object cxDBTextEdit1: TcxDBTextEdit
         Left = 24
         Top = 104
@@ -83,6 +91,15 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
         Properties.ListColumns = <>
         TabOrder = 3
         Width = 145
+      end
+      object DBLookupComboBox1: TDBLookupComboBox
+        Left = 24
+        Top = 192
+        Width = 339
+        Height = 21
+        DataField = 'PerfilUsuario'
+        DataSource = DataSource
+        TabOrder = 4
       end
     end
   end

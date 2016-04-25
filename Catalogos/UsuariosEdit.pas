@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, cxTextEdit, cxDBEdit;
+  cxDBLookupComboBox, cxTextEdit, cxDBEdit, Vcl.DBCtrls;
 
 type
   TfrmUsuariosEdit = class(T_frmEdit)
@@ -31,6 +31,8 @@ type
     cxDBTextEdit2: TcxDBTextEdit;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBLookupComboBox2: TcxDBLookupComboBox;
+    Label5: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
   private
     { Private declarations }
   public

@@ -74,8 +74,14 @@ begin
   DEcodeDate(Date,a,m,d);
 
   cxDtEdtInicio.Date:=EncodeDate(a,m,1);
-  FechaAux:=EncodeDate(a,m+1,1);
-  FechaAux:=FechaAux-1;
+  m:=m+1;
+  if m=13 then  //Aban Abr 19/16
+  begin
+    m:=1;
+    a:=a+1;
+  end;
+  FechaAux:=EncodeDate(a,m,1);
+  FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtFin.Date:=FechaAux;
 
 end;

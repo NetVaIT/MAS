@@ -12,7 +12,8 @@ inherited dmCotizaciones: TdmCotizaciones
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
       'te'#13#10' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDoc' +
-      'to'#13#10'order by idDocumentoSalidaEstatus, FechaRegistro Desc'
+      'to'#13#10'and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10 +
+      'order by idDocumentoSalidaEstatus, FechaRegistro Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -321,7 +322,8 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     CommandText = 
       'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,'#13#10' P.DiasCredit' +
-      'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  '
+      'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  an' +
+      'd P.idPersona>-1'
     Parameters = <>
     Left = 192
     Top = 40
@@ -350,7 +352,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -373,7 +374,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -390,7 +390,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4811,7 +4810,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 96
   end
   object ADODtStIdentificadores: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

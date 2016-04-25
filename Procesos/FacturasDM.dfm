@@ -20,15 +20,13 @@ inherited DMFacturas: TDMFacturas
       'o, TotalImpuestoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, ' +
       'Observaciones, '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_' +
       'TB, '#13#10'SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB '#13#10' from C' +
-      'FDI '#13#10'order by IDCFDIESTATUS, Fecha '
+      'FDI '#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'orde' +
+      'r by IDCFDIESTATUS, Fecha '
     Left = 48
     Top = 24
     object adodsMasterIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
       ReadOnly = True
-    end
-    object adodsMasterIdCFDITipoDocumento: TIntegerField
-      FieldName = 'IdCFDITipoDocumento'
     end
     object adodsMasterIdCFDIFormaPago: TIntegerField
       FieldName = 'IdCFDIFormaPago'
@@ -44,6 +42,9 @@ inherited DMFacturas: TDMFacturas
     end
     object adodsMasterIdPersonaReceptor: TIntegerField
       FieldName = 'IdPersonaReceptor'
+    end
+    object adodsMasterIdCFDITipoDocumento: TIntegerField
+      FieldName = 'IdCFDITipoDocumento'
     end
     object adodsMasterIdDocumentoCBB: TIntegerField
       FieldName = 'IdDocumentoCBB'
@@ -514,6 +515,7 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     AfterPost = ADODtStCFDIConceptosAfterPost
+    OnNewRecord = ADODtStCFDIConceptosNewRecord
     CommandText = 
       'select IdCFDIConcepto, IdCFDI, IdProducto, IdUnidadMedida, Canti' +
       'dad, Unidad,'#13#10' Descripcion, NoIdentifica, ValorUnitario, Importe' +

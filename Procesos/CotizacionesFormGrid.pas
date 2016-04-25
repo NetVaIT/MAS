@@ -22,7 +22,8 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  Vcl.ExtCtrls, Vcl.Menus, cxContainer, dxCore, cxDateUtils, Vcl.Buttons,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.StdCtrls;
 
 type
   TfrmCotizacionesGrid = class(T_frmStandarGFormGrid)
@@ -38,6 +39,15 @@ type
     tvMasterTipoDocumento: TcxGridDBColumn;
     tvMasterIdDocumentoSalida: TcxGridDBColumn;
     tvMasterIdentificadorCte: TcxGridDBColumn;
+    PnlFechas: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    cxDtEdtDesde: TcxDateEdit;
+    cxDtEdtHasta: TcxDateEdit;
+    SpdBtn: TSpeedButton;
+    TlBtnSepara: TToolButton;
+    procedure FormShow(Sender: TObject);
+    procedure SpdBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,5 +62,33 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM;
+
+procedure TfrmCotizacionesGrid.FormShow(Sender: TObject);
+var    // Abr 19/16
+  fechaAux:TDAteTime;
+  a,d,m:word;
+begin
+  inherited;
+    decodeDate(date,a,m,d);   //D. Abr 19/16
+  cxDtEdtDesde.date:= encodedate(a,m,1);
+  m:=m+1;
+  if m=13 then
+  begin
+    m:=1;
+    a:=a+1;
+  end;
+  fechaAux:=encodedate(a,m,1);
+  cxDtEdtHasta.date :=fechaAux-1;
+
+   //H Abr 19/16
+
+end;
+
+procedure TfrmCotizacionesGrid.SpdBtnClick(Sender: TObject);
+begin
+  inherited;
+   //Armar consulta
+
+end;
 
 end.

@@ -17,6 +17,14 @@ type
     adodsUsuarioEstatus: TADODataSet;
     adodsMasterPersona: TStringField;
     adodsMasterUsuarioEstatus: TStringField;
+    ADODtStPerfiles: TADODataSet;
+    ADODtStPerfilesIdUsuarioPerfil: TAutoIncField;
+    ADODtStPerfilesDescripcion: TStringField;
+    ADODtStPerfilesPermisoMenu: TStringField;
+    ADODtStPerfilesPermisoOpcion: TStringField;
+    ADODtStPerfilesPermisosFuncion: TStringField;
+    adodsMasterIdUsuarioPerfil: TIntegerField;
+    adodsMasterPerfilUsuario: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

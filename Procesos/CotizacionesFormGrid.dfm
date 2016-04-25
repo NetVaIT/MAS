@@ -1,48 +1,53 @@
 inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   Caption = 'frmCotizacionesGrid'
-  ClientWidth = 890
-  ExplicitWidth = 890
+  ClientWidth = 1025
+  ExplicitWidth = 1025
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited splDetail2: TSplitter
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited splDetail1: TSplitter
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnlClose: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnlDetail3: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnlDetail2: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnlDetail1: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnltoolbar: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
   end
   inherited pnlMaster: TPanel
-    Width = 890
+    Width = 1025
     ExplicitWidth = 890
     inherited cxGrid: TcxGrid
-      Width = 890
+      Top = 44
+      Width = 1025
+      Height = 427
+      ExplicitLeft = 146
+      ExplicitTop = 23
       ExplicitWidth = 890
+      ExplicitHeight = 427
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdDocumentoSalida: TcxGridDBColumn
           Caption = 'No.'
@@ -85,16 +90,138 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 890
+      Width = 1025
+      Height = 44
+      ButtonHeight = 44
       ExplicitWidth = 890
+      ExplicitHeight = 44
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 44
+      end
+      inherited ToolButton10: TToolButton
+        Width = 107
+        ExplicitWidth = 107
+        ExplicitHeight = 44
+      end
+      inherited tbtnCerrar: TToolButton
+        Left = 384
+        ExplicitLeft = 384
+        ExplicitHeight = 44
+      end
+      object TlBtnSepara: TToolButton
+        Left = 407
+        Top = 0
+        Width = 169
+        Caption = 'TlBtnSepara'
+        ImageIndex = 11
+        Style = tbsSeparator
+      end
+      object PnlFechas: TPanel
+        Left = 576
+        Top = 0
+        Width = 360
+        Height = 44
+        ParentBackground = False
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 21
+          Top = 4
+          Width = 30
+          Height = 13
+          Caption = 'Desde'
+        end
+        object Label2: TLabel
+          Left = 181
+          Top = 4
+          Width = 28
+          Height = 13
+          Caption = 'Hasta'
+        end
+        object SpdBtn: TSpeedButton
+          Left = 331
+          Top = 13
+          Width = 25
+          Height = 25
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            8000008000000080800080000000800080008080000080808000C0C0C0000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+            33033333333333333F7F3333333333333000333333333333F777333333333333
+            000333333333333F777333333333333000333333333333F77733333333333300
+            033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+            33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
+            333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
+            33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
+            333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
+            333333773FF77333333333370007333333333333777333333333}
+          NumGlyphs = 2
+          OnClick = SpdBtnClick
+        end
+        object cxDtEdtDesde: TcxDateEdit
+          Left = 16
+          Top = 17
+          TabOrder = 0
+          Width = 145
+        end
+        object cxDtEdtHasta: TcxDateEdit
+          Left = 176
+          Top = 17
+          TabOrder = 1
+          Width = 137
+        end
+      end
     end
   end
   inherited DataSource: TDataSource
     DataSet = dmCotizaciones.adodsMaster
+    Left = 616
+    Top = 80
   end
   inherited ilPageControl: TImageList
+    Left = 664
+    Top = 80
     Bitmap = {
-      494C010102000400D40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -233,9 +360,15 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    Left = 704
+    Top = 80
+  end
   inherited ilAction: TImageList
+    Left = 736
+    Top = 80
     Bitmap = {
-      494C01010C00C001F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -771,6 +904,15 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Left = 560
+    Top = 88
     PixelsPerInch = 96
+  end
+  inherited cxGridPopupMenu: TcxGridPopupMenu
+    Left = 792
+    Top = 80
+  end
+  inherited PopupMenu: TPopupMenu
+    Top = 88
   end
 end

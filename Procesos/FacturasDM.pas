@@ -441,6 +441,7 @@ type
     procedure adodsMasterCalcFields(DataSet: TDataSet);
     procedure ActImpNotasVentaExecute(Sender: TObject);
     procedure ActEnvioCorreoNotasVentaExecute(Sender: TObject);
+    procedure ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -469,6 +470,7 @@ type
     procedure RevertirInventario(IDOrdenSalida, IDCFDI: Integer);
     function SacaListaDatos(idCFDI: Integer; Lista: TArrDatosActualiza):Boolean;
     procedure ImprimeNotaVPDF(Mostrar: Boolean; nombre: TFileName='');
+    function ActualizaAsociadosACFDI(idCFDIAct: Integer): Boolean;
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -564,7 +566,7 @@ begin
         reset(F);
         readln(F,Respuesta);
         CloseFile(F);
-        if pos('previamente',Respuesta)>0 then
+         if pos('previamente',Respuesta)>0 then
         begin
           adodsMaster.Edit;
           adodsMasterFechaCancelacion.AsDateTime:=Now;
@@ -574,14 +576,18 @@ begin
            //Actualiza Inventario y demás   //Mar 7/16
           if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
              RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+
+          if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
+             ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
+
           //Actualiza datos
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
           //Actualizar Saldo Cliente //No debio actualizar antes
 
           ShowMessage('El comprobante ya habia sido cancelado anteriormente');
         end
-        else
-           if pos('UUID CANCELADO CORRECTAMENTE' ,Respuesta)>0 then
+        else                                      //Ajuste por si acaso cambio Abr 18/16
+           if pos('UUID CANCELADO CORRECTAMENTE' ,UpperCase(Respuesta))>0 then
            begin
              adodsMaster.Edit;
              adodsMasterFechaCancelacion.AsDateTime:=Now;
@@ -589,11 +595,16 @@ begin
              adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta;
              adodsMaster.Post;
 
-               //Actualiza Inventario y demás   //Mar 7/16
+               //Actualiza Inventario y demás   //Mar 7/16       //Este nunca estará aca ya que es factura la asociada abr 18/16
              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
                 RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
-             //Actualizar Saldo Cliente
+             if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
+               ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
+            //Actualizar Saldo Cliente
              ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+             if adodsMasterIdPersonaReceptor.Value=-1 then
+                ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
+
              ShowMessage(adodsMasterUUID_TB.Value + #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación');
 
            end
@@ -608,6 +619,8 @@ begin
                  //Actualiza Inventario y demás   //Mar 7/16
              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
                 RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+             if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
+                ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
                 //Actualizar Saldo Cliente
                ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
                ShowMessage(adodsMasterUUID_TB.Value + #13+'Prueba de Cancelación ');
@@ -619,6 +632,18 @@ begin
         ShowMessage('Ocurrio un error Cancelando el CFDI . Error '+DAto);
     end; // No existe carpeta. nDS
   end; //else Cancelada por usuario
+end;
+
+function TDMFacturas.ActualizaAsociadosACFDI (idCFDIAct:Integer):Boolean; //Abr 18/26
+var
+  i:integer;
+begin
+  ADOQryAuxiliar.close;
+  ADOQryAuxiliar.Sql.Clear;
+                                                                    //Quede otra vez precargada?
+  ADOQryAuxiliar.SQL.Add('Update CFDI SET IDCFDIFacturaGral =NULL , IDCFDIEstatus=1 Where IDCFDIFacturaGral='+ intTostr(idCFDIAct));
+  i:=ADOQryAuxiliar.ExecSQL;
+  Result:= i>0;
 end;
 
 procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);   (*SOLO USAR PARA FACTURAS Y NOTAS DE VENTA *)
@@ -1838,6 +1863,17 @@ begin
 
 
   AdoDSMaster.Refresh;
+end;
+
+procedure TDMFacturas.ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  if adodsMasterIdCFDITipoDocumento.AsInteger in [2,3] then
+  begin
+    dataset.FieldByName('IDUnidadMedida').AsInteger:=2; //No aplica
+    dataset.FieldByName('Unidad').AsString:='NA'
+  end;
+
 end;
 
 procedure TDMFacturas.ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
