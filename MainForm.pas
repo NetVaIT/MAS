@@ -102,6 +102,8 @@ type
     ActRptCostoInventario: TAction;
     dxBarLargeButton31: TdxBarLargeButton;
     ActPerfilUsuario: TAction;
+    actEntradaMercancia: TAction;
+    dxBarLargeButton32: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -190,7 +192,8 @@ begin
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
-   44: gModulo := TdmOrdenesEntradas.Create(Self);
+   44: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, tEntradaMercacia);
+   45: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, TOrdenEntrada);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
 
@@ -231,6 +234,7 @@ begin
   actOrdenCompra.Enabled        := Conected;
   actInvoice.Enabled            := Conected;
   actOrdenesEntrada.Enabled     := Conected;
+  actEntradaMercancia.Enabled     := Conected;
 
   UsarPermisos; //Abr 25/16
 end;

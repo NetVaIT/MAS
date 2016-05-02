@@ -4,7 +4,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 952
-  ExplicitHeight = 518
+  ExplicitHeight = 519
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -12,6 +12,7 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 936
     inherited dxRibbon1Tab1: TdxRibbonTab
+      Active = False
       Index = 0
     end
     object dxRbnTbCatalogos: TdxRibbonTab
@@ -45,6 +46,7 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab5: TdxRibbonTab
       Tag = 4000
+      Active = True
       Caption = 'Compras'
       Groups = <
         item
@@ -97,7 +99,6 @@ inherited frmMain: TfrmMain
   end
   inherited pnlMain: TPanel
     Width = 936
-    ExplicitTop = 161
     ExplicitWidth = 936
   end
   inherited dxBarManager: TdxBarManager
@@ -109,6 +110,8 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
+      DockedDockControl = nil
+      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -272,7 +275,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 137
-      FloatClientHeight = 216
+      FloatClientHeight = 270
       ItemLinks = <
         item
           Visible = True
@@ -289,6 +292,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton23'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton32'
         end
         item
           Visible = True
@@ -442,6 +449,10 @@ inherited frmMain: TfrmMain
     object dxBarLargeButton23: TdxBarLargeButton
       Tag = 43
       Action = actInvoice
+      Category = 0
+    end
+    object dxBarLargeButton32: TdxBarLargeButton
+      Action = actEntradaMercancia
       Category = 0
     end
     object dxBarLargeButton24: TdxBarLargeButton
@@ -10492,8 +10503,15 @@ inherited frmMain: TfrmMain
       ImageIndex = 33
       OnExecute = actCatalogoExecute
     end
-    object actOrdenesEntrada: TAction
+    object actEntradaMercancia: TAction
       Tag = 44
+      Category = 'Compras'
+      Caption = 'Entrada de mercancia'
+      ImageIndex = 45
+      OnExecute = actCatalogoExecute
+    end
+    object actOrdenesEntrada: TAction
+      Tag = 45
       Category = 'Compras'
       Caption = 'Ordenes de entrada'
       ImageIndex = 45

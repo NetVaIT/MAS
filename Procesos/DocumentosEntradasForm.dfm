@@ -52,18 +52,21 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
     Top = 22
     Width = 800
     Height = 405
+    ExplicitTop = 22
     ExplicitWidth = 800
-    ExplicitHeight = 427
+    ExplicitHeight = 405
     ClientRectBottom = 404
     ClientRectRight = 799
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 798
-      ExplicitHeight = 425
+      ExplicitHeight = 403
       inherited cxScrollBox1: TcxScrollBox
         Width = 798
         Height = 403
         ExplicitWidth = 798
-        ExplicitHeight = 425
+        ExplicitHeight = 403
         inherited tbarData: TToolBar
           Width = 796
           ExplicitWidth = 796
@@ -80,26 +83,26 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Top = 0
             Action = dmDocumentosEntradas.actImprimir
           end
-          object btnGenDocumento: TSpeedButton
+          object btnAutorizar: TSpeedButton
             Left = 285
             Top = 0
             Width = 75
             Height = 22
-            Action = dmDocumentosEntradas.actGenDocumento
+            Action = dmDocumentosEntradas.actAutorizar
           end
-          object btnAutorizar: TSpeedButton
+          object btnGenDocumento: TSpeedButton
             Left = 360
             Top = 0
-            Width = 75
+            Width = 100
             Height = 22
-            Action = dmDocumentosEntradas.actAutorizar
+            Action = dmDocumentosEntradas.actGenDocumento
           end
         end
         inherited pnlMaster: TPanel
           Width = 796
           Height = 376
           ExplicitWidth = 796
-          ExplicitHeight = 398
+          ExplicitHeight = 376
           object pnlDetail: TPanel
             Left = 0
             Top = 147
@@ -108,7 +111,6 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 140
           end
           object pnlEncabezado: TPanel
             Left = 0
@@ -269,7 +271,6 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Height = 111
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 287
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -357,8 +358,6 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -477
-    ExplicitWidth = 1277
     object cxDBLabel3: TcxDBLabel
       Left = 9
       Top = 1
@@ -370,7 +369,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -511,7 +510,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D002803C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803CC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

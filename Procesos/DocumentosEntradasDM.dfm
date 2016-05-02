@@ -10,7 +10,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       'toEntradaTipo, IdDocumentoEntradaEstatus, IdPersona, IdMoneda, I' +
       'dUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, Observaciones' +
       ' from DocumentosEntradas'#13#10'where IdDocumentoEntradaTipo = :IdDocu' +
-      'mentoEntradaTipo'
+      'mentoEntradaTipo'#13#10'Order by Fecha DESC'
     Parameters = <
       item
         Name = 'IdDocumentoEntradaTipo'
@@ -157,7 +157,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       OnExecute = actBuscarProductoExecute
     end
     object actGenDocumento: TAction
-      Caption = 'Crear'
+      Caption = 'Registrar factura'
       Hint = 'Crear documento'
       ImageIndex = 11
       OnExecute = actGenDocumentoExecute

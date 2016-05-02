@@ -241,11 +241,13 @@ begin
   inherited;
   case Tipo of
     tRequisicion: begin
-      TAction(Sender).Hint:= 'Cerrar y crear orden de compra';
+      TAction(Sender).Caption:= 'Generar OC';
+      TAction(Sender).Hint:= 'Cerrar y generar orden de compra';
       TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAbierto));
     end;
     tOrdenCompra: begin
-      TAction(Sender).Hint:= 'Cerrar y crear factura del provedor';
+      TAction(Sender).Caption:= 'Registrar factura';
+      TAction(Sender).Hint:= 'Cerrar y registrar factura del provedor';
       TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAutorizado));
     end;
     tFactura: begin
