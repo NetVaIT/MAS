@@ -226,6 +226,14 @@ type
     adodsCotizacionesDetalleDisponible: TFloatField;
     adodsCotizacionesDetalleApartadoPorSurtir: TFloatField;
     adodsCotizacionesDetalleApartadoPorFacturar: TFloatField;
+    ADODtStAntSaldos: TADODataSet;
+    ADODtStAntSaldosCliente: TStringField;
+    ADODtStAntSaldosTotalVigente: TFloatField;
+    ADODtStAntSaldosSuma_a_30Dias: TFloatField;
+    ADODtStAntSaldosSuma_a_60Dias: TFloatField;
+    ADODtStAntSaldosSuma_a_90Dias: TFloatField;
+    ADODtStAntSaldosSuma_a_mas_de_90Dias: TFloatField;
+    ADODtStAntSaldosIdPersonaREceptor: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -243,8 +251,10 @@ type
     procedure ActEnviarXCorreoExecute(Sender: TObject);
     procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
     procedure adodsCotizacionesDetalleBeforeOpen(DataSet: TDataSet);
+    procedure adodsCotizacionesDetalleBeforeDelete(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
+    FIdDocAct: Integer;
     function EncuentraProd(IdProd: String; var ValUni: Double;
       var ID:Integer): String;
     function CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA:Double;var AMontoIva,ASubtotal,ATotal:Double):Boolean;
@@ -260,6 +270,7 @@ type
   public
     { Public declarations }
     Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
+    property idDocActual:Integer read FIdDocAct write FIdDocAct;
   end;
 
 implementation
@@ -364,21 +375,34 @@ begin
 end;
 
 procedure TdmCotizaciones.adodsCotizacionesDetalleAfterPost(DataSet: TDataSet);
-const PIVA=0.16;
+const PIVA=0.16;                   //No funciona para el Delete
 var Total,MontoIVA,SubTotal:Double;
+    IdAct:Integer;//May 2/16
 begin
   inherited;
-  if CalcularTotales(dataset.fieldbyname('IdDocumentoSalida').asInteger,'IdDocumentoSalida','Importe',
+  if dataset.fieldbyname('IdDocumentoSalida').asInteger=0 then //May 2/16
+    IdAct:= idDocActual
+  else
+    IdAct:=dataset.fieldbyname('IdDocumentoSalida').asInteger;
+                                                 //May 2/16  dataset.fieldbyname('IdDocumentoSalida').asInteger
+  if CalcularTotales(IdAct,'IdDocumentoSalida','Importe',
                      'DocumentosSalidasDetalles',PIVA,MontoIVA,SubTotal,Total) then
   begin
     adoQryauxiliar.Close;
     TAdoquery(AdoQryAuxiliar).SQL.Clear;
     TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE DocumentosSalidas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
-                                    +' WHERE IDDocumentoSalida= '+intToStr(dataset.fieldbyname('IdDocumentoSalida').asInteger));
-    if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
+                                    +' WHERE IDDocumentoSalida= '+intToStr(IdAct));
+    if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then                         //  dataset.fieldbyname('IdDocumentoSalida').asInteger
        ADodsMaster.Refresh;
   //Se cambio mecanismo de actualizacion .Ene 11/16
   end;
+end;
+
+procedure TdmCotizaciones.adodsCotizacionesDetalleBeforeDelete(
+  DataSet: TDataSet);
+begin
+  inherited;
+  idDocActual:= DataSet.fieldbyname('idDocumentoSalida').asInteger;
 end;
 
 procedure TdmCotizaciones.adodsCotizacionesDetalleBeforeInsert(

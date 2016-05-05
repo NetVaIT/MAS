@@ -183,7 +183,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
   end
   object adodsTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -194,7 +193,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 168
   end
   object adodsEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -205,7 +203,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 216
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -237,7 +234,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'
@@ -246,7 +242,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 328
   end
   object adodsUsuarios: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdUsuario, Login from Usuarios'

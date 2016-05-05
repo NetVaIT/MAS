@@ -1,6 +1,7 @@
 inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   Caption = 'frmCotizacionesGrid'
   ClientWidth = 1025
+  OnCreate = FormCreate
   ExplicitWidth = 1025
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -19,34 +20,33 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   end
   inherited pnlClose: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
   end
   inherited pnlDetail3: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
   end
   inherited pnlDetail2: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
   end
   inherited pnlDetail1: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
   end
   inherited pnltoolbar: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
     Width = 1025
-    ExplicitWidth = 890
+    ExplicitWidth = 1025
     inherited cxGrid: TcxGrid
       Top = 44
       Width = 1025
       Height = 427
-      ExplicitLeft = 146
-      ExplicitTop = 23
-      ExplicitWidth = 890
+      ExplicitTop = 44
+      ExplicitWidth = 1025
       ExplicitHeight = 427
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdDocumentoSalida: TcxGridDBColumn
@@ -93,7 +93,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       Width = 1025
       Height = 44
       ButtonHeight = 44
-      ExplicitWidth = 890
+      ExplicitWidth = 1025
       ExplicitHeight = 44
       inherited ToolButton1: TToolButton
         ExplicitHeight = 44
@@ -221,7 +221,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 664
     Top = 80
     Bitmap = {
-      494C010102000400D80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -368,7 +368,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C01010C00C001FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -36,7 +36,6 @@ inherited dmMonedasCotizaciones: TdmMonedasCotizaciones
     end
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'

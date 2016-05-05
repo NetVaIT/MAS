@@ -232,7 +232,7 @@ implementation
 {$R *.dfm}
 
 uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM,
-  UDMEnvioMail, _Utils;
+  UDMEnvioMail, _Utils, _ConectionDmod;
 
 procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);  //Kardex + Salidas_Ubicaciones
 var                        //Feb 5/16
@@ -791,6 +791,7 @@ begin
                             (Datasource.DataSet.FieldByName('FechaFinRevisa').IsNull);
     BtBtnAutoriza.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=3) and  //Dic 15/15
                             (Datasource.DataSet.FieldByName('FechaAutoriza').IsNull);
+    BtBtnAutoriza.Enabled:= pos('autoriza',_dmConection.PerFuncion)>0 ; //Abr 26/16
 
     BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
                             (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
@@ -829,9 +830,11 @@ begin
       LblEmpaco.Caption:='Empacando:'
     else
       LblEmpaco.Caption:='Empacó:';                                                        //Se habilito el 1 para borrar todo //Abr 13/16
-    BtBtnRegresaEstado.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>=1)and((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4) //Mar 4/16
+    BtBtnRegresaEstado.Visible:= ((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>=1)
+                                  and((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4) //Mar 4/16
                                 or ((Datasource.DataSet.FieldByName('IdGeneraCFDITipoDoc').AsInteger=4)and
-                                  (not RevisaGenerado(Datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger))));// Abr 12/16
+                                  (not RevisaGenerado(Datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger)))))// Abr 12/16
+                                and (pos('autoriza',_dmConection.PerFuncion)>0) ; //Abr 26/16;
   end;
   PnlDetalle.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4);
 end;

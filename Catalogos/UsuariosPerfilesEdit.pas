@@ -45,6 +45,8 @@ type
     ChckBxRep: TCheckBox;
     BtnActOpcion: TButton;
     ToolButton3: TToolButton;
+    Label4: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
     procedure ChckBxCatClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnActOpcionClick(Sender: TObject);

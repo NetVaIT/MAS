@@ -20,34 +20,33 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   end
   inherited pnlClose: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
   end
   inherited pnlDetail3: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
   end
   inherited pnlDetail2: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
   end
   inherited pnlDetail1: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
   end
   inherited pnltoolbar: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
   end
   inherited pnlMaster: TPanel
     Width = 1255
-    ExplicitWidth = 936
+    ExplicitWidth = 1255
     inherited cxGrid: TcxGrid
       Top = 46
       Width = 1255
       Height = 425
-      ExplicitLeft = 8
-      ExplicitTop = 40
-      ExplicitWidth = 936
+      ExplicitTop = 46
+      ExplicitWidth = 1255
       ExplicitHeight = 425
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridOrdenSalida: TcxGridDBColumn
@@ -106,7 +105,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       Width = 1255
       Height = 46
       ButtonHeight = 44
-      ExplicitWidth = 936
+      ExplicitWidth = 1255
       ExplicitHeight = 46
       inherited ToolButton1: TToolButton
         ExplicitHeight = 44
@@ -174,6 +173,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         Width = 330
         Height = 44
         Caption = 'Estado'
+        Color = clWhite
         Columns = 4
         ItemIndex = 0
         Items.Strings = (
@@ -187,6 +187,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
             'Enviado                                                         ' +
             '                                 ')
         ParentBackground = False
+        ParentColor = False
         TabOrder = 1
         OnClick = RdGrpEstadoClick
       end
@@ -259,7 +260,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -406,7 +407,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C001FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

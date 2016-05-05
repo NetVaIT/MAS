@@ -196,7 +196,9 @@ inherited dmCotizaciones: TdmCotizaciones
     CursorType = ctStatic
     BeforeOpen = adodsCotizacionesDetalleBeforeOpen
     BeforeInsert = adodsCotizacionesDetalleBeforeInsert
+    BeforeEdit = adodsCotizacionesDetalleBeforeDelete
     AfterPost = adodsCotizacionesDetalleAfterPost
+    BeforeDelete = adodsCotizacionesDetalleBeforeDelete
     AfterDelete = adodsCotizacionesDetalleAfterPost
     OnNewRecord = adodsCotizacionesDetalleNewRecord
     CommandText = 
@@ -4932,6 +4934,66 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object ADODsDocumentoArchivo: TBlobField
       FieldName = 'Archivo'
+    end
+  end
+  object ADODtStAntSaldos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterPost = ADODtStOrdenSalidaItemAfterPost
+    OnNewRecord = ADODtStOrdenSalidaItemNewRecord
+    CommandText = 
+      'Select IdPersonaREceptor, Cliente, SUM(vigentes) as TotalVigente' +
+      ', SUM ([Vencidos_a_30_dias]) as Suma_a_30Dias,SUM ([Vencidos_a_6' +
+      '0_dias]) as Suma_a_60Dias,SUM ([Vencidos_a_90_dias]) as Suma_a_9' +
+      '0Dias,'#13#10'SUM ([Vencidos_mas_de_90_dias]) as Suma_a_mas_de_90Dias'#13 +
+      #10'from vw_SumaSaldosXVigencia'#13#10'where IDPersonaReceptor=:IdPersona' +
+      'Receptor'#13#10#13#10'Group by IDPersonaREceptor,Cliente'
+    Parameters = <
+      item
+        Name = 'IdPersonaReceptor'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 448
+    Top = 504
+    object ADODtStAntSaldosCliente: TStringField
+      FieldName = 'Cliente'
+      Size = 300
+    end
+    object ADODtStAntSaldosTotalVigente: TFloatField
+      FieldName = 'TotalVigente'
+      ReadOnly = True
+      currency = True
+    end
+    object ADODtStAntSaldosSuma_a_30Dias: TFloatField
+      DisplayLabel = 'Total vencido 30 Dias'
+      FieldName = 'Suma_a_30Dias'
+      ReadOnly = True
+      currency = True
+    end
+    object ADODtStAntSaldosSuma_a_60Dias: TFloatField
+      DisplayLabel = 'Total vencido 60 Dias'
+      FieldName = 'Suma_a_60Dias'
+      ReadOnly = True
+      currency = True
+    end
+    object ADODtStAntSaldosSuma_a_90Dias: TFloatField
+      DisplayLabel = 'Total vencido 90 Dias'
+      FieldName = 'Suma_a_90Dias'
+      ReadOnly = True
+      currency = True
+    end
+    object ADODtStAntSaldosSuma_a_mas_de_90Dias: TFloatField
+      DisplayLabel = 'Total vencido a m'#225's de 90 Dias'
+      FieldName = 'Suma_a_mas_de_90Dias'
+      ReadOnly = True
+      currency = True
+    end
+    object ADODtStAntSaldosIdPersonaREceptor: TIntegerField
+      FieldName = 'IdPersonaREceptor'
     end
   end
 end

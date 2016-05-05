@@ -1,4 +1,5 @@
 ﻿inherited dmRptAntiguedadSaldos: TdmRptAntiguedadSaldos
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -26,8 +27,13 @@
       '                   - CI.Fecha >= 120 + PR.DiasCreditoCliente THE' +
       'N CI.SaldoDocumento END AS '#39'Vencidos m'#225's de 90 d'#237'as'#39#13#10'FROM      ' +
       '   CFDI AS CI INNER JOIN'#13#10'                      Personas AS PR O' +
-      'N CI.IdPersonaReceptor = PR.IdPersona'#13#10'WHERE     (CI.IdCFDIEstat' +
-      'us = 2) AND (CI.SaldoDocumento > 0)'#13#10'ORDER BY Cliente'
+      'N CI.IdPersonaReceptor = PR.IdPersona'#13#10'WHERE    (CI.SaldoDocumen' +
+      'to > 0)   AND (Ci.IdPersonaReceptor <> - 1)'#13#10'And          (Ci.Id' +
+      'CFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 1) OR'#13#10'          ' +
+      '      (CI.IdCFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 3) OR' +
+      #13#10'                (CI.IdCFDIEstatus = 4) AND (Ci.IdCFDITipoDocum' +
+      'ento = 4) OR'#13#10'                  (CI.IdCFDIEstatus = 5) AND (CI.I' +
+      'dCFDITipoDocumento = 4) '#13#10'     '#13#10'ORDER BY Cliente'
     object adodsMasterTipoComp: TStringField
       FieldName = 'TipoComp'
       Size = 10

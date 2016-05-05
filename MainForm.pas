@@ -104,6 +104,8 @@ type
     ActPerfilUsuario: TAction;
     actEntradaMercancia: TAction;
     dxBarLargeButton32: TdxBarLargeButton;
+    ActDevoluciones: TAction;
+    dxBrLrgBtnDevolucion: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -188,6 +190,7 @@ begin
    26:   gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
 
    30: gModulo := TdmAlmacenes.Create(Self);
+   31: ShowMessage('Módulo en construcción');//gModulo := TdmAlmacenes.Create(Self);
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);

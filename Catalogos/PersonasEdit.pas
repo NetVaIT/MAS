@@ -61,7 +61,6 @@ type
     tsCorreo: TcxTabSheet;
     tsContactos: TcxTabSheet;
     tsCuentasBancarias: TcxTabSheet;
-    cxDBLkupCBxRol: TcxDBLookupComboBox;
     PnlCliente: TPanel;
     cxDBEdtCtaCliente: TcxDBTextEdit;
     LblCteCte: TLabel;
@@ -75,6 +74,10 @@ type
     cxDBTextEdit3: TcxDBTextEdit;
     cxDBLabel3: TcxDBLabel;
     PnlTitulo: TPanel;
+    Label16: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    cxDBLkupCBxRol: TcxDBLookupComboBox;
+    cxDBLabel2: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -82,6 +85,7 @@ type
     procedure cmbTipoPersonaPropertiesChange(Sender: TObject);
     procedure edtNombrePropertiesEditValueChanged(Sender: TObject);
     procedure cxDBLkupCBxMetodoPagoPropertiesChange(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
     dmPersonasDomicilios : TdmPersonasDomicilios;
@@ -112,16 +116,21 @@ end;
 
 procedure TfrmPersonasEdit.cmbTipoPersonaPropertiesChange(Sender: TObject);
 begin
-  inherited;
-  MostrarPanel;
+  inherited;  //Parece que entra por cada registro que exista.. may 4/16
+
   if datasource.State in[dsEdit,dsInsert] then             //Nov 4/15
-     datasource.DataSet.FieldByName('idrol').Asinteger:=integer(ROL);   //no coincide con los de la BD
+  begin
+    datasource.DataSet.FieldByName('idrol').Asinteger:=integer(ROL);   //no coincide con los de la BD
+    pnlPersonaFisica.Visible:=(cmbTipoPersona.editValue =1);
+    pnlPersonaMoral.Visible := (cmbTipoPersona.editValue =2);
+ //   MostrarPanel; //Movido aca   //Cambiado
+  end;
 end;
 
 procedure TfrmPersonasEdit.cxDBLkupCBxMetodoPagoPropertiesChange(
   Sender: TObject);
 begin
-   inherited;
+  inherited;
   LblCteCte.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
   cxDBEdtCtaCliente.Visible:=cxDBLkupCBxMetodoPago.EditValue=1; //DSMetodoPago.DataSet.FieldByName('ExigeCuenta').asinteger=1;
   if DataSource.DataSet.State in [dsedit, dsInsert]  then
@@ -129,6 +138,12 @@ begin
     if not cxDBEdtCtaCliente.Visible then
       datasource.DataSet.FieldByName('NumCtaPagoCliente').AsString:='';
   end;
+end;
+
+procedure TfrmPersonasEdit.DataSourceDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  MostrarPanel; //May 4/16
 end;
 
 procedure TfrmPersonasEdit.edtNombrePropertiesEditValueChanged(Sender: TObject);
@@ -146,34 +161,37 @@ procedure TfrmPersonasEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPersonas.Create(Self);
-  dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
-  dmTelefonos := TdmTelefonos.Create(nil);
+ dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
+ dmTelefonos := TdmTelefonos.Create(nil);
   dmEmails := TdmEmail.Create(nil);
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
   dmPersonasCSD:= TdmPersonasCSD.Create(nil);//Dic 21/15
+ (*   May 4 para prueba*)
+
  // TfrmPersonas(gFormGrid).CerrarGrid := actCloseGrid;
 end;
 
 procedure TfrmPersonasEdit.FormDestroy(Sender: TObject);
 begin
   inherited;
-  FreeAndNil(dmPersonasDomicilios);
+ FreeAndNil(dmPersonasDomicilios);
   FreeAndNil(dmTelefonos);
   FreeAndNil(dmEmails);
   FreeAndNil(dmContactos);
   FreeAndNil(dmCuentasBancarias);
   FreeAndNil(dmPersonasCSD); //Dic 21/15
+ (*  May 4 para prueba*)
 end;
 
 procedure TfrmPersonasEdit.FormShow(Sender: TObject);
 begin
   inherited;
-  MostrarPanel;
+
   dmPersonasDomicilios.MasterSource := DataSource;
   dmPersonasDomicilios.MasterFields := 'IdPersona';
   dmPersonasDomicilios.ShowModule(tsDomicilio,'');
-  dmTelefonos.MasterSource := DataSource;
+ dmTelefonos.MasterSource := DataSource;
   dmTelefonos.MasterFields := 'IdPersona';
   dmTelefonos.ShowModule(tsTelefono,'');
   dmEmails.MasterSource := DataSource;
@@ -197,13 +215,15 @@ begin
     rEmpleado: PnlTitulo.Caption:='Empleados';
     rEmisor: PnlTitulo.Caption:='Emisor';
   end;
+ (*  //May 4 para prueba*)
    //Titulo
-
+   MostrarPanel; //Se movio aca    y deshabilitado may 4/16
 end;
 
 procedure TfrmPersonasEdit.MostrarPanel;
 begin
-  if DataSource.DataSet.State in [dsEdit] then
+(*//DEshabilitado tmporal May 4/16  *)
+ if DataSource.DataSet.State in [dsEdit] then
   begin
     if DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 1 then
     begin
@@ -231,7 +251,7 @@ begin
       cmbTipoPersona.Enabled := False;
       cmbTipoPersona.EditValue := 1;
     end;
-    if cmbTipoPersona.EditValue = 1 then
+  (*  if cmbTipoPersona.EditValue = 1 then
     begin
       pnlPersonaMoral.Visible := False;
       pnlPersonaFisica.Visible := True;
@@ -240,10 +260,10 @@ begin
     begin
       pnlPersonaMoral.Visible := True;
       pnlPersonaFisica.Visible := False;
-    end;
+    end;   *)
 
     cmbTipoPersona.Enabled := True;
-  end;
+  end;   // *)
   //ADD ABAN Nov 5/15
   if not DataSource.DataSet.eof then
   begin

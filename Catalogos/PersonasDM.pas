@@ -147,7 +147,7 @@ begin
   'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado, DiasCreditoCliente ' +
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
-  actSearch.Execute;
+  actSearch.Execute;   //May 4 deshabilitado para prueba
 end;
 
 procedure TdmPersonas.SetFilter;

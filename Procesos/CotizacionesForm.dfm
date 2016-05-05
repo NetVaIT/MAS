@@ -1,6 +1,8 @@
 inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'frmCotizaciones'
   ClientWidth = 1277
+  KeyPreview = True
+  OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -250,8 +252,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 173
               Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
+              Color = clBtnFace
               DataSource = DataSourceDetail
-              Options = [dgEditing, dgAlwaysShowEditor, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
               ParentShowHint = False
               ShowHint = True
               TabOrder = 1
@@ -262,6 +264,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               TitleFont.Style = []
               OnDblClick = DBGrdDetallesDblClick
               OnEditButtonClick = DBGrdDetallesEditButtonClick
+              OnKeyDown = DBGrdDetallesKeyDown
               Columns = <
                 item
                   Expanded = False
@@ -290,23 +293,27 @@ inherited frmCotizaciones: TfrmCotizaciones
                   ButtonStyle = cbsNone
                   Expanded = False
                   FieldName = 'Producto'
+                  ReadOnly = True
                   Width = 263
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'Disponible'
+                  ReadOnly = True
                   Width = 73
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'ApartadoPorSurtir'
+                  ReadOnly = True
                   Visible = True
                 end
                 item
                   Expanded = False
                   FieldName = 'ApartadoPorFacturar'
+                  ReadOnly = True
                   Width = 68
                   Visible = True
                 end
@@ -340,7 +347,7 @@ inherited frmCotizaciones: TfrmCotizaciones
                   Expanded = False
                   FieldName = 'Importe'
                   ReadOnly = True
-                  Width = 64
+                  Width = 92
                   Visible = True
                 end>
             end
@@ -352,6 +359,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 161
             Align = alTop
             TabOrder = 1
+            ExplicitTop = -6
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -389,7 +397,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 36
               Height = 13
               Caption = 'Estatus'
-              FocusControl = DBLookupComboBox3
             end
             object Label10: TLabel
               Left = 41
@@ -463,7 +470,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'IdentificadorCte'
             end
             object Label12: TLabel
-              Left = 719
+              Left = 672
               Top = 106
               Width = 58
               Height = 13
@@ -481,18 +488,20 @@ inherited frmCotizaciones: TfrmCotizaciones
               Top = 125
               DataBinding.DataField = 'VigenciaDias'
               DataBinding.DataSource = DataSource
-              TabOrder = 1
+              TabOrder = 4
+              OnKeyDown = DBGrdDetallesKeyDown
               Width = 121
             end
             object DBLookupComboBox1: TDBLookupComboBox
-              Left = 40
+              Left = 41
               Top = 79
               Width = 304
               Height = 21
               DataField = 'Cliente'
               DataSource = DataSource
-              TabOrder = 0
+              TabOrder = 1
               OnClick = DBLookupComboBox1Click
+              OnKeyDown = DBGrdDetallesKeyDown
             end
             object DBLookupComboBox2: TDBLookupComboBox
               Left = 41
@@ -501,16 +510,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 2
-            end
-            object DBLookupComboBox3: TDBLookupComboBox
-              Left = 453
-              Top = 32
-              Width = 165
-              Height = 21
-              DataField = 'Estatus'
-              DataSource = DataSource
               TabOrder = 3
+              OnKeyDown = DBGrdDetallesKeyDown
             end
             object DBLookupComboBox4: TDBLookupComboBox
               Left = 41
@@ -519,14 +520,14 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'TipoDocumento'
               DataSource = DataSource
-              TabOrder = 4
+              TabOrder = 5
             end
             object cxDBDateEdit1: TcxDBDateEdit
               Left = 291
               Top = 34
               DataBinding.DataField = 'FechaRegistro'
               DataBinding.DataSource = DataSource
-              TabOrder = 5
+              TabOrder = 6
               Width = 145
             end
             object cxDBLabel1: TcxDBLabel
@@ -545,7 +546,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'Direccioncliente'
               DataSource = DataSource
-              TabOrder = 7
+              TabOrder = 8
             end
             object cxDBLabel2: TcxDBLabel
               Left = 193
@@ -593,7 +594,9 @@ inherited frmCotizaciones: TfrmCotizaciones
               KeyField = 'IdPersonaDomicilio'
               ListField = 'DirCompleta'
               ListSource = DSDireccioncliente
-              TabOrder = 8
+              TabOrder = 2
+              TabStop = False
+              OnKeyDown = DBGrdDetallesKeyDown
             end
             object LstBxAdjuntosMail: TListBox
               Left = 976
@@ -629,7 +632,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnClick = BtBtnAdjuntosClick
             end
             object cxDBLabel6: TcxDBLabel
-              Left = 719
+              Left = 672
               Top = 125
               DataBinding.DataField = 'DiasCredito'
               DataBinding.DataSource = DataSource
@@ -641,6 +644,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Top = 125
               DataBinding.DataField = 'SaldoxRFC'
               DataBinding.DataSource = DataSource
+              OnClick = cxDBLabel7Click
               Height = 21
               Width = 78
             end
@@ -651,6 +655,141 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 62
+            end
+            object PnlSumasSaldos: TPanel
+              Left = 768
+              Top = 6
+              Width = 282
+              Height = 149
+              Color = clWhite
+              ParentBackground = False
+              TabOrder = 19
+              Visible = False
+              object Label15: TLabel
+                Left = 29
+                Top = 37
+                Width = 79
+                Height = 13
+                Caption = 'Vencido 30 Dias:'
+              end
+              object Label14: TLabel
+                Left = 68
+                Top = 12
+                Width = 40
+                Height = 13
+                Caption = 'Vigente:'
+              end
+              object Label16: TLabel
+                Left = 29
+                Top = 62
+                Width = 79
+                Height = 13
+                Caption = 'Vencido 60 Dias:'
+              end
+              object Label17: TLabel
+                Left = 29
+                Top = 87
+                Width = 79
+                Height = 13
+                Caption = 'Vencido 90 Dias:'
+              end
+              object Label18: TLabel
+                Left = 7
+                Top = 113
+                Width = 101
+                Height = 13
+                Caption = 'Vencido m'#225's 90 Dias:'
+              end
+              object Label19: TLabel
+                Left = 11
+                Top = 0
+                Width = 35
+                Height = 13
+                Caption = 'Saldos:'
+              end
+              object cxDBLabel9: TcxDBLabel
+                Left = 113
+                Top = 8
+                DataBinding.DataField = 'TotalVigente'
+                DataBinding.DataSource = DSAntSaldos
+                ParentColor = False
+                Height = 21
+                Width = 90
+                AnchorX = 203
+              end
+              object cxDBLabel10: TcxDBLabel
+                Left = 114
+                Top = 33
+                DataBinding.DataField = 'Suma_a_30Dias'
+                DataBinding.DataSource = DSAntSaldos
+                ParentColor = False
+                Height = 21
+                Width = 90
+                AnchorX = 204
+              end
+              object cxDBLabel11: TcxDBLabel
+                Left = 114
+                Top = 58
+                DataBinding.DataField = 'Suma_a_60Dias'
+                DataBinding.DataSource = DSAntSaldos
+                ParentColor = False
+                Height = 21
+                Width = 90
+                AnchorX = 204
+              end
+              object cxDBLabel12: TcxDBLabel
+                Left = 114
+                Top = 83
+                DataBinding.DataField = 'Suma_a_90Dias'
+                DataBinding.DataSource = DSAntSaldos
+                ParentColor = False
+                Height = 21
+                Width = 90
+                AnchorX = 204
+              end
+              object cxDBLabel13: TcxDBLabel
+                Left = 114
+                Top = 109
+                DataBinding.DataField = 'Suma_a_mas_de_90Dias'
+                DataBinding.DataSource = DSAntSaldos
+                ParentColor = False
+                Height = 21
+                Width = 90
+                AnchorX = 204
+              end
+              object BtBtnOcultar: TBitBtn
+                Left = 208
+                Top = 112
+                Width = 70
+                Height = 25
+                Caption = 'Aceptar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFFFFFFFFFF33330000000000
+                  03333377777777777F33333003333330033333377FF333377F33333300333333
+                  0333333377FF33337F3333333003333303333333377FF3337333333333003333
+                  333333333377FF3333333333333003333333333333377FF33333333333330033
+                  3333333333337733333333333330033333333333333773333333333333003333
+                  33333333337733333F3333333003333303333333377333337F33333300333333
+                  03333333773333337F33333003333330033333377FFFFFF77F33330000000000
+                  0333337777777777733333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 5
+                OnClick = BtBtnOcultarClick
+              end
+            end
+            object cxDBDateEdit2: TcxDBDateEdit
+              Left = 444
+              Top = 32
+              TabStop = False
+              DataBinding.DataField = 'FechaRegistro'
+              DataBinding.DataSource = DataSource
+              TabOrder = 0
+              OnKeyDown = DBGrdDetallesKeyDown
+              Width = 152
             end
           end
           object Panel1: TPanel
@@ -694,6 +833,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object cxDBTextEdit2: TcxDBTextEdit
               Left = 553
               Top = 48
+              TabStop = False
               DataBinding.DataField = 'IVA'
               DataBinding.DataSource = DataSource
               TabOrder = 0
@@ -702,6 +842,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object cxDBTextEdit3: TcxDBTextEdit
               Left = 553
               Top = 21
+              TabStop = False
               DataBinding.DataField = 'SubTotal'
               DataBinding.DataSource = DataSource
               TabOrder = 1
@@ -710,6 +851,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object cxDBTextEdit4: TcxDBTextEdit
               Left = 553
               Top = 74
+              TabStop = False
               DataBinding.DataField = 'Total'
               DataBinding.DataSource = DataSource
               TabOrder = 2
@@ -754,7 +896,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -960,7 +1102,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011900C002FC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002000210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1906,23 +2048,22 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSOrdenSalidaItems: TDataSource
     DataSet = dmCotizaciones.ADODtStOrdenSalidaItem
-    Left = 844
-    Top = 32
+    Left = 772
+    Top = 24
   end
   object DSOrdenSalida: TDataSource
     DataSet = dmCotizaciones.ADODtStOrdenSalida
-    Left = 892
-    Top = 32
+    Left = 796
   end
   object DSQryBorrar: TDataSource
     DataSet = dmCotizaciones.ADOQryAuxiliar
-    Left = 904
-    Top = 192
+    Left = 800
+    Top = 248
   end
   object DSDireccioncliente: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccAuxiliar
-    Left = 936
-    Top = 112
+    Left = 1048
+    Top = 272
   end
   object DSDocumentoAux: TDataSource
     Left = 886
@@ -1931,5 +2072,10 @@ inherited frmCotizaciones: TfrmCotizaciones
   object dsFotosAux: TDataSource
     Left = 798
     Top = 431
+  end
+  object DSAntSaldos: TDataSource
+    DataSet = dmCotizaciones.ADODtStAntSaldos
+    Left = 608
+    Top = 152
   end
 end

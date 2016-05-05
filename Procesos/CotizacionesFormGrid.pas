@@ -23,7 +23,7 @@ uses
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, Vcl.Menus, cxContainer, dxCore, cxDateUtils, Vcl.Buttons,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.StdCtrls;
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.StdCtrls,Data.Win.ADODB;
 
 type
   TfrmCotizacionesGrid = class(T_frmStandarGFormGrid)
@@ -46,12 +46,18 @@ type
     cxDtEdtHasta: TcxDateEdit;
     SpdBtn: TSpeedButton;
     TlBtnSepara: TToolButton;
-    procedure FormShow(Sender: TObject);
     procedure SpdBtnClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
+    ffiltro: String;
+    FTipoDoc: Integer;
+    procedure PoneFiltro;
+    procedure SetTipoDoc(const Value: Integer);
     { Private declarations }
   public
     { Public declarations }
+     property FiltroCon:String read ffiltro write ffiltro; //may 2/16
+     Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
   end;
 
 var
@@ -63,13 +69,13 @@ implementation
 
 uses CotizacionesDM;
 
-procedure TfrmCotizacionesGrid.FormShow(Sender: TObject);
+procedure TfrmCotizacionesGrid.FormCreate(Sender: TObject);
 var    // Abr 19/16
   fechaAux:TDAteTime;
   a,d,m:word;
 begin
   inherited;
-    decodeDate(date,a,m,d);   //D. Abr 19/16
+  decodeDate(date,a,m,d);   //D. Abr 19/16
   cxDtEdtDesde.date:= encodedate(a,m,1);
   m:=m+1;
   if m=13 then
@@ -81,13 +87,42 @@ begin
   cxDtEdtHasta.date :=fechaAux-1;
 
    //H Abr 19/16
+end;
 
+procedure TfrmCotizacionesGrid.SetTipoDoc(const Value: Integer);
+begin
+  FTipoDoc := Value;
 end;
 
 procedure TfrmCotizacionesGrid.SpdBtnClick(Sender: TObject);
+const
+  TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,  IdDocumentoSalidaEstatus, IdMoneda,'+
+           'IdUsuario, FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDocto ';
+
+  orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';
+
+ // and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)
 begin
   inherited;
    //Armar consulta
+  PoneFiltro;
+  Tadodataset(datasource.DataSet).Close;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltro+orden;
+  if ffiltro <>''then                                        //Abr.20/16
+  begin
+    Tadodataset(datasource.DataSet).Parameters.ParamByName('TipoDocto').value:=FTipoDoc;
+    Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
+    Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
+  end;
+
+  Tadodataset(datasource.DataSet).open;
+end;
+
+procedure TfrmCotizacionesGrid.PoneFiltro;
+begin
+  //Ver si existe un todos o alguna restriccion
+  ffiltro:=' and fechaRegistro >:Fini and FechaRegistro<:FFin';
 
 end;
 

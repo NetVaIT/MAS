@@ -50,7 +50,6 @@ type
     cxDBSpinEdit1: TcxDBSpinEdit;
     DBLookupComboBox1: TDBLookupComboBox;
     DBLookupComboBox2: TDBLookupComboBox;
-    DBLookupComboBox3: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
     Panel1: TPanel;
@@ -108,6 +107,21 @@ type
     Label13: TLabel;
     cxDBLabel7: TcxDBLabel;
     cxDBLabel8: TcxDBLabel;
+    PnlSumasSaldos: TPanel;
+    cxDBLabel9: TcxDBLabel;
+    DSAntSaldos: TDataSource;
+    Label15: TLabel;
+    cxDBLabel10: TcxDBLabel;
+    Label14: TLabel;
+    Label16: TLabel;
+    cxDBLabel11: TcxDBLabel;
+    Label17: TLabel;
+    cxDBLabel12: TcxDBLabel;
+    Label18: TLabel;
+    cxDBLabel13: TcxDBLabel;
+    Label19: TLabel;
+    BtBtnOcultar: TBitBtn;
+    cxDBDateEdit2: TcxDBDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
@@ -120,6 +134,11 @@ type
     procedure TlBtnEnvioCorreoMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure BtBtnAdjuntosClick(Sender: TObject);
+    procedure BtBtnOcultarClick(Sender: TObject);
+    procedure cxDBLabel7Click(Sender: TObject);
+    procedure DBGrdDetallesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
@@ -169,6 +188,14 @@ begin
 end;
 
 
+procedure TfrmCotizaciones.BtBtnOcultarClick(Sender: TObject);
+begin
+  inherited;
+  PnlSumasSaldos.Visible:=False;
+   PnlSumasSaldos.Repaint;
+   DSAntSaldos.DataSet.Close;
+end;
+
 procedure TfrmCotizaciones.CrearArchivos(ListaAdj:TListBox;RutaAdj:String);
 var
   Base:String;
@@ -206,6 +233,16 @@ begin
     end;
   end;
 end;
+procedure TfrmCotizaciones.cxDBLabel7Click(Sender: TObject);
+begin
+  inherited;
+   DSAntSaldos.DataSet.Close;       //May 2/16
+  TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:= datasource.DataSet.FieldByName('IdPersona').asInteger;
+  DSAntSaldos.DataSet.Open;
+  PnlSumasSaldos.Visible:=True;
+  PnlSumasSaldos.Repaint;
+end;
+
 procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
@@ -300,6 +337,20 @@ begin
   //ShowMessage('Entro al evento');
 end;
 
+procedure TfrmCotizaciones.DBGrdDetallesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   inherited;
+  if Key=13 then
+  begin
+    key:=9;
+    //Perform(WM_NEXTDLGCTL,0,0);
+  end;
+
+
+
+end;
+
 procedure TfrmCotizaciones.DBLookupComboBox1Click(Sender: TObject);
 begin
   inherited;
@@ -311,7 +362,7 @@ begin
      dsDireccionCliente.dataset.Open;
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
-
+     TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLookupComboBox1.KeyValue;
    end;
 end;
 
@@ -324,6 +375,25 @@ begin
   DataSource.DataSet.open;
   DataSourceDetail.DataSet.Open;
 
+end;
+
+procedure TfrmCotizaciones.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+ if Key = #13 then                                                 { if it's an enter key }
+  begin
+     if not (ActiveControl is TDBGrid) then
+     begin       { if not on a TDBGrid }
+       Key := #0;                                                        { eat enter key }
+       Perform(WM_NEXTDLGCTL, 0, 0);                 { move to next control }
+     end
+     else if (ActiveControl is TDBGrid) then                { if it is a TDBGrid }
+     with TDBGrid(ActiveControl) do
+       if selectedindex < (fieldcount -1) then             { increment the field }
+         selectedindex := selectedindex +1
+       else
+         selectedindex := 0;
+  end;
 end;
 
 procedure TfrmCotizaciones.FormShow(Sender: TObject);
@@ -354,8 +424,9 @@ begin
   end;
  // TlBtnGenCotizaPDF.visible:= TlBtnCambioEstatus.Hint='Acepta Cotización'; //Feb 9/16    SpdBtnCambioEstatus.Caption
   SpdBtnGenPDFCotiza .visible:= SpdBtnCambioEstatus.Caption= 'Acepta Cotización';
-  TlBtnEnvioCorreo.Visible:=SpdBtnGenPDFCotiza .visible;
-  LstBxAdjuntosMail.Visible:=SpdBtnGenPDFCotiza .visible;
+
+ // TlBtnEnvioCorreo.Visible:=SpdBtnGenPDFCotiza .visible; //Para que desde el pedido tambien se pueda?? May 2/16
+//  LstBxAdjuntosMail.Visible:=SpdBtnGenPDFCotiza .visible;    //May 2/16
 
 end;
 
@@ -447,9 +518,13 @@ end;
 function TfrmCotizaciones.RevisaFaltantes(IDDocumento: Integer): Boolean;
 begin //Nov 23/15
   TADODataset(dsAuxiliar.dataset).Close;
-  TADODataset(dsAuxiliar.dataset).CommandText:='Select Sum(CantidadPendiente) Pendiente From DocumentosSalidasDetalles where IdDocumentoSalida='+intTosTR(IDDocumento);
+  TADODataset(dsAuxiliar.dataset).CommandText:='Select Sum(CantidadPendiente) Pendiente, count (*) cant From DocumentosSalidasDetalles where IdDocumentoSalida='+intTosTR(IDDocumento);
   dsAuxiliar.dataset.Open;
-  Result:=dsAuxiliar.DataSet.FieldByName('Pendiente').AsFloat >0;
+
+  Result:=(dsAuxiliar.DataSet.FieldByName('Pendiente').AsFloat >0) or (dsAuxiliar.DataSet.FieldByName('cant').AsInteger=0); //May 2/16 Para evitar q  ue los que estan dando de alta se bloqueen
+
+
+
 
 end;
 
@@ -475,7 +550,7 @@ end;
 procedure TfrmCotizaciones.SetTipoDoc(const Value: Integer);
 begin
   FTipoDoc := Value;
-
+  TfrmCotizacionesGrid(gFormGrid).TipoDocumento:=Value;
 end;
 
 procedure TfrmCotizaciones.SpdBtnCambioEstatusClick(Sender: TObject);

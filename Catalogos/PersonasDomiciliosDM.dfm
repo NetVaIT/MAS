@@ -89,7 +89,6 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
   end
   object adodsDomiciliosTipos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDomicilioTipo, Descripcion FROM DomiciliosTipos'
@@ -98,7 +97,6 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 96
   end
   object adodsDomicilios: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -158,7 +156,6 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 80
   end
   object ADODtStEnvioTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdEnvioTipo, Descripcion from EnviosTipos'

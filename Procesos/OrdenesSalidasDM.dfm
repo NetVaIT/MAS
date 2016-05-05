@@ -344,7 +344,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -366,7 +365,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRecolecta: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -400,7 +398,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRevisa: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -434,7 +431,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaEmpaca: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -490,7 +486,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 241
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -553,7 +548,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 240
   end
   object ADODtStPersonaAutoriza: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -973,6 +967,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object DSInsertaKardex: TDataSource
+    AutoEdit = False
     DataSet = ADODtStDatosDocumentoSalida
     Left = 620
     Top = 240
@@ -1026,7 +1021,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 297
   end
   object ADODtStIdentificadores: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

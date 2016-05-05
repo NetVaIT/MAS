@@ -580,7 +580,7 @@ begin
           if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
              ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
 
-          //Actualiza datos
+          //Actualiza datos   //Verificar que no sea tipo3 (nota Credito)  Abr 28/16
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
           //Actualizar Saldo Cliente //No debio actualizar antes
 

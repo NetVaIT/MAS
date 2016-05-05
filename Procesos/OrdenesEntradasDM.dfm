@@ -362,7 +362,6 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     Top = 80
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProducto, Descripcion from Productos'

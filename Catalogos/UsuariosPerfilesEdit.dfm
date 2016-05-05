@@ -7,97 +7,58 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 964
+    ExplicitWidth = 964
   end
   inherited splDetail2: TSplitter
     Width = 964
+    ExplicitWidth = 964
   end
   inherited splDetail1: TSplitter
     Width = 964
+    ExplicitWidth = 964
   end
   inherited pnlClose: TPanel
     Width = 964
+    ExplicitWidth = 964
   end
   inherited pnlDetail3: TPanel
     Width = 964
+    ExplicitWidth = 964
   end
   inherited pnlDetail2: TPanel
     Width = 964
+    ExplicitWidth = 964
   end
   inherited pnlDetail1: TPanel
     Width = 964
+    ExplicitWidth = 964
   end
   inherited pcMain: TcxPageControl
     Width = 964
-    ExplicitWidth = 918
+    ExplicitWidth = 964
     ClientRectRight = 963
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
-      ExplicitWidth = 748
+      ExplicitWidth = 962
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 962
+        ExplicitWidth = 962
         inherited tbarData: TToolBar
           Width = 960
-          object ToolButton3: TToolButton [1]
-            Left = 23
+          ExplicitWidth = 960
+          inherited ToolButton19: TToolButton
+            OnMouseDown = ToolButton19MouseDown
+          end
+          object ToolButton3: TToolButton
+            Left = 254
             Top = 0
             Action = DataSetEdit
-          end
-          inherited ToolButton11: TToolButton
-            Left = 46
-            ExplicitLeft = 46
-          end
-          inherited ToolButton12: TToolButton
-            Left = 54
-            ExplicitLeft = 54
-          end
-          inherited ToolButton13: TToolButton
-            Left = 77
-            ExplicitLeft = 77
-          end
-          inherited ToolButton14: TToolButton
-            Left = 85
-            ExplicitLeft = 85
-          end
-          inherited ToolButton15: TToolButton
-            Left = 108
-            ExplicitLeft = 108
-          end
-          inherited ToolButton16: TToolButton
-            Left = 131
-            ExplicitLeft = 131
-          end
-          inherited ToolButton17: TToolButton
-            Left = 154
-            ExplicitLeft = 154
-          end
-          inherited ToolButton18: TToolButton
-            Left = 177
-            ExplicitLeft = 177
-          end
-          inherited ToolButton19: TToolButton
-            Left = 200
-            OnMouseDown = ToolButton19MouseDown
-            ExplicitLeft = 200
-          end
-          inherited ToolButton20: TToolButton
-            Left = 223
-            ExplicitLeft = 223
-          end
-          inherited ToolButton1: TToolButton
-            Left = 246
-            ExplicitLeft = 246
-          end
-          inherited ToolButton2: TToolButton
-            Left = 254
-            ExplicitLeft = 254
           end
         end
         inherited pnlMaster: TPanel
           Width = 960
-          ExplicitLeft = -3
-          ExplicitTop = 24
           ExplicitWidth = 960
           object Label1: TLabel
             Left = 32
@@ -122,6 +83,14 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             Height = 13
             Caption = 'Permiso Opciones'
             FocusControl = cxDBTextEdit3
+          end
+          object Label4: TLabel
+            Left = 334
+            Top = 29
+            Width = 77
+            Height = 13
+            Caption = 'Permiso Funci'#243'n'
+            FocusControl = cxDBTextEdit4
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 32
@@ -148,8 +117,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             Width = 392
           end
           object PnlMenus: TPanel
-            Left = 31
-            Top = 180
+            Left = 23
+            Top = 107
             Width = 770
             Height = 229
             BevelOuter = bvNone
@@ -158,8 +127,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckLstBxOpcionesCat: TCheckListBox
               Tag = 1000
               Left = 12
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 166
               ItemHeight = 13
               Items.Strings = (
@@ -180,27 +149,28 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckLstBxOpcionesAlm: TCheckListBox
               Tag = 3000
               Left = 135
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 103
               ItemHeight = 13
               Items.Strings = (
-                'Almacenes                 |30')
+                'Almacenes                 |30'
+                'Devoluci'#243'n Producto |31')
               TabOrder = 1
             end
             object ChckLstBxOpcionesVenta: TCheckListBox
               Tag = 2000
               Left = 258
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 103
               ItemHeight = 13
               Items.Strings = (
                 'Cotizaciones            |20'
-                'Pedido                     |21'
+                'Pedido                      |21'
                 'Ordenes Salida        |22'
                 'Facturas                  |23'
-                'Notas Venta            |24'
+                'Notas Venta             |24'
                 'Notas Cr'#233'dito          |25'
                 'Notas Cargo            |26')
               TabOrder = 2
@@ -208,8 +178,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckLstBxOpcionesCXC: TCheckListBox
               Tag = 6000
               Left = 504
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 103
               ItemHeight = 13
               Items.Strings = (
@@ -221,34 +191,35 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckLstBxOpcionesCompra: TCheckListBox
               Tag = 4000
               Left = 381
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 103
               ItemHeight = 13
               Items.Strings = (
-                'Requisici'#243'n               |41'
-                'Orden Compra         |42'
-                'Backorder                |40'
-                'Facturas                  |43'
-                'Ordenes Entrada     |44')
+                'Requisici'#243'n                |41'
+                'Orden Compra          |42'
+                'Backorder                 |40'
+                'Facturas                   |43'
+                'Entrada Mercanc'#237'a    |44'
+                'Ordenes Entrada      |45')
               TabOrder = 4
             end
             object ChckLstBxOpcionesRep: TCheckListBox
               Tag = 5000
               Left = 627
-              Top = 42
-              Width = 117
+              Top = 30
+              Width = 118
               Height = 103
               ItemHeight = 13
               Items.Strings = (
-                'Ventas Unidades     |50'
-                'Costo Inventario     |51')
+                'Ventas Unidades      |50'
+                'Costo Inventario      |51')
               TabOrder = 5
             end
             object ChckBxCat: TCheckBox
               Tag = 1000
               Left = 15
-              Top = 19
+              Top = 7
               Width = 97
               Height = 17
               Caption = 'Cat'#225'logos                  |1000'
@@ -258,7 +229,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckBxAlm: TCheckBox
               Tag = 3000
               Left = 135
-              Top = 19
+              Top = 7
               Width = 97
               Height = 17
               Caption = 'Almacen                     |2000'
@@ -268,7 +239,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckBxVentas: TCheckBox
               Tag = 2000
               Left = 261
-              Top = 19
+              Top = 7
               Width = 97
               Height = 17
               Caption = 'Ventas                       |3000'
@@ -277,8 +248,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckBxCompras: TCheckBox
               Tag = 4000
-              Left = 381
-              Top = 19
+              Left = 382
+              Top = 7
               Width = 97
               Height = 17
               Caption = 'Compras                    |4000'
@@ -288,7 +259,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckBxCxC: TCheckBox
               Tag = 6000
               Left = 506
-              Top = 19
+              Top = 7
               Width = 105
               Height = 17
               Caption = 'Cuentas X Cobrar      |6000'
@@ -298,7 +269,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             object ChckBxRep: TCheckBox
               Tag = 5000
               Left = 629
-              Top = 19
+              Top = 7
               Width = 97
               Height = 17
               Caption = 'Reportes                    |5000'
@@ -307,7 +278,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object BtnActOpcion: TButton
               Left = 160
-              Top = 176
+              Top = 164
               Width = 113
               Height = 25
               Caption = 'Actualiza Opciones'
@@ -315,6 +286,14 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Visible = False
               OnClick = BtnActOpcionClick
             end
+          end
+          object cxDBTextEdit4: TcxDBTextEdit
+            Left = 334
+            Top = 48
+            DataBinding.DataField = 'PermisosFuncion'
+            DataBinding.DataSource = DataSource
+            TabOrder = 4
+            Width = 311
           end
         end
       end
@@ -327,7 +306,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -468,7 +447,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
