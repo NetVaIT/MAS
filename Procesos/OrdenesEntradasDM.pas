@@ -364,6 +364,7 @@ begin
   adodsMasterTipoCambio.Value:= 1;
   adodsMasterIdUsuario.Value:= _dmConection.IdUsuario;
   adodsMasterFecha.Value:= Date;
+  TfrmOrdenesEntradas(gGridEditForm).SetFoco;
 end;
 
 procedure TdmOrdenesEntradas.CalcularItemsImportes;

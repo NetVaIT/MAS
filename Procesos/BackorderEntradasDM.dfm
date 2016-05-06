@@ -68,14 +68,23 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
       'les.IdDocumentoEntradaDetalle, BackorderEntradasDetalles.IdOrden' +
       'EntradaItem, '#13#10'BackorderEntradasDetalles.IdBackorderEntradaTipo,' +
       ' BackorderEntradasDetalles.IdProducto, BackorderEntradasDetalles' +
-      '.Fecha, BackorderEntradasTipos.Descripcion AS Tipo, '#13#10'BackorderE' +
-      'ntradasDetalles.Cantidad, Productos.Identificador1, Productos.De' +
-      'scripcion AS Producto'#13#10'FROM BackorderEntradasDetalles'#13#10'INNER JOI' +
-      'N BackorderEntradasTipos ON BackorderEntradasDetalles.IdBackorde' +
-      'rEntradaTipo = BackorderEntradasTipos.IdBackorderEntradaTipo'#13#10'IN' +
-      'NER JOIN Productos ON BackorderEntradasDetalles.IdProducto = Pro' +
-      'ductos.IdProducto'#13#10'WHERE BackorderEntradasDetalles.IdBackorderEn' +
-      'trada = :IdBackorderEntrada'
+      '.Fecha, BackorderEntradasTipos.Descripcion AS Tipo, '#13#10'ISNULL(Doc' +
+      'umentosEntradas.IdDocumentoEntrada, OrdenesEntradas.IdOrdenEntra' +
+      'da) AS Folio, BackorderEntradasDetalles.Cantidad, Productos.Iden' +
+      'tificador1, '#13#10'Productos.Descripcion AS Producto'#13#10'FROM BackorderE' +
+      'ntradasDetalles'#13#10'INNER JOIN BackorderEntradasTipos ON BackorderE' +
+      'ntradasDetalles.IdBackorderEntradaTipo = BackorderEntradasTipos.' +
+      'IdBackorderEntradaTipo'#13#10'INNER JOIN Productos ON BackorderEntrada' +
+      'sDetalles.IdProducto = Productos.IdProducto '#13#10'LEFT JOIN Document' +
+      'osEntradasDetalles ON BackorderEntradasDetalles.IdDocumentoEntra' +
+      'daDetalle = DocumentosEntradasDetalles.IdDocumentoEntradaDetalle' +
+      ' '#13#10'LEFT JOIN DocumentosEntradas ON DocumentosEntradasDetalles.Id' +
+      'DocumentoEntrada = DocumentosEntradas.IdDocumentoEntrada'#13#10'LEFT J' +
+      'OIN OrdenesEntradasItems ON BackorderEntradasDetalles.IdOrdenEnt' +
+      'radaItem = OrdenesEntradasItems.IdOrdenEntradaItem'#13#10'LEFT JOIN Or' +
+      'denesEntradas ON OrdenesEntradasItems.IdOrdenEntrada = OrdenesEn' +
+      'tradas.IdOrdenEntrada'#13#10'WHERE BackorderEntradasDetalles.IdBackord' +
+      'erEntrada = :IdBackorderEntrada'
     DataSource = dsMaster
     MasterFields = 'IdBackorderEntrada'
     Parameters = <
@@ -120,6 +129,10 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
     object adodsDetalleTipo: TStringField
       FieldName = 'Tipo'
       Size = 15
+    end
+    object adodsDetalleFolio: TIntegerField
+      FieldName = 'Folio'
+      ReadOnly = True
     end
     object adodsDetalleCantidad: TFloatField
       FieldName = 'Cantidad'

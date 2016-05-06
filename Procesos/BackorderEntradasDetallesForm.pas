@@ -42,6 +42,7 @@ type
     tvMasterProducto: TcxGridDBColumn;
     tvMasterIdOrdenEntradaItem: TcxGridDBColumn;
     tvMasterIdBackorderEntradaTipo: TcxGridDBColumn;
+    tvMasterFolio: TcxGridDBColumn;
   private
     { Private declarations }
   public

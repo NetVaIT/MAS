@@ -52,14 +52,13 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
     Top = 22
     Width = 800
     Height = 405
+    TabStop = False
     ExplicitTop = 22
     ExplicitWidth = 800
     ExplicitHeight = 405
     ClientRectBottom = 404
     ClientRectRight = 799
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
       ExplicitWidth = 798
       ExplicitHeight = 403
       inherited cxScrollBox1: TcxScrollBox
@@ -172,7 +171,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Width = 40
               Height = 13
               Caption = 'Almacen'
-              FocusControl = DBLookupComboBox4
+              FocusControl = lcbAlmacen
             end
             object edtMoneda: TDBLookupComboBox
               Left = 9
@@ -249,7 +248,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               TabOrder = 7
               Width = 121
             end
-            object DBLookupComboBox4: TDBLookupComboBox
+            object lcbAlmacen: TDBLookupComboBox
               Left = 9
               Top = 63
               Width = 556
@@ -374,7 +373,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -515,7 +514,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D002803E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

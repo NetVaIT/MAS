@@ -51,7 +51,7 @@ type
     cxDBLabel2: TcxDBLabel;
     ToolButton3: TToolButton;
     Label11: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
+    lcbClave: TDBLookupComboBox;
     Label12: TLabel;
     edtTipoCambio: TcxDBButtonEdit;
     btnAutorizar: TSpeedButton;
@@ -59,6 +59,7 @@ type
     btnImprimir: TToolButton;
     PnlTitulo: TPanel;
     cxDBLabel3: TcxDBLabel;
+    btnEmail: TToolButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -66,16 +67,20 @@ type
     FactImprimir: TBasicAction;
     FactTipoCambio: TBasicAction;
     FactGenDocumento: TBasicAction;
+    FactEmail: TBasicAction;
     procedure SetactAutorizar(const Value: TBasicAction);
     procedure SetactImprimir(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
     procedure SetactGenDocumento(const Value: TBasicAction);
+    procedure SetactEmail(const Value: TBasicAction);
   public
     { Public declarations }
     property actAutorizar: TBasicAction read FactAutorizar write SetactAutorizar;
     property actGenDocumento: TBasicAction read FactGenDocumento write SetactGenDocumento;
     property actImprimir: TBasicAction read FactImprimir write SetactImprimir;
+    property actEmail: TBasicAction read FactEmail write SetactEmail;
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
+    procedure SetFoco;
   end;
 
 implementation
@@ -97,6 +102,12 @@ begin
   btnAutorizar.Action:= Value;
 end;
 
+procedure TfrmDocumentosEntradas.SetactEmail(const Value: TBasicAction);
+begin
+  FactEmail := Value;
+  btnEmail.Action := Value;
+end;
+
 procedure TfrmDocumentosEntradas.SetactGenDocumento(const Value: TBasicAction);
 begin
   FactGenDocumento := Value;
@@ -113,6 +124,11 @@ procedure TfrmDocumentosEntradas.SetactTipoCambio(const Value: TBasicAction);
 begin
   FactTipoCambio := Value;
   edtTipoCambio.Properties.Buttons[0].Action:= Value;
+end;
+
+procedure TfrmDocumentosEntradas.SetFoco;
+begin
+  lcbClave.SetFocus;
 end;
 
 end.

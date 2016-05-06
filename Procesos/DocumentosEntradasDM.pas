@@ -146,6 +146,11 @@ type
     adoqTipoCambioValor: TFMTBCDField;
     actGenDocumento: TAction;
     adodsDocumentosDetallesImporteMonedaLocal: TFMTBCDField;
+    actEmail: TAction;
+    ADOQryAuxiliar: TADOQuery;
+    adodsDocumentosDetallesPrecioMonedalocal: TFMTBCDField;
+    adodsDocumentosDetallesCostoPromedio: TFloatField;
+    adodsDocumentosDetallesPreicoVenta: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -165,6 +170,8 @@ type
     procedure actGenDocumentoUpdate(Sender: TObject);
     procedure actAutorizarUpdate(Sender: TObject);
     procedure adodsDocumentosDetallesCalcFields(DataSet: TDataSet);
+    procedure actEmailExecute(Sender: TObject);
+    procedure actEmailUpdate(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -177,6 +184,10 @@ type
     function GetIdProducto(IdPersona: Integer; Clave: String;
       var Precio: Double): Integer;
     procedure SetBloquear(const Value: Boolean);
+    function GetCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+    function GetCorreoReceptor(IdCliente: Integer;
+      var CorreoCliente: String): Boolean;
+    procedure PrintPDFFile(PDFFileName: TFileName; Mostrar: Boolean);
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -190,7 +201,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses DocumentosEntradasForm, DocumentosEntradasDetalleForm, ConfiguracionDM,
-  _ConectionDmod, _Utils;
+  _ConectionDmod, _Utils, UDMEnvioMail;
 
 {$R *.dfm}
 
@@ -224,6 +235,75 @@ begin
   adodsListaProductos.Open
 end;
 
+procedure TdmDocumentosEntradas.actEmailExecute(Sender: TObject);
+var
+  dmEnvioMail: TDMEnvioMails;
+  ADatosEmisor: TStringList;
+  ArchivosLista: TStringList;
+  ArcCotiza, ArcImagen, ArcDoc: TFileName;
+  IdDoc: Integer;
+  CorreoRec, FechaText: string;
+  Tipo, Folio: string;
+begin
+  inherited;
+  FechaText := FormatDateTime('yyyymmdd', Date);
+  Tipo := adodsMasterTipo.AsString;
+  Folio:= adodsMasterIdDocumentoEntrada.AsString;
+  ArcCotiza:= Tipo + '_'+ Folio + '_'+ FechaText + '.pdf';
+  ShowProgress(10,100,'Preparando documentos');
+  try
+    PrintPDFFile(ArcCotiza, False);
+    if FileExists(ArcCotiza) then
+    begin
+      ADatosEmisor:=TStringList.Create;
+      ArchivosLista:=TStringList.Create;
+      ArcImagen:='';
+      ArcDoc:='';
+      try
+        ShowProgress(30,100,'Enviando correo');
+        ArchivosLista.Add(ArcCotiza);
+      //  AdjuntarArchivos(ArchivosLista);
+        if GetCorreoEmisor(ADatosEmisor) and GetCorreoReceptor(adodsMasterIdPersona.AsInteger,CorreoRec) then
+        begin
+          dmEnvioMail := TDMEnvioMails.Create(Self);
+          try
+            ShowProgress(60,100,'Enviando correo');
+            if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'], Tipo, Tipo+ ' ' + Folio,
+                     ArcCotiza,ArcImagen, ArcDoc,ArchivosLista,ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
+                     'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
+                     StrToInt(ADatosEmisor.Values['ModSSL'])) then
+             begin
+               ShowMessage('Correo enviado');
+             end
+             else
+             begin
+               ShowMessage('Error en envio del correo. Verifique conexión a internet');
+             end;
+          finally
+            dmEnvioMail.Free;
+          end;
+        end
+        else
+        begin
+          ShowMessage('No se pudo enviar el correo. Falta Información para el envio. '+#13+'Asegurese de tener definida la información del servidor de salida y el correo del destinatario.');
+        end;
+      //  BorraSoloArchivos(ExtractFilePath(application.ExeName)+'Adjcorreo\');
+      finally
+        ADatosEmisor.Free;
+        ArchivosLista.Free;
+      end;
+    end;
+  finally
+    ShowProgress(100,100);
+  end;
+end;
+
+procedure TdmDocumentosEntradas.actEmailUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Visible:= (Tipo <> tFactura);
+end;
+
 procedure TdmDocumentosEntradas.actGenDocumentoExecute(Sender: TObject);
 begin
   inherited;
@@ -246,12 +326,13 @@ begin
       TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAbierto));
     end;
     tOrdenCompra: begin
-      TAction(Sender).Caption:= 'Registrar factura';
-      TAction(Sender).Hint:= 'Cerrar y registrar factura del provedor';
+      TAction(Sender).Caption:= 'Registrar prefactura';
+      TAction(Sender).Hint:= 'Cerrar y registrar prefactura del provedor';
       TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAutorizado));
     end;
     tFactura: begin
-      TAction(Sender).Hint:= 'Cerrar documento';
+      TAction(Sender).Caption:= 'Registrar factura';
+      TAction(Sender).Hint:= 'Registrar factura del provedor';
       TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAbierto));
     end;
   end;
@@ -306,7 +387,10 @@ procedure TdmDocumentosEntradas.adodsDocumentosDetallesCalcFields(
 begin
   inherited;
   if adodsMaster.Active then
+  begin
+    adodsDocumentosDetallesPrecioMonedalocal.Value:= adodsDocumentosDetallesPrecio.AsFloat * adodsMasterTipoCambio.AsFloat;
     adodsDocumentosDetallesImporteMonedaLocal.Value:= adodsDocumentosDetallesImporte.AsFloat * adodsMasterTipoCambio.AsFloat;
+  end;
 end;
 
 procedure TdmDocumentosEntradas.adodsDocumentosDetallesCantidadChange(
@@ -377,6 +461,7 @@ begin
   adodsMasterTipoCambio.Value:= 1;
   adodsMasterIdUsuario.Value:= _dmConection.IdUsuario;
   adodsMasterFecha.Value:= Date;
+  TfrmDocumentosEntradas(gGridEditForm).SetFoco;
 end;
 
 constructor TdmDocumentosEntradas.CreateWTipo(AOwner: TComponent; Tipo: TPTipo);
@@ -400,6 +485,7 @@ begin
   TfrmDocumentosEntradas(gGridEditForm).actGenDocumento:= actGenDocumento;
   TfrmDocumentosEntradas(gGridEditForm).actAutorizar:= actAutorizar;
   TfrmDocumentosEntradas(gGridEditForm).actImprimir := actImprimir;
+  TfrmDocumentosEntradas(gGridEditForm).actEmail := actEmail;
   TfrmDocumentosEntradas(gGridEditForm).actTipoCambio:= actGetTipoCambio;
   gFormDetail1:= TfrmDocumentosEntradasDetalle.Create(Self);
   gFormDetail1.DataSet:= adodsDocumentosDetalles;
@@ -463,6 +549,87 @@ end;
 procedure TdmDocumentosEntradas.SetTipo(const Value: TPTipo);
 begin
   FTipo := Value;
+end;
+
+function TdmDocumentosEntradas.GetCorreoEmisor(ADatosCorreo: TStringList): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * from Configuraciones');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('HostEnvio').AsString <> EmptyStr)
+  and (ADOQryAuxiliar.FieldByName('PuertoEnvio').AsString <> EmptyStr)
+  and (ADOQryAuxiliar.FieldByName('PasswordCorreo').AsString <> EmptyStr)
+  and (ADOQryAuxiliar.FieldByName('CorreoEnvio').AsString <> EmptyStr) then
+  begin
+    ADatosCorreo.Values['emailNoti']    := ADOQryAuxiliar.FieldByName('CorreoEnvio').ASString;
+    ADatosCorreo.Values['host']         := ADOQryAuxiliar.FieldByName('HostEnvio').ASString;
+    ADatosCorreo.Values['usuario']      :=ADOQryAuxiliar.FieldByName('UsuarioCorreo').ASString ;
+    ADatosCorreo.Values['contrasenia']  :=ADOQryAuxiliar.FieldByName('PasswordCorreo').ASString ;
+    ADatosCorreo.Values['puerto']       :=ADOQryAuxiliar.FieldByName('PuertoEnvio').ASString ;
+  //  ADatosCorreo.Values['QEnvia']   :='Notificador'; //ADOQryAuxiliar.FieldByName('').ASString ;
+    if not ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').IsNull then
+       ADatosCorreo.Values['MetSSL']   :=ADOQryAuxiliar.FieldByName('TIPOSEGURIDAD').ASString
+    else
+      ADatosCorreo.Values['MetSSL']   :='3'; //sslvTLSv1
+    if not ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').IsNull then
+      ADatosCorreo.Values['ModSSL']   :=ADOQryAuxiliar.FieldByName('METODOAUTENTICACION').ASString
+    else
+      ADatosCorreo.Values['ModSSL']   :='0';//sslmUnassigned
+    Result:=True;
+  end;
+  ADOQryAuxiliar.Close;
+end;
+
+function TdmDocumentosEntradas.GetCorreoReceptor(IdCliente: Integer;
+  var CorreoCliente: String): Boolean;
+begin
+  Result:=False;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;                                                                            //Notificador o preguntar cual???  o ver si el predeterminado
+  ADOQryAuxiliar.sql.add('Select * from Emails where idPersona='+IntToStr(IdCliente)+' and ((IdEmailTipo=3) or(Predeterminado=1))');
+  ADOQryAuxiliar.Open;
+  if not (ADOQryAuxiliar.eof) and (ADOQryAuxiliar.FieldByName('email').ASString<>'') then
+  begin
+    CorreoCliente:=ADOQryAuxiliar.FieldByName('email').ASString;
+    REsult:=True;
+  end;
+end;
+
+procedure TdmDocumentosEntradas.PrintPDFFile(PDFFileName: TFileName; Mostrar: Boolean);
+var
+  vDeviceType: String;
+  vShowPrintDialog, vShowCancelDialog, vAllowPrintToArchive: Boolean;
+begin
+  // Configura el reporte
+  vDeviceType:= ppRptDocumento.DeviceType;
+  vShowPrintDialog := ppRptDocumento.ShowPrintDialog;
+  vShowCancelDialog := ppRptDocumento.ShowCancelDialog;
+  vAllowPrintToArchive := ppRptDocumento.AllowPrintToArchive;
+  try
+    ppRptDocumento.ShowPrintDialog:= False;
+    ppRptDocumento.ShowCancelDialog:= False;
+    ppRptDocumento.AllowPrintToArchive:= False;
+    if Mostrar then
+       ppRptDocumento.DeviceType:= 'Screen'
+    else
+    if PDFFileName <> '' then
+    begin
+      ppRptDocumento.DeviceType:= 'PDF';
+      ppRptDocumento.TextFileName:= PDFFileName;
+    end
+    else
+      ppRptDocumento.DeviceType:= 'Printer';
+    ppRptDocumento.PrinterSetup.Copies:= 1;
+    ppRptDocumento.PrinterSetup.DocumentName:= ExtractFileName(PDFFileName);
+    ppRptDocumento.Print;
+  finally
+    ppRptDocumento.DeviceType := vDeviceType;
+    ppRptDocumento.ShowPrintDialog := vShowPrintDialog;
+    ppRptDocumento.ShowCancelDialog := vShowCancelDialog;
+    ppRptDocumento.AllowPrintToArchive := vAllowPrintToArchive;
+  end;
 end;
 
 end.

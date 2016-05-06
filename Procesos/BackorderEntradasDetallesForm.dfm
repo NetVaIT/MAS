@@ -6,6 +6,7 @@ inherited frmBackorderEntradasDetalles: TfrmBackorderEntradasDetalles
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdBackorderEntradaDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdBackorderEntradaDetalle'
@@ -37,6 +38,9 @@ inherited frmBackorderEntradasDetalles: TfrmBackorderEntradasDetalles
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
         end
+        object tvMasterFolio: TcxGridDBColumn
+          DataBinding.FieldName = 'Folio'
+        end
         object tvMasterCantidad: TcxGridDBColumn
           DataBinding.FieldName = 'Cantidad'
         end
@@ -66,7 +70,6 @@ inherited frmBackorderEntradasDetalles: TfrmBackorderEntradasDetalles
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

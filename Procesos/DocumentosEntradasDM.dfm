@@ -176,6 +176,13 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       ImageIndex = 12
       OnExecute = actImprimirExecute
     end
+    object actEmail: TAction
+      Caption = 'Enviar por correo'
+      Hint = 'Enviar por correo electr'#243'nico'
+      ImageIndex = 13
+      OnExecute = actEmailExecute
+      OnUpdate = actEmailUpdate
+    end
     object actGetTipoCambio: TAction
       Caption = '...'
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
@@ -340,6 +347,14 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Size = 6
       Calculated = True
     end
+    object adodsDocumentosDetallesPrecioMonedalocal: TFMTBCDField
+      DisplayLabel = 'Costo'
+      FieldKind = fkCalculated
+      FieldName = 'PrecioMonedalocal'
+      Visible = False
+      currency = True
+      Calculated = True
+    end
     object adodsDocumentosDetallesExistencia: TFloatField
       FieldKind = fkLookup
       FieldName = 'Existencia'
@@ -347,6 +362,28 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       LookupKeyFields = 'IdProducto'
       LookupResultField = 'Existencia'
       KeyFields = 'IdProducto'
+      Lookup = True
+    end
+    object adodsDocumentosDetallesCostoPromedio: TFloatField
+      DisplayLabel = 'Costo promedio'
+      FieldKind = fkLookup
+      FieldName = 'CostoPromedio'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'CostoPromedio'
+      KeyFields = 'IdProducto'
+      currency = True
+      Lookup = True
+    end
+    object adodsDocumentosDetallesPreicoVenta: TFloatField
+      DisplayLabel = 'Preico venta'
+      FieldKind = fkLookup
+      FieldName = 'PreicoVenta'
+      LookupDataSet = adodsCantidad
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'PrecioVenta'
+      KeyFields = 'IdProducto'
+      currency = True
       Lookup = True
     end
     object adodsDocumentosDetallesCantidadAnual: TFloatField
@@ -4487,9 +4524,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT        IdProducto, Existencia, CantidadAnual, CantidadMen' +
-      'sual, CantidadPromedio, CantidadFuturo, Backorder'#13#10'FROM         ' +
-      '   v_ProductosCantidad'
+      'SELECT        IdProducto, Existencia, CostoPromedio, PrecioVenta' +
+      ', CantidadAnual, CantidadMensual, CantidadPromedio, CantidadFutu' +
+      'ro, Backorder'#13#10'FROM            v_ProductosCantidad'
     Parameters = <>
     Left = 144
     Top = 224
@@ -4513,5 +4550,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       ReadOnly = True
       Precision = 16
     end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 308
+    Top = 472
   end
 end

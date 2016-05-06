@@ -32,6 +32,7 @@ type
     adodsMasterEntrada: TFloatField;
     adodsDetalleIdOrdenEntradaItem: TIntegerField;
     adodsDetalleIdBackorderEntradaTipo: TIntegerField;
+    adodsDetalleFolio: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

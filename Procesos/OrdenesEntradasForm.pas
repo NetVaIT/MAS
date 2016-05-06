@@ -53,7 +53,7 @@ type
     lblTipoCambio: TLabel;
     edtTipoCambio: TcxDBButtonEdit;
     Label13: TLabel;
-    DBLookupComboBox4: TDBLookupComboBox;
+    lcbAlmacen: TDBLookupComboBox;
     PnlTitulo: TPanel;
     cxLabel1: TcxLabel;
     btnRecibr: TSpeedButton;
@@ -79,6 +79,7 @@ type
     property actRecibir: TBasicAction read FactRecibir write SetactRecibir;
     property actAplicar: TBasicAction read FactAplicar write SetactAplicar;
     property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
+    procedure SetFoco;
   end;
 
 implementation
@@ -122,6 +123,11 @@ procedure TfrmOrdenesEntradas.SetactTipoCambio(const Value: TBasicAction);
 begin
   FactTipoCambio := Value;
   edtTipoCambio.Properties.Buttons[0].Action:= Value;
+end;
+
+procedure TfrmOrdenesEntradas.SetFoco;
+begin
+  lcbAlmacen.SetFocus;
 end;
 
 procedure TfrmOrdenesEntradas.SetMostrarImporte(const Value: Boolean);

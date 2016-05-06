@@ -49,6 +49,10 @@ type
     tvMaster2CantidadFuturo: TcxGridDBColumn;
     tvMaster2BackOrder: TcxGridDBColumn;
     tvMasterImporteMonedaLocal: TcxGridDBColumn;
+    tvMaster2PrecioMonedalocal: TcxGridDBColumn;
+    tvMaster2CostoPromedio: TcxGridDBColumn;
+    tvMaster2PreicoVenta: TcxGridDBColumn;
+    tvMasterPrecioMonedalocal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
