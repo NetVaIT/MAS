@@ -150,7 +150,8 @@ uses
   rptCostoInventarioDM in 'Reportes\rptCostoInventarioDM.pas' {DMrptCostoInventario: TDataModule},
   UsuariosPerfilesDM in 'Catalogos\UsuariosPerfilesDM.pas' {DmPerfilesUsuario: TDataModule},
   UsuariosPerfilesEdit in 'Catalogos\UsuariosPerfilesEdit.pas' {frmUsuariosPerfiles},
-  UsuariosPerfilesForm in 'Catalogos\UsuariosPerfilesForm.pas' {frmUsuariosPerfilesGrid};
+  UsuariosPerfilesForm in 'Catalogos\UsuariosPerfilesForm.pas' {frmUsuariosPerfilesGrid},
+  ContactosEdit in 'Catalogos\ContactosEdit.pas' {FrmContactosEdit};
 
 {$R *.res}
 
@@ -163,5 +164,6 @@ begin
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
+  Application.CreateForm(TFrmContactosEdit, FrmContactosEdit);
   Application.Run;
 end.

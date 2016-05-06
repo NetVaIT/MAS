@@ -39,6 +39,8 @@ type
     cxDBLabel3: TcxDBLabel;
     Label5: TLabel;
     procedure FormCreate(Sender: TObject);
+    procedure cxDBLookupComboBox1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FUpdateDomicilio: TBasicAction;
     procedure SetUpdateDomicilio(const Value: TBasicAction);
@@ -54,6 +56,17 @@ implementation
 {$R *.dfm}
 
 uses PersonasDomiciliosDM, PersonasDomiciliosForm;
+
+procedure TfrmPersonasDomiciliosEdit.cxDBLookupComboBox1KeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if Key=13 then     //May 5/16
+  begin
+    key:=9;
+    //Perform(WM_NEXTDLGCTL,0,0);
+  end;
+end;
 
 procedure TfrmPersonasDomiciliosEdit.FormCreate(Sender: TObject);
 begin

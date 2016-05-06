@@ -26,11 +26,13 @@ uses
 
 type
   TfrmPersonasContactos = class(T_frmStandarGFormGrid)
-    tvMasterIdPersonaContacto: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
     tvMasterIdContacto: TcxGridDBColumn;
-    tvMasterContacto: TcxGridDBColumn;
-    tvMasterPrincipal: TcxGridDBColumn;
+    tvMasterIdPersonaPertenece: TcxGridDBColumn;
+    tvMasterNombre: TcxGridDBColumn;
+    tvMasterCargo: TcxGridDBColumn;
+    tvMasterCorreoElectronico: TcxGridDBColumn;
+    tvMasterTelefonoFijo: TcxGridDBColumn;
+    tvMasterTelefonoMovil: TcxGridDBColumn;
   private
     { Private declarations }
   public

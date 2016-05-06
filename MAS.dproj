@@ -685,6 +685,10 @@
             <Form>frmUsuariosPerfilesGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\ContactosEdit.pas">
+            <Form>FrmContactosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

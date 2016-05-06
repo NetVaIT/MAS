@@ -86,6 +86,9 @@ type
     procedure edtNombrePropertiesEditValueChanged(Sender: TObject);
     procedure cxDBLkupCBxMetodoPagoPropertiesChange(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure cmbTipoPersonaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     dmPersonasDomicilios : TdmPersonasDomicilios;
@@ -114,9 +117,19 @@ begin
   ShellExecute(Self.Handle,nil,PChar('https://rfc.siat.sat.gob.mx/PTSC/RFC/menu/index.jsp?opcion=2'),'','',SW_SHOWNORMAL);
 end;
 
+procedure TfrmPersonasEdit.cmbTipoPersonaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key=13 then     //May 5/16
+  begin
+    key:=9;
+  end;
+end;
+
 procedure TfrmPersonasEdit.cmbTipoPersonaPropertiesChange(Sender: TObject);
 begin
-  inherited;  //Parece que entra por cada registro que exista.. may 4/16
+  inherited;
 
   if datasource.State in[dsEdit,dsInsert] then             //Nov 4/15
   begin
@@ -183,6 +196,16 @@ begin
   FreeAndNil(dmPersonasCSD); //Dic 21/15
  (*  May 4 para prueba*)
 end;
+
+procedure TfrmPersonasEdit.FormKeyPress(Sender: TObject; var Key: Char);
+begin     //May 5/16
+  inherited;
+ if Key = #13 then                                                 { if it's an enter key }
+  begin
+    Key := #0;                                                        { eat enter key }
+       Perform(WM_NEXTDLGCTL, 0, 0);                 { move to next control }
+  end;
+ end;
 
 procedure TfrmPersonasEdit.FormShow(Sender: TObject);
 begin

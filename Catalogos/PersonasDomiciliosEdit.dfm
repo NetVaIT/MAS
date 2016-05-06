@@ -1,19 +1,13 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
-          ExplicitLeft = -1
-          ExplicitTop = 24
+          ExplicitLeft = 0
+          ExplicitTop = 25
           object Label1: TLabel
             Left = 23
             Top = 16
@@ -66,7 +60,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Height = 21
             DataField = 'DomicilioTipo'
             DataSource = DataSource
-            TabOrder = 0
+            TabOrder = 1
+            OnKeyDown = cxDBLookupComboBox1KeyDown
           end
           object cxDBCheckBox1: TcxDBCheckBox
             Left = 23
@@ -74,7 +69,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Caption = 'Predeterminado'
             DataBinding.DataField = 'Predeterminado'
             DataBinding.DataSource = DataSource
-            TabOrder = 1
+            TabOrder = 2
+            OnKeyDown = cxDBLookupComboBox1KeyDown
             Width = 121
           end
           object cxDBLabel1: TcxDBLabel
@@ -91,7 +87,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             DataBinding.DataField = 'Domicilio'
             DataBinding.DataSource = DataSource
             Properties.ListColumns = <>
-            TabOrder = 3
+            TabOrder = 0
+            OnKeyDown = cxDBLookupComboBox1KeyDown
             Width = 500
           end
           object DBLookupComboBox1: TDBLookupComboBox
@@ -101,7 +98,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Height = 21
             DataField = 'EnvioTipo'
             DataSource = DataSource
-            TabOrder = 4
+            TabOrder = 3
+            OnKeyDown = cxDBLookupComboBox1KeyDown
           end
           object cxDBLabel2: TcxDBLabel
             Left = 363
@@ -130,7 +128,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -271,7 +269,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

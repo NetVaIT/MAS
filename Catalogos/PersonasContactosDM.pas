@@ -8,12 +8,22 @@ uses
 
 type
   TdmPersonaContactos = class(T_dmStandar)
-    adodsMasterIdPersonaContacto: TAutoIncField;
-    adodsMasterIdPersona: TIntegerField;
-    adodsMasterPrincipal: TBooleanField;
     adodsContacto: TADODataSet;
-    adodsMasterContacto: TStringField;
+    adodsContactoIdPersona: TAutoIncField;
+    adodsContactoNombre: TStringField;
+    adodsContactoApellidoPaterno: TStringField;
+    adodsContactoApellidoMaterno: TStringField;
+    adodsContactoRazonSocial: TStringField;
+    adodsContactoIdPersonaEstatus: TIntegerField;
+    adodsContactoRFC: TStringField;
+    adodsContactoCURP: TStringField;
     adodsMasterIdContacto: TIntegerField;
+    adodsMasterNombre: TStringField;
+    adodsMasterCargo: TStringField;
+    adodsMasterCorreoElectronico: TStringField;
+    adodsMasterTelefonoFijo: TStringField;
+    adodsMasterTelefonoMovil: TStringField;
+    adodsMasterIdPersona: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

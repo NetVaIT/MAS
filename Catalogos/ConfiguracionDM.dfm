@@ -4,7 +4,11 @@ inherited dmConfiguracion: TdmConfiguracion
   Width = 699
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
-    CommandText = 'SELECT IdPais, IdMoneda, RutaBaseFacturas'#13#10'FROM Configuraciones'
+    CommandText = 
+      'SELECT IdPais, IdMoneda, RutaBaseFacturas, '#13#10'CorreoEnvio, HostEn' +
+      'vio, PuertoEnvio, UsuarioCorreo, PasswordCorreo, TipoSeguridad, ' +
+      'MetodoAutenticacion, UltimoFolioPago, UltimaSeriePago'#13#10'FROM Conf' +
+      'iguraciones'
     object adodsMasterIdPais: TIntegerField
       FieldName = 'IdPais'
       Visible = False
@@ -38,6 +42,45 @@ inherited dmConfiguracion: TdmConfiguracion
       DisplayLabel = 'Ruta Base para Facturas'
       FieldName = 'RutaBaseFacturas'
       Size = 250
+    end
+    object adodsMasterCorreoEnvio: TStringField
+      DisplayLabel = 'Correo Envio'
+      FieldName = 'CorreoEnvio'
+      Size = 150
+    end
+    object adodsMasterHostEnvio: TStringField
+      DisplayLabel = 'Host Envio'
+      FieldName = 'HostEnvio'
+      Size = 50
+    end
+    object adodsMasterPuertoEnvio: TStringField
+      DisplayLabel = 'Puerto Envio'
+      FieldName = 'PuertoEnvio'
+    end
+    object adodsMasterUsuarioCorreo: TStringField
+      DisplayLabel = 'Usuario Correo'
+      FieldName = 'UsuarioCorreo'
+      Size = 100
+    end
+    object adodsMasterPasswordCorreo: TStringField
+      DisplayLabel = 'Password Correo'
+      FieldName = 'PasswordCorreo'
+    end
+    object adodsMasterTipoSeguridad: TStringField
+      DisplayLabel = 'Tipo Seguridad'
+      FieldName = 'TipoSeguridad'
+    end
+    object adodsMasterMetodoAutenticacion: TStringField
+      DisplayLabel = 'Metodo Autenticacion'
+      FieldName = 'MetodoAutenticacion'
+    end
+    object adodsMasterUltimoFolioPago: TIntegerField
+      DisplayLabel = 'Ultimo Folio Pago'
+      FieldName = 'UltimoFolioPago'
+    end
+    object adodsMasterUltimaSeriePago: TStringField
+      DisplayLabel = 'Ultima Serie Pago'
+      FieldName = 'UltimaSeriePago'
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -76,6 +119,7 @@ inherited dmConfiguracion: TdmConfiguracion
     end
   end
   object adodsPaises: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
@@ -84,6 +128,7 @@ inherited dmConfiguracion: TdmConfiguracion
     Top = 16
   end
   object adodsMonedas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'

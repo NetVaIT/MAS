@@ -22,7 +22,8 @@ uses
   cxMaskEdit, cxDropDownEdit, cxCalendar, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxGroupBox, cxRadioGroup,
-  cxCheckBox, Data.Win.ADODB, cxLabel, cxDBLabel, Vcl.Menus;
+  cxCheckBox, Data.Win.ADODB, cxLabel, cxDBLabel, Vcl.Menus, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox;
 
 type
   TFrmOrdenesSalida = class(T_frmStandarGFormEdit)
@@ -122,7 +123,6 @@ type
     Label9: TLabel;
     cxDBTextEdit5: TcxDBTextEdit;
     cxDBDateEdit1: TcxDBDateEdit;
-    DBLookupComboBox1: TDBLookupComboBox;
     Label8: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
     Label21: TLabel;
@@ -173,6 +173,7 @@ type
     Label29: TLabel;
     DBText6: TDBText;
     BtBtnEnviar: TBitBtn;
+    cmbTelefono: TcxDBLookupComboBox;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -195,6 +196,8 @@ type
     procedure BtBtnAceptaRegClick(Sender: TObject);
     procedure BitBtn9Click(Sender: TObject);
     procedure ToolButton33Click(Sender: TObject);
+    procedure cxDBDateEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     FCargarDocGuia: TBasicAction;
@@ -987,7 +990,8 @@ end;
 procedure TFrmOrdenesSalida.ChckBxDatosEnviosClick(Sender: TObject);
 begin
   inherited;
-  DSInformacionEntrega.DataSet.Refresh;
+  DSInformacionEntrega.DataSet.Close;
+  DSInformacionEntrega.DataSet.open; ///Verificar actualice por que el refresh no lo hace //May 5/16
   PnlInformacionEntrega.Visible:=ChckBxDatosEnvios.Checked;
 end;
 
@@ -1027,6 +1031,17 @@ begin
 
 end;
 
+
+procedure TFrmOrdenesSalida.cxDBDateEdit1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key=13 then     //May 5/16
+  begin
+    key:=9;
+  end;
+
+end;
 
 function TFrmOrdenesSalida.ExisteCompleto(idOrdenSalidaItem:Integer; var Falta:Double):Boolean;     //Ene 28/16
 begin

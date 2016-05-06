@@ -36,6 +36,9 @@ type
     tvMasterPais: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterRutaBaseFacturas: TcxGridDBColumn;
+    tvMasterCorreoEnvio: TcxGridDBColumn;
+    tvMasterUltimoFolioPago: TcxGridDBColumn;
+    tvMasterUltimaSeriePago: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

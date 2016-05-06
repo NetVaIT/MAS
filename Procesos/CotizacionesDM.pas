@@ -6,7 +6,7 @@ uses
   winapi.windows, System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, dxGDIPlusClasses, ppCtrls, ppPrnabl, ppClass, ppDB,
   ppBands, ppCache, ppDBPipe, ppParameter, ppDesignLayer, ppComm, ppRelatv,
-  ppProd, ppReport, ppStrtch, ppMemo, dialogs, ShellApi, Forms;
+  ppProd, ppReport, ppStrtch, ppMemo, dialogs, ShellApi, Forms, ppVar;
 
 type
   TdmCotizaciones = class(T_dmStandar)
@@ -234,6 +234,8 @@ type
     ADODtStAntSaldosSuma_a_90Dias: TFloatField;
     ADODtStAntSaldosSuma_a_mas_de_90Dias: TFloatField;
     ADODtStAntSaldosIdPersonaREceptor: TIntegerField;
+    ppSystmVarNumPag: TppSystemVariable;
+    ADODtStPrecioMayoreo: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -265,6 +267,7 @@ type
       var CorreoCliente: String): Boolean;
     procedure ReadFile(FileName: TFileName);
     procedure AdjuntarArchivos(Listaadj: TStringList);
+    function ObtenerPrecioMayoreo(idprod: Integer; precioAct: Double;Cantidad:Double): Double; //May 6/16
    // function tamanoFichero(sFileToExamine: string): Longword;
     { Private declarations }
   public
@@ -431,6 +434,9 @@ begin
   begin
   //  if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat<= adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then  //Abr 11/16
   //  begin
+  //Tomar cantidad y llamar para cargar precio especial en caso de que aplique mayoreo... May 6/16
+      adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat:= ObtenerPrecioMayoreo(adodsCotizacionesDetalleIdProducto.AsInteger ,adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat, adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat);
+
       adodsCotizacionesDetalle.FieldByName('cantidadpendiente').AsFloat:=adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat;
       adodsCotizacionesDetalle.FieldByName('Importe').AsFloat:=adodsCotizacionesDetalle.FieldByName('PrecioUnitario').AsFloat* adodsCotizacionesDetalle.FieldByName('CAntidad').AsFloat;
 //    end
@@ -438,6 +444,23 @@ begin
 //      ShowMessage('No es posible asignar un valor mayor al disponible'); //Abr 11/16
   end;
 end;
+
+function TdmCotizaciones.ObtenerPrecioMayoreo(idprod:Integer; precioAct:Double; Cantidad:Double) :Double;//May 6/16
+begin
+  Result:=PrecioAct;
+  ADODtStPrecioMayoreo.Close;
+  ADODtStPrecioMayoreo.Parameters.ParamByName('IdProducto').Value:=IdProd;
+  ADODtStPrecioMayoreo.Parameters.ParamByName('IdProducto1').Value:=IdProd;
+  ADODtStPrecioMayoreo.Parameters.ParamByName('Cantidad').Value:=cantidad;
+  ADODtStPrecioMayoreo.Parameters.ParamByName('Cantidad1').Value:=cantidad;
+  ADODtStPrecioMayoreo.Open;
+  if not ADODtStPrecioMayoreo.Eof then
+    Result:= ADODtStPrecioMayoreo.FieldByName('PrecioXEscala').AsFloat;
+
+  ADODtStPrecioMayoreo.Close;
+
+end;
+
 
 procedure TdmCotizaciones.adodsCotizacionesDetalleClaveProductoChange(
   Sender: TField);
@@ -656,7 +679,6 @@ var                       // Modificado                //Feb 18/16
   vPDFFileName: TFileName;
 begin
     // Configura el reporte
-
     ppRprtCotizacion.ShowPrintDialog:= False;
     ppRprtCotizacion.ShowCancelDialog:= False;
     ppRprtCotizacion.AllowPrintToArchive:= False;

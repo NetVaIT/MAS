@@ -3,6 +3,7 @@ inherited dmPersonas: TdmPersonas
   Height = 464
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, '#13 +
       #10'IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor,'#13#10' IdPersona' +
@@ -245,18 +246,6 @@ inherited dmPersonas: TdmPersonas
       FieldName = 'Descripcion'
       Size = 50
     end
-  end
-  object ADODataSet1: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    Parameters = <>
-    Left = 312
-    Top = 160
-  end
-  object DataSource1: TDataSource
-    DataSet = adodsMaster
-    Left = 320
-    Top = 232
   end
   object ADOdsPais: TADODataSet
     Connection = _dmConection.ADOConnection

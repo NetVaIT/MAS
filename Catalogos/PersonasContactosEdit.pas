@@ -20,14 +20,23 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.StdCtrls, Vcl.ExtCtrls, cxContainer,
-  cxEdit, cxCheckBox, cxDBEdit, Vcl.DBCtrls;
+  cxEdit, cxCheckBox, cxDBEdit, Vcl.DBCtrls, Vcl.Buttons, cxTextEdit;
 
 type
   TfrmPersonasContactosEdit = class(T_frmStandarGFormEdit)
     Label1: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
-    cxDBCheckBox1: TcxDBCheckBox;
+    cxDBTextEdit1: TcxDBTextEdit;
+    Label2: TLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
+    Label3: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
+    Label4: TLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
+    Label5: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
+    procedure cxDBTextEdit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -39,6 +48,16 @@ implementation
 {$R *.dfm}
 
 uses PersonasContactosDM, PersonasContactosForm;
+
+procedure TfrmPersonasContactosEdit.cxDBTextEdit1KeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if Key=13 then   //May 5/16
+  begin
+    key:=9;
+  end;
+end;
 
 procedure TfrmPersonasContactosEdit.FormCreate(Sender: TObject);
 begin

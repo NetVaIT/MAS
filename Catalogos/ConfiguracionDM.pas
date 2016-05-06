@@ -23,6 +23,15 @@ type
     adoqGetRutaBasePagosValor: TStringField;
     adoqGetDiaPagoActual: TADOQuery;
     adoqGetDiaPagoActualValor: TDateTimeField;
+    adodsMasterCorreoEnvio: TStringField;
+    adodsMasterHostEnvio: TStringField;
+    adodsMasterPuertoEnvio: TStringField;
+    adodsMasterUsuarioCorreo: TStringField;
+    adodsMasterPasswordCorreo: TStringField;
+    adodsMasterTipoSeguridad: TStringField;
+    adodsMasterMetodoAutenticacion: TStringField;
+    adodsMasterUltimoFolioPago: TIntegerField;
+    adodsMasterUltimaSeriePago: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

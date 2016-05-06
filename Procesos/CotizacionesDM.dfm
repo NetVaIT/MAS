@@ -320,6 +320,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 148
   end
   object adodsClientes: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -354,6 +355,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -376,6 +378,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -392,6 +395,7 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -627,6 +631,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 488
   end
   object ADODtStDireccionesCliente: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDireccionesClienteCalcFields
@@ -865,6 +870,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object ppRprtCotizacion: TppReport
     AutoStop = False
     DataPipeline = ppDBPplnItemsCotizacion
+    PassSetting = psTwoPass
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
@@ -4506,6 +4512,8 @@ inherited dmCotizaciones: TdmCotizaciones
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
       Background2.Brush.Style = bsClear
+      Border.BorderPositions = [bpLeft, bpTop, bpRight, bpBottom]
+      Border.Weight = 0.748799979686737100
       mmBottomOffset = 0
       mmHeight = 9790
       mmPrintPosition = 0
@@ -4619,7 +4627,7 @@ inherited dmCotizaciones: TdmCotizaciones
     object ppFooterBand1: TppFooterBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 92869
+      mmHeight = 29898
       mmPrintPosition = 0
       object ppLabel19: TppLabel
         UserName = 'Label19'
@@ -4782,6 +4790,22 @@ inherited dmCotizaciones: TdmCotizaciones
         BandType = 8
         LayerName = Foreground
       end
+      object ppSystmVarNumPag: TppSystemVariable
+        UserName = 'SystmVarNumPag'
+        VarType = vtPageSetDesc
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = []
+        Transparent = True
+        mmHeight = 4233
+        mmLeft = 185738
+        mmTop = 23813
+        mmWidth = 17462
+        BandType = 8
+        LayerName = Foreground
+      end
     end
     object ppDesignLayers1: TppDesignLayers
       object ppDesignLayer1: TppDesignLayer
@@ -4812,6 +4836,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 96
   end
   object ADODtStIdentificadores: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4995,5 +5020,42 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStAntSaldosIdPersonaREceptor: TIntegerField
       FieldName = 'IdPersonaREceptor'
     end
+  end
+  object ADODtStPrecioMayoreo: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select *  from ProductosPreciosMayoreo where idProducto=:Idprodu' +
+      'cto'#13#10' and Escala <=:Cantidad and escala=(Select  MAX(escala)from' +
+      ' ProductosPreciosMayoreo '#13#10'where idProducto=:IdProducto1 and Esc' +
+      'ala <=:Cantidad1)'#13#10
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'Cantidad'
+        DataType = ftFloat
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdProducto1'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'Cantidad1'
+        Size = -1
+        Value = Null
+      end>
+    Left = 416
+    Top = 156
   end
 end

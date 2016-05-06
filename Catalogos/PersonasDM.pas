@@ -19,8 +19,6 @@ type
     adodsSexoDescripcion: TStringField;
     adodsEstadoCivilIdEstadoCivil: TIntegerField;
     adodsEstadoCivilDescripcion: TStringField;
-    ADODataSet1: TADODataSet;
-    DataSource1: TDataSource;
     adodsMasterIdPersona: TAutoIncField;
     adodsMasterRFC: TStringField;
     adodsMasterCURP: TStringField;
@@ -73,6 +71,7 @@ type
     adodsMasterNumCtaPagoCliente: TStringField;
     adodsMasterDiasCreditoCliente: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure adodsMasterNewRecord(DataSet: TDataSet);
   private
     { Private declarations }
     FRol: TPRol;
@@ -130,6 +129,12 @@ uses PersonasEdit;
 //  adodsMaster.CommandText := adodsMaster.CommandText + ConsultaP;
 //end;
 
+procedure TdmPersonas.adodsMasterNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  Dataset.fieldbyname('IdPersonaEstatus').AsInteger:=1; //Activo //May 5/16
+end;
+
 constructor TdmPersonas.CreateWRol(AOwner: TComponent; Rol: TPRol);
 begin
   FRol:= Rol;
@@ -147,7 +152,7 @@ begin
   'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado, DiasCreditoCliente ' +
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
-  actSearch.Execute;   //May 4 deshabilitado para prueba
+  SetFilter;//actSearch.Execute;   //May 4 deshabilitado para prueba
 end;
 
 procedure TdmPersonas.SetFilter;

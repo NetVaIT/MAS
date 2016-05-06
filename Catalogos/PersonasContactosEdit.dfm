@@ -2,34 +2,102 @@ inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   Caption = 'frmPersonasContactosEdit'
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
       inherited cxScrollBox1: TcxScrollBox
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
         inherited pnlMaster: TPanel
+          ExplicitTop = 24
           object Label1: TLabel
-            Left = 24
-            Top = 24
-            Width = 44
+            Left = 32
+            Top = 23
+            Width = 37
             Height = 13
-            Caption = 'Contacto'
-            FocusControl = DBLookupComboBox1
+            Caption = 'Nombre'
+            FocusControl = cxDBTextEdit1
           end
-          object DBLookupComboBox1: TDBLookupComboBox
-            Left = 24
-            Top = 40
-            Width = 600
-            Height = 21
-            DataField = 'Contacto'
-            DataSource = DataSource
+          object Label2: TLabel
+            Left = 32
+            Top = 71
+            Width = 29
+            Height = 13
+            Caption = 'Cargo'
+            FocusControl = cxDBTextEdit2
+          end
+          object Label3: TLabel
+            Left = 33
+            Top = 119
+            Width = 88
+            Height = 13
+            Caption = 'Correo Electr'#243'nico'
+            FocusControl = cxDBTextEdit3
+          end
+          object Label4: TLabel
+            Left = 33
+            Top = 168
+            Width = 62
+            Height = 13
+            Caption = 'Tel'#233'fono Fijo'
+            FocusControl = cxDBTextEdit4
+          end
+          object Label5: TLabel
+            Left = 201
+            Top = 168
+            Width = 69
+            Height = 13
+            Caption = 'Tel'#233'fono M'#243'vil'
+            FocusControl = cxDBTextEdit5
+          end
+          object cxDBTextEdit1: TcxDBTextEdit
+            Left = 32
+            Top = 39
+            DataBinding.DataField = 'Nombre'
+            DataBinding.DataSource = DataSource
             TabOrder = 0
+            OnKeyDown = cxDBTextEdit1KeyDown
+            Width = 289
           end
-          object cxDBCheckBox1: TcxDBCheckBox
-            Left = 24
-            Top = 67
-            Caption = 'Principal'
-            DataBinding.DataField = 'Principal'
+          object cxDBTextEdit2: TcxDBTextEdit
+            Left = 32
+            Top = 87
+            DataBinding.DataField = 'Cargo'
             DataBinding.DataSource = DataSource
             TabOrder = 1
+            OnKeyDown = cxDBTextEdit1KeyDown
+            Width = 121
+          end
+          object cxDBTextEdit3: TcxDBTextEdit
+            Left = 33
+            Top = 135
+            DataBinding.DataField = 'CorreoElectronico'
+            DataBinding.DataSource = DataSource
+            TabOrder = 2
+            OnKeyDown = cxDBTextEdit1KeyDown
+            Width = 289
+          end
+          object cxDBTextEdit4: TcxDBTextEdit
+            Left = 33
+            Top = 184
+            DataBinding.DataField = 'TelefonoFijo'
+            DataBinding.DataSource = DataSource
+            TabOrder = 3
+            OnKeyDown = cxDBTextEdit1KeyDown
+            Width = 121
+          end
+          object cxDBTextEdit5: TcxDBTextEdit
+            Left = 200
+            Top = 184
+            DataBinding.DataField = 'TelefonoMovil'
+            DataBinding.DataSource = DataSource
+            TabOrder = 4
+            OnKeyDown = cxDBTextEdit1KeyDown
             Width = 121
           end
         end
@@ -41,7 +109,7 @@ inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -182,7 +250,7 @@ inherited frmPersonasContactosEdit: TfrmPersonasContactosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
