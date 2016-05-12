@@ -1,4 +1,4 @@
-unit EmailForm;
+unit PaqueteriasForm;
 
 interface
 
@@ -18,40 +18,30 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, cxGridCustomPopupMenu, cxGridPopupMenu,
-  cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  cxNavigator, Data.DB, cxDBData, Vcl.Menus, cxGridCustomPopupMenu,
+  cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
+  Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmEmail = class(T_frmStandarGFormGrid)
-    tvMasterIdEmail: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdEmailTipo: TcxGridDBColumn;
-    tvMasterEmailTipo: TcxGridDBColumn;
-    tvMasterEmail: TcxGridDBColumn;
-    tvMasterPredeterminado: TcxGridDBColumn;
+  TfrmPaqueteriasGrid = class(T_frmStandarGFormGrid)
+    tvMasterIdPaqueteria: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
   private
-    FIdDomicilioPer: Integer;
-    procedure SetFIdDomicilioPer(const Value: Integer);
     { Private declarations }
   public
     { Public declarations }
-    property AIdDomicilioPersona:Integer read FIdDomicilioPer write SetFIdDomicilioPer;  //may 6/16
   end;
+
+var
+  frmPaqueteriasGrid: TfrmPaqueteriasGrid;
 
 implementation
 
 {$R *.dfm}
 
-uses EmailDM;
-
-{ TfrmEmail }
-
-procedure TfrmEmail.SetFIdDomicilioPer(const Value: Integer);
-begin
-  FIdDomicilioPer := Value;
-end;
+uses PaqueteriasDM;
 
 end.

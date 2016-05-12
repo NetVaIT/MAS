@@ -2,13 +2,23 @@ inherited dmEmail: TdmEmail
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdEmail, IdPersona, IdEmailTipo, Email, Predeterminado FR' +
-      'OM Emails WHERE IdPersona = :IdPersona'
+      'SELECT IdEmail, IdPersona, IdEmailTipo, Email, Predeterminado, '#13 +
+      #10'IdPersonaDomicilio'#13#10' FROM Emails WHERE IdPersona = :IdPersona '#13 +
+      #10'and IdPersonaDomicilio=:idpersonaDomicilio'
     Parameters = <
       item
         Name = 'IdPersona'
         Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'idpersonaDomicilio'
+        Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
         Size = 4
@@ -43,6 +53,9 @@ inherited dmEmail: TdmEmail
     end
     object adodsMasterPredeterminado: TBooleanField
       FieldName = 'Predeterminado'
+    end
+    object adodsMasterIdPersonaDomicilio: TIntegerField
+      FieldName = 'IdPersonaDomicilio'
     end
   end
   object adodsEmailTipo: TADODataSet

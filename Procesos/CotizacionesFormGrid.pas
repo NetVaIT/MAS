@@ -46,18 +46,25 @@ type
     cxDtEdtHasta: TcxDateEdit;
     SpdBtn: TSpeedButton;
     TlBtnSepara: TToolButton;
+    PnlBusqueda: TPanel;
+    EdtNombre: TEdit;
+    Label3: TLabel;
     procedure SpdBtnClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure EdtNombreChange(Sender: TObject);
   private
     ffiltro: String;
     FTipoDoc: Integer;
+    FfiltroNombre: String;
     procedure PoneFiltro;
     procedure SetTipoDoc(const Value: Integer);
+    function GetFFiltroNombre: String;
     { Private declarations }
   public
     { Public declarations }
      property FiltroCon:String read ffiltro write ffiltro; //may 2/16
      Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
+     Property AFiltroNombre:String read GetFFiltroNombre write FfiltroNombre; //May 10/16
   end;
 
 var
@@ -68,6 +75,17 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM;
+
+procedure TfrmCotizacionesGrid.EdtNombreChange(Sender: TObject);
+begin
+  inherited;
+  if edtNombre.Text<>'' then   //May 10/16
+  begin
+    FfiltroNombre:='inner join Personas P On P.IdPersona=DS.IdPersona and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+  end
+  else
+    FfiltroNombre:='';
+end;
 
 procedure TfrmCotizacionesGrid.FormCreate(Sender: TObject);
 var    // Abr 19/16
@@ -89,6 +107,11 @@ begin
    //H Abr 19/16
 end;
 
+function TfrmCotizacionesGrid.GetFFiltroNombre: String;   //May 10/16
+begin
+  Result := FfiltroNombre;
+end;
+
 procedure TfrmCotizacionesGrid.SetTipoDoc(const Value: Integer);
 begin
   FTipoDoc := Value;
@@ -96,10 +119,11 @@ end;
 
 procedure TfrmCotizacionesGrid.SpdBtnClick(Sender: TObject);
 const
-  TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,  IdDocumentoSalidaEstatus, IdMoneda,'+
-           'IdUsuario, FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
-           ' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDocto ';
-
+  TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
+           'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ' FROM DocumentosSalidas DS ';
+  TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto ';     //Para colocar el inner join y buscar por nombre cliente May 11/16
+                                                           //OJO quitar para insertar y modificar....
   orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';
 
  // and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)
@@ -107,9 +131,9 @@ begin
   inherited;
    //Armar consulta
   PoneFiltro;
-  Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltro+orden;
-  if ffiltro <>''then                                        //Abr.20/16
+  Tadodataset(datasource.DataSet).Close;             //May 10/16
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltronombre+TxtWhere+ ffiltro+orden;
+  if ffiltro <>''then                                              //Abr.20/16
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('TipoDocto').value:=FTipoDoc;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;

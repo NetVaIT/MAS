@@ -3,7 +3,7 @@ object frmListaProductos: TfrmListaProductos
   Top = 0
   Caption = 'Lista de productos'
   ClientHeight = 315
-  ClientWidth = 772
+  ClientWidth = 1150
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,19 +17,21 @@ object frmListaProductos: TfrmListaProductos
   object pnlMaster: TPanel
     Left = 0
     Top = 0
-    Width = 772
+    Width = 1150
     Height = 315
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 772
     object cxGrid: TcxGrid
       Left = 0
       Top = 50
-      Width = 772
+      Width = 1150
       Height = 265
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
+      ExplicitWidth = 772
       object tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         Navigator.Buttons.CustomButtons = <>
@@ -59,10 +61,21 @@ object frmListaProductos: TfrmListaProductos
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
-          Width = 416
+          Width = 403
         end
         object tvMasterPrecioUnitario: TcxGridDBColumn
           DataBinding.FieldName = 'PrecioUnitario'
+          Width = 77
+        end
+        object tvMasterAplicacion: TcxGridDBColumn
+          Caption = 'Aplicaci'#243'n'
+          DataBinding.FieldName = 'Aplicacion'
+          Width = 166
+        end
+        object tvMasterIdentificador: TcxGridDBColumn
+          Caption = 'Identificador Aplicaci'#243'n'
+          DataBinding.FieldName = 'Identificador'
+          Width = 132
         end
       end
       object cxGridLevel1: TcxGridLevel
@@ -72,10 +85,11 @@ object frmListaProductos: TfrmListaProductos
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 772
+      Width = 1150
       Height = 50
       Align = alTop
       TabOrder = 1
+      ExplicitWidth = 772
       object RdGrpUsoIdentificador: TRadioGroup
         Left = 263
         Top = -1
@@ -137,10 +151,27 @@ object frmListaProductos: TfrmListaProductos
         TabOrder = 2
         OnClick = SpdBtnBuscarClick
       end
+      object ChckBxBuscaXAp: TCheckBox
+        Left = 704
+        Top = 12
+        Width = 129
+        Height = 17
+        Caption = 'Buscar por Aplicaci'#243'n'
+        TabOrder = 3
+      end
+      object ChckBxMostrarAplicacion: TCheckBox
+        Left = 567
+        Top = 12
+        Width = 114
+        Height = 17
+        Caption = 'Mostrar Aplicaci'#243'n'
+        TabOrder = 4
+      end
     end
   end
   object DataSource: TDataSource
     AutoEdit = False
+    DataSet = dmCotizaciones.ADODSAuxiliar
     Left = 524
     Top = 72
   end

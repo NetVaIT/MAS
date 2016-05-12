@@ -119,7 +119,6 @@ inherited dmConfiguracion: TdmConfiguracion
     end
   end
   object adodsPaises: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
@@ -128,7 +127,6 @@ inherited dmConfiguracion: TdmConfiguracion
     Top = 16
   end
   object adodsMonedas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdMoneda, Descripcion from Monedas'

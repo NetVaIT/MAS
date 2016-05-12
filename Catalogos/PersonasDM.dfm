@@ -180,6 +180,12 @@ inherited dmPersonas: TdmPersonas
       FieldName = 'DiasCreditoCliente'
     end
   end
+  inherited ActionList: TActionList
+    object ActEjecutarConsulta: TAction
+      Caption = 'ActEjecutarConsulta'
+      OnExecute = ActEjecutarConsultaExecute
+    end
+  end
   object adodsPersonaTipo: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic

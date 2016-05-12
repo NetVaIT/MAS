@@ -151,7 +151,12 @@ uses
   UsuariosPerfilesDM in 'Catalogos\UsuariosPerfilesDM.pas' {DmPerfilesUsuario: TDataModule},
   UsuariosPerfilesEdit in 'Catalogos\UsuariosPerfilesEdit.pas' {frmUsuariosPerfiles},
   UsuariosPerfilesForm in 'Catalogos\UsuariosPerfilesForm.pas' {frmUsuariosPerfilesGrid},
-  ContactosEdit in 'Catalogos\ContactosEdit.pas' {FrmContactosEdit};
+  ContactosEdit in 'Catalogos\ContactosEdit.pas' {FrmContactosEdit},
+  PaqueteriasDM in 'Catalogos\PaqueteriasDM.pas' {DMPaqueterias: TDataModule},
+  PaqueteriasEdit in 'Catalogos\PaqueteriasEdit.pas' {frmPaqueteriasEdit},
+  PaqueteriasForm in 'Catalogos\PaqueteriasForm.pas' {frmPaqueteriasGrid},
+  ProductosAplicacionesEdit in 'Catalogos\ProductosAplicacionesEdit.pas' {frmProductosAplicacionEdit},
+  ProductosAplicacionesForm in 'Catalogos\ProductosAplicacionesForm.pas' {frmProductosAplicaciones};
 
 {$R *.res}
 
@@ -164,6 +169,5 @@ begin
   Application.CreateForm(T_frmMainRibbon, _frmMainRibbon);
   Application.CreateForm(T_frmProgress, _frmProgress);
   Application.CreateForm(TdmConfiguracion, dmConfiguracion);
-  Application.CreateForm(TFrmContactosEdit, FrmContactosEdit);
   Application.Run;
 end.

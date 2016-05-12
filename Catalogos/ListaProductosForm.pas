@@ -37,6 +37,10 @@ type
     EdtBuscar: TEdit;
     DataSource: TDataSource;
     SpdBtnBuscar: TBitBtn;
+    ChckBxBuscaXAp: TCheckBox;
+    ChckBxMostrarAplicacion: TCheckBox;
+    tvMasterAplicacion: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
     procedure tvMasterDblClick(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -117,21 +121,51 @@ begin
 end;
 
 procedure TfrmListaProductos.SpdBtnBuscarClick(Sender: TObject);
-var
-   idProd:String;
+var        //May 11/16
+   idProd, ParteAp:String;
 begin
   inherited;
   idProd:=EdtBuscar.Text;
-  DataSource.DataSet.Close;
-    TAdoDataset(DataSource.DataSet).commandText:='Select * from Productos where (Identificador1 Like '''+IDProd+
-                               '%'' or Identificador2 like '''+IDProd+'%'' or Identificador3 Like '''+IDProd+
-                               '%'')';
-  DataSource.DataSet.open;
-  if DataSource.DataSet.Eof then
+  if not ChckBxMostrarAplicacion.Checked then  //May 11/16
+    ParteAp:=  ', '' as Aplicacion, '' as IdentificadorAplica '
+  else
+    ParteAp:=',PA.Aplicacion, PA.Identificador ';
+
+  if ChckBxBuscaXAp.Checked then
   begin
-    DataSource.DataSet.Close;
-    TAdoDataset(DataSource.DataSet).commandText:='Select * from Productos where Descripcion like ''%'+IDProd+ '%''';
+    DataSource.DataSet.Close;                                   //May 11/16
+    TAdoDataset(DataSource.DataSet).commandText:='Select P.*, PA.Aplicacion, PA.Identificador IdentificadorAplica from Productos P '+
+                                                 ' inner join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto'+
+                                                  ' and  PA.Aplicacion like''%'+IDProd +'%'') ';
+   DataSource.DataSet.open;
+  end
+  else  //Sin filtro por aplicacion
+  begin
+
+    DataSource.DataSet.Close;                                   //May 11/16
+     if not ChckBxMostrarAplicacion.Checked then
+         TAdoDataset(DataSource.DataSet).commandText:='Select * '+ParteAp+ 'from Productos where (Identificador1 Like '''+IDProd+
+                                 '%'' or Identificador2 like '''+IDProd+'%'' or Identificador3 Like '''+IDProd+
+                                 '%'')'
+     else
+     begin
+       TAdoDataset(DataSource.DataSet).commandText:='Select P.* '+ParteAp+ 'from Productos P '+
+                                          ' left join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto)  '+
+                                          ' where(Identificador1 Like '''+IDProd+'%'' or Identificador2 like '''+IDProd+
+                                          '%'' or Identificador3 Like '''+IDProd+'%'')';
+     end;
     DataSource.DataSet.open;
+    if DataSource.DataSet.Eof then
+    begin
+      DataSource.DataSet.Close;
+      if not ChckBxMostrarAplicacion.Checked then
+         TAdoDataset(DataSource.DataSet).commandText:='Select P.* '+ParteAp+' from Productos P where P.Descripcion like ''%'+IDProd+ '%'''
+      else
+         TAdoDataset(DataSource.DataSet).commandText:='Select P.* '+ParteAp+' from Productos P'+
+           ' left join ProductosAplicaciones PA on P.IdProducto=PA.IdProducto' +
+           ' where P.Descripcion like ''%'+IDProd+ '%''';
+      DataSource.DataSet.open;
+    end;
   end;
 end;
 

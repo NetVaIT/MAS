@@ -35,10 +35,16 @@ type
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
+    fIDDomicilio: integer;    //Pendientede usar may 6/16
+    fIDPersonaDomicilio: integer;
     { Private declarations }
     function EsCliente(idPersona:Integer;var  identificadorNvo:Integer):Boolean;
+    procedure setFiddomicilio(const Value: integer);
+    procedure setFidPersonadomicilio(const Value: integer);
   public
     { Public declarations }
+    property AIDDomicilio:integer read fIDDomicilio write setFiddomicilio;  //May 6/16
+     property AIDPersonaDomicilio:integer read fIDPersonaDomicilio write setFidPersonadomicilio;  //May 6/16
   end;
 
 implementation
@@ -120,6 +126,16 @@ begin
     Result:=True;
   end;
 
+end;
+
+procedure TdmPersonasDomicilios.setFiddomicilio(const Value: integer); //May 6/16
+begin
+  fIDDomicilio := Value;
+end;
+
+procedure TdmPersonasDomicilios.setFidPersonadomicilio(const Value: integer);//May 6/16
+begin
+  fIDPersonaDomicilio := Value;
 end;
 
 end.

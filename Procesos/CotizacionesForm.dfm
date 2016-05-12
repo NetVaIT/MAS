@@ -359,7 +359,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 161
             Align = alTop
             TabOrder = 1
-            ExplicitTop = -6
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -715,7 +714,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 ParentColor = False
                 Height = 21
                 Width = 90
-                AnchorX = 203
               end
               object cxDBLabel10: TcxDBLabel
                 Left = 114
@@ -725,7 +723,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 ParentColor = False
                 Height = 21
                 Width = 90
-                AnchorX = 204
               end
               object cxDBLabel11: TcxDBLabel
                 Left = 114
@@ -735,7 +732,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 ParentColor = False
                 Height = 21
                 Width = 90
-                AnchorX = 204
               end
               object cxDBLabel12: TcxDBLabel
                 Left = 114
@@ -745,7 +741,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 ParentColor = False
                 Height = 21
                 Width = 90
-                AnchorX = 204
               end
               object cxDBLabel13: TcxDBLabel
                 Left = 114
@@ -755,7 +750,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 ParentColor = False
                 Height = 21
                 Width = 90
-                AnchorX = 204
               end
               object BtBtnOcultar: TBitBtn
                 Left = 208
@@ -896,7 +890,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400B80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1102,7 +1096,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011900C002000210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002040210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

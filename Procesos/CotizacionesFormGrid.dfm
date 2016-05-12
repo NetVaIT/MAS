@@ -92,74 +92,96 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     inherited tbarGrid: TToolBar
       Width = 1025
       Height = 44
-      ButtonHeight = 44
+      ButtonHeight = 41
       ExplicitWidth = 1025
       ExplicitHeight = 44
       inherited ToolButton1: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited btnEdit: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton3: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton4: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton5: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton6: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton7: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton8: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton9: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton2: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited btnPost: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited btnCancel: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton21: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton22: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton10: TToolButton
         Width = 107
         ExplicitWidth = 107
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited tbtnCerrar: TToolButton
         Left = 384
         ExplicitLeft = 384
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       object TlBtnSepara: TToolButton
         Left = 407
         Top = 0
-        Width = 169
+        Width = 26
         Caption = 'TlBtnSepara'
         ImageIndex = 11
         Style = tbsSeparator
       end
+      object PnlBusqueda: TPanel
+        Left = 433
+        Top = 0
+        Width = 184
+        Height = 41
+        TabOrder = 1
+        object Label3: TLabel
+          Left = 16
+          Top = 2
+          Width = 90
+          Height = 13
+          Caption = 'Cliente parecido a:'
+        end
+        object EdtNombre: TEdit
+          Left = 15
+          Top = 17
+          Width = 163
+          Height = 21
+          TabOrder = 0
+          OnChange = EdtNombreChange
+        end
+      end
       object PnlFechas: TPanel
-        Left = 576
+        Left = 617
         Top = 0
         Width = 360
-        Height = 44
+        Height = 41
         ParentBackground = False
         TabOrder = 0
         object Label1: TLabel
@@ -221,7 +243,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 664
     Top = 80
     Bitmap = {
-      494C010102000400DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -368,7 +390,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C01010C00C001000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

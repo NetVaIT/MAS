@@ -68,6 +68,7 @@ type
     SpdBtnVerArchivo: TSpeedButton;
     PnlTitulo: TPanel;
     tsProductoProveedor: TcxTabSheet;
+    tsProductoAplicacion: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
@@ -221,6 +222,7 @@ begin
   inherited;
   gFormGrid := TfrmProductos.Create(Self);
   ContainerDetail1:= tsProductoProveedor;
+  ContainerDetail2:= tsProductoAplicacion;  //May 12/16
  // TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
   dmProductosFotos := TdmProductosFotos.Create(nil); //Pa fotos
  // DataSourceFotos.DataSet.Open;

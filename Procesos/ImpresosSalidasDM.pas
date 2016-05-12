@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB, ppDB, ppDBPipe,
   ppParameter, ppDesignLayer, ppBands, myChkBox, dxGDIPlusClasses, ppCtrls,
-  ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport;
+  ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport, ppVar;
 
 type
   TDMImpresosSalidas = class(TDataModule)
@@ -238,6 +238,54 @@ type
     ppDBText27: TppDBText;
     ADODtStDatosEtiquetaFechaProgramadaEnt: TDateTimeField;
     ADODtStDatosEtiquetaFechaRealEnt: TDateTimeField;
+    ppRptOrdenEmbarque: TppReport;
+    ppHeaderBand4: TppHeaderBand;
+    ppImage3: TppImage;
+    ppLabel41: TppLabel;
+    ppLabel43: TppLabel;
+    ppLabel44: TppLabel;
+    ppLabel45: TppLabel;
+    ppLabel46: TppLabel;
+    ppLabel47: TppLabel;
+    ppLabel48: TppLabel;
+    ppDBText29: TppDBText;
+    ppDetailBand4: TppDetailBand;
+    ppLabel51: TppLabel;
+    ppLabel52: TppLabel;
+    ppLabel53: TppLabel;
+    ppLabel54: TppLabel;
+    ppLabel56: TppLabel;
+    ppLabel60: TppLabel;
+    ppLabel63: TppLabel;
+    ppLabel65: TppLabel;
+    ppDBText30: TppDBText;
+    ppDBText31: TppDBText;
+    ppDBText32: TppDBText;
+    ppDBText33: TppDBText;
+    ppDBText34: TppDBText;
+    ppDBText35: TppDBText;
+    ppDBText36: TppDBText;
+    ppDBText37: TppDBText;
+    ppDBText38: TppDBText;
+    myDBCheckBox10: TmyDBCheckBox;
+    ppLabel66: TppLabel;
+    ppDBText39: TppDBText;
+    ppFooterBand4: TppFooterBand;
+    ppDesignLayers4: TppDesignLayers;
+    ppDesignLayer4: TppDesignLayer;
+    ppParameterList4: TppParameterList;
+    ppDBPplnOrdenEmb: TppDBPipeline;
+    ppLabel70: TppLabel;
+    ppLabel71: TppLabel;
+    ppLabel72: TppLabel;
+    ppLabel55: TppLabel;
+    ppDBText42: TppDBText;
+    ppLabel61: TppLabel;
+    ppShape3: TppShape;
+    myDBCheckBox7: TmyDBCheckBox;
+    ppSystemVariable1: TppSystemVariable;
+    ppLabel57: TppLabel;
+    ppDBText40: TppDBText;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -330,6 +378,15 @@ begin
       end;
 
     end;
+  3:begin  //may 10/16
+      ppRptOrdenEmbarque.ShowPrintDialog:= False;
+      ppRptOrdenEmbarque.ShowCancelDialog:= False;
+      ppRptOrdenEmbarque.AllowPrintToArchive:= False;
+      ppRptOrdenEmbarque.DeviceType:= 'Screen';
+      ppRptOrdenEmbarque.Print;
+    end;
+
+
 
   end;
 end;

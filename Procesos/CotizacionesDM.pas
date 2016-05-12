@@ -254,6 +254,8 @@ type
     procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
     procedure adodsCotizacionesDetalleBeforeOpen(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleBeforeDelete(DataSet: TDataSet);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
+    procedure adodsMasterBeforeDelete(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     FIdDocAct: Integer;
@@ -382,9 +384,12 @@ const PIVA=0.16;                   //No funciona para el Delete
 var Total,MontoIVA,SubTotal:Double;
     IdAct:Integer;//May 2/16
 begin
-  inherited;
-  if dataset.fieldbyname('IdDocumentoSalida').asInteger=0 then //May 2/16
-    IdAct:= idDocActual
+  inherited;                                                   //May 11/16
+  if (dataset.fieldbyname('IdDocumentoSalida').asInteger=0) or (idDocActual<>0)then //May 2/16
+  begin
+    IdAct:= idDocActual;
+    IdDocActual:=0; //May 11/16
+  end
   else
     IdAct:=dataset.fieldbyname('IdDocumentoSalida').asInteger;
                                                  //May 2/16  dataset.fieldbyname('IdDocumentoSalida').asInteger
@@ -524,6 +529,51 @@ begin
   //FEb 8/16
   ADODtStIdentificadores.Open;
  // ADODtStDireccionesCliente.Open;
+end;
+
+procedure TdmCotizaciones.adodsMasterBeforeDelete(DataSet: TDataSet);
+const    //May 11/16
+  TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
+           'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ' FROM DocumentosSalidas DS ';
+  TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto  ';     //Para colocar el inner join y buscar por nombre cliente May 11/16
+  orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';
+var Txt:String;
+    IdDoc:Integer;
+begin
+  IdDoc :=adodsMaster.FieldByName('IdDocumentoSalida').AsInteger;
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL+TxtWhere +orden;
+    Tadodataset(adodsMaster).Parameters.ParamByName('TipoDocto').value:=FTipoDoc;
+    Tadodataset(adodsMaster).open;
+    Tadodataset(adodsMaster).Locate('IDDocumentoSalida',IdDoc,[]);
+  end;
+  inherited;
+
+end;
+
+procedure TdmCotizaciones.adodsMasterBeforeInsert(DataSet: TDataSet);
+const    //May 11/16
+  TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
+           'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ' FROM DocumentosSalidas DS ';
+  TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)';     //Para colocar el inner join y buscar por nombre cliente May 11/16
+  orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';
+var Txt:String;
+begin
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL+TxtWhere +orden;
+    Tadodataset(adodsMaster).Parameters.ParamByName('TipoDocto').value:=FTipoDoc;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
+
 end;
 
 procedure TdmCotizaciones.adodsMasterCalcFields(DataSet: TDataSet);

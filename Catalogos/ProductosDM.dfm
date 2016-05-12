@@ -1,7 +1,7 @@
 inherited dmProductos: TdmProductos
   OldCreateOrder = True
   Height = 489
-  Width = 438
+  Width = 780
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -332,6 +332,80 @@ inherited dmProductos: TdmProductos
     object adodsPersonasMoneda: TStringField
       FieldName = 'Moneda'
       Size = 80
+    end
+  end
+  object ADODtStMarcas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdMarca, Identificador, Descripcion from Marcas'
+    Parameters = <>
+    Left = 480
+    Top = 217
+    object ADODtStMarcasIdMarca: TAutoIncField
+      FieldName = 'IdMarca'
+      ReadOnly = True
+    end
+    object ADODtStMarcasIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 50
+    end
+    object ADODtStMarcasDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 150
+    end
+  end
+  object ADODtStProductosAplicaciones: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoAplicacion, IdMarca, IdProducto, Identificador,' +
+      ' Descripcion, Aplicacion from ProductosAplicaciones'#13#10'where Idpro' +
+      'ducto=:idproducto'
+    DataSource = dsMaster
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <
+      item
+        Name = 'idproducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 368
+    Top = 184
+    object adodsMasterIdProductoAplicacion: TAutoIncField
+      FieldName = 'IdProductoAplicacion'
+      ReadOnly = True
+    end
+    object adodsMasterIdMarca: TIntegerField
+      FieldName = 'IdMarca'
+    end
+    object IntegerField1: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object adodsMasterIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 50
+    end
+    object StringField1: TStringField
+      FieldName = 'Descripcion'
+      Size = 255
+    end
+    object adodsMasterAplicacion: TStringField
+      FieldName = 'Aplicacion'
+      Size = 255
+    end
+    object adodsMasterMarca: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Marca'
+      LookupDataSet = ADODtStMarcas
+      LookupKeyFields = 'IdMarca'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMarca'
+      Size = 30
+      Lookup = True
     end
   end
 end

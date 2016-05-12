@@ -5,6 +5,8 @@ inherited dmCotizaciones: TdmCotizaciones
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
+    BeforeInsert = adodsMasterBeforeInsert
+    BeforeDelete = adodsMasterBeforeDelete
     OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
@@ -320,7 +322,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 148
   end
   object adodsClientes: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -355,7 +356,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsCotizacionEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -378,7 +378,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object adodsMoneda: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdMoneda, Descripcion FROM Monedas'
@@ -395,7 +394,6 @@ inherited dmCotizaciones: TdmCotizaciones
     end
   end
   object ADOdsTipoDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -631,7 +629,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 488
   end
   object ADODtStDireccionesCliente: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStDireccionesClienteCalcFields
@@ -4836,7 +4833,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 96
   end
   object ADODtStIdentificadores: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

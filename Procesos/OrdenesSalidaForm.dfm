@@ -1,19 +1,20 @@
 inherited FrmOrdenesSalida: TFrmOrdenesSalida
   Caption = 'FrmOrdenesSalida'
-  ClientWidth = 1097
+  ClientWidth = 1267
   OnActivate = FormActivate
-  ExplicitWidth = 1097
+  ExplicitWidth = 1267
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 620
-    Width = 1097
+    Width = 1267
     ExplicitTop = 620
     ExplicitWidth = 933
   end
   inherited splDetail2: TSplitter
     Top = 582
-    Width = 1097
+    Width = 1267
     Height = 18
     ExplicitLeft = -1
     ExplicitTop = 588
@@ -22,13 +23,13 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited splDetail1: TSplitter
     Top = 561
-    Width = 1097
+    Width = 1267
     ExplicitTop = 524
     ExplicitWidth = 933
   end
   inherited pnlClose: TPanel
     Top = 640
-    Width = 1097
+    Width = 1267
     Height = 10
     ExplicitTop = 640
     ExplicitWidth = 1097
@@ -36,7 +37,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited pnlDetail3: TPanel
     Top = 623
-    Width = 1097
+    Width = 1267
     Height = 17
     ExplicitTop = 623
     ExplicitWidth = 1097
@@ -44,7 +45,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited pnlDetail2: TPanel
     Top = 600
-    Width = 1097
+    Width = 1267
     Height = 20
     ExplicitTop = 600
     ExplicitWidth = 1097
@@ -52,7 +53,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited pnlDetail1: TPanel
     Top = 564
-    Width = 1097
+    Width = 1267
     Height = 18
     ExplicitLeft = 0
     ExplicitTop = 564
@@ -61,23 +62,23 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited pcMain: TcxPageControl
     Top = 22
-    Width = 1097
+    Width = 1267
     Height = 539
     ExplicitTop = 22
     ExplicitWidth = 1097
     ExplicitHeight = 539
     ClientRectBottom = 538
-    ClientRectRight = 1096
+    ClientRectRight = 1266
     inherited tsGeneral: TcxTabSheet
       ExplicitWidth = 1095
       ExplicitHeight = 537
       inherited cxScrollBox1: TcxScrollBox
-        Width = 1095
+        Width = 1265
         Height = 537
         ExplicitWidth = 1095
         ExplicitHeight = 537
         inherited tbarData: TToolBar
-          Width = 1093
+          Width = 1263
           ExplicitLeft = 0
           ExplicitTop = 0
           ExplicitWidth = 1093
@@ -106,7 +107,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           end
         end
         inherited pnlMaster: TPanel
-          Width = 1093
+          Width = 1263
           Height = 510
           ExplicitLeft = 0
           ExplicitTop = 25
@@ -115,10 +116,11 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 1093
+            Width = 1263
             Height = 416
             Align = alTop
             TabOrder = 0
+            ExplicitWidth = 1093
             object Label10: TLabel
               Left = 137
               Top = 16
@@ -1088,7 +1090,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             object PnlInformacionEntrega: TPanel
               Left = 162
               Top = 272
-              Width = 919
+              Width = 1071
               Height = 138
               BevelOuter = bvNone
               TabOrder = 13
@@ -1155,7 +1157,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 FocusControl = cxDBTextEdit6
               end
               object Label26: TLabel
-                Left = 771
+                Left = 795
                 Top = 99
                 Width = 42
                 Height = 13
@@ -1310,9 +1312,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 Tag = 22
                 Left = 790
                 Top = 21
-                Width = 83
+                Width = 116
                 Height = 25
-                Caption = 'Imprime'
+                Caption = 'Imprime Etiqueta'
                 Enabled = False
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
@@ -1333,7 +1335,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
               object BtBtnAdjGuia: TBitBtn
                 Tag = 20
-                Left = 776
+                Left = 792
                 Top = 68
                 Width = 96
                 Height = 25
@@ -1366,7 +1368,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 Width = 96
               end
               object cxDBLabel1: TcxDBLabel
-                Left = 769
+                Left = 793
                 Top = 116
                 DataBinding.DataField = 'DocGuia'
                 DataBinding.DataSource = DSInformacionEntrega
@@ -1387,6 +1389,31 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 TabOrder = 1
                 OnKeyDown = cxDBDateEdit1KeyDown
                 Width = 141
+              end
+              object BtBtnOrdenEmbarque: TBitBtn
+                Tag = 22
+                Left = 913
+                Top = 20
+                Width = 152
+                Height = 25
+                Caption = 'Imprime Orden Embarque'
+                Enabled = False
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  33333333333FFFFFFFFF333333000000000033333377777777773333330FFFFF
+                  FFF03333337F333333373333330FFFFFFFF03333337F3FF3FFF73333330F00F0
+                  00F03333F37F773777373330330FFFFFFFF03337FF7F3F3FF3F73339030F0800
+                  F0F033377F7F737737373339900FFFFFFFF03FF7777F3FF3FFF70999990F00F0
+                  00007777777F7737777709999990FFF0FF0377777777FF37F3730999999908F0
+                  F033777777777337F73309999990FFF0033377777777FFF77333099999000000
+                  3333777777777777333333399033333333333337773333333333333903333333
+                  3333333773333333333333303333333333333337333333333333}
+                NumGlyphs = 2
+                TabOrder = 16
+                OnClick = BtBtnOrdenEmbarqueClick
               end
             end
             object PnlSalidasUbicacion: TPanel
@@ -1678,18 +1705,20 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           object PnlDetalle: TPanel
             Left = 0
             Top = 416
-            Width = 1093
+            Width = 1263
             Height = 138
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitWidth = 1093
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
-              Width = 1093
+              Width = 1263
               Height = 29
               Images = ilAction
               TabOrder = 0
+              ExplicitWidth = 1093
               object ToolButton31: TToolButton
                 Left = 0
                 Top = 0
@@ -1765,7 +1794,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             object DBGrid2: TDBGrid
               Left = 0
               Top = 29
-              Width = 1093
+              Width = 1263
               Height = 109
               Align = alClient
               DataSource = DtSrcOrdenSalItem
@@ -1843,7 +1872,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   object PnlTitulo: TPanel [8]
     Left = 0
     Top = 0
-    Width = 1097
+    Width = 1267
     Height = 22
     Align = alTop
     Alignment = taLeftJustify
@@ -1857,6 +1886,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
+    ExplicitWidth = 1097
   end
   inherited DataSource: TDataSource
     DataSet = DMOrdenesSalidas.adodsMaster
@@ -1864,7 +1894,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2080,7 +2110,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002EC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3057,7 +3087,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DsCambiosREgreso: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStCambioEstadoInv
-    Left = 1052
-    Top = 336
+    Left = 1076
+    Top = 288
   end
 end

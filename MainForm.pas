@@ -106,6 +106,9 @@ type
     dxBarLargeButton32: TdxBarLargeButton;
     ActDevoluciones: TAction;
     dxBrLrgBtnDevolucion: TdxBarLargeButton;
+    dxBarLrgBtnPaqueteria: TdxBarLargeButton;
+    ActPaqueterias: TAction;
+    dxBarLargeButton33: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -139,7 +142,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
-  rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod;
+  rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM;
 
 { TfrmMain }
 
@@ -167,6 +170,7 @@ begin
    10: gModulo := TdmProductos.Create(Self);
    11: gModulo := TdmPersonas.CreateWRol(Self, rEmisor); //Dic 14/15
    12: gModulo := TDmPerfilesUsuario.create(Self); //Abr 21/16
+   13: gModulo := TDmPaqueterias.create(Self); //May 9/16
    20: begin
          gModulo := TdmCotizaciones.Create(Self);
          TdmCotizaciones(gModulo).TipoDocumento:=1;

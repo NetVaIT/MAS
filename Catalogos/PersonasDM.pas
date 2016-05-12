@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, dialogs;
 
 type
   TPRol = (rNone, rCliente, rProveedor, rEmpleado, rEmisor); //Mod ABAN Nov 4/15 se agrego emisor
@@ -70,12 +70,16 @@ type
     adodsMasterExigeCta: TIntegerField;
     adodsMasterNumCtaPagoCliente: TStringField;
     adodsMasterDiasCreditoCliente: TIntegerField;
+    ActEjecutarConsulta: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ActEjecutarConsultaExecute(Sender: TObject);
   private
     { Private declarations }
     FRol: TPRol;
+    FFiltroNombre: String;
     procedure SetRol(const Value: TPRol);
+    function GetFFiltroNombre: String;
 //    procedure AsignarConsulta;
   protected
     procedure SetFilter; override;
@@ -83,6 +87,8 @@ type
     { Public declarations }
     constructor CreateWRol(AOwner: TComponent; Rol: TPRol); virtual;
     property Rol: TPRol read FRol write SetRol;
+
+    property AfiltroNombre:String read GetFFiltroNombre write FFiltroNombre;
   end;
 
 implementation
@@ -129,6 +135,12 @@ uses PersonasEdit;
 //  adodsMaster.CommandText := adodsMaster.CommandText + ConsultaP;
 //end;
 
+procedure TdmPersonas.ActEjecutarConsultaExecute(Sender: TObject);
+begin
+  inherited;
+  actSearch.Execute;
+end;
+
 procedure TdmPersonas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
@@ -146,7 +158,9 @@ begin
   inherited;
   gGridEditForm := TfrmPersonasEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  TfrmPersonasEdit(gGridEditForm).ActualizaConsulta:=ActEjecutarconsulta; //verificar si funciona  May 9/16
   TfrmPersonasEdit(gGridEditForm).Rol := Rol;
+
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEstatus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, ApellidoPaterno, ' +
   'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado, DiasCreditoCliente ' +
@@ -154,6 +168,13 @@ begin
   SQLOrderBy:= 'ORDER BY RazonSocial';
   SetFilter;//actSearch.Execute;   //May 4 deshabilitado para prueba
 end;
+
+function TdmPersonas.GetFFiltroNombre: String;
+begin
+  FFiltroNombre:= TfrmPersonasEdit(gGridEditForm).AFiltroNombre;
+  Result := FFiltroNombre;
+end;
+
 
 procedure TdmPersonas.SetFilter;
 begin
@@ -169,6 +190,13 @@ begin
       SQLWhere := ' WHERE Personas.IDRol = 3';
     rEmisor:
       SQLWhere := ' WHERE Personas.IDRol = 4';
+  end;
+  if AFiltroNombre<>'' then
+  begin
+    if SQLWhere<>'' then  //May 9/16
+      SQLWhere:=SQLWhere + ' and '+AFiltroNombre
+    else
+      SQLWhere:= AfiltroNombre;
   end;
 end;
 

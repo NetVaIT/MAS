@@ -31,6 +31,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited pnlDetail1: TPanel
     Width = 964
+    ExplicitLeft = 0
+    ExplicitTop = 480
     ExplicitWidth = 964
   end
   inherited pcMain: TcxPageControl
@@ -47,6 +49,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
         ExplicitWidth = 962
         inherited tbarData: TToolBar
           Width = 960
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 960
           inherited ToolButton19: TToolButton
             OnMouseDown = ToolButton19MouseDown
@@ -59,6 +63,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
         end
         inherited pnlMaster: TPanel
           Width = 960
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 960
           object Label1: TLabel
             Left = 32
@@ -129,7 +135,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 12
               Top = 30
               Width = 118
-              Height = 166
+              Height = 179
               ItemHeight = 13
               Items.Strings = (
                 'Bancos                      |1'
@@ -143,7 +149,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
                 'Empleados               |9'
                 'Productos                |10'
                 'Emisor                      |11'
-                'Perfiles                     |12')
+                'Perfiles                     |12'
+                'Paqueter'#237'as              |13')
               TabOrder = 0
             end
             object ChckLstBxOpcionesAlm: TCheckListBox
@@ -306,7 +313,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -447,7 +454,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -1,4 +1,4 @@
-unit EmailForm;
+unit ProductosAplicacionesForm;
 
 interface
 
@@ -18,40 +18,33 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, cxGridCustomPopupMenu, cxGridPopupMenu,
-  cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  cxNavigator, Data.DB, cxDBData, Vcl.Menus, cxGridCustomPopupMenu,
+  cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
+  Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, Vcl.ExtCtrls;
 
 type
-  TfrmEmail = class(T_frmStandarGFormGrid)
-    tvMasterIdEmail: TcxGridDBColumn;
-    tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdEmailTipo: TcxGridDBColumn;
-    tvMasterEmailTipo: TcxGridDBColumn;
-    tvMasterEmail: TcxGridDBColumn;
-    tvMasterPredeterminado: TcxGridDBColumn;
+  TfrmProductosAplicaciones = class(T_frmStandarGFormGrid)
+    tvMasterIdProductoAplicacion: TcxGridDBColumn;
+    tvMasterIdMarca: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
+    tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterAplicacion: TcxGridDBColumn;
   private
-    FIdDomicilioPer: Integer;
-    procedure SetFIdDomicilioPer(const Value: Integer);
     { Private declarations }
   public
     { Public declarations }
-    property AIdDomicilioPersona:Integer read FIdDomicilioPer write SetFIdDomicilioPer;  //may 6/16
   end;
+
+var
+  frmProductosAplicaciones: TfrmProductosAplicaciones;
 
 implementation
 
 {$R *.dfm}
 
-uses EmailDM;
-
-{ TfrmEmail }
-
-procedure TfrmEmail.SetFIdDomicilioPer(const Value: Integer);
-begin
-  FIdDomicilioPer := Value;
-end;
+uses  ProductosDM;
 
 end.

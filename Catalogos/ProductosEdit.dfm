@@ -2,8 +2,6 @@ inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
   OnDestroy = FormDestroy
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -49,16 +47,18 @@ inherited frmProductosEdit: TfrmProductosEdit
     ClientRectRight = 748
     ClientRectTop = 28
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 517
+      ExplicitLeft = 2
+      ExplicitTop = 28
+      ExplicitWidth = 746
+      ExplicitHeight = 489
       inherited cxScrollBox1: TcxScrollBox
         Width = 746
         Height = 489
-        ExplicitHeight = 517
+        ExplicitWidth = 746
+        ExplicitHeight = 489
         inherited tbarData: TToolBar
           Width = 744
+          ExplicitWidth = 744
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -68,7 +68,8 @@ inherited frmProductosEdit: TfrmProductosEdit
         inherited pnlMaster: TPanel
           Width = 744
           Height = 462
-          ExplicitHeight = 490
+          ExplicitWidth = 744
+          ExplicitHeight = 462
           object PnlFotos: TPanel
             Left = 0
             Top = 273
@@ -76,8 +77,6 @@ inherited frmProductosEdit: TfrmProductosEdit
             Height = 189
             Align = alClient
             TabOrder = 0
-            ExplicitWidth = 746
-            ExplicitHeight = 217
             object ImgFoto: TImage
               Left = 23
               Top = 18
@@ -236,7 +235,6 @@ inherited frmProductosEdit: TfrmProductosEdit
             Height = 273
             Align = alTop
             TabOrder = 1
-            ExplicitWidth = 746
             object Label1: TLabel
               Left = 24
               Top = 71
@@ -425,6 +423,14 @@ inherited frmProductosEdit: TfrmProductosEdit
     object tsProductoProveedor: TcxTabSheet
       Caption = 'Proveedores'
       ImageIndex = 1
+      ExplicitLeft = 4
+      ExplicitTop = 27
+    end
+    object tsProductoAplicacion: TcxTabSheet
+      Caption = 'Aplicaciones'
+      ImageIndex = 2
+      ExplicitLeft = 4
+      ExplicitTop = 27
     end
   end
   object PnlTitulo: TPanel [8]
@@ -452,7 +458,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -601,7 +607,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

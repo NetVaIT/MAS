@@ -689,6 +689,27 @@
             <Form>FrmContactosEdit</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Catalogos\PaqueteriasDM.pas">
+            <Form>DMPaqueterias</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PaqueteriasEdit.pas">
+            <Form>frmPaqueteriasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\PaqueteriasForm.pas">
+            <Form>frmPaqueteriasGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosAplicacionesEdit.pas">
+            <Form>frmProductosAplicacionEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosAplicacionesForm.pas">
+            <Form>frmProductosAplicaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

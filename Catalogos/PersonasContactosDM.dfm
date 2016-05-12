@@ -2,13 +2,22 @@ inherited dmPersonaContactos: TdmPersonaContactos
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdContacto, IdPersona, Nombre, Cargo, '#13#10'CorreoElectronico' +
       ', TelefonoFijo, TelefonoMovil from Contactos'#13#10' WHERE IdPersona= ' +
-      ':IdPersona'
+      ':IdPersona and IDPersonaDomicilio = :IdPersonaDomicilio'
     Parameters = <
       item
         Name = 'IdPersona'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IdPersonaDomicilio'
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10

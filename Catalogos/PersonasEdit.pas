@@ -78,6 +78,7 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBLkupCBxRol: TcxDBLookupComboBox;
     cxDBLabel2: TcxDBLabel;
+    ActEjecutaconsulta: TAction;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -89,6 +90,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure cmbTipoPersonaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure pcMainChange(Sender: TObject);
   private
     { Private declarations }
     dmPersonasDomicilios : TdmPersonasDomicilios;
@@ -98,11 +100,25 @@ type
     dmCuentasBancarias : TdmCuentasBancarias;
     dmPersonasCSD:TdmPersonasCSD;
     FRol: TPRol;
+    fIDDomicilio: integer;
+    FFiltroNombre: String;
+    FActConsulta: TBasicAction;   //May 7/16
     procedure SetRol(const Value: TPRol);
     procedure MostrarPanel();
+
+    procedure SetIDDomicilio(const Value: integer);
+    function GetFFiltroNombre: String;
+    procedure SetFActConsulta(const Value: TBasicAction);
   public
     { Public declarations }
     property Rol: TPRol read FRol write SetRol;
+    property AIdDomicilio :integer read fIDDomicilio   write SetIDDomicilio;  //May 7/16
+
+    Property AFiltroNombre:String read GetFFiltroNombre write FfiltroNombre; //May 9/16
+    property ActualizaConsulta: TBasicAction read FActConsulta write SetFActConsulta; //May 9/16
+
+
+
   end;
 
 implementation
@@ -174,8 +190,12 @@ procedure TfrmPersonasEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmPersonas.Create(Self);
+  TfrmPersonas(gFormGrid).ActualizaConsulta:=ActEjecutaconsulta; // May 9/16
+
  dmPersonasDomicilios := TdmPersonasDomicilios.Create(nil);
  dmTelefonos := TdmTelefonos.Create(nil);
+// dmTelefonos.AIdDomicilio:=dmPersonasDomicilios.adodsMasterIdDomicilio.AsInteger;//may 6/16
+
   dmEmails := TdmEmail.Create(nil);
   dmContactos := TdmPersonaContactos.Create(nil);
   dmCuentasBancarias := TdmCuentasBancarias.Create(nil);
@@ -214,8 +234,10 @@ begin
   dmPersonasDomicilios.MasterSource := DataSource;
   dmPersonasDomicilios.MasterFields := 'IdPersona';
   dmPersonasDomicilios.ShowModule(tsDomicilio,'');
- dmTelefonos.MasterSource := DataSource;
+
+  dmTelefonos.MasterSource := DataSource;
   dmTelefonos.MasterFields := 'IdPersona';
+  dmTelefonos.AIdDomicilio:= dmPersonasDomicilios.adodsMasterIdDomicilio.AsInteger; // may 7/16
   dmTelefonos.ShowModule(tsTelefono,'');
   dmEmails.MasterSource := DataSource;
   dmEmails.MasterFields := 'IdPersona';
@@ -241,6 +263,17 @@ begin
  (*  //May 4 para prueba*)
    //Titulo
    MostrarPanel; //Se movio aca    y deshabilitado may 4/16
+end;
+
+
+function TfrmPersonasEdit.GetFFiltroNombre: String;
+begin
+  if Assigned(gFormGrid) then
+  begin
+    FfiltroNombre:=TfrmPersonas(gFormGrid).AfiltroNombre;
+
+  end;
+    Result := FfiltroNombre;
 end;
 
 procedure TfrmPersonasEdit.MostrarPanel;
@@ -297,6 +330,27 @@ begin
     LblCteCte.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;;
     cxDBEdtCtaCliente.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;
   end;
+end;
+
+procedure TfrmPersonasEdit.pcMainChange(Sender: TObject);
+begin
+  inherited;
+  //may 7/16
+  dmTelefonos.AIdDomicilio:= dmPersonasDomicilios.adodsMasterIdDomicilio.AsInteger;
+  dmEmails.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger;
+
+  //dmContactos.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger; //Falta implementar y en new record
+end;
+
+procedure TfrmPersonasEdit.SetFActConsulta(const Value: TBasicAction);
+begin
+  FActConsulta := Value;
+   TfrmPersonas(gFormGrid).ActualizaConsulta:=Value;
+end;
+
+procedure TfrmPersonasEdit.SetIDDomicilio(const Value: integer);
+begin
+
 end;
 
 procedure TfrmPersonasEdit.SetRol(const Value: TPRol);

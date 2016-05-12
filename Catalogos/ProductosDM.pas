@@ -59,6 +59,18 @@ type
     adodsPersonasProvedor: TStringField;
     adodsPersonasMoneda: TStringField;
     adodsProductosProveedoresProveedor: TStringField;
+    ADODtStMarcas: TADODataSet;
+    ADODtStMarcasIdMarca: TAutoIncField;
+    ADODtStMarcasIdentificador: TStringField;
+    ADODtStMarcasDescripcion: TStringField;
+    ADODtStProductosAplicaciones: TADODataSet;
+    adodsMasterIdProductoAplicacion: TAutoIncField;
+    adodsMasterIdMarca: TIntegerField;
+    IntegerField1: TIntegerField;
+    adodsMasterIdentificador: TStringField;
+    StringField1: TStringField;
+    adodsMasterAplicacion: TStringField;
+    adodsMasterMarca: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
@@ -75,7 +87,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ProductosEdit, DocumentosDM, ProductosProveedoresEdit;
+uses ProductosEdit, DocumentosDM, ProductosProveedoresEdit,
+   ProductosAplicacionesEdit;
 
 {$R *.dfm}
 
@@ -119,6 +132,7 @@ procedure TdmProductos.DataModuleCreate(Sender: TObject);
 begin
   inherited;
   if adodsProductosProveedores.CommandText <> EmptyStr then adodsProductosProveedores.Open;
+  if adodtstProductosAplicaciones.CommandText <> EmptyStr then adodtstProductosAplicaciones.Open; //May 12/16
   gGridEditForm := TfrmProductosEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
 //  TfrmProductosEdit(gGridEditForm).InsertFile := actNuevoDocumento;
@@ -131,6 +145,9 @@ begin
   ADODsDocumento.open;    //Ya viene abierto
   gFormDetail1:= TfrmProductosProveedoresEdit.Create(Self);
   gFormDetail1.DataSet:= adodsProductosProveedores;
+  gFormDetail2:= TfrmProductosAplicacionEdit.Create(Self);  //May 12/16
+  gFormDetail2.DataSet:= adodtstProductosAplicaciones;     //May 12/16
+  TfrmProductosAplicacionEdit(gFormDetail2).DSIdentificadores.DataSet:= adodsMaster;
 end;
 
 procedure TdmProductos.DataModuleDestroy(Sender: TObject);

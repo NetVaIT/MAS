@@ -260,6 +260,7 @@ begin
   inherited;                                                      //Agregado edit verificar ene28/16
   DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled);  //  SpdBtnCambioEstatus
 
+
 end;
 
 procedure TfrmCotizaciones.DBGrdDetallesDblClick(Sender: TObject);

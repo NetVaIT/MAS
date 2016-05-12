@@ -174,6 +174,7 @@ type
     DBText6: TDBText;
     BtBtnEnviar: TBitBtn;
     cmbTelefono: TcxDBLookupComboBox;
+    BtBtnOrdenEmbarque: TBitBtn;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -198,6 +199,7 @@ type
     procedure ToolButton33Click(Sender: TObject);
     procedure cxDBDateEdit1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
 
   private
     FCargarDocGuia: TBasicAction;
@@ -209,7 +211,7 @@ type
       var Falta: Double): Boolean;
     function VerificaUbicacionProductos(idordenSalida: Integer): Boolean;
     procedure ImprimirOrdenSalida(idOrdenSalida,IDDocumentoSalida:Integer);
-    procedure ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida: Integer);
+    procedure ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida,cualRep: Integer);    //May 10/16  ajuste reusar
     procedure SetCargarDocGuia(const Value: TBasicAction);
     procedure SetEnviaCorreoConDocs(const Value: TBasicAction);
     procedure SetActApartado(const Value: TBasicAction);
@@ -712,7 +714,7 @@ end;
 procedure TFrmOrdenesSalida.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
   inherited;  //Enviar Cantidad de  cajas e imprimir ese numero de etiquetas //Feb 15/16
-  ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0);
+  ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0, 2); //May 10/16 + CualRep
   if application.MessageBox('¿Mercancía Enviada?','Confirmación cambio estado',MB_YESNO)=idyes then //Abr 20/16
   begin
     datasource.DataSet.Edit;
@@ -769,6 +771,12 @@ begin
         end;
     end;
   end;
+end;
+
+procedure TFrmOrdenesSalida.BtBtnOrdenEmbarqueClick(Sender: TObject);
+begin
+  inherited;
+  ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0, 3); //May 10/16
 end;
 
 procedure TFrmOrdenesSalida.DataSourceDataChange(Sender: TObject;
@@ -882,6 +890,7 @@ begin
   BtBtnCancelaInfoEnt.Enabled:=dsInformacionEntrega.State=DsEdit;
 
   BtBtnImprimeEtiqueta.Enabled:=dsInformacionEntrega.State=dsBrowse;
+  BtBtnOrdenEmbarque.Enabled:= BtBtnImprimeEtiqueta.Enabled; //May 10/16
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
 end;
 
@@ -1072,7 +1081,7 @@ begin
 
 end;
 
-procedure TFrmOrdenesSalida.ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida: Integer);
+procedure TFrmOrdenesSalida.ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida,cualRep: Integer);
 var
   DMImpresosSalidas:TDMImpresosSalidas;
   Cuantos:Integer;
@@ -1084,8 +1093,8 @@ begin
   DMImpresosSalidas.ADODtStDatosEtiqueta.Parameters.ParamByName('IdOrdenSalida').Value:=idOrdenSalida;
   DMImpresosSalidas.ADODtStDatosEtiqueta.Open;
   Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
-  DMImpresosSalidas.PrintPDFFile(2, cuantos);//Ajuste Feb 15/16
-
+  DMImpresosSalidas.PrintPDFFile(CualRep, cuantos);//Ajuste Feb 15/16
+                                  //Ajuste May 10/16
   DMImpresosSalidas.Free;
 
 end;
