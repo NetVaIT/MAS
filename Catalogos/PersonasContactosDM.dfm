@@ -5,8 +5,9 @@ inherited dmPersonaContactos: TdmPersonaContactos
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdContacto, IdPersona, Nombre, Cargo, '#13#10'CorreoElectronico' +
-      ', TelefonoFijo, TelefonoMovil from Contactos'#13#10' WHERE IdPersona= ' +
-      ':IdPersona and IDPersonaDomicilio = :IdPersonaDomicilio'
+      ', TelefonoFijo, TelefonoMovil, IDPersonaDomicilio from Contactos' +
+      #13#10' WHERE IdPersona= :IdPersona and IDPersonaDomicilio = :IdPerso' +
+      'naDomicilio'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -55,6 +56,9 @@ inherited dmPersonaContactos: TdmPersonaContactos
       FieldName = 'TelefonoMovil'
       Visible = False
       Size = 25
+    end
+    object adodsMasterIDPersonaDomicilio: TIntegerField
+      FieldName = 'IDPersonaDomicilio'
     end
   end
   object adodsContacto: TADODataSet

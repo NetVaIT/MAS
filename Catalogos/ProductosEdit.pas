@@ -71,7 +71,6 @@ type
     tsProductoAplicacion: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
-    procedure DataSetInsertExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BtBtnFotosClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -136,12 +135,6 @@ procedure TfrmProductosEdit.DataSetEditExecute(Sender: TObject);
 begin
   inherited;
   EditFile.Execute;
-end;
-
-procedure TfrmProductosEdit.DataSetInsertExecute(Sender: TObject);
-begin
-  inherited;
-  InsertFile.Execute;
 end;
 
 procedure TfrmProductosEdit.DataSourceDataChange(Sender: TObject;

@@ -18,7 +18,8 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
-  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit;
+  Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit,
+  Vcl.Buttons, Vcl.Mask;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -42,11 +43,13 @@ type
     Label6: TLabel;
     cxDBTextEdit5: TcxDBTextEdit;
     Label7: TLabel;
-    cxDBTextEdit6: TcxDBTextEdit;
     Label9: TLabel;
     cxDBTextEdit7: TcxDBTextEdit;
     Label10: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
+    SpdBtnVerPass: TSpeedButton;
+    DBTxtEdtPass: TDBEdit;
+    procedure SpdBtnVerPassClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,5 +61,14 @@ implementation
 {$R *.dfm}
 
 uses ConfiguracionDM;
+
+procedure TfrmConfiguracionesEdit.SpdBtnVerPassClick(Sender: TObject);
+begin
+  inherited;
+  if SpdBtnVerPass.Down then
+    DBTxtEdtPass.passwordchar :=#0
+  else
+     DBTxtEdtPass.passwordchar :='*';
+end;
 
 end.

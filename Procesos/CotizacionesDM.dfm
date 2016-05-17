@@ -327,7 +327,7 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 
       'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,'#13#10' P.DiasCredit' +
       'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  an' +
-      'd P.idPersona>-1'
+      'd P.idPersona>-1'#13#10'order by P.RazonSocial'
     Parameters = <>
     Left = 192
     Top = 40
@@ -418,6 +418,18 @@ inherited dmCotizaciones: TdmCotizaciones
   object ADODSAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    CommandText = 
+      'select P.idPersona, P.RazonSocial, P.RFC, PD.identificador, PD.I' +
+      'dPersonaDomicilio, D.Calle, D.NoExterior,d.NoInterior,D.CodigoPo' +
+      'stal,'#13#10'PA.Descripcion as Pais, E.Descripcion as Estado, M.Descri' +
+      'pcion as Municipio, PO.Descripcion as Poblacion'#13#10'  from Personas' +
+      ' P'#13#10' inner join  PersonasDomicilios PD on P.idPersona=PD.IdPerso' +
+      'na '#13#10' inner join Domicilios D on D.IDDomicilio=PD.IdDomicilio'#13#10' ' +
+      'inner join Paises PA on PA.IdPais=d.IdPais'#13#10' inner join Estados ' +
+      'E on E.IdEstado =D.IdEstado'#13#10' inner join Municipios M on  M.IdMu' +
+      'nicipio=D.IdMunicipio'#13#10' left join Poblaciones PO on PO.IdPoblaci' +
+      'on =D.IdPoblacion'#13#10' '#13#10' '#13#10' where idRol=1 and P.IdPersonaEstatus=1' +
+      ' or P.IdPersonaEstatus is null'
     Parameters = <>
     Left = 64
     Top = 224
@@ -5053,5 +5065,48 @@ inherited dmCotizaciones: TdmCotizaciones
       end>
     Left = 416
     Top = 156
+  end
+  object ADODtStArchivoAsociado: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumentoSalidaArchivo, IdDocumentoSalida, IdDocumento,' +
+      #13#10' Notas from DocumentosSalidasArchivos '#13#10'where IdDocumentoSalid' +
+      'a =:IdDocumentoSalida'#13#10
+    Parameters = <
+      item
+        Name = 'IdDocumentoSalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 568
+    Top = 472
+    object adodsMasterIdDocumentoSalidaArchivo: TAutoIncField
+      FieldName = 'IdDocumentoSalidaArchivo'
+      ReadOnly = True
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'IdDocumentoSalida'
+    end
+    object adodsMasterIdDocumento: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object adodsMasterNombreArchivo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'NombreArchivo'
+      LookupDataSet = ADODsDocumento
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumento'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterNotas: TStringField
+      FieldName = 'Notas'
+      Size = 200
+    end
   end
 end

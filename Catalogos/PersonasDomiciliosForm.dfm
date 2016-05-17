@@ -1,7 +1,5 @@
 inherited frmPersonasDomicilios: TfrmPersonasDomicilios
   Caption = 'Domicilios'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -23,14 +21,40 @@ inherited frmPersonasDomicilios: TfrmPersonasDomicilios
           DataBinding.FieldName = 'IdDomicilioTipo'
           Visible = False
         end
+        object tvMasterPredeterminado: TcxGridDBColumn
+          DataBinding.FieldName = 'Predeterminado'
+        end
         object tvMasterDomicilio: TcxGridDBColumn
           DataBinding.FieldName = 'Domicilio'
+          Width = 400
+        end
+        object tvMasterColonia: TcxGridDBColumn
+          DataBinding.FieldName = 'Colonia'
+          Width = 210
+        end
+        object tvMasterCodigoPostal: TcxGridDBColumn
+          DataBinding.FieldName = 'CodigoPostal'
+          Width = 66
+        end
+        object tvMasterMunicipio: TcxGridDBColumn
+          DataBinding.FieldName = 'Municipio'
+          Width = 150
+        end
+        object tvMasterEstado: TcxGridDBColumn
+          DataBinding.FieldName = 'Estado'
+          Width = 150
+        end
+        object tvMasterPais: TcxGridDBColumn
+          DataBinding.FieldName = 'Pais'
+          Width = 150
+        end
+        object tvMasterIdentificador: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador'
+          Width = 50
         end
         object tvMasterDomicilioTipo: TcxGridDBColumn
           DataBinding.FieldName = 'DomicilioTipo'
-        end
-        object tvMasterPredeterminado: TcxGridDBColumn
-          DataBinding.FieldName = 'Predeterminado'
+          Width = 200
         end
       end
     end
@@ -40,7 +64,7 @@ inherited frmPersonasDomicilios: TfrmPersonasDomicilios
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004008C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400900010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -181,7 +205,7 @@ inherited frmPersonasDomicilios: TfrmPersonasDomicilios
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C002001980010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C0020019C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -22,7 +22,6 @@ object frmListaProductos: TfrmListaProductos
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 772
     object cxGrid: TcxGrid
       Left = 0
       Top = 50
@@ -31,10 +30,10 @@ object frmListaProductos: TfrmListaProductos
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitWidth = 772
       object tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         Navigator.Buttons.CustomButtons = <>
+        OnCellDblClick = tvMasterCellDblClick
         DataController.DataSource = DataSource
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
@@ -89,7 +88,6 @@ object frmListaProductos: TfrmListaProductos
       Height = 50
       Align = alTop
       TabOrder = 1
-      ExplicitWidth = 772
       object RdGrpUsoIdentificador: TRadioGroup
         Left = 263
         Top = -1

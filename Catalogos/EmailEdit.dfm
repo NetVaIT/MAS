@@ -4,6 +4,10 @@ inherited frmEmailEdit: TfrmEmailEdit
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -11,7 +15,13 @@ inherited frmEmailEdit: TfrmEmailEdit
       ExplicitWidth = 748
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
         inherited pnlMaster: TPanel
+          ExplicitLeft = 0
+          ExplicitTop = 24
           object Label1: TLabel
             Left = 32
             Top = 16
@@ -26,6 +36,28 @@ inherited frmEmailEdit: TfrmEmailEdit
             Height = 13
             Caption = 'Email'
             FocusControl = cxDBTextEdit1
+          end
+          object SpdBtnAsociaMails: TSpeedButton
+            Left = 360
+            Top = 19
+            Width = 104
+            Height = 33
+            Caption = 'Vincular Mails'
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              3333333333333333333333333333333333333FFFFFFFFFFFFFFF000000000000
+              0000777777777777777707FFFFFFFFFFFF70773FF33333333F770F77FFFFFFFF
+              77F07F773FF3333F77370FFF77FFFF77FFF07F33773FFF7733370FFFFF0000FF
+              FFF07F333F77773FF3370FFF70EEEE07FFF07F3F773333773FF70F707FFFFFF7
+              07F07F77333333337737007EEEEEEEEEE70077FFFFFFFFFFFF77077777777777
+              77707777777777777777307EEEEEEEEEE7033773FF333333F77333707FFFFFF7
+              0733333773FF33F773333333707EE707333333333773F7733333333333700733
+              3333333333377333333333333333333333333333333333333333}
+            NumGlyphs = 2
+            OnClick = SpdBtnAsociaMailsClick
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 32
@@ -62,7 +94,7 @@ inherited frmEmailEdit: TfrmEmailEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -203,7 +235,7 @@ inherited frmEmailEdit: TfrmEmailEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -740,5 +772,10 @@ inherited frmEmailEdit: TfrmEmailEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
+  end
+  object DSHayXVincular: TDataSource
+    DataSet = dmEmail.ADODtStHayXVincular
+    Left = 606
+    Top = 88
   end
 end

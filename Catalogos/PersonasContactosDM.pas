@@ -24,6 +24,7 @@ type
     adodsMasterTelefonoFijo: TStringField;
     adodsMasterTelefonoMovil: TStringField;
     adodsMasterIdPersona: TIntegerField;
+    adodsMasterIDPersonaDomicilio: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
   private

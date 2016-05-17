@@ -21,7 +21,7 @@ uses
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   cxCheckBox, cxDBEdit, cxTextEdit, Vcl.DBCtrls, Vcl.StdCtrls, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
-  dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC;
+  dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC, Vcl.Buttons;
 
 type
   TfrmEmailEdit = class(T_frmStandarGFormEdit)
@@ -30,11 +30,17 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     cxDBCheckBox1: TcxDBCheckBox;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
+    SpdBtnAsociaMails: TSpeedButton;
+    DSHayXVincular: TDataSource;
     procedure FormCreate(Sender: TObject);
+    procedure SpdBtnAsociaMailsClick(Sender: TObject);
   private
+    FVinculaMail: TBasicAction;
+    procedure SetFVinculaMail(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+     property AVinculaMails : TBasicAction read FVinculaMail write SetFVinculaMail;
   end;
 
 implementation
@@ -47,7 +53,22 @@ procedure TfrmEmailEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmEmail.Create(Self);
+  DSHayXVincular.DataSet.close;
+  DSHayXVincular.DataSet.open;
+  SpdBtnAsociaMails.Visible:=DSHayXVincular.DataSet.RecordCount>0;
  // TfrmEmail(gFormGrid).CerrarGrid := actCloseGrid;
+end;
+
+procedure TfrmEmailEdit.SetFVinculaMail(const Value: TBasicAction);
+begin
+  FVinculaMail := Value;
+end;
+
+procedure TfrmEmailEdit.SpdBtnAsociaMailsClick(Sender: TObject);
+begin
+  inherited;
+  AVinculaMails.Execute;
+  SpdBtnAsociaMails.Visible:=DSHayXVincular.DataSet.RecordCount>0;
 end;
 
 end.

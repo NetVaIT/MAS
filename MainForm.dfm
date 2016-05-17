@@ -1,15 +1,15 @@
 inherited frmMain: TfrmMain
   Caption = 'MAS -Principal'
-  ClientHeight = 598
-  ClientWidth = 1128
+  ClientHeight = 574
+  ClientWidth = 796
   Font.Height = -32
   OnDestroy = FormDestroy
-  ExplicitWidth = 1144
-  ExplicitHeight = 636
+  ExplicitWidth = 812
+  ExplicitHeight = 612
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
-    Width = 1128
+    Width = 796
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 1128
     inherited dxRibbon1Tab1: TdxRibbonTab
@@ -95,14 +95,14 @@ inherited frmMain: TfrmMain
     end
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
-    Top = 575
-    Width = 1128
+    Top = 551
+    Width = 796
     ExplicitTop = 575
     ExplicitWidth = 1128
   end
   inherited pnlMain: TPanel
-    Width = 1128
-    Height = 420
+    Width = 796
+    Height = 396
     ExplicitWidth = 1128
     ExplicitHeight = 420
   end

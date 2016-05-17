@@ -44,6 +44,9 @@ type
     procedure tvMasterDblClick(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     { Private declarations }
     FDataSet: TDataSet;
@@ -169,6 +172,29 @@ begin
   end;
 end;
 
+procedure TfrmListaProductos.tvMasterCellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+var
+   texto:String;   //May 13/16
+   i:integer;
+begin
+  texto:=ACellViewInfo.Item.Name;
+  I:= Pos('Identificador',Texto);
+  if i>0 then
+  begin
+    texto:= copy(texto,i + 13, 1);
+  end
+  else
+    Texto:='';
+  if Texto <>'' then
+  begin
+   // ShowMessage(Texto);
+    i:=strToInt(Texto);
+    RdGrpUsoIdentificador.ItemIndex:=i-1;
+  end;
+end;
+
 procedure TfrmListaProductos.tvMasterDblClick(Sender: TObject);
 //var Identi:String;
 begin
@@ -177,8 +203,17 @@ begin
 //  IDProducto:=Datasource.DataSet.FieldByName('IdProducto').AsInteger;
 //  Descripcion:=Datasource.DataSet.FieldByName('Descripcion').AsString;
 //  Precio:=Datasource.DataSet.FieldByName('PrecioUnitario').AsFloat;
-  Acepto:=True;
-  Close;
+  if not Datasource.DataSet.eof then
+  begin
+    Acepto:=True;
+    Close;
+  end
+  else
+  begin
+    Acepto:=False;
+    Close;
+  end;
+
 end;
 
 end.

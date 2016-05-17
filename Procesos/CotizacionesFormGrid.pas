@@ -44,14 +44,16 @@ type
     Label2: TLabel;
     cxDtEdtDesde: TcxDateEdit;
     cxDtEdtHasta: TcxDateEdit;
-    SpdBtn: TSpeedButton;
+    SpdBtnBuscar: TSpeedButton;
     TlBtnSepara: TToolButton;
     PnlBusqueda: TPanel;
     EdtNombre: TEdit;
     Label3: TLabel;
-    procedure SpdBtnClick(Sender: TObject);
+    procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
+    procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     ffiltro: String;
     FTipoDoc: Integer;
@@ -87,6 +89,17 @@ begin
     FfiltroNombre:='';
 end;
 
+procedure TfrmCotizacionesGrid.EdtNombreKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;    //May 12/16
+  if key=13 then
+  begin
+    key:=0;
+    spdBtnBuscar.Click;
+  end;
+end;
+
 procedure TfrmCotizacionesGrid.FormCreate(Sender: TObject);
 var    // Abr 19/16
   fechaAux:TDAteTime;
@@ -117,7 +130,7 @@ begin
   FTipoDoc := Value;
 end;
 
-procedure TfrmCotizacionesGrid.SpdBtnClick(Sender: TObject);
+procedure TfrmCotizacionesGrid.SpdBtnBuscarClick(Sender: TObject);
 const
   TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
            'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+

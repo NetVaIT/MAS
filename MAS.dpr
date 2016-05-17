@@ -156,7 +156,11 @@ uses
   PaqueteriasEdit in 'Catalogos\PaqueteriasEdit.pas' {frmPaqueteriasEdit},
   PaqueteriasForm in 'Catalogos\PaqueteriasForm.pas' {frmPaqueteriasGrid},
   ProductosAplicacionesEdit in 'Catalogos\ProductosAplicacionesEdit.pas' {frmProductosAplicacionEdit},
-  ProductosAplicacionesForm in 'Catalogos\ProductosAplicacionesForm.pas' {frmProductosAplicaciones};
+  ProductosAplicacionesForm in 'Catalogos\ProductosAplicacionesForm.pas' {frmProductosAplicaciones},
+  ListaClientesForm in 'Catalogos\ListaClientesForm.pas' {FrmBuscaCliente},
+  CotizacionesArchivosDM in 'Procesos\CotizacionesArchivosDM.pas' {dmCotizacionesArchivos: TDataModule},
+  CotizacionesArchivosForm in 'Procesos\CotizacionesArchivosForm.pas' {frmCotizacionesArchivos},
+  CotizacionesArchivosEdit in 'Procesos\CotizacionesArchivosEdit.pas' {frmCotizacionesArchivosEdit};
 
 {$R *.res}
 

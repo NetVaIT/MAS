@@ -79,6 +79,9 @@ type
     cxDBLkupCBxRol: TcxDBLookupComboBox;
     cxDBLabel2: TcxDBLabel;
     ActEjecutaconsulta: TAction;
+    cxDBLblDomicilio: TcxDBLabel;
+    cxDBLabel4: TcxDBLabel;
+    cxDBLabel5: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -245,6 +248,11 @@ begin
   dmContactos.MasterSource := DataSource;
   dmContactos.MasterFields := 'IdPersona';
   dmContactos.ShowModule(tsContactos,'');
+
+  dmEmails.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger;
+
+  dmContactos.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger;
+
   dmCuentasBancarias.MasterSource := DataSource;
   dmCuentasBancarias.MasterFields := 'IdPersona';
   dmCuentasBancarias.ShowModule(tsCuentasBancarias,'');
@@ -339,7 +347,8 @@ begin
   dmTelefonos.AIdDomicilio:= dmPersonasDomicilios.adodsMasterIdDomicilio.AsInteger;
   dmEmails.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger;
 
-  //dmContactos.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger; //Falta implementar y en new record
+  dmContactos.AIdDomicilioPersona:= dmPersonasDomicilios.adodsMasterIdPersonaDomicilio.AsInteger; //Falta implementar y en new record
+
 end;
 
 procedure TfrmPersonasEdit.SetFActConsulta(const Value: TBasicAction);

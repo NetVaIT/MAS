@@ -1,47 +1,48 @@
 inherited frmProductos: TfrmProductos
   Caption = 'Productos'
-  ClientWidth = 800
-  ExplicitWidth = 800
-  ExplicitHeight = 650
+  ClientWidth = 1045
+  ExplicitWidth = 1045
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited splDetail2: TSplitter
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited splDetail1: TSplitter
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnlClose: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnlDetail3: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnlDetail2: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnlDetail1: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnltoolbar: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
   end
   inherited pnlMaster: TPanel
-    Width = 800
+    Width = 1045
     ExplicitWidth = 800
     inherited cxGrid: TcxGrid
-      Width = 800
+      Top = 36
+      Width = 1045
+      Height = 435
       ExplicitWidth = 800
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
@@ -111,16 +112,139 @@ inherited frmProductos: TfrmProductos
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 800
-      ExplicitWidth = 800
+      Width = 1045
+      Height = 36
+      ButtonHeight = 36
+      ExplicitWidth = 1045
+      ExplicitHeight = 36
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 36
+      end
+      inherited ToolButton10: TToolButton
+        Width = 31
+        ExplicitWidth = 31
+        ExplicitHeight = 36
+      end
+      inherited tbtnCerrar: TToolButton
+        Left = 308
+        ExplicitLeft = 308
+        ExplicitHeight = 36
+      end
+      object Panel1: TPanel
+        Left = 331
+        Top = 0
+        Width = 681
+        Height = 36
+        Align = alRight
+        BevelOuter = bvNone
+        ParentBackground = False
+        ParentColor = True
+        TabOrder = 0
+        object EdtBuscar: TEdit
+          Left = 15
+          Top = 9
+          Width = 202
+          Height = 21
+          TabOrder = 0
+        end
+        object SpdBtnBuscar: TBitBtn
+          Left = 223
+          Top = 7
+          Width = 26
+          Height = 25
+          Default = True
+          Glyph.Data = {
+            AA030000424DAA03000000000000360000002800000011000000110000000100
+            18000000000074030000C40E0000C40E00000000000000000000241CED241CED
+            241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+            ED241CED241CED241CED241CED00241CED241CED241CED241CED241CED241CED
+            241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+            ED00241CED241CEDFFFBFFB5AAA5F7FBF7241CED241CED241CED241CED241CED
+            241CED241CED241CED241CED241CED241CED241CED00241CED241CEDBD9E8C73
+            38219C7973F7FBF7241CED241CED241CED241CED241CED241CED241CED241CED
+            241CED241CED241CED00241CED241CEDE7DBCE945131844931AD8A73F7FBF724
+            1CED241CED241CED241CED241CED241CED241CED241CED241CED241CED00241C
+            ED241CED241CEDE7DBCEA56142A55931BD8E73F7FBF7F7E7E7DECBBDE7CBBDF7
+            EFF7241CED241CED241CED241CED241CED00241CED241CED241CED241CEDE7E3
+            DEB57142B56942B57D5AB56942B56942B56942B56942DEBAA5FFFBFF241CED24
+            1CED241CED00241CED241CED241CED241CED241CEDE7E3DEB57142B57142B571
+            42D6A684D6A684B57142B57142DEBEA5241CED241CED241CED00241CED241CED
+            241CED241CED241CEDE7DBCEC67942C6865AF7EFE7FFFBFFFFFBFFF7E7DEC679
+            42C67942F7EFE7241CED241CED00241CED241CED241CED241CED241CEDD6BA8C
+            C68242E7C7A5FFFFFFFFFFFFFFFFFFFFFFFFD6B28CC68242E7CBB5241CED241C
+            ED00241CED241CED241CED241CED241CEDE7BA8CC68A42E7CBB5FFFFFFFFFFFF
+            FFFFFFFFFFFFE7BA8CC68A42E7CBB5241CED241CED00241CED241CED241CED24
+            1CED241CEDE7D3B5D69242D6A66BF7FBF7FFFFFFFFFFFFF7F3F7D69E5AD69242
+            F7E7DE241CED241CED00241CED241CED241CED241CED241CEDF7FBF7D6AE6BD6
+            9A42D6AE6BE7D3B5E7D3B5D6A65AD69A42D6B66BFFFBFF241CED241CED00241C
+            ED241CED241CED241CED241CED241CEDF7EFDEE7BE5AD6AA31D6AA31D6AA31D6
+            AA31E7BE6BF7F3E7241CED241CED241CED00241CED241CED241CED241CED241C
+            ED241CED241CEDFFFBF7F7DFB5E7D78CE7D78CF7E7BDFFFBFF241CED241CED24
+            1CED241CED00241CED241CED241CED241CED241CED241CED241CED241CED241C
+            ED241CED241CED241CED241CED241CED241CED241CED241CED00241CED241CED
+            241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+            ED241CED241CED241CED241CED00}
+          TabOrder = 1
+          OnClick = SpdBtnBuscarClick
+        end
+        object ChckBxBuscaXAp: TCheckBox
+          Left = 272
+          Top = 11
+          Width = 129
+          Height = 17
+          Caption = 'Buscar por Aplicaci'#243'n'
+          TabOrder = 2
+        end
+      end
     end
   end
   inherited DataSource: TDataSource
     DataSet = dmProductos.adodsMaster
+    Top = 152
   end
   inherited ilPageControl: TImageList
+    Top = 152
     Bitmap = {
-      494C0101020004009C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -259,9 +383,13 @@ inherited frmProductos: TfrmProductos
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    Top = 152
+  end
   inherited ilAction: TImageList
+    Top = 152
     Bitmap = {
-      494C01010C00B801F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -797,6 +925,10 @@ inherited frmProductos: TfrmProductos
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Top = 152
     PixelsPerInch = 96
+  end
+  inherited cxGridPopupMenu: TcxGridPopupMenu
+    Top = 152
   end
 end

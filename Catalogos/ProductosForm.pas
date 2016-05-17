@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls, Vcl.Buttons,Data.Win.ADODB;
 
 type
   TfrmProductos = class(T_frmStandarGFormGrid)
@@ -43,6 +43,11 @@ type
     tvMasterIdentificador1: TcxGridDBColumn;
     tvMasterIdentificador2: TcxGridDBColumn;
     tvMasterIdentificador3: TcxGridDBColumn;
+    Panel1: TPanel;
+    EdtBuscar: TEdit;
+    SpdBtnBuscar: TBitBtn;
+    ChckBxBuscaXAp: TCheckBox;
+    procedure SpdBtnBuscarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,5 +59,36 @@ implementation
 {$R *.dfm}
 
 uses ProductosDM;
+
+procedure TfrmProductos.SpdBtnBuscarClick(Sender: TObject);
+var        //May 17/16
+   idProd, ParteAp:String;
+begin
+  inherited;
+  idProd:=EdtBuscar.Text;
+
+  if ChckBxBuscaXAp.Checked then
+  begin
+    DataSource.DataSet.Close;                                   //May 11/16 , PA.Aplicacion, PA.Identificador  IdentificadorAplica
+    TAdoDataset(DataSource.DataSet).commandText:='Select distinct(P.IdProducto) ,P.* from Productos P '+
+                                                 ' inner join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto'+
+                                                  ' and  PA.Aplicacion like''%'+IDProd +'%'') ';
+   DataSource.DataSet.open;
+  end
+  else  //Sin filtro por aplicacion
+  begin
+    DataSource.DataSet.Close;                                   //May 11/16    '+ParteAp+ '      ' left join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto)  '+
+    TAdoDataset(DataSource.DataSet).commandText:='Select P.*  from Productos P '+
+                                          ' where(Identificador1 Like '''+IDProd+'%'' or Identificador2 like '''+IDProd+
+                                          '%'' or Identificador3 Like '''+IDProd+'%'')';
+    DataSource.DataSet.open;
+    if DataSource.DataSet.Eof then
+    begin
+      DataSource.DataSet.Close;
+      TAdoDataset(DataSource.DataSet).commandText:='Select P.* '+ParteAp+' from Productos P where P.Descripcion like ''%'+IDProd+ '%''';
+      DataSource.DataSet.open;
+    end;
+  end;
+end;
 
 end.

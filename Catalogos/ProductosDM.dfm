@@ -4,6 +4,7 @@ inherited dmProductos: TdmProductos
   Width = 780
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforeInsert = adodsMasterBeforeInsert
     CommandText = 
       'SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, ' +
       #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +

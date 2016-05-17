@@ -10,12 +10,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
-      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
-      ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
-      ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAuto' +
-      'riza, FechaAutoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10' Subtotal, I' +
-      'VA'#13#10'from OrdenesSalidas '#13#10'Order by IdOrdenEstatus,FechaRegistro ' +
-      'Desc'
+      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'OS.FechaRegis' +
+      'tro, OS.Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniR' +
+      'evisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPerso' +
+      'naAutoriza, FechaAutoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Su' +
+      'btotal, OS.IVA'#13#10'from OrdenesSalidas OS'#13#10'Order by IdOrdenEstatus,' +
+      'OS.FechaRegistro Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'

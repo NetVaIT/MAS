@@ -76,6 +76,7 @@ type
     procedure actEditaDocumentoExecute(Sender: TObject);
     procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
     procedure ReadFile(FileName: TFileName);
@@ -126,6 +127,23 @@ begin
     adodsProductoFotos.Post;
   end;
   dmDocumentos.Free;
+end;
+
+procedure TdmProductos.adodsMasterBeforeInsert(DataSet: TDataSet);
+const    //May 17/16
+  TxtSQL='SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, Maximo, Minimo, PuntoReorden,'+
+  ' IdProductoTipo, IdProductoEstatus, Identificador1, Identificador2, Identificador3 FROM Productos';
+var Txt:String;
+begin
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
+
 end;
 
 procedure TdmProductos.DataModuleCreate(Sender: TObject);

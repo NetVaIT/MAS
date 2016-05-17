@@ -48,7 +48,7 @@ type
     Label9: TLabel;
     Label10: TLabel;
     cxDBSpinEdit1: TcxDBSpinEdit;
-    DBLookupComboBox1: TDBLookupComboBox;
+    DBLkpCmbBxCliente: TDBLookupComboBox;
     DBLookupComboBox2: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
@@ -122,13 +122,16 @@ type
     Label19: TLabel;
     BtBtnOcultar: TBitBtn;
     cxDBDateEdit2: TcxDBDateEdit;
+    SpdBtnBuscaParte: TSpeedButton;
+    SpdBtnAdjuntarArchivos: TSpeedButton;
+    DSCotizacionArchivo: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
     procedure SpdBtnCambioEstatusClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
-    procedure DBLookupComboBox1Click(Sender: TObject);
+    procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure DataSourceStateChange(Sender: TObject);
     procedure DBGrdDetallesDblClick(Sender: TObject);
     procedure TlBtnEnvioCorreoMouseDown(Sender: TObject; Button: TMouseButton;
@@ -139,6 +142,8 @@ type
     procedure DBGrdDetallesKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure SpdBtnBuscaParteClick(Sender: TObject);
+    procedure SpdBtnAdjuntarArchivosClick(Sender: TObject);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
@@ -167,7 +172,7 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm
-  , ProductosFotosMostrar;    //    ,GeneraOrdenSalida
+  , ProductosFotosMostrar, ListaClientesForm, CotizacionesArchivosDM;    //    ,GeneraOrdenSalida
 
 function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
@@ -260,7 +265,7 @@ begin
   inherited;                                                      //Agregado edit verificar ene28/16
   DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled);  //  SpdBtnCambioEstatus
 
-
+  SpdBtnBuscaParte.Enabled:= (DataSource.State in [dsInsert,dsEdit] ) and(SpdBtnCambioEstatus.Enabled); //May 12/16
 end;
 
 procedure TfrmCotizaciones.DBGrdDetallesDblClick(Sender: TObject);
@@ -352,18 +357,18 @@ begin
 
 end;
 
-procedure TfrmCotizaciones.DBLookupComboBox1Click(Sender: TObject);
+procedure TfrmCotizaciones.DBLkpCmbBxClienteClick(Sender: TObject);
 begin
   inherited;
   //Para que abra la de direcciones //ene11/2016
    if DataSource.State in [dsInsert,dsEdit] then //Por si cambia de cliente
    begin
      dsDireccionCliente.dataset.close;
-     TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
+     TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLkpCmbBxCliente.KeyValue; //DEberia Funcionar
      dsDireccionCliente.dataset.Open;
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
-     TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLookupComboBox1.KeyValue;
+     TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLkpCmbBxCliente.KeyValue;
    end;
 end;
 
@@ -375,6 +380,7 @@ begin
  // TfrmCotizacionesGrid(gFormGrid).CerrarGrid := actCloseGrid;  //Se vaa acolocar en el estandar hay que quitarlo de aca Ene 13/16
   DataSource.DataSet.open;
   DataSourceDetail.DataSet.Open;
+  dmCotizacionesArchivos := TdmCotizacionesArchivos.Create(nil); //Pa ARchivos asociados
 
 end;
 
@@ -552,6 +558,33 @@ procedure TfrmCotizaciones.SetTipoDoc(const Value: Integer);
 begin
   FTipoDoc := Value;
   TfrmCotizacionesGrid(gFormGrid).TipoDocumento:=Value;
+end;
+
+procedure TfrmCotizaciones.SpdBtnAdjuntarArchivosClick(Sender: TObject);
+begin
+  inherited;
+  //LLamar Crear y mostrar
+  dmCotizacionesArchivos.dsMaster.DataSet:=DSCotizacionArchivo.DataSet;
+  dmCotizacionesArchivos.MasterSource := DataSource;
+  dmCotizacionesArchivos.MasterFields := 'IdDocumentoSalida';
+  dmCotizacionesArchivos.ShowModule(nil,'');
+ // DataSourceFotos.DataSet.Close;
+ // DataSourceFotos.DataSet.Open;
+
+end;
+
+procedure TfrmCotizaciones.SpdBtnBuscaParteClick(Sender: TObject);
+begin
+  inherited;
+  FrmbuscaCliente:= TFrmBuscaCliente.Create(self);
+  FrmbuscaCliente.DSBuscarCliente.DataSet:=DSAuxiliar.DataSet;
+
+  FrmBuscaCliente.ShowModal;
+ // DBLkpCmbBxCliente.KeyValue:=  FrmBuscaCliente.AIdPersona;
+  datasource.DataSet.FieldByName('IDPersona').AsInteger:= FrmBuscaCliente.AIdPersona;
+  DBLkpCmbBxClienteClick(DBLkpCmbBxCliente);
+  DBLkupCmbBxDirAuxiliar.KeyValue:= FrmBuscaCliente.AIdPersonaDomicilio;
+   FrmBuscaCliente.Free;
 end;
 
 procedure TfrmCotizaciones.SpdBtnCambioEstatusClick(Sender: TObject);

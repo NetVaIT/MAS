@@ -3,7 +3,6 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   ClientWidth = 1025
   OnCreate = FormCreate
   ExplicitWidth = 1025
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -175,6 +174,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
           Height = 21
           TabOrder = 0
           OnChange = EdtNombreChange
+          OnKeyDown = EdtNombreKeyDown
         end
       end
       object PnlFechas: TPanel
@@ -198,7 +198,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
           Height = 13
           Caption = 'Hasta'
         end
-        object SpdBtn: TSpeedButton
+        object SpdBtnBuscar: TSpeedButton
           Left = 331
           Top = 13
           Width = 25
@@ -217,7 +217,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
             333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
             333333773FF77333333333370007333333333333777333333333}
           NumGlyphs = 2
-          OnClick = SpdBtnClick
+          OnClick = SpdBtnBuscarClick
         end
         object cxDtEdtDesde: TcxDateEdit
           Left = 16
@@ -243,7 +243,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 664
     Top = 80
     Bitmap = {
-      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -390,7 +390,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C01010C00C001080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C0010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

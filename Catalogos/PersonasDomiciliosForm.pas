@@ -33,6 +33,12 @@ type
     tvMasterDomicilio: TcxGridDBColumn;
     tvMasterDomicilioTipo: TcxGridDBColumn;
     tvMasterPredeterminado: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
+    tvMasterMunicipio: TcxGridDBColumn;
+    tvMasterEstado: TcxGridDBColumn;
+    tvMasterColonia: TcxGridDBColumn;
+    tvMasterCodigoPostal: TcxGridDBColumn;
+    tvMasterPais: TcxGridDBColumn;
   private
     { Private declarations }
   public

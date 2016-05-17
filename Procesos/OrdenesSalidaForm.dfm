@@ -3,7 +3,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -32,7 +31,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1267
     Height = 10
     ExplicitTop = 640
-    ExplicitWidth = 1097
+    ExplicitWidth = 1267
     ExplicitHeight = 10
   end
   inherited pnlDetail3: TPanel
@@ -40,7 +39,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1267
     Height = 17
     ExplicitTop = 623
-    ExplicitWidth = 1097
+    ExplicitWidth = 1267
     ExplicitHeight = 17
   end
   inherited pnlDetail2: TPanel
@@ -48,16 +47,15 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1267
     Height = 20
     ExplicitTop = 600
-    ExplicitWidth = 1097
+    ExplicitWidth = 1267
     ExplicitHeight = 20
   end
   inherited pnlDetail1: TPanel
     Top = 564
     Width = 1267
     Height = 18
-    ExplicitLeft = 0
     ExplicitTop = 564
-    ExplicitWidth = 1097
+    ExplicitWidth = 1267
     ExplicitHeight = 18
   end
   inherited pcMain: TcxPageControl
@@ -65,23 +63,21 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1267
     Height = 539
     ExplicitTop = 22
-    ExplicitWidth = 1097
+    ExplicitWidth = 1267
     ExplicitHeight = 539
     ClientRectBottom = 538
     ClientRectRight = 1266
     inherited tsGeneral: TcxTabSheet
-      ExplicitWidth = 1095
+      ExplicitWidth = 1265
       ExplicitHeight = 537
       inherited cxScrollBox1: TcxScrollBox
         Width = 1265
         Height = 537
-        ExplicitWidth = 1095
+        ExplicitWidth = 1265
         ExplicitHeight = 537
         inherited tbarData: TToolBar
           Width = 1263
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 1093
+          ExplicitWidth = 1263
           object ToolButton4: TToolButton
             Left = 254
             Top = 0
@@ -109,9 +105,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
         inherited pnlMaster: TPanel
           Width = 1263
           Height = 510
-          ExplicitLeft = 0
-          ExplicitTop = 25
-          ExplicitWidth = 1093
+          ExplicitWidth = 1263
           ExplicitHeight = 510
           object Panel4: TPanel
             Left = 0
@@ -120,7 +114,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             Height = 416
             Align = alTop
             TabOrder = 0
-            ExplicitWidth = 1093
             object Label10: TLabel
               Left = 137
               Top = 16
@@ -1710,7 +1703,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             Align = alTop
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitWidth = 1093
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -1718,7 +1710,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Height = 29
               Images = ilAction
               TabOrder = 0
-              ExplicitWidth = 1093
               object ToolButton31: TToolButton
                 Left = 0
                 Top = 0
@@ -1886,7 +1877,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitWidth = 1097
   end
   inherited DataSource: TDataSource
     DataSet = DMOrdenesSalidas.adodsMaster
@@ -1894,7 +1884,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2110,7 +2100,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002EC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002F00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3053,8 +3043,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   object DSInformacionEntrega: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStInformacionEnvio
     OnStateChange = DSInformacionEntregaStateChange
-    Left = 988
-    Top = 280
+    Left = 996
+    Top = 136
   end
   object DSSalidasUbicaciones: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStSalidasUbicaciones
@@ -3064,8 +3054,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DSQryAuxiliar: TDataSource
     DataSet = DMOrdenesSalidas.ADOQryAuxiliar
-    Left = 1044
-    Top = 280
+    Left = 1100
+    Top = 136
   end
   object DSProductosXEspacio: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStProductosXEspacio
@@ -3087,7 +3077,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DsCambiosREgreso: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStCambioEstadoInv
-    Left = 1076
-    Top = 288
+    Left = 1108
+    Top = 184
   end
 end

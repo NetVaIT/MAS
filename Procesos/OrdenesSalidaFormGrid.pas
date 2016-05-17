@@ -47,18 +47,28 @@ type
     cxDtEdtHasta: TcxDateEdit;
     TlBtn: TToolButton;
     RdGrpEstado: TRadioGroup;
+    PnlBusqueda: TPanel;
+    Label3: TLabel;
+    EdtNombre: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
+    procedure EdtNombreChange(Sender: TObject);
+    procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     ffiltro: String;
     ffiltroEstado: String;
-    procedure PoneFiltro;//Abr 19/16
+    FfiltroNombre: String;
+    procedure PoneFiltro;
+    function GetFFiltroNombre: String;//Abr 19/16
     { Private declarations }
   public
     { Public declarations }
     property FiltroCon:String read ffiltro write ffiltro; //Abr 19/16
     Property FiltroEst:String read ffiltroEstado write ffiltroEstado;//abr 20/16
+    Property AFiltroNombre:String read GetFFiltroNombre write FfiltroNombre; //May 16/16
+
   end;
 
 var
@@ -69,6 +79,29 @@ implementation
 {$R *.dfm}
 
 uses OrdenesSalidasDM;
+
+procedure TFrmOrdenesSalidaGrid.EdtNombreChange(Sender: TObject);
+begin           //May 16/16
+  inherited;
+  if edtNombre.Text<>'' then
+  begin
+    FfiltroNombre:=' inner join DocumentosSalidas DS on DS.IdDocumentoSalida=OS.IDDocumentoSalida'
+                  +' inner join Personas P On P.IdPersona=DS.IdPersona and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+  end
+  else
+    FfiltroNombre:='';
+end;
+
+procedure TFrmOrdenesSalidaGrid.EdtNombreKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin             //May 16/16
+  inherited;
+ if key=13 then
+  begin
+    key:=0;
+    SpdBtnConsulta.Click;
+  end;
+end;
 
 procedure TFrmOrdenesSalidaGrid.FormCreate(Sender: TObject);
 var         //Aban Abr 19/16
@@ -91,20 +124,26 @@ begin
   SpdBtnConsultaClick(SpdBtnConsulta);
 end;
 
+function TFrmOrdenesSalidaGrid.GetFFiltroNombre: String;
+begin
+  Result := FfiltroNombre;
+end;
+
 procedure TFrmOrdenesSalidaGrid.SpdBtnConsultaClick(Sender: TObject);
 const
-    TxtSQL='select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
- +'IdPersonaRevisa, IdPersonaEmpaca, FechaRegistro, Total, FechaIniRecolecta, FechaFinRecolecta,'
+    TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
+ +'IdPersonaRevisa, IdPersonaEmpaca, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
- +'IdGeneraCFDITipoDoc, Acumula, Subtotal, IVA from OrdenesSalidas ';
+ +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA from OrdenesSalidas OS ';
 
-  orden=' Order by IdOrdenEstatus,FechaRegistro Desc';
+  orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin
   inherited;
   PoneFiltro;
-  Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltro+ffiltroEstado+orden;
-  if ffiltro <>''then                                        //Abr.20/16
+  Tadodataset(datasource.DataSet).Close;               //May 16/16
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden;
+//  ShowMessage(TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden);
+  if ffiltro <>''then                                                //Abr.20/16
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
@@ -117,7 +156,7 @@ end;
 procedure TFrmOrdenesSalidaGrid.PoneFiltro;
 begin
   //Ver si existe un todos o alguna restriccion
-  ffiltro:='where fechaRegistro >:Fini and FechaRegistro<:FFin';
+  ffiltro:=' where OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Ajustado May 16/16
 
 end;
 procedure TFrmOrdenesSalidaGrid.RdGrpEstadoClick(Sender: TObject);

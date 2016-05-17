@@ -24,6 +24,7 @@ inherited dmEmail: TdmEmail
         Size = 4
         Value = Null
       end>
+    Left = 32
     object adodsMasterIdEmail: TAutoIncField
       FieldName = 'IdEmail'
       ReadOnly = True
@@ -58,6 +59,12 @@ inherited dmEmail: TdmEmail
       FieldName = 'IdPersonaDomicilio'
     end
   end
+  inherited ActionList: TActionList
+    object ActVincularMails: TAction
+      Caption = 'Vincular Mails'
+      OnExecute = ActVincularMailsExecute
+    end
+  end
   object adodsEmailTipo: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -65,5 +72,47 @@ inherited dmEmail: TdmEmail
     Parameters = <>
     Left = 192
     Top = 88
+  end
+  object ADODtStHayXVincular: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select  Pd.IDPersonaDomicilio as ValorIDPD , E.* from Emails E  ' +
+      'inner join PersonasDomicilios Pd on Pd.IdPersona=E.IdPersona '#13#10' ' +
+      '                                           where E.IdPersonaDomi' +
+      'cilio is null'
+    Parameters = <>
+    Left = 48
+    Top = 176
+    object ADODtStHayXVincularValorIDPD: TAutoIncField
+      FieldName = 'ValorIDPD'
+      ReadOnly = True
+    end
+    object ADODtStHayXVincularIdEmail: TAutoIncField
+      FieldName = 'IdEmail'
+      ReadOnly = True
+    end
+    object ADODtStHayXVincularIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStHayXVincularIdEmailTipo: TIntegerField
+      FieldName = 'IdEmailTipo'
+    end
+    object ADODtStHayXVincularIdPersonaDomicilio: TIntegerField
+      FieldName = 'IdPersonaDomicilio'
+    end
+    object ADODtStHayXVincularEmail: TStringField
+      FieldName = 'Email'
+      Size = 200
+    end
+    object ADODtStHayXVincularPredeterminado: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 180
+    Top = 169
   end
 end

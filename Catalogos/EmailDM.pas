@@ -16,8 +16,19 @@ type
     adodsMasterPredeterminado: TBooleanField;
     adodsMasterEmailTipo: TStringField;
     adodsMasterIdPersonaDomicilio: TIntegerField;
+    ADODtStHayXVincular: TADODataSet;
+    ActVincularMails: TAction;
+    ADOQryAuxiliar: TADOQuery;
+    ADODtStHayXVincularValorIDPD: TAutoIncField;
+    ADODtStHayXVincularIdEmail: TAutoIncField;
+    ADODtStHayXVincularIdPersona: TIntegerField;
+    ADODtStHayXVincularIdEmailTipo: TIntegerField;
+    ADODtStHayXVincularIdPersonaDomicilio: TIntegerField;
+    ADODtStHayXVincularEmail: TStringField;
+    ADODtStHayXVincularPredeterminado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
+    procedure ActVincularMailsExecute(Sender: TObject);
   private
     FIdDomicilioPersona: Integer;
     procedure SetFIdDomicilioPersona(const Value: Integer);
@@ -36,6 +47,22 @@ uses EmailEdit;
 
 {$R *.dfm}
 
+procedure TdmEmail.ActVincularMailsExecute(Sender: TObject);
+begin       //May 13/16
+  inherited;
+  ADOQryAuxiliar.Close;
+  ADODtStHayXVincular.first;
+  while not ADODtStHayXVincular.eof do
+  begin
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('Update Emails set IDPersonaDomicilio ='+ADODtStHayXVincular.FieldByName('ValorIDPD').asstring+' where IDEmail ='+ADODtStHayXVincular.FieldByName('IdEmail').asstring + ' and IdPersonaDomicilio is NULL ');
+    ADOQryAuxiliar.ExecSql;
+    ADODtStHayXVincular.Next;
+  end;
+  ADODtStHayXVincular.Close;
+  ADODtStHayXVincular.Open;
+end;
+
 procedure TdmEmail.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
@@ -48,6 +75,7 @@ begin
   inherited;
   gGridEditForm := TfrmEmailEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  TfrmEmailEdit(gGridEditForm).AVinculaMails:=  ActVincularMails;//May 13/16
 end;
 
 procedure TdmEmail.SetFIdDomicilioPersona(const Value: Integer); //May 7/16

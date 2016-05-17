@@ -471,6 +471,7 @@ type
     function SacaListaDatos(idCFDI: Integer; Lista: TArrDatosActualiza):Boolean;
     procedure ImprimeNotaVPDF(Mostrar: Boolean; nombre: TFileName='');
     function ActualizaAsociadosACFDI(idCFDIAct: Integer): Boolean;
+    function SacaPaqueteria(IdPerDom: integer): String;
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -1260,6 +1261,7 @@ begin
       ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
       ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
       ADODtStInformacionEnvio.Fieldbyname('FechaProgramadaEnt').AsDateTime:= Date+10;
+      ADODtStInformacionEnvio.Fieldbyname('Conducto').AsString:= SacaPaqueteria(adodsMaster.FieldByName('IdClienteDomicilio').AsInteger);//May 12/16
       ADODtStInformacionEnvio.Fieldbyname('Servicio').AsString:= 'Domicilio';
       ADODtStInformacionEnvio.Fieldbyname('PagoFlete').AsBoolean:= False;
       ADODtStInformacionEnvio.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
@@ -1272,6 +1274,7 @@ begin
       ADODtStInformacionEnvio.Edit;
    //   ADODtStInformacionEnvio.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersonaReceptor').AsInteger;
       ADODtStInformacionEnvio.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdClienteDomicilio').AsInteger;
+      ADODtStInformacionEnvio.Fieldbyname('Conducto').AsString:= SacaPaqueteria(adodsMaster.FieldByName('IdClienteDomicilio').AsInteger);//May 12/16
       ADODtStInformacionEnvio.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
       ADODtStInformacionEnvio.Post;
     end;
@@ -1315,6 +1318,22 @@ begin
   end;*)
 
 end;
+
+function TDMFacturas.SacaPaqueteria(IdPerDom:integer) :String;    //May 12/16
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select pd.*, PA.Descripcion from personasDomicilios pd left join '
+                         +'Paqueterias pa on pa.IdPaqueteria=pd.idenviotipo  where idpersonadomicilio='+intToStr(IdPerDom) );
+
+  ADOQryAuxiliar.Open;
+  if ADOQryAuxiliar.Eof or (ADOQryAuxiliar.fieldbyname('Descripcion').isNull) then
+    Result:=''
+  else
+    Result:= ADOQryAuxiliar.fieldbyname('Descripcion').asString;
+end;
+
+
 
 procedure TDMFacturas.ActRegeneraPDFExecute(Sender: TObject);
 var      //Dic 22/15

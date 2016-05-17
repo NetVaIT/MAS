@@ -85,7 +85,6 @@ inherited FrmProductosFotos: TFrmProductosFotos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

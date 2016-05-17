@@ -3,7 +3,6 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   ClientWidth = 1255
   OnCreate = FormCreate
   ExplicitWidth = 1255
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -42,9 +41,9 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Width = 1255
     ExplicitWidth = 1255
     inherited cxGrid: TcxGrid
-      Top = 46
+      Top = 42
       Width = 1255
-      Height = 425
+      Height = 429
       ExplicitTop = 46
       ExplicitWidth = 1255
       ExplicitHeight = 425
@@ -103,75 +102,79 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     end
     inherited tbarGrid: TToolBar
       Width = 1255
-      Height = 46
-      ButtonHeight = 44
+      Height = 42
+      ButtonHeight = 41
       ExplicitWidth = 1255
-      ExplicitHeight = 46
+      ExplicitHeight = 42
       inherited ToolButton1: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited btnEdit: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton3: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton4: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton5: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton6: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton7: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton8: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton9: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton2: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
-      inherited btnPost: TToolButton
-        ExplicitHeight = 44
+      inherited btnCancel: TToolButton [10]
+        Left = 200
+        ExplicitLeft = 200
+        ExplicitHeight = 41
       end
-      inherited btnCancel: TToolButton
-        ExplicitHeight = 44
+      inherited btnPost: TToolButton [11]
+        Left = 223
+        ExplicitLeft = 223
+        ExplicitHeight = 41
       end
       inherited ToolButton21: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton22: TToolButton
-        ExplicitHeight = 44
+        ExplicitHeight = 41
       end
       inherited ToolButton10: TToolButton
-        Width = 100
-        ExplicitWidth = 100
-        ExplicitHeight = 44
+        Width = 20
+        ExplicitWidth = 20
+        ExplicitHeight = 41
       end
       inherited tbtnCerrar: TToolButton
-        Left = 377
-        ExplicitLeft = 377
-        ExplicitHeight = 44
+        Left = 297
+        ExplicitLeft = 297
+        ExplicitHeight = 41
       end
       object TlBtn: TToolButton
-        Left = 400
+        Left = 320
         Top = 0
-        Width = 137
+        Width = 33
         Caption = 'TlBtn'
         ImageIndex = 12
         Style = tbsSeparator
       end
       object RdGrpEstado: TRadioGroup
-        Left = 537
+        Left = 353
         Top = 0
         Width = 330
-        Height = 44
+        Height = 41
         Caption = 'Estado'
         Color = clWhite
         Columns = 4
@@ -191,11 +194,37 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         TabOrder = 1
         OnClick = RdGrpEstadoClick
       end
+      object PnlBusqueda: TPanel
+        Left = 683
+        Top = 0
+        Width = 201
+        Height = 41
+        BevelInner = bvLowered
+        ParentBackground = False
+        ParentColor = True
+        TabOrder = 2
+        object Label3: TLabel
+          Left = 16
+          Top = 2
+          Width = 90
+          Height = 13
+          Caption = 'Cliente parecido a:'
+        end
+        object EdtNombre: TEdit
+          Left = 15
+          Top = 17
+          Width = 163
+          Height = 21
+          TabOrder = 0
+          OnChange = EdtNombreChange
+          OnKeyDown = EdtNombreKeyDown
+        end
+      end
       object PnlFechas: TPanel
-        Left = 867
+        Left = 884
         Top = 0
         Width = 368
-        Height = 44
+        Height = 41
         BevelInner = bvLowered
         ParentBackground = False
         TabOrder = 0
@@ -260,7 +289,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400E00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -407,7 +436,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C001000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

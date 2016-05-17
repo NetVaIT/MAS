@@ -236,6 +236,12 @@ type
     ADODtStAntSaldosIdPersonaREceptor: TIntegerField;
     ppSystmVarNumPag: TppSystemVariable;
     ADODtStPrecioMayoreo: TADODataSet;
+    ADODtStArchivoAsociado: TADODataSet;
+    adodsMasterIdDocumentoSalidaArchivo: TAutoIncField;
+    IntegerField5: TIntegerField;
+    adodsMasterIdDocumento: TIntegerField;
+    adodsMasterNombreArchivo: TStringField;
+    adodsMasterNotas: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -372,9 +378,18 @@ end;
 
 
 procedure TdmCotizaciones.ActGenPDFCotizacionExecute(Sender: TObject);
+var ArcCotiza:String;
 begin
   inherited;
-  PrintPDFFile(True);
+  ArcCotiza:='Cotizacion.pdf'; //May 13 /16
+  if FileExists(ArcCotiza) then  //May 13 /16
+    deleteFile(arcCotiza);
+   //PrintPDFFile(True); //May 13 /16 deshabilitado para que no muestre desde el Reportbuilder
+  PrintPDFFile(False,ArcCotiza);// que sólo muestre el PDF   //May 13 /16
+  if FileExists(ArcCotiza) then  //May 13 /16
+  begin
+    ShellExecute(application.Handle, 'open', PChar(ArcCotiza), nil, nil, SW_SHOWNORMAL);
+  end;
  //LLamar envio ShowMessage('Envio por correo al cliente  en construcción');
   // ver que hace y ver como se muestr directo como PDF , luego hay que ver si se hace envio..
 end;
