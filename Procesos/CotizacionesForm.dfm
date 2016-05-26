@@ -49,6 +49,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited pnlDetail1: TPanel
     Top = 528
     Width = 1277
+    ExplicitLeft = 0
     ExplicitTop = 528
     ExplicitWidth = 1277
   end
@@ -62,6 +63,8 @@ inherited frmCotizaciones: TfrmCotizaciones
     ClientRectBottom = 502
     ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 1275
       ExplicitHeight = 501
       inherited cxScrollBox1: TcxScrollBox
@@ -72,6 +75,8 @@ inherited frmCotizaciones: TfrmCotizaciones
         inherited tbarData: TToolBar
           Width = 1273
           ParentShowHint = False
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 1273
           inherited ToolButton14: TToolButton
             AutoSize = True
@@ -117,8 +122,30 @@ inherited frmCotizaciones: TfrmCotizaciones
             ImageIndex = 12
             Style = tbsSeparator
           end
-          object TlBtnCambioEstatus: TToolButton
+          object SpdBtnAdjuntarArchivos: TSpeedButton
             Left = 461
+            Top = 0
+            Width = 122
+            Height = 22
+            Caption = 'Archivos Asociados'
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              555555FFFFFFFFFF55555000000000055555577777777775FFFF00B8B8B8B8B0
+              0000775F5555555777770B0B8B8B8B8B0FF07F75F555555575F70FB0B8B8B8B8
+              B0F07F575FFFFFFFF7F70BFB0000000000F07F557777777777570FBFBF0FFFFF
+              FFF07F55557F5FFFFFF70BFBFB0F000000F07F55557F777777570FBFBF0FFFFF
+              FFF075F5557F5FFFFFF750FBFB0F000000F0575FFF7F777777575700000FFFFF
+              FFF05577777F5FF55FF75555550F00FF00005555557F775577775555550FFFFF
+              0F055555557F55557F755555550FFFFF00555555557FFFFF7755555555000000
+              0555555555777777755555555555555555555555555555555555}
+            NumGlyphs = 2
+            OnClick = SpdBtnAdjuntarArchivosClick
+          end
+          object TlBtnCambioEstatus: TToolButton
+            Left = 583
             Top = 0
             Caption = 'Acepta Cotizacion'
             ImageIndex = 22
@@ -128,14 +155,14 @@ inherited frmCotizaciones: TfrmCotizaciones
             OnClick = SpdBtnCambioEstatusClick
           end
           object TlBtnGenCotizaPDF: TToolButton
-            Left = 484
+            Left = 606
             Top = 0
             Caption = 'Cotizaci'#243'n PDF'
             ImageIndex = 23
             Visible = False
           end
           object TlBtnEnvioCorreo: TToolButton
-            Left = 507
+            Left = 629
             Top = 0
             Caption = 'Enviar Correo'
             ImageIndex = 24
@@ -146,6 +173,8 @@ inherited frmCotizaciones: TfrmCotizaciones
         inherited pnlMaster: TPanel
           Width = 1273
           Height = 474
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 1273
           ExplicitHeight = 474
           object pnlDetail: TPanel
@@ -356,7 +385,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 161
             Align = alTop
             TabOrder = 1
-            ExplicitTop = -6
+            ExplicitTop = 3
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -501,27 +530,13 @@ inherited frmCotizaciones: TfrmCotizaciones
               NumGlyphs = 2
               OnClick = SpdBtnBuscaParteClick
             end
-            object SpdBtnAdjuntarArchivos: TSpeedButton
-              Left = 444
-              Top = 119
-              Width = 122
-              Height = 22
-              Caption = 'Archivos Asociados'
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000120B0000120B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
-                555555FFFFFFFFFF55555000000000055555577777777775FFFF00B8B8B8B8B0
-                0000775F5555555777770B0B8B8B8B8B0FF07F75F555555575F70FB0B8B8B8B8
-                B0F07F575FFFFFFFF7F70BFB0000000000F07F557777777777570FBFBF0FFFFF
-                FFF07F55557F5FFFFFF70BFBFB0F000000F07F55557F777777570FBFBF0FFFFF
-                FFF075F5557F5FFFFFF750FBFB0F000000F0575FFF7F777777575700000FFFFF
-                FFF05577777F5FF55FF75555550F00FF00005555557F775577775555550FFFFF
-                0F055555557F55557F755555550FFFFF00555555557FFFFF7755555555000000
-                0555555555777777755555555555555555555555555555555555}
-              NumGlyphs = 2
-              OnClick = SpdBtnAdjuntarArchivosClick
+            object Label21: TLabel
+              Left = 370
+              Top = 109
+              Width = 49
+              Height = 13
+              Caption = 'Enviar Por'
+              FocusControl = DBLookupComboBox1
             end
             object cxDBSpinEdit1: TcxDBSpinEdit
               Left = 223
@@ -826,6 +841,35 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnKeyDown = DBGrdDetallesKeyDown
               Width = 152
             end
+            object DBLookupComboBox1: TDBLookupComboBox
+              Left = 370
+              Top = 125
+              Width = 155
+              Height = 21
+              DataField = 'EnviarPor'
+              DataSource = DataSource
+              TabOrder = 20
+            end
+            object cxDBRadioGroup1: TcxDBRadioGroup
+              Left = 540
+              Top = 98
+              TabStop = False
+              Caption = 'Servicio'
+              DataBinding.DataField = 'Servicio'
+              DataBinding.DataSource = DataSource
+              Properties.Items = <
+                item
+                  Caption = 'Ocurre'
+                  Value = 'Ocurre'
+                end
+                item
+                  Caption = 'Domicilio'
+                  Value = 'Domicilio'
+                end>
+              TabOrder = 21
+              Height = 57
+              Width = 78
+            end
           end
           object Panel1: TPanel
             Left = 0
@@ -861,9 +905,16 @@ inherited frmCotizaciones: TfrmCotizaciones
             object Label6: TLabel
               Left = 31
               Top = 6
-              Width = 71
+              Width = 74
               Height = 13
-              Caption = 'Observaciones'
+              Caption = 'Observaciones '
+            end
+            object Label20: TLabel
+              Left = 695
+              Top = 6
+              Width = 72
+              Height = 13
+              Caption = 'Notas Internas'
             end
             object cxDBTextEdit2: TcxDBTextEdit
               Left = 553
@@ -901,6 +952,15 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 74
               Width = 442
             end
+            object cxDBMemo2: TcxDBMemo
+              Left = 695
+              Top = 25
+              DataBinding.DataField = 'NotasInternas'
+              DataBinding.DataSource = DataSource
+              TabOrder = 4
+              Height = 74
+              Width = 410
+            end
           end
         end
       end
@@ -928,10 +988,14 @@ inherited frmCotizaciones: TfrmCotizaciones
     DataSet = dmCotizaciones.adodsMaster
     OnStateChange = DataSourceStateChange
     OnDataChange = DataSourceDataChange
+    Left = 934
+    Top = 80
   end
   inherited ilPageControl: TImageList
+    Left = 966
+    Top = 80
     Bitmap = {
-      494C010102000400C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1071,6 +1135,8 @@ inherited frmCotizaciones: TfrmCotizaciones
       000000000000}
   end
   inherited ActionList: TActionList
+    Left = 998
+    Top = 80
     object DatasetDetalleFirst: TDataSetFirst
       Category = 'DatasetDetalle'
       Caption = '&Primero'
@@ -1136,8 +1202,10 @@ inherited frmCotizaciones: TfrmCotizaciones
     end
   end
   inherited ilAction: TImageList
+    Left = 1032
+    Top = 80
     Bitmap = {
-      494C01011900C002080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C0020C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2069,6 +2137,8 @@ inherited frmCotizaciones: TfrmCotizaciones
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Left = 902
+    Top = 80
     PixelsPerInch = 96
   end
   object DataSourceDetail: TDataSource
@@ -2088,7 +2158,8 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSOrdenSalida: TDataSource
     DataSet = dmCotizaciones.ADODtStOrdenSalida
-    Left = 796
+    Left = 908
+    Top = 32
   end
   object DSQryBorrar: TDataSource
     DataSet = dmCotizaciones.ADOQryAuxiliar
@@ -2115,7 +2186,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSCotizacionArchivo: TDataSource
     DataSet = dmCotizaciones.ADODtStArchivoAsociado
-    Left = 616
+    Left = 624
     Top = 176
   end
 end

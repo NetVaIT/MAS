@@ -286,6 +286,8 @@ type
     ppSystemVariable1: TppSystemVariable;
     ppLabel57: TppLabel;
     ppDBText40: TppDBText;
+    ADODtStDatosEtiquetaTelefonoCompleto: TStringField;
+    ADODtStDatosEtiquetaLada: TStringField;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -316,6 +318,9 @@ begin
   Dataset.FieldByName('ocurrechk').AsBoolean:=dataset.FieldByName('Servicio').AsString='Ocurre';
   Dataset.FieldByName('Domiciliochk').AsBoolean:=dataset.FieldByName('Servicio').AsString='Domicilio';
   Dataset.FieldByName('Cobrarchk').AsBoolean:=not dataset.FieldByName('PagoFlete').AsBoolean;
+
+  Dataset.FieldByName('TelefonoCompleto').AsString:=Dataset.FieldByName('Lada').AsString+' '
+  + Dataset.FieldByName('Telefono').AsString;
 
 end;
 

@@ -13,9 +13,10 @@ inherited dmCotizaciones: TdmCotizaciones
       'SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,'#13#10' Id' +
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
-      'te'#13#10' FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDoc' +
-      'to'#13#10'and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10 +
-      'order by idDocumentoSalidaEstatus, FechaRegistro Desc'
+      'te,'#13#10' NotasInternas, IdPaqueteria, Servicio FROM DocumentosSalid' +
+      'as where IdDocumentoSalidaTipo=:TipoDocto'#13#10'and fechaRegistro>DAT' +
+      'EADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order by idDocumentoSalid' +
+      'aEstatus, FechaRegistro Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -179,6 +180,27 @@ inherited dmCotizaciones: TdmCotizaciones
       LookupKeyFields = 'IdPersonaDomicilio'
       LookupResultField = 'Saldo'
       KeyFields = 'IdDomicilioCliente'
+      Lookup = True
+    end
+    object adodsMasterNotasInternas: TStringField
+      FieldName = 'NotasInternas'
+      Size = 300
+    end
+    object adodsMasterIdPaqueteria: TIntegerField
+      FieldName = 'IdPaqueteria'
+    end
+    object adodsMasterServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object adodsMasterEnviarPor: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EnviarPor'
+      LookupDataSet = ADODtStPaqueterias
+      LookupKeyFields = 'IdPaqueteria'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdPaqueteria'
+      Size = 50
       Lookup = True
     end
   end
@@ -437,7 +459,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object DSMaster: TDataSource
     DataSet = adodsMaster
     Left = 132
-    Top = 40
+    Top = 32
   end
   object ADODtStOrdenSalida: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -447,10 +469,11 @@ inherited dmCotizaciones: TdmCotizaciones
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
-      #13#10'from OrdenesSalidas where iddocumentoSalida=:IDDocumentoSalida'
+      ', IDPersonaDomicilio'#13#10'from OrdenesSalidas where iddocumentoSalid' +
+      'a=:IDDocumentoSalida'
     DataSource = DSMaster
     IndexFieldNames = 'IdDocumentoSalida'
-    MasterFields = 'IdDocumentoSalida'
+    MasterFields = 'IDDocumentoSalida'
     Parameters = <
       item
         Name = 'IDDocumentoSalida'
@@ -526,6 +549,9 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'IVA'
       Precision = 18
       Size = 6
+    end
+    object ADODtStOrdenSalidaIDPersonaDomicilio: TIntegerField
+      FieldName = 'IDPersonaDomicilio'
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
@@ -649,12 +675,12 @@ inherited dmCotizaciones: TdmCotizaciones
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
-      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
-      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
-      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
-      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
-      #13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo'#13#10#13#10'from PersonasD' +
+      'omicilios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomi' +
+      'cilio'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'l' +
+      'eft join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join ' +
+      'Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.id' +
+      'pais=D.Idpais'#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
@@ -727,6 +753,9 @@ inherited dmCotizaciones: TdmCotizaciones
       Precision = 18
       Size = 6
     end
+    object ADODtStDireccionesClienteIdEnvioTipo: TIntegerField
+      FieldName = 'IdEnvioTipo'
+    end
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -792,12 +821,12 @@ inherited dmCotizaciones: TdmCotizaciones
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
-      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
-      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
-      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
-      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
-      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo'#13#10#13#10'from PersonasD' +
+      'omicilios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomi' +
+      'cilio'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'l' +
+      'eft join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join ' +
+      'Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.id' +
+      'pais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -874,6 +903,9 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'Saldo'
       Precision = 18
       Size = 6
+    end
+    object ADODtStDireccAuxiliarIdEnvioTipo: TIntegerField
+      FieldName = 'IdEnvioTipo'
     end
   end
   object ppRprtCotizacion: TppReport
@@ -4636,7 +4668,7 @@ inherited dmCotizaciones: TdmCotizaciones
     object ppFooterBand1: TppFooterBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 29898
+      mmHeight = 46302
       mmPrintPosition = 0
       object ppLabel19: TppLabel
         UserName = 'Label19'
@@ -4792,7 +4824,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Transparent = True
         WordWrap = True
         DataPipelineName = 'ppDBPplnGenerales'
-        mmHeight = 11113
+        mmHeight = 9790
         mmLeft = 4233
         mmTop = 10054
         mmWidth = 145521
@@ -4810,8 +4842,45 @@ inherited dmCotizaciones: TdmCotizaciones
         Transparent = True
         mmHeight = 4233
         mmLeft = 185738
-        mmTop = 23813
-        mmWidth = 17462
+        mmTop = 37835
+        mmWidth = 17463
+        BandType = 8
+        LayerName = Foreground
+      end
+      object ppLabel24: TppLabel
+        UserName = 'Label24'
+        AutoSize = False
+        Caption = 'Observaciones'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 10
+        Font.Style = []
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 4498
+        mmTop = 20638
+        mmWidth = 28840
+        BandType = 8
+        LayerName = Foreground
+      end
+      object ppDBText17: TppDBText
+        UserName = 'DBText13'
+        DataField = 'Observaciones'
+        DataPipeline = ppDBPplnGenerales
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPplnGenerales'
+        mmHeight = 12965
+        mmLeft = 4498
+        mmTop = 25135
+        mmWidth = 198702
         BandType = 8
         LayerName = Foreground
       end
@@ -5107,6 +5176,25 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsMasterNotas: TStringField
       FieldName = 'Notas'
       Size = 200
+    end
+  end
+  object ADODtStPaqueterias: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdPaqueteria, Identificador, Descripcion from Paqueterias'
+    Parameters = <>
+    Left = 184
+    Top = 296
+    object ADODtStPaqueteriasIdPaqueteria: TAutoIncField
+      FieldName = 'IdPaqueteria'
+      ReadOnly = True
+    end
+    object ADODtStPaqueteriasIdentificador: TStringField
+      FieldName = 'Identificador'
+    end
+    object ADODtStPaqueteriasDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
     end
   end
 end

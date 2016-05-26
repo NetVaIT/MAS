@@ -58,7 +58,7 @@ implementation
 
 {$R *.dfm}
 
-uses ProductosFotosDM;
+uses ProductosFotosDM, OrdenesSalidasDM;
 
 procedure TFrmProductosFotos.DatasetEditExecute(Sender: TObject);
 begin

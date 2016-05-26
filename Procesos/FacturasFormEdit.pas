@@ -269,7 +269,7 @@ begin
   3:pnlTitulo.Caption:='  Notas de Cargo';
   4:pnlTitulo.Caption:='  Notas de Venta';
   end;
-
+                                                  //Va en Cero may 24/16
   TFrmFacturasGrid(gFormGrid).tipoDocumento := tipoDocumento;   //Mar 30/16
 end;
 

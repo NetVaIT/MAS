@@ -7,21 +7,22 @@ inherited DMFacturas: TDMFacturas
     Filter = ' IdCFDITipoDocumento=1'
     Filtered = True
     AfterOpen = adodsMasterAfterOpen
+    BeforeInsert = adodsMasterBeforeInsert
     OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago,'#13#10' IdMetodo' +
-      'Pago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor, '#13#10'IdDocument' +
-      'oCBB, IdDocumentoXML, IdDocumentoPDF, '#13#10'IdOrdenSalida, IdCFDIEst' +
-      'atus, IdCFDIFacturaGral, IdClienteDomicilio,'#13#10' CuentaCte, TipoCa' +
-      'mbio, TipoComp, Serie, Folio, Fecha,'#13#10' LugarExpedicion, Sello, C' +
-      'ondPago, NoCertificado, Certificado,'#13#10' SubTotal, Descto, MotivoD' +
-      'escto, Total, NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoRetenid' +
-      'o, TotalImpuestoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion, ' +
-      'Observaciones, '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCFD_' +
-      'TB, '#13#10'SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB '#13#10' from C' +
-      'FDI '#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'orde' +
-      'r by IDCFDIESTATUS, Fecha '
+      'Pago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor, '#13#10'IdDocume' +
+      'ntoCBB, IdDocumentoXML, IdDocumentoPDF, '#13#10'IdOrdenSalida, IdCFDIE' +
+      'status, IdCFDIFacturaGral, IdClienteDomicilio,'#13#10' CuentaCte, Tipo' +
+      'Cambio, TipoComp, Serie, Folio, Fecha,'#13#10' LugarExpedicion, Sello,' +
+      ' CondPago, NoCertificado, Certificado,'#13#10' SubTotal, Descto, Motiv' +
+      'oDescto, Total, NumCtaPago, '#13#10'CadenaOriginal, TotalImpuestoReten' +
+      'ido, TotalImpuestoTrasladado, '#13#10'SaldoDocumento, FechaCancelacion' +
+      ', Observaciones, '#13#10'PorcentajeIVA, EmailCliente, UUID_TB, SelloCF' +
+      'D_TB, '#13#10'SelloSAT_TB, CertificadoSAT_TB, FechaTimbrado_TB '#13#10' from' +
+      ' CFDI C'#13#10'where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'o' +
+      'rder by IDCFDIESTATUS, Fecha '
     Left = 48
     Top = 24
     object adodsMasterIdCFDI: TLargeintField
@@ -322,7 +323,7 @@ inherited DMFacturas: TDMFacturas
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
-    Left = 160
+    Left = 168
     Top = 16
   end
   object ADODtStOrdenSalida: TADODataSet
@@ -333,8 +334,8 @@ inherited DMFacturas: TDMFacturas
       'RFC, P.RazonSocial NombreCliente, P.idPersona IDPersonaCliente'#13#10 +
       'from OrdenesSalidas OS '#13#10'inner join documentosSalidas DS on DS.i' +
       'ddocumentoSalida= OS.idDocumentoSalida'#13#10'inner Join Personas P on' +
-      ' P.IdPersona= DS.IDPersona'#13#10'where OS.IdOrdenEstatus=4'#13#10'and  OS.I' +
-      'dOrdenSalida=:IdOrdenSalida'#13#10
+      ' P.IdPersona= DS.IDPersona'#13#10'where (OS.IdOrdenEstatus=4 or OS.IdO' +
+      'rdenEstatus=10)'#13#10'and  OS.IdOrdenSalida=:IdOrdenSalida'#13#10
     DataSource = DSDatosDocSalida
     IndexFieldNames = 'IdDocumentoSalida'
     Parameters = <
@@ -1430,19 +1431,11 @@ inherited DMFacturas: TDMFacturas
   object ADODtStInformacionEnvio: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select * from InformacionEntregas where IdCFDI=:IDCFDI'
-    DataSource = DSMaster
+    CommandText = 'select * from InformacionEntregas '
+    DataSource = DSDatosDocSalida
     IndexFieldNames = 'IdCFDI'
     MasterFields = 'IDCFDI'
-    Parameters = <
-      item
-        Name = 'IDCFDI'
-        Attributes = [paSigned]
-        DataType = ftLargeint
-        Precision = 19
-        Size = 8
-        Value = Null
-      end>
+    Parameters = <>
     Left = 536
     Top = 521
     object ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField

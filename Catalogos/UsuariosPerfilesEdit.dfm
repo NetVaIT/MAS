@@ -2,7 +2,6 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   Caption = 'frmUsuariosPerfiles'
   ClientWidth = 964
   ExplicitWidth = 964
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -158,7 +157,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 135
               Top = 30
               Width = 118
-              Height = 103
+              Height = 128
               ItemHeight = 13
               Items.Strings = (
                 'Almacenes                 |30'
@@ -170,12 +169,13 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 258
               Top = 30
               Width = 118
-              Height = 103
+              Height = 128
               ItemHeight = 13
               Items.Strings = (
                 'Cotizaciones            |20'
                 'Pedido                      |21'
                 'Ordenes Salida        |22'
+                'Ordenes Entrega     |27'
                 'Facturas                  |23'
                 'Notas Venta             |24'
                 'Notas Cr'#233'dito          |25'
@@ -187,7 +187,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 504
               Top = 30
               Width = 118
-              Height = 103
+              Height = 128
               ItemHeight = 13
               Items.Strings = (
                 'Registro Pagos            |60'
@@ -200,7 +200,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 381
               Top = 30
               Width = 118
-              Height = 103
+              Height = 128
               ItemHeight = 13
               Items.Strings = (
                 'Requisici'#243'n                |41'
@@ -216,7 +216,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 627
               Top = 30
               Width = 118
-              Height = 103
+              Height = 128
               ItemHeight = 13
               Items.Strings = (
                 'Ventas Unidades      |50'
@@ -313,7 +313,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -454,7 +454,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

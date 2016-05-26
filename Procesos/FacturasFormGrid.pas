@@ -64,6 +64,9 @@ type
     Label1: TLabel;
     Label2: TLabel;
     SpdBtnConsultaFecha: TSpeedButton;
+    PnlBusqueda: TPanel;
+    Label3: TLabel;
+    EdtNombre: TEdit;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -75,6 +78,9 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure cxDtEdtDiaPropertiesChange(Sender: TObject);
     procedure SpdBtnConsultaFechaClick(Sender: TObject);
+    procedure EdtNombreChange(Sender: TObject);
+    procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -86,7 +92,8 @@ type
     FCFDIDiario: TBasicAction;   //Mar 30/16
     ImprimeNotaVenta: TBasicAction;
     ffiltroFecha: String;
-    fOrden: String;  //Abr 4/16
+    fOrden: String;
+    ffiltroNombre: String;  //Abr 4/16
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
@@ -96,7 +103,8 @@ type
     procedure SetFCFDIDiario(const Value: TBasicAction);
 
     procedure SetImprimeNotaVenta(const Value: TBasicAction);
-    procedure PoneRangoFechas; //Feb 17/16
+    procedure PoneRangoFechas;
+    function GetFFiltroNombre: String; //Feb 17/16
 
 
     { Private declarations }
@@ -115,6 +123,7 @@ type
      Property ActImprimeNotaVenta: TBasicAction read ImprimeNotaVenta write SetImprimeNotaVenta;  //Abr 4/16
      property FiltroFecha: String read ffiltroFecha write ffiltroFecha;   //Abr 19/16
      Property ElOrden :String read fOrden write fOrden;
+     property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;    //May 26/16
   end;
 
 var
@@ -156,6 +165,28 @@ begin
   TlBtnEnvioCorreo.Enabled:= DataSource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=2;
 end;
 
+procedure TfrmFacturasGrid.EdtNombreChange(Sender: TObject);
+begin
+  inherited;
+ if edtNombre.Text<>'' then   //May 26/16
+  begin
+    FfiltroNombre:='inner join Personas P On P.IdPersona=IdPersonaReceptor and P.RazonSocial Like ''%'+edtNombre.Text+'%''';
+  end
+  else
+    FfiltroNombre:='';
+end;
+
+procedure TfrmFacturasGrid.EdtNombreKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin           //May 26/16
+  inherited;
+  if key=13 then
+  begin
+    key:=0;
+    SpdBtnConsultaFecha.Click;
+  end;
+end;
+
 procedure TfrmFacturasGrid.FormShow(Sender: TObject);
 var
   i :integer;
@@ -194,6 +225,11 @@ begin
   TlBtnConsultaClick(TlBtnConsulta);
    //H Abr 19/16
 end;
+function TfrmFacturasGrid.GetFFiltroNombre: String;
+begin
+  Result := ffiltroNombre;
+end;
+
 procedure TfrmFacturasGrid.PoneRangoFechas; //Abr 19/16
 begin
   ffiltroFecha:='';
@@ -318,6 +354,7 @@ end;
 procedure TfrmFacturasGrid.SpdBtnConsultaFechaClick(Sender: TObject);
 begin
   inherited;
+
   PoneRangoFechas;
   TlBtnConsultaClick(TlBtnConsulta);
 end;
@@ -329,12 +366,12 @@ begin
 end;
 
 procedure TfrmFacturasGrid.TlBtnConsultaClick(Sender: TObject);
-const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
+const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
 'IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF,IdOrdenSalida, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio,'+
 'CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
 'SubTotal, Descto, MotivoDescto, Total, NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
 'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
-'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB  from CFDI ';
+'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB  from CFDI C ';
 var AuxFiltro:String;
 begin
   inherited;
@@ -342,13 +379,13 @@ begin
   if FFiltroFecha<>'' then
   begin
     if ffiltro='' then
-      AuxFiltro:='where '+FFiltroFecha
+      AuxFiltro:=' where '+FFiltroFecha
     else
       AuxFiltro:=' and '+FFiltroFecha;
   end;
 
   Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltro+ AuxFiltro;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ffiltro+ AuxFiltro;
   if ffiltroFecha <>''then
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;

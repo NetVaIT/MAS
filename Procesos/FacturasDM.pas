@@ -442,6 +442,7 @@ type
     procedure ActImpNotasVentaExecute(Sender: TObject);
     procedure ActEnvioCorreoNotasVentaExecute(Sender: TObject);
     procedure ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -761,7 +762,7 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 
         ActualizaInventario(adodsMaster.FieldByName('IDOrdenSalida').AsInteger,adodsMaster.FieldByName('IDCFDI').AsInteger);
       end;
-      LlenaDatosEnvio; //Para que se haga siempre que sea 4 (Nota de Venta o Presupuesto) se movio Abr 8/16
+      // deshabilitado May 23/16 LlenaDatosEnvio; //Para que se haga siempre que sea 4 (Nota de Venta o Presupuesto) se movio Abr 8/16
       //Se imprime afuera.
     end;
     //Hasta aca Mar 28/16
@@ -1233,7 +1234,7 @@ begin
         else
           application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
         // Verificar si
-        LlenaDatosEnvio; //Ene 27/16  Se hace aun y cuando no se haya alcanzado a Timbrar la Factura.
+        //DEshabilitado May 23/16 LlenaDatosEnvio; //Ene 27/16  Se hace aun y cuando no se haya alcanzado a Timbrar la Factura.
 
 
 
@@ -1248,7 +1249,7 @@ end;
 
 
 procedure TDMFacturas.LlenaDatosEnvio; //Ene 27/16
-var IDCFDI,i:Integer;
+var IDCFDI,i:Integer;           //no se va a usar asi.. //May 18/16
     DatosDireccion:TArrDatosActualiza;
 begin
    IDCFDI:= adodsMaster.FieldByName('IdCFDI').AsInteger;
@@ -1782,6 +1783,34 @@ procedure TDMFacturas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodtstIdentificadores.Open; //Feb 8/16
+end;
+
+procedure TDMFacturas.adodsMasterBeforeInsert(DataSet: TDataSet);
+const
+   TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
+   'IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF,IdOrdenSalida, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio,'+
+   'CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
+   'SubTotal, Descto, MotivoDescto, Total, NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
+   'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
+   'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB  from CFDI C ';
+
+
+
+
+var
+  txt:String;
+begin
+  ffiltro:=' where fecha>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)';
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL+ffiltro;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
+
 end;
 
 procedure TDMFacturas.adodsMasterCalcFields(DataSet: TDataSet);

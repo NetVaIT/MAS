@@ -242,6 +242,19 @@ type
     adodsMasterIdDocumento: TIntegerField;
     adodsMasterNombreArchivo: TStringField;
     adodsMasterNotas: TStringField;
+    adodsMasterNotasInternas: TStringField;
+    adodsMasterIdPaqueteria: TIntegerField;
+    adodsMasterServicio: TStringField;
+    ADODtStPaqueterias: TADODataSet;
+    ADODtStPaqueteriasIdPaqueteria: TAutoIncField;
+    ADODtStPaqueteriasIdentificador: TStringField;
+    ADODtStPaqueteriasDescripcion: TStringField;
+    adodsMasterEnviarPor: TStringField;
+    ADODtStDireccionesClienteIdEnvioTipo: TIntegerField;
+    ADODtStDireccAuxiliarIdEnvioTipo: TIntegerField;
+    ADODtStOrdenSalidaIDPersonaDomicilio: TIntegerField;
+    ppLabel24: TppLabel;
+    ppDBText17: TppDBText;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -381,6 +394,9 @@ procedure TdmCotizaciones.ActGenPDFCotizacionExecute(Sender: TObject);
 var ArcCotiza:String;
 begin
   inherited;
+  if adodsMaster.State in [dsInsert, dsEdit] then   //May 24/16
+     adodsMaster.post;
+
   ArcCotiza:='Cotizacion.pdf'; //May 13 /16
   if FileExists(ArcCotiza) then  //May 13 /16
     deleteFile(arcCotiza);
@@ -550,6 +566,7 @@ procedure TdmCotizaciones.adodsMasterBeforeDelete(DataSet: TDataSet);
 const    //May 11/16
   TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
            'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ', NotasInternas, IdPaqueteria, Servicio'+ //May 18/16
            ' FROM DocumentosSalidas DS ';
   TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto  ';     //Para colocar el inner join y buscar por nombre cliente May 11/16
   orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';
@@ -574,6 +591,7 @@ procedure TdmCotizaciones.adodsMasterBeforeInsert(DataSet: TDataSet);
 const    //May 11/16
   TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
            'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
+           ', NotasInternas, IdPaqueteria, Servicio'+ //May 18/16
            ' FROM DocumentosSalidas DS ';
   TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)';     //Para colocar el inner join y buscar por nombre cliente May 11/16
   orden=' Order by idDocumentoSalidaEstatus, FechaRegistro Desc';

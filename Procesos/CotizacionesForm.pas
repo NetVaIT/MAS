@@ -24,7 +24,8 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, cxDBData, cxMemo,
   cxDropDownEdit, cxCalendar, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGridCustomView, cxGrid, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Buttons, cxLabel, cxDBLabel,Data.Win.ADODB;
+  Vcl.DBGrids, Vcl.Buttons, cxLabel, cxDBLabel,Data.Win.ADODB, cxGroupBox,
+  cxRadioGroup;
 
 type
   TfrmCotizaciones = class(T_frmStandarGFormEdit)
@@ -123,8 +124,13 @@ type
     BtBtnOcultar: TBitBtn;
     cxDBDateEdit2: TcxDBDateEdit;
     SpdBtnBuscaParte: TSpeedButton;
-    SpdBtnAdjuntarArchivos: TSpeedButton;
     DSCotizacionArchivo: TDataSource;
+    SpdBtnAdjuntarArchivos: TSpeedButton;
+    Label20: TLabel;
+    cxDBMemo2: TcxDBMemo;
+    Label21: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    cxDBRadioGroup1: TcxDBRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
@@ -352,9 +358,6 @@ begin
     key:=9;
     //Perform(WM_NEXTDLGCTL,0,0);
   end;
-
-
-
 end;
 
 procedure TfrmCotizaciones.DBLkpCmbBxClienteClick(Sender: TObject);
@@ -369,6 +372,8 @@ begin
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
      TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLkpCmbBxCliente.KeyValue;
+     if not dsDireccionCliente.dataset.Fieldbyname('IDEnvioTipo').IsNull then //May18/16
+       DataSource.DataSet.FieldByName('IDPaqueteria').AsInteger:=dsDireccionCliente.dataset.Fieldbyname('IDEnvioTipo').asInteger;  //May18/16
    end;
 end;
 
@@ -438,8 +443,8 @@ begin
 end;
 
 function TfrmCotizaciones.GenerarOrdenSalida(idDocumento: Integer): Boolean; //Nov 18/15
-//var
-//  id:integer;
+var
+  id:integer;//Habilitado may 18/16 para usarse en InformacionEntregas
 begin
 //  Result:=False;
 
@@ -448,6 +453,7 @@ begin
 
   dsordenSalida.DataSet.Insert;
   dsordenSalida.DataSet.FieldByName('IDDocumentoSalida').asInteger:= idDocumento;
+  dsordenSalida.DataSet.FieldByName('IDPersonaDomicilio').asInteger:=DataSource.DataSet.FieldByName('IDDomicilioCliente').asInteger;//may 20/16
   dsordenSalida.DataSet.FieldByName('FechaRegistro').AsDateTime:=Now;
   dsordenSalida.DataSet.FieldByName('Subtotal').AsFloat:=DataSource.DataSet.FieldByName('Subtotal').asFloat;
 
@@ -456,7 +462,8 @@ begin
   dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
   dsordenSalida.DataSet.Post;
 
-//  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;
+//deshabilitado no usado  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;//Habilitado may 18/16 para usarse en InformacionEntregas
+
   DataSourceDetail.DataSet.first; //Para aseguarase que ponga todos //Abr 13/16
   while not DataSourceDetail.DataSet.eof do
   begin
@@ -484,6 +491,21 @@ begin
     end;
     DataSourceDetail.DataSet.next;
   end;
+(*  //Crea información entregas    May 18/16   //No se creará desde aca... Mayo 20/16
+  DSQryBorrar.DataSet.Close;
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;  //Poner ceros en cada elemento de la tabla de documentosalidadetalle
+  TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Insert into InformacionEntregas (IdPersonaCliente, IdPersonaDomicilio, CondicionEntrega,'+
+                                         'Observaciones, Conducto,Servicio,valor) '+
+                                         'Values ('+DataSource.DataSet.FieldByName('IDPersona').asString+','+
+                                         DataSource.DataSet.FieldByName('IDDomicilioCliente').asString+','+
+                                         DataSource.DataSet.FieldByName('NotasInternas').asString+','''','+
+                                         DataSource.DataSet.FieldByName('EnviarPor').asString+','+ DataSource.DataSet.FieldByName('Servicio').asString+','+
+                                         DataSource.DataSet.FieldByName('Total').asString);
+  TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
+
+  //HAsta aca May 18/16  *)
+
+
   DSQryBorrar.DataSet.Close;
   TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;  //Poner ceros en cada elemento de la tabla de documentosalidadetalle
   TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Update DocumentosSalidasDetalles SET CantidadPendiente=0 where IDDocumentoSalida='+intToStr(idDocumento));
@@ -491,35 +513,7 @@ begin
 
   //Actualizar en un sólo paso los n detales
   REsult:=True;
-  (*   //Se genera pero se no se permite cambiar aca
 
-  FrmGeneraOrdenSalida:=TFrmGeneraOrdenSalida.Create(Self);
-  FrmGeneraOrdenSalida.IdOrden:=id;
-  FrmGeneraOrdenSalida.DSOrdenSalida.DataSet:=DSOrdenSalida.DataSet;
-  FrmGeneraOrdenSalida.DSOrdenSalidaItems.DataSet:=DSOrdenSalidaItems.DataSet;
-  FrmGeneraOrdenSalida.ShowModal;
-  if FrmGeneraOrdenSalida.ModalResult=mrCancel then
-  begin
-    //Eliminar y regresar FAlso
-
-    DSQryBorrar.DataSet.Close;
-    TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
-    TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Delete From OrdenesSalidasItems where IDOrdenSalida='+intToStr(ID));
-    TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
-
-    TAdoQuery(DSQryBorrar.DataSet).Sql.Clear;
-    TAdoQuery(DSQryBorrar.DataSet).Sql.Add('Delete From OrdenesSalidas where IDOrdenSalida='+intToStr(ID));
-    TAdoQuery(DSQryBorrar.DataSet).ExecSQL;
-    Result:=False;
-
-  end
-  else
-  begin
-    //Verificar Cambios y ajustar estatus  de docSalida
-    Result:=True;
-  end;
-  FrmGeneraOrdenSalida.Free;
-  *)
 end;
 
 function TfrmCotizaciones.RevisaFaltantes(IDDocumento: Integer): Boolean;
@@ -561,7 +555,7 @@ begin
 end;
 
 procedure TfrmCotizaciones.SpdBtnAdjuntarArchivosClick(Sender: TObject);
-begin
+begin //Siempre que exista un doc de salida //Movido de posición.. May 18/16
   inherited;
   //LLamar Crear y mostrar
   dmCotizacionesArchivos.dsMaster.DataSet:=DSCotizacionArchivo.DataSet;

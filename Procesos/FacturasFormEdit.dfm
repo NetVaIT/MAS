@@ -2,7 +2,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   Caption = 'frmFacturasFormEdit'
   ClientWidth = 990
   ExplicitWidth = 990
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -430,7 +429,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Top = 88
               DataBinding.DataField = 'CondPago'
               DataBinding.DataSource = DataSource
-              TabOrder = 6
+              TabOrder = 5
               Width = 365
             end
             object cxDBLabel5: TcxDBLabel
@@ -448,7 +447,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'MetodoPago'
               DataSource = DataSource
-              TabOrder = 7
+              TabOrder = 6
             end
             object PnlCtaPago: TPanel
               Left = 820
@@ -456,7 +455,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Width = 144
               Height = 57
               BevelOuter = bvNone
-              TabOrder = 8
+              TabOrder = 7
               object Label26: TLabel
                 Left = 3
                 Top = 10
@@ -484,7 +483,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               KeyField = 'IdPersonaDomicilio'
               ListField = 'DirCompleta'
               ListSource = DSDatosCliente
-              TabOrder = 10
+              TabOrder = 9
             end
             object cxDBLabel6: TcxDBLabel
               Left = 54
@@ -557,14 +556,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 18
+              TabOrder = 17
             end
             object cxDBTextEdit8: TcxDBTextEdit
               Left = 762
               Top = 254
               DataBinding.DataField = 'TipoCambio'
               DataBinding.DataSource = DataSource
-              TabOrder = 20
+              TabOrder = 19
               Width = 105
             end
             object cxDBLabel1: TcxDBLabel
@@ -877,7 +876,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1097,7 +1096,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002F40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002F80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

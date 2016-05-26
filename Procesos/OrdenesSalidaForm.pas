@@ -175,6 +175,8 @@ type
     BtBtnEnviar: TBitBtn;
     cmbTelefono: TcxDBLookupComboBox;
     BtBtnOrdenEmbarque: TBitBtn;
+    DBLkupCmbBxPaqueteria: TDBLookupComboBox;
+    dsInfoEntregaDetalle: TDataSource;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -191,7 +193,6 @@ type
     procedure TlBtnImprimirOrdenSalClick(Sender: TObject);
     procedure ChckBxDatosEnviosClick(Sender: TObject);
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
-    procedure BtBtnAdjGuiaClick(Sender: TObject);
     procedure BtBtnRegresaEstadoClick(Sender: TObject);
     procedure DBRdGrpGenerarClick(Sender: TObject);
     procedure BtBtnAceptaRegClick(Sender: TObject);
@@ -206,6 +207,10 @@ type
     FEnviaCorreoConDocs: TBasicAction;
     FActApartado: TBasicAction;
     FRevApartado: TBasicAction; //Abr 11/16
+    FCreaDatosenvio:TBasicAction;
+    FIDEntregaExistente: Integer;
+    FComparteEnvio: TBasicAction; //May 23/16
+    FFacturando: boolean;//May 24/16
     procedure CrearSalidasUbicacion;
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
@@ -217,6 +222,11 @@ type
     procedure SetActApartado(const Value: TBasicAction);
     procedure SetRevApartado(const Value: TBasicAction);
     function RevisaGenerado(IDOrden: Integer): Boolean;
+    function ExisteEnvioPendiente(IdOrdenSal, IDPerDomicilio: integer; var idInfoEntrega: integer): Boolean;
+    procedure SetFCreaDatosenvio(const Value: TBasicAction); //May 19/16
+    function GetFIDEntregaExistente: Integer;
+    procedure SetFComparteEnvio(const Value: TBasicAction);   //May 23/16
+    function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean; //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -226,6 +236,12 @@ type
     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
     property ActualizaApartado: TBasicAction read FActApartado write SetActApartado; //Abr 11/16
     property RevierteApartado: TBasicAction read FRevApartado write SetRevApartado; //Abr 11/16
+
+    property CrearDatosEnvio:TBasicAction read FCreaDatosenvio write SetFCreaDatosenvio;
+    property ComparteEnvio:TBasicAction read FComparteEnvio write SetFComparteEnvio;
+
+    Property AIdEntregaExistente:Integer read GetFIDEntregaExistente write FIDEntregaExistente;//May  23/16
+    Property Facturando:boolean read FFacturando write FFacturando;//May  24/16
 
   end;
 
@@ -237,7 +253,7 @@ implementation
 {$R *.dfm}
 
 uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM,
-  UDMEnvioMail, _Utils, _ConectionDmod;
+  UDMEnvioMail, _Utils, _ConectionDmod, ListaEtiquetasGRD;
 
 procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);  //Kardex + Salidas_Ubicaciones
 var                        //Feb 5/16
@@ -267,12 +283,6 @@ begin
     DtSrcOrdenSalItem.DataSet.Next;
   enD;
   DtSrcOrdenSalItem.DataSet.First;
-end;
-
-procedure TFrmOrdenesSalida.BtBtnAdjGuiaClick(Sender: TObject);
-begin
-  inherited;
-  //ShowMessage('Adjuntar Guia Escaneada..... Proceso en Construcción');
 end;
 
 procedure TFrmOrdenesSalida.BtBtnRegresaEstadoClick(Sender: TObject);
@@ -332,7 +342,8 @@ procedure TFrmOrdenesSalida.BtBtnAceptaInfoEntClick(Sender: TObject);
 begin
   inherited;
   DSInformacionEntrega.DataSet.Post; //Se supone que solo esta habilitado si se edito
-
+  //May 23 /16 Verificar si cambio la paqueteria del cliente  para actualizarla... preguntando..
+  ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16 // Para verificar
 end;
 
 procedure TFrmOrdenesSalida.BtBtnAceptaProcesosClick(Sender: TObject);
@@ -341,6 +352,7 @@ var estatus:Integer;
     Pnlaux:TPanel;
     btnAux:TbitBtn;
     CreoCFDI, imprimeOS:Boolean;
+    IDInfo:Integer;//May 20/16
 begin
   inherited;
   ImprimeOS:=False; //Feb 11/16
@@ -415,11 +427,38 @@ begin
   //Si es 4 autorizo bien... Se debe generar la Factura directamente
   if Estatus<>-1 then //Cambio a 4
   begin
+   //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
+
+    if ExisteEnvioPendiente(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdPersonadomicilio').AsInteger, IDInfo)and
+      (Application.MessageBox('¿Desea juntar envíos con una misma etiqueta?','Confirmación de agrupacion de Envíos',MB_YESNO)=ID_YES) then
+    begin
+  //    if IDInfo=-1 then //Hay más de un registro
+
+      FrmListaEtiquetas:=TFrmListaEtiquetas.create(self);
+      FrmListaEtiquetas.DSListaEtiquetas.DataSet:=DSQryAuxiliar.DataSet; //Verificar comportamiento Mayo 20 /16
+      FrmListaEtiquetas.ShowModal;
+      FIDEntregaExistente :=FrmListaEtiquetas.AIdEtiqueta;
+      FrmListaEtiquetas.Free;
+      //Crear asociacion y actualizar totales, permitir modificacion de Cajas....
+      ComparteEnvio.execute;
+
+
+    end
+    else
+    begin //Crear nueva y mostrar
+      CrearDatosEnvio.Execute;
+
+    end;
+
+  (*  *)
    //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
     ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
     Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
     if CreoCFDI then
     begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
+      //Actualizar CFDI en InfoEntrega si es que no tiene uno
+      ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16
+
       DSInformacionEntrega.DataSet.Close;
       DSInformacionEntrega.DataSet.Open;
 
@@ -447,9 +486,67 @@ begin
       //deberia quitar Kardex y posibles datos de CFDIs
       ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
     end;
+    dsInfoEntregaDetalle.DataSet.Close;
+    dsInfoEntregaDetalle.DataSet.Open;
+    DSInformacionEntrega.DataSet.Close;
+    DSInformacionEntrega.DataSet.Open;
 
-    //Si no se genera hay que hacer algo para que se pueda generar en otro punto!!! ??
+    PnlInformacionEntrega.Visible:=True; //May 23/16
+    ChckBxDatosEnvios.Checked:=true;
   end;
+end;
+
+function TFrmOrdenesSalida.ActualizaEtiqueta(IDOrdenSalida:Integer):Boolean; //May 26/16
+var
+  IDCFDIAct, IdInfoEntrega:Integer;
+begin
+  Result:=False;
+  TADOQuery(DsQryAuxiliar.DataSet).Close;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Add( 'Select IDCFDI from CFDI where idOrdenSalida=' +intToStr(IDOrdenSalida));
+  TADOQuery(DsQryAuxiliar.DataSet).open;
+  if  not TADOQuery(DsQryAuxiliar.DataSet).eof then
+  begin
+    IDCFDIAct:= TADOQuery(DsQryAuxiliar.DataSet).Fieldbyname('IDCFDI').AsInteger;
+    TADOQuery(DsQryAuxiliar.DataSet).Close;
+    TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+    TADOQuery(DsQryAuxiliar.DataSet).SQL.Add( 'Select * from InformacionEntregasDetalles where idOrdenSalida=' +intToStr(IDOrdenSalida));
+    TADOQuery(DsQryAuxiliar.DataSet).open;
+    if  not TADOQuery(DsQryAuxiliar.DataSet).eof then
+    begin
+      IdInfoEntrega:= TADOQuery(DsQryAuxiliar.DataSet).Fieldbyname('IdInfoEntrega').AsInteger;
+      TADOQuery(DsQryAuxiliar.DataSet).Close;
+      TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+      TADOQuery(DsQryAuxiliar.DataSet).SQL.Add('UPDATE InformacionEntregas  set IdCFDI ='+intToSTr(IDCFDIAct)
+                                              +' where IdCFDI is NULL and IdInfoEntrega=' +intToStr(IdInfoEntrega) );
+      Result:=TADOQuery(DsQryAuxiliar.DataSet).ExecSQL >0 ;
+    end;
+  end;
+
+
+end;
+
+function TFrmOrdenesSalida.ExisteEnvioPendiente(IdOrdenSal, IDPerDomicilio:integer; var idInfoEntrega:integer):Boolean; //May 19/16
+//(datasource.DataSet.FieldByName('IdDocumentoSalida').AsInteger, IDInfo)a
+begin
+  Result:=false;
+  idInfoEntrega:=-1;
+  DsQryAuxiliar.DataSet.Close;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Add('Select Os.idOrdenSalida,os.FechaRegistro,IE.* from OrdenesSalidas OS inner join InformacionEntregasDetalles IED ' +
+                                  'on IED.IDOrdenSalida=OS.IdOrdenSalida ' +
+                                  ' inner join InformacionEntregas IE on IE.IdInfoEntrega=IED.IdInfoEntrega ' +
+                                  ' and os.idOrdenEstatus =4 and OS.IDPersonaDomicilio='+intToStr(IDPerDomicilio)+
+                                  ' and OS.IDOrdenSalida <> ' +intToSTR(IdOrdenSal));//deberia no existir, porque a penas lo va a crear.
+
+   DsQryAuxiliar.DataSet.open;
+   if  not DsQryAuxiliar.DataSet.eof then
+   begin
+     Result:=True;
+     if DsQryAuxiliar.DataSet.recordcount=1 then
+       idInfoEntrega:=dsQryAuxiliar.dataset.Fieldbyname('IdInfoEntrega').AsInteger;
+   end;
+
 end;
 
 procedure TFrmOrdenesSalida.BtBtnAceptaRegClick(Sender: TObject);
@@ -462,6 +559,7 @@ begin
   EsCambio:=True;
   clave:=EdtContraRev.Text;
   //Acepta regreso
+
   //Verificar Usuario y cntraseña.. ver que tenga permiso de regresar..
   case datasource.DataSet.FieldByName('IdOrdenEstatus').ASInteger of
     1:begin // Para Eliminar la orden y regresar al Pedido   //Abr 13/16
@@ -806,10 +904,12 @@ begin
 
     BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
                             (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
-                            (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);                 //Abr 20/16
-    ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4)and  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<6);//Feb 11/16
+                            (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
+                                                                                           //4 May 19/16           //Abr 20/16
+    ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3);// deshabilitado may 24/16 //and  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<6);//Feb 11/16
     TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and (not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull); //Feb 17/16
-    PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4)and ChckBxDatosEnvios.Checked;
+    PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3)and ChckBxDatosEnvios.Checked; //4  May 19/16
+
     // ??PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4); //Ene 27/16
     PnlSalidasUbicacion.Visible:=False;  //Ene 28/16
 
@@ -903,7 +1003,9 @@ end;
 
 procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //Mod Mar 28/16
 
-begin                                               //Mar 29/16
+begin
+  FFacturando:=True;
+                                               //Mar 29/16
   dmFacturas := TdmFacturas.CreateWMostrar(nil,True,IDGenTipoDoc);  //Era false pero verificar  a ver si no da el aV
   dmFActuras.PIDordenSalida:=IDOrden;
   dmFacturas.ActCrearPrefacturas.Execute;
@@ -922,20 +1024,28 @@ end;
 procedure TFrmOrdenesSalida.FormActivate(Sender: TObject);
 begin
   inherited;
-  actShowGridExecute(sender); //Para que muestre la lista al entrar Nov 26/15
+  if Not Facturando then
+    actShowGridExecute(sender); //Para que muestre la lista al entrar Nov 26/15
 end;
 
 procedure TFrmOrdenesSalida.FormCreate(Sender: TObject);
 begin
   inherited;
+  Facturando:=False; //May 24/16
   gFormGrid := TFrmOrdenesSalidaGrid.Create(Self);
 //  TFrmOrdenesSalidaGrid(gFormGrid).CerrarGrid := actCloseGrid;
 
   DataSource.dataset.open; //Nov 25/15
   DtSrcOrdenSalItem.DataSet.Open;
+
   DSInformacionEntrega.DataSet.Open;
   dsProductosXEspacio.DataSet.Open;
 
+end;
+
+function TFrmOrdenesSalida.GetFIDEntregaExistente: Integer;
+begin
+  Result:=FIDEntregaExistente;
 end;
 
 procedure TFrmOrdenesSalida.ImprimirOrdenSalida(idOrdenSalida, IDDocumentoSalida: Integer);
@@ -978,6 +1088,16 @@ begin                              //Feb 16/16
   TlBtnEnvioFactura.ImageIndex:=23;
 end;
 
+procedure TFrmOrdenesSalida.SetFComparteEnvio(const Value: TBasicAction);
+begin
+  FComparteEnvio := Value;
+end;
+
+procedure TFrmOrdenesSalida.SetFCreaDatosenvio(const Value: TBasicAction);
+begin
+  FCreaDatosenvio := Value;
+end;
+
 procedure TFrmOrdenesSalida.SetRevApartado(const Value: TBasicAction);
 begin
   FRevApartado := Value;
@@ -999,6 +1119,8 @@ end;
 procedure TFrmOrdenesSalida.ChckBxDatosEnviosClick(Sender: TObject);
 begin
   inherited;
+  dsInfoEntregaDetalle.DataSet.Close;
+  dsInfoEntregaDetalle.DataSet.Open;
   DSInformacionEntrega.DataSet.Close;
   DSInformacionEntrega.DataSet.open; ///Verificar actualice por que el refresh no lo hace //May 5/16
   PnlInformacionEntrega.Visible:=ChckBxDatosEnvios.Checked;

@@ -109,6 +109,8 @@ type
     dxBarLrgBtnPaqueteria: TdxBarLargeButton;
     ActPaqueterias: TAction;
     dxBarLargeButton33: TdxBarLargeButton;
+    dxBrLrgBtnOrdenEntrega: TdxBarLargeButton;
+    ActOrdenEntrega: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -192,6 +194,7 @@ begin
    24:   gModulo := TDMFacturas.CreateWMostrar(Self,True,4);//Nota Venta Mar 29/16
    25:   gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
    26:   gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
+//   27:   gModulo := TDMOrdenesEntrega.Create(Self); //Ordenesentega May 26/16
 
    30: gModulo := TdmAlmacenes.Create(Self);
    31: ShowMessage('Módulo en construcción');//gModulo := TdmAlmacenes.Create(Self);

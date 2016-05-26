@@ -2,7 +2,6 @@ inherited FrmProductosFotos: TFrmProductosFotos
   Caption = 'FrmProductosFotos'
   ClientWidth = 699
   ExplicitWidth = 699
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -85,6 +84,7 @@ inherited FrmProductosFotos: TFrmProductosFotos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

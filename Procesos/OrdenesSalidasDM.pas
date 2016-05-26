@@ -51,7 +51,7 @@ type
     adodsMasterIVA: TFMTBCDField;
     adodsProductos: TADODataSet;
     ADODtStOrdenSalidaItemProducto: TStringField;
-    DSMaster: TDataSource;
+    dsMaster: TDataSource;
     ADODtStPersonaRevisaIdPersona: TAutoIncField;
     ADODtStPersonaRevisaIdRol: TIntegerField;
     ADODtStPersonaRevisaIdPersonaEstatus: TIntegerField;
@@ -210,6 +210,46 @@ type
     ADODtStCambioEstadoInvClaveUsr: TStringField;
     ActActualizaApartado: TAction;
     ActRevierteApartado: TAction;
+    AdoDtStInfoEntregaDetalle: TADODataSet;
+    adodsMasterIDPersonaDomicilio: TIntegerField;
+    AdoDtStInfoEntregaDetalleIdInformacionentregaDetalle: TAutoIncField;
+    AdoDtStInfoEntregaDetalleIdInfoEntrega: TIntegerField;
+    AdoDtStInfoEntregaDetalleIdOrdenSalida: TIntegerField;
+    adodsMasterIDPersona: TIntegerField;
+    ADODtStDatosDocumentoSalidaIdPaqueteria: TIntegerField;
+    ADODtStDatosDocumentoSalidaServicio: TStringField;
+    adodsMasterIdPaqueteria: TIntegerField;
+    adodsMasterServicio: TStringField;
+    ADODtStPaqueterias: TADODataSet;
+    ADODtStPaqueteriasIdPaqueteria: TAutoIncField;
+    ADODtStPaqueteriasIdentificador: TStringField;
+    ADODtStPaqueteriasDescripcion: TStringField;
+    ADODtStInformacionEnvioPaqueteria: TStringField;
+    ActCreaInformacionEnvio: TAction;
+    ActCompartirEnvio: TAction;
+    DSInfoEnviodetalle: TDataSource;
+    ADODtstInsertaInfoEntrega: TADODataSet;
+    ADODtstInsertaInfoEntregaIdInfoEntrega: TAutoIncField;
+    ADODtstInsertaInfoEntregaIdCFDI: TLargeintField;
+    ADODtstInsertaInfoEntregaIDPersonaCliente: TIntegerField;
+    ADODtstInsertaInfoEntregaIDPersonaDomicilio: TIntegerField;
+    ADODtstInsertaInfoEntregaIDResponsableEntrega: TIntegerField;
+    ADODtstInsertaInfoEntregaFechaProgramadaEnt: TDateTimeField;
+    ADODtstInsertaInfoEntregaFechaRealEnt: TDateTimeField;
+    ADODtstInsertaInfoEntregaCondicionEntrega: TStringField;
+    ADODtstInsertaInfoEntregaObservaciones: TStringField;
+    ADODtstInsertaInfoEntregaEstatusEntrega: TStringField;
+    ADODtstInsertaInfoEntregaIdTelefono: TIntegerField;
+    ADODtstInsertaInfoEntregaIdDocumentoGuia: TIntegerField;
+    ADODtstInsertaInfoEntregaContenido: TStringField;
+    ADODtstInsertaInfoEntregaConducto: TStringField;
+    ADODtstInsertaInfoEntregaServicio: TStringField;
+    ADODtstInsertaInfoEntregaPagoFlete: TBooleanField;
+    ADODtstInsertaInfoEntregaValor: TFloatField;
+    ADODtstInsertaInfoEntregaAsegurado: TBooleanField;
+    ADODtstInsertaInfoEntregaCantidadCajas: TIntegerField;
+    ADODtStDatosDocumentoSalidaIdDomicilioCliente: TIntegerField;
+    ADODtStDatosDocumentoSalidaIDDomicilio: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -232,6 +272,8 @@ type
     procedure ActRevierteApartadoExecute(Sender: TObject);
     procedure ADODtStOrdenSalidaItemBeforeDelete(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemAfterDelete(DataSet: TDataSet);
+    procedure ActCreaInformacionEnvioExecute(Sender: TObject);
+    procedure ActCompartirEnvioExecute(Sender: TObject);
   private
     CantAGuardar:Double;
     IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
@@ -245,12 +287,15 @@ type
     function GetFileName(IdDocumento: Integer): TFileName;
     function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;
     function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean;
+    function SacaPaqueteriaNvo(IdPersonaDocicilio: Integer): String;
+
 
     { Private declarations }
 
   public
     { Public declarations }
     Ajustar,CambioCantidad:Boolean;
+    procedure LlenaDatosEnvioNvo;
 
   end;
 
@@ -313,6 +358,49 @@ begin
     end;
   end;
   dmDocumentos.Free;
+end;
+
+procedure TDMOrdenesSalidas.ActCompartirEnvioExecute(Sender: TObject);
+var IdInfoEntrega:Integer;
+begin
+  inherited;
+  //Tomar losdatos de IDOrdenNueva, IdEntregaExistente, crear Relacion
+  //Actualizar total y mostrar.. Para ajustes... Estatus de la nueva orden... Consolidado y quien tiene la orden original debe empacar todo.
+  //Asegurarse que si esta en  medio del empaque se avise..
+  IdInfoEntrega:=TFrmOrdenesSalida(gGridEditForm).AIdEntregaExistente;
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Insert into InformacionEntregasDetalles (IDInfoentrega, IDordenSalida) Values('+intToStr(IdInfoEntrega)+','+adodsMaster.FieldByName('IdOrdenSalida').Asstring+ ')');
+  if ADOQryAuxiliar.ExecSQL<>1 then
+    ShowMessage('Error Compartiendo Etiqueta de envio NDS')
+  else
+  begin
+    //Actualiza totales y se coloca Estatus nuevo a la Orden.. S
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('Update InformacionEntregas SET Valor=Valor+'+adodsMaster.FieldByName('Total').Asstring+ ' where IdInfoEntrega='+intToStr(IdInfoEntrega));
+    if ADOQryAuxiliar.ExecSQL<>1 then
+       ShowMessage('Error Actualizando Total NDS')
+    else
+    begin
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus=10 where IDOrdenSalida='+adodsMaster.FieldByName('IdOrdenSalida').Asstring);
+      if ADOQryAuxiliar.ExecSQL<>1 then
+         ShowMessage('Error Actualizando Orden NDS')
+    end;
+  end;
+
+end;
+
+procedure TDMOrdenesSalidas.ActCreaInformacionEnvioExecute(Sender: TObject);
+begin    //May 23/16
+  inherited;
+  LlenaDatosEnvioNvo;
+
+  AdoDtStInfoEntregaDetalle.Refresh;  //Verificar que actualice
+  ADODtStInformacionEnvio.Refresh;
+  ADODtStTelefonos.Open;
 end;
 
 procedure TDMOrdenesSalidas.ActEnvioCorreoConArchivosExecute(Sender: TObject);
@@ -412,7 +500,6 @@ begin
   inherited;
   Dataset.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1; //Generar Factura
   Dataset.FieldByName('Acumula').ASBoolean:=False; //No acumula
-
 end;
 
 procedure TDMOrdenesSalidas.ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
@@ -432,8 +519,10 @@ procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
   DataSet: TDataSet);
 begin
   inherited;
+
   ADODtStFacturasCFDI.Open;
   ADODtStTelefonos.Open;
+  AdoDtStInfoEntregaDetalle.Open; //May23/16
 end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterDelete(
@@ -757,6 +846,10 @@ begin
   TFrmOrdenesSalida(gGridEditForm).ActualizaApartado :=ActActualizaApartado;//Abr 11/16
   TFrmOrdenesSalida(gGridEditForm).RevierteApartado :=ActRevierteApartado;//Abr 11/16
 
+  TFrmOrdenesSalida(gGridEditForm).CrearDatosEnvio :=ActCreaInformacionEnvio;//May 23/16
+  TFrmOrdenesSalida(gGridEditForm).ComparteEnvio:=ActCompartirEnvio;//May 23/16
+
+
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
@@ -861,6 +954,66 @@ begin
   FileName:= TPath.GetTempPath + adodsUpdateNombreArchivo.AsString;
   ReadFile(FileName);
   Result:= FileName;
+end;
+
+
+
+procedure TDMOrdenesSalidas.LlenaDatosEnvioNvo; //May 23/16
+var ID,i:Integer;
+
+begin
+  if adodsMaster.FieldByName('IdPersona').AsInteger<>-1 then
+  begin          //Verificar que  nose puedan crear de publico en general
+    ADODtstInsertaInfoEntrega.Open;
+//    if ADODtStInformacionEnvio.eof then     //Verificar o cambiar....
+//    begin
+      ADODtstInsertaInfoEntrega.Insert;
+      ADODtstInsertaInfoEntrega.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersona').AsInteger;
+      ADODtstInsertaInfoEntrega.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger;
+      ADODtstInsertaInfoEntrega.Fieldbyname('FechaProgramadaEnt').AsDateTime:= Date+10;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Conducto').AsString:= SacaPaqueteriaNvo(adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger);//May 12/16
+      ADODtstInsertaInfoEntrega.Fieldbyname('Servicio').AsString:=adodsMaster.FieldByName('Servicio').AsString; ;
+      ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:= False;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= False;
+      ADODtstInsertaInfoEntrega.Post; //Errror de operacion en varios pasos //Fecha
+      id:=   ADODtstInsertaInfoEntrega.Fieldbyname('IdInfoentrega').AsInteger;
+      //Crear asociacion
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('Insert into InformacionEntregasDetalles (IDInfoentrega, IDordenSalida) Values('+intToStr(id)+','+adodsMaster.FieldByName('IdOrdenSalida').Asstring+ ')');
+      if ADOQryAuxiliar.ExecSQL<>1 then
+        ShowMessage('Errores Creando Detalles Entrega');
+  end;
+
+
+end;
+
+Function TDMOrdenesSalidas.SacaPaqueteriaNvo(IdPersonaDocicilio:Integer):String;    //May 23/16
+
+begin
+  Result:='SIN IDENTIFICAR';
+  if not DsMaster.DataSet.FieldByName('IdPaqueteria').Isnull then
+  begin
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.Sql.Add('Select * from Paqueterias where IDPaqueteria='+DsMaster.DataSet.FieldByName('IdPaqueteria').asstring);
+    ADOQryAuxiliar.Open;
+    if not ADOQryAuxiliar.eof then //Solo puede tener si existe
+    begin
+      result:=ADOQryAuxiliar.fieldbyname('Descripcion').AsString;
+    end
+  end
+  else
+  begin//Buscar en Cliente
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.Sql.Add('Select PA.* from PersonasDomicilio PD inner join Paqueterias PA on PA.idPaqueteria=PD.IDPaqueteria'
+                          +' where IDpersonadomicilio='+intToStr(IdPersonaDocicilio));
+    ADOQryAuxiliar.Open;
+    if not ADOQryAuxiliar.eof then //Solo puede tener si existe
+      result:=ADOQryAuxiliar.fieldbyname('Descripcion').AsString;
+  end;
 end;
 
 end.

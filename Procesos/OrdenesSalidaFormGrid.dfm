@@ -44,9 +44,9 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       Top = 42
       Width = 1255
       Height = 429
-      ExplicitTop = 46
+      ExplicitTop = 48
       ExplicitWidth = 1255
-      ExplicitHeight = 425
+      ExplicitHeight = 429
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridOrdenSalida: TcxGridDBColumn
           Caption = 'No.Orden Salida'
@@ -136,14 +136,10 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       inherited ToolButton2: TToolButton
         ExplicitHeight = 41
       end
-      inherited btnCancel: TToolButton [10]
-        Left = 200
-        ExplicitLeft = 200
+      inherited btnPost: TToolButton
         ExplicitHeight = 41
       end
-      inherited btnPost: TToolButton [11]
-        Left = 223
-        ExplicitLeft = 223
+      inherited btnCancel: TToolButton
         ExplicitHeight = 41
       end
       inherited ToolButton21: TToolButton
@@ -188,7 +184,8 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
           'Empacado'
           
             'Enviado                                                         ' +
-            '                                 ')
+            '                                 '
+          'Consolidado')
         ParentBackground = False
         ParentColor = False
         TabOrder = 1
@@ -289,7 +286,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -436,7 +433,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C001040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C0010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

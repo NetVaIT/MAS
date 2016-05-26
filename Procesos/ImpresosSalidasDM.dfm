@@ -56,7 +56,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 354
+    Left = 362
     Top = 26
     Version = '15.0'
     mmColumnWidth = 0
@@ -3886,7 +3886,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Size = 4
         Value = Null
       end>
-    Left = 192
+    Left = 200
     Top = 26
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
@@ -7306,9 +7306,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Size = 12
         Font.Style = []
         Transparent = True
-        mmHeight = 6081
+        VerticalAlignment = avCenter
+        mmHeight = 4756
         mmLeft = 9798
-        mmTop = 16941
+        mmTop = 23301
         mmWidth = 20620
         BandType = 4
         LayerName = Foreground1
@@ -7325,8 +7326,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 8731
         mmLeft = 9790
-        mmTop = 25400
-        mmWidth = 24871
+        mmTop = 30435
+        mmWidth = 21960
         BandType = 4
         LayerName = Foreground1
       end
@@ -7340,9 +7341,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Size = 12
         Font.Style = []
         Transparent = True
-        mmHeight = 6081
+        VerticalAlignment = avCenter
+        mmHeight = 5286
         mmLeft = 9798
-        mmTop = 43403
+        mmTop = 49233
         mmWidth = 20620
         BandType = 4
         LayerName = Foreground1
@@ -7357,9 +7359,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Size = 12
         Font.Style = []
         Transparent = True
-        mmHeight = 6879
+        mmHeight = 5289
         mmLeft = 9798
-        mmTop = 52923
+        mmTop = 57428
         mmWidth = 20620
         BandType = 4
         LayerName = Foreground1
@@ -7374,10 +7376,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Size = 12
         Font.Style = []
         Transparent = True
-        mmHeight = 6879
+        mmHeight = 5292
         mmLeft = 9790
-        mmTop = 63236
-        mmWidth = 27781
+        mmTop = 65356
+        mmWidth = 23283
         BandType = 4
         LayerName = Foreground1
       end
@@ -7391,9 +7393,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Size = 12
         Font.Style = []
         Transparent = True
-        mmHeight = 6879
+        mmHeight = 5554
         mmLeft = 9790
-        mmTop = 73554
+        mmTop = 73024
         mmWidth = 30427
         BandType = 4
         LayerName = Foreground1
@@ -7546,8 +7548,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 8731
         mmLeft = 9790
-        mmTop = 5292
-        mmWidth = 38100
+        mmTop = 3440
+        mmWidth = 36513
         BandType = 4
         LayerName = Foreground1
       end
@@ -7564,29 +7566,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         WordWrap = True
         DataPipelineName = 'ppDBPplnEtiquetas'
-        mmHeight = 8731
-        mmLeft = 49477
-        mmTop = 5292
-        mmWidth = 67998
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object ppDBText11: TppDBText
-        UserName = 'DBText11'
-        DataField = 'RFC'
-        DataPipeline = ppDBPplnEtiquetas
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 12
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        DataPipelineName = 'ppDBPplnEtiquetas'
-        mmHeight = 4763
-        mmLeft = 32544
-        mmTop = 16933
-        mmWidth = 42333
+        mmHeight = 18521
+        mmLeft = 48154
+        mmTop = 3440
+        mmWidth = 69321
         BandType = 4
         LayerName = Foreground1
       end
@@ -7601,10 +7584,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
+        VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPplnEtiquetas'
         mmHeight = 4763
         mmLeft = 32544
-        mmTop = 43392
+        mmTop = 49222
         mmWidth = 39423
         BandType = 4
         LayerName = Foreground1
@@ -7620,10 +7604,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
+        VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPplnEtiquetas'
         mmHeight = 4763
         mmLeft = 73290
-        mmTop = 43392
+        mmTop = 49222
         mmWidth = 44186
         BandType = 4
         LayerName = Foreground1
@@ -7641,16 +7626,16 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         WordWrap = True
         DataPipelineName = 'ppDBPplnEtiquetas'
-        mmHeight = 14288
+        mmHeight = 16140
         mmLeft = 32544
-        mmTop = 25400
+        mmTop = 30435
         mmWidth = 84931
         BandType = 4
         LayerName = Foreground1
       end
       object ppDBText17: TppDBText
         UserName = 'DBText17'
-        DataField = 'Telefono'
+        DataField = 'TelefonoCompleto'
         DataPipeline = ppDBPplnEtiquetas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -7660,9 +7645,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPplnEtiquetas'
-        mmHeight = 4763
+        mmHeight = 5292
         mmLeft = 32544
-        mmTop = 53975
+        mmTop = 57415
         mmWidth = 39423
         BandType = 4
         LayerName = Foreground1
@@ -7729,8 +7714,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnEtiquetas'
         mmHeight = 4763
-        mmLeft = 37571
-        mmTop = 64294
+        mmLeft = 33867
+        mmTop = 65354
         mmWidth = 76465
         BandType = 4
         LayerName = Foreground1
@@ -7750,7 +7735,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipelineName = 'ppDBPplnEtiquetas'
         mmHeight = 12435
         mmLeft = 9790
-        mmTop = 81227
+        mmTop = 79902
         mmWidth = 106363
         BandType = 4
         LayerName = Foreground1
@@ -7912,6 +7897,26 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = Foreground1
       end
+      object ppDBText11: TppDBText
+        UserName = 'DBText11'
+        DataField = 'RFC'
+        DataPipeline = ppDBPplnEtiquetas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPplnEtiquetas'
+        mmHeight = 4763
+        mmLeft = 32544
+        mmTop = 23291
+        mmWidth = 42333
+        BandType = 4
+        LayerName = Foreground1
+      end
     end
     object ppFooterBand2: TppFooterBand
       Background.Brush.Style = bsClear
@@ -7949,17 +7954,17 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'PagoFlete  '#13#10'      ,  Valor  '#13#10'      ,  Asegurado  ,'#13#10'      P.Ra' +
       'zonSocial, PD.Identificador,D.Calle, D.NoExterior, D.NoInterior,' +
       ' D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripcio' +
-      'n Municipio,'#13#10'P.RFC, T.Telefono, CantidadCajas, IdDocumentoGuia'#13 +
-      #10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join CFDI CI on CI' +
-      '.IdCFDI=IE.IdCFDI'#13#10'inner join OrdenesSalidas OS on os.idOrdenSal' +
-      'ida=Ci. idOrdenSalida'#13#10'  inner join Personas P on P.IdPersona=IE' +
-      '.IDPersonaCliente'#13#10'  inner join PersonasDomicilios PD on PD.IdPe' +
-      'rsonaDomicilio=IE.IDPersonaDomicilio'#13#10'  inner join Domicilios D ' +
-      'on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner join Municipios M on M.' +
-      'IdMunicipio=D.IdMunicipio'#13#10'  inner join Estados E on E.IdEstado=' +
-      'D.IdEstado  '#13#10'  Left join Personas PR on PR.IdPersona=IE.IDRespo' +
-      'nsableEntrega'#13#10'  Left join Telefonos T on T.IdTelefono=IE.IdTele' +
-      'fono'#13#10' where ci.idOrdenSalida=:idOrdenSalida'
+      'n Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, IdDocume' +
+      'ntoGuia'#13#10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join CFDI ' +
+      'CI on CI.IdCFDI=IE.IdCFDI'#13#10'inner join OrdenesSalidas OS on os.id' +
+      'OrdenSalida=Ci. idOrdenSalida'#13#10'  inner join Personas P on P.IdPe' +
+      'rsona=IE.IDPersonaCliente'#13#10'  inner join PersonasDomicilios PD on' +
+      ' PD.IdPersonaDomicilio=IE.IDPersonaDomicilio'#13#10'  inner join Domic' +
+      'ilios D on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner join Municipios' +
+      ' M on M.IdMunicipio=D.IdMunicipio'#13#10'  inner join Estados E on E.I' +
+      'dEstado=D.IdEstado  '#13#10'  Left join Personas PR on PR.IdPersona=IE' +
+      '.IDResponsableEntrega'#13#10'  Left join Telefonos T on T.IdTelefono=I' +
+      'E.IdTelefono'#13#10' where ci.idOrdenSalida=:idOrdenSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -8097,6 +8102,16 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStDatosEtiquetaFechaRealEnt: TDateTimeField
       FieldName = 'FechaRealEnt'
+    end
+    object ADODtStDatosEtiquetaLada: TStringField
+      FieldName = 'Lada'
+      Size = 10
+    end
+    object ADODtStDatosEtiquetaTelefonoCompleto: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'TelefonoCompleto'
+      Size = 30
+      Calculated = True
     end
   end
   object DSDatosEtiqueta: TDataSource
@@ -12035,7 +12050,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
         Border.Weight = 0.748799979686737100
-        DataField = 'Telefono'
+        DataField = 'TelefonoCompleto'
         DataPipeline = ppDBPplnOrdenEmb
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -12046,8 +12061,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnOrdenEmb'
         mmHeight = 4763
-        mmLeft = 135724
-        mmTop = 49996
+        mmLeft = 137054
+        mmTop = 50006
         mmWidth = 39423
         BandType = 4
         LayerName = BandLayer4

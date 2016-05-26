@@ -80,7 +80,6 @@ uses
   DocumentosForm in 'Catalogos\DocumentosForm.pas' {frmDocumentos},
   ProductosFotosDM in 'Catalogos\ProductosFotosDM.pas' {dmProductosFotos: TDataModule},
   ProductosFotosForm in 'Catalogos\ProductosFotosForm.pas' {FrmProductosFotos},
-  ProductosFotosEdit in 'Catalogos\ProductosFotosEdit.pas' {FrmProductosFotosEdit},
   OrdenesSalidasDM in 'Procesos\OrdenesSalidasDM.pas' {DMOrdenesSalidas: TDataModule},
   OrdenesSalidaFormGrid in 'Procesos\OrdenesSalidaFormGrid.pas' {FrmOrdenesSalidaGrid},
   GeneraOrdenSalida in 'Procesos\GeneraOrdenSalida.pas' {FrmGeneraOrdenSalida},
@@ -160,7 +159,9 @@ uses
   ListaClientesForm in 'Catalogos\ListaClientesForm.pas' {FrmBuscaCliente},
   CotizacionesArchivosDM in 'Procesos\CotizacionesArchivosDM.pas' {dmCotizacionesArchivos: TDataModule},
   CotizacionesArchivosForm in 'Procesos\CotizacionesArchivosForm.pas' {frmCotizacionesArchivos},
-  CotizacionesArchivosEdit in 'Procesos\CotizacionesArchivosEdit.pas' {frmCotizacionesArchivosEdit};
+  ListaEtiquetasGRD in 'Procesos\ListaEtiquetasGRD.pas' {FrmListaEtiquetas},
+  OrdenesEntregasDM in 'Procesos\OrdenesEntregasDM.pas' {dmOrdenesEntregas: TDataModule},
+  OrdenesEntregasEdit in 'Procesos\OrdenesEntregasEdit.pas' {frmOrdenesEntregasEdit};
 
 {$R *.res}
 

@@ -134,7 +134,7 @@ const
     TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
  +'IdPersonaRevisa, IdPersonaEmpaca, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
- +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA from OrdenesSalidas OS ';
+ +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio from OrdenesSalidas OS ';
 
   orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin
@@ -142,7 +142,7 @@ begin
   PoneFiltro;
   Tadodataset(datasource.DataSet).Close;               //May 16/16
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden;
-//  ShowMessage(TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden);
+ // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden);
   if ffiltro <>''then                                                //Abr.20/16
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
@@ -163,8 +163,19 @@ procedure TFrmOrdenesSalidaGrid.RdGrpEstadoClick(Sender: TObject);
 begin
   inherited;
   ffiltroEstado:='';
+  Tadodataset(datasource.DataSet).filtered:=True;//May 24/16
   if RdGrpEstado.ItemIndex >0then
-    ffiltroEstado:=' and IdOrdenEstatus='+ IntToSTR(RdGrpEstado.ItemIndex)+' ';
+  begin
+    if RdGrpEstado.ItemIndex<>7 then //May 24/16
+    begin
+      ffiltroEstado:=' and IdOrdenEstatus='+ IntToSTR(RdGrpEstado.ItemIndex)+' ';
+    end
+    else
+    begin
+      ffiltroEstado:=' and IdOrdenEstatus=10 ';  //May 24/16
+      Tadodataset(datasource.DataSet).filtered:=False;
+    end;
+  end;
   SpdBtnConsultaClick(SpdBtnConsulta);
 end;
 
