@@ -67,6 +67,8 @@ type
     PnlBusqueda: TPanel;
     Label3: TLabel;
     EdtNombre: TEdit;
+    ChckBxXFecha: TCheckBox;
+    ChckBxFactVivas: TCheckBox;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -93,7 +95,8 @@ type
     ImprimeNotaVenta: TBasicAction;
     ffiltroFecha: String;
     fOrden: String;
-    ffiltroNombre: String;  //Abr 4/16
+    ffiltroNombre: String;
+    ffiltrovivas: String;  //Abr 4/16
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
@@ -124,6 +127,7 @@ type
      property FiltroFecha: String read ffiltroFecha write ffiltroFecha;   //Abr 19/16
      Property ElOrden :String read fOrden write fOrden;
      property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;    //May 26/16
+     property FiltroVivas:String read ffiltrovivas write ffiltrovivas; //May 30/16
   end;
 
 var
@@ -222,6 +226,7 @@ begin
   forden:= '';
   PnlFechas.Visible:= (RdGrpNotasVentas.itemindex<>0);
   PoneRangoFechas;
+  ffiltrovivas:=''; //Todas may 30/16
   TlBtnConsultaClick(TlBtnConsulta);
    //H Abr 19/16
 end;
@@ -235,7 +240,8 @@ begin
   ffiltroFecha:='';
   if RdGrpNotasVentas.ItemIndex<>0 then
   begin
-    ffiltroFecha:=' Fecha >:FIni and Fecha <:FFin';
+    if ChckBxXFecha.checked then    //May 30/16
+      ffiltroFecha:=' Fecha >:FIni and Fecha <:FFin';
   end;
 end;
 
@@ -354,6 +360,10 @@ end;
 procedure TfrmFacturasGrid.SpdBtnConsultaFechaClick(Sender: TObject);
 begin
   inherited;
+  if ChckBxFactVivas.Checked then // may 30/16
+    ffiltrovivas:=' SaldoDocumento >0 '
+  else
+    ffiltrovivas:='';
 
   PoneRangoFechas;
   TlBtnConsultaClick(TlBtnConsulta);
@@ -369,7 +379,7 @@ procedure TfrmFacturasGrid.TlBtnConsultaClick(Sender: TObject);
 const TxtSQL='select  IdCFDI, IdCFDITipoDocumento, IdCFDIFormaPago, IdMetodoPago, C.IdMoneda, IdPersonaEmisor, IdPersonaReceptor,'+
 'IdDocumentoCBB, IdDocumentoXML, IdDocumentoPDF,IdOrdenSalida, IdCFDIEstatus, IdCFDIFacturaGral, IdClienteDomicilio,'+
 'CuentaCte, TipoCambio, TipoComp, Serie, Folio, Fecha, LugarExpedicion, Sello, CondPago, NoCertificado, Certificado,'+
-'SubTotal, Descto, MotivoDescto, Total, NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
+'SubTotal, Descto, MotivoDescto, Total,  NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
 'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
 'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB  from CFDI C ';
 var AuxFiltro:String;
@@ -383,9 +393,21 @@ begin
     else
       AuxFiltro:=' and '+FFiltroFecha;
   end;
-
+  //May 30/16
+  if ffiltrovivas <>'' then
+  begin
+    if AuxFiltro<>'' then
+      AuxFiltro:=AuxFiltro +' and '+ ffiltrovivas
+    else
+      if ffiltro='' then
+        AuxFiltro:=' where '+ffiltrovivas
+      else
+        AuxFiltro:=' and '+ffiltrovivas;
+  end;
+ //Hasta aca May 30/16
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltroNombre+ffiltro+ AuxFiltro;
+//  ShowMessage(TxtSQL+ffiltroNombre+ffiltro+ AuxFiltro);
   if ffiltroFecha <>''then
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;

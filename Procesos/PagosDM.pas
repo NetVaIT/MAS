@@ -115,6 +115,7 @@ type
     procedure ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);
     procedure ADODtStAplicacionesPagosAfterPost(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
+    procedure adodsMasterBeforeInsert(DataSet: TDataSet);
   private
     function ActualizaSaldoCliente(IDCFDI, IDPagoRegistro: Integer;
       Importe: Double;operacion:String): Boolean;
@@ -149,6 +150,23 @@ begin
   ADODtStConfiguraciones.Post;
 
 
+end;
+
+procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
+const
+   TxtSQL='select IdPagoRegistro, IdBanco, IdMetodoPago, IdPersonaCliente, '+
+   'IdCuentaBancariaEstadoCuenta, Fecha, Referencia, Importe, Saldo, Observaciones,'+
+   'IdDomicilioCliente, FolioPago, SeriePago from PagosRegistros ';
+var Txt:String;
+begin
+  Txt:=   Tadodataset(adodsMaster).CommandText;
+  if pos('inner ',Txt)>0 then
+  begin
+    Tadodataset(adodsMaster).Close;
+    Tadodataset(adodsMaster).CommandText:=TxtSQL;
+    Tadodataset(adodsMaster).open;
+  end;
+  inherited;
 end;
 
 procedure TdmPagos.adodsMasterBeforePost(DataSet: TDataSet);

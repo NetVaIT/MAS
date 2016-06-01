@@ -1008,7 +1008,7 @@ begin
   begin//Buscar en Cliente
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.Sql.Add('Select PA.* from PersonasDomicilio PD inner join Paqueterias PA on PA.idPaqueteria=PD.IDPaqueteria'
+    ADOQryAuxiliar.Sql.Add('Select PA.* from PersonasDomicilios PD inner join Paqueterias PA on PA.idPaqueteria=PD.IDEnvioTipo'
                           +' where IDpersonadomicilio='+intToStr(IdPersonaDocicilio));
     ADOQryAuxiliar.Open;
     if not ADOQryAuxiliar.eof then //Solo puede tener si existe

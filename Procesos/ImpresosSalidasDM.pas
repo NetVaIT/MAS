@@ -297,7 +297,7 @@ type
 
     { Private declarations }
   public
-    procedure PrintPDFFile(IDReporte: Integer; Cant:Integer=1);
+    procedure PrintPDFFile(IDReporte: Integer; Cant:Integer=1;mostrar: boolean=true; nombrePDF:TFileName=''); //Ajuste may 30/16
     { Public declarations }
   end;
 
@@ -353,8 +353,8 @@ begin
   ADODtStBuscaUbicacion.Close;
   Result:=Texto;
 end;
-
-procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer;Cant:Integer=1);
+                                                                           //Ajustado May 30/16
+procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer;Cant:Integer=1;mostrar: boolean=True; nombrePDF:TFileName='');
 var                       // Modificado
   vPDFFileName: TFileName;
   Actual:Integer;
@@ -365,7 +365,17 @@ begin
       ppRprtOrdenSalida.ShowPrintDialog:= False;
       ppRprtOrdenSalida.ShowCancelDialog:= False;
       ppRprtOrdenSalida.AllowPrintToArchive:= False;
-      ppRprtOrdenSalida.DeviceType:= 'Screen';
+      if Mostrar then //May 30/16
+        ppRprtOrdenSalida.DeviceType:= 'Screen'
+      else
+      begin
+        if nombrePDF<>'' then //May 30/16
+        begin
+          ppRprtOrdenSalida.DeviceType:= 'PDF';
+          ppRprtOrdenSalida.PDFSettings.OpenPDFFile := False;
+          ppRprtOrdenSalida.TextFileName:= nombrePDF;
+        end; //Siempre muesta el PDF
+      end;
     //    ppReport.PrinterSetup.Copies:= 1;
     // DES ABAN eNE7/16      ppReport.PrinterSetup.DocumentName:= ExtractFileName(vPDFFileName);
       ppRprtOrdenSalida.Print;
@@ -375,24 +385,53 @@ begin
       ppRprtEtiquetaEnvio.ShowPrintDialog:= False;
       ppRprtEtiquetaEnvio.ShowCancelDialog:= False;
       ppRprtEtiquetaEnvio.AllowPrintToArchive:= False;
-      ppRprtEtiquetaEnvio.DeviceType:= 'Screen';
-      for Actual:=1 to Cant do
+      if (cant>1) then   //Mientras se arregla lo del pdf de varias hojas
       begin
-        ppLblCajaAct.Caption:=intToStr(Actual);
-        ppRprtEtiquetaEnvio.Print;
-      end;
+        ppRprtEtiquetaEnvio.DeviceType:= 'Screen';
+        for Actual:=1 to Cant do
+          begin
+            ppLblCajaAct.Caption:=intToStr(Actual); //Poner nueva pagina
+            ppRprtEtiquetaEnvio.Print;
+          end;
+      end
+      else
+      begin
+        if Mostrar  then //May 30/16
+          ppRprtEtiquetaEnvio.DeviceType:= 'Screen'
+        else
+        begin
+          if nombrePDF<>'' then //May 30/16
+          begin
+            ppRprtEtiquetaEnvio.DeviceType:= 'PDF';
+            ppRprtEtiquetaEnvio.PDFSettings.OpenPDFFile := False;
+            ppRprtEtiquetaEnvio.TextFileName:= nombrePDF;
+          end; //Siempre muesta el PDF
+          for Actual:=1 to Cant do
+          begin
+            ppLblCajaAct.Caption:=intToStr(Actual); //Poner nueva pagina
+            ppRprtEtiquetaEnvio.Print;
+          end;
+        end;
+      end;//DEl else temporarl may 30/16
 
     end;
   3:begin  //may 10/16
       ppRptOrdenEmbarque.ShowPrintDialog:= False;
       ppRptOrdenEmbarque.ShowCancelDialog:= False;
       ppRptOrdenEmbarque.AllowPrintToArchive:= False;
-      ppRptOrdenEmbarque.DeviceType:= 'Screen';
+      if Mostrar then //May 30/16
+        ppRptOrdenEmbarque.DeviceType:= 'Screen'
+      else
+      begin
+        if nombrePDF<>'' then //May 30/16
+        begin
+          ppRptOrdenEmbarque.DeviceType:= 'PDF';
+          ppRptOrdenEmbarque.PDFSettings.OpenPDFFile := False;
+          ppRptOrdenEmbarque.TextFileName:= nombrePDF;
+        end; //Siempre muesta el PDF
+      end;
       ppRptOrdenEmbarque.Print;
     end;
-
-
-
   end;
 end;
 end.

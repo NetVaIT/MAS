@@ -2,6 +2,7 @@ inherited dmPagos: TdmPagos
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforeInsert = adodsMasterBeforeInsert
     BeforePost = adodsMasterBeforePost
     AfterPost = adodsMasterAfterPost
     OnNewRecord = adodsMasterNewRecord
@@ -312,7 +313,7 @@ inherited dmPagos: TdmPagos
     CommandText = 
       'Select  IdPersona, IdPersonaTipo, IdRol, IdMetodoPagoCliente, Id' +
       'PersonaEstatus, IdMoneda, RFC, RazonSocial, NumCtaPagoCliente, S' +
-      'aldoCliente'#13#10'from Personas where IdRol=1'
+      'aldoCliente'#13#10'from Personas where IdRol=1'#13#10'order by Razonsocial'
     Parameters = <>
     Left = 44
     Top = 75

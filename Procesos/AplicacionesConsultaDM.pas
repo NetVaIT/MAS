@@ -18,6 +18,11 @@ type
     adodsMasterFechaFactura: TDateTimeField;
     adodsMasterRazonSocial: TStringField;
     adodsMasterIdentificador: TIntegerField;
+    ADOQryAuxiliar: TADOQuery;
+    adodsMasterIdPagoAplicacion: TLargeintField;
+    adodsMasterIdPagoRegistro: TLargeintField;
+    adodsMasterIdCFDI: TLargeintField;
+    adodsMasterIdPersonaCliente: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -41,6 +46,7 @@ begin
   inherited;
   gGridEditForm:= TFrmAplicacionesConsultaInd.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
+  TFrmAplicacionesConsultaInd(gGridEditForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar; //Jun 1/16
   adodsMaster.open;
 end;
 

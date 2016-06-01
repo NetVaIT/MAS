@@ -7955,20 +7955,19 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'zonSocial, PD.Identificador,D.Calle, D.NoExterior, D.NoInterior,' +
       ' D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripcio' +
       'n Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, IdDocume' +
-      'ntoGuia'#13#10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join CFDI ' +
-      'CI on CI.IdCFDI=IE.IdCFDI'#13#10'inner join OrdenesSalidas OS on os.id' +
-      'OrdenSalida=Ci. idOrdenSalida'#13#10'  inner join Personas P on P.IdPe' +
-      'rsona=IE.IDPersonaCliente'#13#10'  inner join PersonasDomicilios PD on' +
-      ' PD.IdPersonaDomicilio=IE.IDPersonaDomicilio'#13#10'  inner join Domic' +
-      'ilios D on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner join Municipios' +
-      ' M on M.IdMunicipio=D.IdMunicipio'#13#10'  inner join Estados E on E.I' +
-      'dEstado=D.IdEstado  '#13#10'  Left join Personas PR on PR.IdPersona=IE' +
-      '.IDResponsableEntrega'#13#10'  Left join Telefonos T on T.IdTelefono=I' +
-      'E.IdTelefono'#13#10' where ci.idOrdenSalida=:idOrdenSalida'
+      'ntoGuia'#13#10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join Perso' +
+      'nas P on P.IdPersona=IE.IDPersonaCliente'#13#10'  inner join PersonasD' +
+      'omicilios PD on PD.IdPersonaDomicilio=IE.IDPersonaDomicilio'#13#10'  i' +
+      'nner join Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner ' +
+      'join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inner join E' +
+      'stados E on E.IdEstado=D.IdEstado  '#13#10'  Left join Personas PR on ' +
+      'PR.IdPersona=IE.IDResponsableEntrega'#13#10'  Left join Telefonos T on' +
+      ' T.IdTelefono=IE.IdTelefono'#13#10'where IE.IdInfoEntrega=:IdInfoEntre' +
+      'ga'
     Parameters = <
       item
-        Name = 'idOrdenSalida'
-        Attributes = [paSigned, paNullable]
+        Name = 'IdInfoEntrega'
+        Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
         Size = 4
@@ -11940,7 +11939,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         WordWrap = True
         mmHeight = 5027
         mmLeft = 6879
-        mmTop = 60062
+        mmTop = 60592
         mmWidth = 34131
         BandType = 4
         LayerName = BandLayer4
@@ -12060,9 +12059,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'ppDBPplnOrdenEmb'
-        mmHeight = 4763
+        mmHeight = 5028
         mmLeft = 137054
-        mmTop = 50006
+        mmTop = 50801
         mmWidth = 39423
         BandType = 4
         LayerName = BandLayer4
@@ -12142,10 +12141,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipeline = ppDBPplnOrdenEmb
         DataField = 'CobrarChk'
         DataPipelineName = 'ppDBPplnOrdenEmb'
-        mmHeight = 15081
+        mmHeight = 13226
         mmLeft = 42333
-        mmTop = 55827
-        mmWidth = 14288
+        mmTop = 56887
+        mmWidth = 10578
         BandType = 4
         LayerName = BandLayer4
       end
@@ -12293,7 +12292,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         WordWrap = True
         mmHeight = 5027
         mmLeft = 105834
-        mmTop = 60062
+        mmTop = 60592
         mmWidth = 30163
         BandType = 4
         LayerName = BandLayer4
@@ -12306,10 +12305,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipeline = ppDBPplnOrdenEmb
         DataField = 'PagoFlete'
         DataPipelineName = 'ppDBPplnOrdenEmb'
-        mmHeight = 15346
-        mmLeft = 135732
-        mmTop = 54768
-        mmWidth = 13494
+        mmHeight = 13226
+        mmLeft = 138382
+        mmTop = 56886
+        mmWidth = 10844
         BandType = 4
         LayerName = BandLayer4
       end

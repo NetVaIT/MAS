@@ -1,32 +1,587 @@
 inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   Caption = 'frmOrdenesEntregasEdit'
+  ClientHeight = 763
+  ClientWidth = 1041
+  ExplicitWidth = 1041
+  ExplicitHeight = 763
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Top = 314
+    Width = 1041
+    Visible = True
+    ExplicitLeft = 8
+    ExplicitTop = 347
+    ExplicitWidth = 949
+  end
+  inherited splDetail2: TSplitter
+    Top = 514
+    Width = 1041
+    Visible = True
+    ExplicitLeft = 8
+    ExplicitTop = 479
+    ExplicitWidth = 949
+  end
+  inherited splDetail1: TSplitter
+    Top = 709
+    Width = 1041
+    ExplicitLeft = -32
+    ExplicitTop = 482
+    ExplicitWidth = 949
+  end
+  inherited pnlClose: TPanel
+    Top = 712
+    Width = 1041
+    Height = 51
+    ExplicitTop = 712
+    ExplicitWidth = 1041
+    ExplicitHeight = 51
+  end
+  inherited pnlDetail3: TPanel
+    Top = 712
+    Width = 1041
+    Height = 0
+    ExplicitTop = 606
+    ExplicitWidth = 949
+    ExplicitHeight = 0
+  end
+  inherited pnlDetail2: TPanel
+    Top = 517
+    Width = 1041
+    Height = 192
+    Anchors = [akLeft, akTop]
+    Visible = True
+    ExplicitTop = 496
+    ExplicitWidth = 1041
+    ExplicitHeight = 192
+    object cxGrid1: TcxGrid
+      Left = 0
+      Top = 30
+      Width = 1041
+      Height = 162
+      Align = alClient
+      TabOrder = 0
+      LookAndFeel.Kind = lfStandard
+      ExplicitTop = 31
+      ExplicitWidth = 949
+      ExplicitHeight = 99
+      object cxGridDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.DataSource = dsOrdenSalidaItems
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsBehavior.IncSearch = True
+        OptionsCustomize.ColumnsQuickCustomization = True
+        OptionsData.Deleting = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.NoDataToDisplayInfoText = ' '
+        OptionsView.GroupByBox = False
+        object cxGridDBTableView1ClaveProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveProducto'
+          Width = 133
+        end
+        object cxGridDBTableView1Producto: TcxGridDBColumn
+          DataBinding.FieldName = 'Producto'
+          Width = 274
+        end
+        object cxGridDBTableView1CantidadDespachada: TcxGridDBColumn
+          Caption = 'Cantidad'
+          DataBinding.FieldName = 'CantidadDespachada'
+          Width = 125
+        end
+        object cxGridDBTableView1Observaciones: TcxGridDBColumn
+          DataBinding.FieldName = 'Observaciones'
+          Width = 300
+        end
+      end
+      object cxGridLevel1: TcxGridLevel
+        GridView = cxGridDBTableView1
+      end
+    end
+    object Panel2: TPanel
+      Left = 0
+      Top = 0
+      Width = 1041
+      Height = 30
+      Align = alTop
+      TabOrder = 1
+      ExplicitWidth = 949
+      object DBNavigator1: TDBNavigator
+        Left = 0
+        Top = 3
+        Width = 175
+        Height = 26
+        DataSource = dsOrdenSalidaItems
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+        TabOrder = 0
+      end
+    end
+  end
   inherited pnlDetail1: TPanel
+    Top = 317
+    Width = 1041
+    Height = 197
+    Anchors = [akLeft, akTop]
+    Visible = True
     ExplicitLeft = 0
-    ExplicitTop = 480
+    ExplicitTop = 312
+    ExplicitWidth = 1041
+    ExplicitHeight = 197
+    object cxGrid: TcxGrid
+      Left = 0
+      Top = 30
+      Width = 1041
+      Height = 167
+      Align = alClient
+      TabOrder = 0
+      LookAndFeel.Kind = lfStandard
+      ExplicitTop = 32
+      ExplicitWidth = 949
+      ExplicitHeight = 129
+      object tvgrid1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.DataSource = dsOrdenesSalida
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsBehavior.IncSearch = True
+        OptionsCustomize.ColumnsQuickCustomization = True
+        OptionsData.Deleting = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.NoDataToDisplayInfoText = ' '
+        OptionsView.GroupByBox = False
+        object tvgrid1idOrdenSalida: TcxGridDBColumn
+          Caption = 'No.Orden Salida'
+          DataBinding.FieldName = 'idOrdenSalida'
+          Width = 93
+        end
+        object tvgrid1FechaRegistro: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaRegistro'
+          Width = 157
+        end
+      end
+      object cxGridLevel2: TcxGridLevel
+        GridView = tvgrid1
+      end
+    end
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 1041
+      Height = 30
+      Align = alTop
+      TabOrder = 1
+      ExplicitWidth = 949
+      object DBNvgtr: TDBNavigator
+        Left = 2
+        Top = 3
+        Width = 175
+        Height = 26
+        DataSource = dsOrdenesSalida
+        VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+        TabOrder = 0
+      end
+    end
   end
   inherited pcMain: TcxPageControl
+    Width = 1041
+    Height = 314
+    ExplicitWidth = 949
+    ExplicitHeight = 309
+    ClientRectBottom = 313
+    ClientRectRight = 1040
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitWidth = 947
+      ExplicitHeight = 307
       inherited cxScrollBox1: TcxScrollBox
+        Width = 1039
+        Height = 312
+        ExplicitWidth = 947
+        ExplicitHeight = 307
         inherited tbarData: TToolBar
+          Width = 1037
           ExplicitLeft = 0
           ExplicitTop = 0
+          ExplicitWidth = 1037
+          inherited ToolButton10: TToolButton
+            Visible = False
+          end
+          inherited ToolButton12: TToolButton
+            Visible = False
+          end
         end
         inherited pnlMaster: TPanel
-          ExplicitLeft = 0
-          ExplicitTop = 25
+          Width = 1037
+          Height = 285
+          ExplicitLeft = 3
+          ExplicitTop = 21
+          ExplicitWidth = 1037
+          ExplicitHeight = 316
+          object Label1: TLabel
+            Left = 32
+            Top = 21
+            Width = 88
+            Height = 13
+            Caption = 'No.Orden Entrega'
+          end
+          object Label2: TLabel
+            Left = 185
+            Top = 20
+            Width = 113
+            Height = 13
+            Caption = 'Programaci'#243'n entrega: '
+          end
+          object Label5: TLabel
+            Left = 185
+            Top = 79
+            Width = 87
+            Height = 13
+            Caption = 'Condicion Entrega'
+            FocusControl = cxDBTextEdit2
+          end
+          object Label6: TLabel
+            Left = 31
+            Top = 214
+            Width = 71
+            Height = 13
+            Caption = 'Observaciones'
+            FocusControl = cxDBTextEdit3
+          end
+          object Label7: TLabel
+            Left = 31
+            Top = 78
+            Width = 42
+            Height = 13
+            Caption = 'Tel'#233'fono'
+          end
+          object Label9: TLabel
+            Left = 31
+            Top = 168
+            Width = 24
+            Height = 13
+            Caption = 'Valor'
+          end
+          object Label8: TLabel
+            Left = 320
+            Top = 125
+            Width = 46
+            Height = 13
+            Caption = 'Conducto'
+            FocusControl = cxDBTextEdit1
+          end
+          object Label21: TLabel
+            Left = 31
+            Top = 124
+            Width = 49
+            Height = 13
+            Caption = 'Contenido'
+            FocusControl = cxDBTextEdit4
+          end
+          object Label25: TLabel
+            Left = 166
+            Top = 169
+            Width = 54
+            Height = 13
+            Caption = 'Total Cajas'
+            FocusControl = cxDBTextEdit6
+          end
+          object Label26: TLabel
+            Left = 627
+            Top = 126
+            Width = 42
+            Height = 13
+            Caption = 'Doc Guia'
+          end
+          object Label4: TLabel
+            Left = 337
+            Top = 19
+            Width = 33
+            Height = 13
+            Caption = 'Cliente'
+          end
+          object cxDBLabel2: TcxDBLabel
+            Left = 32
+            Top = 40
+            DataBinding.DataField = 'IdInfoEntrega'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 121
+            AnchorX = 153
+          end
+          object cxDBTextEdit2: TcxDBTextEdit
+            Left = 182
+            Top = 98
+            DataBinding.DataField = 'CondicionEntrega'
+            DataBinding.DataSource = DataSource
+            TabOrder = 1
+            Width = 287
+          end
+          object cxDBTextEdit3: TcxDBTextEdit
+            Left = 31
+            Top = 233
+            DataBinding.DataField = 'Observaciones'
+            DataBinding.DataSource = DataSource
+            TabOrder = 2
+            Width = 486
+          end
+          object cxDBCheckBox1: TcxDBCheckBox
+            Left = 320
+            Top = 172
+            Caption = 'Flete Pagado'
+            DataBinding.DataField = 'PagoFlete'
+            DataBinding.DataSource = DataSource
+            TabOrder = 3
+            Width = 88
+          end
+          object cxDBCheckBox2: TcxDBCheckBox
+            Left = 320
+            Top = 197
+            Caption = 'Asegurado'
+            DataBinding.DataField = 'Asegurado'
+            DataBinding.DataSource = DataSource
+            TabOrder = 4
+            Width = 87
+          end
+          object cxDBTextEdit5: TcxDBTextEdit
+            Left = 31
+            Top = 187
+            DataBinding.DataField = 'Valor'
+            DataBinding.DataSource = DataSource
+            TabOrder = 5
+            Width = 129
+          end
+          object cxDBDateEdit1: TcxDBDateEdit
+            Left = 185
+            Top = 39
+            DataBinding.DataField = 'FechaProgramadaEnt'
+            DataBinding.DataSource = DataSource
+            TabOrder = 6
+            Width = 127
+          end
+          object cxDBTextEdit1: TcxDBTextEdit
+            Left = 320
+            Top = 142
+            DataBinding.DataField = 'Conducto'
+            TabOrder = 7
+            Width = 197
+          end
+          object cxDBTextEdit4: TcxDBTextEdit
+            Left = 31
+            Top = 143
+            DataBinding.DataField = 'Contenido'
+            DataBinding.DataSource = DataSource
+            TabOrder = 8
+            Width = 278
+          end
+          object cxDBRadioGroup1: TcxDBRadioGroup
+            Left = 523
+            Top = 118
+            TabStop = False
+            Caption = 'Servicio'
+            DataBinding.DataField = 'Servicio'
+            DataBinding.DataSource = DataSource
+            Properties.Items = <
+              item
+                Caption = 'Ocurre'
+                Value = 'Ocurre'
+              end
+              item
+                Caption = 'Domicilio'
+                Value = 'Domicilio'
+              end>
+            TabOrder = 9
+            Height = 57
+            Width = 78
+          end
+          object BtBtnAceptaInfoEnt: TBitBtn
+            Tag = 20
+            Left = 590
+            Top = 231
+            Width = 83
+            Height = 25
+            Caption = 'Aceptar'
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+              555555555555555555555555555555555555555555FF55555555555559055555
+              55555555577FF5555555555599905555555555557777F5555555555599905555
+              555555557777FF5555555559999905555555555777777F555555559999990555
+              5555557777777FF5555557990599905555555777757777F55555790555599055
+              55557775555777FF5555555555599905555555555557777F5555555555559905
+              555555555555777FF5555555555559905555555555555777FF55555555555579
+              05555555555555777FF5555555555557905555555555555777FF555555555555
+              5990555555555555577755555555555555555555555555555555}
+            NumGlyphs = 2
+            TabOrder = 10
+            Visible = False
+          end
+          object BtBtnCancelaInfoEnt: TBitBtn
+            Tag = 22
+            Left = 679
+            Top = 231
+            Width = 83
+            Height = 25
+            Caption = 'Cancelar'
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              333333333333333333333333333333333333333FFF33FF333FFF339993370733
+              999333777FF37FF377733339993000399933333777F777F77733333399970799
+              93333333777F7377733333333999399933333333377737773333333333990993
+              3333333333737F73333333333331013333333333333777FF3333333333910193
+              333333333337773FF3333333399000993333333337377737FF33333399900099
+              93333333773777377FF333399930003999333337773777F777FF339993370733
+              9993337773337333777333333333333333333333333333333333333333333333
+              3333333333333333333333333333333333333333333333333333}
+            NumGlyphs = 2
+            TabOrder = 11
+            Visible = False
+          end
+          object BtBtnImprimeEtiqueta: TBitBtn
+            Tag = 22
+            Left = 776
+            Top = 95
+            Width = 116
+            Height = 25
+            Caption = 'Imprime Etiqueta'
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000120B0000120B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+              0003377777777777777308888888888888807F33333333333337088888888888
+              88807FFFFFFFFFFFFFF7000000000000000077777777777777770F8F8F8F8F8F
+              8F807F333333333333F708F8F8F8F8F8F9F07F333333333337370F8F8F8F8F8F
+              8F807FFFFFFFFFFFFFF7000000000000000077777777777777773330FFFFFFFF
+              03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
+              03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
+              33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
+              33333337FFFF7733333333300000033333333337777773333333}
+            NumGlyphs = 2
+            TabOrder = 12
+            OnClick = BtBtnImprimeEtiquetaClick
+          end
+          object BtBtnAdjGuia: TBitBtn
+            Tag = 20
+            Left = 768
+            Top = 140
+            Width = 96
+            Height = 25
+            Caption = 'Adjuntar Gu'#237'a'
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333303
+              333333333333337FF3333333333333903333333333333377FF33333333333399
+              03333FFFFFFFFF777FF3000000999999903377777777777777FF0FFFF0999999
+              99037F3337777777777F0FFFF099999999907F3FF777777777770F00F0999999
+              99037F773777777777730FFFF099999990337F3FF777777777330F00FFFFF099
+              03337F773333377773330FFFFFFFF09033337F3FF3FFF77733330F00F0000003
+              33337F773777777333330FFFF0FF033333337F3FF7F3733333330F08F0F03333
+              33337F7737F7333333330FFFF003333333337FFFF77333333333000000333333
+              3333777777333333333333333333333333333333333333333333}
+            NumGlyphs = 2
+            TabOrder = 13
+          end
+          object cxDBTextEdit6: TcxDBTextEdit
+            Left = 166
+            Top = 187
+            DataBinding.DataField = 'CantidadCajas'
+            DataBinding.DataSource = DataSource
+            TabOrder = 14
+            Width = 96
+          end
+          object cxDBLabel1: TcxDBLabel
+            Left = 625
+            Top = 143
+            DataBinding.DataField = 'DocGuia'
+            DataBinding.DataSource = DataSource
+            Height = 22
+            Width = 137
+          end
+          object cmbTelefono: TcxDBLookupComboBox
+            Left = 31
+            Top = 97
+            DataBinding.DataField = 'TelefonoCompleto'
+            DataBinding.DataSource = DataSource
+            Properties.KeyFieldNames = 'IdTelefono'
+            Properties.ListColumns = <
+              item
+                FieldName = 'TeleconLada'
+              end
+              item
+                FieldName = 'Descripcion'
+              end>
+            TabOrder = 16
+            Width = 141
+          end
+          object BtBtnOrdenEmbarque: TBitBtn
+            Tag = 22
+            Left = 607
+            Top = 95
+            Width = 152
+            Height = 25
+            Caption = 'Imprime Orden Embarque'
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              33333333333FFFFFFFFF333333000000000033333377777777773333330FFFFF
+              FFF03333337F333333373333330FFFFFFFF03333337F3FF3FFF73333330F00F0
+              00F03333F37F773777373330330FFFFFFFF03337FF7F3F3FF3F73339030F0800
+              F0F033377F7F737737373339900FFFFFFFF03FF7777F3FF3FFF70999990F00F0
+              00007777777F7737777709999990FFF0FF0377777777FF37F3730999999908F0
+              F033777777777337F73309999990FFF0033377777777FFF77333099999000000
+              3333777777777777333333399033333333333337773333333333333903333333
+              3333333773333333333333303333333333333337333333333333}
+            NumGlyphs = 2
+            TabOrder = 17
+            OnClick = BtBtnOrdenEmbarqueClick
+          end
+          object DBLkupCmbBxPaqueteria: TDBLookupComboBox
+            Left = 320
+            Top = 142
+            Width = 197
+            Height = 21
+            DataField = 'Paqueteria'
+            DataSource = DataSource
+            TabOrder = 18
+          end
+          object cxDBLabel3: TcxDBLabel
+            Left = 337
+            Top = 38
+            DataBinding.DataField = 'Cliente'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 555
+          end
         end
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmOrdenesEntregas.adodsMaster
+    OnStateChange = DataSourceStateChange
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -167,7 +722,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -704,5 +1259,15 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
+  end
+  object dsOrdenesSalida: TDataSource
+    DataSet = dmOrdenesEntregas.ADODtStOrdensalida
+    Left = 606
+    Top = 320
+  end
+  object dsOrdenSalidaItems: TDataSource
+    DataSet = dmOrdenesEntregas.ADODtStOrdenSalidaItem
+    Left = 718
+    Top = 480
   end
 end

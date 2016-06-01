@@ -144,7 +144,8 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   OrdenesSalidasDM, FacturasDM, AlmacenesDM, rptVentasUnidadesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
-  rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM;
+  rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
+  OrdenesEntregasDM;
 
 { TfrmMain }
 
@@ -194,7 +195,7 @@ begin
    24:   gModulo := TDMFacturas.CreateWMostrar(Self,True,4);//Nota Venta Mar 29/16
    25:   gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
    26:   gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
-//   27:   gModulo := TDMOrdenesEntrega.Create(Self); //Ordenesentega May 26/16
+   27:   gModulo := TDMOrdenesEntregas.Create(Self); //Ordenesentega May 27/16
 
    30: gModulo := TdmAlmacenes.Create(Self);
    31: ShowMessage('Módulo en construcción');//gModulo := TdmAlmacenes.Create(Self);

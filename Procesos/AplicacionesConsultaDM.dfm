@@ -6,11 +6,12 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       'select PA.Fecha FechaAplicacion,pa.importe, PR.Fecha as FechaPag' +
       'o, PR.FolioPago, Pr.SeriePago,CI.Folio FolioFactura,CI.Serie Ser' +
       'ieFactura, CI.Fecha as FechaFactura ,P.RazonSocial,Pd.Identifica' +
-      'dor'#13#10' from PagosAplicaciones PA'#13#10'inner join PagosRegistros PR on' +
-      ' PA.IdPagoRegistro=PR.IdPagoRegistro'#13#10'inner join CFDI CI on PA.I' +
-      'dCFDI =CI.IdCFDI'#13#10'inner join PersonasDomicilios Pd on Pd.IdPerso' +
-      'naDomicilio= CI.IdClienteDomicilio'#13#10'inner join Personas P on P.I' +
-      'dPersona =Pd.IdPersona '#13#10
+      'dor,'#13#10'PA.IdPagoAplicacion, Pa.IdPagoRegistro, PA.IdCFDI, PA.IdPe' +
+      'rsonaCliente '#13#10'from PagosAplicaciones PA'#13#10'inner join PagosRegist' +
+      'ros PR on PA.IdPagoRegistro=PR.IdPagoRegistro'#13#10'inner join CFDI C' +
+      'I on PA.IdCFDI =CI.IdCFDI'#13#10'inner join PersonasDomicilios Pd on P' +
+      'd.IdPersonaDomicilio= CI.IdClienteDomicilio'#13#10'inner join Personas' +
+      ' P on P.IdPersona =Pd.IdPersona '#13#10
     object adodsMasterRazonSocial: TStringField
       FieldName = 'RazonSocial'
       Size = 300
@@ -43,5 +44,24 @@ inherited dmAplicacionesConsulta: TdmAplicacionesConsulta
       FieldName = 'importe'
       currency = True
     end
+    object adodsMasterIdPagoAplicacion: TLargeintField
+      FieldName = 'IdPagoAplicacion'
+      ReadOnly = True
+    end
+    object adodsMasterIdPagoRegistro: TLargeintField
+      FieldName = 'IdPagoRegistro'
+    end
+    object adodsMasterIdCFDI: TLargeintField
+      FieldName = 'IdCFDI'
+    end
+    object adodsMasterIdPersonaCliente: TIntegerField
+      FieldName = 'IdPersonaCliente'
+    end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 28
+    Top = 91
   end
 end

@@ -23,7 +23,7 @@ uses
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxGroupBox, cxRadioGroup,
   cxCheckBox, Data.Win.ADODB, cxLabel, cxDBLabel, Vcl.Menus, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox;
+  cxDBLookupEdit, cxDBLookupComboBox, ShellAPI;
 
 type
   TFrmOrdenesSalida = class(T_frmStandarGFormEdit)
@@ -811,8 +811,9 @@ end;
 
 procedure TFrmOrdenesSalida.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
-  inherited;  //Enviar Cantidad de  cajas e imprimir ese numero de etiquetas //Feb 15/16
-  ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0, 2); //May 10/16 + CualRep
+  inherited;  //Imprimir La cantidad de etiquetas segun cajas //Feb 15/16
+                   // datasource.DataSet.FieldByName('idOrdenSalida').AsInteger Cambio may 27/16
+  ImprimirEtiqueta(dsinformacionEntrega.dataset.FieldByName('IdInfoentrega').AsInteger,0, 2); //May 10/16 + CualRep
   if application.MessageBox('¿Mercancía Enviada?','Confirmación cambio estado',MB_YESNO)=idyes then //Abr 20/16
   begin
     datasource.DataSet.Edit;
@@ -873,8 +874,8 @@ end;
 
 procedure TFrmOrdenesSalida.BtBtnOrdenEmbarqueClick(Sender: TObject);
 begin
-  inherited;
-  ImprimirEtiqueta(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger,0, 3); //May 10/16
+  inherited;       // datasource.DataSet.FieldByName('idOrdenSalida').AsInteger
+  ImprimirEtiqueta(dsinformacionEntrega.dataset.FieldByName('IdInfoentrega').AsInteger,0, 3); //May 10/16
 end;
 
 procedure TFrmOrdenesSalida.DataSourceDataChange(Sender: TObject;
@@ -1051,7 +1052,10 @@ end;
 procedure TFrmOrdenesSalida.ImprimirOrdenSalida(idOrdenSalida, IDDocumentoSalida: Integer);
 var
   DMImpresosSalidas:TDMImpresosSalidas;
+  ArchiPDF:TFileName; //May 30/16
 begin
+  ArchiPDF:='OrdenSalida.PDF';//May 30/16
+
   DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
   DMImpresosSalidas.adodSDocumentoSalida.Parameters.ParamByName('IdDocumentoSalida').Value:=idDocumentoSalida;
   DMImpresosSalidas.adodSDocumentoSalida.open;
@@ -1062,10 +1066,12 @@ begin
   DMImpresosSalidas.ADODtStOrdenSalidaItem.Close;
   DMImpresosSalidas.ADODtStOrdenSalidaItem.Parameters.ParamByName('IdOrdenSalida').Value:=idOrdenSalida;
   DMImpresosSalidas.ADODtStOrdenSalidaItem.Open;
-   DMImpresosSalidas.PrintPDFFile(1);
+
+   DMImpresosSalidas.PrintPDFFile(1,1,False,ArchiPDF);  //May 30/16 modificado
 
    DMImpresosSalidas.Free;
-
+   if FileExists(ArchiPDF) then //May 30/16
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TFrmOrdenesSalida.SetActApartado(const Value: TBasicAction);
@@ -1204,20 +1210,23 @@ begin
 end;
 
 procedure TFrmOrdenesSalida.ImprimirEtiqueta(idOrdenSalida, IDDocumentoSalida,cualRep: Integer);
-var
+var                         //No se va a usar desde aca..
   DMImpresosSalidas:TDMImpresosSalidas;
   Cuantos:Integer;
+  ArchiPDF: TFileName;
 begin
   DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
+  ArchiPDF:='Etiquetas.pdf'; //May 30/16
 
-
-  DMImpresosSalidas.ADODtStDatosEtiqueta. Close;
-  DMImpresosSalidas.ADODtStDatosEtiqueta.Parameters.ParamByName('IdOrdenSalida').Value:=idOrdenSalida;
+  DMImpresosSalidas.ADODtStDatosEtiqueta. Close;             //Era idOrdenSalida      //No se modifico el nombre del parametro May 27/16
+  DMImpresosSalidas.ADODtStDatosEtiqueta.Parameters.ParamByName('IdInfoEntrega').Value:=idOrdenSalida;
   DMImpresosSalidas.ADODtStDatosEtiqueta.Open;
   Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
-  DMImpresosSalidas.PrintPDFFile(CualRep, cuantos);//Ajuste Feb 15/16
-                                  //Ajuste May 10/16
-  DMImpresosSalidas.Free;
+
+  DMImpresosSalidas.PrintPDFFile(CualRep, cuantos,False, ArchiPDF);    //Ajustado may 30/16
+  DMImpresosSalidas.Free;     //Temporal may 30/16
+  if FileExists(ArchiPDF) and (cuantos =1) then //May 30/16
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 
 end;
 

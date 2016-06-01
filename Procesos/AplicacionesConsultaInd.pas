@@ -45,6 +45,7 @@ type
     cxDBLabel9: TcxDBLabel;
     cxDBLabel10: TcxDBLabel;
     PnlTitulo: TPanel;
+    DSQryAuxiliar: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
   private
@@ -72,6 +73,8 @@ procedure TFrmAplicacionesConsultaInd.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TFrmAplicacionesConsultaGrid.Create(Self);
+  TFrmAplicacionesConsultaGrid(gFormGrid).DataSource:=Datasource;  //Jun 1/16
+  TFrmAplicacionesConsultaGrid(gFormGrid).DSQryAux:=DSQryAuxiliar; //Jun 1/16
   //Sólo visualiza Feb 29/16
   Toolbutton10.Visible:=False;
   Toolbutton12.Visible:=False;

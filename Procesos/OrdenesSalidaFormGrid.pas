@@ -96,7 +96,7 @@ procedure TFrmOrdenesSalidaGrid.EdtNombreKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin             //May 16/16
   inherited;
- if key=13 then
+  if key=13 then
   begin
     key:=0;
     SpdBtnConsulta.Click;
