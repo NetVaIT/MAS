@@ -11,22 +11,37 @@ inherited frmEspacios: TfrmEspacios
           DataBinding.FieldName = 'IdEspacio'
           Visible = False
         end
-        object tvMasterIdSeccion: TcxGridDBColumn
-          DataBinding.FieldName = 'IdSeccion'
+        object tvMasterIdEspacioPadre: TcxGridDBColumn
+          DataBinding.FieldName = 'IdEspacioPadre'
           Visible = False
+        end
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
+          Visible = False
+        end
+        object tvMasterIdEspacioTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdEspacioTipo'
+          Visible = False
+        end
+        object tvMasterIdContenedor: TcxGridDBColumn
+          DataBinding.FieldName = 'IdContenedor'
+          Visible = False
+        end
+        object tvMasterTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'Tipo'
         end
         object tvMasterDescripcion: TcxGridDBColumn
           DataBinding.FieldName = 'Descripcion'
         end
+        object tvMasterContenedor: TcxGridDBColumn
+          DataBinding.FieldName = 'Contenedor'
+        end
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmAlmacenes.adodsEspacios
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400C80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -167,7 +182,7 @@ inherited frmEspacios: TfrmEspacios
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

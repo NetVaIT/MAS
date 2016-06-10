@@ -163,7 +163,10 @@ uses
   OrdenesEntregasDM in 'Procesos\OrdenesEntregasDM.pas' {dmOrdenesEntregas: TDataModule},
   OrdenesEntregasEdit in 'Procesos\OrdenesEntregasEdit.pas' {frmOrdenesEntregasEdit},
   OrdenesEntregasGrid in 'Procesos\OrdenesEntregasGrid.pas' {frmOrdenesEntregasGrid},
-  PagosConfirmaDesaplica in 'Procesos\PagosConfirmaDesaplica.pas' {FrmConfirmaDesaplicacion};
+  PagosConfirmaDesaplica in 'Procesos\PagosConfirmaDesaplica.pas' {FrmConfirmaDesaplicacion},
+  ProductosXEspacioDm in 'Procesos\ProductosXEspacioDm.pas' {dmProductosXEspacio: TDataModule},
+  ProductosXEspacioForm in 'Procesos\ProductosXEspacioForm.pas' {frmProductosXEspacio},
+  ProductosXEspacioGrid in 'Procesos\ProductosXEspacioGrid.pas' {frmProductosXEspacioGrid};
 
 {$R *.res}
 

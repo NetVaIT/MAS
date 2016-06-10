@@ -111,6 +111,8 @@ type
     dxBarLargeButton33: TdxBarLargeButton;
     dxBrLrgBtnOrdenEntrega: TdxBarLargeButton;
     ActOrdenEntrega: TAction;
+    actProductosXEspacio: TAction;
+    dxBarLargeButton34: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -145,7 +147,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
-  OrdenesEntregasDM;
+  OrdenesEntregasDM, ProductosXEspacioDm;
 
 { TfrmMain }
 
@@ -205,6 +207,7 @@ begin
    43: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tFactura);
    44: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, tEntradaMercacia);
    45: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, TOrdenEntrada);
+   46: gModulo := TdmProductosXEspacio.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
 

@@ -29,12 +29,15 @@ inherited dmAlmacenes: TdmAlmacenes
     Left = 104
     Top = 16
   end
-  object adodsZonas: TADODataSet
+  object adodsEspacios: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforePost = adodsEspaciosBeforePost
+    OnNewRecord = adodsEspaciosNewRecord
     CommandText = 
-      'select IdZona, IdAlmacen, Identificador, Descripcion from Zonas ' +
-      'WHERE IdAlmacen = :IdAlmacen'
+      'select IdEspacio, IdEspacioPadre, IdAlmacen, IdEspacioTipo, IdCo' +
+      'ntenedor, Descripcion from Espacios'#13#10'where IdAlmacen = :IdAlmace' +
+      'n'
     DataSource = dsMaster
     MasterFields = 'IdAlmacen'
     Parameters = <
@@ -43,151 +46,96 @@ inherited dmAlmacenes: TdmAlmacenes
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = Null
+        Value = 1
       end>
-    Left = 40
-    Top = 96
-    object adodsZonasIdZona: TAutoIncField
-      FieldName = 'IdZona'
-      ReadOnly = True
-      Visible = False
-    end
-    object adodsZonasIdAlmacen: TIntegerField
-      FieldName = 'IdAlmacen'
-      Visible = False
-    end
-    object adodsZonasIdentificador: TStringField
-      FieldName = 'Identificador'
-    end
-    object adodsZonasDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 50
-    end
-  end
-  object dsZonas: TDataSource
-    DataSet = adodsZonas
-    Left = 120
-    Top = 96
-  end
-  object adodsAnaqueles: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdAnaquel, IdZona, Identificador, Descripcion from Anaque' +
-      'les WHERE IdZona = :IdZona'
-    DataSource = dsZonas
-    MasterFields = 'IdZona'
-    Parameters = <
-      item
-        Name = 'IdZona'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 40
-    Top = 152
-    object adodsAnaquelesIdAnaquel: TAutoIncField
-      FieldName = 'IdAnaquel'
-      ReadOnly = True
-      Visible = False
-    end
-    object adodsAnaquelesIdZona: TIntegerField
-      FieldName = 'IdZona'
-      Visible = False
-    end
-    object adodsAnaquelesIdentificador: TStringField
-      FieldName = 'Identificador'
-    end
-    object adodsAnaquelesDescripcion: TStringField
-      FieldName = 'Descripcion'
-      Size = 50
-    end
-  end
-  object dsAnaqueles: TDataSource
-    DataSet = adodsAnaqueles
-    Left = 120
-    Top = 152
-  end
-  object adodsSecciones: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdSeccion, IdAnaquel, Fila, Columna, Espacios from Seccio' +
-      'nes WHERE IdAnaquel = :IdAnaquel'
-    DataSource = dsAnaqueles
-    MasterFields = 'IdAnaquel'
-    Parameters = <
-      item
-        Name = 'IdAnaquel'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 40
-    Top = 208
-    object adodsSeccionesIdSeccion: TAutoIncField
-      FieldName = 'IdSeccion'
-      ReadOnly = True
-      Visible = False
-    end
-    object adodsSeccionesIdAnaquel: TIntegerField
-      FieldName = 'IdAnaquel'
-      Visible = False
-    end
-    object adodsSeccionesFila: TStringField
-      FieldName = 'Fila'
-      Size = 50
-    end
-    object adodsSeccionesColumna: TStringField
-      FieldName = 'Columna'
-      Size = 50
-    end
-    object adodsSeccionesEspacios: TIntegerField
-      FieldName = 'Espacios'
-    end
-  end
-  object dsSecciones: TDataSource
-    DataSet = adodsSecciones
-    Left = 128
-    Top = 208
-  end
-  object adodsEspacios: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select IdEspacio, IdSeccion, Descripcion from Espacios WHERE IdS' +
-      'eccion = :IdSeccion'
-    DataSource = dsSecciones
-    MasterFields = 'IdSeccion'
-    Parameters = <
-      item
-        Name = 'IdSeccion'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 40
-    Top = 264
+    Left = 32
+    Top = 88
     object adodsEspaciosIdEspacio: TAutoIncField
       FieldName = 'IdEspacio'
       ReadOnly = True
       Visible = False
     end
-    object adodsEspaciosIdSeccion: TIntegerField
-      FieldName = 'IdSeccion'
+    object adodsEspaciosIdEspacioPadre: TIntegerField
+      FieldName = 'IdEspacioPadre'
       Visible = False
     end
+    object adodsEspaciosIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+      Visible = False
+    end
+    object adodsEspaciosIdEspacioTipo: TIntegerField
+      FieldName = 'IdEspacioTipo'
+      Visible = False
+    end
+    object adodsEspaciosIdContenedor: TIntegerField
+      FieldName = 'IdContenedor'
+      Visible = False
+    end
+    object adodsEspaciosTipo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Tipo'
+      LookupDataSet = adodsEspacioTipos
+      LookupKeyFields = 'IdEspacioTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdEspacioTipo'
+      Size = 30
+      Lookup = True
+    end
     object adodsEspaciosDescripcion: TStringField
-      DisplayLabel = 'Descripci'#243'n'
       FieldName = 'Descripcion'
       Size = 50
+    end
+    object adodsEspaciosContenedor: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Contenedor'
+      LookupDataSet = adodsContenedores
+      LookupKeyFields = 'IdContenedor'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdContenedor'
+      Size = 50
+      Lookup = True
+    end
+  end
+  object adodsEspacioTipos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdEspacioTipo, Descripcion, Seleccionar from EspaciosTipo' +
+      's'
+    Parameters = <>
+    Left = 128
+    Top = 88
+  end
+  object adodsContenedores: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdContenedor, Descripcion from Contenedores'
+    Parameters = <>
+    Left = 128
+    Top = 144
+  end
+  object adoqEspacioValido: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdEspacio'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT EspaciosTipos.Seleccionar'
+      
+        'FROM Espacios INNER JOIN EspaciosTipos ON Espacios.IdEspacioTipo' +
+        ' = EspaciosTipos.IdEspacioTipo'
+      'WHERE Espacios.IdEspacio = :IdEspacio')
+    Left = 320
+    Top = 168
+    object adoqEspacioValidoSeleccionar: TBooleanField
+      FieldName = 'Seleccionar'
     end
   end
 end

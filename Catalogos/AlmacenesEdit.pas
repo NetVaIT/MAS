@@ -24,9 +24,6 @@ uses
 
 type
   TfrmAlmacenesEdit = class(T_frmStandarGFormEdit)
-    tsZonas: TcxTabSheet;
-    tsAnaqueles: TcxTabSheet;
-    tsSecciones: TcxTabSheet;
     Label1: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
     Label2: TLabel;
@@ -51,10 +48,7 @@ procedure TfrmAlmacenesEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TfrmAlmacenes.Create(Self);
-  ContainerDetail1:= tsZonas;
-  ContainerDetail2:= tsAnaqueles;
-  ContainerDetail3:= tsSecciones;
-  ContainerDetail4:= tsEspacios;
+  ContainerDetail1:= tsEspacios;
 end;
 
 end.

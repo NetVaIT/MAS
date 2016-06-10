@@ -5,7 +5,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 812
-  ExplicitHeight = 612
+  ExplicitHeight = 613
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -13,7 +13,6 @@ inherited frmMain: TfrmMain
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
     ExplicitWidth = 796
     inherited dxRibbon1Tab1: TdxRibbonTab
-      Active = False
       Index = 0
     end
     object dxRbnTbCatalogos: TdxRibbonTab
@@ -56,7 +55,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab6: TdxRibbonTab
       Tag = 6000
-      Active = True
       Caption = 'Cuentas X Cobrar'
       Groups = <
         item
@@ -115,8 +113,6 @@ inherited frmMain: TfrmMain
       0
       0)
     inherited dxbArchivo: TdxBar
-      DockedDockControl = nil
-      DockedDockingStyle = dsNone
       FloatClientWidth = 51
       FloatClientHeight = 76
     end
@@ -195,8 +191,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 674
       FloatTop = 8
-      FloatClientWidth = 94
-      FloatClientHeight = 378
+      FloatClientWidth = 103
+      FloatClientHeight = 432
       ItemLinks = <
         item
           Visible = True
@@ -291,8 +287,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 970
       FloatTop = 8
-      FloatClientWidth = 137
-      FloatClientHeight = 270
+      FloatClientWidth = 145
+      FloatClientHeight = 324
       ItemLinks = <
         item
           Visible = True
@@ -313,6 +309,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton32'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton34'
         end
         item
           Visible = True
@@ -539,6 +539,10 @@ inherited frmMain: TfrmMain
     object dxBrLrgBtnOrdenEntrega: TdxBarLargeButton
       Tag = 27
       Action = ActOrdenEntrega
+      Category = 0
+    end
+    object dxBarLargeButton34: TdxBarLargeButton
+      Action = actProductosXEspacio
       Category = 0
     end
   end
@@ -11057,7 +11061,7 @@ inherited frmMain: TfrmMain
     object actEntradaMercancia: TAction
       Tag = 44
       Category = 'Compras'
-      Caption = 'Entrada de mercancia'
+      Caption = 'Recepci'#243'n de mercancia'
       ImageIndex = 45
       OnExecute = actCatalogoExecute
     end
@@ -11143,6 +11147,13 @@ inherited frmMain: TfrmMain
       Category = 'Ventas'
       Caption = 'Ordenes Entrega'
       ImageIndex = 56
+      OnExecute = actCatalogoExecute
+    end
+    object actProductosXEspacio: TAction
+      Tag = 46
+      Category = 'Compras'
+      Caption = 'Acomodo de mercancia'
+      ImageIndex = 16
       OnExecute = actCatalogoExecute
     end
   end

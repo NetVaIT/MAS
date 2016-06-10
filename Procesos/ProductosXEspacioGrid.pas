@@ -1,4 +1,4 @@
-unit EspaciosForm;
+unit ProductosXEspacioGrid;
 
 interface
 
@@ -18,22 +18,26 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, cxGridCustomPopupMenu, cxGridPopupMenu,
+  cxNavigator, Data.DB, cxDBData, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, Vcl.Menus, cxGridCustomPopupMenu, cxGridPopupMenu,
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls, Vcl.Menus;
+  Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel, cxGridCustomView, cxGrid,
+  Vcl.ExtCtrls;
 
 type
-  TfrmEspacios = class(T_frmStandarGFormGrid)
-    tvMasterIdEspacio: TcxGridDBColumn;
-    tvMasterIdEspacioPadre: TcxGridDBColumn;
+  TfrmProductosXEspacioGrid = class(T_frmStandarGFormGrid)
+    tvMasterIdProductoXEspacio: TcxGridDBColumn;
     tvMasterIdAlmacen: TcxGridDBColumn;
-    tvMasterIdEspacioTipo: TcxGridDBColumn;
-    tvMasterIdContenedor: TcxGridDBColumn;
-    tvMasterTipo: TcxGridDBColumn;
-    tvMasterDescripcion: TcxGridDBColumn;
-    tvMasterContenedor: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterIdEspacio: TcxGridDBColumn;
+    tvMasterIdCategoria: TcxGridDBColumn;
+    tvMasterAlmacen: TcxGridDBColumn;
+    tvMasterIdentificador1: TcxGridDBColumn;
+    tvMasterIdentificador2: TcxGridDBColumn;
+    tvMasterIdentificador3: TcxGridDBColumn;
+    tvMasterProducto: TcxGridDBColumn;
+    tvMasterEspacio: TcxGridDBColumn;
+    tvMasterCantidad: TcxGridDBColumn;
   private
     { Private declarations }
   public
@@ -44,6 +48,6 @@ implementation
 
 {$R *.dfm}
 
-uses AlmacenesDM;
+uses ProductosXEspacioDm;
 
 end.

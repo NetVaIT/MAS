@@ -750,6 +750,19 @@
             <Form>FrmConfirmaDesaplicacion</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\ProductosXEspacioDm.pas">
+            <Form>dmProductosXEspacio</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\ProductosXEspacioForm.pas">
+            <Form>frmProductosXEspacio</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\ProductosXEspacioGrid.pas">
+            <Form>frmProductosXEspacioGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

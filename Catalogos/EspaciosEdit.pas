@@ -20,12 +20,19 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxTextEdit,
-  cxDBEdit, Vcl.StdCtrls;
+  cxDBEdit, Vcl.StdCtrls, dxtree, dxdbtree, Vcl.DBCtrls;
 
 type
   TfrmEspaciosEdit = class(T_frmStandarGFormEdit)
+    ImgLstArbol: TcxImageList;
+    dxDBTreeView1: TdxDBTreeView;
+    pnlTop: TPanel;
     Label1: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Label2: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
+    Label3: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
