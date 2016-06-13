@@ -278,7 +278,7 @@ inherited dmPersonas: TdmPersonas
     CursorType = ctStatic
     CommandText = 
       'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta fro' +
-      'm MetodosPago'
+      'm MetodosPago'#13#10'where idMetodoPago>0'
     Parameters = <>
     Left = 144
     Top = 296

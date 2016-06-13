@@ -24,7 +24,7 @@ uses
   cxLabel, cxDBLabel, Vcl.StdCtrls, Vcl.Buttons, cxGroupBox, cxRadioGroup,
   cxDBEdit, cxMaskEdit, cxCalendar, cxCheckBox, cxTextEdit, cxCustomData,
   cxFilter, cxData, cxDataStorage, cxNavigator, cxDBData, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGridLevel, cxGridCustomView, cxGrid, ShellApi;
+  cxGridTableView, cxGridDBTableView, cxGridLevel, cxGridCustomView, cxGrid, ShellApi, Data.Win.ADODB;
 
 type
   TfrmOrdenesEntregasEdit = class(T_frmStandarGFormEdit)
@@ -77,15 +77,51 @@ type
     DBNvgtr: TDBNavigator;
     Panel2: TPanel;
     DBNavigator1: TDBNavigator;
+    Label3: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DSDireccionenvios: TDataSource;
+    BtBtnEmpaca: TBitBtn;
+    BtBtnEnviar: TBitBtn;
+    PnlEmpaca: TPanel;
+    Label14: TLabel;
+    Label15: TLabel;
+    EdtContraseniaEm: TEdit;
+    BtBtnAceptar: TBitBtn;
+    DBLkupCmbBxEmpaca: TDBLookupComboBox;
+    BtBtnCancelaProc: TBitBtn;
+    BtBtnFinEmpaque: TBitBtn;
+    DSQryAuxiliar: TDataSource;
+    DSQryAux2: TDataSource;
+    DBTxtQuienEmpaca: TDBText;
+    LblEmpaco: TLabel;
+    PnlEnviar: TPanel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Edit1: TEdit;
+    BitBtn1: TBitBtn;
+    DBLookupComboBox2: TDBLookupComboBox;
+    BitBtn2: TBitBtn;
+    DBText1: TDBText;
+    lblRespEntrega: TLabel;
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
-    procedure DataSourceStateChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BtBtnEmpacaClick(Sender: TObject);
+    procedure BtBtnAceptarClick(Sender: TObject);
+    procedure BtBtnFinEmpaqueClick(Sender: TObject);
+    procedure BtBtnCancelaProcClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private
+    FCargarDocGuia: TBasicAction;
     procedure ImprimirEtiqueta(IdInfoentrega, IDDocumentoSalida,
       cualRep: Integer);
+    procedure SetCargarDocGuia(const Value: TBasicAction);
+    procedure ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo:Integer);
     { Private declarations }
   public
     { Public declarations }
+    property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
   end;
 
 var
@@ -95,7 +131,214 @@ implementation
 
 {$R *.dfm}
 
-uses OrdenesEntregasDM, ImpresosSalidasDM;
+uses OrdenesEntregasDM, ImpresosSalidasDM, OrdenesEntregasGrid;
+
+procedure TfrmOrdenesEntregasEdit.BtBtnAceptarClick(Sender: TObject);
+var estatus:Integer;
+    campoFecha, CampoClave,Clave, CampoIDPer:String;
+    btnAux:TbitBtn;
+    pnlAux:Tpanel;
+begin
+  inherited;
+   case (Sender as TBitBtn).tag of
+   4:begin   //Se cambio
+      campoFecha:='FechaIniEmpaque';
+      clave:=EdtContraseniaEm.Text;
+      CampoClave:='ClaveUEmpaca';
+      EdtContraseniaEm.Clear;
+      btnAux:=BtBtnFinEmpaque;
+      pnlAux:=PnlEmpaca;
+      CampoIDPer:='IDPersonaEmpaca'; //Nov 25
+    end;
+
+   5: begin
+        CampoIDPer:='IdResponsableEntrega'; //Nov 25
+        estatus:= 5; //No requiere contraseña
+        pnlAux:=PnlEnviar;
+
+   end;
+
+  end;
+  if estatus=5 then
+  begin //DEbneria estar en edit por que se póne el REsponsable
+    if (not datasource.DataSet.FieldByName(CampoIDPer).IsNull) then
+    begin
+      datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger:=6; //Enviado //Verificar si actualizar la otra tabla
+      datasource.DataSet.Post;
+      pnlAux.Visible:=False;
+    end
+    else
+      ShowMessage('Debe colocar el responsable del Envio');
+  end
+  else
+  begin
+    if (clave<>'') and (not datasource.DataSet.FieldByName(CampoIDPer).IsNull) then
+    begin
+      if datasource.DataSet.FieldByName(CampoClave).AsString =Clave then
+      begin
+        if datasource.DataSet.State =dsBrowse then
+          datasource.DataSet.Edit;
+        datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+        datasource.DataSet.Post;
+
+        btnAux.Visible:=true;
+        pnlAux.Visible:=False;
+      end
+      else
+      begin
+        //Clave incorrecta
+        ShowMessage('Contraseña incorrecta');
+      end;
+    end
+    else
+      ShowMessage('Debe seleccionar la persona y colocar su contraseña');
+  end;
+end;
+
+procedure TfrmOrdenesEntregasEdit.BtBtnCancelaProcClick(Sender: TObject);
+begin
+  inherited;
+  if datasource.DataSet.State=dsEdit then
+      datasource.DataSet.Cancel;
+  case (Sender as TBitBtn).tag of     //Copiado jun 13/16
+  4:begin
+     BtBtnEmpaca.Visible:=True;
+     Pnlempaca.Visible:=False;
+  end;
+  5:begin
+    // verificar o habilitar  Datasource.DataSet.FieldByName('IdResponsableEntrega').Value:=Null;
+      BtBtnEnviar.Visible:=True;
+      PnlEnviar.Visible:=False;
+      lblRespEntrega.Visible:=False;
+  end;
+
+  end;
+
+end;
+
+procedure TfrmOrdenesEntregasEdit.BtBtnEmpacaClick(Sender: TObject);
+begin      //Jun 9/16
+  inherited;
+   case (Sender as TBitBtn).tag of
+   4:begin
+       if application.MessageBox('¿Desea imprimir las Etiquetas y la Orden de embarque?','Confirmación Etiquetas', MB_YESNO)=IDYES then
+       begin
+         BtBtnImprimeEtiqueta.Click;
+         ShowMessage('Verifique que los datos sean correctos');
+         BtBtnOrdenEmbarque.Click;
+       end;
+
+        BtBtnEmpaca.Visible:=False;
+        Pnlempaca.Visible:=True;
+    end;
+    5:begin //Verificar  Abr 20/16
+        BtBtnEnviar.Visible:=False;
+        pnlenviar.Visible:=True;
+    end;
+   end;
+end;
+
+procedure TfrmOrdenesEntregasEdit.BtBtnFinEmpaqueClick(Sender: TObject);
+var      //Jun 10/16
+  EstatusNvo, cont:integer;
+  CampoFecha:String;
+begin
+  inherited;
+  case (Sender as TBitBtn).tag of
+     4:begin   //Solo si esta autorizada
+        BtBtnFinEmpaque.Visible:=False;
+        EstatusNvo:=5; //Empacada
+        CampoFecha:='FechaFinempaque';
+        BtBtnFinEmpaque.Visible:=False;
+    end;
+  end;
+
+  if datasource.DataSet.State =dsBrowse then
+        datasource.DataSet.Edit;
+  datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+  datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger:=EstatusNvo;
+  datasource.DataSet.Post;
+ // if EstatusNvo=5  then
+ // begin
+   // ActualizarOrdenesSalida( datasource.DataSet.FieldByName('IDInformacionEntrega').AsInteger, EstatusNvo);
+
+   // Cont:=-1;
+
+
+
+
+
+
+   {
+
+
+    //Revisar y dar por cerrados Pedidos completados
+    dsQryAuxiliar.DataSet.Close;
+    TADOQuery(dsQryAuxiliar.DataSet).sql.clear;
+    TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect DS.IdDocumentoSalida , Sum(DSD.CantidadPendiente) as suma, COUNT(*) as registros from DocumentosSalidasDetalles DSD '
+                                            +' inner join DocumentosSalidas DS on DSD.idDocumentoSalida=DS.idDocumentoSalida'
+                                            +' where DS.idDocumentoSalida='+ DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring
+                                            +' group by DS.IdDocumentoSalida'); //Ver si con una sola se puede
+    TADOQuery(dsQryAuxiliar.DataSet).open;
+    if not dsQryAuxiliar.DataSet.eof  and (dsQryAuxiliar.DataSet.fieldbyname('Registros').AsInteger >0) and
+      (dsQryAuxiliar.DataSet.fieldbyname('suma').AsInteger =0) then //Pasa primera condicion
+    begin
+     dsQryAuxiliar.DataSet.Close;
+     TADOQuery(dsQryAuxiliar.DataSet).sql.clear;   //Abr 8/16
+     TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect OS.IdOrdenEstatus, OS.idOrdenSalida, OS.IdOrdenSalidaOrigen from OrdenesSalidas OS '
+                                             +' where os.idDocumentoSalida=' + DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring
+                                             +' and OS.IdOrdenEstatus<>8  ');//Verfificar
+     TADOQuery(dsQryAuxiliar.DataSet).open;
+     if not dsQryAuxiliar.DataSet.Eof then
+       cont:=0;
+     while not  dsQryAuxiliar.DataSet.Eof do
+     begin //Contar para actualizar
+       if dsQryAuxiliar.DataSet.fieldbyname('IdOrdenEstatus').AsInteger <>5 then // no esta Empacado
+         Cont:= Cont+1;
+       dsQryAuxiliar.DataSet.next;
+     end;
+     if Cont=0 then //Todo lo encontrado es 5
+     begin
+       //Actualizar estatus de Documento como cerrado
+       dsQryAuxiliar.DataSet.Close;
+       TADOQuery(dsQryAuxiliar.DataSet).sql.clear;   //Abr 8/16                           //Cerrado
+       TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('UPDATE DocumentosSalidas SET IdDocumentoSalidaEstatus=2 '
+                                               +'where idDocumentoSalida=' + DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring);
+       TADOQuery(dsQryAuxiliar.DataSet).execSQL;
+     end;
+
+
+    end;}
+
+  //  end
+
+
+
+end;
+
+procedure TfrmOrdenesEntregasEdit.ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo:Integer);
+begin
+  dsQryAuxiliar.DataSet.Close;
+  TADOQuery(dsQryAuxiliar.DataSet).sql.clear;
+  TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect IED.* from InformacionEntregasDetalles IED '
+                                          +' where IED.idInformacionEntrega='+ intToStr(IdInfoEntrega));
+  TADOQuery(dsQryAuxiliar.DataSet).open;
+  while not dsQryAuxiliar.DataSet.eof do
+  begin
+    dsQryAux2.DataSet.Close;
+    TADOQuery(dsQryAux2.DataSet).sql.clear;
+    TADOQuery(dsQryAux2.DataSet).Sql.ADD('Update OrdenesSalidas SET IdOrdenEstatus= '+intToStr(IdEstatusNvo)
+                                            +' where idOrdenSalida='+ dsQryAuxiliar.DataSet.FieldByName('IdOrdenSalida').asString);
+    TADOQuery(dsQryAux2.DataSet).ExecSql;
+
+    //Aca se deberia verificar los DocumentoSalidas Items, par aver si estan completos...
+
+    dsQryAuxiliar.DataSet.Next;
+  end;
+
+
+
+end;
 
 procedure TfrmOrdenesEntregasEdit.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
@@ -117,12 +360,42 @@ begin
   ImprimirEtiqueta(datasource.DataSet.FieldByName('IdInfoentrega').AsInteger,0, 3);
 end;
 
-procedure TfrmOrdenesEntregasEdit.DataSourceStateChange(Sender: TObject);
+procedure TfrmOrdenesEntregasEdit.DataSourceDataChange(Sender: TObject;
+  Field: TField);
 begin
   inherited;
   BtBtnImprimeEtiqueta.Enabled:=datasource.State=dsBrowse;
   BtBtnOrdenEmbarque.Enabled:= BtBtnImprimeEtiqueta.Enabled;
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
+  //Jun 13/16
+
+  BtBtnEmpaca.Visible:= (Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=4) and
+                        (Datasource.DataSet.FieldByName('FechaIniEmpaque').IsNull) and (not PnlEmpaca.visible);
+
+  LblEmpaco.Visible:=not(Datasource.DataSet.FieldByName('FechaIniEmpaque').IsNull);
+ if LblEmpaco.Visible and (Datasource.DataSet.FieldByName('FechaFinEmpaque').IsNull) then
+   LblEmpaco.Caption:='Empacando:'
+ else
+   LblEmpaco.Caption:='Empacó:';
+
+
+
+  BtBtnEnviar.Visible:=(Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=5)and (Datasource.DataSet.FieldByName('IDResponsableEntrega').IsNull)
+                       and ( not PnlEnviar.visible);
+  lblRespEntrega.Visible:=not(Datasource.DataSet.FieldByName('IdResponsableEntrega').IsNull) and  (not BtBtnEnviar.Visible) ;
+end;
+
+procedure TfrmOrdenesEntregasEdit.FormActivate(Sender: TObject);
+begin
+  inherited;
+   actShowGridExecute(sender); //Para que muestre la lista al entrar Jun 13/16
+end;
+
+procedure TfrmOrdenesEntregasEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+   gFormGrid := TfrmOrdenesEntregasGrid.Create(Self); //Jun 9/16
+   DSDireccionenvios.DataSet.Open; //Jun 9/16
 end;
 
 procedure TfrmOrdenesEntregasEdit.ImprimirEtiqueta(IdInfoentrega, IDDocumentoSalida,cualRep: Integer);
@@ -145,4 +418,10 @@ begin
 
 
 end;
+procedure TfrmOrdenesEntregasEdit.SetCargarDocGuia(const Value: TBasicAction);
+begin
+  FCargarDocGuia := Value;
+  btbtnAdjGuia.Action := Value;
+end;
+
 end.

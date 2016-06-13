@@ -1,45 +1,46 @@
 inherited frmFacturasGrid: TfrmFacturasGrid
   Caption = 'frmFacturasGrid'
-  ClientWidth = 1303
-  ExplicitWidth = 1303
+  ClientWidth = 1335
+  ExplicitWidth = 1335
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1303
+    Width = 1335
     ExplicitWidth = 942
   end
   inherited splDetail2: TSplitter
-    Width = 1303
+    Width = 1335
     ExplicitWidth = 942
   end
   inherited splDetail1: TSplitter
-    Width = 1303
+    Width = 1335
     ExplicitWidth = 942
   end
   inherited pnlClose: TPanel
-    Width = 1303
-    ExplicitWidth = 1148
+    Width = 1335
+    ExplicitWidth = 1303
   end
   inherited pnlDetail3: TPanel
-    Width = 1303
-    ExplicitWidth = 1148
+    Width = 1335
+    ExplicitWidth = 1303
   end
   inherited pnlDetail2: TPanel
-    Width = 1303
-    ExplicitWidth = 1148
+    Width = 1335
+    ExplicitWidth = 1303
   end
   inherited pnlDetail1: TPanel
-    Width = 1303
-    ExplicitWidth = 1148
+    Width = 1335
+    ExplicitWidth = 1303
   end
   inherited pnltoolbar: TPanel
     Top = 0
-    Width = 1303
+    Width = 1335
     Height = 44
     Align = alTop
     Visible = True
     ExplicitTop = 0
-    ExplicitWidth = 1148
+    ExplicitWidth = 1303
     ExplicitHeight = 44
     object LblImpresion: TLabel
       Left = 327
@@ -65,7 +66,6 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         'Todo')
       TabOrder = 0
       OnClick = RdGrpSeleccionClick
-      ExplicitLeft = 285
     end
     object ChckLstImpresion: TCheckListBox
       Left = 409
@@ -109,7 +109,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     object PnlFechas: TPanel
       Left = 807
       Top = -1
-      Width = 482
+      Width = 528
       Height = 44
       TabOrder = 4
       object Label1: TLabel
@@ -174,9 +174,9 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       object ChckBxFactVivas: TCheckBox
         Left = 376
         Top = 22
-        Width = 97
+        Width = 153
         Height = 17
-        Caption = 'Facturas Vivas'
+        Caption = 'Documentos vivos'
         TabOrder = 3
       end
     end
@@ -209,17 +209,17 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited pnlMaster: TPanel
     Top = 44
-    Width = 1303
+    Width = 1335
     Height = 433
     ExplicitTop = 44
-    ExplicitWidth = 1148
+    ExplicitWidth = 1303
     ExplicitHeight = 433
     inherited cxGrid: TcxGrid
       Top = 31
-      Width = 1303
+      Width = 1335
       Height = 402
       ExplicitTop = 31
-      ExplicitWidth = 1148
+      ExplicitWidth = 1303
       ExplicitHeight = 402
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFecha: TcxGridDBColumn
@@ -277,11 +277,11 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 1303
+      Width = 1335
       Height = 31
       ButtonHeight = 33
       OnClick = tbarGridClick
-      ExplicitWidth = 1148
+      ExplicitWidth = 1303
       ExplicitHeight = 31
       inherited ToolButton1: TToolButton
         ExplicitHeight = 33
@@ -419,7 +419,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -566,7 +566,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01011200D0019C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011200D001A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

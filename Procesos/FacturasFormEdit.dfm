@@ -75,6 +75,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
         ExplicitHeight = 568
         inherited tbarData: TToolBar
           Width = 986
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 986
           object TlBtnEdit: TToolButton
             Left = 254
@@ -483,7 +485,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               KeyField = 'IdPersonaDomicilio'
               ListField = 'DirCompleta'
               ListSource = DSDatosCliente
-              TabOrder = 9
+              TabOrder = 8
             end
             object cxDBLabel6: TcxDBLabel
               Left = 54
@@ -556,14 +558,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 17
+              TabOrder = 16
             end
             object cxDBTextEdit8: TcxDBTextEdit
               Left = 762
               Top = 254
               DataBinding.DataField = 'TipoCambio'
               DataBinding.DataSource = DataSource
-              TabOrder = 19
+              TabOrder = 18
               Width = 105
             end
             object cxDBLabel1: TcxDBLabel
@@ -876,7 +878,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1096,7 +1098,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011A00C002F80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011A00C002FC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

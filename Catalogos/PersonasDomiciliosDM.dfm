@@ -6,8 +6,9 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
-      'Tipo, IdEnvioTipo ,Predeterminado, Identificador, Saldo'#13#10' FROM P' +
-      'ersonasDomicilios '#13#10'WHERE IdPersona = :IdPersona'
+      'Tipo, IdEnvioTipo ,Predeterminado, '#13#10'Identificador, Saldo, UsarP' +
+      'araEnvio'#13#10' FROM PersonasDomicilios '#13#10'WHERE IdPersona = :IdPerson' +
+      'a'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -141,6 +142,10 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       Size = 500
       Lookup = True
     end
+    object adodsMasterUsarParaEnvio: TBooleanField
+      DisplayLabel = 'Disponible Para Envio'
+      FieldName = 'UsarParaEnvio'
+    end
   end
   inherited ActionList: TActionList
     object actUpdate: TAction
@@ -149,6 +154,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     end
   end
   object adodsDomiciliosTipos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDomicilioTipo, Descripcion FROM DomiciliosTipos'
@@ -157,6 +163,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 96
   end
   object adodsDomicilios: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -254,6 +261,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Top = 80
   end
   object ADODtStEnvioTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdPaqueteria, Identificador, Descripcion from Paqueterias'

@@ -107,6 +107,15 @@ inherited dmPagos: TdmPagos
       KeyFields = 'IdDomicilioCliente'
       Lookup = True
     end
+    object adodsMasterIdMetPagSugerido: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'IdMetPagSugerido'
+      LookupDataSet = ADODtStClientes
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'IdMetodoPagoCliente'
+      KeyFields = 'IdPersonaCliente'
+      Lookup = True
+    end
   end
   object ADODtStDireccAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection

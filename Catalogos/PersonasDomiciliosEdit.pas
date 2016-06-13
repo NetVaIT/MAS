@@ -38,6 +38,7 @@ type
     Label4: TLabel;
     cxDBLabel3: TcxDBLabel;
     Label5: TLabel;
+    cxDBCheckBox3: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cxDBLookupComboBox1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

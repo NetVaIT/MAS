@@ -1,13 +1,27 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 748
+      ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
-        inherited pnlMaster: TPanel
+        inherited tbarData: TToolBar
           ExplicitLeft = 0
-          ExplicitTop = 25
+          ExplicitTop = 0
+        end
+        inherited pnlMaster: TPanel
+          ExplicitLeft = 62
+          ExplicitTop = 0
           object Label1: TLabel
             Left = 23
             Top = 16
@@ -119,6 +133,15 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Width = 131
             AnchorX = 494
           end
+          object cxDBCheckBox3: TcxDBCheckBox
+            Left = 23
+            Top = 288
+            Caption = 'Disponible Para Envio'
+            DataBinding.DataField = 'UsarParaEnvio'
+            DataBinding.DataSource = DataSource
+            TabOrder = 7
+            Width = 131
+          end
         end
       end
     end
@@ -128,7 +151,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -269,7 +292,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

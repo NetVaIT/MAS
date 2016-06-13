@@ -1,39 +1,52 @@
 inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
-  Caption = 'frmOrdenesEntregasGrid'
+  Caption = 'Ordenes de Entrega'
   ClientWidth = 989
+  OnCreate = FormCreate
   ExplicitWidth = 989
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 989
+    ExplicitWidth = 989
   end
   inherited splDetail2: TSplitter
     Width = 989
+    ExplicitWidth = 989
   end
   inherited splDetail1: TSplitter
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnlClose: TPanel
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnlDetail3: TPanel
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnlDetail2: TPanel
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnlDetail1: TPanel
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnltoolbar: TPanel
     Width = 989
+    ExplicitWidth = 989
   end
   inherited pnlMaster: TPanel
     Width = 989
+    ExplicitWidth = 989
     inherited cxGrid: TcxGrid
+      Top = 41
       Width = 989
-      ExplicitLeft = -360
-      ExplicitTop = 35
+      Height = 430
+      ExplicitTop = 52
+      ExplicitWidth = 989
+      ExplicitHeight = 422
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -54,6 +67,10 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         object tvMasterCondicionEntrega: TcxGridDBColumn
           DataBinding.FieldName = 'CondicionEntrega'
           Width = 300
+        end
+        object tvMasterDireccionEnvio: TcxGridDBColumn
+          DataBinding.FieldName = 'DireccionEnvio'
+          Width = 500
         end
         object tvMasterFechaProgramadaEnt: TcxGridDBColumn
           DataBinding.FieldName = 'FechaProgramadaEnt'
@@ -101,21 +118,155 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         object tvMasterFechaFinEmpaque: TcxGridDBColumn
           DataBinding.FieldName = 'FechaFinEmpaque'
         end
-        object tvMasterIdEstatusOrdenEntrega: TcxGridDBColumn
-          DataBinding.FieldName = 'IdEstatusOrdenEntrega'
-        end
       end
     end
     inherited tbarGrid: TToolBar
       Width = 989
+      Height = 41
+      ButtonHeight = 43
+      ExplicitWidth = 989
+      ExplicitHeight = 41
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 43
+      end
+      inherited tbtnCerrar: TToolButton [14]
+        Left = 277
+        ExplicitLeft = 277
+        ExplicitHeight = 43
+      end
+      inherited ToolButton10: TToolButton [15]
+        Left = 300
+        Width = 114
+        ExplicitLeft = 300
+        ExplicitWidth = 114
+        ExplicitHeight = 43
+      end
+      object PnlBusqueda: TPanel
+        Left = 414
+        Top = 0
+        Width = 201
+        Height = 43
+        BevelInner = bvLowered
+        ParentBackground = False
+        ParentColor = True
+        TabOrder = 0
+        object Label3: TLabel
+          Left = 16
+          Top = 2
+          Width = 90
+          Height = 13
+          Caption = 'Cliente parecido a:'
+        end
+        object EdtNombre: TEdit
+          Left = 15
+          Top = 17
+          Width = 163
+          Height = 21
+          TabOrder = 0
+          OnChange = EdtNombreChange
+          OnKeyDown = EdtNombreKeyDown
+        end
+      end
+      object PnlFechas: TPanel
+        Left = 615
+        Top = 0
+        Width = 274
+        Height = 43
+        BevelInner = bvLowered
+        ParentBackground = False
+        TabOrder = 1
+        object SpdBtnConsulta: TSpeedButton
+          Left = 227
+          Top = 10
+          Width = 25
+          Height = 25
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000130B0000130B00001000000000000000000000000000
+            8000008000000080800080000000800080008080000080808000C0C0C0000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+            33033333333333333F7F3333333333333000333333333333F777333333333333
+            000333333333333F777333333333333000333333333333F77733333333333300
+            033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+            33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
+            333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
+            33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
+            333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
+            333333773FF77333333333370007333333333333777333333333}
+          NumGlyphs = 2
+          OnClick = SpdBtnConsultaClick
+        end
+        object RdGrpEstado: TRadioGroup
+          Left = 6
+          Top = -2
+          Width = 203
+          Height = 45
+          Caption = 'Estado'
+          Color = clWhite
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Todos'
+            'Autorizado'
+            'Empacado'
+            'Enviado  ')
+          ParentBackground = False
+          ParentColor = False
+          TabOrder = 0
+          OnClick = RdGrpEstadoClick
+        end
+      end
     end
   end
   inherited DataSource: TDataSource
     DataSet = dmOrdenesEntregas.adodsMaster
+    Left = 576
+    Top = 176
   end
   inherited ilPageControl: TImageList
+    Left = 608
+    Top = 176
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -254,9 +405,15 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    Left = 640
+    Top = 176
+  end
   inherited ilAction: TImageList
+    Left = 672
+    Top = 176
     Bitmap = {
-      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -792,6 +949,12 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Left = 544
+    Top = 176
     PixelsPerInch = 96
+  end
+  inherited cxGridPopupMenu: TcxGridPopupMenu
+    Left = 704
+    Top = 176
   end
 end

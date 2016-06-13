@@ -59,6 +59,8 @@ type
     dsConFacturasPendientes: TDataSource;
     ToolButton3: TToolButton;
     PnlTitulo: TPanel;
+    Label6: TLabel;
+    DBLkpCmbBxMPCliente: TDBLookupComboBox;
     procedure DBLkpCmbBxClienteClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cxDBTxtEdtImporteExit(Sender: TObject);
@@ -144,6 +146,8 @@ begin
      dsDireccionCliente.dataset.Open;
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
+     if DBLkpCmbBxMPCliente.Text<>null then
+       DBLkpCmbBxMetodoPago.KeyValue :=  DBLkpCmbBxMPCliente.text;
 
    end;
 end;

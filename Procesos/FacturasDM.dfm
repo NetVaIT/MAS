@@ -1010,8 +1010,8 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta  fr' +
-      'om MetodosPago'
+      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta '#13#10' ' +
+      'from MetodosPago where idMetodoPago>0'
     Parameters = <>
     Left = 624
     Top = 208

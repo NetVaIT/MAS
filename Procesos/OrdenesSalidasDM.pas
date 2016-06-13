@@ -250,6 +250,24 @@ type
     ADODtstInsertaInfoEntregaCantidadCajas: TIntegerField;
     ADODtStDatosDocumentoSalidaIdDomicilioCliente: TIntegerField;
     ADODtStDatosDocumentoSalidaIDDomicilio: TIntegerField;
+    ADODtStDireccionesEnvio: TADODataSet;
+    ADODtStDireccionesEnvioIdPersonaDomicilio: TAutoIncField;
+    ADODtStDireccionesEnvioIdPersona: TIntegerField;
+    ADODtStDireccionesEnvioIdDomicilio: TIntegerField;
+    ADODtStDireccionesEnvioIdDomicilioTipo: TIntegerField;
+    ADODtStDireccionesEnvioIdentificador: TIntegerField;
+    ADODtStDireccionesEnvioPredeterminado: TBooleanField;
+    ADODtStDireccionesEnvioCalle: TStringField;
+    ADODtStDireccionesEnvioNoExterior: TStringField;
+    ADODtStDireccionesEnvioNoInterior: TStringField;
+    ADODtStDireccionesEnvioColonia: TStringField;
+    ADODtStDireccionesEnvioCodigoPostal: TStringField;
+    ADODtStDireccionesEnvioMunicipio: TStringField;
+    ADODtStDireccionesEnvioPoblacion: TStringField;
+    ADODtStDireccionesEnvioEstado: TStringField;
+    ADODtStDireccionesEnvioPais: TStringField;
+    ADODtStDireccionesEnvioDirEnviocompleta: TStringField;
+    DSInformacionEnvio: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -274,6 +292,7 @@ type
     procedure ADODtStOrdenSalidaItemAfterDelete(DataSet: TDataSet);
     procedure ActCreaInformacionEnvioExecute(Sender: TObject);
     procedure ActCompartirEnvioExecute(Sender: TObject);
+    procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
   private
     CantAGuardar:Double;
     IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
@@ -394,7 +413,7 @@ begin
 end;
 
 procedure TDMOrdenesSalidas.ActCreaInformacionEnvioExecute(Sender: TObject);
-begin    //May 23/16
+begin    //May 23/16     //Se llama desde Ordenes de Salida ()
   inherited;
   LlenaDatosEnvioNvo;
 
@@ -515,6 +534,15 @@ begin
   end;
 end;
 
+procedure TDMOrdenesSalidas.ADODtStDireccionesEnvioCalcFields(
+  DataSet: TDataSet);
+begin          //Jun 10/16
+  inherited;
+  DataSet.FieldByName('DirEnvioCompleta').AsString:= Uppercase(dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
+                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString+
+                                                '. '+dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString);
+end;
+
 procedure TDMOrdenesSalidas.ADODtStInformacionEnvioBeforeOpen(
   DataSet: TDataSet);
 begin
@@ -523,6 +551,8 @@ begin
   ADODtStFacturasCFDI.Open;
   ADODtStTelefonos.Open;
   AdoDtStInfoEntregaDetalle.Open; //May23/16
+
+  ADODtStDireccionesEnvio.Open; //Jun 10/16
 end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterDelete(
@@ -848,7 +878,7 @@ begin
 
   TFrmOrdenesSalida(gGridEditForm).CrearDatosEnvio :=ActCreaInformacionEnvio;//May 23/16
   TFrmOrdenesSalida(gGridEditForm).ComparteEnvio:=ActCompartirEnvio;//May 23/16
-
+   TFrmOrdenesSalida(gGridEditForm).DsdireccionEnvios.dataset:=ADODtStDireccionesEnvio; //Jun 10/16
 
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
@@ -976,6 +1006,7 @@ begin
       ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:= False;
       ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
       ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= False;
+      ADODtstInsertaInfoEntrega.Fieldbyname('IDEstatusOrdenEntrega').AsInteger:= adodsMaster.FieldByName('IdOrdenEstatus').AsInteger; //Jun 10/16
       ADODtstInsertaInfoEntrega.Post; //Errror de operacion en varios pasos //Fecha
       id:=   ADODtstInsertaInfoEntrega.Fieldbyname('IdInfoentrega').AsInteger;
       //Crear asociacion

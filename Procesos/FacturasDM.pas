@@ -450,7 +450,8 @@ type
     ArrBinario:TArrDinamico;
     fCreoCFDI: Boolean;
     FMuestra: Boolean;//Ene7/16
-    FTipoDoc:Integer;//Mar 29/16
+    FTipoDoc:Integer; //Mar 29/16
+
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
     procedure actXMLaPDFExecute(Sender: TObject);
@@ -473,6 +474,8 @@ type
     procedure ImprimeNotaVPDF(Mostrar: Boolean; nombre: TFileName='');
     function ActualizaAsociadosACFDI(idCFDIAct: Integer): Boolean;
     function SacaPaqueteria(IdPerDom: integer): String;
+    procedure CrearPagoNota(serie: string; Folio, idCFDINota, IDCliente,IDDomicilioCliente,
+      IdMetodoPago: integer; Total: Double);  //Jun 2/16
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -485,6 +488,7 @@ type
     constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean;TipoDoc:Integer); virtual;
     property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
     property TipoDocumento:Integer read FTipoDoc write FTipoDoc; //Mar 28/16
+
 
   end;
 
@@ -781,11 +785,19 @@ var
   ADatosEmisor:TStringList;
   CorreoRec:String;
   ArchivosLista:TStringList;
+  TextoCorreo:String;//Jun 2/16
+
 begin
   inherited;
   ADatosEmisor:=TStringList.Create;
   ArchivosLista:=TStringList.Create;//Feb 22/16
   adodsMaster.Open; //debe estar abierto
+  //Jun 2/16 Pone texto Correcto
+  if (adodsMasterIdCFDITipoDocumento.asinteger=1) and (adodsMasteridOrdenSalida.asstring<>'') then
+    TextoCorreo:='Envio Factura relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring
+  else
+    TextoCorreo:='Envio CFDI correspondiente a '+ adodsMasterTipoDocumento.AsString +' No.'+adodsMasterSerie.AsString+' - '+adodsMasterFolio.AsString;
+
   //Sacar CFDI y PDF si se require
   ShowProgress(10,100.1,'Obteniendo información de documentos ' + IntToStr(10) + '%');
   IdDoc:=adodsMasterIdDocumentoXML.AsInteger;
@@ -800,7 +812,7 @@ begin
   begin //Sacar datos Correo Emisor           //SAcar datos Correo Receptor
     DMEnvioMail:=TDMEnvioMails.Create(self);
     ShowProgress(50,100.1,'Enviando Correo... ' + IntToStr(50) + '%');
-    if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Factura '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,'Envio Factura relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring,
+    if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio CFDI  '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,TextoCorreo,
              ArcXml,ArcPDF,ArcGuia, ArchivosLista, ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
              'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
              StrToInt(ADatosEmisor.Values['ModSSL'])) then
@@ -834,8 +846,14 @@ var         //Abr 6/16
   ADatosEmisor:TStringList;
   CorreoRec:String;
   ArchivosLista:TStringList;
+  TextoCorreo:String;
 begin   //Envio Correo de Notas venta y Presupuestos
   inherited;
+   //Jun 2/16 Pone texto Correcto
+  if (adodsMasterIdCFDITipoDocumento.asinteger=4) and (adodsMasteridOrdenSalida.asstring<>'') then
+    TextoCorreo:='Envio Nota de Venta relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring
+  else
+    TextoCorreo:='Envio Nota de Venta correspondiente a '+ adodsMasterTipoDocumento.AsString +' No.'+adodsMasterSerie.AsString+' - '+adodsMasterFolio.AsString;
   if Application.MessageBox('¿Desea enviar correo al Cliente?','Confirmación',MB_YESNO)=IdYes  then
   begin
     nombreNV:=ExtractFilepath(Application.Exename)+'Adjcorreo\'+ adodsMasterRFC.AsString+'_'+adodsMasterSerie.AsString+adodsMasterFolio.AsString+'.pdf';
@@ -853,7 +871,7 @@ begin   //Envio Correo de Notas venta y Presupuestos
        begin
          DMEnvioMail:=TDMEnvioMails.Create(self);
          ShowProgress(50,100.1,'Enviando Correo... ' + IntToStr(50) + '%');
-         if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Factura '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,'Envio Factura relacionada al Pedido No.'+ adodsMasteridOrdenSalida.asstring,
+         if  DMEnvioMails.SendEmail(CorreoRec+';'+ADatosEmisor.Values['emailNoti'],'Envio Documento '+adodsMasterSerie.asstring+'-'+adodsMasterFolio.asstring ,TextoCorreo,
              '','','', ArchivosLista, ADatosEmisor.Values['host'], ADatosEmisor.Values['usuario'], ADatosEmisor.Values['contrasenia'],
              'Tracto Partes MAS', StrToInt(ADatosEmisor.Values['puerto']),StrToInt(ADatosEmisor.Values['MetSSL']),
              StrToInt(ADatosEmisor.Values['ModSSL'])) then
@@ -1013,6 +1031,7 @@ var
 begin
   inherited;
   //Habilitado Dic 21/15
+  ShowProgress(10,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(10) + '%');  //Jun 2/16
   XMLpdf := TdmodXMLtoPDF.Create(Self);
   XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm';
   XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
@@ -1063,7 +1082,7 @@ begin
    // ScreenCursorProc(-11);  //Deshabilitado Dic 29/15
     DecodeDate(Now, Anio, Mes, Dia);
 //    RutaBase :=SacaRutaBase;
-
+    ShowProgress(20,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(20) + '%');  //Jun 2/16
     adodsArchivosCerKey.Close;
 
     ADODtStPersonaEmisor.Close;
@@ -1082,7 +1101,7 @@ begin
     DocumentoComprobanteFiscal:= TDocumentoComprobanteFiscal.Create;
 
     TipoDoc:=adodsMaster.FieldByName('TipoDocumento').asString; //Mar 31/16
-
+    ShowProgress(30,100.1,'Extrayendo datos de Emisor ' + IntToStr(30) + '%');  //Jun 2/16
     try
         Emisor.RFC                    := TFERFC(ADODtStPersonaEmisorRFC.AsString);
         Emisor.Nombre                 := ADODtStPersonaEmisorRazonSocial.AsString;
@@ -1111,6 +1130,7 @@ begin
         Emisor.ExpedidoEn.Localidad    := Emisor.Direccion.Localidad;
         Emisor.ExpedidoEn.Referencia   := Emisor.Direccion.Referencia;    *)
 
+        ShowProgress(40,100.1,'Extrayendo datos de Receptor ' + IntToStr(40) + '%');  //Jun 2/16
         Receptor.RFC := TFERFC(ADODtStPersonaReceptorRFC.AsString);
         Receptor.Nombre := ADODtStPersonaReceptorRazonSocial.AsString;
         if (ADODtStPersonaReceptorCalle.AsString<>'')and (ADODtStPersonaReceptorPais.AsString<>'')then
@@ -1154,6 +1174,7 @@ begin
         DocumentoComprobanteFiscal.LugarDeExpedicion := ADODtStPersonaEmisorMunicipio.AsString+ ', ' + ADODtStPersonaEmisorEstado.AsString;
         //adodsEmisorPoblacion.AsString ;
         // Definimos todos los conceptos que incluyo la factura
+        ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
         ADODtStCFDIConceptos.First;
         while not ADODtStCFDIConceptos.Eof do
         begin
@@ -1190,6 +1211,7 @@ begin
            ForceDirectories(RutaFactura);
         if  DirectoryExists (RutaFactura) then
         begin
+            ShowProgress(60,100.1,'Timbrando  CFDI .... ' + IntToStr(60) + '%');  //Jun 2/16
         if GenerarCFDI(RutaFactura, DocumentoComprobanteFiscal, Certificado, TimbreCFDI,EsProduccion) then
         begin
           XMLpdf.FileIMG := RutaFactura + fePNG; //Dic 21/15
@@ -1212,6 +1234,7 @@ begin
           adodsMasterIdDocumentoCBB.Value := CargaXMLPDFaFS(XMLpdf.FileIMG,'PNG '+TipoDoc + String(DocumentoComprobanteFiscal.Serie) + IntToStr(DocumentoComprobanteFiscal.Folio));//Ene 5/2016
 
           adodsMaster.Post;
+          ShowProgress(80,100.1,'Actualizando Datos Cliente ' + IntToStr(80) + '%');  //Jun 2/16
           //Actualiza Saldos  Mar 1/16                                                                                                                 //Mar 7/16
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
 
@@ -1222,6 +1245,17 @@ begin
 
         //  Showmessage('CFDI Generado');//Dic 29/15
 
+          //Jun 2/16 Crear Pago si es NotaCredito
+          if  (adodsMasterIdCFDITipoDocumento.AsInteger=2)  then  //Nota credito
+          begin
+            CrearPagoNota(adodsMasterSerie.Value, adodsMasterFolio.Value,adodsMasterIdCFDI.value,
+            adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.Value,
+            adodsMasterIdMetodoPago.Value,adodsMasterTotal.Value);
+
+          end;
+
+          ShowProgress(100,100.1,'Procesando PDF ' + IntToStr(100) + '%');  //Jun 2/16
+          ShowProgress(100,100);
           if FileExists(RutaPDF) then
             ShellExecute(application.Handle, 'open', PChar(RutaPDF), nil, nil, SW_SHOWNORMAL);     //VErificar el FRM Edit
           ActEnvioCorreoFact.Execute; //verificar  Abr5/16
@@ -1247,6 +1281,20 @@ begin
 
 end;
 
+procedure TDMFacturas.CrearPagoNota(serie:string;Folio,idCFDINota,IDCliente,IDDomicilioCliente,IdMetodoPago:integer;Total:Double); //Jun 2/16
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.sql.Clear;
+  ADOQryAuxiliar.SQL.Add('INSERT INTO PagosRegistros (Fecha, IdmetodoPago,IdPersonaCliente,idDomicilioCliente,FolioPago,SeriePago,Importe,saldo,IDCFDINotaCredito)'
+  +' Values(GetDate(),'+inttoStr(idmetodoPago)+','+intToStr(IDcliente)+','+intToStr(IDDomicilioCliente)+','+intToStr(Folio)+','''+serie+''','
+  +floatToStr(Total)+','+floatToStr(Total)+','+intToStr(idCFDINota)+')');
+  if ADOQryAuxiliar.ExecSql=1then
+    ShowMessage('Se ha creado el pago respecto a la nota de crédito')
+  else
+    ShowMessage('ERROR creando el pago asociado a la nota de crédito')
+
+
+end;
 
 procedure TDMFacturas.LlenaDatosEnvio; //Ene 27/16
 var IDCFDI,i:Integer;           //no se va a usar asi.. //May 18/16
@@ -1624,7 +1672,7 @@ begin
       begin
         adopCopiaOrdenSalida.Parameters.ParamByName('@IdOrdenSalida').Value:= IDOrdenSalida;
         adopCopiaOrdenSalida.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
-        adopCopiaOrdenSalida.ExecProc;
+        adopCopiaOrdenSalida.ExecProc;         //Actualizado Jun 13/16
       end;
 
 
@@ -1721,8 +1769,8 @@ begin
     ADOQryAuxiliar.next;
     Result:=True;
   end;
-
 end;
+
 procedure TDMFacturas.ConvierteBinADec(Numero: integer; var B: TArrDinamico); //Ene 7/16
 var      // Este convierte Decimal a Binario
   aux,i:integer;
@@ -1793,9 +1841,6 @@ const
    'SubTotal, Descto, MotivoDescto, Total, NumCtaPago,CadenaOriginal, TotalImpuestoRetenido, TotalImpuestoTrasladado,'+
    'SaldoDocumento, FechaCancelacion, Observaciones,PorcentajeIVA, EmailCliente, UUID_TB,'+
    'SelloCFD_TB, SelloSAT_TB,CertificadoSAT_TB,FechaTimbrado_TB  from CFDI C ';
-
-
-
 
 var
   txt:String;

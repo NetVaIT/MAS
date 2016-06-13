@@ -177,6 +177,9 @@ type
     BtBtnOrdenEmbarque: TBitBtn;
     DBLkupCmbBxPaqueteria: TDBLookupComboBox;
     dsInfoEntregaDetalle: TDataSource;
+    Label30: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DSDireccionenvios: TDataSource;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -417,15 +420,18 @@ begin
     end
     else
     begin
+      Estatus:=-1; //Jun10/16 Para que no actualice el resto cuando no coincide
       //Clave incorrecta
       ShowMessage('Contraseña incorrecta');
     end;
   end
   else
+  begin
+    Estatus:=-1; //Jun10/16 Para que no actualice el resto cuando no coincide
     ShowMessage('Debe seleccionar la persona y colocar su contraseña');
-
+  end;
   //Si es 4 autorizo bien... Se debe generar la Factura directamente
-  if Estatus<>-1 then //Cambio a 4
+  if Estatus<>-1 then //Cambio a 4.
   begin
    //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
 
@@ -479,7 +485,7 @@ begin
       begin //Ver si se borra el CFDI (regresar valores de folios??)
         if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
         begin
-
+         //Poner ejecucion de devolucion Jun 10/16
         end;
       end;
 
@@ -494,6 +500,7 @@ begin
     PnlInformacionEntrega.Visible:=True; //May 23/16
     ChckBxDatosEnvios.Checked:=true;
   end;
+  //Jun 10/16 No se hace nada para autorizaci+ón si no hay contraseña o no es Valida
 end;
 
 function TFrmOrdenesSalida.ActualizaEtiqueta(IDOrdenSalida:Integer):Boolean; //May 26/16
@@ -683,8 +690,8 @@ begin
       PnlAutorizaYFactura.Visible:=False;
   end;
   4:begin
-      BtBtnEmpaca.Visible:=True;
-      Pnlempaca.Visible:=False;
+     // BtBtnEmpaca.Visible:=True;
+     // Pnlempaca.Visible:=False;
   end;
 
   end;
@@ -890,8 +897,9 @@ begin
     BtBtnRevisa.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=2) and
                             (Datasource.DataSet.FieldByName('FechaIniRevisa').IsNull);
 
-    BtBtnEmpaca.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
-                            (Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
+    BtBtnEmpaca.Visible:=False; //Jun 13/16
+ // Jun 13 /16 desh  BtBtnEmpaca.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
+ //                           (Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
 
     BtBtnFinRecolecta.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=1) and
                             (not Datasource.DataSet.FieldByName('FechaIniRecolecta').IsNull)and
@@ -902,10 +910,10 @@ begin
     BtBtnAutoriza.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=3) and  //Dic 15/15
                             (Datasource.DataSet.FieldByName('FechaAutoriza').IsNull);
     BtBtnAutoriza.Enabled:= pos('autoriza',_dmConection.PerFuncion)>0 ; //Abr 26/16
-
-    BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
-                            (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
-                            (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
+    BtBtnFinEmpaque.Visible:= False; //Jun 13/16
+// Jun 13 /16 desh    BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
+// Jun 13 /16 desh                            (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
+// Jun 13 /16 desh                             (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
                                                                                            //4 May 19/16           //Abr 20/16
     ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3);// deshabilitado may 24/16 //and  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<6);//Feb 11/16
     TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and (not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull); //Feb 17/16
@@ -914,7 +922,8 @@ begin
     // ??PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4); //Ene 27/16
     PnlSalidasUbicacion.Visible:=False;  //Ene 28/16
 
-    BtBtnEnviar.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=5);
+    BtBtnEnviar.Visible:= False; //Jun 13/16
+// Jun 13 /16 desh     BtBtnEnviar.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=5);
 
     PnlRecolecta.Visible:=False;
     PnlRevisa.Visible:=False;

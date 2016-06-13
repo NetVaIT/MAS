@@ -146,9 +146,9 @@ begin
   begin
 
     DataSource.DataSet.Close;                                   //May 11/16
-     if not ChckBxMostrarAplicacion.Checked then
-         TAdoDataset(DataSource.DataSet).commandText:='Select * '+ParteAp+ 'from Productos where (Identificador1 Like '''+IDProd+
-                                 '%'' or Identificador2 like '''+IDProd+'%'' or Identificador3 Like '''+IDProd+
+     if not ChckBxMostrarAplicacion.Checked then                                     //Jun 8 se agrego '%' al inicio para buscar codigo en cualquier lugar
+         TAdoDataset(DataSource.DataSet).commandText:='Select * '+ParteAp+ 'from Productos where (Identificador1 Like ''%'+IDProd+
+                                 '%'' or Identificador2 like ''%'+IDProd+'%'' or Identificador3 Like ''%'+IDProd+
                                  '%'')'
      else
      begin

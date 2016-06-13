@@ -43,6 +43,7 @@ type
     adodsMasterPais: TStringField;
     adodsDomiciliosDomicilio2: TStringField;
     adodsMasterDomicilio2: TStringField;
+    adodsMasterUsarParaEnvio: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

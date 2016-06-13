@@ -2,6 +2,7 @@ inherited dmUsuarios: TdmUsuarios
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforePost = adodsMasterBeforePost
     CommandText = 
       'SELECT IdUsuario, IdPersona, IdUsuarioEstatus, Login, Password, ' +
       #13#10'IdUsuarioPerfil FROM Usuarios'
@@ -110,5 +111,11 @@ inherited dmUsuarios: TdmUsuarios
       FieldName = 'PermisosFuncion'
       Size = 300
     end
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 316
+    Top = 227
   end
 end

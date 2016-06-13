@@ -314,6 +314,7 @@ begin //Feb 17/16
   EnvioCorreo:=Value;
   TlBtnEnvioCorreo.Action:=Value;
   TlBtnEnvioCorreo.ImageIndex:=15;
+  TlBtnEnvioCorreo.Hint:='Enviar '+Caption+' por Correo';
 end;
 
 procedure TfrmFacturasGrid.SetFCFDIDiario(const Value: TBasicAction);

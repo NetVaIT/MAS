@@ -271,6 +271,9 @@ begin
   end;
                                                   //Va en Cero may 24/16
   TFrmFacturasGrid(gFormGrid).tipoDocumento := tipoDocumento;   //Mar 30/16
+  TlBtnEnvioFactura.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo';   //Jun 2/16
+  TFrmFacturasGrid(gFormGrid).TlBtnEnvioCorreo.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo'; //Jun 2/16
+  TFrmFacturasGrid(gFormGrid).ChckBxFactVivas.Caption:=Trim(pnlTitulo.Caption)+' vivas';
 end;
 
 
@@ -303,7 +306,9 @@ begin
   FEnviaCorreoConDocs := Value;
   TlBtnEnvioFactura.Action:=Value;
   TlBtnEnvioFactura.ImageIndex:=24;
+
   TFrmFacturasGrid(gFormGrid).ActEnvioCorreo:=Value; //Feb 17/16
+
 end;
 
 procedure TfrmFacturasFormEdit.SetFacturaCta(const Value: TBasicAction);

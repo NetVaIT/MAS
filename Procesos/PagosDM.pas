@@ -108,6 +108,7 @@ type
     ADODtStAplicacionesPagosserieFactura: TStringField;
     ADODtStAplicacionesPagosFolioFactura: TIntegerField;
     ADOQryAuxiliar: TADOQuery;
+    adodsMasterIdMetPagSugerido: TIntegerField;
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);

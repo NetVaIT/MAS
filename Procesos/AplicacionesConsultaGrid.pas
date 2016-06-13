@@ -82,7 +82,7 @@ implementation
 
 {$R *.dfm}
 
-uses AplicacionesConsultaDM, PagosConfirmaDesaplica;
+uses AplicacionesConsultaDM, PagosConfirmaDesaplica, _ConectionDmod;
 
 procedure TFrmAplicacionesConsultaGrid.EdtNombreChange(Sender: TObject);
 begin
@@ -125,7 +125,7 @@ begin
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtFin.Date:=FechaAux;
-
+  TlBtnDesaplicaPago.Visible:=pos('autoriza',_dmConection.PerFuncion)>0 ; //Jun 2/16
 end;
 
 function TFrmAplicacionesConsultaGrid.GetFFiltroNombre: String;

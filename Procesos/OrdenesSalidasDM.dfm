@@ -383,6 +383,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -404,6 +405,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRecolecta: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -437,6 +439,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRevisa: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -470,6 +473,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaEmpaca: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -528,6 +532,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 241
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -608,6 +613,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 240
   end
   object ADODtStPersonaAutoriza: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -802,8 +808,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldKind = fkLookup
       FieldName = 'Paqueteria'
       LookupDataSet = ADODtStPaqueterias
-      LookupKeyFields = 'Descripcion'
-      LookupResultField = 'Descripcion'
+      LookupKeyFields = 'Identificador'
+      LookupResultField = 'Identificador'
       KeyFields = 'Conducto'
       Size = 50
       Lookup = True
@@ -860,6 +866,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 208
   end
   object ADODtStTelefonos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStTelefonosCalcFields
@@ -1083,6 +1090,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 297
   end
   object ADODtStIdentificadores: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1127,6 +1135,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object adodsDocumento: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
@@ -1248,9 +1257,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPaqueterias: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdPaqueteria, Identificador, Descripcion from Paqueterias'
+    CommandText = 
+      'select IdPaqueteria, Identificador, Descripcion from Paqueterias' +
+      ' order by identificador'
     Parameters = <>
     Left = 56
     Top = 400
@@ -1342,5 +1354,101 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtstInsertaInfoEntregaCantidadCajas: TIntegerField
       FieldName = 'CantidadCajas'
     end
+  end
+  object ADODtStDireccionesEnvio: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    OnCalcFields = ADODtStDireccionesEnvioCalcFields
+    CommandText = 
+      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
+      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
+      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
+      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
+      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
+      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
+      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
+      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
+      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
+      'IDPersona=:IDPersonaCliente and  PD.UsarParaEnvio=1'#13#10#13#10#13#10#13#10
+    DataSource = DSInformacionEnvio
+    IndexFieldNames = 'IdPersona'
+    MasterFields = 'IDPersonaCliente'
+    Parameters = <
+      item
+        Name = 'IDPersonaCliente'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 72
+    Top = 568
+    object ADODtStDireccionesEnvioIdPersonaDomicilio: TAutoIncField
+      FieldName = 'IdPersonaDomicilio'
+      ReadOnly = True
+    end
+    object ADODtStDireccionesEnvioIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStDireccionesEnvioIdDomicilio: TIntegerField
+      FieldName = 'IdDomicilio'
+    end
+    object ADODtStDireccionesEnvioIdDomicilioTipo: TIntegerField
+      FieldName = 'IdDomicilioTipo'
+    end
+    object ADODtStDireccionesEnvioIdentificador: TIntegerField
+      FieldName = 'Identificador'
+    end
+    object ADODtStDireccionesEnvioPredeterminado: TBooleanField
+      FieldName = 'Predeterminado'
+    end
+    object ADODtStDireccionesEnvioCalle: TStringField
+      FieldName = 'Calle'
+      Size = 50
+    end
+    object ADODtStDireccionesEnvioNoExterior: TStringField
+      FieldName = 'NoExterior'
+      Size = 10
+    end
+    object ADODtStDireccionesEnvioNoInterior: TStringField
+      FieldName = 'NoInterior'
+      Size = 10
+    end
+    object ADODtStDireccionesEnvioColonia: TStringField
+      FieldName = 'Colonia'
+      Size = 50
+    end
+    object ADODtStDireccionesEnvioCodigoPostal: TStringField
+      FieldName = 'CodigoPostal'
+      Size = 10
+    end
+    object ADODtStDireccionesEnvioMunicipio: TStringField
+      FieldName = 'Municipio'
+      Size = 50
+    end
+    object ADODtStDireccionesEnvioPoblacion: TStringField
+      FieldName = 'Poblacion'
+      Size = 150
+    end
+    object ADODtStDireccionesEnvioEstado: TStringField
+      FieldName = 'Estado'
+      Size = 50
+    end
+    object ADODtStDireccionesEnvioPais: TStringField
+      FieldName = 'Pais'
+      Size = 100
+    end
+    object ADODtStDireccionesEnvioDirEnviocompleta: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DirEnviocompleta'
+      Size = 300
+      Calculated = True
+    end
+  end
+  object DSInformacionEnvio: TDataSource
+    DataSet = ADODtStInformacionEnvio
+    Left = 524
+    Top = 472
   end
 end

@@ -75,6 +75,7 @@ begin
   gFormGrid := TFrmAplicacionesConsultaGrid.Create(Self);
   TFrmAplicacionesConsultaGrid(gFormGrid).DataSource:=Datasource;  //Jun 1/16
   TFrmAplicacionesConsultaGrid(gFormGrid).DSQryAux:=DSQryAuxiliar; //Jun 1/16
+
   //Sólo visualiza Feb 29/16
   Toolbutton10.Visible:=False;
   Toolbutton12.Visible:=False;

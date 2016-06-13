@@ -5181,7 +5181,9 @@ inherited dmCotizaciones: TdmCotizaciones
   object ADODtStPaqueterias: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdPaqueteria, Identificador, Descripcion from Paqueterias'
+    CommandText = 
+      'select IdPaqueteria, Identificador, Descripcion from Paqueterias' +
+      #13#10'order by Identificador'
     Parameters = <>
     Left = 184
     Top = 296
