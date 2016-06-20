@@ -132,6 +132,7 @@ type
     DSDireccioncliente: TDataSource;
     TlBtnEdit: TToolButton;
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
+    TlBtnCancelaNV: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -148,7 +149,8 @@ type
     FCancelaCFDI: TBasicAction;
     FTipoDoc: Integer;
     FCFDIDiario: TBasicAction; //Feb 10/16
-    ImprimeNotaVenta: TBasicAction; //Abr 4/16
+    ImprimeNotaVenta: TBasicAction;
+    FCancelaNotaVenta: TBasicAction; //Abr 4/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -162,7 +164,8 @@ type
     procedure SetCancelaCFDI(const Value: TBasicAction);
     procedure SetTipoDoc(const Value: Integer);
     procedure SetFCFDIDiario(const Value: TBasicAction);
-    procedure SetImprimeNotaVenta(const Value: TBasicAction);  //ene 7/16
+    procedure SetImprimeNotaVenta(const Value: TBasicAction);
+    procedure SETFCancelaNotaVenta(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -182,6 +185,8 @@ type
 
     property ActFActuraDiaria : TBasicAction read FCFDIDiario write SetFCFDIDiario; //Mar 31/16
     Property ActImprimeNotaVenta: TBasicAction read ImprimeNotaVenta write SetImprimeNotaVenta;  //Abr 4/16
+
+    property ActCancelaNotaVenta:TBasicAction read FCancelaNotaVenta  write SETFCancelaNotaVenta;
   end;
 
 var
@@ -211,6 +216,8 @@ begin
   ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
   TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4);  //feb 17/16
   TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat);
+  TlBtnCancelaNV.Enabled:= (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger=4) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat); //Jun 15/16
+
   DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ); //Mar 28/16    //Se dejo para determinar el movimiento
   if DBLkupCmbBxDirAuxiliar.Visible then
   begin
@@ -317,6 +324,13 @@ begin
   TlBtnGeneraCFDI.Action:=Value;
   TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
 
+end;
+
+procedure TfrmFacturasFormEdit.SETFCancelaNotaVenta(const Value: TBasicAction);
+begin           //Jun 15/16
+  FCancelaNotaVenta := Value;
+  TlBtnCancelaNV.Action:=Value;
+  TlBtnCancelaNV.ImageIndex:=26;
 end;
 
 procedure TfrmFacturasFormEdit.SetFCFDIDiario(const Value: TBasicAction);

@@ -2,7 +2,6 @@ inherited FrmPagosEdt: TFrmPagosEdt
   Caption = 'FrmPagosEdt'
   ClientWidth = 880
   ExplicitWidth = 880
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -51,6 +50,7 @@ inherited FrmPagosEdt: TFrmPagosEdt
     Top = 574
     Width = 880
     Height = 19
+    ExplicitLeft = 0
     ExplicitTop = 574
     ExplicitWidth = 880
     ExplicitHeight = 19
@@ -76,6 +76,8 @@ inherited FrmPagosEdt: TFrmPagosEdt
         ExplicitHeight = 547
         inherited tbarData: TToolBar
           Width = 876
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 876
           object ToolButton3: TToolButton
             Left = 254
@@ -86,6 +88,8 @@ inherited FrmPagosEdt: TFrmPagosEdt
         inherited pnlMaster: TPanel
           Width = 876
           Height = 520
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 876
           ExplicitHeight = 520
           object Label7: TLabel
@@ -187,6 +191,7 @@ inherited FrmPagosEdt: TFrmPagosEdt
             Width = 88
             Height = 13
             Caption = 'IdMetPagSugerido'
+            Visible = False
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 22
@@ -343,6 +348,7 @@ inherited FrmPagosEdt: TFrmPagosEdt
             DataField = 'IdMetPagSugerido'
             DataSource = DataSource
             TabOrder = 15
+            Visible = False
           end
         end
       end
@@ -374,7 +380,7 @@ inherited FrmPagosEdt: TFrmPagosEdt
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -515,7 +521,7 @@ inherited FrmPagosEdt: TFrmPagosEdt
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

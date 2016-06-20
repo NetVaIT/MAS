@@ -6,6 +6,7 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
     CursorType = ctStatic
     BeforeOpen = adodsMasterBeforeOpen
     AfterOpen = adodsMasterAfterOpen
+    AfterPost = adodsMasterAfterPost
     CommandText = 
       'select IdInfoEntrega, IdCFDI, IDPersonaCliente, IDPersonaDomicil' +
       'io, '#13#10'IDResponsableEntrega, FechaProgramadaEnt, FechaRealEnt,'#13#10' ' +
@@ -14,6 +15,8 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       #13#10' Asegurado, CantidadCajas, IdPersonaEmpaca, FechaIniEmpaque, '#13 +
       #10'FechaFinEmpaque, IdEstatusOrdenEntrega from'#13#10' InformacionEntreg' +
       'as IE where IdEstatusOrdenEntrega =4'
+    Left = 32
+    Top = 24
     object adodsMasterIdInfoEntrega: TAutoIncField
       DisplayLabel = 'No.Orden Entrega'
       FieldName = 'IdInfoEntrega'
@@ -170,6 +173,15 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       Size = 150
       Lookup = True
     end
+    object adodsMasterEstatusOrden: TStringField
+      FieldKind = fkLookup
+      FieldName = 'EstatusOrden'
+      LookupDataSet = ADODtStEstatusOrden
+      LookupKeyFields = 'IdOrdenEstatus'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdEstatusOrdenEntrega'
+      Lookup = True
+    end
   end
   inherited ActionList: TActionList
     object ActCargarGuia: TAction
@@ -263,7 +275,6 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
     end
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -440,7 +451,6 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
     end
   end
   object adodsDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
@@ -739,6 +749,27 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
     object AdoDtstPersonaEntregaPermiso: TStringField
       FieldName = 'Permiso'
       Size = 255
+    end
+  end
+  object ADODtStEstatusOrden: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdOrdenEstatus, Identificador, Descripcion  from OrdenesE' +
+      'status'
+    Parameters = <>
+    Left = 408
+    Top = 416
+    object ADODtStEstatusOrdenIdOrdenEstatus: TIntegerField
+      FieldName = 'IdOrdenEstatus'
+    end
+    object ADODtStEstatusOrdenIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStEstatusOrdenDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
     end
   end
 end

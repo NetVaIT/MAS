@@ -180,6 +180,8 @@ type
     Label30: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     DSDireccionenvios: TDataSource;
+    LblRespEntrega: TLabel;
+    DBText7: TDBText;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -204,6 +206,7 @@ type
     procedure cxDBDateEdit1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 
   private
     FCargarDocGuia: TBasicAction;
@@ -229,7 +232,8 @@ type
     procedure SetFCreaDatosenvio(const Value: TBasicAction); //May 19/16
     function GetFIDEntregaExistente: Integer;
     procedure SetFComparteEnvio(const Value: TBasicAction);   //May 23/16
-    function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean; //May 26/16
+    function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean;
+    procedure PermisosEdicion; //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -390,7 +394,7 @@ begin
       CampoIDPer:='IDPersonaAutoriza';
       Estatus:=4;
     end;
-  4:begin   //Se cambio
+  4:begin   //Se cambio   Nunca vendra por aca
       campoFecha:='FechaIniEmpaca';
       clave:=EdtContraseniaEm.Text;
       CampoClave:='ClaveUEmpaca';
@@ -416,7 +420,24 @@ begin
        //ShowMessage('Imprimir Orden Salida');
          ImprimirOrdenSalida(datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdDocumentoSalida').AsInteger);
       Pnlaux.Visible:=False;
-      btnAux.Visible:=true;
+      if Estatus = -1 then //Jun 17/16
+         btnAux.Visible:=true;
+      if  CampoIDPer='IDPersonaRevisa' then  //Para que lo ponga cualdo es revision
+      begin //Movido  aca  Jun 16/16   desde
+        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then
+        begin
+          if datasource.Dataset.state=dsBrowse then
+            datasource.DataSet.Edit;
+
+          datasource.DataSet.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1;
+          datasource.DataSet.FieldByName('Acumula').AsBoolean:=False;
+          datasource.DataSet.post;
+
+        end;
+    //Hasta aca  Jun 16/16
+      end;
+
+
     end
     else
     begin
@@ -431,9 +452,10 @@ begin
     ShowMessage('Debe seleccionar la persona y colocar su contraseña');
   end;
   //Si es 4 autorizo bien... Se debe generar la Factura directamente
-  if Estatus<>-1 then //Cambio a 4.
+
+  if Estatus<>-1 then //Cambio a 4. Solo es para autorizacion
   begin
-   //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
+    //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
 
     if ExisteEnvioPendiente(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdPersonadomicilio').AsInteger, IDInfo)and
       (Application.MessageBox('¿Desea juntar envíos con una misma etiqueta?','Confirmación de agrupacion de Envíos',MB_YESNO)=ID_YES) then
@@ -848,8 +870,8 @@ begin
     end;
     3:begin //Dic 15/15
         BtBtnAutoriza.Visible:=False;
-        PnlAutorizaYFactura.Visible:=True;
-        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then
+        PnlAutorizaYFactura.Visible:=True;     //A lo mejor no va a ca
+  (*      if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then
         begin
           Editando:= not (datasource.Dataset.state=dsBrowse);
           if datasource.Dataset.state=dsBrowse then
@@ -860,7 +882,7 @@ begin
           if NOT Editando then
             datasource.DataSet.post;
 
-        end;
+        end;      *)
 
       end;
 
@@ -953,11 +975,17 @@ begin
       LblEmpaco.Caption:='Empacó:';                                                        //Se habilito el 1 para borrar todo //Abr 13/16
     BtBtnRegresaEstado.Visible:= ((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>=1)
                                   and((Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4) //Mar 4/16
-                                or ((Datasource.DataSet.FieldByName('IdGeneraCFDITipoDoc').AsInteger=4)and
-                                  (not RevisaGenerado(Datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger)))))// Abr 12/16
+                             //Por Nota Venta no desde aca   or ((Datasource.DataSet.FieldByName('IdGeneraCFDITipoDoc').AsInteger=4)and
+                             //     (not RevisaGenerado(Datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger)))    // Abr 12/16 (notasVenta, sin facturar)
+                                  ))
                                 and (pos('autoriza',_dmConection.PerFuncion)>0) ; //Abr 26/16;
   end;
   PnlDetalle.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<4);
+  dsinformacionEntrega.AutoEdit:= not(datasource.DataSet.fieldbyName('idOrdenEstatus').asinteger=6); //Jun 14/16
+
+
+   lblRespEntrega.Visible:=not(Datasource.DataSet.FieldByName('IdPersonaEntrega').IsNull);  //Jun 15/16
+
 end;
 
 function TFrmOrdenesSalida.RevisaGenerado(IDOrden:Integer):Boolean;
@@ -1053,6 +1081,12 @@ begin
 
 end;
 
+procedure TFrmOrdenesSalida.FormShow(Sender: TObject);
+begin
+  inherited;
+  PermisosEdicion;//Jun 14/16
+end;
+
 function TFrmOrdenesSalida.GetFIDEntregaExistente: Integer;
 begin
   Result:=FIDEntregaExistente;
@@ -1139,6 +1173,7 @@ begin
   DSInformacionEntrega.DataSet.Close;
   DSInformacionEntrega.DataSet.open; ///Verificar actualice por que el refresh no lo hace //May 5/16
   PnlInformacionEntrega.Visible:=ChckBxDatosEnvios.Checked;
+  PermisosEdicion; //Jun 14/16
 end;
 
 procedure TFrmOrdenesSalida.CrearSalidasUbicacion;   //Ene 28/16
@@ -1237,6 +1272,21 @@ begin
   if FileExists(ArchiPDF) and (cuantos =1) then //May 30/16
     ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 
+end;
+
+Procedure TFrmOrdenesSalida.PermisosEdicion;  //Jun 14/16
+var i :Integer;
+begin
+  //Tag 50 elementos que debenser deshabilitados   or (datasource.DataSet.fieldbyName('idOrdenEstatus').asinteger=6)
+  if (pos('autoriza',_dmConection.PerFuncion)=0)  then
+  begin
+    for i:=0 to ComponentCount-1 do
+    begin
+      if (Components[i] is TwinControl) and(Components[i].Tag =50)  then //Verificar
+         (Components[i] as TwinControl).Enabled:=False;
+
+    end;
+  end;
 end;
 
 end.

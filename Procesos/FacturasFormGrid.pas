@@ -262,7 +262,7 @@ begin
         ffiltro:='where IdCFDITipoDocumento=4 and IdCFDIFacturaGral is not NULL';
         forden:= ' order by IdCFDIFacturaGral'; ///Abar 19/16
     end;
-    2:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus<>5' ; //Ya que esos son presupuestos
+    2:ffiltro:='where IdCFDITipoDocumento=4 ';//dehabilitado para que muestre TODO and IDCFDIEstatus<>5' ; //Ya que esos son presupuestos
     3:ffiltro:='where IdCFDITipoDocumento=4 and IDCFDIEstatus=5' ; //Presupuestos
    end;
   PoneRangoFechas;

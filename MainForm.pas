@@ -65,7 +65,7 @@ type
     actOrdenSalida: TAction;
     actEmisor: TAction;
     dxBarLargeButton17: TdxBarLargeButton;
-    dxbAlmacenes: TdxBar;
+    dxbDevoluciones: TdxBar;
     actAlmacenes: TAction;
     dxBarLargeButton18: TdxBarLargeButton;
     dxRibbon1Tab7: TdxRibbonTab;
@@ -113,6 +113,11 @@ type
     ActOrdenEntrega: TAction;
     actProductosXEspacio: TAction;
     dxBarLargeButton34: TdxBarLargeButton;
+    dxBrLrgBtnAlmacenes: TdxBarLargeButton;
+    dxRbnTbCierre: TdxRibbonTab;
+    dxBarManagerBar5: TdxBar;
+    dxBarLargeButton35: TdxBarLargeButton;
+    ActCierreReporteMensual: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

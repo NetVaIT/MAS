@@ -268,6 +268,23 @@ type
     ADODtStDireccionesEnvioPais: TStringField;
     ADODtStDireccionesEnvioDirEnviocompleta: TStringField;
     DSInformacionEnvio: TDataSource;
+    adodsMasterIDPersonaEntrega: TIntegerField;
+    AdoDtstPersonaEntrega: TADODataSet;
+    AdoDtstPersonaEntregaIdPersona: TAutoIncField;
+    AdoDtstPersonaEntregaIdRol: TIntegerField;
+    AdoDtstPersonaEntregaIdPersonaEstatus: TIntegerField;
+    AdoDtstPersonaEntregaRazonSocial: TStringField;
+    AdoDtstPersonaEntregaPassword: TStringField;
+    AdoDtstPersonaEntregaPermiso: TStringField;
+    adodsMasterPersonaEntrega: TStringField;
+    ADODtstInsertaInfoEntregaIdPersonaEmpaca: TIntegerField;
+    ADODtstInsertaInfoEntregaFechaIniEmpaque: TDateTimeField;
+    ADODtstInsertaInfoEntregaFechaFinEmpaque: TDateTimeField;
+    ADODtstInsertaInfoEntregaIdEstatusOrdenEntrega: TIntegerField;
+    ADODtStDatosDocumentoSalidaIdPersonaDomicilioEnvio: TIntegerField;
+    ADODtStDatosDocumentoSalidaDireccionEnvio: TStringField;
+    adodsMasterDirEnvio: TStringField;
+    adodsMasterIdDireccionEnvio: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -999,7 +1016,16 @@ begin
 //    begin
       ADODtstInsertaInfoEntrega.Insert;
       ADODtstInsertaInfoEntrega.Fieldbyname('IdPersonaCliente').AsInteger:= adodsMaster.FieldByName('IdPersona').AsInteger;
-      ADODtstInsertaInfoEntrega.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger;
+      if not adodtstDatosDocumentoSalida.FieldByName('IdPersonaDomicilioEnvio').isnull then  //Jun 16/16
+      begin
+  //      ShowMessage('NULLLLL Dir referenciada '+adodsMaster.FieldByName('IdDireccionEnvio').asstring+' Dir envio'+ADODtStDireccionesEnvioIdPersonaDomicilio.asstring);
+        ADODtstInsertaInfoEntrega.Fieldbyname('IDPersonaDomicilio').AsInteger:=adodtstDatosDocumentoSalida.FieldByName('IdPersonaDomicilioEnvio').Value //Jun 16/16
+      end
+      else   //Jun 16/16
+      begin
+//        ShowMessage('Dir referenciada '+adodtstDatosDocumentoSalida.FieldByName('IdPersonaDomicilioEnvio').Value);
+        ADODtstInsertaInfoEntrega.Fieldbyname('IDPersonaDomicilio').AsInteger:=   adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger;
+      end;
       ADODtstInsertaInfoEntrega.Fieldbyname('FechaProgramadaEnt').AsDateTime:= Date+10;
       ADODtstInsertaInfoEntrega.Fieldbyname('Conducto').AsString:= SacaPaqueteriaNvo(adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger);//May 12/16
       ADODtstInsertaInfoEntrega.Fieldbyname('Servicio').AsString:=adodsMaster.FieldByName('Servicio').AsString; ;
@@ -1007,6 +1033,7 @@ begin
       ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
       ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= False;
       ADODtstInsertaInfoEntrega.Fieldbyname('IDEstatusOrdenEntrega').AsInteger:= adodsMaster.FieldByName('IdOrdenEstatus').AsInteger; //Jun 10/16
+
       ADODtstInsertaInfoEntrega.Post; //Errror de operacion en varios pasos //Fecha
       id:=   ADODtstInsertaInfoEntrega.Fieldbyname('IdInfoentrega').AsInteger;
       //Crear asociacion
@@ -1021,7 +1048,7 @@ begin
 end;
 
 Function TDMOrdenesSalidas.SacaPaqueteriaNvo(IdPersonaDocicilio:Integer):String;    //May 23/16
-
+                               //Ver si se cambia para programar que sesaque lo de lultima paqueteria usada.. Jun 16/16
 begin
   Result:='SIN IDENTIFICAR';
   if not DsMaster.DataSet.FieldByName('IdPaqueteria').Isnull then
@@ -1032,7 +1059,7 @@ begin
     ADOQryAuxiliar.Open;
     if not ADOQryAuxiliar.eof then //Solo puede tener si existe
     begin
-      result:=ADOQryAuxiliar.fieldbyname('Descripcion').AsString;
+      result:=ADOQryAuxiliar.fieldbyname('Identificador').AsString; //Se cambio Jun 16/16
     end
   end
   else
@@ -1043,7 +1070,7 @@ begin
                           +' where IDpersonadomicilio='+intToStr(IdPersonaDocicilio));
     ADOQryAuxiliar.Open;
     if not ADOQryAuxiliar.eof then //Solo puede tener si existe
-      result:=ADOQryAuxiliar.fieldbyname('Descripcion').AsString;
+      result:=ADOQryAuxiliar.fieldbyname('Identificador').AsString;
   end;
 end;
 

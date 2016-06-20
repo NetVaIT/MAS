@@ -132,7 +132,7 @@ end;
 procedure TFrmOrdenesSalidaGrid.SpdBtnConsultaClick(Sender: TObject);
 const
     TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
- +'IdPersonaRevisa, IdPersonaEmpaca, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'
+ +'IdPersonaRevisa, IdPersonaEmpaca, IdPersonaEntrega, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'  //Se agrego persona entrega Jun 15/16
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
  +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio from OrdenesSalidas OS ';
 

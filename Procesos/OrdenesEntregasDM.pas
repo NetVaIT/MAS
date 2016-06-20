@@ -148,12 +148,18 @@ type
     AdoDtstPersonaEntregaPassword: TStringField;
     AdoDtstPersonaEntregaPermiso: TStringField;
     adodsMasterPersonaEnvia: TStringField;
+    ADODtStEstatusOrden: TADODataSet;
+    ADODtStEstatusOrdenIdOrdenEstatus: TIntegerField;
+    ADODtStEstatusOrdenIdentificador: TStringField;
+    ADODtStEstatusOrdenDescripcion: TStringField;
+    adodsMasterEstatusOrden: TStringField;
     procedure ADODtStTelefonosCalcFields(DataSet: TDataSet);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
     procedure ActCargarGuiaExecute(Sender: TObject);
+    procedure adodsMasterAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -210,6 +216,44 @@ begin
   ADODtStDatosDocumentoSalida.Open;
 //  ADODtStDatosDocumentoSalida.Open;
 
+end;
+
+procedure TdmOrdenesEntregas.adodsMasterAfterPost(DataSet: TDataSet);
+var Aux, aux2:String;
+begin
+  inherited;
+  Aux:='';
+  Aux2:='';
+  //Actualizar el Estatus de Las Ordenes de salida
+  //Sacar Id de Ordenes de Salida Asociadas y actualizar una a una
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.sql.Add('Select * from InformacionEntregasDetalles where IdInfoEntrega='+(DataSet.FieldByName('IdInfoEntrega').asString));
+  ADOQryAuxiliar.Open;
+  if not Dataset.FieldByName('IDPersonaEmpaca').IsNull then
+  begin
+    Aux:=', IDPersonaEmpaca=' +Dataset.FieldByName('IDPersonaEmpaca').AsString+', FechaIniEmpaca=:Fini ' ;  //Empaca
+    if not Dataset.FieldByName('FechaFinEmpaque').IsNull then
+       Aux:= Aux+', FechaFinEmpaca=:Ffin ';
+  end;
+  if not Dataset.FieldByName('IDResponsableEntrega').IsNull then
+   Aux2:=', IDPersonaEntrega='+Dataset.FieldByName('IDREsponsableEntrega').AsString;  //Envio  //No existía Jun 15/16
+  while not ADOQryAuxiliar.Eof do
+  begin
+    ADOQryAux2.Close;
+    ADOQryAux2.Sql.Clear;                                                                                                //Para completar datos Jun 15/16
+    ADOQryAux2.Sql.Add('UPDATE ORDENESSALIDAS SET IDOrdenEstatus= '+DataSet.FieldByName('IdEstatusOrdenEntrega').asString +aux+aux2
+                      +' where IDOrdenSalida= '+ ADOQryAuxiliar.FieldByName('IdOrdenSalida').AsString);
+
+    if pos('Fini', aux)>0 then
+       ADOQryAux2.Parameters.ParamByName('Fini').value:= Dataset.FieldByName('FechaIniEmpaque').asDateTime;
+     if pos('Ffin', aux)>0 then
+       ADOQryAux2.Parameters.ParamByName('FFin').value:= Dataset.FieldByName('FechaFinEmpaque').asDateTime;
+
+
+    ADOQryAux2.ExecSQL;
+    ADOQryAuxiliar.Next;
+  end;
 end;
 
 procedure TdmOrdenesEntregas.adodsMasterBeforeOpen(DataSet: TDataSet);

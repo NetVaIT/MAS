@@ -133,8 +133,8 @@ end;
 procedure TfrmCotizacionesGrid.SpdBtnBuscarClick(Sender: TObject);
 const
   TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
-           'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente'+
-           ', NotasInternas, IdPaqueteria, Servicio'+ //May 18/16
+           'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente, IDPersonaDomicilioEnvio'+
+           ', NotasInternas, IdPaqueteria, Servicio'+ //May 18/16                                                   //Jun 16/16
            ' FROM DocumentosSalidas DS ';
   TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto ';     //Para colocar el inner join y buscar por nombre cliente May 11/16
                                                            //OJO quitar para insertar y modificar....

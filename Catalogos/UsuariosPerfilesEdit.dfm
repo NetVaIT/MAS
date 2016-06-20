@@ -1,53 +1,53 @@
 inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   Caption = 'frmUsuariosPerfiles'
-  ClientWidth = 964
-  ExplicitWidth = 964
+  ClientWidth = 1048
+  ExplicitWidth = 1048
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited splDetail2: TSplitter
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited splDetail1: TSplitter
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited pnlClose: TPanel
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited pnlDetail3: TPanel
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited pnlDetail2: TPanel
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
   end
   inherited pnlDetail1: TPanel
-    Width = 964
+    Width = 1048
     ExplicitLeft = 0
     ExplicitTop = 480
     ExplicitWidth = 964
   end
   inherited pcMain: TcxPageControl
-    Width = 964
+    Width = 1048
     ExplicitWidth = 964
-    ClientRectRight = 963
+    ClientRectRight = 1047
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 962
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
-        Width = 962
+        Width = 1046
         ExplicitWidth = 962
         inherited tbarData: TToolBar
-          Width = 960
+          Width = 1044
           ExplicitLeft = 0
           ExplicitTop = 0
           ExplicitWidth = 960
@@ -61,7 +61,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
           end
         end
         inherited pnlMaster: TPanel
-          Width = 960
+          Width = 1044
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 960
@@ -124,7 +124,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
           object PnlMenus: TPanel
             Left = 23
             Top = 107
-            Width = 770
+            Width = 914
             Height = 229
             BevelOuter = bvNone
             Enabled = False
@@ -134,7 +134,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Left = 12
               Top = 30
               Width = 118
-              Height = 179
+              Height = 195
               ItemHeight = 13
               Items.Strings = (
                 'Bancos                      |1'
@@ -149,24 +149,24 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
                 'Productos                |10'
                 'Emisor                      |11'
                 'Perfiles                     |12'
-                'Paqueter'#237'as              |13')
+                'Paqueter'#237'as              |13'
+                'Almacenes                |30')
               TabOrder = 0
             end
             object ChckLstBxOpcionesAlm: TCheckListBox
               Tag = 3000
-              Left = 135
+              Left = 384
               Top = 30
               Width = 118
               Height = 128
               ItemHeight = 13
               Items.Strings = (
-                'Almacenes                 |30'
                 'Devoluci'#243'n Producto |31')
               TabOrder = 1
             end
             object ChckLstBxOpcionesVenta: TCheckListBox
               Tag = 2000
-              Left = 258
+              Left = 260
               Top = 30
               Width = 118
               Height = 128
@@ -184,7 +184,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckLstBxOpcionesCXC: TCheckListBox
               Tag = 6000
-              Left = 504
+              Left = 508
               Top = 30
               Width = 118
               Height = 128
@@ -197,7 +197,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckLstBxOpcionesCompra: TCheckListBox
               Tag = 4000
-              Left = 381
+              Left = 136
               Top = 30
               Width = 118
               Height = 128
@@ -214,7 +214,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckLstBxOpcionesRep: TCheckListBox
               Tag = 5000
-              Left = 627
+              Left = 756
               Top = 30
               Width = 118
               Height = 128
@@ -236,27 +236,27 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckBxAlm: TCheckBox
               Tag = 3000
-              Left = 135
+              Left = 384
               Top = 7
               Width = 97
               Height = 17
-              Caption = 'Almacen                     |2000'
+              Caption = 'Devoluciones                     |3000'
               TabOrder = 7
               OnClick = ChckBxCatClick
             end
             object ChckBxVentas: TCheckBox
               Tag = 2000
-              Left = 261
+              Left = 263
               Top = 7
               Width = 97
               Height = 17
-              Caption = 'Ventas                       |3000'
+              Caption = 'Ventas                       |2000'
               TabOrder = 8
               OnClick = ChckBxCatClick
             end
             object ChckBxCompras: TCheckBox
               Tag = 4000
-              Left = 382
+              Left = 137
               Top = 7
               Width = 97
               Height = 17
@@ -266,7 +266,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckBxCxC: TCheckBox
               Tag = 6000
-              Left = 506
+              Left = 508
               Top = 7
               Width = 105
               Height = 17
@@ -276,7 +276,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
             end
             object ChckBxRep: TCheckBox
               Tag = 5000
-              Left = 629
+              Left = 758
               Top = 7
               Width = 97
               Height = 17
@@ -293,6 +293,27 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               TabOrder = 12
               Visible = False
               OnClick = BtnActOpcionClick
+            end
+            object CheckBox1: TCheckBox
+              Tag = 7000
+              Left = 632
+              Top = 7
+              Width = 97
+              Height = 17
+              Caption = 'Cierre                   |7000'
+              TabOrder = 13
+              OnClick = ChckBxCatClick
+            end
+            object ChckLstBxOpcCierre: TCheckListBox
+              Tag = 7000
+              Left = 632
+              Top = 30
+              Width = 118
+              Height = 128
+              ItemHeight = 13
+              Items.Strings = (
+                'Reporte mensual      |70')
+              TabOrder = 14
             end
           end
           object cxDBTextEdit4: TcxDBTextEdit
@@ -314,7 +335,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -455,7 +476,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -47,6 +47,8 @@ type
     ToolButton3: TToolButton;
     Label4: TLabel;
     cxDBTextEdit4: TcxDBTextEdit;
+    CheckBox1: TCheckBox;
+    ChckLstBxOpcCierre: TCheckListBox;
     procedure ChckBxCatClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnActOpcionClick(Sender: TObject);

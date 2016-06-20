@@ -52,29 +52,33 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
           DataBinding.FieldName = 'Cliente'
           Width = 300
         end
+        object tvMasterEstatusOrden: TcxGridDBColumn
+          DataBinding.FieldName = 'EstatusOrden'
+        end
+        object tvMasterConducto: TcxGridDBColumn
+          DataBinding.FieldName = 'Conducto'
+          Width = 129
+        end
         object tvMasterIDResponsableEntrega: TcxGridDBColumn
           DataBinding.FieldName = 'IDResponsableEntrega'
           Visible = False
         end
-        object tvMasterConducto: TcxGridDBColumn
-          DataBinding.FieldName = 'Conducto'
-          Width = 167
-        end
         object tvMasterServicio: TcxGridDBColumn
           DataBinding.FieldName = 'Servicio'
-          Width = 100
+          Width = 118
+        end
+        object tvMasterDireccionEnvio: TcxGridDBColumn
+          Caption = 'Direcci'#243'n Envio'
+          DataBinding.FieldName = 'DireccionEnvio'
+          Width = 451
         end
         object tvMasterCondicionEntrega: TcxGridDBColumn
           DataBinding.FieldName = 'CondicionEntrega'
-          Width = 300
-        end
-        object tvMasterDireccionEnvio: TcxGridDBColumn
-          DataBinding.FieldName = 'DireccionEnvio'
-          Width = 500
+          Width = 207
         end
         object tvMasterFechaProgramadaEnt: TcxGridDBColumn
           DataBinding.FieldName = 'FechaProgramadaEnt'
-          Width = 142
+          Width = 135
         end
         object tvMasterFechaRealEnt: TcxGridDBColumn
           DataBinding.FieldName = 'FechaRealEnt'
@@ -94,9 +98,6 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
           DataBinding.FieldName = 'Contenido'
           Width = 300
         end
-        object tvMasterPaqueteria: TcxGridDBColumn
-          DataBinding.FieldName = 'Paqueteria'
-        end
         object tvMasterPagoFlete: TcxGridDBColumn
           DataBinding.FieldName = 'PagoFlete'
         end
@@ -111,12 +112,19 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         end
         object tvMasterIdPersonaEmpaca: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaEmpaca'
+          Visible = False
         end
         object tvMasterFechaIniEmpaque: TcxGridDBColumn
           DataBinding.FieldName = 'FechaIniEmpaque'
         end
         object tvMasterFechaFinEmpaque: TcxGridDBColumn
           DataBinding.FieldName = 'FechaFinEmpaque'
+        end
+        object tvMasterPersonaEmpaca: TcxGridDBColumn
+          DataBinding.FieldName = 'PersonaEmpaca'
+        end
+        object tvMasterPersonaEnvia: TcxGridDBColumn
+          DataBinding.FieldName = 'PersonaEnvia'
         end
       end
     end
@@ -175,16 +183,17 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
       end
       inherited ToolButton10: TToolButton [15]
         Left = 300
-        Width = 114
+        Width = 93
         ExplicitLeft = 300
-        ExplicitWidth = 114
+        ExplicitWidth = 93
         ExplicitHeight = 43
       end
       object PnlBusqueda: TPanel
-        Left = 414
+        Left = 393
         Top = 0
         Width = 201
         Height = 43
+        Align = alRight
         BevelInner = bvLowered
         ParentBackground = False
         ParentColor = True
@@ -207,10 +216,11 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         end
       end
       object PnlFechas: TPanel
-        Left = 615
+        Left = 594
         Top = 0
-        Width = 274
+        Width = 266
         Height = 43
+        Align = alRight
         BevelInner = bvLowered
         ParentBackground = False
         TabOrder = 1
@@ -241,7 +251,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
           Width = 203
           Height = 45
           Caption = 'Estado'
-          Color = clWhite
+          Color = clBtnFace
           Columns = 2
           ItemIndex = 1
           Items.Strings = (
@@ -249,7 +259,6 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
             'Autorizado'
             'Empacado'
             'Enviado  ')
-          ParentBackground = False
           ParentColor = False
           TabOrder = 0
           OnClick = RdGrpEstadoClick

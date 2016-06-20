@@ -255,6 +255,24 @@ type
     ADODtStOrdenSalidaIDPersonaDomicilio: TIntegerField;
     ppLabel24: TppLabel;
     ppDBText17: TppDBText;
+    adodsMasterIdPersonaDomicilioEnvio: TIntegerField;
+    ADODtStDireccionesEnvio: TADODataSet;
+    ADODtStDireccionesEnvioIdPersonaDomicilio: TAutoIncField;
+    ADODtStDireccionesEnvioIdPersona: TIntegerField;
+    ADODtStDireccionesEnvioIdDomicilio: TIntegerField;
+    ADODtStDireccionesEnvioIdDomicilioTipo: TIntegerField;
+    ADODtStDireccionesEnvioIdentificador: TIntegerField;
+    ADODtStDireccionesEnvioPredeterminado: TBooleanField;
+    ADODtStDireccionesEnvioCalle: TStringField;
+    ADODtStDireccionesEnvioNoExterior: TStringField;
+    ADODtStDireccionesEnvioNoInterior: TStringField;
+    ADODtStDireccionesEnvioColonia: TStringField;
+    ADODtStDireccionesEnvioCodigoPostal: TStringField;
+    ADODtStDireccionesEnvioMunicipio: TStringField;
+    ADODtStDireccionesEnvioPoblacion: TStringField;
+    ADODtStDireccionesEnvioEstado: TStringField;
+    ADODtStDireccionesEnvioPais: TStringField;
+    ADODtStDireccionesEnvioDirEnviocompleta: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -275,6 +293,7 @@ type
     procedure adodsCotizacionesDetalleBeforeDelete(DataSet: TDataSet);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
+    procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     FIdDocAct: Integer;
@@ -560,6 +579,7 @@ begin
   //FEb 8/16
   ADODtStIdentificadores.Open;
  // ADODtStDireccionesCliente.Open;
+
 end;
 
 procedure TdmCotizaciones.adodsMasterBeforeDelete(DataSet: TDataSet);
@@ -638,6 +658,15 @@ procedure TdmCotizaciones.ADODtStDireccionesClienteCalcFields(
 begin
   inherited;
   dataset.FieldByName('DirCompleta').AsString:= Uppercase(dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
+                                                ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString+
+                                                '. '+dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString);
+
+end;
+
+procedure TdmCotizaciones.ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
+begin
+  inherited; //Jun 16/16
+  DataSet.FieldByName('DirEnvioCompleta').AsString:= Uppercase(dataset.FieldByName('Calle').AsString+ dataset.FieldByName('NoExterior').AsString+
                                                 ' '+dataset.FieldByName('Colonia').AsString +' '+ dataset.FieldByName('CodigoPostal').AsString+
                                                 '. '+dataset.FieldByName('Municipio').AsString +', '+dataset.FieldByName('Estado').AsString);
 

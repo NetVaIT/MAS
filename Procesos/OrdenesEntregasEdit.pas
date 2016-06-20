@@ -101,7 +101,7 @@ type
     BitBtn1: TBitBtn;
     DBLookupComboBox2: TDBLookupComboBox;
     BitBtn2: TBitBtn;
-    DBText1: TDBText;
+    DBTxtQuienEntrega: TDBText;
     lblRespEntrega: TLabel;
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
@@ -112,12 +112,14 @@ type
     procedure BtBtnCancelaProcClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
+    procedure FormShow(Sender: TObject);
   private
     FCargarDocGuia: TBasicAction;
     procedure ImprimirEtiqueta(IdInfoentrega, IDDocumentoSalida,
       cualRep: Integer);
     procedure SetCargarDocGuia(const Value: TBasicAction);
     procedure ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo:Integer);
+    procedure PermisosEdicion;
     { Private declarations }
   public
     { Public declarations }
@@ -131,7 +133,7 @@ implementation
 
 {$R *.dfm}
 
-uses OrdenesEntregasDM, ImpresosSalidasDM, OrdenesEntregasGrid;
+uses OrdenesEntregasDM, ImpresosSalidasDM, OrdenesEntregasGrid, _ConectionDmod;
 
 procedure TfrmOrdenesEntregasEdit.BtBtnAceptarClick(Sender: TObject);
 var estatus:Integer;
@@ -367,10 +369,16 @@ begin
   BtBtnImprimeEtiqueta.Enabled:=datasource.State=dsBrowse;
   BtBtnOrdenEmbarque.Enabled:= BtBtnImprimeEtiqueta.Enabled;
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
+
+  BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=4) and      //Jun 14/16
+                         (not Datasource.DataSet.FieldByName('FechaIniEmpaque').IsNull) and
+                         (Datasource.DataSet.FieldByName('FechaFinEmpaque').IsNull);
+
   //Jun 13/16
 
   BtBtnEmpaca.Visible:= (Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=4) and
                         (Datasource.DataSet.FieldByName('FechaIniEmpaque').IsNull) and (not PnlEmpaca.visible);
+
 
   LblEmpaco.Visible:=not(Datasource.DataSet.FieldByName('FechaIniEmpaque').IsNull);
  if LblEmpaco.Visible and (Datasource.DataSet.FieldByName('FechaFinEmpaque').IsNull) then
@@ -383,6 +391,9 @@ begin
   BtBtnEnviar.Visible:=(Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=5)and (Datasource.DataSet.FieldByName('IDResponsableEntrega').IsNull)
                        and ( not PnlEnviar.visible);
   lblRespEntrega.Visible:=not(Datasource.DataSet.FieldByName('IdResponsableEntrega').IsNull) and  (not BtBtnEnviar.Visible) ;
+
+  Datasource.AutoEdit:= not (Datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger=6); //Jun |4/16
+
 end;
 
 procedure TfrmOrdenesEntregasEdit.FormActivate(Sender: TObject);
@@ -396,6 +407,12 @@ begin
   inherited;
    gFormGrid := TfrmOrdenesEntregasGrid.Create(Self); //Jun 9/16
    DSDireccionenvios.DataSet.Open; //Jun 9/16
+end;
+
+procedure TfrmOrdenesEntregasEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  PermisosEdicion;
 end;
 
 procedure TfrmOrdenesEntregasEdit.ImprimirEtiqueta(IdInfoentrega, IDDocumentoSalida,cualRep: Integer);
@@ -422,6 +439,22 @@ procedure TfrmOrdenesEntregasEdit.SetCargarDocGuia(const Value: TBasicAction);
 begin
   FCargarDocGuia := Value;
   btbtnAdjGuia.Action := Value;
+end;
+
+
+Procedure TfrmOrdenesEntregasEdit.PermisosEdicion; //Jun 14/16
+var i :Integer;
+begin
+  //Tag 50 elementos que debenser deshabilitados   //aban or (datasource.DataSet.fieldbyName('idEstatusOrdenEntrega').asinteger=6)
+  if (pos('autoriza',_dmConection.PerFuncion)=0) then
+  begin
+    for i:=0 to ComponentCount-1 do
+    begin
+      if (Components[i] is TwinControl) and(Components[i].Tag =50)  then //Verificar
+         (Components[i] as TwinControl).Enabled:=False;
+    end;
+  end;
+
 end;
 
 end.

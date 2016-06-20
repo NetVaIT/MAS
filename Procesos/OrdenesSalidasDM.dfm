@@ -10,12 +10,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
-      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'OS.FechaRegis' +
-      'tro, OS.Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniR' +
-      'evisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPerso' +
-      'naAutoriza, FechaAutoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Su' +
-      'btotal, OS.IVA,os.IDPersonaDomicilio'#13#10'from OrdenesSalidas OS'#13#10'Or' +
-      'der by IdOrdenEstatus,OS.FechaRegistro Desc'
+      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca,IDPersonaEntrega' +
+      ', '#13#10'OS.FechaRegistro, OS.Total, FechaIniRecolecta, FechaFinRecol' +
+      'ecta, '#13#10'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFin' +
+      'Empaca,'#13#10' IdPersonaAutoriza, FechaAutoriza, IdGeneraCFDITipoDoc,' +
+      ' Acumula,'#13#10'OS. Subtotal, OS.IVA,os.IDPersonaDomicilio'#13#10'from Orde' +
+      'nesSalidas OS'#13#10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -223,6 +223,38 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 50
       Lookup = True
     end
+    object adodsMasterIDPersonaEntrega: TIntegerField
+      FieldName = 'IDPersonaEntrega'
+    end
+    object adodsMasterPersonaEntrega: TStringField
+      FieldKind = fkLookup
+      FieldName = 'PersonaEntrega'
+      LookupDataSet = AdoDtstPersonaEntrega
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IDPersonaEntrega'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterDirEnvio: TStringField
+      FieldKind = fkLookup
+      FieldName = 'DirEnvio'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'DireccionEnvio'
+      KeyFields = 'IdDocumentoSalida'
+      Size = 200
+      Lookup = True
+    end
+    object adodsMasterIdDireccionEnvio: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'IdDireccionEnvio'
+      LookupDataSet = ADODtStDireccionesEnvio
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'IdPersonaDomicilio'
+      KeyFields = 'IDPersonaDomicilio'
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -383,7 +415,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -405,7 +436,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRecolecta: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -439,7 +469,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaRevisa: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -473,7 +502,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPersonaEmpaca: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -532,15 +560,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 241
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
-      'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio'#13 +
-      #10' from DocumentosSalidas DS'#13#10' inner join Personas P on P.IDperso' +
-      'na =DS.IdPersona'#13#10'inner join PersonasDomicilios PD on PD.IdPerso' +
-      'naDomicilio =Ds.IDDomicilioCliente'
+      'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio,' +
+      #13#10'DS.IdPersonaDomicilioEnvio'#13#10#13#10' from DocumentosSalidas DS'#13#10' inn' +
+      'er join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner join Pers' +
+      'onasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomicilioClient' +
+      'e'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -580,6 +608,19 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStDatosDocumentoSalidaIDDomicilio: TIntegerField
       FieldName = 'IDDomicilio'
     end
+    object ADODtStDatosDocumentoSalidaIdPersonaDomicilioEnvio: TIntegerField
+      FieldName = 'IdPersonaDomicilioEnvio'
+    end
+    object ADODtStDatosDocumentoSalidaDireccionEnvio: TStringField
+      FieldKind = fkLookup
+      FieldName = 'DireccionEnvio'
+      LookupDataSet = ADODtStDireccionesEnvio
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'DirEnviocompleta'
+      KeyFields = 'IdPersonaDomicilioEnvio'
+      Size = 200
+      Lookup = True
+    end
   end
   object DSDatosDocSalida: TDataSource
     DataSet = ADODtStDatosDocumentoSalida
@@ -613,7 +654,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 240
   end
   object ADODtStPersonaAutoriza: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -866,7 +906,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 208
   end
   object ADODtStTelefonos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     OnCalcFields = ADODtStTelefonosCalcFields
@@ -1090,7 +1129,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Top = 297
   end
   object ADODtStIdentificadores: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1135,7 +1173,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object adodsDocumento: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
@@ -1257,7 +1294,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
   end
   object ADODtStPaqueterias: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1353,6 +1389,18 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtstInsertaInfoEntregaCantidadCajas: TIntegerField
       FieldName = 'CantidadCajas'
+    end
+    object ADODtstInsertaInfoEntregaIdPersonaEmpaca: TIntegerField
+      FieldName = 'IdPersonaEmpaca'
+    end
+    object ADODtstInsertaInfoEntregaFechaIniEmpaque: TDateTimeField
+      FieldName = 'FechaIniEmpaque'
+    end
+    object ADODtstInsertaInfoEntregaFechaFinEmpaque: TDateTimeField
+      FieldName = 'FechaFinEmpaque'
+    end
+    object ADODtstInsertaInfoEntregaIdEstatusOrdenEntrega: TIntegerField
+      FieldName = 'IdEstatusOrdenEntrega'
     end
   end
   object ADODtStDireccionesEnvio: TADODataSet
@@ -1450,5 +1498,38 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     DataSet = ADODtStInformacionEnvio
     Left = 524
     Top = 472
+  end
+  object AdoDtstPersonaEntrega: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select P.IdPersona, IdRol, IdPersonaEstatus, RazonSocial , U.Pas' +
+      'sword,U.Permiso'#13#10'from Personas P inner join Usuarios U on P.IdPe' +
+      'rsona =U.idPersona'#13#10'where P.idRol=3 and U.IDUsuarioEstatus=1'
+    Parameters = <>
+    Left = 400
+    Top = 160
+    object AdoDtstPersonaEntregaIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object AdoDtstPersonaEntregaIdRol: TIntegerField
+      FieldName = 'IdRol'
+    end
+    object AdoDtstPersonaEntregaIdPersonaEstatus: TIntegerField
+      FieldName = 'IdPersonaEstatus'
+    end
+    object AdoDtstPersonaEntregaRazonSocial: TStringField
+      FieldName = 'RazonSocial'
+      Size = 300
+    end
+    object AdoDtstPersonaEntregaPassword: TStringField
+      FieldName = 'Password'
+      Size = 15
+    end
+    object AdoDtstPersonaEntregaPermiso: TStringField
+      FieldName = 'Permiso'
+      Size = 255
+    end
   end
 end

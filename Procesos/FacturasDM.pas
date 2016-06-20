@@ -423,6 +423,7 @@ type
     adodsMasterTotalEnLetra: TStringField;
     ActImpNotasVenta: TAction;
     ActEnvioCorreoNotasVenta: TAction;
+    ActCancelaNotaVenta: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -443,6 +444,7 @@ type
     procedure ActEnvioCorreoNotasVentaExecute(Sender: TObject);
     procedure ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
+    procedure ActCancelaNotaVentaExecute(Sender: TObject);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -518,6 +520,40 @@ begin
 
 end;
 
+procedure TDMFacturas.ActCancelaNotaVentaExecute(Sender: TObject);
+var
+   dato, motivo : String;
+   EsPresupuesto:Boolean;
+begin
+  inherited;
+  //ShowMessage('Cancelación En proceso');
+  dato:= '¿Está seguro CANCELAR el documento con Folio:'
+           +adodsMaster.fieldbyname('Folio').ASString+' Serie: '
+           +adodsMaster.fieldbyname('Serie').ASString +'?';
+
+  motivo:= ' ';
+  if (Application.MessageBox(pChar(dato),'Confirmación',MB_YESNO)=IDYES) and(inputQuery('Motivo Cancelación','Motivo cancelacion',motivo)) then
+  begin
+    EsPresupuesto:= adodsMasterIdCFDIEstatus.AsInteger=5 ; //Presupuestos, las Acumuladas son las que quedan en 4 y esas no aplica
+
+
+    adodsMaster.Edit;
+    adodsMasterFechaCancelacion.AsDateTime:=Now;
+    adodsMasterIdCFDIEstatus.AsInteger:=3;
+    adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo;
+    adodsMaster.Post;
+
+    if ESPresupuesto then// (adodsMasterIdCFDITipoDocumento.AsInteger=4) and (adodsMasterIdCFDIFacturaGral.IsNull) then //Jun 17/16 Solo Notas Ventas  que no esten
+    begin
+      //Verificar aca si se va a generar orden de entrada o sólo se revierten datos..
+
+      RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Jun 17/16    Desde NotasVenta
+
+      ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
+    end;
+  end;
+end;
+
 procedure TDMFacturas.ActCancelarCFDIExecute(Sender: TObject);
 var
   Certificado: TFECertificado;
@@ -581,7 +617,7 @@ begin
           adodsMaster.Post;
            //Actualiza Inventario y demás   //Mar 7/16
           if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
-             RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+             RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16     //Cancelado Antes
 
           if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
              ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
@@ -603,7 +639,7 @@ begin
 
                //Actualiza Inventario y demás   //Mar 7/16       //Este nunca estará aca ya que es factura la asociada abr 18/16
              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
-                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16   Normal cancelacion
              if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
                ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
             //Actualizar Saldo Cliente
@@ -624,7 +660,7 @@ begin
                adodsMaster.Post;
                  //Actualiza Inventario y demás   //Mar 7/16
              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
-                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16
+                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16    PruebaCancelacion
              if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
                 ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
                 //Actualizar Saldo Cliente
@@ -1263,7 +1299,11 @@ begin
           //ShowMessage('Envio a Cliente por Correo Electronico en proceso');
         end
         else
+        begin
           Showmessage('Error Generando CFDI '+TimbreCFDI.MensajeError);//Dic 29/15
+          ShowProgress(100,100.1,'Proceso Terminado con errores ' + IntToStr(100) + '%');  //Jun 16/16
+          ShowProgress(100,100); //Jun 16/16
+        end
         end
         else
           application.MessageBox('No se pudo Crear el directorio. Verifique permisos', 'Error', MB_Ok);
@@ -1587,8 +1627,8 @@ begin
   cont :=0;//abr 1/16
   try
     ADODtStDatosActInv.Connection.BeginTrans;
-    if (idreceptor<>-1) and (IDTipoDoc=1) then
-    begin
+    if (idreceptor<>-1) and ((IDTipoDoc=1)or (IDTIpoDoc=4)) then
+    begin                                   //Jun 17/16 debe tener el Estatus 5  sino no debe llegar aca
       ADOQryActualizaInventario.SQL.Clear; // Mar 8/16
        //  Cancela  OrdenSalida  //Verificar si a los registros de Items de OrdenSalida se les quita el IDDocumentoDetalle..
       ADOQryActualizaInventario.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus = 8  , FechaCancela = getdate() ' //Cancelada
@@ -1635,20 +1675,21 @@ begin
                                           +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
         AdoQryAuxiliar.Open;  //Hasta Abr. 14/16
         if not AdoQryAuxiliar.eof then
+        begin // Jun 17/16 Se coloco todo en el if
           IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
 
-        //Necesitamos el espacio  //Abr 14/16
+          //Necesitamos el espacio  //Abr 14/16
 
-        ADOQryActualizaInventario.SQL.Clear;            //Aca se regresa la sumatoria C. Mar 18/16
-        ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad + '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
-                                         +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
-                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString +' and IDProductoXEspacio='+intToStr(IDPXE));
-                                                                                                                   //Agregado Ab. 14, por si hay mas ubicaciones);
+          ADOQryActualizaInventario.SQL.Clear;            //Aca se regresa la sumatoria C. Mar 18/16
+          ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad + '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                           +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
+                                           +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString +' and IDProductoXEspacio='+intToStr(IDPXE));
+                                                                                                                     //Agregado Ab. 14, por si hay mas ubicaciones);
 
-        ADOQryActualizaInventario.ExecSQL;
+          ADOQryActualizaInventario.ExecSQL;
 
-        Texto:=Texto +' Revierte ProductoEspacio';
-
+          Texto:=Texto +' Revierte ProductoEspacio';
+        end;
         if idreceptor<>-1 then
         begin
           ADOQryActualizaInventario.SQL.Clear; //No estaba                        //Cancelar registro
@@ -2029,6 +2070,9 @@ begin
   TfrmFacturasFormEdit(gGridEditForm).TipoDocumento:=TipoDocumento;
   TfrmFacturasFormEdit(gGridEditForm).ActFacturaDiaria:=ActPreFacturaNotaVenta; //Mar 31/16
   TfrmFacturasFormEdit(gGridEditForm).ActImprimeNotaVenta:= ActImpNotasVenta;
+
+  TfrmFacturasFormEdit(gGridEditForm).ActCancelaNotaVenta:= ActCancelaNotaVenta;
+
 
 end;
 

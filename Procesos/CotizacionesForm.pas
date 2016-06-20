@@ -131,6 +131,9 @@ type
     Label21: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBRadioGroup1: TcxDBRadioGroup;
+    Label22: TLabel;
+    DBLookupComboBox3: TDBLookupComboBox;
+    DSDireccionenvios: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
@@ -264,6 +267,10 @@ begin
   toolbutton10.enabled:= pnlMaster.Enabled;
   toolbutton12.Enabled:=pnlMaster.Enabled;
   LstBxAdjuntosMail.Clear;
+
+  DSDireccionenvios.dataset.Close;  //Jun 16/16
+  TadoDataset(DSDireccionenvios.dataset).Parameters.ParamByName('IdPersona').value:= DataSource.DataSet.FieldByName('IdPersona').AsInteger; //DEberia Funcionar
+  DSDireccionenvios.dataset.Open;
 end;
 
 procedure TfrmCotizaciones.DataSourceStateChange(Sender: TObject);
@@ -369,6 +376,12 @@ begin
      dsDireccionCliente.dataset.close;
      TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLkpCmbBxCliente.KeyValue; //DEberia Funcionar
      dsDireccionCliente.dataset.Open;
+
+     DSDireccionenvios.dataset.Close;
+     TadoDataset(DSDireccionenvios.dataset).Parameters.ParamByName('IdPersona').value:= DBLkpCmbBxCliente.KeyValue; //DEberia Funcionar
+     DSDireccionenvios.dataset.Open;
+
+
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
      TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLkpCmbBxCliente.KeyValue;
@@ -622,7 +635,9 @@ begin
   Datasource.dataset.close;
   Datasource.dataset.Open;
   Datasource.dataset.Locate('idDocumentoSalida',id,[]); //Ene 14/16
-  DataSourceDetail.DataSet.refresh; //Mar 29/16
+
+  DataSourceDetail.DataSet.Close;
+  DataSourceDetail.DataSet.Open; // se cambio el refresh porque mostraba todo ..Jun 17/16
   //Si se ven deberia ubicarse en la modificada
  (* if res then // Abr 18/16
   begin

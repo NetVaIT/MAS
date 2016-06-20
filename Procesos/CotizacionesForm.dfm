@@ -179,12 +179,14 @@ inherited frmCotizaciones: TfrmCotizaciones
           ExplicitHeight = 474
           object pnlDetail: TPanel
             Left = 0
-            Top = 161
+            Top = 209
             Width = 1273
-            Height = 202
+            Height = 154
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitTop = 161
+            ExplicitHeight = 202
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -275,7 +277,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Left = 0
               Top = 29
               Width = 1273
-              Height = 173
+              Height = 125
               Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
               Color = clBtnFace
@@ -382,7 +384,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Left = 0
             Top = 0
             Width = 1273
-            Height = 161
+            Height = 209
             Align = alTop
             TabOrder = 1
             ExplicitTop = 3
@@ -394,8 +396,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'Fecha Registro'
             end
             object Label5: TLabel
-              Left = 223
-              Top = 106
+              Left = 208
+              Top = 105
               Width = 62
               Height = 13
               Caption = 'Vigencia D'#237'as'
@@ -410,8 +412,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               FocusControl = DBLkpCmbBxCliente
             end
             object Label8: TLabel
-              Left = 41
-              Top = 106
+              Left = 39
+              Top = 105
               Width = 38
               Height = 13
               Caption = 'Moneda'
@@ -531,16 +533,24 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnClick = SpdBtnBuscaParteClick
             end
             object Label21: TLabel
-              Left = 370
-              Top = 109
+              Left = 39
+              Top = 154
               Width = 49
               Height = 13
               Caption = 'Enviar Por'
               FocusControl = DBLookupComboBox1
             end
+            object Label22: TLabel
+              Left = 370
+              Top = 149
+              Width = 69
+              Height = 18
+              Caption = 'DireccionEnvio'
+              FocusControl = DBLookupComboBox3
+            end
             object cxDBSpinEdit1: TcxDBSpinEdit
-              Left = 223
-              Top = 125
+              Left = 208
+              Top = 124
               DataBinding.DataField = 'VigenciaDias'
               DataBinding.DataSource = DataSource
               TabOrder = 4
@@ -559,8 +569,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnKeyDown = DBGrdDetallesKeyDown
             end
             object DBLookupComboBox2: TDBLookupComboBox
-              Left = 41
-              Top = 125
+              Left = 40
+              Top = 124
               Width = 135
               Height = 21
               DataField = 'Moneda'
@@ -610,6 +620,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 92
+              AnchorX = 285
             end
             object cxDBLabel3: TcxDBLabel
               Left = 824
@@ -642,7 +653,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
               Left = 370
               Top = 77
-              Width = 439
+              Width = 500
               Height = 21
               DataField = 'IdDomicilioCliente'
               DataSource = DataSource
@@ -693,6 +704,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 90
+              AnchorX = 762
             end
             object cxDBLabel7: TcxDBLabel
               Left = 824
@@ -702,6 +714,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnClick = cxDBLabel7Click
               Height = 21
               Width = 78
+              AnchorX = 902
             end
             object cxDBLabel8: TcxDBLabel
               Left = 908
@@ -710,6 +723,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 62
+              AnchorX = 970
             end
             object PnlSumasSaldos: TPanel
               Left = 768
@@ -842,8 +856,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 152
             end
             object DBLookupComboBox1: TDBLookupComboBox
-              Left = 370
-              Top = 125
+              Left = 39
+              Top = 170
               Width = 155
               Height = 21
               DataField = 'EnviarPor'
@@ -851,12 +865,13 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 20
             end
             object cxDBRadioGroup1: TcxDBRadioGroup
-              Left = 540
-              Top = 98
+              Left = 208
+              Top = 151
               TabStop = False
               Caption = 'Servicio'
               DataBinding.DataField = 'Servicio'
               DataBinding.DataSource = DataSource
+              Properties.Columns = 2
               Properties.Items = <
                 item
                   Caption = 'Ocurre'
@@ -867,8 +882,20 @@ inherited frmCotizaciones: TfrmCotizaciones
                   Value = 'Domicilio'
                 end>
               TabOrder = 21
-              Height = 57
-              Width = 78
+              Height = 43
+              Width = 150
+            end
+            object DBLookupComboBox3: TDBLookupComboBox
+              Left = 364
+              Top = 170
+              Width = 500
+              Height = 21
+              DataField = 'IdPersonaDomicilioEnvio'
+              DataSource = DataSource
+              KeyField = 'IdPersonaDomicilio'
+              ListField = 'DirEnviocompleta'
+              ListSource = DSDireccionenvios
+              TabOrder = 22
             end
           end
           object Panel1: TPanel
@@ -988,14 +1015,14 @@ inherited frmCotizaciones: TfrmCotizaciones
     DataSet = dmCotizaciones.adodsMaster
     OnStateChange = DataSourceStateChange
     OnDataChange = DataSourceDataChange
-    Left = 934
-    Top = 80
+    Left = 966
+    Top = 32
   end
   inherited ilPageControl: TImageList
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1205,7 +1232,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C0020C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002100210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2143,13 +2170,13 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DataSourceDetail: TDataSource
     DataSet = dmCotizaciones.adodsCotizacionesDetalle
-    Left = 608
-    Top = 80
+    Left = 1024
+    Top = 32
   end
   object DSAuxiliar: TDataSource
     DataSet = dmCotizaciones.ADODSAuxiliar
-    Left = 688
-    Top = 112
+    Left = 1000
+    Top = 216
   end
   object DSOrdenSalidaItems: TDataSource
     DataSet = dmCotizaciones.ADODtStOrdenSalidaItem
@@ -2163,8 +2190,8 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSQryBorrar: TDataSource
     DataSet = dmCotizaciones.ADOQryAuxiliar
-    Left = 800
-    Top = 248
+    Left = 808
+    Top = 296
   end
   object DSDireccioncliente: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccAuxiliar
@@ -2181,12 +2208,17 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSAntSaldos: TDataSource
     DataSet = dmCotizaciones.ADODtStAntSaldos
-    Left = 616
-    Top = 128
+    Left = 864
+    Top = 208
   end
   object DSCotizacionArchivo: TDataSource
     DataSet = dmCotizaciones.ADODtStArchivoAsociado
-    Left = 624
-    Top = 176
+    Left = 944
+    Top = 216
+  end
+  object DSDireccionenvios: TDataSource
+    DataSet = dmCotizaciones.ADODtStDireccionesEnvio
+    Left = 1068
+    Top = 219
   end
 end

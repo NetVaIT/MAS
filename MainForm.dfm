@@ -1,23 +1,25 @@
 inherited frmMain: TfrmMain
   Caption = 'MAS -Principal'
   ClientHeight = 574
-  ClientWidth = 796
+  ClientWidth = 881
   Font.Height = -32
   OnDestroy = FormDestroy
-  ExplicitWidth = 812
+  ExplicitWidth = 897
   ExplicitHeight = 612
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
-    Width = 796
+    Width = 881
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitWidth = 796
+    ExplicitTop = 5
+    ExplicitWidth = 881
     inherited dxRibbon1Tab1: TdxRibbonTab
       Active = False
       Index = 0
     end
     object dxRbnTbCatalogos: TdxRibbonTab
       Tag = 1000
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -26,12 +28,12 @@ inherited frmMain: TfrmMain
         end>
       Index = 1
     end
-    object dxRibbon1Tab3: TdxRibbonTab
-      Tag = 3000
-      Caption = 'Almac'#233'n'
+    object dxRibbon1Tab5: TdxRibbonTab
+      Tag = 4000
+      Caption = 'Compras'
       Groups = <
         item
-          ToolbarName = 'dxbAlmacenes'
+          ToolbarName = 'dxBarManagerBar2'
         end>
       Index = 2
     end
@@ -45,13 +47,12 @@ inherited frmMain: TfrmMain
         end>
       Index = 3
     end
-    object dxRibbon1Tab5: TdxRibbonTab
-      Tag = 4000
-      Active = True
-      Caption = 'Compras'
+    object dxRibbon1Tab3: TdxRibbonTab
+      Tag = 3000
+      Caption = 'Devoluciones'
       Groups = <
         item
-          ToolbarName = 'dxBarManagerBar2'
+          ToolbarName = 'dxbDevoluciones'
         end>
       Index = 4
     end
@@ -64,6 +65,18 @@ inherited frmMain: TfrmMain
         end>
       Index = 5
     end
+    object dxRbnTbCierre: TdxRibbonTab
+      Tag = 7000
+      Caption = 'Cierre'
+      Groups = <
+        item
+          Caption = 'Cierre'
+        end
+        item
+          ToolbarName = 'dxBarManagerBar5'
+        end>
+      Index = 6
+    end
     object dxRibbon1Tab7: TdxRibbonTab
       Tag = 5000
       Caption = 'Reportes'
@@ -71,7 +84,7 @@ inherited frmMain: TfrmMain
         item
           ToolbarName = 'dxbReportes'
         end>
-      Index = 6
+      Index = 7
     end
   end
   inherited dxRibbonBackstageView1: TdxRibbonBackstageView
@@ -96,14 +109,14 @@ inherited frmMain: TfrmMain
   end
   inherited dxRibbonStatusBar1: TdxRibbonStatusBar
     Top = 551
-    Width = 796
+    Width = 881
     ExplicitTop = 551
-    ExplicitWidth = 796
+    ExplicitWidth = 881
   end
   inherited pnlMain: TPanel
-    Width = 796
+    Width = 881
     Height = 396
-    ExplicitWidth = 796
+    ExplicitWidth = 881
     ExplicitHeight = 396
   end
   inherited dxBarManager: TdxBarManager
@@ -181,6 +194,10 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLrgBtnPaqueteria'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBrLrgBtnAlmacenes'
         end>
       OneOnRow = True
       Row = 0
@@ -236,8 +253,8 @@ inherited frmMain: TfrmMain
       Visible = True
       WholeRow = False
     end
-    object dxbAlmacenes: TdxBar [4]
-      Caption = 'Almacenes'
+    object dxbDevoluciones: TdxBar [4]
+      Caption = 'Devoluciones'
       CaptionButtons = <>
       DockedLeft = 0
       DockedTop = 0
@@ -246,10 +263,6 @@ inherited frmMain: TfrmMain
       FloatClientWidth = 87
       FloatClientHeight = 108
       ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarLargeButton18'
-        end
         item
           Visible = True
           ItemName = 'dxBrLrgBtnDevolucion'
@@ -349,6 +362,26 @@ inherited frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarLargeButton27'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object dxBarManagerBar5: TdxBar [8]
+      Caption = 'Cierre'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 915
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton35'
         end>
       OneOnRow = True
       Row = 0
@@ -548,6 +581,16 @@ inherited frmMain: TfrmMain
     object dxBarLargeButton34: TdxBarLargeButton
       Tag = 46
       Action = actProductosXEspacio
+      Category = 0
+    end
+    object dxBrLrgBtnAlmacenes: TdxBarLargeButton
+      Tag = 30
+      Action = actAlmacenes
+      Category = 0
+    end
+    object dxBarLargeButton35: TdxBarLargeButton
+      Tag = 70
+      Action = ActCierreReporteMensual
       Category = 0
     end
   end
@@ -11160,6 +11203,12 @@ inherited frmMain: TfrmMain
       Caption = 'Acomodo de mercancia'
       ImageIndex = 16
       OnExecute = actCatalogoExecute
+    end
+    object ActCierreReporteMensual: TAction
+      Tag = 70
+      Category = 'Cierre'
+      Caption = 'Reporte Mensual'
+      ImageIndex = 0
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

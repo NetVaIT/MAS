@@ -44,7 +44,6 @@ type
     tvMasterFechaFinEmpaque: TcxGridDBColumn;
     tvMasterTelefonoCompleto: TcxGridDBColumn;
     tvMasterDocGuia: TcxGridDBColumn;
-    tvMasterPaqueteria: TcxGridDBColumn;
     tvMasterCliente: TcxGridDBColumn;
     tvMasterDireccionEnvio: TcxGridDBColumn;
     PnlBusqueda: TPanel;
@@ -53,6 +52,9 @@ type
     PnlFechas: TPanel;
     SpdBtnConsulta: TSpeedButton;
     RdGrpEstado: TRadioGroup;
+    tvMasterPersonaEmpaca: TcxGridDBColumn;
+    tvMasterPersonaEnvia: TcxGridDBColumn;
+    tvMasterEstatusOrden: TcxGridDBColumn;
     procedure EdtNombreChange(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);

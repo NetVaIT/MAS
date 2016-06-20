@@ -134,7 +134,6 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitHeight = 140
       object tvgrid1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dsOrdenesSalida
@@ -184,19 +183,19 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     Width = 1041
     Height = 413
     ExplicitWidth = 1041
-    ExplicitHeight = 341
+    ExplicitHeight = 413
     ClientRectBottom = 412
     ClientRectRight = 1040
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1039
-      ExplicitHeight = 339
+      ExplicitHeight = 411
       inherited cxScrollBox1: TcxScrollBox
         Width = 1039
         Height = 411
         ExplicitWidth = 1039
-        ExplicitHeight = 339
+        ExplicitHeight = 411
         inherited tbarData: TToolBar
           Width = 1037
           ExplicitLeft = 0
@@ -212,7 +211,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
         inherited pnlMaster: TPanel
           Width = 1037
           Height = 384
-          ExplicitTop = 27
+          ExplicitTop = 25
           ExplicitWidth = 1037
           ExplicitHeight = 384
           object Label1: TLabel
@@ -306,10 +305,10 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             FocusControl = DBLookupComboBox1
           end
           object DBTxtQuienEmpaca: TDBText
-            Left = 93
+            Left = 110
             Top = 298
             Width = 94
-            Height = 19
+            Height = 13
             AutoSize = True
             DataField = 'PersonaEmpaca'
             DataSource = DataSource
@@ -318,7 +317,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Left = 33
             Top = 298
             Width = 47
-            Height = 17
+            Height = 13
             Caption = 'Empac'#243':'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -327,10 +326,10 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Font.Style = [fsBold]
             ParentFont = False
           end
-          object DBText1: TDBText
+          object DBTxtQuienEntrega: TDBText
             Left = 160
             Top = 347
-            Width = 129
+            Width = 95
             Height = 13
             AutoSize = True
             DataField = 'PersonaEnvia'
@@ -352,7 +351,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
           object PnlEnviar: TPanel
             Left = 1
             Top = 330
-            Width = 744
+            Width = 696
             Height = 47
             BevelOuter = bvNone
             TabOrder = 25
@@ -457,7 +456,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Width = 713
             Height = 47
             BevelOuter = bvNone
-            TabOrder = 23
+            TabOrder = 22
             Visible = False
             object Label14: TLabel
               Left = 320
@@ -558,74 +557,81 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             DataBinding.DataSource = DataSource
             Height = 21
             Width = 121
-            AnchorX = 153
           end
           object cxDBTextEdit2: TcxDBTextEdit
+            Tag = 50
             Left = 182
             Top = 98
             DataBinding.DataField = 'CondicionEntrega'
             DataBinding.DataSource = DataSource
-            TabOrder = 1
+            TabOrder = 0
             Width = 287
           end
           object cxDBTextEdit3: TcxDBTextEdit
+            Tag = 50
             Left = 471
             Top = 234
             DataBinding.DataField = 'Observaciones'
             DataBinding.DataSource = DataSource
-            TabOrder = 2
+            TabOrder = 1
             Width = 421
           end
           object cxDBCheckBox1: TcxDBCheckBox
+            Tag = 50
             Left = 320
             Top = 218
             Caption = 'Flete Pagado'
             DataBinding.DataField = 'PagoFlete'
             DataBinding.DataSource = DataSource
-            TabOrder = 3
+            TabOrder = 2
             Width = 88
           end
           object cxDBCheckBox2: TcxDBCheckBox
+            Tag = 50
             Left = 320
             Top = 243
             Caption = 'Asegurado'
             DataBinding.DataField = 'Asegurado'
             DataBinding.DataSource = DataSource
-            TabOrder = 4
+            TabOrder = 3
             Width = 87
           end
           object cxDBTextEdit5: TcxDBTextEdit
+            Tag = 50
             Left = 31
             Top = 233
             DataBinding.DataField = 'Valor'
             DataBinding.DataSource = DataSource
-            TabOrder = 5
+            TabOrder = 4
             Width = 129
           end
           object cxDBDateEdit1: TcxDBDateEdit
+            Tag = 50
             Left = 185
             Top = 39
             DataBinding.DataField = 'FechaProgramadaEnt'
             DataBinding.DataSource = DataSource
-            TabOrder = 6
+            TabOrder = 5
             Width = 127
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 320
             Top = 142
             DataBinding.DataField = 'Conducto'
-            TabOrder = 7
+            TabOrder = 6
             Width = 197
           end
           object cxDBTextEdit4: TcxDBTextEdit
+            Tag = 50
             Left = 31
             Top = 143
             DataBinding.DataField = 'Contenido'
             DataBinding.DataSource = DataSource
-            TabOrder = 8
+            TabOrder = 7
             Width = 278
           end
           object cxDBRadioGroup1: TcxDBRadioGroup
+            Tag = 50
             Left = 523
             Top = 118
             TabStop = False
@@ -641,7 +647,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
                 Caption = 'Domicilio'
                 Value = 'Domicilio'
               end>
-            TabOrder = 9
+            TabOrder = 8
             Height = 57
             Width = 78
           end
@@ -667,7 +673,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               05555555555555777FF5555555555557905555555555555777FF555555555555
               5990555555555555577755555555555555555555555555555555}
             NumGlyphs = 2
-            TabOrder = 10
+            TabOrder = 9
             Visible = False
           end
           object BtBtnCancelaInfoEnt: TBitBtn
@@ -692,7 +698,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               9993337773337333777333333333333333333333333333333333333333333333
               3333333333333333333333333333333333333333333333333333}
             NumGlyphs = 2
-            TabOrder = 11
+            TabOrder = 10
             Visible = False
           end
           object BtBtnImprimeEtiqueta: TBitBtn
@@ -717,11 +723,11 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
               33333337FFFF7733333333300000033333333337777773333333}
             NumGlyphs = 2
-            TabOrder = 12
+            TabOrder = 11
             OnClick = BtBtnImprimeEtiquetaClick
           end
           object BtBtnAdjGuia: TBitBtn
-            Tag = 20
+            Tag = 50
             Left = 768
             Top = 140
             Width = 96
@@ -742,14 +748,15 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               33337F7737F7333333330FFFF003333333337FFFF77333333333000000333333
               3333777777333333333333333333333333333333333333333333}
             NumGlyphs = 2
-            TabOrder = 13
+            TabOrder = 12
           end
           object cxDBTextEdit6: TcxDBTextEdit
+            Tag = 50
             Left = 166
             Top = 233
             DataBinding.DataField = 'CantidadCajas'
             DataBinding.DataSource = DataSource
-            TabOrder = 14
+            TabOrder = 13
             Width = 96
           end
           object cxDBLabel1: TcxDBLabel
@@ -761,6 +768,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Width = 137
           end
           object cmbTelefono: TcxDBLookupComboBox
+            Tag = 50
             Left = 31
             Top = 97
             DataBinding.DataField = 'TelefonoCompleto'
@@ -773,7 +781,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               item
                 FieldName = 'Descripcion'
               end>
-            TabOrder = 16
+            TabOrder = 14
             Width = 141
           end
           object BtBtnOrdenEmbarque: TBitBtn
@@ -798,17 +806,18 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               3333777777777777333333399033333333333337773333333333333903333333
               3333333773333333333333303333333333333337333333333333}
             NumGlyphs = 2
-            TabOrder = 17
+            TabOrder = 15
             OnClick = BtBtnOrdenEmbarqueClick
           end
           object DBLkupCmbBxPaqueteria: TDBLookupComboBox
+            Tag = 50
             Left = 320
             Top = 142
             Width = 197
             Height = 21
             DataField = 'Paqueteria'
             DataSource = DataSource
-            TabOrder = 18
+            TabOrder = 16
           end
           object cxDBLabel3: TcxDBLabel
             Left = 337
@@ -819,6 +828,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Width = 555
           end
           object DBLookupComboBox1: TDBLookupComboBox
+            Tag = 50
             Left = 32
             Top = 188
             Width = 860
@@ -828,7 +838,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             KeyField = 'IdPersonaDomicilio'
             ListField = 'DirEnviocompleta'
             ListSource = DSDireccionenvios
-            TabOrder = 20
+            TabOrder = 18
           end
           object BtBtnEmpaca: TBitBtn
             Tag = 4
@@ -864,7 +874,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-            TabOrder = 21
+            TabOrder = 19
             OnClick = BtBtnEmpacaClick
           end
           object BtBtnEnviar: TBitBtn
@@ -901,7 +911,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-            TabOrder = 22
+            TabOrder = 20
             OnClick = BtBtnEmpacaClick
           end
           object BtBtnFinEmpaque: TBitBtn
@@ -925,7 +935,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               33333333337F7F33333333333309033333333333337F7F333333333333090333
               33333333337F7F33333333333300033333333333337773333333}
             NumGlyphs = 2
-            TabOrder = 24
+            TabOrder = 23
             Visible = False
             OnClick = BtBtnFinEmpaqueClick
           end
@@ -939,7 +949,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1080,7 +1090,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

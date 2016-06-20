@@ -320,6 +320,10 @@ inherited DMFacturas: TDMFacturas
       Caption = 'ActEnvioCorreoNotasVenta'
       OnExecute = ActEnvioCorreoNotasVentaExecute
     end
+    object ActCancelaNotaVenta: TAction
+      Caption = 'Cancela Nota Venta'
+      OnExecute = ActCancelaNotaVentaExecute
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster

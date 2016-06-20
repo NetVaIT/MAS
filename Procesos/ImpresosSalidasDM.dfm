@@ -8124,7 +8124,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     CommandText = 
       'select PE.Cantidad, PE.IDCategoria,E.Descripcion '#13#10'from Producto' +
       'sXEspacio PE '#13#10'inner join Espacios E on E.idEspacio=PE.IdEspacio' +
-      #13#10'where IDProducto=:IdProducto and IdAlmacen=:IdAlmacen'
+      #13#10'where IDProducto=:IdProducto and Pe.IdAlmacen=:IdAlmacen'
     Parameters = <
       item
         Name = 'IdProducto'

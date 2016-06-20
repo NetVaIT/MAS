@@ -457,7 +457,8 @@ inherited dmPagos: TdmPagos
       'select  IdCFDI, IdCFDITipoDocumento, IdPersonaReceptor, '#13#10'IdOrde' +
       'nSalida, IdCFDIEstatus, IdClienteDomicilio, TipoCambio,'#13#10' Serie,' +
       ' Folio, Fecha, Total, SaldoDocumento from CFDI where '#13#10'SaldoDocu' +
-      'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3)'#13#10
+      'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3'#13#10' o' +
+      'r IDCFDITipoDocumento=4)'#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaReceptor;IdClienteDomicilio'
     MasterFields = 'IdPersonaCliente;IdDomicilioCliente'
