@@ -247,10 +247,10 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     AfterDelete = adodsItemsAfterPost
     CommandText = 
       'select IdOrdenEntradaItem, IdOrdenEntrada, IdDocumentoEntradaDet' +
-      'alle, IdProducto, ClaveProducto, Cantidad, CantidadSolicitada, P' +
-      'recio, Importe,'#13#10'ImporteMonedaLocal, ImpuestoArancelario, Gastos' +
-      ', ImporteTotal, CostoAproximado'#13#10'from OrdenesEntradasItems'#13#10'wher' +
-      'e IdOrdenEntrada  = :IdOrdenEntrada'
+      'alle, IdProducto, ClaveProducto, Cantidad, CantidadSolicitada, C' +
+      'osto, Importe,'#13#10'ImporteMonedaLocal, ImpuestoArancelario, Gastos,' +
+      ' ImporteTotal, CostoAproximado'#13#10'from OrdenesEntradasItems'#13#10'where' +
+      ' IdOrdenEntrada  = :IdOrdenEntrada'
     DataSource = dsmaster
     MasterFields = 'IdOrdenEntrada'
     Parameters = <
@@ -259,8 +259,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = 1
+        Value = 10
       end>
     Left = 24
     Top = 80
@@ -306,9 +305,8 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       DisplayLabel = 'Solicitada'
       FieldName = 'CantidadSolicitada'
     end
-    object adodsItemsPrecio: TFMTBCDField
-      FieldName = 'Precio'
-      OnChange = adodsItemsPrecioChange
+    object adodsItemsCosto: TFMTBCDField
+      FieldName = 'Costo'
       currency = True
       Precision = 18
       Size = 6

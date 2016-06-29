@@ -37,7 +37,6 @@ type
     tvMasterProducto: TcxGridDBColumn;
     tvMasterCantidad: TcxGridDBColumn;
     tvMasterCantidadSolicitada: TcxGridDBColumn;
-    tvMasterPrecio: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
     tvMasterImporteMonedaLocal: TcxGridDBColumn;
     tvMasterImpuestoArancelario: TcxGridDBColumn;
@@ -46,6 +45,7 @@ type
     tvMasterCostoAproximado: TcxGridDBColumn;
     btnArancel: TSpeedButton;
     btnGastos: TSpeedButton;
+    tvMasterCosto: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
@@ -111,8 +111,8 @@ end;
 procedure TfrmOrdenesEntradasItemsGrid.SetMostrarImporte(const Value: Boolean);
 begin
   FMostrarImporte := Value;
-  tvMasterPrecio.Visible:= Value;
-  tvMasterPrecio.VisibleForCustomization:= Value;
+  tvMasterCosto.Visible:= Value;
+  tvMasterCosto.VisibleForCustomization:= Value;
   tvMasterImporte.Visible:= Value;
   tvMasterImporte.VisibleForCustomization:= Value;
   //

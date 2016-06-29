@@ -54,7 +54,6 @@ type
     adodsItemsIdProducto: TIntegerField;
     adodsItemsClaveProducto: TStringField;
     adodsItemsCantidad: TFloatField;
-    adodsItemsPrecio: TFMTBCDField;
     adodsProductos: TADODataSet;
     adodsItemsProducto: TStringField;
     adodsItemsImporte: TFMTBCDField;
@@ -99,6 +98,7 @@ type
     actModificarArancel: TAction;
     actModificarGastos: TAction;
     actRecibirMercancia: TAction;
+    adodsItemsCosto: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -330,7 +330,7 @@ begin
     if adodsItems.State in [dsEdit,dsInsert] then
     begin
       adodsItemsIdProducto.Value:= FIdProducto;
-      adodsItemsPrecio.Value:= FPrecio;
+      adodsItemsCosto.Value:= FPrecio;
       adodsItemsCantidadSolicitada.Value:= FCantidadSolicitada;
       CalcularItemsImportes;
     end;
@@ -369,7 +369,7 @@ end;
 
 procedure TdmOrdenesEntradas.CalcularItemsImportes;
 begin
-  adodsItemsImporte.Value := adodsItemsPrecio.Value * adodsItemsCantidad.Value;
+  adodsItemsImporte.Value := adodsItemsCosto.Value * adodsItemsCantidad.Value;
   adodsItemsImporteMonedaLocal.Value := adodsItemsImporte.Value*adodsMasterTipoCambio.Value;
   adodsItemsImporteTotal.Value := adodsItemsImporteMonedaLocal.Value + adodsItemsImpuestoArancelario.Value + adodsItemsGastos.Value;
   if adodsItemsCantidad.Value <> 0 then

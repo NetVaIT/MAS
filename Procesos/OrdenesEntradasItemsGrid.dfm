@@ -53,8 +53,8 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
           Visible = False
           Options.Focusing = False
         end
-        object tvMasterPrecio: TcxGridDBColumn
-          DataBinding.FieldName = 'Precio'
+        object tvMasterCosto: TcxGridDBColumn
+          DataBinding.FieldName = 'Costo'
         end
         object tvMasterImporte: TcxGridDBColumn
           DataBinding.FieldName = 'Importe'
@@ -98,12 +98,9 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmOrdenesEntradas.adodsItems
-  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -264,7 +261,7 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8015C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
