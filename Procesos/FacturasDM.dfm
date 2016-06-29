@@ -278,6 +278,26 @@ inherited DMFacturas: TDMFacturas
       Size = 300
       Calculated = True
     end
+    object adodsMasterMetPagoClaveSAT: TStringField
+      FieldKind = fkLookup
+      FieldName = 'MetPagoClaveSAT'
+      LookupDataSet = ADODtStMetodoPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'ClaveSAT2016'
+      KeyFields = 'IdMetodoPago'
+      Size = 10
+      Lookup = True
+    end
+    object adodsMasterClaveMoneda: TStringField
+      FieldKind = fkLookup
+      FieldName = 'ClaveMoneda'
+      LookupDataSet = ADODtStMonedas
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdMoneda'
+      Size = 10
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     OnNewRecord = adodsMasterNewRecord
@@ -445,8 +465,9 @@ inherited DMFacturas: TDMFacturas
     CommandText = 
       'select IdOrdenSalidaItem, IdUnidadMedida, IdOrdenSalida, IdDocum' +
       'entoSalidaDetalle,'#13#10' ClaveProducto, IdProducto, CantidadDespacha' +
-      'da, Precio, Importe, CantidadSolicitada, Observaciones'#13#10' from Or' +
-      'denesSalidasItems where idOrdenSalida=:IdOrdenSalida'
+      'da, Precio, Importe,'#13#10'CostoUnitario, CantidadSolicitada, Observa' +
+      'ciones'#13#10' from OrdenesSalidasItems where idOrdenSalida=:IdOrdenSa' +
+      'lida'
     DataSource = DSOrdenSalida
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -515,10 +536,16 @@ inherited DMFacturas: TDMFacturas
     object ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
     end
+    object ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField
+      FieldName = 'CostoUnitario'
+      Precision = 18
+      Size = 6
+    end
   end
   object ADODtStCFDIConceptos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforeInsert = ADODtStCFDIConceptosBeforeInsert
     AfterPost = ADODtStCFDIConceptosAfterPost
     OnNewRecord = ADODtStCFDIConceptosNewRecord
     CommandText = 
@@ -562,6 +589,7 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStCFDIConceptosNoIdentifica: TStringField
       FieldName = 'NoIdentifica'
+      OnChange = ADODtStCFDIConceptosNoIdentificaChange
       Size = 50
     end
     object ADODtStCFDIConceptosValorUnitario: TFMTBCDField
@@ -736,7 +764,7 @@ inherited DMFacturas: TDMFacturas
       'iones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M o' +
       'n M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado' +
       '=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where Pe' +
-      '.iDRol=1 '
+      '.iDRol=1 and Pe.IdPersona>0 '#13#10'order by Pe.RazonSocial'
     Parameters = <>
     Left = 336
     Top = 224
@@ -855,6 +883,7 @@ inherited DMFacturas: TDMFacturas
     Top = 283
   end
   object adodsProductos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -1014,8 +1043,8 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta '#13#10' ' +
-      'from MetodosPago where idMetodoPago>0'
+      'select IdMetodoPago, Identificador, Descripcion, ExigeCuenta, Cl' +
+      'aveSAT2016 '#13#10' from MetodosPago where idMetodoPago>0'
     Parameters = <>
     Left = 624
     Top = 208
@@ -1033,6 +1062,10 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStMetodoPagoExigeCuenta: TIntegerField
       FieldName = 'ExigeCuenta'
+    end
+    object ADODtStMetodoPagoClaveSAT2016: TStringField
+      FieldName = 'ClaveSAT2016'
+      Size = 10
     end
   end
   object ADODtStBuscaFolioSerie: TADODataSet
@@ -5695,5 +5728,24 @@ inherited DMFacturas: TDMFacturas
     DataSet = ADODtStCFDIConceptos
     Left = 760
     Top = 88
+  end
+  object ADODSAuxiliar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select P.idPersona, P.RazonSocial, P.RFC, PD.identificador, PD.I' +
+      'dPersonaDomicilio, D.Calle, D.NoExterior,d.NoInterior,D.CodigoPo' +
+      'stal,'#13#10'PA.Descripcion as Pais, E.Descripcion as Estado, M.Descri' +
+      'pcion as Municipio, PO.Descripcion as Poblacion'#13#10'  from Personas' +
+      ' P'#13#10' inner join  PersonasDomicilios PD on P.idPersona=PD.IdPerso' +
+      'na '#13#10' inner join Domicilios D on D.IDDomicilio=PD.IdDomicilio'#13#10' ' +
+      'inner join Paises PA on PA.IdPais=d.IdPais'#13#10' inner join Estados ' +
+      'E on E.IdEstado =D.IdEstado'#13#10' inner join Municipios M on  M.IdMu' +
+      'nicipio=D.IdMunicipio'#13#10' left join Poblaciones PO on PO.IdPoblaci' +
+      'on =D.IdPoblacion'#13#10' '#13#10' '#13#10' where idRol=1 and P.IdPersonaEstatus=1' +
+      ' or P.IdPersonaEstatus is null'
+    Parameters = <>
+    Left = 56
+    Top = 384
   end
 end

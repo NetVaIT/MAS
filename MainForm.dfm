@@ -11,7 +11,6 @@ inherited frmMain: TfrmMain
   inherited dxRibbon1: TdxRibbon
     Width = 881
     OnApplicationMenuClick = dxRibbon1ApplicationMenuClick
-    ExplicitTop = 5
     ExplicitWidth = 881
     inherited dxRibbon1Tab1: TdxRibbonTab
       Active = False
@@ -19,7 +18,6 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCatalogos: TdxRibbonTab
       Tag = 1000
-      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -49,6 +47,7 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab3: TdxRibbonTab
       Tag = 3000
+      Active = True
       Caption = 'Devoluciones'
       Groups = <
         item
@@ -141,7 +140,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 674
       FloatTop = 8
       FloatClientWidth = 140
-      FloatClientHeight = 486
+      FloatClientHeight = 540
       ItemLinks = <
         item
           Visible = True
@@ -261,7 +260,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 87
-      FloatClientHeight = 108
+      FloatClientHeight = 54
       ItemLinks = <
         item
           Visible = True
@@ -376,8 +375,8 @@ inherited frmMain: TfrmMain
       DockedTop = 0
       FloatLeft = 915
       FloatTop = 8
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      FloatClientWidth = 105
+      FloatClientHeight = 54
       ItemLinks = <
         item
           Visible = True

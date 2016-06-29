@@ -84,8 +84,8 @@ RAZON PARA CAMBIAR:
         property TotalImpuestosTrasladados: Currency read fTotalImpuestosTrasladados;
         property DescuentoMonto: Currency read fDescuento;
         property DescuentoMotivo: String read fMotivoDescuento;
-        property TipoCambio: Currency read FTipoCambio;
-        property Moneda: string read FMoneda;
+        property TipoCambio: Currency read FTipoCambio write FTipoCambio;//Write Agregado Jun 27/16
+        property Moneda: string read FMoneda write FMoneda;  //Write Agregado Jun 27/16
         property ImpuestosLocales: TFEImpuestosLocales read FImpuestosLocales;
         property LugarDeExpedicion: String read FLugarDeExpedicion write
             FLugarDeExpedicion;

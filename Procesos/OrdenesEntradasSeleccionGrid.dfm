@@ -43,15 +43,18 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
       end
     end
   end
-  inherited DataSource: TDataSource
-    DataSet = dmOrdenesEntradas.adodsFacturasSeleccion
-  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -61,7 +64,7 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -163,7 +163,8 @@ type
     function ActualizaPedidoXSurtirEnInventario(IdProducto:Integer; Cantidad:Double):Boolean;
     procedure SetGenPDFCotiza(const Value: TBasicAction);
     procedure SetEnviaCotizacion(const Value: TBasicAction); // Ene12/16
-    procedure CrearArchivos(ListaAdj: TListBox; RutaAdj: String); //Feb 22/16
+    procedure CrearArchivos(ListaAdj: TListBox; RutaAdj: String);
+    function CostoDeInventario(IdProd: integer): Double; //Feb 22/16
 
     { Private declarations }
   public
@@ -328,10 +329,11 @@ begin
   FrmListaProductos:=TFrmListaProductos.Create(Self);
   FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
   FrmListaProductos.DataSet.Close;  //Adicional par evitar consulta anterior
-  if DataSourceDetail.State=dsEdit then
+ // if DataSourceDetail.State in [dsEdit] then
+ if (DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString <> '') then
   begin
     FrmListaProductos.Clave:=DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString;
-//      FrmListaProductos.EdtBuscar.Text:=FrmListaProductos.Identificador;
+    FrmListaProductos.EdtBuscar.Text:= FrmListaProductos.Clave;//FrmListaProductos.Identificador;REhabilitado Jun 20/16
     FrmListaProductos.SpdBtnBuscarClick(FrmListaProductos.SpdBtnBuscar);
   end;
   FrmListaProductos.ShowModal;
@@ -473,6 +475,8 @@ begin
   dsordenSalida.DataSet.FieldByName('IVA').asFloat:=DataSource.DataSet.FieldByName('IVA').asFloat;
   dsordenSalida.DataSet.FieldByName('Total').asFloat:=DataSource.DataSet.FieldByName('Total').asFloat;
   dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
+  dsordenSalida.DataSet.FieldByName('IDPersona').asInteger:= DataSource.DataSet.FieldByName('IDPersona').asInteger;//Jun 20/16
+
   dsordenSalida.DataSet.Post;
 
 //deshabilitado no usado  id:= dsordenSalida.DataSet.FieldByName('IDOrdenSalida').asInteger;//Habilitado may 18/16 para usarse en InformacionEntregas
@@ -491,7 +495,8 @@ begin
       DSOrdenSalidaItems.DataSet.FieldByName('Precio').asFloat:= DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat;
       DSOrdenSalidaItems.DataSet.FieldByName('Importe').asFloat:= DataSourceDetail.DataSet.FieldByName('CantidadPendiente').AsFloat
                                                                   *DataSourceDetail.DataSet.FieldByName('PrecioUnitario').AsFloat;//DataSourceDetail.DataSet.FieldByName('Importe').AsFloat;
-                                                                   //Por que pude habae varias salidas por Pedido.
+                                                                   //Porque puede haber varias salidas por Pedido.
+      DSOrdenSalidaItems.DataSet.FieldByName('CostoUnitario').asFloat:= CostoDeInventario(DataSourceDetail.DataSet.FieldByName('IDProducto').AsInteger); //Jun 24/16
 
       DSOrdenSalidaItems.DataSet.Post;
 
@@ -528,6 +533,23 @@ begin
   REsult:=True;
 
 end;
+
+Function TfrmCotizaciones.CostoDeInventario(IdProd:integer):Double; //Jun24/16
+begin
+  Result:=-1;
+  DSAuxiliar.dataset.Close;
+  TAdoDataset(DSAuxiliar.dataset).CommandText:='Select P.*, I.CostoPromedio from Productos P inner join Inventario I on I.IDProducto= P.IDProducto'+
+                             ' where P.IdProducto='+intToStr(IDProd);
+  DSAuxiliar.dataset.open;
+  if not DSAuxiliar.dataset.eof then
+  begin
+    Result:=DSAuxiliar.dataset.FieldByName('CostoPromedio').asFloat;
+  end
+  else
+    ShowMessage('No existe el producto en inventario... NDS');
+  DSAuxiliar.dataset.Close;
+end;
+
 
 function TfrmCotizaciones.RevisaFaltantes(IDDocumento: Integer): Boolean;
 begin //Nov 23/15

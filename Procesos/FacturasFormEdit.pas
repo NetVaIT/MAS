@@ -133,6 +133,7 @@ type
     TlBtnEdit: TToolButton;
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     TlBtnCancelaNV: TToolButton;
+    cxDBLabel16: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -216,8 +217,8 @@ begin
   ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
   TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4);  //feb 17/16
   TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat);
-  TlBtnCancelaNV.Enabled:= (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger=4) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat); //Jun 15/16
-
+  TlBtnCancelaNV.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=5) and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger=4) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat); //Jun 15/16
+                                                                         //Presupuestos (4 son NV pero se acumulan asi que no se pueden cancelar individual o si??)  //Jun 20/16
   DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ); //Mar 28/16    //Se dejo para determinar el movimiento
   if DBLkupCmbBxDirAuxiliar.Visible then
   begin

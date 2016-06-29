@@ -981,142 +981,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               TabOrder = 12
               OnClick = BtBtnIniciarProceso
             end
-            object PnlSalidasUbicacion: TPanel
-              Left = 314
-              Top = 49
-              Width = 631
-              Height = 241
-              TabOrder = 14
-              Visible = False
-              object Label22: TLabel
-                Left = 22
-                Top = 12
-                Width = 184
-                Height = 13
-                Caption = 'Ubicaci'#243'n de Salida por Producto'
-                FocusControl = DBLookupComboBox5
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = [fsBold]
-                ParentFont = False
-              end
-              object BitBtn8: TBitBtn
-                Tag = 12
-                Left = 525
-                Top = 193
-                Width = 83
-                Height = 25
-                Caption = 'Cancelar'
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
-                  999333777FF37FF377733339993000399933333777F777F77733333399970799
-                  93333333777F7377733333333999399933333333377737773333333333990993
-                  3333333333737F73333333333331013333333333333777FF3333333333910193
-                  333333333337773FF3333333399000993333333337377737FF33333399900099
-                  93333333773777377FF333399930003999333337773777F777FF339993370733
-                  9993337773337333777333333333333333333333333333333333333333333333
-                  3333333333333333333333333333333333333333333333333333}
-                NumGlyphs = 2
-                TabOrder = 1
-                Visible = False
-                OnClick = BtBtnFinGenProcesoClick
-              end
-              object BtBtnAcepta: TBitBtn
-                Tag = 10
-                Left = 444
-                Top = 194
-                Width = 165
-                Height = 25
-                Caption = 'Aceptar Ubicaciones'
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000120B0000120B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
-                  555555555555555555555555555555555555555555FF55555555555559055555
-                  55555555577FF5555555555599905555555555557777F5555555555599905555
-                  555555557777FF5555555559999905555555555777777F555555559999990555
-                  5555557777777FF5555557990599905555555777757777F55555790555599055
-                  55557775555777FF5555555555599905555555555557777F5555555555559905
-                  555555555555777FF5555555555559905555555555555777FF55555555555579
-                  05555555555555777FF5555555555557905555555555555777FF555555555555
-                  5990555555555555577755555555555555555555555555555555}
-                NumGlyphs = 2
-                TabOrder = 0
-                OnClick = BtBtnFinGenProcesoClick
-              end
-              object DBGrid1: TDBGrid
-                Left = 21
-                Top = 31
-                Width = 590
-                Height = 159
-                DataSource = DSSalidasUbicaciones
-                Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
-                TabOrder = 2
-                TitleFont.Charset = DEFAULT_CHARSET
-                TitleFont.Color = clWindowText
-                TitleFont.Height = -11
-                TitleFont.Name = 'Tahoma'
-                TitleFont.Style = []
-                OnCellClick = DBGrid1CellClick
-                Columns = <
-                  item
-                    Expanded = False
-                    FieldName = 'IdProducto'
-                    Visible = False
-                  end
-                  item
-                    Expanded = False
-                    FieldName = 'Producto'
-                    Width = 187
-                    Visible = True
-                  end
-                  item
-                    Expanded = False
-                    FieldName = 'EspacioA'
-                    Title.Caption = 'Espacio'
-                    Width = 208
-                    Visible = True
-                  end
-                  item
-                    Expanded = False
-                    FieldName = 'Disponible'
-                    Visible = False
-                  end
-                  item
-                    Expanded = False
-                    FieldName = 'Cantidad'
-                    Visible = True
-                  end>
-              end
-              object DBNavigator1: TDBNavigator
-                Left = 48
-                Top = 194
-                Width = 220
-                Height = 25
-                DataSource = DSSalidasUbicaciones
-                VisibleButtons = [nbDelete, nbEdit, nbPost, nbCancel, nbRefresh]
-                TabOrder = 3
-              end
-              object BtBtnCancela: TBitBtn
-                Tag = 10
-                Left = 316
-                Top = 194
-                Width = 122
-                Height = 25
-                Caption = 'Cancelar'
-                Kind = bkCancel
-                NumGlyphs = 2
-                TabOrder = 4
-                OnClick = BtBtnCancelaClick
-              end
-            end
             object ChckBxDatosEnvios: TCheckBox
               Left = 32
               Top = 204
@@ -1768,6 +1632,142 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 Visible = False
               end
             end
+            object PnlSalidasUbicacion: TPanel
+              Left = 319
+              Top = 53
+              Width = 631
+              Height = 241
+              TabOrder = 14
+              Visible = False
+              object Label22: TLabel
+                Left = 22
+                Top = 12
+                Width = 184
+                Height = 13
+                Caption = 'Ubicaci'#243'n de Salida por Producto'
+                FocusControl = DBLookupComboBox5
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object BitBtn8: TBitBtn
+                Tag = 12
+                Left = 525
+                Top = 193
+                Width = 83
+                Height = 25
+                Caption = 'Cancelar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                  999333777FF37FF377733339993000399933333777F777F77733333399970799
+                  93333333777F7377733333333999399933333333377737773333333333990993
+                  3333333333737F73333333333331013333333333333777FF3333333333910193
+                  333333333337773FF3333333399000993333333337377737FF33333399900099
+                  93333333773777377FF333399930003999333337773777F777FF339993370733
+                  9993337773337333777333333333333333333333333333333333333333333333
+                  3333333333333333333333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 1
+                Visible = False
+                OnClick = BtBtnFinGenProcesoClick
+              end
+              object BtBtnAcepta: TBitBtn
+                Tag = 10
+                Left = 444
+                Top = 194
+                Width = 165
+                Height = 25
+                Caption = 'Aceptar Ubicaciones'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+                  555555555555555555555555555555555555555555FF55555555555559055555
+                  55555555577FF5555555555599905555555555557777F5555555555599905555
+                  555555557777FF5555555559999905555555555777777F555555559999990555
+                  5555557777777FF5555557990599905555555777757777F55555790555599055
+                  55557775555777FF5555555555599905555555555557777F5555555555559905
+                  555555555555777FF5555555555559905555555555555777FF55555555555579
+                  05555555555555777FF5555555555557905555555555555777FF555555555555
+                  5990555555555555577755555555555555555555555555555555}
+                NumGlyphs = 2
+                TabOrder = 0
+                OnClick = BtBtnFinGenProcesoClick
+              end
+              object DBGrid1: TDBGrid
+                Left = 21
+                Top = 31
+                Width = 590
+                Height = 159
+                DataSource = DSSalidasUbicaciones
+                Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
+                TabOrder = 2
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'Tahoma'
+                TitleFont.Style = []
+                OnCellClick = DBGrid1CellClick
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'IdProducto'
+                    Visible = False
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'Producto'
+                    Width = 187
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'EspacioA'
+                    Title.Caption = 'Espacio'
+                    Width = 208
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'Disponible'
+                    Visible = False
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'Cantidad'
+                    Visible = True
+                  end>
+              end
+              object DBNavigator1: TDBNavigator
+                Left = 48
+                Top = 194
+                Width = 220
+                Height = 25
+                DataSource = DSSalidasUbicaciones
+                VisibleButtons = [nbDelete, nbEdit, nbPost, nbCancel, nbRefresh]
+                TabOrder = 3
+              end
+              object BtBtnCancela: TBitBtn
+                Tag = 10
+                Left = 316
+                Top = 194
+                Width = 122
+                Height = 25
+                Caption = 'Cancelar'
+                Kind = bkCancel
+                NumGlyphs = 2
+                TabOrder = 4
+                OnClick = BtBtnCancelaClick
+              end
+            end
           end
           object PnlDetalle: TPanel
             Left = 0
@@ -1958,7 +1958,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400CC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2174,7 +2174,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C0020C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

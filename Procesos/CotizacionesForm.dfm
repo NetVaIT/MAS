@@ -185,8 +185,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitTop = 161
-            ExplicitHeight = 202
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -387,7 +385,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 209
             Align = alTop
             TabOrder = 1
-            ExplicitTop = 3
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -544,7 +541,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Left = 370
               Top = 149
               Width = 69
-              Height = 18
+              Height = 13
               Caption = 'DireccionEnvio'
               FocusControl = DBLookupComboBox3
             end
@@ -620,7 +617,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 92
-              AnchorX = 285
             end
             object cxDBLabel3: TcxDBLabel
               Left = 824
@@ -704,7 +700,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 90
-              AnchorX = 762
             end
             object cxDBLabel7: TcxDBLabel
               Left = 824
@@ -714,7 +709,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               OnClick = cxDBLabel7Click
               Height = 21
               Width = 78
-              AnchorX = 902
             end
             object cxDBLabel8: TcxDBLabel
               Left = 908
@@ -723,7 +717,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 62
-              AnchorX = 970
             end
             object PnlSumasSaldos: TPanel
               Left = 768
@@ -1022,7 +1015,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1232,7 +1225,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C002100210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002180210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -278,8 +278,8 @@ begin
     PWideChar(TFEReglamentacion.ComoMoneda(Documento.SubTotal)),
     PWideChar(TFEReglamentacion.ComoMoneda(Documento.DescuentoMonto)),
     PWideChar(TFEReglamentacion.ComoMoneda(Documento.Total)),
-    PWideChar(TFEReglamentacion.ComoMoneda(Documento.TipoCambio)),
-    PWideChar(TFEReglamentacion.ComoCadena(Documento.Moneda)),
+    PWideChar(Documento.Moneda),   // se quito  TFEReglamentacion.ComoCadena //Estaban invertidos Jun 27/16
+    PWideChar(TFEReglamentacion.ComoMoneda(Documento.TipoCambio)), //Ojo estaban invertidos!!!!!! jun 27/16
     PWideChar(TFEReglamentacion.ComoCadena(Documento.CondicionesDePago)),
     PWideChar(TFEReglamentacion.ComoCadena(Documento.MetodoDePago)),
     PWideChar(TFEReglamentacion.ComoCadena(Documento.DescuentoMotivo)));

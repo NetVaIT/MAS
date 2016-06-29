@@ -2,6 +2,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   Caption = 'frmFacturasFormEdit'
   ClientWidth = 990
   ExplicitWidth = 990
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -50,6 +51,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Top = 595
     Width = 990
     Height = 18
+    ExplicitLeft = 0
     ExplicitTop = 595
     ExplicitWidth = 990
     ExplicitHeight = 18
@@ -95,6 +97,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Left = 552
             Top = 0
             Hint = 'Generar CFDI'
+            Enabled = False
             ImageIndex = 23
             ParentShowHint = False
             ShowHint = True
@@ -103,12 +106,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             Left = 575
             Top = 0
             Caption = 'Cancelar CFDI'
+            Enabled = False
             ImageIndex = 25
           end
           object TlBtnCancelaNV: TToolButton
             Left = 598
             Top = 0
             Caption = 'Cancela Nota'
+            Enabled = False
             ImageIndex = 26
           end
           object ToolButton4: TToolButton
@@ -130,6 +135,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
         inherited pnlMaster: TPanel
           Width = 986
           Height = 541
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 986
           ExplicitHeight = 541
           object Splitter1: TSplitter
@@ -451,7 +458,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             object DBLookupComboBox5: TDBLookupComboBox
               Left = 593
               Top = 197
-              Width = 209
+              Width = 184
               Height = 21
               DataField = 'MetodoPago'
               DataSource = DataSource
@@ -564,14 +571,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 15
+              TabOrder = 12
             end
             object cxDBTextEdit8: TcxDBTextEdit
               Left = 762
               Top = 254
               DataBinding.DataField = 'TipoCambio'
               DataBinding.DataSource = DataSource
-              TabOrder = 17
+              TabOrder = 14
               Width = 105
             end
             object cxDBLabel1: TcxDBLabel
@@ -597,6 +604,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 135
+            end
+            object cxDBLabel16: TcxDBLabel
+              Left = 783
+              Top = 196
+              DataBinding.DataField = 'MetPagoClaveSAT'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 31
             end
           end
           object Panel3: TPanel
@@ -707,20 +722,17 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
                 item
                   Expanded = False
                   FieldName = 'IdCFDI'
-                  Width = 40
-                  Visible = True
+                  Visible = False
                 end
                 item
                   Expanded = False
                   FieldName = 'IdOrdenSalidaItem'
-                  Width = 89
-                  Visible = True
+                  Visible = False
                 end
                 item
                   Expanded = False
                   FieldName = 'IdProducto'
-                  Width = 58
-                  Visible = True
+                  Visible = False
                 end
                 item
                   Expanded = False
@@ -742,7 +754,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
                 item
                   Expanded = False
                   FieldName = 'Descripcion'
-                  Width = 182
+                  Width = 245
                   Visible = True
                 end
                 item
@@ -884,7 +896,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1104,7 +1116,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011B00C002180210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011B00C002240210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

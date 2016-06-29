@@ -596,6 +596,7 @@ begin
        EsCambio:=False;
        if application.MessageBox('Está seguro de regresar al Pedido?. La Orden de Salida será eliminada', 'Confirmación ',MB_YESNO)=idYes then
        begin
+
          eliminar:=true;
        end
        else
@@ -642,12 +643,14 @@ begin
         DsCambiosREgreso.DataSet.Post;
       if eliminar then
       begin
+
+
         DtSrcOrdenSalItem.DataSet.First;
         while not DtSrcOrdenSalItem.Dataset.eof do
         begin
           DtSrcOrdenSalItem.DataSet.Delete;
         end;
-        datasource.DataSet.delete;
+        datasource.DataSet.delete;   //Borrar desde cambios OrdenesSCambiosEstatus
         PnlRegresaEstado.Visible:=False;
       end
       else
@@ -1077,6 +1080,7 @@ begin
   DtSrcOrdenSalItem.DataSet.Open;
 
   DSInformacionEntrega.DataSet.Open;
+  TAdoDataset(dsProductosXEspacio.DataSet).Parameters.ParamByName('IDADUANA').Value:=8; //DEbe ser variable de la configuracion
   dsProductosXEspacio.DataSet.Open;
 
 end;

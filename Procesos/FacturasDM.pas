@@ -424,6 +424,11 @@ type
     ActImpNotasVenta: TAction;
     ActEnvioCorreoNotasVenta: TAction;
     ActCancelaNotaVenta: TAction;
+    ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
+    ADODtStMetodoPagoClaveSAT2016: TStringField;
+    adodsMasterMetPagoClaveSAT: TStringField;
+    adodsMasterClaveMoneda: TStringField;
+    ADODSAuxiliar: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -445,6 +450,8 @@ type
     procedure ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure ActCancelaNotaVentaExecute(Sender: TObject);
+    procedure ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
+    procedure ADODtStCFDIConceptosNoIdentificaChange(Sender: TField);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -477,7 +484,9 @@ type
     function ActualizaAsociadosACFDI(idCFDIAct: Integer): Boolean;
     function SacaPaqueteria(IdPerDom: integer): String;
     procedure CrearPagoNota(serie: string; Folio, idCFDINota, IDCliente,IDDomicilioCliente,
-      IdMetodoPago: integer; Total: Double);  //Jun 2/16
+      IdMetodoPago: integer; Total: Double);
+    function EncuentraProd(IdProd: String; var ValUni: Double;
+      var ID: Integer): String;  //Jun 2/16
   public
     { Public declarations }
     EsProduccion:Boolean;
@@ -723,7 +732,7 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
     if  not ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').IsNull then //Ene 29/16
       adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').ASInteger
     else
-       adodsMaster.FieldByName('IdMetodoPago').AsInteger :=4; //No identificado   //Ene 29/16
+       adodsMaster.FieldByName('IdMetodoPago').AsInteger :=5; //Otros Jun 27/16   //Ene 29/16
     if  not ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').Isnull then
       adodsMaster.FieldByName('IdClienteDomicilio').AsInteger := ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').ASInteger;
                                                           //Verificar que tenga algo
@@ -1083,6 +1092,7 @@ begin
       ADODtStBuscaFolioSerie.Close;
       ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
       ADODtStBuscaFolioSerie.Open;
+
       if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
       begin
         adodsMaster.Edit;
@@ -1203,12 +1213,17 @@ begin
 
         DocumentoComprobanteFiscal.FechaGeneracion := FechaAux; //Para evitar  dobles generaciones
 
-        DocumentoComprobanteFiscal.MetodoDePago :=  adodsMasterMetodoPago.AsString;
+        DocumentoComprobanteFiscal.MetodoDePago := adodsMasterMetPagoClaveSAT.AsString; //Cambiardo por el codigo SAT Jun 27/16  adodsMasterMetodoPago.AsString;
         if adodsMasterNumCtaPago.AsString <>''then
           DocumentoComprobanteFiscal.NumeroDeCuenta:= adodsMasterNumCtaPago.AsString;
         // Asignamos el lugar de expedición (requerido en  CFD >= 2.2)
         DocumentoComprobanteFiscal.LugarDeExpedicion := ADODtStPersonaEmisorMunicipio.AsString+ ', ' + ADODtStPersonaEmisorEstado.AsString;
         //adodsEmisorPoblacion.AsString ;
+
+    //Llevaba ceros..
+        DocumentoComprobanteFiscal.Moneda:= adodsMasterClaveMoneda.AsString;//Jun 27/16
+        DocumentoComprobanteFiscal.TipoCambio:= (adodsMasterTipoCambio.AsFloat);//Jun 27/16
+
         // Definimos todos los conceptos que incluyo la factura
         ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
         ADODtStCFDIConceptos.First;
@@ -1286,8 +1301,8 @@ begin
           begin
             CrearPagoNota(adodsMasterSerie.Value, adodsMasterFolio.Value,adodsMasterIdCFDI.value,
             adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.Value,
-            adodsMasterIdMetodoPago.Value,adodsMasterTotal.Value);
-
+            0,adodsMasterTotal.Value);
+            //Tipo nota de crédito Jun 27/16
           end;
 
           ShowProgress(100,100.1,'Procesando PDF ' + IntToStr(100) + '%');  //Jun 2/16
@@ -1930,7 +1945,8 @@ begin
 // DataSet.FieldByName('Serie').AsString:=
   DataSet.FieldByName('IdCFDIFormaPago').AsInteger :=1;
   DataSet.FieldByName('IDMoneda').AsInteger:=106;
-  DataSet.FieldByName('IDMetodoPago').AsInteger:=4; //No identificado // abril 1/16      se supone que al seleccionar el cliente debe cambiar, si tiene
+  adodsMaster.fieldbyname('TipoCambio').AsInteger:=1; //Jun 27/16
+  DataSet.FieldByName('IDMetodoPago').AsInteger:=5; //Otros Jun 27/16  4; //No identificado // abril 1/16      se supone que al seleccionar el cliente debe cambiar, si tiene
 
   DataSet.FieldByName('IdPersonaEmisor').AsInteger:=ADODtStPersonaEmisoridpersona.AsInteger; //Debe estar abierta y debe tener una direccion fiscal
   Except
@@ -1999,16 +2015,71 @@ begin
   AdoDSMaster.Refresh;
 end;
 
+procedure TDMFacturas.ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
+begin
+  if adodsMaster.State in [dsEdit,dsInsert] then //Jun 27/16
+    adodsMaster.post;
+  inherited;
+end;
+
 procedure TDMFacturas.ADODtStCFDIConceptosNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  if adodsMasterIdCFDITipoDocumento.AsInteger in [2,3] then
+  if adodsMasterIdCFDITipoDocumento.AsInteger in [3] then  //Se quito el 2 por que ese es como factura
   begin
     dataset.FieldByName('IDUnidadMedida').AsInteger:=2; //No aplica
     dataset.FieldByName('Unidad').AsString:='NA'
   end;
-
+  if adodsMasterIdCFDITipoDocumento.AsInteger in [2] then //Jun 27/16
+  begin
+    dataset.FieldByName('IDUnidadMedida').AsInteger:=1; //PZA
+    dataset.FieldByName('Unidad').AsString:='PZA';
+    dataset.FieldByName('Cantidad').AsFloat:=1;
+  end;
 end;
+
+procedure TDMFacturas.ADODtStCFDIConceptosNoIdentificaChange(Sender: TField);
+var valuni:Double;       //Jun 27/16        //Puede que despues es añada busqueda por Facturas...
+  idproducto:integer;
+begin
+  inherited;
+  if adodsMasterIdCFDITipoDocumento.AsInteger=2 then //Notas Credito unicamente
+  begin
+    if ADODtStCFDIConceptos.State in [dsEdit,dsInsert] then
+    begin                            //Cambio
+      ADODtStCFDIConceptos.FieldByName('Descripcion').AsString:= EncuentraProd(ADODtStCFDIConceptos.FieldByName('NoIdentifica').ASString,ValUni,idproducto);
+      if ADODtStCFDIConceptos.FieldByName('Descripcion').AsString<>'' then
+      begin
+        ADODtStCFDIConceptos.FieldByName('ValorUnitario').AsFloat:=ValUni;
+        ADODtStCFDIConceptos.FieldByName('IdProducto').asInteger:=idproducto;
+        ADODtStCFDIConceptos.FieldByName('Importe').AsFloat:=ValUni* ADODtStCFDIConceptos.FieldByName('CAntidad').AsFloat;
+      end;
+    end;
+  end;
+end;
+
+function TDMFacturas.EncuentraProd(IdProd: String;Var ValUni:Double;var ID:Integer):String;     //Jun 27/16
+begin
+  Result:='';
+  if IDProd<>'' then
+  begin
+    ADODSAuxiliar.Close;
+    ADODSAuxiliar.CommandText:='Select * from Productos where (Identificador1='''+IDProd+
+                               ''' or Identificador2='''+IDProd+''' or Identificador3='''+IDProd+
+                               ''')';
+    ADODSAuxiliar.open;
+    if not ADODSAuxiliar.eof then
+    begin
+      ValUni:= ADODSAuxiliar.FieldByName('PrecioUnitario').AsFloat;
+      ID:=ADODSAuxiliar.FieldByName('IdProducto').asinteger ; //Valor del IDinterno
+      Result:=ADODSAuxiliar.FieldByName('Descripcion').AsString;
+
+    end;
+  end;
+  ADODSAuxiliar.Close;
+end;
+
+
 
 procedure TDMFacturas.ADODtStCFDIConceptosValorUnitarioChange(Sender: TField);
 begin

@@ -166,7 +166,13 @@ uses
   PagosConfirmaDesaplica in 'Procesos\PagosConfirmaDesaplica.pas' {FrmConfirmaDesaplicacion},
   ProductosXEspacioDm in 'Procesos\ProductosXEspacioDm.pas' {dmProductosXEspacio: TDataModule},
   ProductosXEspacioForm in 'Procesos\ProductosXEspacioForm.pas' {frmProductosXEspacio},
-  ProductosXEspacioGrid in 'Procesos\ProductosXEspacioGrid.pas' {frmProductosXEspacioGrid};
+  ProductosXEspacioGrid in 'Procesos\ProductosXEspacioGrid.pas' {frmProductosXEspacioGrid},
+  DevolucionesDM in 'Procesos\DevolucionesDM.pas' {dmDevoluciones: TDataModule},
+  DevolucionesEdit in 'Procesos\DevolucionesEdit.pas' {FrmDevoluciones},
+  DevolucionesForm in 'Procesos\DevolucionesForm.pas' {FrmDevolucionesGrid},
+  DevolucionesItemsEdit in 'Procesos\DevolucionesItemsEdit.pas' {FrmDevolucionesItems},
+  DevolucionesItemsForm in 'Procesos\DevolucionesItemsForm.pas' {FrmDevolucionesItemsGrid},
+  ListaItemsParaDevolucion in 'Catalogos\ListaItemsParaDevolucion.pas' {FrmSeleccionItemsDevolucion};
 
 {$R *.res}
 

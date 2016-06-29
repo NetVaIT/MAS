@@ -85,16 +85,6 @@ type
     adodsMasterFechaAutoriza: TDateTimeField;
     adodsMasterPersonaAutoriza: TStringField;
     adodsMasterClaveUAutoriza: TStringField;
-    ADODtStProductosKardex: TADODataSet;
-    ADODtStProductosKardexIdProducto: TIntegerField;
-    ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField;
-    ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField;
-    ADODtStProductosKardexIdMoneda: TIntegerField;
-    ADODtStProductosKardexReferenciaEspacio: TIntegerField;
-    ADODtStProductosKardexContenedor: TStringField;
-    ADODtStProductosKardexMovimiento: TStringField;
-    ADODtStProductosKardexCantidad: TFloatField;
-    ADODtStProductosKardexImporte: TFMTBCDField;
     ADODtStInformacionEnvio: TADODataSet;
     ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField;
     ADODtStInformacionEnvioIdCFDI: TLargeintField;
@@ -184,10 +174,6 @@ type
     adodsUpdateIdArchivo: TGuidField;
     adodsUpdateArchivo: TBlobField;
     ActEnvioCorreoConArchivos: TAction;
-    ADODtStProductosKardexIdProductoKardex: TAutoIncField;
-    ADODtStProductosKardexIdAlmacen: TIntegerField;
-    ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField;
-    ADODtStProductosKardexFecha: TDateTimeField;
     ADODtStInformacionEnvioFechaProgramadaEnt: TDateTimeField;
     ADODtStInformacionEnvioFechaRealEnt: TDateTimeField;
     adodsMasterIdGeneraCFDITipoDoc: TIntegerField;
@@ -285,6 +271,7 @@ type
     ADODtStDatosDocumentoSalidaDireccionEnvio: TStringField;
     adodsMasterDirEnvio: TStringField;
     adodsMasterIdDireccionEnvio: TIntegerField;
+    ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -310,6 +297,7 @@ type
     procedure ActCreaInformacionEnvioExecute(Sender: TObject);
     procedure ActCompartirEnvioExecute(Sender: TObject);
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
+    procedure adodsMasterBeforeDelete(DataSet: TDataSet);
   private
     CantAGuardar:Double;
     IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
@@ -324,6 +312,7 @@ type
     function SacaCorreoEmisor(ADatosCorreo:TStringList):Boolean;
     function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean;
     function SacaPaqueteriaNvo(IdPersonaDocicilio: Integer): String;
+    function BuscaSalidaUbicacionXAplicar(IDProductoEspacio,IDSalidaUbicaAct: Integer): Double;
 
 
     { Private declarations }
@@ -531,6 +520,17 @@ begin
   adodtstIdentificadores.Open; //Feb 8/16
 end;
 
+procedure TDMOrdenesSalidas.adodsMasterBeforeDelete(DataSet: TDataSet);
+begin
+  //Borrar de OrdenesSCambiosEstatus    Jun 28/16
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Delete From OrdenesSCambiosEstatus where IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
+  ADOQryAuxiliar.ExecSQL;
+
+  inherited;
+end;
+
 procedure TDMOrdenesSalidas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
@@ -670,6 +670,10 @@ begin
   cantSol:=DataSet.FieldByName('CantidadSolicitada').AsFloat;
   IdDocSal:= DataSet.FieldByName('IDOrdenSalida').AsInteger; //OrdenSalida
 
+  ADOQryAuxiliar.Close;  //Jun 28/16
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Delete From SalidasUbicaciones where IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
+  ADOQryAuxiliar.ExecSQL;
 
 end;
 
@@ -732,15 +736,40 @@ end;
 
 procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesBeforePost(
   DataSet: TDataSet);
-var valor:Double;
+var valor,AGuardarAux:Double;
+    TextoAux:String; //Jun 28/16
 begin
   inherited;
-  valor:=ValorMaximoPosible(CantAGuardar,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
+  //Jun 28/16 Desde
+  TextoAux:='';
+  valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
+  AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;
+  if CantAGuardar>0 then
+     AGuardarAux:=cantAGuardar;
+  if (AdoDtstProductosXEspacio.fieldbyname('Cantidad').ASFloat - valor ) <AGuardarAux then
+  begin
+    if valor >0 then
+      TextoAux:='Existen Apartados pendientes de aplicar';
+    ShowMessage('Advertencia!! Verifique Existencias en Ubicación.'+TextoAux);
+    abort;
+  end;
+  //Hasta aca Jun 28/16     //Era pero estaba en ceros  CantAGuardar  si no se cambia Jun 28/16
+  valor:=ValorMaximoPosible(AGuardarAux,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
   if valor <CantAGuardar then
   begin
     abort;
     Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
   end;
+end;
+
+function TDMOrdenesSalidas.BuscaSalidaUbicacionXAplicar(IDProductoEspacio, IDSalidaUbicaAct:Integer):Double;//Jun 28/16
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select Sum(Cantidad) as Total from SalidasUbicaciones where IdSalidaUbicacionEstatus<3 and idProductoXEspacio='+ intToStr(IDProductoEspacio)
+                        +' and IDSalidaUbicacion<>'+intToStr(IDSalidaUbicaAct));
+  ADOQryAuxiliar.Open;
+  Result:=  ADOQryAuxiliar.FieldByName('Total').AsFloat;
 end;
 
 procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadChange(
@@ -895,8 +924,8 @@ begin
 
   TFrmOrdenesSalida(gGridEditForm).CrearDatosEnvio :=ActCreaInformacionEnvio;//May 23/16
   TFrmOrdenesSalida(gGridEditForm).ComparteEnvio:=ActCompartirEnvio;//May 23/16
-   TFrmOrdenesSalida(gGridEditForm).DsdireccionEnvios.dataset:=ADODtStDireccionesEnvio; //Jun 10/16
-
+  TFrmOrdenesSalida(gGridEditForm).DsdireccionEnvios.dataset:=ADODtStDireccionesEnvio; //Jun 10/16
+  TFrmOrdenesSalida(gGridEditForm).DSProductosXEspacio.DataSet:=ADODtStProductosXEspacio; //Jun 28/16
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15

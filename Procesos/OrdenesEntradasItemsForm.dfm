@@ -1,20 +1,32 @@
 inherited frmOrdenesEntradasItems: TfrmOrdenesEntradasItems
   Caption = 'frmOrdenesEntradasItems'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
       ExplicitHeight = 475
+      inherited cxScrollBox1: TcxScrollBox
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
+        inherited pnlMaster: TPanel
+          ExplicitLeft = 0
+          ExplicitTop = 25
+        end
+      end
     end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -155,7 +167,7 @@ inherited frmOrdenesEntradasItems: TfrmOrdenesEntradasItems
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

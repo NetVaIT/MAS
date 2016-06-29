@@ -239,6 +239,10 @@ type
     ppLabel7: TppLabel;
     ppLabel10: TppLabel;
     ppLabel22: TppLabel;
+    ADODtStMetodoPago: TADOQuery;
+    cdsXMLMetPagoNombre: TStringField;
+    ppDBText37: TppDBText;
+    ppDBPipelineDatosFacturappField73: TppField;
     procedure cdsXMLCalcFields(DataSet: TDataSet);
     procedure ppReportFileDeviceCreate(Sender: TObject);
     procedure ppImageCBBPrint(Sender: TObject);

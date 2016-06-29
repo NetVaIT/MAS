@@ -7,6 +7,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Filter = 'IdOrdenEstatus <8'
     Filtered = True
     AfterOpen = adodsMasterAfterOpen
+    BeforeDelete = adodsMasterBeforeDelete
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
@@ -337,8 +338,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CommandText = 
       'select IdOrdenSalidaItem, IdOrdenSalida, IdDocumentoSalidaDetall' +
       'e,'#13#10' IdProducto, CantidadDespachada, Precio, Importe, CantidadSo' +
-      'licitada, Observaciones'#13#10', ClaveProducto from OrdenesSalidasItem' +
-      's where idOrdenSalida=:IdOrdenSalida '#13#10
+      'licitada, Observaciones'#13#10', ClaveProducto, CostoUnitario from Ord' +
+      'enesSalidasItems where idOrdenSalida=:IdOrdenSalida '#13#10
     DataSource = dsMaster
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -348,6 +349,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 10
       end>
     Left = 56
@@ -412,6 +414,11 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       LookupResultField = 'IdAlmacen'
       KeyFields = 'IdDocumentoSalidaDetalle'
       Lookup = True
+    end
+    object ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField
+      FieldName = 'CostoUnitario'
+      Precision = 18
+      Size = 6
     end
   end
   object ADODtStOrdenSalEstatus: TADODataSet
@@ -685,58 +692,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStPersonaAutorizaPassword: TStringField
       FieldName = 'Password'
       Size = 15
-    end
-  end
-  object ADODtStProductosKardex: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 'select * from ProductosKardex '
-    Parameters = <>
-    Left = 632
-    Top = 129
-    object ADODtStProductosKardexIdProducto: TIntegerField
-      FieldName = 'IdProducto'
-    end
-    object ADODtStProductosKardexIdOrdenEntradaItem: TIntegerField
-      FieldName = 'IdOrdenEntradaItem'
-    end
-    object ADODtStProductosKardexIdOrdenSalidaItem: TIntegerField
-      FieldName = 'IdOrdenSalidaItem'
-    end
-    object ADODtStProductosKardexIdMoneda: TIntegerField
-      FieldName = 'IdMoneda'
-    end
-    object ADODtStProductosKardexReferenciaEspacio: TIntegerField
-      FieldName = 'ReferenciaEspacio'
-    end
-    object ADODtStProductosKardexContenedor: TStringField
-      FieldName = 'Contenedor'
-      Size = 30
-    end
-    object ADODtStProductosKardexMovimiento: TStringField
-      FieldName = 'Movimiento'
-      Size = 1
-    end
-    object ADODtStProductosKardexCantidad: TFloatField
-      FieldName = 'Cantidad'
-    end
-    object ADODtStProductosKardexImporte: TFMTBCDField
-      FieldName = 'Importe'
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStProductosKardexIdProductoKardex: TAutoIncField
-      FieldName = 'IdProductoKardex'
-      ReadOnly = True
-    end
-    object ADODtStProductosKardexIdAlmacen: TIntegerField
-      FieldName = 'IdAlmacen'
-    end
-    object ADODtStProductosKardexIdProductoKardexEstatus: TIntegerField
-      FieldName = 'IdProductoKardexEstatus'
-    end
-    object ADODtStProductosKardexFecha: TDateTimeField
-      FieldName = 'Fecha'
     end
   end
   object ADODtStInformacionEnvio: TADODataSet
@@ -1043,8 +998,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CursorType = ctStatic
     CommandText = 
       'select Pe.*, E.Descripcion as Espacio from ProductosXEspacio PE'#13 +
-      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'
-    Parameters = <>
+      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio and Pe.IdEspa' +
+      'cio<>:IDAduana'
+    Parameters = <
+      item
+        Name = 'IDAduana'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
     Left = 248
     Top = 545
     object ADODtStProductosXEspacioIdProductoXEspacio: TAutoIncField
@@ -1108,12 +1070,14 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       
         'Insert inTo  ProductosKardex(IdProducto,IdOrdenSalidaItem,IdMone' +
         'da,IdProductoKardexEstatus,Fecha,Movimiento,Cantidad,Importe,IdA' +
-        'lmacen)'
+        'lmacen, CostoUnitario,PrecioUnitario)'
       ''
       
         'SELECT   osi.IdProducto, osi.IdOrdenSalidaItem,DS.IdMoneda, 1, G' +
         'ETDATE() , '#39'S'#39','
-      'OSI.CantidadDespachada, osi.Importe, :IdAlmacen'
+      
+        'OSI.CantidadDespachada, osi.Importe, :IdAlmacen, OSI.CostoUnitar' +
+        'io, Precio'
       ''
       'FROM         OrdenesSalidasItems OSI '
       

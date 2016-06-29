@@ -472,8 +472,8 @@ inherited dmCotizaciones: TdmCotizaciones
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
-      ', IDPersonaDomicilio'#13#10'from OrdenesSalidas where iddocumentoSalid' +
-      'a=:IDDocumentoSalida'
+      ', IDPersonaDomicilio, IdPersona'#13#10'from OrdenesSalidas where iddoc' +
+      'umentoSalida=:IDDocumentoSalida'
     DataSource = DSMaster
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IDDocumentoSalida'
@@ -556,6 +556,9 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStOrdenSalidaIDPersonaDomicilio: TIntegerField
       FieldName = 'IDPersonaDomicilio'
     end
+    object ADODtStOrdenSalidaIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -565,8 +568,9 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 
       'select IdOrdenSalidaItem, IdOrdenSalida, IdDocumentoSalidaDetall' +
       'e, IdUnidadMedida,'#13#10' IdProducto, CantidadDespachada, Precio, Imp' +
-      'orte, CantidadSolicitada, Observaciones'#13#10', ClaveProducto from Or' +
-      'denesSalidasItems where idOrdenSalida=:IdOrdenSalida'
+      'orte, CantidadSolicitada, Observaciones'#13#10', ClaveProducto, CostoU' +
+      'nitario from OrdenesSalidasItems where idOrdenSalida=:IdOrdenSal' +
+      'ida'
     DataSource = DSOrdenSalida
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -635,6 +639,11 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object ADODtStOrdenSalidaItemIdUnidadMedida: TIntegerField
       FieldName = 'IdUnidadMedida'
+    end
+    object ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField
+      FieldName = 'CostoUnitario'
+      Precision = 18
+      Size = 6
     end
   end
   object DSOrdenSalida: TDataSource

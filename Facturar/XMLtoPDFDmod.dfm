@@ -338,6 +338,16 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       FieldName = 'Traslado'
       UnNamed = True
     end
+    object cdsXMLMetPagoNombre: TStringField
+      FieldKind = fkLookup
+      FieldName = 'MetPagoNombre'
+      LookupDataSet = ADODtStMetodoPago
+      LookupKeyFields = 'ClaveSAT2016'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'metodoDePago'
+      Size = 100
+      Lookup = True
+    end
   end
   object XMLTransformProvider: TXMLTransformProvider
     TransformRead.TransformationFile = 
@@ -5092,12 +5102,13 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
-        mmLeft = 30956
+        mmLeft = 29105
         mmTop = 16404
-        mmWidth = 49213
+        mmWidth = 5815
         BandType = 7
         LayerName = Foreground
       end
@@ -5167,6 +5178,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
+        TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'ppDBPipelineDatosFactura'
         mmHeight = 3704
@@ -5183,6 +5195,26 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         mmLeft = 0
         mmTop = 95779
         mmWidth = 202936
+        BandType = 7
+        LayerName = Foreground
+      end
+      object ppDBText37: TppDBText
+        UserName = 'DBText37'
+        AutoSize = True
+        DataField = 'MetPagoNombre'
+        DataPipeline = ppDBPipelineDatosFactura
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 9
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPipelineDatosFactura'
+        mmHeight = 3969
+        mmLeft = 35719
+        mmTop = 16404
+        mmWidth = 24606
         BandType = 7
         LayerName = Foreground
       end
@@ -5933,6 +5965,15 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       DataType = dtNotKnown
       DisplayWidth = 0
       Position = 71
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPipelineDatosFacturappField73: TppField
+      FieldAlias = 'MetPagoNombre'
+      FieldName = 'MetPagoNombre'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 72
       Searchable = False
       Sortable = False
     end
@@ -7211,5 +7252,14 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
       Searchable = False
       Sortable = False
     end
+  end
+  object ADODtStMetodoPago: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'Select * from MetodosPago ')
+    Left = 68
+    Top = 385
   end
 end

@@ -273,6 +273,8 @@ type
     ADODtStDireccionesEnvioEstado: TStringField;
     ADODtStDireccionesEnvioPais: TStringField;
     ADODtStDireccionesEnvioDirEnviocompleta: TStringField;
+    ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
+    ADODtStOrdenSalidaIdPersona: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -484,7 +486,7 @@ end;
 procedure TdmCotizaciones.adodsCotizacionesDetalleCantidadChange(
   Sender: TField);
 begin
-  inherited;
+  inherited;  //Verificar comportamiento en precio
   if adodsCotizacionesDetalle.State in [dsEdit,dsInsert] then
   begin
   //  if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat<= adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then  //Abr 11/16

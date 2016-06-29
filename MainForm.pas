@@ -152,7 +152,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
-  OrdenesEntregasDM, ProductosXEspacioDm;
+  OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM;
 
 { TfrmMain }
 
@@ -205,7 +205,7 @@ begin
    27:   gModulo := TDMOrdenesEntregas.Create(Self); //Ordenesentega May 27/16
 
    30: gModulo := TdmAlmacenes.Create(Self);
-   31: ShowMessage('Módulo en construcción');//gModulo := TdmAlmacenes.Create(Self);
+   31: gModulo := TdmDevoluciones.Create(Self); //Jun 21/16
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
