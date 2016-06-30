@@ -2,6 +2,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   Caption = 'frmUsuariosPerfiles'
   ClientWidth = 1048
   ExplicitWidth = 1048
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -18,39 +19,39 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited pnlClose: TPanel
     Width = 1048
-    ExplicitWidth = 964
+    ExplicitWidth = 1048
   end
   inherited pnlDetail3: TPanel
     Width = 1048
-    ExplicitWidth = 964
+    ExplicitWidth = 1048
   end
   inherited pnlDetail2: TPanel
     Width = 1048
-    ExplicitWidth = 964
+    ExplicitWidth = 1048
   end
   inherited pnlDetail1: TPanel
     Width = 1048
     ExplicitLeft = 0
     ExplicitTop = 480
-    ExplicitWidth = 964
+    ExplicitWidth = 1048
   end
   inherited pcMain: TcxPageControl
     Width = 1048
-    ExplicitWidth = 964
+    ExplicitWidth = 1048
     ClientRectRight = 1047
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
-      ExplicitWidth = 962
+      ExplicitWidth = 1046
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 1046
-        ExplicitWidth = 962
+        ExplicitWidth = 1046
         inherited tbarData: TToolBar
           Width = 1044
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 960
+          ExplicitWidth = 1044
           inherited ToolButton19: TToolButton
             OnMouseDown = ToolButton19MouseDown
           end
@@ -64,7 +65,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
           Width = 1044
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 960
+          ExplicitWidth = 1044
           object Label1: TLabel
             Left = 32
             Top = 32
@@ -161,7 +162,13 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Height = 128
               ItemHeight = 13
               Items.Strings = (
-                'Devoluci'#243'n Producto |31')
+                'Inventario                 |32'
+                'Devoluci'#243'n Producto |31'
+                'Salidas X Merma        |33'
+                'Acomodo Mercanc'#237'a  |46'
+                'Lista de Precios         |34'
+                'Kardex Movtos          |35'
+                'Costo Inventario       |51 ')
               TabOrder = 1
             end
             object ChckLstBxOpcionesVenta: TCheckListBox
@@ -240,7 +247,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Top = 7
               Width = 97
               Height = 17
-              Caption = 'Devoluciones                     |3000'
+              Caption = 'Almacenes                     |3000'
               TabOrder = 7
               OnClick = ChckBxCatClick
             end
@@ -335,7 +342,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -476,7 +483,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -50,6 +50,7 @@ type
     PnlBusqueda: TPanel;
     Label3: TLabel;
     EdtNombre: TEdit;
+    ChckBxXFecha: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
@@ -147,7 +148,6 @@ begin
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
-
   end;
 
   Tadodataset(datasource.DataSet).open;
@@ -155,8 +155,9 @@ begin
 end;
 procedure TFrmOrdenesSalidaGrid.PoneFiltro;
 begin
-  //Ver si existe un todos o alguna restriccion
-  ffiltro:=' where OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Ajustado May 16/16
+  ffiltro:=''; //Jun 30/16
+  if ChckBxXFecha.checked then   //Jun 30/16
+     ffiltro:=' where OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Ajustado May 16/16
 
 end;
 procedure TFrmOrdenesSalidaGrid.RdGrpEstadoClick(Sender: TObject);

@@ -104,7 +104,6 @@ type
     adodsItemsPrecioVenta: TFMTBCDField;
     adodsItemsCostoAproximado: TFMTBCDField;
     ADODtStItemsXDevolver: TADODataSet;
-    ADODtStItemsRegstrados: TADODataSet;
     ADODtStItemsXDevolverIdCFDIConcepto: TLargeintField;
     ADODtStItemsXDevolverIdProducto: TIntegerField;
     ADODtStItemsXDevolverIdUnidadMedida: TIntegerField;

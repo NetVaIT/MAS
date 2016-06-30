@@ -429,6 +429,7 @@ type
     adodsMasterMetPagoClaveSAT: TStringField;
     adodsMasterClaveMoneda: TStringField;
     ADODSAuxiliar: TADODataSet;
+    ADODtStCostoFactura: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);

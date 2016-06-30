@@ -1,273 +1,105 @@
-inherited FrmPagosGrid: TFrmPagosGrid
-  Caption = 'FrmPagosGrid'
-  ClientWidth = 1428
-  OnCreate = FormCreate
-  ExplicitWidth = 1428
+inherited FrmInventarioGrid: TFrmInventarioGrid
+  Caption = 'FrmInventarioGrid'
+  ClientWidth = 1019
+  ExplicitWidth = 1019
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited splDetail2: TSplitter
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited splDetail1: TSplitter
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnlClose: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnlDetail3: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnlDetail2: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnlDetail1: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnltoolbar: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
   end
   inherited pnlMaster: TPanel
-    Width = 1428
-    ExplicitWidth = 1428
+    Width = 1019
     inherited cxGrid: TcxGrid
-      Top = 40
-      Width = 1428
-      Height = 431
-      ExplicitTop = 40
-      ExplicitWidth = 1428
-      ExplicitHeight = 431
+      Width = 1019
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
-          Width = 91
+        object tvMasteridentificador1: TcxGridDBColumn
+          Caption = 'Identificador1'
+          DataBinding.FieldName = 'identificador1'
+          Width = 140
         end
-        object tvMasterIdentificador: TcxGridDBColumn
-          DataBinding.FieldName = 'Identificador'
-          Width = 105
+        object tvMasterIdentificador2: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador2'
+          Visible = False
+          Width = 140
         end
-        object tvMasterNombreCliente: TcxGridDBColumn
-          Caption = 'Raz'#243'n Social'
-          DataBinding.FieldName = 'NombreCliente'
-          Width = 310
+        object tvMasterIdentificador3: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador3'
+          Visible = False
+          Width = 140
         end
-        object tvMasterSeriePago: TcxGridDBColumn
-          Caption = 'Serie Pago'
-          DataBinding.FieldName = 'SeriePago'
-          Width = 91
+        object tvMasterDescripcion: TcxGridDBColumn
+          DataBinding.FieldName = 'Descripcion'
+          Width = 350
         end
-        object tvMasterFolioPago: TcxGridDBColumn
-          Caption = 'Folio Pago'
-          DataBinding.FieldName = 'FolioPago'
-          Width = 77
+        object tvMasterPrecioVenta: TcxGridDBColumn
+          Caption = 'Precio Venta'
+          DataBinding.FieldName = 'PrecioVenta'
+          Width = 72
         end
-        object tvMasterImporte: TcxGridDBColumn
-          DataBinding.FieldName = 'Importe'
+        object tvMasterCostoPromedio: TcxGridDBColumn
+          Caption = 'Costo Promedio'
+          DataBinding.FieldName = 'CostoPromedio'
+          Width = 86
         end
-        object tvMasterSaldo: TcxGridDBColumn
-          DataBinding.FieldName = 'Saldo'
+        object tvMasterTransito: TcxGridDBColumn
+          DataBinding.FieldName = 'Transito'
+          Visible = False
         end
-        object tvMasterMetodoPago: TcxGridDBColumn
-          Caption = 'M'#233'todo Pago'
-          DataBinding.FieldName = 'MetodoPago'
+        object tvMasterExistencia: TcxGridDBColumn
+          DataBinding.FieldName = 'Existencia'
         end
-        object tvMasterBanco: TcxGridDBColumn
-          DataBinding.FieldName = 'Banco'
+        object tvMasterPedidoXSurtir: TcxGridDBColumn
+          DataBinding.FieldName = 'PedidoXSurtir'
+          Width = 72
         end
-        object tvMasterObservaciones: TcxGridDBColumn
-          DataBinding.FieldName = 'Observaciones'
+        object tvMasterApartado: TcxGridDBColumn
+          DataBinding.FieldName = 'Apartado'
+        end
+        object tvMasterVirtual: TcxGridDBColumn
+          DataBinding.FieldName = 'Virtual'
+        end
+        object tvMasterPrecioUnitario: TcxGridDBColumn
+          DataBinding.FieldName = 'PrecioUnitario'
+          Visible = False
         end
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 1428
-      Height = 40
-      ButtonHeight = 40
-      ExplicitWidth = 1428
-      ExplicitHeight = 40
-      inherited ToolButton1: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited btnEdit: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton3: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton4: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton5: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton6: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton7: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton8: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton9: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton2: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited btnPost: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited btnCancel: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton21: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton22: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited ToolButton10: TToolButton
-        ExplicitHeight = 40
-      end
-      inherited tbtnCerrar: TToolButton
-        ExplicitHeight = 40
-      end
-      object ToolButton11: TToolButton
-        Left = 308
-        Top = 0
-        Width = 186
-        Caption = 'ToolButton11'
-        ImageIndex = 12
-        Style = tbsSeparator
-      end
-      object PnlBusqueda: TPanel
-        Left = 494
-        Top = 0
-        Width = 274
-        Height = 40
-        BevelInner = bvLowered
-        ParentBackground = False
-        ParentColor = True
-        TabOrder = 0
-        object Label3: TLabel
-          Left = 16
-          Top = 2
-          Width = 90
-          Height = 13
-          Caption = 'Cliente parecido a:'
-        end
-        object EdtNombre: TEdit
-          Left = 15
-          Top = 15
-          Width = 163
-          Height = 21
-          TabOrder = 0
-          OnChange = EdtNombreChange
-          OnKeyDown = EdtNombreKeyDown
-        end
-        object ChckBxConSaldo: TCheckBox
-          Left = 200
-          Top = 4
-          Width = 74
-          Height = 33
-          Caption = 'Con Saldo'
-          TabOrder = 1
-          WordWrap = True
-        end
-      end
-      object PnlFechas: TPanel
-        Left = 768
-        Top = 0
-        Width = 410
-        Height = 40
-        BevelInner = bvLowered
-        ParentBackground = False
-        TabOrder = 1
-        object Label1: TLabel
-          Left = 18
-          Top = 2
-          Width = 30
-          Height = 13
-          Caption = 'Desde'
-          Transparent = True
-        end
-        object Label2: TLabel
-          Left = 162
-          Top = 2
-          Width = 28
-          Height = 13
-          Caption = 'Hasta'
-          Transparent = True
-        end
-        object SpdBtnConsulta: TSpeedButton
-          Left = 301
-          Top = 12
-          Width = 25
-          Height = 25
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            04000000000000010000130B0000130B00001000000000000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-            33033333333333333F7F3333333333333000333333333333F777333333333333
-            000333333333333F777333333333333000333333333333F77733333333333300
-            033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
-            33333377333777733333307F8F8F7033333337F3333337F3333377F8F8F8F773
-            333337333333373F3333078F8F8F870333337F333333337F333307F8F8F8F703
-            33337F333333337F3333078F8F8F8703333373F333333373333377F8F8F8F773
-            333337F3333337F33333307F8F8F70333333373FF333F7333333330777770333
-            333333773FF77333333333370007333333333333777333333333}
-          NumGlyphs = 2
-          OnClick = SpdBtnConsultaClick
-        end
-        object cxDtEdtDesde: TcxDateEdit
-          Left = 16
-          Top = 15
-          TabOrder = 0
-          Width = 136
-        end
-        object cxDtEdtHasta: TcxDateEdit
-          Left = 159
-          Top = 15
-          TabOrder = 1
-          Width = 136
-        end
-        object ChckBxFechaPago: TCheckBox
-          Left = 334
-          Top = 4
-          Width = 67
-          Height = 33
-          Caption = 'Con Fecha Pago'
-          Checked = True
-          State = cbChecked
-          TabOrder = 2
-          WordWrap = True
-        end
-      end
+      Width = 1019
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmPagos.adodsMaster
+    DataSet = dmInventario.adodsMaster
     Left = 544
-    Top = 64
+    Top = 112
   end
   inherited ilPageControl: TImageList
     Left = 576
-    Top = 64
+    Top = 112
     Bitmap = {
-      494C010102000400F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -408,13 +240,13 @@ inherited FrmPagosGrid: TFrmPagosGrid
   end
   inherited ActionList: TActionList
     Left = 608
-    Top = 64
+    Top = 112
   end
   inherited ilAction: TImageList
     Left = 640
-    Top = 64
+    Top = 112
     Bitmap = {
-      494C01010C00B801140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -951,15 +783,15 @@ inherited FrmPagosGrid: TFrmPagosGrid
   end
   inherited cxStyleRepository1: TcxStyleRepository
     Left = 512
-    Top = 64
+    Top = 112
     PixelsPerInch = 96
   end
   inherited cxGridPopupMenu: TcxGridPopupMenu
     Left = 672
-    Top = 64
+    Top = 112
   end
   inherited PopupMenu: TPopupMenu
     Left = 512
-    Top = 120
+    Top = 168
   end
 end

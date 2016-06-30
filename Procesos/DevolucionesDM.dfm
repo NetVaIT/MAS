@@ -649,25 +649,6 @@ inherited dmDevoluciones: TdmDevoluciones
       Size = 6
     end
   end
-  object ADODtStItemsRegstrados: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select  IdDevolucionRelacion, IdOrdenEntradaItem, IdCFDIConcepto' +
-      ','#13#10' CantidaRegresada, Observaciones'#13#10'from DevolucionesRelacion w' +
-      'here IdOrdenEntradaItem=:IdOrdenEntradaItem'
-    Parameters = <
-      item
-        Name = 'IdOrdenEntradaItem'
-        Attributes = [paSigned, paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end>
-    Left = 552
-    Top = 464
-  end
   object adopAplicaEntradaXDev: TADOStoredProc
     Connection = _dmConection.ADOConnection
     ProcedureName = 'p_SetOrdenesEntradasDevolucionEstatus;1'
@@ -677,18 +658,21 @@ inherited dmDevoluciones: TdmDevoluciones
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdOrdenEntrada'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdUsuario'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 56
     Top = 464

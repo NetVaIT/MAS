@@ -172,7 +172,10 @@ uses
   DevolucionesForm in 'Procesos\DevolucionesForm.pas' {FrmDevolucionesGrid},
   DevolucionesItemsEdit in 'Procesos\DevolucionesItemsEdit.pas' {FrmDevolucionesItems},
   DevolucionesItemsForm in 'Procesos\DevolucionesItemsForm.pas' {FrmDevolucionesItemsGrid},
-  ListaItemsParaDevolucion in 'Catalogos\ListaItemsParaDevolucion.pas' {FrmSeleccionItemsDevolucion};
+  ListaItemsParaDevolucion in 'Catalogos\ListaItemsParaDevolucion.pas' {FrmSeleccionItemsDevolucion},
+  InventarioDM in 'Procesos\InventarioDM.pas' {dmInventario: TDataModule},
+  InventarioEdit in 'Procesos\InventarioEdit.pas' {frmInventarioEdit},
+  InventarioGrid in 'Procesos\InventarioGrid.pas' {FrmInventarioGrid};
 
 {$R *.res}
 

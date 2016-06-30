@@ -49,6 +49,7 @@ type
     PnlBusqueda: TPanel;
     EdtNombre: TEdit;
     Label3: TLabel;
+    ChckBxXFecha: TCheckBox;
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
@@ -58,6 +59,7 @@ type
     ffiltro: String;
     FTipoDoc: Integer;
     FfiltroNombre: String;
+
     procedure PoneFiltro;
     procedure SetTipoDoc(const Value: Integer);
     function GetFFiltroNombre: String;
@@ -67,6 +69,7 @@ type
      property FiltroCon:String read ffiltro write ffiltro; //may 2/16
      Property TipoDocumento:Integer read FTipoDoc write SetTipoDoc;
      Property AFiltroNombre:String read GetFFiltroNombre write FfiltroNombre; //May 10/16
+
   end;
 
 var
@@ -77,6 +80,7 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM;
+
 
 procedure TfrmCotizacionesGrid.EdtNombreChange(Sender: TObject);
 begin
@@ -147,9 +151,10 @@ begin
   PoneFiltro;
   Tadodataset(datasource.DataSet).Close;             //May 10/16
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ffiltronombre+TxtWhere+ ffiltro+orden;
+  Tadodataset(datasource.DataSet).Parameters.ParamByName('TipoDocto').value:=FTipoDoc; //Movido aca Jun 30/16  salio del if
+
   if ffiltro <>''then                                              //Abr.20/16
   begin
-    Tadodataset(datasource.DataSet).Parameters.ParamByName('TipoDocto').value:=FTipoDoc;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtDesde.Date;
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:=cxDtEdtHasta.Date+1;
   end;
@@ -159,8 +164,9 @@ end;
 
 procedure TfrmCotizacionesGrid.PoneFiltro;
 begin
-  //Ver si existe un todos o alguna restriccion
-  ffiltro:=' and fechaRegistro >:Fini and FechaRegistro<:FFin';
+  ffiltro:=''; //Jun 30/16
+  if ChckBxXFecha.checked then   //Jun 30/16
+    ffiltro:=' and fechaRegistro >:Fini and FechaRegistro<:FFin';
 
 end;
 

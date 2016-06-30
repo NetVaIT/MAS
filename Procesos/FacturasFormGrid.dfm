@@ -19,19 +19,19 @@ inherited frmFacturasGrid: TfrmFacturasGrid
   end
   inherited pnlClose: TPanel
     Width = 1335
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
   end
   inherited pnlDetail3: TPanel
     Width = 1335
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
   end
   inherited pnlDetail2: TPanel
     Width = 1335
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
   end
   inherited pnlDetail1: TPanel
     Width = 1335
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
   end
   inherited pnltoolbar: TPanel
     Top = 0
@@ -40,7 +40,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Align = alTop
     Visible = True
     ExplicitTop = 0
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
     ExplicitHeight = 44
     object LblImpresion: TLabel
       Left = 327
@@ -163,9 +163,9 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       end
       object ChckBxXFecha: TCheckBox
         Left = 376
-        Top = 3
+        Top = -1
         Width = 97
-        Height = 17
+        Height = 20
         Caption = 'Usar Fecha'
         Checked = True
         State = cbChecked
@@ -212,14 +212,14 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Width = 1335
     Height = 433
     ExplicitTop = 44
-    ExplicitWidth = 1303
+    ExplicitWidth = 1335
     ExplicitHeight = 433
     inherited cxGrid: TcxGrid
       Top = 31
       Width = 1335
       Height = 402
       ExplicitTop = 31
-      ExplicitWidth = 1303
+      ExplicitWidth = 1335
       ExplicitHeight = 402
       inherited tvMaster: TcxGridDBTableView
         object tvMasterFecha: TcxGridDBColumn
@@ -281,7 +281,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
       Height = 31
       ButtonHeight = 33
       OnClick = tbarGridClick
-      ExplicitWidth = 1303
+      ExplicitWidth = 1335
       ExplicitHeight = 31
       inherited ToolButton1: TToolButton
         ExplicitHeight = 33
@@ -419,7 +419,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C0101020004001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -566,7 +566,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01011200D001A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011200D001A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -883,7 +883,6 @@ inherited DMFacturas: TDMFacturas
     Top = 283
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -5747,5 +5746,12 @@ inherited DMFacturas: TDMFacturas
     Parameters = <>
     Left = 56
     Top = 384
+  end
+  object ADODtStCostoFactura: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 856
+    Top = 304
   end
 end

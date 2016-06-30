@@ -1,48 +1,49 @@
 inherited frmCotizacionesGrid: TfrmCotizacionesGrid
   Caption = 'frmCotizacionesGrid'
-  ClientWidth = 1025
+  ClientWidth = 1158
   OnCreate = FormCreate
-  ExplicitWidth = 1025
+  ExplicitWidth = 1158
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 890
   end
   inherited splDetail2: TSplitter
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 890
   end
   inherited splDetail1: TSplitter
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 890
   end
   inherited pnlClose: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
   end
   inherited pnlDetail3: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
   end
   inherited pnlDetail2: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
   end
   inherited pnlDetail1: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
   end
   inherited pnltoolbar: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
   end
   inherited pnlMaster: TPanel
-    Width = 1025
+    Width = 1158
     ExplicitWidth = 1025
     inherited cxGrid: TcxGrid
       Top = 44
-      Width = 1025
+      Width = 1158
       Height = 427
       ExplicitTop = 44
       ExplicitWidth = 1025
@@ -89,7 +90,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 1025
+      Width = 1158
       Height = 44
       ButtonHeight = 41
       ExplicitWidth = 1025
@@ -180,7 +181,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
       object PnlFechas: TPanel
         Left = 617
         Top = 0
-        Width = 360
+        Width = 456
         Height = 41
         ParentBackground = False
         TabOrder = 0
@@ -231,6 +232,16 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
           TabOrder = 1
           Width = 137
         end
+        object ChckBxXFecha: TCheckBox
+          Left = 373
+          Top = 18
+          Width = 82
+          Height = 17
+          Caption = 'Usar Fecha'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+        end
       end
     end
   end
@@ -243,7 +254,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 664
     Top = 80
     Bitmap = {
-      494C010102000400E80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -390,7 +401,7 @@ inherited frmCotizacionesGrid: TfrmCotizacionesGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C01010C00C0010C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
