@@ -52,6 +52,8 @@ type
     btnAplicarEntrada: TSpeedButton;
     cxDBLabel1: TcxDBLabel;
     cxDBLabel3: TcxDBLabel;
+    PnlTitulo: TPanel;
+    Label10: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceStateChange(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);

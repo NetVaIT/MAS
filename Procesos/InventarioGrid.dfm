@@ -35,7 +35,6 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
       Width = 1019
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridentificador1: TcxGridDBColumn
-          Caption = 'Identificador1'
           DataBinding.FieldName = 'identificador1'
           Width = 140
         end

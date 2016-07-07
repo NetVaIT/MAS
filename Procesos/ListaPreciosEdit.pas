@@ -1,4 +1,4 @@
-unit InventarioEdit;
+unit ListaPreciosEdit;
 
 interface
 
@@ -19,37 +19,26 @@ uses
   dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
-  Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxLabel,
-  cxDBLabel, Vcl.StdCtrls;
+  Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxTextEdit,
+  cxDBEdit, Vcl.StdCtrls;
 
 type
-  TfrmInventarioEdit = class(T_frmStandarGFormEdit)
+  TfrmListaPrecioEdit = class(T_frmStandarGFormEdit)
     Label1: TLabel;
-    cxDBLabel1: TcxDBLabel;
-    cxDBLabel2: TcxDBLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
     Label2: TLabel;
-    cxDBLabel3: TcxDBLabel;
+    cxDBTextEdit2: TcxDBTextEdit;
     Label3: TLabel;
-    cxDBLabel4: TcxDBLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
     Label4: TLabel;
-    cxDBLabel5: TcxDBLabel;
+    cxDBTextEdit4: TcxDBTextEdit;
     Label5: TLabel;
-    Label6: TLabel;
-    cxDBLabel6: TcxDBLabel;
-    Label8: TLabel;
-    cxDBLabel7: TcxDBLabel;
-    Label9: TLabel;
-    cxDBLabel8: TcxDBLabel;
-    Label10: TLabel;
-    cxDBLabel9: TcxDBLabel;
-    Label7: TLabel;
-    cxDBLabel10: TcxDBLabel;
-    Label11: TLabel;
-    cxDBLabel11: TcxDBLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
     PnlTitulo: TPanel;
-    Label12: TLabel;
+    Label6: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure cxDBTextEdit5Editing(Sender: TObject; var CanEdit: Boolean);
   private
     { Private declarations }
   public
@@ -57,26 +46,33 @@ type
   end;
 
 var
-  frmInventarioEdit: TfrmInventarioEdit;
+  frmListaPrecioEdit: TfrmListaPrecioEdit;
 
 implementation
 
 {$R *.dfm}
 
-uses InventarioGrid, InventarioDM;
+uses ListaPreciosDM, ListaPreciosGrid;
 
-procedure TfrmInventarioEdit.FormActivate(Sender: TObject);
+procedure TfrmListaPrecioEdit.cxDBTextEdit5Editing(Sender: TObject;
+  var CanEdit: Boolean);
 begin
   inherited;
-  ToolButton10.Visible:=False;//Jul 1/16
-  Toolbutton12.visible:=False; //Jul 1/16
-  actShowGridExecute(sender); //Para que muestre la lista al entrar Jun 30/16
+  Datasource.DataSet.Tag:= DataSource.tag;  //
+  Datasource.DataSet.Filter:='';
 end;
 
-procedure TfrmInventarioEdit.FormCreate(Sender: TObject);
+procedure TfrmListaPrecioEdit.FormActivate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TFrmInventarioGrid.Create(Self);
+  actShowGridExecute(sender); //Para que muestre la lista al entrar Jul 4/16
+end;
+
+procedure TfrmListaPrecioEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  gFormGrid := TFrmListaPreciosGrid.Create(Self);
+
 end;
 
 end.

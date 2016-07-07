@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>MAS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -801,6 +801,36 @@
             <Form>FrmInventarioGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\ListaPreciosDM.pas">
+            <Form>DmListaPrecios</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\ListaPreciosEdit.pas">
+            <Form>frmListaPrecioEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\ListaPreciosGrid.pas">
+            <Form>FrmListaPreciosGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CambioPreciosEdt.pas">
+            <Form>FrmCambioPrecios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\KardexMovimientosDM.pas">
+            <Form>dmKardexMovimientos</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\KardexMovimientosEdit.pas">
+            <Form>frmKardexMovimientosEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\KardexMovimientosGrid.pas">
+            <Form>FrmKardexMovimientosGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -867,7 +897,232 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment/>
+            <Deployment>
+                <DeployFile LocalName="Win32\Release\MAS.rsm" Configuration="Release" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>MAS.rsm</RemoteName>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\MAS.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
+                </DeployFile>
+                <DeployClass Required="true" Name="DependencyPackage">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.bpl</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch2048">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXInfoPList">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSDeviceInfoPList">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSDeviceDebug">
+                    <Platform Name="iOSDevice">
+                        <RemoteDir>..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch1024">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSResource">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSSimulatorInfoPList">
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXEntitlements">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch640">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXResource">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch320">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch768">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Required="true" Name="ProjectOutput">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSDeviceResourceRules">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="File">
+                    <Platform Name="iOSDevice">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DebugSymbols">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyFramework">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.framework</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch640x1136">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSEntitlements">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch1536">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AdditionalDebugSymbols">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <ProjectRoot Platform="iOSDevice" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+            </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
@@ -877,4 +1132,5 @@
     </ProjectExtensions>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+    <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
 </Project>

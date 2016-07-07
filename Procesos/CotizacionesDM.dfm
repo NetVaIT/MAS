@@ -324,6 +324,15 @@ inherited dmCotizaciones: TdmCotizaciones
       KeyFields = 'IdProducto'
       Lookup = True
     end
+    object adodsCotizacionesDetalleEnAduana: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'EnAduana'
+      LookupDataSet = adodsProductos
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'EnAduana'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
   end
   object adodsUsuario: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -340,8 +349,9 @@ inherited dmCotizaciones: TdmCotizaciones
       'SELECT P.IdProducto,P.Descripcion,P.PrecioUnitario, I.Existencia' +
       ','#13#10' I.PedidoXSurtir, I.apartado, (I.Existencia-I.PedidoXSurtir-I' +
       '.Apartado ) as ExistenciaReal,'#13#10' I.PedidoXSurtir as PorSurtir, I' +
-      '.Apartado as PorFacturar'#13#10' FROM Productos P'#13#10' inner join Inventa' +
-      'rio  I On P.IDProducto=I.IdProducto '#13#10'and I.IDAlmacen=1'
+      '.Apartado as PorFacturar, I.virtual as EnAduana'#13#10' FROM Productos' +
+      ' P'#13#10' inner join Inventario  I On P.IDProducto=I.IdProducto '#13#10'and' +
+      ' I.IDAlmacen=1'
     Parameters = <>
     Left = 64
     Top = 148
@@ -462,7 +472,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object DSMaster: TDataSource
     DataSet = adodsMaster
     Left = 132
-    Top = 32
+    Top = 16
   end
   object ADODtStOrdenSalida: TADODataSet
     Connection = _dmConection.ADOConnection

@@ -175,7 +175,14 @@ uses
   ListaItemsParaDevolucion in 'Catalogos\ListaItemsParaDevolucion.pas' {FrmSeleccionItemsDevolucion},
   InventarioDM in 'Procesos\InventarioDM.pas' {dmInventario: TDataModule},
   InventarioEdit in 'Procesos\InventarioEdit.pas' {frmInventarioEdit},
-  InventarioGrid in 'Procesos\InventarioGrid.pas' {FrmInventarioGrid};
+  InventarioGrid in 'Procesos\InventarioGrid.pas' {FrmInventarioGrid},
+  ListaPreciosDM in 'Procesos\ListaPreciosDM.pas' {DmListaPrecios: TDataModule},
+  ListaPreciosEdit in 'Procesos\ListaPreciosEdit.pas' {frmListaPrecioEdit},
+  ListaPreciosGrid in 'Procesos\ListaPreciosGrid.pas' {FrmListaPreciosGrid},
+  CambioPreciosEdt in 'Procesos\CambioPreciosEdt.pas' {FrmCambioPrecios},
+  KardexMovimientosDM in 'Procesos\KardexMovimientosDM.pas' {dmKardexMovimientos: TDataModule},
+  KardexMovimientosEdit in 'Procesos\KardexMovimientosEdit.pas' {frmKardexMovimientosEdit},
+  KardexMovimientosGrid in 'Procesos\KardexMovimientosGrid.pas' {FrmKardexMovimientosGrid};
 
 {$R *.res}
 

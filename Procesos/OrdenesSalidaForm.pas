@@ -182,6 +182,8 @@ type
     DSDireccionenvios: TDataSource;
     LblRespEntrega: TLabel;
     DBText7: TDBText;
+    Label31: TLabel;
+    DBText8: TDBText;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);

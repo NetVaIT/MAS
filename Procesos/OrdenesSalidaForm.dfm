@@ -420,6 +420,28 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataField = 'PersonaEntrega'
               DataSource = DataSource
             end
+            object Label31: TLabel
+              Left = 1133
+              Top = 16
+              Width = 61
+              Height = 13
+              Caption = 'Tipo Salida'
+              FocusControl = DBLookupComboBox5
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object DBText8: TDBText
+              Left = 1133
+              Top = 35
+              Width = 65
+              Height = 17
+              DataField = 'TipoSalida'
+              DataSource = DataSource
+            end
             object PnlEmpaca: TPanel
               Left = 0
               Top = 242
@@ -1958,7 +1980,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400D00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2174,7 +2196,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C0020C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002100210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

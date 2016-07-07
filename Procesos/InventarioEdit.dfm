@@ -1,33 +1,262 @@
 inherited frmInventarioEdit: TfrmInventarioEdit
   Caption = 'frmInventarioEdit'
+  ClientWidth = 594
   OnActivate = FormActivate
-  ExplicitWidth = 750
+  ExplicitWidth = 594
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 594
+  end
+  inherited splDetail2: TSplitter
+    Width = 594
+  end
+  inherited splDetail1: TSplitter
+    Width = 594
+  end
+  inherited pnlClose: TPanel
+    Width = 594
+  end
+  inherited pnlDetail3: TPanel
+    Width = 594
+  end
+  inherited pnlDetail2: TPanel
+    Width = 594
+  end
   inherited pnlDetail1: TPanel
+    Width = 594
     ExplicitLeft = 0
     ExplicitTop = 480
   end
   inherited pcMain: TcxPageControl
+    Top = 22
+    Width = 594
+    Height = 455
+    ClientRectBottom = 454
+    ClientRectRight = 593
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
+        Width = 592
+        Height = 453
         inherited tbarData: TToolBar
+          Width = 590
           ExplicitLeft = 0
           ExplicitTop = 0
+          ExplicitWidth = 590
         end
         inherited pnlMaster: TPanel
-          ExplicitLeft = 0
+          Width = 590
+          Height = 426
+          ExplicitLeft = -1
           ExplicitTop = 24
+          ExplicitWidth = 590
+          object Label1: TLabel
+            Left = 40
+            Top = 24
+            Width = 67
+            Height = 13
+            Caption = 'Identificador1'
+          end
+          object Label2: TLabel
+            Left = 177
+            Top = 24
+            Width = 67
+            Height = 13
+            Caption = 'Identificador2'
+          end
+          object Label3: TLabel
+            Left = 312
+            Top = 24
+            Width = 67
+            Height = 13
+            Caption = 'Identificador3'
+          end
+          object Label4: TLabel
+            Left = 40
+            Top = 80
+            Width = 36
+            Height = 13
+            Caption = 'Art'#237'culo'
+          end
+          object Label5: TLabel
+            Left = 40
+            Top = 136
+            Width = 69
+            Height = 13
+            Caption = 'Precio Unitario'
+          end
+          object Label6: TLabel
+            Left = 40
+            Top = 208
+            Width = 48
+            Height = 13
+            Caption = 'Existencia'
+          end
+          object Label8: TLabel
+            Left = 312
+            Top = 216
+            Width = 70
+            Height = 13
+            Caption = 'Pedido X Surtir'
+          end
+          object Label9: TLabel
+            Left = 312
+            Top = 136
+            Width = 28
+            Height = 13
+            Caption = 'Costo'
+          end
+          object Label10: TLabel
+            Left = 175
+            Top = 216
+            Width = 45
+            Height = 13
+            Caption = 'Apartado'
+          end
+          object Label7: TLabel
+            Left = 176
+            Top = 280
+            Width = 39
+            Height = 13
+            Caption = 'Tr'#225'nsito'
+          end
+          object Label11: TLabel
+            Left = 312
+            Top = 280
+            Width = 30
+            Height = 13
+            Caption = 'Virtual'
+          end
+          object cxDBLabel1: TcxDBLabel
+            Left = 40
+            Top = 43
+            DataBinding.DataField = 'identificador1'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel2: TcxDBLabel
+            Left = 177
+            Top = 43
+            DataBinding.DataField = 'Identificador2'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel3: TcxDBLabel
+            Left = 312
+            Top = 43
+            DataBinding.DataField = 'Identificador3'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel4: TcxDBLabel
+            Left = 40
+            Top = 99
+            DataBinding.DataField = 'Descripcion'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 377
+          end
+          object cxDBLabel5: TcxDBLabel
+            Left = 40
+            Top = 155
+            DataBinding.DataField = 'PrecioVenta'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel6: TcxDBLabel
+            Left = 40
+            Top = 227
+            DataBinding.DataField = 'Existencia'
+            DataBinding.DataSource = DataSource
+            StyleDisabled.TextStyle = [fsBold]
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel7: TcxDBLabel
+            Left = 312
+            Top = 235
+            DataBinding.DataField = 'PedidoXSurtir'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel8: TcxDBLabel
+            Left = 312
+            Top = 155
+            DataBinding.DataField = 'CostoPromedio'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel9: TcxDBLabel
+            Left = 175
+            Top = 235
+            DataBinding.DataField = 'Apartado'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel10: TcxDBLabel
+            Left = 176
+            Top = 299
+            DataBinding.DataField = 'Transito'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
+          object cxDBLabel11: TcxDBLabel
+            Left = 312
+            Top = 299
+            DataBinding.DataField = 'Virtual'
+            DataBinding.DataSource = DataSource
+            Height = 21
+            Width = 105
+          end
         end
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 594
+    Height = 22
+    Align = alTop
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -156
+    ExplicitWidth = 750
+    object Label12: TLabel
+      Left = 14
+      Top = 2
+      Width = 72
+      Height = 16
+      Caption = ' Inventario'
+    end
+  end
+  inherited DataSource: TDataSource
+    AutoEdit = False
+    DataSet = dmInventario.adodsMaster
+    Left = 422
+  end
   inherited ilPageControl: TImageList
+    Left = 462
     Bitmap = {
       494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -168,7 +397,11 @@ inherited frmInventarioEdit: TfrmInventarioEdit
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    Left = 502
+  end
   inherited ilAction: TImageList
+    Left = 536
     Bitmap = {
       494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
@@ -706,6 +939,7 @@ inherited frmInventarioEdit: TfrmInventarioEdit
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Left = 382
     PixelsPerInch = 96
   end
 end

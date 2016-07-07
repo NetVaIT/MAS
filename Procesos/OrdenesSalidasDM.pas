@@ -272,6 +272,9 @@ type
     adodsMasterDirEnvio: TStringField;
     adodsMasterIdDireccionEnvio: TIntegerField;
     ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
+    ADODtStOrdenSalidaTipo: TADODataSet;
+    adodsMasterIDOrdenSalidaTipo: TIntegerField;
+    adodsMasterTipoSalida: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);

@@ -37,15 +37,17 @@ inherited dmInventario: TdmInventario
       FieldName = 'Virtual'
     end
     object adodsMasterDescripcion: TStringField
+      DisplayLabel = 'Art'#237'culo'
       FieldName = 'Descripcion'
       Size = 255
     end
-    object adodsMasteridentificador1: TStringField
-      FieldName = 'identificador1'
-      Size = 50
-    end
     object adodsMasterPrecioUnitario: TFloatField
       FieldName = 'PrecioUnitario'
+    end
+    object adodsMasteridentificador1: TStringField
+      DisplayLabel = 'Identificador1'
+      FieldName = 'identificador1'
+      Size = 50
     end
     object adodsMasterIdentificador2: TStringField
       FieldName = 'Identificador2'

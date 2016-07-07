@@ -135,14 +135,14 @@ const
     TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
  +'IdPersonaRevisa, IdPersonaEmpaca, IdPersonaEntrega, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'  //Se agrego persona entrega Jun 15/16
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
- +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio from OrdenesSalidas OS ';
-
+ +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio, OS.IDPersona, os.IdOrdenSalidaTipo from OrdenesSalidas OS ';
+  CondTipo=' where  IdOrdenSalidaTipo=1 ' ; //Jul 1/16                        // campos  Jul 1/16
   orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin
   inherited;
   PoneFiltro;
-  Tadodataset(datasource.DataSet).Close;               //May 16/16
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden;
+  Tadodataset(datasource.DataSet).Close;               //May 16/16   //Jul 1/16
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+CondTipo+ffiltro+ffiltroEstado+orden;
  // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden);
   if ffiltro <>''then                                                //Abr.20/16
   begin
@@ -157,8 +157,8 @@ procedure TFrmOrdenesSalidaGrid.PoneFiltro;
 begin
   ffiltro:=''; //Jun 30/16
   if ChckBxXFecha.checked then   //Jun 30/16
-     ffiltro:=' where OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Ajustado May 16/16
-
+     ffiltro:=' and  OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Ajustado May 16/16
+               //Se quito whereJul 1/16
 end;
 procedure TFrmOrdenesSalidaGrid.RdGrpEstadoClick(Sender: TObject);
 begin

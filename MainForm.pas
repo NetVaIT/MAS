@@ -163,7 +163,8 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   ConfiguracionDM, BackorderEntradasDM, DocumentosEntradasDM, PagosDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
-  OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM;
+  OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
+  ListaPreciosDM, KardexMovimientosDM;
 
 { TfrmMain }
 
@@ -218,12 +219,14 @@ begin
    30: gModulo := TdmAlmacenes.Create(Self);
    31: gModulo := TdmDevoluciones.Create(Self); //Jun 21/16
   //Jun 30/16
-   32: gModulo := TdmInventario.Create(Self);
- (*  33: gModulo := TdmSalidaXMerma.Create(Self);
-   34: gModulo := TdmListaPrecios.Create(Self);
-   35: gModulo := TdmKardex.Create(Self);
 
-   *)
+   32: gModulo := TdmInventario.Create(Self);
+   34: gModulo := TdmListaPrecios.Create(Self);  //Jul 1/16
+ (*  33: gModulo := TdmSalidaXMerma.Create(Self);
+     *)
+   35: gModulo := TdmKardexMovimientos.Create(Self); //Jul 6/16
+
+
 
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
@@ -279,7 +282,7 @@ end;
 procedure TfrmMain.UsarPermisos;
 var
   i, tagAux:Integer;
-   MenuTxt, OpcionTxt, aux:String;
+   MenuTxt, OpcionTxt :String;
 begin
   MenuTxt:=_dmConection.PerMenu;
   OpcionTxt:=_dmConection.PerOpcion;

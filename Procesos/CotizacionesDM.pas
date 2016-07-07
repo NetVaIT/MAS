@@ -275,6 +275,7 @@ type
     ADODtStDireccionesEnvioDirEnviocompleta: TStringField;
     ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
     ADODtStOrdenSalidaIdPersona: TIntegerField;
+    adodsCotizacionesDetalleEnAduana: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -489,6 +490,8 @@ begin
   inherited;  //Verificar comportamiento en precio
   if adodsCotizacionesDetalle.State in [dsEdit,dsInsert] then
   begin
+    if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat> adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then //Jul 5/16
+       beep;
   //  if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat<= adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then  //Abr 11/16
   //  begin
   //Tomar cantidad y llamar para cargar precio especial en caso de que aplique mayoreo... May 6/16
@@ -544,7 +547,7 @@ begin
   if IDProd<>'' then
   begin
     ADODSAuxiliar.Close;
-    ADODSAuxiliar.CommandText:='Select * from Productos where (Identificador1='''+IDProd+
+    ADODSAuxiliar.CommandText:='Select * from Productos P inner join Inventario I on P.IdProducto = I.IdProducto where (Identificador1='''+IDProd+
                                ''' or Identificador2='''+IDProd+''' or Identificador3='''+IDProd+
                                ''')';
     ADODSAuxiliar.open;

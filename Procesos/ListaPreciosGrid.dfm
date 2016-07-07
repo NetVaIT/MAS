@@ -1,252 +1,253 @@
-inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
-  Caption = 'FrmOrdenesSalidaGrid'
-  ClientWidth = 1295
-  OnCreate = FormCreate
-  ExplicitLeft = -23
-  ExplicitWidth = 1295
+inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
+  Caption = 'FrmListaPreciosGrid'
+  ClientWidth = 1109
+  ExplicitWidth = 1109
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1109
   end
   inherited splDetail2: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1109
   end
   inherited splDetail1: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1109
   end
   inherited pnlClose: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1109
   end
   inherited pnlDetail3: TPanel
-    Width = 1295
-    ExplicitTop = 571
-    ExplicitWidth = 1255
+    Width = 1109
   end
   inherited pnlDetail2: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1109
   end
   inherited pnlDetail1: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1109
   end
   inherited pnltoolbar: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1109
   end
   inherited pnlMaster: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1109
     inherited cxGrid: TcxGrid
-      Top = 46
-      Width = 1295
-      Height = 425
-      ExplicitTop = 42
-      ExplicitWidth = 1255
-      ExplicitHeight = 429
+      Top = 49
+      Width = 1109
+      Height = 422
       inherited tvMaster: TcxGridDBTableView
-        object tvMasteridOrdenSalida: TcxGridDBColumn
-          Caption = 'No.Orden Salida'
-          DataBinding.FieldName = 'idOrdenSalida'
-          Width = 86
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
+          VisibleForCustomization = False
         end
-        object tvMasterIdDocumentoSalida: TcxGridDBColumn
-          Caption = 'No.Pedido Origen'
-          DataBinding.FieldName = 'IdDocumentoSalida'
-          Width = 92
+        object tvMasterIdProductoTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoTipo'
+          Visible = False
+          VisibleForCustomization = False
         end
-        object tvMasterIdentificadorCte: TcxGridDBColumn
-          DataBinding.FieldName = 'IdentificadorCte'
-          Width = 86
+        object tvMasterIdUnidadMedida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUnidadMedida'
+          Visible = False
+          VisibleForCustomization = False
         end
-        object tvMasterNombreCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'NombreCliente'
-          Width = 295
+        object tvMasterIdProductoEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoEstatus'
+          Visible = False
+          VisibleForCustomization = False
         end
-        object tvMasterFechaRegistro: TcxGridDBColumn
-          Caption = 'Fecha Registro'
-          DataBinding.FieldName = 'FechaRegistro'
-          Width = 133
+        object tvMasterIdentificador1: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador1'
+          Width = 150
         end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
+        object tvMasterIdentificador2: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador2'
+          Visible = False
+          Width = 150
         end
-        object tvMasterPersonaRecolecta: TcxGridDBColumn
-          Caption = 'Recolecta'
-          DataBinding.FieldName = 'PersonaRecolecta'
-          Width = 212
+        object tvMasterIdentificador3: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador3'
+          Visible = False
+          Width = 150
         end
-        object tvMasterPersonaRevisa: TcxGridDBColumn
-          Caption = 'Revisa'
-          DataBinding.FieldName = 'PersonaRevisa'
-          Width = 233
+        object tvMasterDescripcion: TcxGridDBColumn
+          DataBinding.FieldName = 'Descripcion'
+          Width = 357
         end
-        object tvMasterPersonaEmpaca: TcxGridDBColumn
-          Caption = 'Empaca'
-          DataBinding.FieldName = 'PersonaEmpaca'
-          Width = 233
+        object tvMasterPrecioUnitario: TcxGridDBColumn
+          Caption = 'Precio Unitario'
+          DataBinding.FieldName = 'PrecioUnitario'
+          Width = 102
         end
-        object tvMasterSubtotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Subtotal'
-        end
-        object tvMasterIVA: TcxGridDBColumn
-          DataBinding.FieldName = 'IVA'
-        end
-        object tvMasterTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Total'
+        object tvMasterUnidadMedida: TcxGridDBColumn
+          Caption = 'Unidad Medida'
+          DataBinding.FieldName = 'UnidadMedida'
+          Width = 100
         end
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 1295
-      Height = 46
-      ButtonHeight = 46
-      ExplicitWidth = 1295
-      ExplicitHeight = 46
+      Width = 1109
+      Height = 49
+      ButtonHeight = 45
+      ExplicitWidth = 1109
+      ExplicitHeight = 49
       inherited ToolButton1: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited btnEdit: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton3: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton4: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton5: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton6: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton7: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton8: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton9: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton2: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited btnPost: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited btnCancel: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton21: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton22: TToolButton
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited ToolButton10: TToolButton
-        Width = 20
-        ExplicitWidth = 20
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
       inherited tbtnCerrar: TToolButton
-        Left = 297
-        ExplicitLeft = 297
-        ExplicitHeight = 46
+        ExplicitHeight = 45
       end
-      object TlBtn: TToolButton
-        Left = 320
+      object ToolButton11: TToolButton
+        Left = 308
         Top = 0
-        Width = 33
-        Caption = 'TlBtn'
+        Width = 93
+        Caption = 'ToolButton11'
         ImageIndex = 12
         Style = tbsSeparator
       end
       object PnlBusqueda: TPanel
-        Left = 353
+        Left = 401
         Top = 0
         Width = 184
-        Height = 46
+        Height = 45
         BevelInner = bvLowered
         ParentBackground = False
         ParentColor = True
-        TabOrder = 2
-        object Label3: TLabel
-          Left = 16
+        TabOrder = 0
+        object LblEtiqueta: TLabel
+          Left = 11
           Top = 2
-          Width = 90
+          Width = 54
           Height = 13
-          Caption = 'Cliente parecido a:'
+          Caption = 'Parecido a:'
         end
         object EdtNombre: TEdit
-          Left = 15
+          Left = 10
           Top = 17
           Width = 163
           Height = 21
+          Hint = 'Producto o Identificador'
           TabOrder = 0
           OnChange = EdtNombreChange
           OnKeyDown = EdtNombreKeyDown
         end
+        object PnlProveedor: TPanel
+          Left = 2
+          Top = 2
+          Width = 180
+          Height = 41
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 1
+          Visible = False
+          ExplicitWidth = 114
+          object Label4: TLabel
+            Left = 10
+            Top = 0
+            Width = 107
+            Height = 13
+            Caption = 'Seleccione proveedor:'
+          end
+          object RxDBLkpCmbProveedor: TRxDBLookupCombo
+            Left = 8
+            Top = 15
+            Width = 164
+            Height = 21
+            DropDownCount = 8
+            LookupField = 'IdPersona'
+            LookupDisplay = 'RazonSocial'
+            LookupSource = DSProveedor
+            TabOrder = 0
+            OnClick = RxDBLkpCmbProveedorClick
+          end
+        end
       end
-      object RdGrpEstado: TRadioGroup
-        Left = 537
+      object RdGrpFiltro: TRadioGroup
+        Left = 585
         Top = 0
-        Width = 330
-        Height = 46
-        Caption = 'Estado'
-        Color = clWhite
-        Columns = 4
+        Width = 143
+        Height = 45
+        Caption = 'Filtro por'
+        Color = clBtnFace
         ItemIndex = 0
         Items.Strings = (
-          'Todos'
-          'Generado'
-          'Recolectado'
-          'Revisado'
-          'Autorizado'
-          'Empacado'
-          
-            'Enviado                                                         ' +
-            '                                 '
-          'Consolidado')
+          'Identificador o Producto '
+          'Proveedor')
         ParentBackground = False
         ParentColor = False
-        TabOrder = 1
-        OnClick = RdGrpEstadoClick
+        TabOrder = 2
+        OnClick = RdGrpFiltroClick
       end
       object PnlFechas: TPanel
-        Left = 867
+        Left = 728
         Top = 0
-        Width = 425
-        Height = 46
+        Width = 328
+        Height = 45
         BevelInner = bvLowered
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 1
         object Label1: TLabel
-          Left = 16
-          Top = 4
-          Width = 30
+          Left = 12
+          Top = 2
+          Width = 62
           Height = 13
-          Caption = 'Desde'
+          Caption = 'Precio Desde'
           Transparent = True
         end
         object Label2: TLabel
-          Left = 176
-          Top = 4
+          Left = 109
+          Top = 2
           Width = 28
           Height = 13
           Caption = 'Hasta'
           Transparent = True
         end
         object SpdBtnConsulta: TSpeedButton
-          Left = 314
-          Top = 15
+          Left = 294
+          Top = 11
           Width = 25
           Height = 25
           Glyph.Data = {
@@ -265,39 +266,100 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
           NumGlyphs = 2
           OnClick = SpdBtnConsultaClick
         end
-        object cxDtEdtDesde: TcxDateEdit
-          Left = 11
-          Top = 17
-          TabOrder = 0
-          Width = 145
-        end
-        object cxDtEdtHasta: TcxDateEdit
-          Left = 171
-          Top = 17
-          TabOrder = 1
-          Width = 137
-        end
-        object ChckBxXFecha: TCheckBox
-          Left = 349
-          Top = 13
+        object ChckBxXRango: TCheckBox
+          Left = 214
+          Top = 11
           Width = 73
-          Height = 20
-          Caption = 'Usar Fecha'
-          Checked = True
-          State = cbChecked
-          TabOrder = 2
+          Height = 25
+          Caption = 'Usar Rango Precio'
+          TabOrder = 0
+          WordWrap = True
         end
+        object cxEdtValFin: TcxCurrencyEdit
+          Left = 109
+          Top = 17
+          EditValue = 1000.000000000000000000
+          TabOrder = 1
+          OnKeyDown = EdtNombreKeyDown
+          Width = 93
+        end
+        object cxEdtValIni: TcxCurrencyEdit
+          Left = 10
+          Top = 18
+          EditValue = 0.000000000000000000
+          TabOrder = 2
+          OnKeyDown = EdtNombreKeyDown
+          Width = 93
+        end
+      end
+      object SpdBtnCambiarPrecio: TSpeedButton
+        Left = 1056
+        Top = 0
+        Width = 32
+        Height = 45
+        Glyph.Data = {
+          36060000424D3606000000000000360000002800000020000000100000000100
+          18000000000000060000C40E0000C40E00000000000000000000FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFCAC9C8CAC9C8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAC9C8CAC9C8FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FF4E31314E3131766D6AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC3C3C3C3C3C3C3C3C3FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCAC9C8CAC9C8FFFFFF4E31
+          3199C64E99C64E4E3131FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFCAC9C8CAC9C8FFFFFFC3C3C3FFFFFFFFFFFFC3C3C3FFFFFFCAC9C8
+          CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8776C6C4E3131A2A0A04E313199C6
+          4ECCF6A899C64E4E3131FFFFFFCAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CAC9C8CA
+          C9C8C3C3C3C3C3C3A2A0A0C3C3C3FFFFFFFFFFFFFFFFFFC3C3C3735C5C473030
+          4730304730304730304730304730304730304E313199C64E4E313199C64ECCF6
+          A899C64E4E3131FFFFFFC3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3
+          C3C3C3C3C3FFFFFFC3C3C3FFFFFFFFFFFFFFFFFFC3C3C3FFFFFF473030EED4BA
+          EED4BAEED4BAEED4BAEED4BAEED4BAECD2B95C4141CFF6AC9CC854CCF6A899C6
+          4E4E3131FFFFFFFFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFFFFF473030FFFFFF
+          FFEFE0FFEFE0FFEFE0FFEFE0FFEFE0FDEDDE755E5ED8F8BCD7F8BBA8CE684E31
+          31CAC9C8CAC9C8FFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFC3C3C3FFFFFFFFFFFFFFFFFFC3C3C3CAC9C8CAC9C8FFFFFF513B3BFFFFFF
+          FFEFE0F9E1C9F9E1C9F9E1C9F9E1C995662F897676DEF9C7DDF9C5D8F8BCA1CA
+          5C4E3131CAC9C8FFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC3
+          C3C3C3C3C3FFFFFFFFFFFFFFFFFFFFFFFFC3C3C3CAC9C8FFFFFF5F4B4BFFFFFF
+          9D723E986B3595662E95662EFFEFE095662F948383978686917F7F836E6E6D55
+          557E7373FFFFFFFFFFFFC3C3C3FFFFFFC3C3C3C3C3C3C3C3C3C3C3C3FFFFFFC3
+          C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3FFFFFFFFFFFF655151FFFFFF
+          FFF1E4FFF1E3FFF0E1FFEFE0FFEFE095662F95662E95662EEED4BA473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC3
+          C3C3C3C3C3C3C3C3FFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFF655151FFFFFF
+          FFF1E4FFF1E3FFF0E1FFEFE0FFEFE0FFEFE0F9E1C9F9E1C9EED4BA473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFF6A5858FFFFFF
+          FFF2E6FAE6D2FAE4CFF9E3CDF9E3CD986A3495662E95662ED9C2AA473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC3
+          C3C3C3C3C3C3C3C3FFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFF766565FFFFFF
+          B4936BB39168AE895EAA8457FFF2E6A57D4EFFFFFF95662ED9C2AA473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFC3C3C3C3C3C3C3C3C3C3C3C3FFF2E6C3
+          C3C3FFFFFFC3C3C3FFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFF817171FFFFFF
+          FFF5EBFFF5EBFFF4EAFFF4E9FFF4E9AF8C62A57D4E9A6D37EED4BA473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFF5EBFFF5EBFFF4EAFFFFFFFFFFFFC3
+          C3C3C3C3C3C3C3C3FFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFF8A7B7BFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFD6BC473030CAC9
+          C8FFFFFFFFFFFFFFFFFFC3C3C3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFC3C3C3CAC9C8FFFFFFFFFFFFFFFFFFAC9E9E968989
+          9689899487878F81818C7E7E8C7E7E8879797F6F6F726161624F4F786262FFFF
+          FFFFFFFFFFFFFFFFFFFFC3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3
+          C3C3C3C3C3C3C3C3C3C3C3C3C3C3FFFFFFFFFFFFFFFFFFFFFFFF}
+        NumGlyphs = 2
+        OnClick = SpdBtnCambiarPrecioClick
       end
     end
   end
   inherited DataSource: TDataSource
-    DataSet = DMOrdenesSalidas.adodsMaster
-    Left = 696
-    Top = 88
+    DataSet = DmListaPrecios.adodsMaster
+    OnDataChange = DataSourceDataChange
+    Top = 152
   end
   inherited ilPageControl: TImageList
-    Left = 736
-    Top = 80
+    Top = 152
     Bitmap = {
       494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -439,14 +501,12 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited ActionList: TActionList
-    Left = 784
-    Top = 80
+    Top = 152
   end
   inherited ilAction: TImageList
-    Left = 816
-    Top = 80
+    Top = 152
     Bitmap = {
-      494C01010C00C0011C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -982,16 +1042,19 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
-    Left = 624
-    Top = 88
+    Top = 152
     PixelsPerInch = 96
   end
   inherited cxGridPopupMenu: TcxGridPopupMenu
-    Left = 856
-    Top = 80
+    Top = 152
   end
   inherited PopupMenu: TPopupMenu
-    Left = 568
-    Top = 88
+    Top = 208
+  end
+  object DSProveedor: TDataSource
+    DataSet = DmListaPrecios.ADODtStProveedor
+    OnDataChange = DataSourceDataChange
+    Left = 896
+    Top = 192
   end
 end

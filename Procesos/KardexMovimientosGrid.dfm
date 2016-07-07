@@ -1,113 +1,101 @@
-inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
-  Caption = 'FrmOrdenesSalidaGrid'
-  ClientWidth = 1295
+inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
+  Caption = 'FrmKardexMovimientosGrid'
+  ClientWidth = 1150
   OnCreate = FormCreate
-  ExplicitLeft = -23
-  ExplicitWidth = 1295
+  ExplicitWidth = 1150
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1150
   end
   inherited splDetail2: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1150
   end
   inherited splDetail1: TSplitter
-    Width = 1295
-    ExplicitWidth = 936
+    Width = 1150
   end
   inherited pnlClose: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1150
   end
   inherited pnlDetail3: TPanel
-    Width = 1295
-    ExplicitTop = 571
-    ExplicitWidth = 1255
+    Width = 1150
   end
   inherited pnlDetail2: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1150
   end
   inherited pnlDetail1: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1150
   end
   inherited pnltoolbar: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1150
   end
   inherited pnlMaster: TPanel
-    Width = 1295
-    ExplicitWidth = 1255
+    Width = 1150
     inherited cxGrid: TcxGrid
       Top = 46
-      Width = 1295
+      Width = 1150
       Height = 425
-      ExplicitTop = 42
-      ExplicitWidth = 1255
-      ExplicitHeight = 429
+      ExplicitLeft = -1
+      ExplicitTop = 46
+      ExplicitWidth = 1051
+      ExplicitHeight = 425
       inherited tvMaster: TcxGridDBTableView
-        object tvMasteridOrdenSalida: TcxGridDBColumn
-          Caption = 'No.Orden Salida'
-          DataBinding.FieldName = 'idOrdenSalida'
-          Width = 86
+        object tvMasterIdProductoKardex: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoKardex'
+          Visible = False
         end
-        object tvMasterIdDocumentoSalida: TcxGridDBColumn
-          Caption = 'No.Pedido Origen'
-          DataBinding.FieldName = 'IdDocumentoSalida'
-          Width = 92
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
+          Visible = False
         end
-        object tvMasterIdentificadorCte: TcxGridDBColumn
-          DataBinding.FieldName = 'IdentificadorCte'
-          Width = 86
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
         end
-        object tvMasterNombreCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'NombreCliente'
-          Width = 295
+        object tvMasterIdProductoKardexEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoKardexEstatus'
+          Visible = False
         end
-        object tvMasterFechaRegistro: TcxGridDBColumn
-          Caption = 'Fecha Registro'
-          DataBinding.FieldName = 'FechaRegistro'
-          Width = 133
+        object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaItem'
+          Visible = False
         end
-        object tvMasterEstatus: TcxGridDBColumn
-          DataBinding.FieldName = 'Estatus'
+        object tvMasterIdOrdenSalidaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenSalidaItem'
+          Visible = False
         end
-        object tvMasterPersonaRecolecta: TcxGridDBColumn
-          Caption = 'Recolecta'
-          DataBinding.FieldName = 'PersonaRecolecta'
-          Width = 212
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
+          Visible = False
         end
-        object tvMasterPersonaRevisa: TcxGridDBColumn
-          Caption = 'Revisa'
-          DataBinding.FieldName = 'PersonaRevisa'
-          Width = 233
+        object tvMasterFecha: TcxGridDBColumn
+          DataBinding.FieldName = 'Fecha'
         end
-        object tvMasterPersonaEmpaca: TcxGridDBColumn
-          Caption = 'Empaca'
-          DataBinding.FieldName = 'PersonaEmpaca'
-          Width = 233
+        object tvMasterMovimiento: TcxGridDBColumn
+          DataBinding.FieldName = 'Movimiento'
         end
-        object tvMasterSubtotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Subtotal'
+        object tvMasterCantidad: TcxGridDBColumn
+          DataBinding.FieldName = 'Cantidad'
         end
-        object tvMasterIVA: TcxGridDBColumn
-          DataBinding.FieldName = 'IVA'
+        object tvMasterImporte: TcxGridDBColumn
+          DataBinding.FieldName = 'Importe'
         end
-        object tvMasterTotal: TcxGridDBColumn
-          DataBinding.FieldName = 'Total'
+        object tvMasterPrecioUnitario: TcxGridDBColumn
+          Caption = 'Precio Unitario'
+          DataBinding.FieldName = 'PrecioUnitario'
+        end
+        object tvMasterCostoUnitario: TcxGridDBColumn
+          Caption = 'Costo Unitario'
+          DataBinding.FieldName = 'CostoUnitario'
         end
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 1295
+      Width = 1150
       Height = 46
       ButtonHeight = 46
-      ExplicitWidth = 1295
+      ExplicitWidth = 1051
       ExplicitHeight = 46
       inherited ToolButton1: TToolButton
         ExplicitHeight = 46
@@ -152,82 +140,96 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         ExplicitHeight = 46
       end
       inherited ToolButton10: TToolButton
-        Width = 20
-        ExplicitWidth = 20
+        Width = 13
+        ExplicitWidth = 13
         ExplicitHeight = 46
       end
       inherited tbtnCerrar: TToolButton
-        Left = 297
-        ExplicitLeft = 297
+        Left = 290
+        ExplicitLeft = 290
         ExplicitHeight = 46
       end
-      object TlBtn: TToolButton
-        Left = 320
+      object ToolButton11: TToolButton
+        Left = 313
         Top = 0
-        Width = 33
-        Caption = 'TlBtn'
+        Width = 65
+        Caption = 'ToolButton11'
         ImageIndex = 12
         Style = tbsSeparator
       end
-      object PnlBusqueda: TPanel
-        Left = 353
+      object PnlProveedor: TPanel
+        Left = 378
         Top = 0
-        Width = 184
+        Width = 359
         Height = 46
-        BevelInner = bvLowered
+        Align = alClient
+        BevelOuter = bvNone
         ParentBackground = False
-        ParentColor = True
-        TabOrder = 2
-        object Label3: TLabel
-          Left = 16
-          Top = 2
-          Width = 90
+        TabOrder = 0
+        object Label4: TLabel
+          Left = 10
+          Top = 1
+          Width = 47
           Height = 13
-          Caption = 'Cliente parecido a:'
+          Caption = 'Producto:'
         end
-        object EdtNombre: TEdit
-          Left = 15
-          Top = 17
-          Width = 163
+        object RxDBLkpCmbProducto: TRxDBLookupCombo
+          Left = 8
+          Top = 16
+          Width = 233
           Height = 21
+          DropDownCount = 8
+          LookupField = 'IdProducto'
+          LookupDisplay = 'Descripcion'
+          LookupSource = DSProductos
           TabOrder = 0
-          OnChange = EdtNombreChange
-          OnKeyDown = EdtNombreKeyDown
+          OnChange = RxDBLkpCmbProductoChange
         end
-      end
-      object RdGrpEstado: TRadioGroup
-        Left = 537
-        Top = 0
-        Width = 330
-        Height = 46
-        Caption = 'Estado'
-        Color = clWhite
-        Columns = 4
-        ItemIndex = 0
-        Items.Strings = (
-          'Todos'
-          'Generado'
-          'Recolectado'
-          'Revisado'
-          'Autorizado'
-          'Empacado'
-          
-            'Enviado                                                         ' +
-            '                                 '
-          'Consolidado')
-        ParentBackground = False
-        ParentColor = False
-        TabOrder = 1
-        OnClick = RdGrpEstadoClick
+        object cxDBLblDescAux: TcxDBLabel
+          Left = 11
+          Top = 16
+          DataBinding.DataField = 'Descripcion'
+          DataBinding.DataSource = DSProductos
+          OnClick = cxDBLblDescAuxClick
+          Height = 20
+          Width = 212
+        end
+        object cxDBLabel1: TcxDBLabel
+          Left = 244
+          Top = 1
+          DataBinding.DataField = 'Identificador1'
+          DataBinding.DataSource = DSProductos
+          OnClick = cxDBLblDescAuxClick
+          Height = 20
+          Width = 114
+        end
+        object cxDBLabel2: TcxDBLabel
+          Left = 244
+          Top = 15
+          DataBinding.DataField = 'Identificador2'
+          DataBinding.DataSource = DSProductos
+          OnClick = cxDBLblDescAuxClick
+          Height = 20
+          Width = 114
+        end
+        object cxDBLabel3: TcxDBLabel
+          Left = 245
+          Top = 29
+          DataBinding.DataField = 'Identificador3'
+          DataBinding.DataSource = DSProductos
+          OnClick = cxDBLblDescAuxClick
+          Height = 20
+          Width = 114
+        end
       end
       object PnlFechas: TPanel
-        Left = 867
+        Left = 737
         Top = 0
         Width = 425
         Height = 46
         BevelInner = bvLowered
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 1
         object Label1: TLabel
           Left = 16
           Top = 4
@@ -246,7 +248,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         end
         object SpdBtnConsulta: TSpeedButton
           Left = 314
-          Top = 15
+          Top = 11
           Width = 25
           Height = 25
           Glyph.Data = {
@@ -291,13 +293,13 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     end
   end
   inherited DataSource: TDataSource
-    DataSet = DMOrdenesSalidas.adodsMaster
-    Left = 696
-    Top = 88
+    DataSet = dmKardexMovimientos.adodsMaster
+    Left = 736
+    Top = 64
   end
   inherited ilPageControl: TImageList
-    Left = 736
-    Top = 80
+    Left = 768
+    Top = 64
     Bitmap = {
       494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -439,14 +441,14 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited ActionList: TActionList
-    Left = 784
-    Top = 80
+    Left = 800
+    Top = 64
   end
   inherited ilAction: TImageList
-    Left = 816
-    Top = 80
+    Left = 832
+    Top = 64
     Bitmap = {
-      494C01010C00C0011C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -982,16 +984,21 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
-    Left = 624
-    Top = 88
+    Left = 704
+    Top = 64
     PixelsPerInch = 96
   end
   inherited cxGridPopupMenu: TcxGridPopupMenu
-    Left = 856
-    Top = 80
+    Left = 864
+    Top = 64
   end
   inherited PopupMenu: TPopupMenu
-    Left = 568
-    Top = 88
+    Left = 704
+    Top = 120
+  end
+  object DSProductos: TDataSource
+    DataSet = dmKardexMovimientos.adodsProductos
+    Left = 824
+    Top = 152
   end
 end

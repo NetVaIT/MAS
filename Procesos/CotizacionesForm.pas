@@ -134,6 +134,7 @@ type
     Label22: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
     DSDireccionenvios: TDataSource;
+    Label23: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);

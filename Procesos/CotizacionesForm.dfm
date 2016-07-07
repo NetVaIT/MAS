@@ -4,6 +4,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   KeyPreview = True
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -325,6 +326,26 @@ inherited frmCotizaciones: TfrmCotizaciones
                 end
                 item
                   Expanded = False
+                  FieldName = 'PrecioUnitario'
+                  ReadOnly = True
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Cantidad'
+                  Title.Caption = 'Cantidad Solicitada'
+                  Width = 99
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Importe'
+                  ReadOnly = True
+                  Width = 92
+                  Visible = True
+                end
+                item
+                  Expanded = False
                   FieldName = 'Disponible'
                   ReadOnly = True
                   Width = 73
@@ -351,13 +372,6 @@ inherited frmCotizaciones: TfrmCotizaciones
                 end
                 item
                   Expanded = False
-                  FieldName = 'Cantidad'
-                  Title.Caption = 'Cantidad Solicitada'
-                  Width = 99
-                  Visible = True
-                end
-                item
-                  Expanded = False
                   FieldName = 'CantidadPendiente'
                   ReadOnly = True
                   Title.Caption = 'Cantidad Pendiente'
@@ -365,15 +379,8 @@ inherited frmCotizaciones: TfrmCotizaciones
                 end
                 item
                   Expanded = False
-                  FieldName = 'PrecioUnitario'
-                  ReadOnly = True
-                  Visible = True
-                end
-                item
-                  Expanded = False
-                  FieldName = 'Importe'
-                  ReadOnly = True
-                  Width = 92
+                  FieldName = 'EnAduana'
+                  Title.Caption = 'En Aduana'
                   Visible = True
                 end>
             end
@@ -544,6 +551,14 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 13
               Caption = 'DireccionEnvio'
               FocusControl = DBLookupComboBox3
+            end
+            object Label23: TLabel
+              Left = 380
+              Top = 117
+              Width = 185
+              Height = 13
+              Caption = 'Poner seleccion si quiere Factura o no.'
+              Visible = False
             end
             object cxDBSpinEdit1: TcxDBSpinEdit
               Left = 208
@@ -1015,7 +1030,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400D40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1225,7 +1240,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C0021C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002200210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2183,8 +2198,8 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSQryBorrar: TDataSource
     DataSet = dmCotizaciones.ADOQryAuxiliar
-    Left = 808
-    Top = 296
+    Left = 1016
+    Top = 328
   end
   object DSDireccioncliente: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccAuxiliar

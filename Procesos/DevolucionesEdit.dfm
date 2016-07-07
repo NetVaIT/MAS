@@ -36,8 +36,11 @@ inherited FrmDevoluciones: TFrmDevoluciones
     ExplicitWidth = 842
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 842
+    Height = 455
     ExplicitWidth = 842
+    ClientRectBottom = 454
     ClientRectRight = 841
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -46,6 +49,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 840
+        Height = 453
         ExplicitWidth = 840
         inherited tbarData: TToolBar
           Width = 838
@@ -92,10 +96,11 @@ inherited FrmDevoluciones: TFrmDevoluciones
         inherited pnlMaster: TPanel
           Top = 24
           Width = 838
-          Height = 449
+          Height = 427
           ExplicitLeft = 0
-          ExplicitTop = 25
+          ExplicitTop = 24
           ExplicitWidth = 838
+          ExplicitHeight = 449
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -103,8 +108,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Height = 177
             Align = alTop
             TabOrder = 0
-            ExplicitLeft = 7
-            ExplicitTop = -6
             object Label1: TLabel
               Left = 298
               Top = 6
@@ -224,20 +227,20 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Left = 0
             Top = 177
             Width = 838
-            Height = 152
+            Height = 130
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 160
+            ExplicitHeight = 152
           end
           object pnlPie: TPanel
             Left = 0
-            Top = 329
+            Top = 307
             Width = 838
             Height = 120
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 328
+            ExplicitTop = 329
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -310,6 +313,32 @@ inherited FrmDevoluciones: TFrmDevoluciones
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 842
+    Height = 22
+    Align = alTop
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = 8
+    ExplicitTop = 8
+    ExplicitWidth = 750
+    object Label10: TLabel
+      Left = 14
+      Top = 2
+      Width = 89
+      Height = 16
+      Caption = ' Devoluciones'
+    end
+  end
   inherited DataSource: TDataSource
     DataSet = dmDevoluciones.adodsMaster
     OnStateChange = DataSourceStateChange
@@ -317,7 +346,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -458,7 +487,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000001313133B515151B600000000000000000000

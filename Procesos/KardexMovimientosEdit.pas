@@ -1,4 +1,4 @@
-unit InventarioEdit;
+unit KardexMovimientosEdit;
 
 interface
 
@@ -20,36 +20,26 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxClasses, Vcl.StdActns,
   Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.ImgList, Data.DB, Vcl.ComCtrls,
   Vcl.ToolWin, cxScrollBox, cxPC, Vcl.ExtCtrls, cxContainer, cxEdit, cxLabel,
-  cxDBLabel, Vcl.StdCtrls;
+  cxDBLabel, Vcl.StdCtrls, cxTextEdit, cxDBEdit, Vcl.DBCtrls;
 
 type
-  TfrmInventarioEdit = class(T_frmStandarGFormEdit)
-    Label1: TLabel;
-    cxDBLabel1: TcxDBLabel;
-    cxDBLabel2: TcxDBLabel;
-    Label2: TLabel;
-    cxDBLabel3: TcxDBLabel;
-    Label3: TLabel;
-    cxDBLabel4: TcxDBLabel;
-    Label4: TLabel;
-    cxDBLabel5: TcxDBLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    cxDBLabel6: TcxDBLabel;
-    Label8: TLabel;
-    cxDBLabel7: TcxDBLabel;
-    Label9: TLabel;
-    cxDBLabel8: TcxDBLabel;
-    Label10: TLabel;
-    cxDBLabel9: TcxDBLabel;
-    Label7: TLabel;
-    cxDBLabel10: TcxDBLabel;
-    Label11: TLabel;
-    cxDBLabel11: TcxDBLabel;
+  TfrmKardexMovimientosEdit = class(T_frmStandarGFormEdit)
+    DSProductos: TDataSource;
     PnlTitulo: TPanel;
-    Label12: TLabel;
-    procedure FormCreate(Sender: TObject);
+    Label1: TLabel;
+    Label2: TLabel;
+    cxDBLabel2: TcxDBLabel;
+    Label4: TLabel;
+    cxDBLabel3: TcxDBLabel;
+    Label5: TLabel;
+    cxDBLabel4: TcxDBLabel;
+    cxDBLabel5: TcxDBLabel;
+    Label6: TLabel;
+    DBRadioGroup1: TDBRadioGroup;
+    Label3: TLabel;
+    cxDBLabel1: TcxDBLabel;
     procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,26 +47,29 @@ type
   end;
 
 var
-  frmInventarioEdit: TfrmInventarioEdit;
+  frmKardexMovimientosEdit: TfrmKardexMovimientosEdit;
 
 implementation
 
 {$R *.dfm}
 
-uses InventarioGrid, InventarioDM;
+uses KardexMovimientosGrid;
 
-procedure TfrmInventarioEdit.FormActivate(Sender: TObject);
+procedure TfrmKardexMovimientosEdit.FormActivate(Sender: TObject);
 begin
   inherited;
-  ToolButton10.Visible:=False;//Jul 1/16
-  Toolbutton12.visible:=False; //Jul 1/16
-  actShowGridExecute(sender); //Para que muestre la lista al entrar Jun 30/16
+  Toolbutton10.Visible:=False;
+  Toolbutton12.Visible:=False;
+  actShowGridExecute(sender);
 end;
 
-procedure TfrmInventarioEdit.FormCreate(Sender: TObject);
+procedure TfrmKardexMovimientosEdit.FormCreate(Sender: TObject);
 begin
   inherited;
-  gFormGrid := TFrmInventarioGrid.Create(Self);
+  gFormGrid := TFrmKardexMovimientosGrid.Create(Self);
+  TFrmKardexMovimientosGrid(gFormGrid).DSProductos.DataSet:=DSProductos.DataSet;
+
+
 end;
 
 end.

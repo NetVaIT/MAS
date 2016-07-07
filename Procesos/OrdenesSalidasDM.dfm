@@ -10,13 +10,14 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     BeforeDelete = adodsMasterBeforeDelete
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
-      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca,IDPersonaEntrega' +
-      ', '#13#10'OS.FechaRegistro, OS.Total, FechaIniRecolecta, FechaFinRecol' +
-      'ecta, '#13#10'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFin' +
-      'Empaca,'#13#10' IdPersonaAutoriza, FechaAutoriza, IdGeneraCFDITipoDoc,' +
-      ' Acumula,'#13#10'OS. Subtotal, OS.IVA,os.IDPersonaDomicilio'#13#10'from Orde' +
-      'nesSalidas OS'#13#10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
+      'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, IdPerso' +
+      'na, IDOrdenSalidaTipo,'#13#10'IdPersonaRecolecta, IdPersonaRevisa, IdP' +
+      'ersonaEmpaca,IDPersonaEntrega, '#13#10'OS.FechaRegistro, OS.Total, Fec' +
+      'haIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa, FechaFinRev' +
+      'isa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAutoriza, FechaA' +
+      'utoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Subtotal, OS.IVA,os.' +
+      'IDPersonaDomicilio'#13#10'from OrdenesSalidas OS'#13#10'where IdOrdenSalidaT' +
+      'ipo=1 -- Jul 1/16'#13#10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -254,6 +255,19 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       LookupKeyFields = 'IdPersonaDomicilio'
       LookupResultField = 'IdPersonaDomicilio'
       KeyFields = 'IDPersonaDomicilio'
+      Lookup = True
+    end
+    object adodsMasterIDOrdenSalidaTipo: TIntegerField
+      FieldName = 'IDOrdenSalidaTipo'
+    end
+    object adodsMasterTipoSalida: TStringField
+      FieldKind = fkLookup
+      FieldName = 'TipoSalida'
+      LookupDataSet = ADODtStOrdenSalidaTipo
+      LookupKeyFields = 'IdOrdenSalidaTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IDOrdenSalidaTipo'
+      Size = 30
       Lookup = True
     end
   end
@@ -555,7 +569,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
   object dsMaster: TDataSource
     DataSet = adodsMaster
     Left = 132
-    Top = 32
+    Top = 24
   end
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -1495,5 +1509,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       FieldName = 'Permiso'
       Size = 255
     end
+  end
+  object ADODtStOrdenSalidaTipo: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select  IdOrdenSalidaTipo, Identificador, Descripcion from Orden' +
+      'esSalidasTipos'
+    Parameters = <>
+    Left = 616
+    Top = 24
   end
 end

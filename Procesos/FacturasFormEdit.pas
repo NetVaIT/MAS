@@ -216,7 +216,7 @@ begin
   TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4); //Mod. Mar 28/16
   ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
   TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4);  //feb 17/16
-  TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat);
+  TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat) and (DataSource.DataSet.FieldByName('UUID_TB').asString<>'');
   TlBtnCancelaNV.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=5) and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger=4) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat); //Jun 15/16
                                                                          //Presupuestos (4 son NV pero se acumulan asi que no se pueden cancelar individual o si??)  //Jun 20/16
   DBLkupCmbBxDirAuxiliar.Visible:= (DataSource.State in [dsInsert,dsEdit] ); //Mar 28/16    //Se dejo para determinar el movimiento
