@@ -95,6 +95,7 @@ procedure TFrmGeneraOrdenSalida.ActualizarSumasyTotales(IDDocSalida,idOrdenSalid
 var
    IDDocItem:integer;
 begin
+  IDDocItem:=-1; //Jul 14/16
   DSOrdenSalidaItems.dataset.first;
   DsQryActualizacion.dataset.close;
   while not DSOrdenSalidaItems.dataset.eof  do

@@ -16,8 +16,9 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'haIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa, FechaFinRev' +
       'isa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAutoriza, FechaA' +
       'utoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Subtotal, OS.IVA,os.' +
-      'IDPersonaDomicilio'#13#10'from OrdenesSalidas OS'#13#10'where IdOrdenSalidaT' +
-      'ipo=1 -- Jul 1/16'#13#10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
+      'IDPersonaDomicilio, OS.Observaciones, OS.IdAlmacen'#13#10'from Ordenes' +
+      'Salidas OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13#10'Order by IdOr' +
+      'denEstatus,OS.FechaRegistro Desc'
     Left = 56
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -197,15 +198,6 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object adodsMasterIDPersonaDomicilio: TIntegerField
       FieldName = 'IDPersonaDomicilio'
     end
-    object adodsMasterIDPersona: TIntegerField
-      FieldKind = fkLookup
-      FieldName = 'IDPersona'
-      LookupDataSet = ADODtStDatosDocumentoSalida
-      LookupKeyFields = 'IDDocumentoSalida'
-      LookupResultField = 'IdPersona'
-      KeyFields = 'IdDocumentoSalida'
-      Lookup = True
-    end
     object adodsMasterIdPaqueteria: TIntegerField
       FieldKind = fkLookup
       FieldName = 'IdPaqueteria'
@@ -268,6 +260,36 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       LookupResultField = 'Descripcion'
       KeyFields = 'IDOrdenSalidaTipo'
       Size = 30
+      Lookup = True
+    end
+    object adodsMasterObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
+    end
+    object adodsMasterIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object adodsMasterIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object adodsMasternombreC: TStringField
+      FieldKind = fkLookup
+      FieldName = 'nombreC'
+      LookupDataSet = adodsClientes
+      LookupKeyFields = 'IdPersona'
+      LookupResultField = 'RazonSocial'
+      KeyFields = 'IdPersona'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterIdentificadorNvo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'IdentificadorNvo'
+      LookupDataSet = ADODtStIdentificadores
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IDPersonaDomicilio'
+      Size = 10
       Lookup = True
     end
   end
@@ -340,6 +362,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ActCompartirEnvio: TAction
       Caption = 'CompartirEnvio'
       OnExecute = ActCompartirEnvioExecute
+    end
+    object actVerificaYcreaResto: TAction
+      Caption = 'actVerificaYcreaResto'
+      OnExecute = actVerificaYcreaRestoExecute
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
@@ -586,10 +612,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CommandText = 
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
       'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio,' +
-      #13#10'DS.IdPersonaDomicilioEnvio'#13#10#13#10' from DocumentosSalidas DS'#13#10' inn' +
-      'er join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner join Pers' +
-      'onasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomicilioClient' +
-      'e'
+      #13#10'DS.IdPersonaDomicilioEnvio, Facturar'#13#10#13#10' from DocumentosSalida' +
+      's DS'#13#10' inner join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner' +
+      ' join PersonasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomic' +
+      'ilioCliente'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -641,6 +667,9 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdPersonaDomicilioEnvio'
       Size = 200
       Lookup = True
+    end
+    object ADODtStDatosDocumentoSalidaFacturar: TBooleanField
+      FieldName = 'Facturar'
     end
   end
   object DSDatosDocSalida: TDataSource
@@ -1066,6 +1095,11 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Value = Null
       end
       item
+        Name = 'IdMoneda'
+        Size = -1
+        Value = Null
+      end
+      item
         Name = 'IdAlmacen'
         DataType = ftInteger
         Size = -1
@@ -1087,22 +1121,15 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         'lmacen, CostoUnitario,PrecioUnitario)'
       ''
       
-        'SELECT   osi.IdProducto, osi.IdOrdenSalidaItem,DS.IdMoneda, 1, G' +
-        'ETDATE() , '#39'S'#39','
+        'SELECT   osi.IdProducto, osi.IdOrdenSalidaItem,:IdMoneda, 1, GET' +
+        'DATE() , '#39'S'#39','
       
         'OSI.CantidadDespachada, osi.Importe, :IdAlmacen, OSI.CostoUnitar' +
         'io, Precio'
       ''
       'FROM         OrdenesSalidasItems OSI '
-      
-        'inner join DocumentosSalidasDEtalles DSD on DSD.idDocumentoSalid' +
-        'aDEtalle=OSI.IdDocumentoSalidaDetalle'
-      
-        'inner join DocumentosSalidas DS on DS.idDocumentoSalida=DSD.IdDo' +
-        'cumentoSalida'
-      ''
-      ''
-      'Where OSI.IdOrdenSalidaItem =:IdOrdenSalidaItem2')
+      'Where OSI.IdOrdenSalidaItem =:IdOrdenSalidaItem2'
+      '')
     Left = 620
     Top = 297
   end
@@ -1519,5 +1546,39 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Parameters = <>
     Left = 616
     Top = 24
+  end
+  object adodsClientes: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,'#13#10' P.DiasCredit' +
+      'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  an' +
+      'd P.idPersona>-1'#13#10'order by P.RazonSocial'
+    Parameters = <>
+    Left = 624
+    Top = 88
+    object adodsClientesIdPersona: TAutoIncField
+      FieldName = 'IdPersona'
+      ReadOnly = True
+    end
+    object adodsClientesRFC: TStringField
+      FieldName = 'RFC'
+      Size = 13
+    end
+    object adodsClientesRazonSocial: TStringField
+      FieldName = 'RazonSocial'
+      Size = 300
+    end
+    object adodsClientesIDRol: TIntegerField
+      FieldName = 'IDRol'
+    end
+    object adodsClientesDiasCreditoCliente: TIntegerField
+      FieldName = 'DiasCreditoCliente'
+    end
+    object adodsClientesSaldoCliente: TFMTBCDField
+      FieldName = 'SaldoCliente'
+      Precision = 18
+      Size = 6
+    end
   end
 end

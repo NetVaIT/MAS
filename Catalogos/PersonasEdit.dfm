@@ -5,7 +5,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1046
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -541,7 +540,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Name = 'Tahoma'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        ExplicitTop = 8
         Height = 21
         Width = 1042
       end
@@ -563,7 +561,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Name = 'Tahoma'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        ExplicitTop = 8
         Height = 21
         Width = 1042
       end
@@ -618,7 +615,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -764,7 +761,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -1,12 +1,11 @@
 inherited FrmDevolucionesItemsGrid: TFrmDevolucionesItemsGrid
   Caption = 'FrmDevolucionesItemsGrid'
   OnCreate = FormCreate
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      ExplicitTop = 32
       inherited tvMaster: TcxGridDBTableView
         OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
@@ -19,7 +18,6 @@ inherited FrmDevolucionesItemsGrid: TFrmDevolucionesItemsGrid
           PropertiesClassName = 'TcxButtonEditProperties'
           Properties.Buttons = <
             item
-              Caption = 'SeleccionaProducto'
               Default = True
               Kind = bkEllipsis
             end>
@@ -75,6 +73,21 @@ inherited FrmDevolucionesItemsGrid: TFrmDevolucionesItemsGrid
       end
     end
     inherited tbarGrid: TToolBar
+      inherited ToolButton1: TToolButton
+        Visible = True
+      end
+      inherited btnEdit: TToolButton
+        Visible = True
+      end
+      inherited ToolButton3: TToolButton
+        Visible = True
+      end
+      inherited btnPost: TToolButton
+        Visible = True
+      end
+      inherited btnCancel: TToolButton
+        Visible = True
+      end
       inherited tbtnCerrar: TToolButton
         Visible = False
       end
@@ -89,7 +102,7 @@ inherited FrmDevolucionesItemsGrid: TFrmDevolucionesItemsGrid
     Left = 528
     Top = 0
     Bitmap = {
-      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -236,7 +249,7 @@ inherited FrmDevolucionesItemsGrid: TFrmDevolucionesItemsGrid
     Left = 600
     Top = 0
     Bitmap = {
-      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

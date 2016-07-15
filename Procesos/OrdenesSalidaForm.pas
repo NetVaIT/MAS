@@ -218,7 +218,8 @@ type
     FCreaDatosenvio:TBasicAction;
     FIDEntregaExistente: Integer;
     FComparteEnvio: TBasicAction; //May 23/16
-    FFacturando: boolean;//May 24/16
+    FFacturando: boolean;
+    FVerificayCreaResto: TBasicAction;//May 24/16
     procedure CrearSalidasUbicacion;
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
@@ -235,7 +236,8 @@ type
     function GetFIDEntregaExistente: Integer;
     procedure SetFComparteEnvio(const Value: TBasicAction);   //May 23/16
     function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean;
-    procedure PermisosEdicion; //May 26/16
+    procedure PermisosEdicion;
+    procedure SetFVerificayCreaResto(const Value: TBasicAction); //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -252,6 +254,8 @@ type
     Property AIdEntregaExistente:Integer read GetFIDEntregaExistente write FIDEntregaExistente;//May  23/16
     Property Facturando:boolean read FFacturando write FFacturando;//May  24/16
 
+    property AVerificaYCreaResto:TBasicAction read FVerificayCreaResto write SetFVerificayCreaResto; //Jul 15/16
+
   end;
 
 var
@@ -262,7 +266,7 @@ implementation
 {$R *.dfm}
 
 uses OrdenesSalidaFormGrid, OrdenesSalidasDM, FacturasDM, ImpresosSalidasDM,
-  UDMEnvioMail, _Utils, _ConectionDmod, ListaEtiquetasGRD;
+  UDMEnvioMail, _Utils, _ConectionDmod, ListaEtiquetasGRD, ConfiguracionDM;
 
 procedure TFrmOrdenesSalida.ActualizaKardex(IdOrdenSalida: integer);  //Kardex + Salidas_Ubicaciones
 var                        //Feb 5/16
@@ -275,6 +279,7 @@ begin
 
     TadoQuery(DSInsertaKardex.DataSet).Parameters.ParamByName('IdOrdenSalidaItem2').Value:=DtSrcOrdenSalItem.DataSet.fieldbyname('idOrdenSalidaItem').AsInteger;
     TadoQuery(DSInsertaKardex.DataSet).Parameters.ParamByName('IdAlmacen').Value:=  1; //Almacen Actual  // debe ser variable  Feb 10/16
+    TadoQuery(DSInsertaKardex.DataSet).Parameters.ParamByName('IdMoneda').Value:= dmconfiguracion.idmoneda ;  //Jul 15/16
     TadoQuery(DSInsertaKardex.DataSet).ExecSQL;
 
     TadoQuery(DSQryAuxiliar.DataSet).Close;
@@ -426,7 +431,7 @@ begin
          btnAux.Visible:=true;
       if  CampoIDPer='IDPersonaRevisa' then  //Para que lo ponga cualdo es revision
       begin //Movido  aca  Jun 16/16   desde
-        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then
+        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then    //no deberia estar en nulo se coloco desde la creacion segun lo que traiga el Doc.
         begin
           if datasource.Dataset.state=dsBrowse then
             datasource.DataSet.Edit;
@@ -1153,6 +1158,13 @@ begin
   FCreaDatosenvio := Value;
 end;
 
+procedure TFrmOrdenesSalida.SetFVerificayCreaResto(const Value: TBasicAction);
+begin
+  FVerificayCreaResto := Value;
+
+
+end;
+
 procedure TFrmOrdenesSalida.SetRevApartado(const Value: TBasicAction);
 begin
   FRevApartado := Value;
@@ -1246,6 +1258,11 @@ begin
 end;
 function TFrmOrdenesSalida.VerificaUbicacionProductos(idordenSalida:Integer):Boolean;
 begin
+  //necesitamos que se ejecute el  VerificaYCreaResto del moduo de datos
+  AVerificaYCreaResto.Execute;
+  DSSalidasUbicaciones.DataSet.close;
+  DSSalidasUbicaciones.DataSet.open;
+
   dsQryAuxiliar.DataSet.Close;
   TAdoQuery(dsQryAuxiliar.DataSet).SQL.Clear;  //Asegurarse que si le cambia el valor de cantidad se complete el restante sin ubicar.
   TAdoQuery(dsQryAuxiliar.DataSet).SQL.ADD('Select Count(*) SinUbicacion from SalidasUbicaciones where IdOrdenSalida='+intToSTR(idordenSalida)+' and  idProductoXEspacio is NULL');
@@ -1273,7 +1290,7 @@ begin
   DMImpresosSalidas.ADODtStDatosEtiqueta.Open;
   Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
 
-  DMImpresosSalidas.PrintPDFFile(CualRep, cuantos,False, ArchiPDF);    //Ajustado may 30/16
+  DMImpresosSalidas.PrintPDFFile(CualRep, cuantos,False, ArchiPDF);    //Ajustado may 30/16    '');// prueba
   DMImpresosSalidas.Free;     //Temporal may 30/16
   if FileExists(ArchiPDF) and (cuantos =1) then //May 30/16
     ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);

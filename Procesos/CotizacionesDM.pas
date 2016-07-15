@@ -7,7 +7,8 @@ uses
   Data.DB, Data.Win.ADODB, dxGDIPlusClasses, ppCtrls, ppPrnabl, ppClass, ppDB,
   ppBands, ppCache, ppDBPipe, ppParameter, ppDesignLayer, ppComm, ppRelatv,
   ppProd, ppReport, ppStrtch, ppMemo, dialogs, ShellApi, Forms, ppVar;
-
+const
+  IdAlmacenPrincipal = 1; //Jul 15/16
 type
   TdmCotizaciones = class(T_dmStandar)
     adodsCotizacionesDetalle: TADODataSet;
@@ -276,6 +277,12 @@ type
     ADODtStOrdenSalidaItemCostoUnitario: TFMTBCDField;
     ADODtStOrdenSalidaIdPersona: TIntegerField;
     adodsCotizacionesDetalleEnAduana: TIntegerField;
+    adodsMasterFacturar: TBooleanField;
+    ADODtStOrdenSalidaIdGeneraCFDITipoDoc: TIntegerField;
+    ADODtStOrdenSalidaAcumula: TBooleanField;
+    ADODtStOrdenSalidaIDOrdenSalidaTipo: TIntegerField;
+    ADODtStOrdenSalidaObservaciones: TStringField;
+    ADODtStOrdenSalidaIdAlmacen: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -297,6 +304,7 @@ type
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
+    procedure ADODtStOrdenSalidaNewRecord(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     FIdDocAct: Integer;
@@ -574,7 +582,7 @@ begin
   inherited;
   dataset.FieldByName('cantidad').AsFloat:=1;
   dataset.FieldByName('cantidadpendiente').AsFloat:=1;
-  dataset.FieldByName('IdAlmacen').AsInteger:=1; //Debe ir como un valor Variable
+  dataset.FieldByName('IdAlmacen').AsInteger:=1; //Debe ir como un valor Variable  DocumentosSalidasItems
 
 end;
 
@@ -656,6 +664,7 @@ begin  //Nov 6/15
   adodsMaster.fieldbyname('IDUsuario').AsInteger:= 1;
   adodsMaster.fieldbyname('IDDocumentoSalidaTipo').AsInteger:= 1;
   adodsMaster.fieldbyname('IDDocumentoSalidaEstatus').AsInteger:= 1;
+  adodsMaster.FieldByName('Facturar').AsBoolean:=True; //Jul 15/16 a ver si se ve marcado
 end;
 
 procedure TdmCotizaciones.ADODtStDireccionesClienteCalcFields(
@@ -721,6 +730,13 @@ procedure TdmCotizaciones.ADODtStOrdenSalidaItemNewRecord(DataSet: TDataSet);
 begin
   inherited;
   DataSet.FieldByName('IDUnidadMedida').AsInteger :=1 ;
+end;
+
+procedure TdmCotizaciones.ADODtStOrdenSalidaNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  dataset.FieldByName('IdOrdenSalidaTipo').AsInteger:=1; //Jul 15/16 Venta
+  dataset.FieldByName('IdAlmacen').AsInteger:=IDAlmacenPrincipal;   //Jul 15/16
 end;
 
 function TdmCotizaciones.CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA: Double; var AMontoIva,

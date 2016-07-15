@@ -128,7 +128,9 @@ type
     ActInventario: TAction;
     ActListaPrecios: TAction;
     ActKardex: TAction;
-    ActSalidaMerma: TAction;
+    ActSalidaAjuste: TAction;
+    dxBrLrgBtnEntradaXAjuste: TdxBarLargeButton;
+    ActEntradaAjuste: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -164,7 +166,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
   OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
-  ListaPreciosDM, KardexMovimientosDM;
+  ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM;
 
 { TfrmMain }
 
@@ -222,11 +224,11 @@ begin
 
    32: gModulo := TdmInventario.Create(Self);
    34: gModulo := TdmListaPrecios.Create(Self);  //Jul 1/16
- (*  33: gModulo := TdmSalidaXMerma.Create(Self);
-     *)
+   33: gModulo := TDMAjustesSalida.Create(Self); //Jul 12/16
+
    35: gModulo := TdmKardexMovimientos.Create(Self); //Jul 6/16
 
-
+  //   36: gModulo := TDMAjustesEntrada.Create(Self); //Jul 12/16
 
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);

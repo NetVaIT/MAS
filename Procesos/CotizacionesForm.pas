@@ -25,7 +25,7 @@ uses
   cxDropDownEdit, cxCalendar, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGridCustomView, cxGrid, Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, cxLabel, cxDBLabel,Data.Win.ADODB, cxGroupBox,
-  cxRadioGroup;
+  cxRadioGroup, cxCheckBox;
 
 type
   TfrmCotizaciones = class(T_frmStandarGFormEdit)
@@ -134,7 +134,7 @@ type
     Label22: TLabel;
     DBLookupComboBox3: TDBLookupComboBox;
     DSDireccionenvios: TDataSource;
-    Label23: TLabel;
+    cxDBCheckBox1: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
@@ -477,6 +477,19 @@ begin
   dsordenSalida.DataSet.FieldByName('Total').asFloat:=DataSource.DataSet.FieldByName('Total').asFloat;
   dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
   dsordenSalida.DataSet.FieldByName('IDPersona').asInteger:= DataSource.DataSet.FieldByName('IDPersona').asInteger;//Jun 20/16
+  //Jul 11/16 Agregar datos de Facturación desde DocumentosSalida
+  if  DataSource.DataSet.FieldByName('Facturar').AsBoolean then
+  begin
+    dsordenSalida.DataSet.FieldByName('IDGeneraCFDITipoDoc').asInteger:= 1; //FActura
+    dsordenSalida.DataSet.FieldByName('Acumula').asBoolean:= False;
+ end
+ else
+ begin
+   dsordenSalida.DataSet.FieldByName('IDGeneraCFDITipoDoc').asInteger:= 4; //Nota Venta
+   dsordenSalida.DataSet.FieldByName('Acumula').asBoolean:= False;
+ end;
+  //Jul 11/16  hasta aca
+
 
   dsordenSalida.DataSet.Post;
 

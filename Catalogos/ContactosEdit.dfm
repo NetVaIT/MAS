@@ -20,8 +20,6 @@ object FrmContactosEdit: TFrmContactosEdit
     Height = 460
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 848
-    ExplicitHeight = 499
     object tbarData: TToolBar
       Left = 0
       Top = 0
@@ -30,7 +28,6 @@ object FrmContactosEdit: TFrmContactosEdit
       Images = ilAction
       List = True
       TabOrder = 0
-      ExplicitWidth = 746
       object ToolButton10: TToolButton
         Left = 0
         Top = 0
@@ -114,10 +111,7 @@ object FrmContactosEdit: TFrmContactosEdit
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = -1
-      ExplicitTop = 22
-      ExplicitWidth = 640
-      ExplicitHeight = 180
+      ExplicitTop = 31
     end
   end
   object cxStyleRepository1: TcxStyleRepository
@@ -150,7 +144,7 @@ object FrmContactosEdit: TFrmContactosEdit
     Left = 555
     Top = 8
     Bitmap = {
-      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -395,7 +389,7 @@ object FrmContactosEdit: TFrmContactosEdit
     Left = 621
     Top = 8
     Bitmap = {
-      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

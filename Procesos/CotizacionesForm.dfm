@@ -552,14 +552,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'DireccionEnvio'
               FocusControl = DBLookupComboBox3
             end
-            object Label23: TLabel
-              Left = 380
-              Top = 117
-              Width = 185
-              Height = 13
-              Caption = 'Poner seleccion si quiere Factura o no.'
-              Visible = False
-            end
             object cxDBSpinEdit1: TcxDBSpinEdit
               Left = 208
               Top = 124
@@ -905,6 +897,15 @@ inherited frmCotizaciones: TfrmCotizaciones
               ListSource = DSDireccionenvios
               TabOrder = 22
             end
+            object cxDBCheckBox1: TcxDBCheckBox
+              Left = 370
+              Top = 124
+              Caption = 'Facturar'
+              DataBinding.DataField = 'Facturar'
+              DataBinding.DataSource = DataSource
+              TabOrder = 23
+              Width = 121
+            end
           end
           object Panel1: TPanel
             Left = 0
@@ -1030,7 +1031,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400D80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1240,7 +1241,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C002200210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002280210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

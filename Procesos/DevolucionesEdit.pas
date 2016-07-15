@@ -50,10 +50,10 @@ type
     Label8: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
     btnAplicarEntrada: TSpeedButton;
-    cxDBLabel1: TcxDBLabel;
     cxDBLabel3: TcxDBLabel;
     PnlTitulo: TPanel;
     Label10: TLabel;
+    cxDBLabel1: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceStateChange(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -78,8 +78,8 @@ uses DevolucionesDM, DevolucionesForm;
 procedure TFrmDevoluciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger<3;
-  DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger<3;//Jun 29/16
+  btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 13/16  (7)
+  DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jun 29/16
 end;
 
 procedure TFrmDevoluciones.DataSourceStateChange(Sender: TObject);

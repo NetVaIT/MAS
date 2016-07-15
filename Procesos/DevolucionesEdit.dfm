@@ -2,7 +2,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
   Caption = 'FrmDevoluciones'
   ClientWidth = 842
   ExplicitWidth = 842
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -39,18 +38,21 @@ inherited FrmDevoluciones: TFrmDevoluciones
     Top = 22
     Width = 842
     Height = 455
+    ExplicitTop = 22
     ExplicitWidth = 842
+    ExplicitHeight = 455
     ClientRectBottom = 454
     ClientRectRight = 841
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 840
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Width = 840
         Height = 453
         ExplicitWidth = 840
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           Width = 838
           Height = 24
@@ -100,7 +102,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
           ExplicitLeft = 0
           ExplicitTop = 24
           ExplicitWidth = 838
-          ExplicitHeight = 449
+          ExplicitHeight = 427
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -206,14 +208,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
               DataSource = DataSource
               TabOrder = 5
             end
-            object cxDBLabel1: TcxDBLabel
-              Left = 139
-              Top = 24
-              DataBinding.DataField = 'Estatus'
-              DataBinding.DataSource = DataSource
-              Height = 21
-              Width = 145
-            end
             object cxDBLabel3: TcxDBLabel
               Left = 480
               Top = 24
@@ -221,6 +215,14 @@ inherited FrmDevoluciones: TFrmDevoluciones
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 217
+            end
+            object cxDBLabel1: TcxDBLabel
+              Left = 154
+              Top = 51
+              DataBinding.DataField = 'Estatus'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 145
             end
           end
           object pnlDetail: TPanel
@@ -231,7 +233,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 152
           end
           object pnlPie: TPanel
             Left = 0
@@ -240,7 +241,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Height = 120
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 329
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -328,9 +328,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 750
     object Label10: TLabel
       Left = 14
       Top = 2
@@ -346,7 +343,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -487,7 +484,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D000E00A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000001313133B515151B600000000000000000000

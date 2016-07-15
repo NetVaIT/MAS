@@ -182,7 +182,14 @@ uses
   CambioPreciosEdt in 'Procesos\CambioPreciosEdt.pas' {FrmCambioPrecios},
   KardexMovimientosDM in 'Procesos\KardexMovimientosDM.pas' {dmKardexMovimientos: TDataModule},
   KardexMovimientosEdit in 'Procesos\KardexMovimientosEdit.pas' {frmKardexMovimientosEdit},
-  KardexMovimientosGrid in 'Procesos\KardexMovimientosGrid.pas' {FrmKardexMovimientosGrid};
+  KardexMovimientosGrid in 'Procesos\KardexMovimientosGrid.pas' {FrmKardexMovimientosGrid},
+  AjustesSalidasDM in 'Procesos\AjustesSalidasDM.pas' {DMAjustesSalida: TDataModule},
+  AjustesSalidasEdit in 'Procesos\AjustesSalidasEdit.pas' {frmAjustesSalidasEdit},
+  AjustesSalidasItemsEdit in 'Procesos\AjustesSalidasItemsEdit.pas' {frmAjustesSalidaItems},
+  AjustesSalidasItemsForm in 'Procesos\AjustesSalidasItemsForm.pas' {frmAjustesSalidasItemsForm},
+  AjustesSalidasForm in 'Procesos\AjustesSalidasForm.pas' {frmAjustesSalidasForm},
+  SalidasUbicacionesEdit in 'Procesos\SalidasUbicacionesEdit.pas' {frmSalidasUbicaciones},
+  SalidasUbicacionesGrid in 'Procesos\SalidasUbicacionesGrid.pas' {frmSalidasUbicacionesGrid};
 
 {$R *.res}
 

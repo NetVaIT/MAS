@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB, ppDB, ppDBPipe,
   ppParameter, ppDesignLayer, ppBands, myChkBox, dxGDIPlusClasses, ppCtrls,
-  ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport, ppVar;
+  ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport, ppVar,Forms;
 
 type
   TDMImpresosSalidas = class(TDataModule)
@@ -288,9 +288,37 @@ type
     ppDBText40: TppDBText;
     ADODtStDatosEtiquetaTelefonoCompleto: TStringField;
     ADODtStDatosEtiquetaLada: TStringField;
+    ppEtiquetaPreimpresa: TppReport;
+    ppParameterList5: TppParameterList;
+    ppDBPpLnPreimresa: TppDBPipeline;
+    ppHeaderBand5: TppHeaderBand;
+    ppDetailBand5: TppDetailBand;
+    ppDBText43: TppDBText;
+    ppDBText44: TppDBText;
+    ppDBText45: TppDBText;
+    ppDBText46: TppDBText;
+    ppDBText47: TppDBText;
+    myDBCheckBox6: TmyDBCheckBox;
+    myDBCheckBox8: TmyDBCheckBox;
+    ppDBText48: TppDBText;
+    ppDBText49: TppDBText;
+    ppDBText50: TppDBText;
+    myDBCheckBox9: TmyDBCheckBox;
+    myDBCheckBox11: TmyDBCheckBox;
+    myDBCheckBox12: TmyDBCheckBox;
+    ppLabel89: TppLabel;
+    ppLblCajaActPre: TppLabel;
+    ppLabel91: TppLabel;
+    ppDBText52: TppDBText;
+    ppDBText53: TppDBText;
+    ppDBText41: TppDBText;
+    ppFooterBand5: TppFooterBand;
+    ppDesignLayers5: TppDesignLayers;
+    ppDesignLayer5: TppDesignLayer;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
+    procedure DataModuleCreate(Sender: TObject);
   private
 
     function ConcatenaUbicaciones (idProd,IdAlm:Integer):String;
@@ -353,7 +381,12 @@ begin
   ADODtStBuscaUbicacion.Close;
   Result:=Texto;
 end;
-                                                                           //Ajustado May 30/16
+                                                                           procedure TDMImpresosSalidas.DataModuleCreate(Sender: TObject);
+begin
+
+end;
+
+//Ajustado May 30/16
 procedure TDMImpresosSalidas.PrintPDFFile(IDReporte: Integer;Cant:Integer=1;mostrar: boolean=True; nombrePDF:TFileName='');
 var                       // Modificado
   vPDFFileName: TFileName;
@@ -381,7 +414,7 @@ begin
       ppRprtOrdenSalida.Print;
     end;
   2:begin  //Feb 11/16
-
+    (*  Deshabilitado par usar el formato preimpreso
       ppRprtEtiquetaEnvio.ShowPrintDialog:= False;
       ppRprtEtiquetaEnvio.ShowCancelDialog:= False;
       ppRprtEtiquetaEnvio.AllowPrintToArchive:= False;
@@ -413,6 +446,48 @@ begin
           end;
         end;
       end;//DEl else temporarl may 30/16
+      *)
+       if (cant>1) then   //Mientras se arregla lo del pdf de varias hojas
+      begin
+        ppEtiquetaPreimpresa.Template.FileName:=ExtractFilePath(application.exeName)+'EtiquetapreimpresaDir.rtm'; //Jul 8/16
+        ppEtiquetaPreimpresa.Template.LoadFromFile;  //Jul 8/16
+        ppEtiquetaPreimpresa.ShowPrintDialog:= False;
+        ppEtiquetaPreimpresa.ShowCancelDialog:= False;
+        ppEtiquetaPreimpresa.AllowPrintToArchive:= False;   //Jul 8/16 para ver si no mueestra el dialogo
+
+        ppEtiquetaPreimpresa.DeviceType:= 'Printer'; //Ver si se manda directo
+        for Actual:=1 to Cant do
+          begin
+            ppLblCajaActPre.Caption:=intToStr(Actual); //Poner nueva pagina
+            ppEtiquetaPreimpresa.Print;
+          end;
+      end
+      else
+      begin
+        ppEtiquetaPreimpresa.Template.FileName:=ExtractFilePath(application.exeName)+'EtiquetapreimpresaPDF.rtm'; //Jul 8/16
+        ppEtiquetaPreimpresa.Template.LoadFromFile; //Jul 8/16
+        ppEtiquetaPreimpresa.ShowPrintDialog:= False;
+        ppEtiquetaPreimpresa.ShowCancelDialog:= False;
+        ppEtiquetaPreimpresa.AllowPrintToArchive:= False;   //Mov  hasta aca jul 8
+
+        if Mostrar  then //May 30/16
+          ppEtiquetaPreimpresa.DeviceType:= 'Screen'
+        else
+        begin
+          if nombrePDF<>'' then //May 30/16
+          begin
+            ppEtiquetaPreimpresa.DeviceType:= 'PDF';
+            ppEtiquetaPreimpresa.PDFSettings.OpenPDFFile := False;
+            ppEtiquetaPreimpresa.TextFileName:= nombrePDF;
+          end; //Siempre muesta el PDF
+          for Actual:=1 to Cant do    //Aca no entraria nunca mientras
+          begin           // ppLblCajaAct
+            ppLblCajaActPre.Caption:=intToStr(Actual); //Poner nueva pagina
+            ppEtiquetaPreimpresa.Print;
+          end;
+        end;
+      end;//DEl else temporarl may 30/16
+
 
     end;
   3:begin  //may 10/16

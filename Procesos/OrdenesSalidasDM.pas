@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB,Dialogs,System.IOUtils,Forms, windows;
-
+const
+  IdAlmacenPrincipal = 1; //Jul 11/16
 type
   TDMOrdenesSalidas = class(T_dmStandar)
     ADODtStOrdenSalidaItem: TADODataSet;
@@ -201,7 +202,6 @@ type
     AdoDtStInfoEntregaDetalleIdInformacionentregaDetalle: TAutoIncField;
     AdoDtStInfoEntregaDetalleIdInfoEntrega: TIntegerField;
     AdoDtStInfoEntregaDetalleIdOrdenSalida: TIntegerField;
-    adodsMasterIDPersona: TIntegerField;
     ADODtStDatosDocumentoSalidaIdPaqueteria: TIntegerField;
     ADODtStDatosDocumentoSalidaServicio: TStringField;
     adodsMasterIdPaqueteria: TIntegerField;
@@ -275,6 +275,20 @@ type
     ADODtStOrdenSalidaTipo: TADODataSet;
     adodsMasterIDOrdenSalidaTipo: TIntegerField;
     adodsMasterTipoSalida: TStringField;
+    ADODtStDatosDocumentoSalidaFacturar: TBooleanField;
+    adodsMasterObservaciones: TStringField;
+    adodsMasterIdAlmacen: TIntegerField;
+    adodsMasterIdPersona: TIntegerField;
+    adodsClientes: TADODataSet;
+    adodsClientesIdPersona: TAutoIncField;
+    adodsClientesRFC: TStringField;
+    adodsClientesRazonSocial: TStringField;
+    adodsClientesIDRol: TIntegerField;
+    adodsClientesDiasCreditoCliente: TIntegerField;
+    adodsClientesSaldoCliente: TFMTBCDField;
+    adodsMasternombreC: TStringField;
+    adodsMasterIdentificadorNvo: TStringField;
+    actVerificaYcreaResto: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -301,6 +315,7 @@ type
     procedure ActCompartirEnvioExecute(Sender: TObject);
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
+    procedure actVerificaYcreaRestoExecute(Sender: TObject);
   private
     CantAGuardar:Double;
     IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
@@ -308,7 +323,7 @@ type
 
     function EncuentraProdXEspacio(TextoEspacio: String; IDProd:Integer;
       var LaCantidad: Double): Integer;
-    function VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
+    function VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer;muestraMsg:boolean):Boolean;  //Ajustado  //Feb 3/16
     function ValorMaximoPosible(valorAct: Double; idOrdenItem: Integer; idSalidaUbicacion:integer): Double;
     procedure ReadFile(FileName: TFileName);
     function GetFileName(IdDocumento: Integer): TFileName;
@@ -517,6 +532,18 @@ begin
 
 end;
 
+procedure TDMOrdenesSalidas.actVerificaYcreaRestoExecute(Sender: TObject);
+var IdOrdenSalItem, IdSalidaUbicacion:integer;           //Jul 15/16
+    cantidad:Double;
+begin
+  inherited;
+  IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
+  Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
+  IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger; //Feb 3/16
+
+  VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion, False);
+end;
+
 procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
@@ -536,9 +563,11 @@ end;
 
 procedure TDMOrdenesSalidas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
-  inherited;
-  Dataset.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1; //Generar Factura
+  inherited;                      //  ver si siempre tiene Documento de salida para traer los datos //Jul 11/16
+  Dataset.FieldByName('IDGeneraCFDITipoDoc').AsInteger:= 1; //Generar Factura //No deben generar Factura..
   Dataset.FieldByName('Acumula').ASBoolean:=False; //No acumula
+
+  Dataset.FieldByName('IDAlmacen').ASinteger:=IdAlmacenPrincipal; //Jul 11/16
 end;
 
 procedure TDMOrdenesSalidas.ADODtStCambioEstadoInvAfterPost(DataSet: TDataSet);
@@ -704,7 +733,7 @@ begin
   end;
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterDelete(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterDelete(     //Copiar a... Jul 14/16
   DataSet: TDataSet);
 var
   valornvo:Double;
@@ -716,7 +745,7 @@ begin
      Showmessage('Registro incompleto');
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterPost(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesAfterPost(       //Copiar a... Jul 14/16
   DataSet: TDataSet);
 var IdOrdenSalItem, IdSalidaUbicacion:integer;
     cantidad:Double;
@@ -727,7 +756,7 @@ begin
     IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
     Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
     IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger; //Feb 3/16
-    VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion);
+    VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion, True); //Ajustado jul 15/16
                                      //Verificar que tenga el valor actual
 
     CambioCantidad:=False;
@@ -737,7 +766,7 @@ begin
   end;
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesBeforePost(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesBeforePost(     //Copiar a... Jul 14/16
   DataSet: TDataSet);
 var valor,AGuardarAux:Double;
     TextoAux:String; //Jun 28/16
@@ -765,7 +794,7 @@ begin
   end;
 end;
 
-function TDMOrdenesSalidas.BuscaSalidaUbicacionXAplicar(IDProductoEspacio, IDSalidaUbicaAct:Integer):Double;//Jun 28/16
+function TDMOrdenesSalidas.BuscaSalidaUbicacionXAplicar(IDProductoEspacio, IDSalidaUbicaAct:Integer):Double;//Jun 28/16    //Copiar a... Jul 14/16
 begin
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
@@ -775,7 +804,7 @@ begin
   Result:=  ADOQryAuxiliar.FieldByName('Total').AsFloat;
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadChange(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadChange(     //Copiar a... Jul 14/16
   Sender: TField);
 var
   CantOrdenItem:Double;
@@ -797,7 +826,7 @@ begin
 
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadSetText(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadSetText(    //Copiar a... Jul 14/16
   Sender: TField; const Text: string);
 //var valor:Double;
 begin
@@ -819,7 +848,7 @@ begin
    *)
 end;
 
-Function TDMOrdenesSalidas.ValorMaximoPosible(valorAct:Double; idOrdenItem:Integer; idSalidaUbicacion:integer):Double;
+Function TDMOrdenesSalidas.ValorMaximoPosible(valorAct:Double; idOrdenItem:Integer; idSalidaUbicacion:integer):Double;  //Copiar a... Jul 14/16
 var
   ValOrden, ValSalida:Double;
 begin
@@ -851,7 +880,7 @@ begin
       Result:= ValOrden-ValSalida; //Resto //Feb 3/16
 end;
 
-procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesEspacioChange(
+procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesEspacioChange(      //Copiar a... Jul 14/16
   Sender: TField);
 var
   Cantidad:Double;
@@ -880,7 +909,7 @@ begin
 end;
 
 
-function TDMOrdenesSalidas.EncuentraProdXEspacio(TextoEspacio:String;IDProd:Integer; var LaCantidad:Double):Integer;
+function TDMOrdenesSalidas.EncuentraProdXEspacio(TextoEspacio:String;IDProd:Integer; var LaCantidad:Double):Integer;  //Copiar a... Jul 14/16
 begin
   Result:=-1;
   if TextoEspacio<>'' then
@@ -929,6 +958,10 @@ begin
   TFrmOrdenesSalida(gGridEditForm).ComparteEnvio:=ActCompartirEnvio;//May 23/16
   TFrmOrdenesSalida(gGridEditForm).DsdireccionEnvios.dataset:=ADODtStDireccionesEnvio; //Jun 10/16
   TFrmOrdenesSalida(gGridEditForm).DSProductosXEspacio.DataSet:=ADODtStProductosXEspacio; //Jun 28/16
+
+  TFrmOrdenesSalida(gGridEditForm).AVerificaYCreaResto:=actVerificaYcreaResto; //Jul 15/16
+
+
  (* TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
@@ -936,7 +969,7 @@ begin
   TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15*)
 end;
 
-function TDMOrdenesSalidas.VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer):Boolean;  //Ajustado  //Feb 3/16
+function TDMOrdenesSalidas.VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer;muestraMsg:boolean):Boolean;  //Ajustado  //Feb 3/16 //Copiar a... Jul 14/16
 var
   valornvo:Double;
 begin
@@ -952,7 +985,8 @@ begin
     Result:=True;
   end
   else
-    ShowMessage('Completo. Asigne las ubicaciones');
+    if muestraMSG then   //Para usarlo en validacion interna jul 15/16
+      ShowMessage('Completo. Asigne ubicaciones en caso que falten');
 
 end;
 

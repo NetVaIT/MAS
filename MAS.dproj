@@ -831,6 +831,35 @@
             <Form>FrmKardexMovimientosGrid</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Procesos\AjustesSalidasDM.pas">
+            <Form>DMAjustesSalida</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesSalidasEdit.pas">
+            <Form>frmAjustesSalidasEdit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesSalidasItemsEdit.pas">
+            <Form>frmAjustesSalidaItems</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesSalidasItemsForm.pas">
+            <Form>frmAjustesSalidasItemsForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesSalidasForm.pas">
+            <Form>frmAjustesSalidasForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SalidasUbicacionesEdit.pas">
+            <Form>frmSalidasUbicaciones</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\SalidasUbicacionesGrid.pas">
+            <Form>frmSalidasUbicacionesGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

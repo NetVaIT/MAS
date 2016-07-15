@@ -14,9 +14,10 @@ inherited dmCotizaciones: TdmCotizaciones
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
       'te,'#13#10' IdPersonaDomicilioEnvio, NotasInternas, IdPaqueteria, Serv' +
-      'icio '#13#10'FROM DocumentosSalidas where IdDocumentoSalidaTipo=:TipoD' +
-      'octo'#13#10'and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)' +
-      #13#10'order by idDocumentoSalidaEstatus, FechaRegistro Desc'
+      'icio , Facturar'#13#10'FROM DocumentosSalidas where IdDocumentoSalidaT' +
+      'ipo=:TipoDocto'#13#10'and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETD' +
+      'ATE()), 0)'#13#10'order by idDocumentoSalidaEstatus, FechaRegistro Des' +
+      'c'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -205,6 +206,9 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object adodsMasterIdPersonaDomicilioEnvio: TIntegerField
       FieldName = 'IdPersonaDomicilioEnvio'
+    end
+    object adodsMasterFacturar: TBooleanField
+      FieldName = 'Facturar'
     end
   end
   inherited ActionList: TActionList
@@ -477,13 +481,15 @@ inherited dmCotizaciones: TdmCotizaciones
   object ADODtStOrdenSalida: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnNewRecord = ADODtStOrdenSalidaNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
-      ', IDPersonaDomicilio, IdPersona'#13#10'from OrdenesSalidas where iddoc' +
-      'umentoSalida=:IDDocumentoSalida'
+      ', IDPersonaDomicilio, IdPersona, IdGeneraCFDITipoDoc, Acumula,'#13#10 +
+      ' IDOrdenSalidaTipo, Observaciones, IdAlmacen'#13#10'from OrdenesSalida' +
+      's where iddocumentoSalida=:IDDocumentoSalida'
     DataSource = DSMaster
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IDDocumentoSalida'
@@ -568,6 +574,22 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object ADODtStOrdenSalidaIdPersona: TIntegerField
       FieldName = 'IdPersona'
+    end
+    object ADODtStOrdenSalidaIdGeneraCFDITipoDoc: TIntegerField
+      FieldName = 'IdGeneraCFDITipoDoc'
+    end
+    object ADODtStOrdenSalidaAcumula: TBooleanField
+      FieldName = 'Acumula'
+    end
+    object ADODtStOrdenSalidaIDOrdenSalidaTipo: TIntegerField
+      FieldName = 'IDOrdenSalidaTipo'
+    end
+    object ADODtStOrdenSalidaObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
+    end
+    object ADODtStOrdenSalidaIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
@@ -662,6 +684,7 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 408
   end
   object ADODtStOrdenSalEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -5207,7 +5230,7 @@ inherited dmCotizaciones: TdmCotizaciones
       'select IdPaqueteria, Identificador, Descripcion from Paqueterias' +
       #13#10'order by Identificador'
     Parameters = <>
-    Left = 184
+    Left = 192
     Top = 296
     object ADODtStPaqueteriasIdPaqueteria: TAutoIncField
       FieldName = 'IdPaqueteria'

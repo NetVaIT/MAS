@@ -650,11 +650,11 @@ begin
                //Actualiza Inventario y demás   //Mar 7/16       //Este nunca estará aca ya que es factura la asociada abr 18/16
              if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
                 RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16   Normal cancelacion
-             if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
+             if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16 //Verificar que no existan con -1 a menos que sea global jul 11/16
                ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
             //Actualizar Saldo Cliente
              ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
-             if adodsMasterIdPersonaReceptor.Value=-1 then
+             if adodsMasterIdPersonaReceptor.Value=-1 then  //Verificar que no existan con -1 a menos que sea global jul 11/16
                 ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
 
              ShowMessage(adodsMasterUUID_TB.Value + #13+'Documento cancelado en SAT. Recuerde que debe descargar del SAT, los acuses de cancelación');
@@ -662,18 +662,18 @@ begin
            end
            else
              if (not EsProduccion) and (pos('74305F11-FFFF-FFFF-FFFF-BD200698C5EA', respuesta)>0) then
-             begin
+             begin  //Pruebas..
                adodsMaster.Edit;
                adodsMasterFechaCancelacion.AsDateTime:=Now;
                adodsMasterIdCFDIEstatus.AsInteger:=3;
                adodsMasterObservaciones.asString:= adodsMasterObservaciones.asString+' '+ motivo+' '+ respuesta;
                adodsMaster.Post;
                  //Actualiza Inventario y demás   //Mar 7/16
-             if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
-                RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16    PruebaCancelacion
-             if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
-                ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
-                //Actualizar Saldo Cliente
+               if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+                  RevertirInventario(adodsMasterIdOrdenSalida.value,adodsMasterIdCFDI.value); //Mar 10/16    PruebaCancelacion
+               if adodsMasterIdPersonaReceptor.Value=-1 then   //Abr 18/16
+                  ActualizaAsociadosACFDI(adodsMasterIdCFDI.value);//  Quita IDCFDIGeneral cuando es una factura de cliente -1 en cada una de las Notas asociadas Abr 18/16
+                  //Actualizar Saldo Cliente
                ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'- ');//Mar 7/16
                ShowMessage(adodsMasterUUID_TB.Value + #13+'Prueba de Cancelación ');
              end

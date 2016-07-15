@@ -1,5 +1,6 @@
 object DMImpresosSalidas: TDMImpresosSalidas
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 610
   Width = 843
   object ppRprtOrdenSalida: TppReport
@@ -7973,7 +7974,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Size = 4
         Value = Null
       end>
-    Left = 184
+    Left = 192
     Top = 366
     object ADODtStDatosEtiquetaIdInfoEntrega: TAutoIncField
       FieldName = 'IdInfoEntrega'
@@ -8142,7 +8143,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Size = 4
         Value = Null
       end>
-    Left = 416
+    Left = 424
     Top = 266
     object ADODtStBuscaUbicacionCantidad: TFloatField
       FieldName = 'Cantidad'
@@ -12441,5 +12442,581 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta1'
     Left = 362
     Top = 494
+  end
+  object ppEtiquetaPreimpresa: TppReport
+    PrinterSetup.BinName = 'Default'
+    PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Orientation = poLandscape
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = True
+    PrinterSetup.mmMarginBottom = 3704
+    PrinterSetup.mmMarginLeft = 3810
+    PrinterSetup.mmMarginRight = 3810
+    PrinterSetup.mmMarginTop = 3810
+    PrinterSetup.mmPaperHeight = 215900
+    PrinterSetup.mmPaperWidth = 279400
+    PrinterSetup.PaperSize = 1
+    PrinterSetup.DevMode = {
+      201000005200690063006F006800200032003000350031000000720073006100
+      6C00200044007200690076006500720000000000000000000000000000000000
+      0000000001040001DC00440F43FF8003020001000C0608046400010002005802
+      0100020058020300000041003400000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000100000000000000
+      0100000002000000010000000100000000000000000000000000000000000000
+      202000008E1F0000000300000000000001000000000000000102000000000000
+      01000000000000000000000000000000EA0A00006F080000960A00001B080000
+      2A0000002A000000C8190000EC13000000190000241300006400000064000000
+      01000000EA0A00006F080000960A00001B0800002A0000002A000000C8190000
+      EC13000000190000241300006400000064000000010000000100000000000000
+      0000000064000000010000000100000001000000020003000000000000000000
+      04000B0001000100000001000000000001000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000200340800009A0B000000000000
+      0000000000000000000000003B03000091040000000000000000000000000000
+      0000000058025802010000000000000000000000010000000100000000000000
+      0000000000000000000000000000000000000000010000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000C0C0C000540069006D006500730020004E0065007700200052006F00
+      6D0061006E000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000048000000540069006D006500730020004E0065007700
+      200052006F006D0061006E000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000048000100000000000000000002010000
+      0000000000000000030000000000410066006900630069006F0020004D005000
+      2000350030003000320000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000010000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000100000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0100000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000007000000
+      00000000}
+    Template.FileName = 
+      'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\EtiquetaPreimpresaDir' +
+      '.rtm'
+    Units = utScreenPixels
+    AllowPrintToFile = True
+    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
+    DeviceType = 'Screen'
+    DefaultFileDeviceType = 'PDF'
+    EmailSettings.ReportFormat = 'PDF'
+    LanguageID = 'Default'
+    OpenFile = False
+    OutlineSettings.CreateNode = True
+    OutlineSettings.CreatePageNodes = True
+    OutlineSettings.Enabled = True
+    OutlineSettings.Visible = True
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = True
+    ThumbnailSettings.DeadSpace = 30
+    PDFSettings.EmbedFontOptions = [efUseSubset]
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
+    PreviewFormSettings.WindowState = wsMaximized
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    TextFileName = '($MyDocuments)\Report.pdf'
+    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.Enabled = True
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
+    Left = 194
+    Top = 450
+    Version = '15.0'
+    mmColumnWidth = 0
+    object ppHeaderBand5: TppHeaderBand
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 59267
+      mmPrintPosition = 0
+    end
+    object ppDetailBand5: TppDetailBand
+      Background1.Brush.Style = bsClear
+      Background2.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 142611
+      mmPrintPosition = 0
+      object ppDBText43: TppDBText
+        UserName = 'DBText10'
+        DataField = 'RazonSocial'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 18521
+        mmLeft = 55827
+        mmTop = 5292
+        mmWidth = 61648
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText44: TppDBText
+        UserName = 'DBText12'
+        DataField = 'Municipio'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 46302
+        mmTop = 63500
+        mmWidth = 33338
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText45: TppDBText
+        UserName = 'DBText13'
+        DataField = 'Estado'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 80698
+        mmTop = 63765
+        mmWidth = 39688
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText46: TppDBText
+        UserName = 'DBText14'
+        DataField = 'Direccioncompleta'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 13229
+        mmLeft = 46302
+        mmTop = 35983
+        mmWidth = 71173
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText47: TppDBText
+        UserName = 'DBText17'
+        DataField = 'TelefonoCompleto'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 5292
+        mmLeft = 46302
+        mmTop = 74083
+        mmWidth = 37835
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object myDBCheckBox6: TmyDBCheckBox
+        UserName = 'DBCheckBox1'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        Style = csCheckMark
+        DataPipeline = ppDBPpLnPreimresa
+        DataField = 'Asegurado'
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 7144
+        mmLeft = 108211
+        mmTop = 122238
+        mmWidth = 7408
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object myDBCheckBox8: TmyDBCheckBox
+        UserName = 'DBCheckBox2'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        Style = csCheckMark
+        DataPipeline = ppDBPpLnPreimresa
+        DataField = 'PagoFlete'
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 7144
+        mmLeft = 108211
+        mmTop = 112977
+        mmWidth = 7408
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText48: TppDBText
+        UserName = 'DBText18'
+        DataField = 'Valor'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 34925
+        mmTop = 122502
+        mmWidth = 38365
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText49: TppDBText
+        UserName = 'DBText19'
+        DataField = 'Conducto'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 46302
+        mmTop = 84138
+        mmWidth = 69850
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText50: TppDBText
+        UserName = 'DBText20'
+        DataField = 'Contenido'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 47361
+        mmTop = 93927
+        mmWidth = 72761
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object myDBCheckBox9: TmyDBCheckBox
+        UserName = 'DBCheckBox3'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        Style = csCheckMark
+        DataPipeline = ppDBPpLnPreimresa
+        DataField = 'DomicilioChk'
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 7144
+        mmLeft = 108211
+        mmTop = 103717
+        mmWidth = 7144
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object myDBCheckBox11: TmyDBCheckBox
+        UserName = 'DBCheckBox4'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        Style = csCheckMark
+        DataPipeline = ppDBPpLnPreimresa
+        DataField = 'OcurreChk'
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 7144
+        mmLeft = 66407
+        mmTop = 103717
+        mmWidth = 7408
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object myDBCheckBox12: TmyDBCheckBox
+        UserName = 'DBCheckBox5'
+        CheckBoxColor = clBlack
+        BooleanFalse = 'False'
+        BooleanTrue = 'True'
+        Style = csCheckMark
+        DataPipeline = ppDBPpLnPreimresa
+        DataField = 'CobrarChk'
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 7144
+        mmLeft = 66407
+        mmTop = 112977
+        mmWidth = 7408
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppLabel89: TppLabel
+        UserName = 'Label40'
+        AutoSize = False
+        Caption = 'Caja'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 12
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 6085
+        mmLeft = 87313
+        mmTop = 97367
+        mmWidth = 10848
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppLblCajaActPre: TppLabel
+        UserName = 'LblCajaAct'
+        AutoSize = False
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5556
+        mmLeft = 98690
+        mmTop = 97367
+        mmWidth = 5821
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppLabel91: TppLabel
+        UserName = 'Label42'
+        AutoSize = False
+        Caption = 'de'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 12
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        mmHeight = 5556
+        mmLeft = 105834
+        mmTop = 97367
+        mmWidth = 5821
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText52: TppDBText
+        UserName = 'DBText27'
+        DataField = 'CantidadCajas'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 5556
+        mmLeft = 112977
+        mmTop = 97896
+        mmWidth = 7408
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText53: TppDBText
+        UserName = 'DBText11'
+        DataField = 'RFC'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 46302
+        mmTop = 25400
+        mmWidth = 38629
+        BandType = 4
+        LayerName = BandLayer5
+      end
+      object ppDBText41: TppDBText
+        UserName = 'DBText15'
+        DataField = 'Identificador'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Name = 'Arial'
+        Font.Size = 14
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taRightJustified
+        Transparent = True
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 4763
+        mmLeft = 9790
+        mmTop = 0
+        mmWidth = 26988
+        BandType = 4
+        LayerName = BandLayer5
+      end
+    end
+    object ppFooterBand5: TppFooterBand
+      Background.Brush.Style = bsClear
+      mmBottomOffset = 0
+      mmHeight = 0
+      mmPrintPosition = 0
+    end
+    object ppDesignLayers5: TppDesignLayers
+      object ppDesignLayer5: TppDesignLayer
+        UserName = 'BandLayer5'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList5: TppParameterList
+    end
+  end
+  object ppDBPpLnPreimresa: TppDBPipeline
+    DataSource = DSDatosEtiqueta
+    UserName = 'Etiqueta2'
+    Left = 194
+    Top = 510
   end
 end

@@ -2,7 +2,6 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   Caption = 'FrmOrdenesSalidaGrid'
   ClientWidth = 1295
   OnCreate = FormCreate
-  ExplicitLeft = -23
   ExplicitWidth = 1295
   ExplicitHeight = 650
   PixelsPerInch = 96
@@ -21,35 +20,34 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   end
   inherited pnlClose: TPanel
     Width = 1295
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
   end
   inherited pnlDetail3: TPanel
     Width = 1295
-    ExplicitTop = 571
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
   end
   inherited pnlDetail2: TPanel
     Width = 1295
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
   end
   inherited pnlDetail1: TPanel
     Width = 1295
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
   end
   inherited pnltoolbar: TPanel
     Width = 1295
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
   end
   inherited pnlMaster: TPanel
     Width = 1295
-    ExplicitWidth = 1255
+    ExplicitWidth = 1295
     inherited cxGrid: TcxGrid
       Top = 46
       Width = 1295
       Height = 425
-      ExplicitTop = 42
-      ExplicitWidth = 1255
-      ExplicitHeight = 429
+      ExplicitTop = 46
+      ExplicitWidth = 1295
+      ExplicitHeight = 425
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridOrdenSalida: TcxGridDBColumn
           Caption = 'No.Orden Salida'
@@ -61,12 +59,26 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
           DataBinding.FieldName = 'IdDocumentoSalida'
           Width = 92
         end
+        object tvMasterIdentificadorNvo: TcxGridDBColumn
+          Caption = 'Identificador Cte'
+          DataBinding.FieldName = 'IdentificadorNvo'
+          Width = 85
+        end
         object tvMasterIdentificadorCte: TcxGridDBColumn
           DataBinding.FieldName = 'IdentificadorCte'
+          Visible = False
+          VisibleForCustomization = False
           Width = 86
+        end
+        object tvMasternombreC: TcxGridDBColumn
+          Caption = 'Nombre Cliente'
+          DataBinding.FieldName = 'nombreC'
+          Width = 295
         end
         object tvMasterNombreCliente: TcxGridDBColumn
           DataBinding.FieldName = 'NombreCliente'
+          Visible = False
+          VisibleForCustomization = False
           Width = 295
         end
         object tvMasterFechaRegistro: TcxGridDBColumn
@@ -299,7 +311,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -446,7 +458,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C0011C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
