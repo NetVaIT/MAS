@@ -11,7 +11,7 @@ inherited dmPersonas: TdmPersonas
       ', ApellidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNaci' +
       'miento, '#13#10'NumCtaPagoCliente, SaldoCliente, '#13#10'NSSEmpleado, DiasCr' +
       'editoCliente'#13#10'FROM Personas'
-    Left = 40
+    Left = 48
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
       ReadOnly = True

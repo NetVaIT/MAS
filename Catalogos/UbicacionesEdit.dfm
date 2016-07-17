@@ -2,6 +2,10 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
   Caption = 'frmUbicacionesEdit'
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     Properties.HideTabs = False
     ClientRectBottom = 475
@@ -21,11 +25,15 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
         ExplicitHeight = 447
         inherited tbarData: TToolBar
           Width = 744
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 744
         end
         inherited pnlMaster: TPanel
           Width = 744
           Height = 420
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 744
           ExplicitHeight = 420
           object Label1: TLabel
@@ -66,31 +74,23 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
     object tsEstado: TcxTabSheet
       Caption = 'Estados'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsMunicipio: TcxTabSheet
       Caption = 'Municipios'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitLeft = 1
+      ExplicitTop = 27
     end
     object tsPoblacion: TcxTabSheet
       Caption = 'Poblaciones'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitLeft = 4
+      ExplicitTop = 27
     end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -231,7 +231,7 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

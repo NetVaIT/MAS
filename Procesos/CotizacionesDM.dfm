@@ -27,7 +27,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Size = 4
         Value = 0
       end>
-    Left = 64
+    Left = 72
     object adodsMasterIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
       ReadOnly = True
@@ -210,6 +210,9 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsMasterFacturar: TBooleanField
       FieldName = 'Facturar'
     end
+  end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
   end
   inherited ActionList: TActionList
     object ActGenPDFCotizacion: TAction
@@ -684,7 +687,6 @@ inherited dmCotizaciones: TdmCotizaciones
     Top = 408
   end
   object ADODtStOrdenSalEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

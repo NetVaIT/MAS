@@ -144,6 +144,8 @@ end;
 procedure TdmPersonas.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
+  if Rol=rEmpleado then //Jul 16/16
+    Dataset.fieldbyname('IdPersonaTipo').AsInteger:=1; // Porque no se asigna
   Dataset.fieldbyname('IdPersonaEstatus').AsInteger:=1; //Activo //May 5/16
 end;
 

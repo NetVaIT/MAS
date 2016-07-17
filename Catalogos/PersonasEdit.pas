@@ -94,6 +94,7 @@ type
     procedure cmbTipoPersonaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure pcMainChange(Sender: TObject);
+    procedure DataSourceStateChange(Sender: TObject);
   private
     { Private declarations }
     dmPersonasDomicilios : TdmPersonasDomicilios;
@@ -176,6 +177,16 @@ procedure TfrmPersonasEdit.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   MostrarPanel; //May 4/16
+end;
+
+procedure TfrmPersonasEdit.DataSourceStateChange(Sender: TObject);
+begin               //jul 16/16
+  inherited;
+(*   Solo en new record if datasource.dataset.state=dsInsert then
+  begin
+    if rol=  rEmpleado then                                             //
+     DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger := 1; //jul 16/16
+  end;  *)
 end;
 
 procedure TfrmPersonasEdit.edtNombrePropertiesEditValueChanged(Sender: TObject);

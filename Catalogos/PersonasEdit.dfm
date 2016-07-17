@@ -5,6 +5,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1046
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -49,6 +50,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     Top = 504
     Width = 1046
     TabOrder = 4
+    ExplicitLeft = 0
     ExplicitTop = 504
     ExplicitWidth = 1046
   end
@@ -77,11 +79,15 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         ExplicitHeight = 428
         inherited tbarData: TToolBar
           Width = 1040
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 1040
         end
         inherited pnlMaster: TPanel
           Width = 1040
           Height = 401
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 1040
           ExplicitHeight = 401
           object pnlPersona: TPanel
@@ -611,11 +617,12 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited DataSource: TDataSource
     DataSet = dmPersonas.adodsMaster
+    OnStateChange = DataSourceStateChange
     OnDataChange = DataSourceDataChange
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -761,7 +768,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00B80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

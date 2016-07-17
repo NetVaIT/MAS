@@ -30,11 +30,6 @@ inherited DMAjustesSalida: TDMAjustesSalida
       Precision = 18
       Size = 6
     end
-    object adodsMasterIVA: TFMTBCDField
-      FieldName = 'IVA'
-      Precision = 18
-      Size = 6
-    end
     object adodsMasterTotal: TFMTBCDField
       FieldName = 'Total'
       Precision = 18
@@ -42,6 +37,11 @@ inherited DMAjustesSalida: TDMAjustesSalida
     end
     object adodsMasterIdGeneraCFDITipoDoc: TIntegerField
       FieldName = 'IdGeneraCFDITipoDoc'
+    end
+    object adodsMasterIVA: TFMTBCDField
+      FieldName = 'IVA'
+      Precision = 18
+      Size = 6
     end
     object adodsMasterAcumula: TBooleanField
       FieldName = 'Acumula'
@@ -172,6 +172,15 @@ inherited DMAjustesSalida: TDMAjustesSalida
       Size = 150
       Lookup = True
     end
+    object ADODtStAjusteSalidaItemsdisponible: TFloatField
+      FieldKind = fkLookup
+      FieldName = 'disponible'
+      LookupDataSet = ADODtStProductos
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Existencia'
+      KeyFields = 'IdProducto'
+      Lookup = True
+    end
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -269,9 +278,13 @@ inherited DMAjustesSalida: TDMAjustesSalida
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdProducto, IdProductoTipo, IdUnidadMedida,'#13#10' IdProductoE' +
-      'status, Identificador1, Identificador2, Identificador3, '#13#10'Descri' +
-      'pcion, PrecioUnitario from Productos'
+      'SELECT P.IdProducto,P.Descripcion,P.PrecioUnitario, I.Existencia' +
+      ', Identificador1, Identificador2, Identificador3, '#13#10' IdProductoE' +
+      'status, IdProductoTipo, IdUnidadMedida,'#13#10' I.PedidoXSurtir, I.apa' +
+      'rtado, (I.Existencia-I.PedidoXSurtir-I.Apartado ) as ExistenciaR' +
+      'eal,'#13#10' I.PedidoXSurtir as PorSurtir, I.Apartado as PorFacturar, ' +
+      'I.virtual as EnAduana'#13#10' FROM Productos P'#13#10' inner join Inventario' +
+      '  I On P.IDProducto=I.IdProducto '#13#10'and I.IDAlmacen=1'
     Parameters = <>
     Left = 200
     Top = 80
@@ -306,6 +319,9 @@ inherited DMAjustesSalida: TDMAjustesSalida
     object ADODtStProductosIdentificador3: TStringField
       FieldName = 'Identificador3'
       Size = 50
+    end
+    object ADODtStProductosExistencia: TFloatField
+      FieldName = 'Existencia'
     end
   end
   object ADODtStListaProductos: TADODataSet
@@ -514,5 +530,83 @@ inherited DMAjustesSalida: TDMAjustesSalida
       '')
     Left = 428
     Top = 321
+  end
+  object ADODtStDatosInventarioDir: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'SElect osi.*, PK.IdAlmacen,PK.IdProductoKardex'#13#10'from OrdenesSali' +
+      'dasItems OSI'#13#10'inner Join ProductosKardex PK on PK.IdOrdenSalidaI' +
+      'tem=osi.IdOrdenSalidaItem'#13#10' where OSI.IdOrdenSalida=:IdOrdenSali' +
+      'da'
+    Parameters = <
+      item
+        Name = 'IdOrdenSalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 432
+    Top = 401
+    object ADODtStDatosInventarioDirIdOrdenSalidaItem: TAutoIncField
+      FieldName = 'IdOrdenSalidaItem'
+      ReadOnly = True
+    end
+    object ADODtStDatosInventarioDirIdOrdenSalida: TIntegerField
+      FieldName = 'IdOrdenSalida'
+    end
+    object ADODtStDatosInventarioDirIdDocumentoSalidaDetalle: TIntegerField
+      FieldName = 'IdDocumentoSalidaDetalle'
+    end
+    object ADODtStDatosInventarioDirIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStDatosInventarioDirIdUnidadMedida: TIntegerField
+      FieldName = 'IdUnidadMedida'
+    end
+    object ADODtStDatosInventarioDirClaveProducto: TStringField
+      FieldName = 'ClaveProducto'
+      Size = 50
+    end
+    object ADODtStDatosInventarioDirCantidadDespachada: TFloatField
+      FieldName = 'CantidadDespachada'
+    end
+    object ADODtStDatosInventarioDirCantidadSolicitada: TFloatField
+      FieldName = 'CantidadSolicitada'
+    end
+    object ADODtStDatosInventarioDirPrecio: TFMTBCDField
+      FieldName = 'Precio'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDatosInventarioDirImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDatosInventarioDirObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 500
+    end
+    object ADODtStDatosInventarioDirCostoUnitario: TFMTBCDField
+      FieldName = 'CostoUnitario'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStDatosInventarioDirIdAlmacen: TIntegerField
+      FieldName = 'IdAlmacen'
+    end
+    object ADODtStDatosInventarioDirIdProductoKardex: TAutoIncField
+      FieldName = 'IdProductoKardex'
+      ReadOnly = True
+    end
+  end
+  object ADOQryActualizaInventario: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 436
+    Top = 457
   end
 end

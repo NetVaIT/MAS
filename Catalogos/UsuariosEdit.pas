@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   cxContainer, cxEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, cxTextEdit, cxDBEdit, Vcl.DBCtrls;
+  cxDBLookupComboBox, cxTextEdit, cxDBEdit, Vcl.DBCtrls, Vcl.Buttons;
 
 type
   TfrmUsuariosEdit = class(T_frmEdit)
@@ -28,11 +28,13 @@ type
     Label3: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
     Label4: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
+    cxDBTxtEdtPass: TcxDBTextEdit;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     Label5: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
+    SpdBtnVerPass: TSpeedButton;
+    procedure SpdBtnVerPassClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,5 +46,13 @@ implementation
 {$R *.dfm}
 
 uses UsuariosDM;
+
+procedure TfrmUsuariosEdit.SpdBtnVerPassClick(Sender: TObject);
+begin
+  inherited;
+ if SpdBtnVerPass.Down then    cxDBTxtEdtPass.properties.echomode :=eemNormal
+  else
+     cxDBTxtEdtPass.properties.echomode :=eemPassword;
+end;
 
 end.

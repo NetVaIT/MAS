@@ -5,8 +5,10 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
   Vcl.ActnList, Data.Win.ADODB, Dialogs;
-
+const
+  IdalmacenPrincipal=1;  //Jul 15/16
 type
+
   TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada, eAplicada);
 
   TDMAjustesSalida = class(T_dmStandar)
@@ -89,6 +91,24 @@ type
     ADODtStSalidasUbicacionesElEspacio: TStringField;
     ActAceptaUbicacion: TAction;
     ADOQryInsertaProductoKardex: TADOQuery;
+    ADODtStDatosInventarioDir: TADODataSet;
+    ADOQryActualizaInventario: TADOQuery;
+    ADODtStDatosInventarioDirIdOrdenSalidaItem: TAutoIncField;
+    ADODtStDatosInventarioDirIdOrdenSalida: TIntegerField;
+    ADODtStDatosInventarioDirIdDocumentoSalidaDetalle: TIntegerField;
+    ADODtStDatosInventarioDirIdProducto: TIntegerField;
+    ADODtStDatosInventarioDirIdUnidadMedida: TIntegerField;
+    ADODtStDatosInventarioDirClaveProducto: TStringField;
+    ADODtStDatosInventarioDirCantidadDespachada: TFloatField;
+    ADODtStDatosInventarioDirCantidadSolicitada: TFloatField;
+    ADODtStDatosInventarioDirPrecio: TFMTBCDField;
+    ADODtStDatosInventarioDirImporte: TFMTBCDField;
+    ADODtStDatosInventarioDirObservaciones: TStringField;
+    ADODtStDatosInventarioDirCostoUnitario: TFMTBCDField;
+    ADODtStDatosInventarioDirIdAlmacen: TIntegerField;
+    ADODtStDatosInventarioDirIdProductoKardex: TAutoIncField;
+    ADODtStProductosExistencia: TFloatField;
+    ADODtStAjusteSalidaItemsdisponible: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActSeleccionaProductoExecute(Sender: TObject);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
@@ -124,6 +144,7 @@ type
       idSalidaUbicacion: Integer;muestraMsg:boolean): Boolean;
     function VerificaUbicacionProductos(idordenSalida: Integer;MostrarMsg:Boolean): Boolean;
     procedure ActualizaKardex(IdOrdenSalida: integer);
+    procedure ActualizaInventarioDir(IDOrdenSalida: Integer);   //Jul 15/16
     { Private declarations }
   public
     CambioCantidad:Boolean; //Jul 14/16
@@ -194,10 +215,13 @@ begin
   //1. ubicaciones se habilita este boton si se colocaron ubicaciones??
   //Aplicar Kardex
   ActualizaKardex(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);  //Actualiza tambien estatus de salidas ubicacion
+  ActualizaInventariodir(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);
 
-
-  //Ajustar inventario y actualizar estatusKardex y demás
-
+  //Verificar
+  adodsmaster.Edit;
+  adodsMasterIdOrdenEstatus.Value:=9;//Aplicada
+  adodsMaster.post;
+  ShowMessage('Realizado'); //Verificar ??
   //
 end;
 
@@ -242,6 +266,7 @@ begin
   adodsMasterIdPersonaRecolecta.Value:= _dmConection.IdUsuario;
   adodsMasterFecharegistro.Value:= now;
   adodsMasterIDOrdenSalidaTipo.Value:=4; //Ajuste, con posibilidad de cambio
+  adodsMasteridalmacen.value:=IdAlmacenPrincipal; //Jul 15/16
 //  TfrmAjustesSalidasEdit(gGridEditForm).SetFoco;
 end;
 
@@ -299,6 +324,8 @@ begin
    if ADODtStAjusteSalidaItems.State in [dsEdit,dsInsert] then
   begin                                                //Deberia ser con el que se vendio
     //adodsItems.FieldByName('PrecioVenta').AsFloat:= ;//ObtenerPrecioMayoreo(adodsItemsIdProducto.AsInteger ,adodsItems.FieldByName('Precio').AsFloat, adodsItems.FieldByName('cantidad').AsFloat);
+    if ADODtStAjusteSalidaItems.FieldByName('cantidadsolicitada').AsFloat> ADODtStAjusteSalidaItems.FieldByName('Disponible').AsFloat then //Jul 5/16
+       beep;
 
     ADODtStAjusteSalidaItems.FieldByName('cantidadDespachada').AsFloat:=ADODtStAjusteSalidaItems.FieldByName('cantidadsolicitada').AsFloat;
     ADODtStAjusteSalidaItems.FieldByName('Importe').AsFloat:=ADODtStAjusteSalidaItems.FieldByName('Precio').AsFloat* ADODtStAjusteSalidaItems.FieldByName('cantidadsolicitada').AsFloat;
@@ -541,8 +568,8 @@ begin
   TfrmAjustesSalidasEdit(gGridEditForm).DSSalidasUbicaciones.dataset:= ADODtStSalidasUbicaciones; //jul 14/16
   //Verificar si productos por espacio puede usar lo de aduana o no  -- and Pe.IdEspacio<>:IDAduana
 
-   TfrmAjustesSalidasEdit(gGridEditForm).DSProductosXEspacio.DataSet:=ADODtStProductosXEspacio;//Jul 14/16
-
+  TfrmAjustesSalidasEdit(gGridEditForm).DSProductosXEspacio.DataSet:=ADODtStProductosXEspacio;//Jul 14/16
+  TfrmAjustesSalidasEdit(gGridEditForm).actAplicaSalida:=ActAplicaSalida; //Jul 15/16
 end;
 
 procedure TDMAjustesSalida.dsmasterDataChange(Sender: TObject; Field: TField);
@@ -575,12 +602,30 @@ begin
   ADODtStAjusteSalidaItems.First;
   while not ADODtStAjusteSalidaItems.eof do
   begin
-    ADOQryInsertaProductoKardex.Parameters.ParamByName('IdOrdenSalidaItem1').Value:=ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsInteger;
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.add('Select * from   ProductosKardex where  IdOrdenSalidaItem =' +ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);
+    ADOQryAuxiliar.Open;
+    if not  ADOQryAuxiliar.eof then  //Existe  //por que es manual
+    begin
+      ADOQryAuxiliar.edit;
+      ADOQryAuxiliar.fieldbyname('cantidad').AsFloat:= ADODtStAjusteSalidaItemsCantidadDespachada.asFloat;
+      ADOQryAuxiliar.fieldbyname('importe').AsFloat:= ADODtStAjusteSalidaItemsImporte.AsFloat;
+      ADOQryAuxiliar.post;
+  //  Update ProductosKardex set(IdProducto,IdOrdenSalidaItem,IdMoneda,IdProductoKardexEstatus,Fecha,Movimiento,Cantidad,Importe,IdAlmacen, CostoUnitario,PrecioUnitario)
 
-    ADOQryInsertaProductoKardex.Parameters.ParamByName('IdOrdenSalidaItem2').Value:=ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsInteger;
-    ADOQryInsertaProductoKardex.Parameters.ParamByName('IdAlmacen').Value:=  1; //Almacen Actual  // debe ser variable  Feb 10/16
-    ADOQryInsertaProductoKardex.Parameters.ParamByName('IdMoneda').Value:= dmconfiguracion.idmoneda ;  //Jul 15/16
-    ADOQryInsertaProductoKardex.ExecSQL;
+    end
+
+    else
+    begin
+
+      ADOQryInsertaProductoKardex.Parameters.ParamByName('IdOrdenSalidaItem1').Value:=ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsInteger;
+
+      ADOQryInsertaProductoKardex.Parameters.ParamByName('IdOrdenSalidaItem2').Value:=ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsInteger;
+      ADOQryInsertaProductoKardex.Parameters.ParamByName('IdAlmacen').Value:=  1; //Almacen Actual  // debe ser variable  Feb 10/16
+      ADOQryInsertaProductoKardex.Parameters.ParamByName('IdMoneda').Value:= dmconfiguracion.idmoneda ;  //Jul 15/16
+      ADOQryInsertaProductoKardex.ExecSQL;
+    end;
 
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
@@ -600,7 +645,91 @@ begin
 end;
 
 
+procedure TDMAjustesSalida.ActualizaInventarioDir(IDOrdenSalida: Integer); //Jul 15/16 Ajustar para que no use CFDI
+var
+   texto:String;
+   cont, IDPXE:Integer;   //Abr 1/16    //Abr 14/16
+begin
+  ADODtStDatosInventarioDir.Close;
+  ADODtStDatosInventarioDir.Parameters.ParamByName('IDOrdenSalida').Value:= IDOrdenSalida;
+  ADODtStDatosInventarioDir.OPEN;
+  cont :=0;
 
+  try
+    ADODtStDatosInventarioDir.Connection.BeginTrans;
+    while not ADODtStDatosInventarioDir.EOF do
+    begin
+         //verificar existencia en inventario Abr 1/16
+      AdoQryAuxiliar.Close;
+      AdoQryAuxiliar.SQL.Clear;
+      AdoQryAuxiliar.SQL.Add('Select * from Inventario Where IdProducto='+ADODtStDatosInventarioDir.FieldByName('IDProducto').AsString
+                                         +' and IDALmacen= '+ADODtStDatosInventarioDir.FieldByName('IDAlmacen').ASString);
+      AdoQryAuxiliar.Open;
+      if AdoQryAuxiliar.Eof then
+      begin
+        cont:=Cont+1;
+      end;
+      if cont=0 then
+      begin
+        ADOQryActualizaInventario.SQL.Clear;                   // PedidoXSurtir  =PedidoXSurtir cambio //Abr 11/16
+        ADOQryActualizaInventario.SQL.Add('Update Inventario SET ' // ese no por no ser de ventas  Apartado  =Apartado-'+ADODtStDatosInventarioDir.FieldByName('Cantidad').AsString
+                                         +' Existencia =Existencia- '+ADODtStDatosInventarioDir.FieldByName('CantidadDespachada').AsString
+                                         +' Where IdProducto='+ADODtStDatosInventarioDir.FieldByName('IDProducto').AsString
+                                         +' and IDALmacen= '+ADODtStDatosInventarioDir.FieldByName('IDAlmacen').ASString);
+
+        ADOQryActualizaInventario.ExecSQL;
+        Texto:='Actualizo inventario';
+        ADOQryActualizaInventario.SQL.Clear;
+        ADOQryActualizaInventario.SQL.Add('Update SalidasUbicaciones SET IdSalidaUbicacionEstatus=3  where IdOrdenSalidaItem='
+                                          +ADODtStDatosInventarioDir.FieldByName('IDOrdenSalidaItem').ASString);
+        ADOQryActualizaInventario.ExecSQL;
+         Texto:=Texto +' Actualizo SalidasUbicacion';
+
+        AdoQryAuxiliar.Close; //desde Abr. 14/16
+        AdoQryAuxiliar.SQL.Clear;
+        AdoQryAuxiliar.SQL.Add('Select * from SalidasUbicaciones  where IdOrdenSalidaItem='
+                                          +ADODtStDatosInventarioDir.FieldByName('IDOrdenSalidaItem').ASString);
+        AdoQryAuxiliar.Open;  //Hasta Abr. 14/16
+        while not AdoQryAuxiliar.eof do //Ajustado para que actualice todos
+        begin
+          IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
+
+        //necesitamos el id de productoXEspacio producto
+          ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
+          ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosInventarioDir.FieldByName('CantidadDespachada').AsString
+                                         +' where IDProducto='+ADODtStDatosInventarioDir.FieldByName('IdProducto').asString
+                                         +' and IdAlmacen= '+ADODtStDatosInventarioDir.FieldByName('IdAlmacen').asString+' and IDProductoXEspacio='+intToStr(IDPXE));
+                                                                                                                   //Agregado Ab. 14, por si hay mas ubicaciones
+          ADOQryActualizaInventario.ExecSQL;
+          AdoQryAuxiliar.Next; //Jul 15/16
+        end;
+        Texto:=Texto +' Actualizo ProductoEspacio';
+        ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
+        ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 3  '
+                                         +' where IDProductoKardex='+ ADODtStDatosInventarioDir.FieldByName('IdProductoKardex').ASString);
+
+        ADOQryActualizaInventario.ExecSQL;
+
+        Texto:=Texto +' Actualizo Producto Kardex';
+
+
+      end; //Ab 1/16
+      ADODtStDatosInventarioDir.Next;
+    end;
+    if Cont=0 then
+      ADODtStDatosInventarioDir.Connection.CommitTrans
+    else
+    begin
+      ADODtStDatosInventarioDir.Connection.RollbackTrans;
+      ShowMessage('No existe algún producto en Inventario');
+    end;
+   //  ShowMessage('bien '+Texto);
+  except
+     ADODtStDatosInventarioDir.Connection.RollbackTrans;
+     ShowMessage('Error'+ Texto);
+  end;
+
+end;
 
 
 

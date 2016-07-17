@@ -6,8 +6,7 @@ inherited dmUsuarios: TdmUsuarios
     CommandText = 
       'SELECT IdUsuario, IdPersona, IdUsuarioEstatus, Login, Password, ' +
       #13#10'IdUsuarioPerfil FROM Usuarios'
-    Left = 32
-    Top = 24
+    Left = 48
     object adodsMasterIdUsuario: TAutoIncField
       FieldName = 'IdUsuario'
       ReadOnly = True
@@ -69,7 +68,7 @@ inherited dmUsuarios: TdmUsuarios
     CursorType = ctStatic
     CommandText = 
       'SELECT IdPersona, RazonSocial FROM Personas WHERE IdPersonaTipo ' +
-      '= 1'
+      '= 1 and idrol=3'
     Parameters = <>
     Left = 104
     Top = 72

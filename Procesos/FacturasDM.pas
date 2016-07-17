@@ -1585,17 +1585,19 @@ begin
         AdoQryAuxiliar.SQL.Add('Select * from SalidasUbicaciones  where IdOrdenSalidaItem='
                                           +ADODtStDatosActInv.FieldByName('IDOrdenSalidaItem').ASString);
         AdoQryAuxiliar.Open;  //Hasta Abr. 14/16
-        if not AdoQryAuxiliar.eof then
+        while not AdoQryAuxiliar.eof do    //Jul 15/16 para que actualice todos
+        begin
           IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
 
-        //necesitamos el id de productoXEspacio producto
-        ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
-        ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
-                                         +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
-                                         +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString+' and IDProductoXEspacio='+intToStr(IDPXE));
-                                                                                                                   //Agregado Ab. 14, por si hay mas ubicaciones
-        ADOQryActualizaInventario.ExecSQL;
-
+          //necesitamos el id de productoXEspacio producto
+          ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
+          ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+                                           +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
+                                           +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString+' and IDProductoXEspacio='+intToStr(IDPXE));
+                                                                                                                     //Agregado Ab. 14, por si hay mas ubicaciones
+          ADOQryActualizaInventario.ExecSQL;
+          AdoQryAuxiliar.Next; //Jul 15/16
+        end;
         Texto:=Texto +' Actualizo ProductoEspacio';
         ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
         ADOQryActualizaInventario.SQL.Add('Update ProductosKardex SET IDProductoKardexEstatus = 3  '

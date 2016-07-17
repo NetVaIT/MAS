@@ -1558,9 +1558,6 @@ inherited DMFacturas: TDMFacturas
   object ADOQryActualizaInventario: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    SQL.Strings = (
-      ''
-      '')
     Left = 332
     Top = 568
   end
