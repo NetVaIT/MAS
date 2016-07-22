@@ -11,6 +11,7 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
     Align = alTop
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
+        OptionsView.GroupByBox = True
         object tvMasterIdBackorderEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdBackorderEntrada'
           Visible = False
@@ -25,6 +26,8 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
         end
         object tvMasterProvedor: TcxGridDBColumn
           DataBinding.FieldName = 'Provedor'
+          Visible = False
+          GroupIndex = 0
           Width = 304
         end
         object tvMasterIdentificador1: TcxGridDBColumn
@@ -74,7 +77,6 @@ inherited frmBackorderEntradas: TfrmBackorderEntradas
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

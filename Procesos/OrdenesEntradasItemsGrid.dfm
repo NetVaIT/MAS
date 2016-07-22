@@ -11,7 +11,9 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
         OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
         OptionsBehavior.GoToNextCellOnEnter = True
+        OptionsBehavior.IncSearch = False
         OptionsBehavior.FocusCellOnCycle = True
+        OptionsData.Appending = True
         OptionsData.Editing = True
         OptionsData.Inserting = True
         object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
@@ -78,6 +80,15 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
           DataBinding.FieldName = 'CostoAproximado'
           Options.Focusing = False
         end
+        object tvMasterPrecioVenta: TcxGridDBColumn
+          DataBinding.FieldName = 'PrecioVenta'
+          Visible = False
+        end
+        object tvMasterPorcentajeUtilidad: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeUtilidad'
+          Options.Focusing = False
+          Width = 118
+        end
       end
     end
     inherited tbarGrid: TToolBar
@@ -100,7 +111,7 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400380110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -261,7 +272,7 @@ inherited frmOrdenesEntradasItemsGrid: TfrmOrdenesEntradasItemsGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B8015C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8016C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -54,6 +54,7 @@ type
     tvMaster2PreicoVenta: TcxGridDBColumn;
     tvMasterPrecioMonedalocal: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure DataSetInsertExecute(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
     procedure SetactSeleccionarProducto(const Value: TBasicAction);
@@ -68,6 +69,13 @@ implementation
 {$R *.dfm}
 
 uses DocumentosEntradasDM;
+
+procedure TfrmDocumentosEntradasDetalleGrid.DataSetInsertExecute(
+  Sender: TObject);
+begin
+  cxGrid.ActiveLevel:= cxGridLevel1;
+  DataSource.DataSet.Append;
+end;
 
 procedure TfrmDocumentosEntradasDetalleGrid.FormCreate(Sender: TObject);
 begin

@@ -5,7 +5,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 897
-  ExplicitHeight = 612
+  ExplicitHeight = 613
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -28,6 +28,7 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab5: TdxRibbonTab
       Tag = 4000
+      Active = True
       Caption = 'Compras'
       Groups = <
         item
@@ -47,7 +48,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab3: TdxRibbonTab
       Tag = 3000
-      Active = True
       Caption = 'Almacen'
       Groups = <
         item
@@ -336,6 +336,10 @@ inherited frmMain: TfrmMain
       ItemLinks = <
         item
           Visible = True
+          ItemName = 'dxBarLargeButton33'
+        end
+        item
+          Visible = True
           ItemName = 'dxBarLargeButton20'
         end
         item
@@ -594,12 +598,6 @@ inherited frmMain: TfrmMain
       Action = ActPaqueterias
       Category = 0
     end
-    object dxBarLargeButton33: TdxBarLargeButton
-      Caption = 'New Button'
-      Category = 0
-      Hint = 'New Button'
-      Visible = ivAlways
-    end
     object dxBrLrgBtnOrdenEntrega: TdxBarLargeButton
       Tag = 27
       Action = ActOrdenEntrega
@@ -624,12 +622,6 @@ inherited frmMain: TfrmMain
       Tag = 32
       Action = ActInventario
       Category = 0
-    end
-    object dxBarButton1: TdxBarButton
-      Caption = 'New Button'
-      Category = 0
-      Hint = 'New Button'
-      Visible = ivAlways
     end
     object dxBrLrgBtnMermas: TdxBarLargeButton
       Tag = 33
@@ -660,6 +652,10 @@ inherited frmMain: TfrmMain
     object dxBrLrgBtnEntradaXAjuste: TdxBarLargeButton
       Tag = 36
       Action = ActEntradaAjuste
+      Category = 0
+    end
+    object dxBarLargeButton33: TdxBarLargeButton
+      Action = actRptVentasProyeccion
       Category = 0
     end
   end
@@ -11872,7 +11868,13 @@ inherited frmMain: TfrmMain
   inherited ActionList: TActionList
     Left = 496
     Top = 248
-    object actCatalogo: TAction [0]
+    object actRptVentasProyeccion: TAction [0]
+      Tag = 47
+      Category = 'Compras'
+      Caption = 'Proyecci'#243'n de compras'
+      ImageIndex = 15
+    end
+    object actCatalogo: TAction [1]
       Category = 'Catalogo'
       Caption = 'Catalogo'
       OnExecute = actCatalogoExecute

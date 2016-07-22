@@ -189,7 +189,9 @@ uses
   AjustesSalidasItemsForm in 'Procesos\AjustesSalidasItemsForm.pas' {frmAjustesSalidasItemsForm},
   AjustesSalidasForm in 'Procesos\AjustesSalidasForm.pas' {frmAjustesSalidasForm},
   SalidasUbicacionesEdit in 'Procesos\SalidasUbicacionesEdit.pas' {frmSalidasUbicaciones},
-  SalidasUbicacionesGrid in 'Procesos\SalidasUbicacionesGrid.pas' {frmSalidasUbicacionesGrid};
+  SalidasUbicacionesGrid in 'Procesos\SalidasUbicacionesGrid.pas' {frmSalidasUbicacionesGrid},
+  rptVentasProyeccionDM in 'Reportes\rptVentasProyeccionDM.pas' {dmrptVentasProyeccion: TDataModule},
+  rptVentasProyeccionForm in 'Reportes\rptVentasProyeccionForm.pas' {frmrptVentasProyeccion};
 
 {$R *.res}
 

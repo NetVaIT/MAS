@@ -108,7 +108,6 @@ type
     dxBrLrgBtnDevolucion: TdxBarLargeButton;
     dxBarLrgBtnPaqueteria: TdxBarLargeButton;
     ActPaqueterias: TAction;
-    dxBarLargeButton33: TdxBarLargeButton;
     dxBrLrgBtnOrdenEntrega: TdxBarLargeButton;
     ActOrdenEntrega: TAction;
     actProductosXEspacio: TAction;
@@ -119,7 +118,6 @@ type
     dxBarLargeButton35: TdxBarLargeButton;
     ActCierreReporteMensual: TAction;
     dxBrLrgBtnInventario: TdxBarLargeButton;
-    dxBarButton1: TdxBarButton;
     dxBrLrgBtnMermas: TdxBarLargeButton;
     dxBrLrgBtnAcomodo: TdxBarLargeButton;
     dxBrLrgBtnListaPrecios: TdxBarLargeButton;
@@ -131,6 +129,8 @@ type
     ActSalidaAjuste: TAction;
     dxBrLrgBtnEntradaXAjuste: TdxBarLargeButton;
     ActEntradaAjuste: TAction;
+    actRptVentasProyeccion: TAction;
+    dxBarLargeButton33: TdxBarLargeButton;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -166,7 +166,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
   OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
-  ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM;
+  ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM, rptVentasProyeccionDM;
 
 { TfrmMain }
 
@@ -213,23 +213,17 @@ begin
                 // TdmCotizaciones(gModulo).TipoDocumento:=3;
        end;
 
-   24:   gModulo := TDMFacturas.CreateWMostrar(Self,True,4);//Nota Venta Mar 29/16
-   25:   gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
-   26:   gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
-   27:   gModulo := TDMOrdenesEntregas.Create(Self); //Ordenesentega May 27/16
-
+   24: gModulo := TDMFacturas.CreateWMostrar(Self,True,4);//Nota Venta Mar 29/16
+   25: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
+   26: gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
+   27: gModulo := TDMOrdenesEntregas.Create(Self); //Ordenesentega May 27/16
    30: gModulo := TdmAlmacenes.Create(Self);
    31: gModulo := TdmDevoluciones.Create(Self); //Jun 21/16
-  //Jun 30/16
-
    32: gModulo := TdmInventario.Create(Self);
    34: gModulo := TdmListaPrecios.Create(Self);  //Jul 1/16
    33: gModulo := TDMAjustesSalida.Create(Self); //Jul 12/16
-
    35: gModulo := TdmKardexMovimientos.Create(Self); //Jul 6/16
-
   //   36: gModulo := TDMAjustesEntrada.Create(Self); //Jul 12/16
-
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
@@ -237,13 +231,12 @@ begin
    44: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, tEntradaMercacia);
    45: gModulo := TdmOrdenesEntradas.CreateWTipo(Self, TOrdenEntrada);
    46: gModulo := TdmProductosXEspacio.Create(Self);
+   47: gModulo := TdmrptVentasProyeccion.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
-
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
    62: gModulo := TdmRptAntiguedadSaldos.create(Self); //Mar23/16
-
   end;
   if Assigned(gModulo) then
   begin
@@ -278,9 +271,9 @@ begin
   actInvoice.Enabled            := Conected;
   actOrdenesEntrada.Enabled     := Conected;
   actEntradaMercancia.Enabled     := Conected;
-
   UsarPermisos; //Abr 25/16
 end;
+
 procedure TfrmMain.UsarPermisos;
 var
   i, tagAux:Integer;
@@ -302,9 +295,8 @@ begin
       (components[i] as TdxBarLargeButton).enabled:= (pos('|'+intToStr(tagAux)+'|', OpcionTxt)>0) or(pos(intToStr(tagAux)+'|', OpcionTxt)=1);
     end;
   end;
-
-
 end;
+
 procedure TfrmMain.DestroyModule;
 begin
   inherited;

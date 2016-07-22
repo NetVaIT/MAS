@@ -13,7 +13,9 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
         OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
         OptionsBehavior.GoToNextCellOnEnter = True
+        OptionsBehavior.IncSearch = False
         OptionsBehavior.FocusCellOnCycle = True
+        OptionsData.Appending = True
         OptionsData.Editing = True
         OptionsData.Inserting = True
         object tvMasterIdDocumentoentradaDetalle: TcxGridDBColumn
@@ -164,7 +166,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -306,6 +308,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   inherited ActionList: TActionList
     inherited DataSetInsert: TDataSetInsert
       Visible = True
+      OnExecute = DataSetInsertExecute
     end
     inherited DataSetEdit: TDataSetEdit
       Visible = True
@@ -325,7 +328,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

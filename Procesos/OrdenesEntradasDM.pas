@@ -76,8 +76,6 @@ type
     adodsFacturasObservaciones: TStringField;
     actCrearOrden: TAction;
     adoqGetIdProducto: TADOQuery;
-    adoqGetIdProductoIdProducto: TIntegerField;
-    adoqGetIdProductoPrecio: TFMTBCDField;
     actBuscarProducto: TAction;
     adodsListaProductos: TADODataSet;
     adodsListaProductosIdProducto: TIntegerField;
@@ -87,7 +85,6 @@ type
     adodsListaProductosIdentificador3: TStringField;
     adodsListaProductosDescripcion: TStringField;
     adodsListaProductosPrecioUnitario: TFMTBCDField;
-    adoqGetIdProductoPendiente: TFloatField;
     actAplicarEntrada: TAction;
     adopSetEstatus: TADOStoredProc;
     adodsItemsImporteMonedaLocal: TFMTBCDField;
@@ -99,6 +96,12 @@ type
     actModificarGastos: TAction;
     actRecibirMercancia: TAction;
     adodsItemsCosto: TFMTBCDField;
+    adodsItemsPrecioVenta: TFMTBCDField;
+    adodsItemsPorcentajeUtilidad: TFMTBCDField;
+    adoqGetIdProductoIdProducto: TIntegerField;
+    adoqGetIdProductoCosto: TFMTBCDField;
+    adoqGetIdProductoPrecio: TFloatField;
+    adoqGetIdProductoPendiente: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -108,7 +111,7 @@ type
     procedure actCrearOrdenExecute(Sender: TObject);
     procedure adodsItemsClaveProductoChange(Sender: TField);
     procedure adodsItemsClaveProductoValidate(Sender: TField);
-    procedure adodsItemsPrecioChange(Sender: TField);
+    procedure adodsItemsCostoChange(Sender: TField);
     procedure actBuscarProductoExecute(Sender: TObject);
     procedure actAplicarEntradaExecute(Sender: TObject);
     procedure actAplicarEntradaUpdate(Sender: TObject);
@@ -117,10 +120,13 @@ type
     procedure actModificarGastosExecute(Sender: TObject);
     procedure actRecibirMercanciaExecute(Sender: TObject);
     procedure actRecibirMercanciaUpdate(Sender: TObject);
+    procedure adodsMasterTipoCambioChange(Sender: TField);
+    procedure adodsItemsCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
     FIdProducto: Integer;
+    FCosto: Double;
     FPrecio: Double;
     FCantidadSolicitada: Double;
     FMostrarCantidad: Boolean;
@@ -128,12 +134,13 @@ type
     FBloquear: Boolean;
     FTipo: TPTipo;
     function GetIdProducto(IdPersona: Integer; Clave: String;
-      var Precio: Double; var CantidadSolicitada: Double): Integer;
+      var Costo, Precio: Double; var CantidadSolicitada: Double): Integer;
     procedure SetMostrarCantidad(const Value: Boolean);
     procedure SetMostrarImporte(const Value: Boolean);
     procedure SetBloquear(const Value: Boolean);
     procedure CalcularItemsImportes;
     procedure SetTipo(const Value: TPTipo);
+    procedure ActualizarTotales;
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -191,6 +198,7 @@ begin
       finally
         adodsItems.EnableControls;
       end;
+      ActualizarTotales;
     end
     else
       MessageDlg('El valor ingresado no es valido.', mtError, [mbOK], 0);
@@ -219,6 +227,7 @@ begin
       finally
         adodsItems.EnableControls;
       end;
+      ActualizarTotales;
     end
     else
       MessageDlg('El valor ingresado no es valido.', mtError, [mbOK], 0);
@@ -314,12 +323,27 @@ begin
   end;
 end;
 
-procedure TdmOrdenesEntradas.adodsItemsAfterPost(DataSet: TDataSet);
+procedure TdmOrdenesEntradas.ActualizarTotales;
 begin
-  inherited;
   adopUpdEntrada.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
   adopUpdEntrada.ExecProc;
   RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+end;
+
+procedure TdmOrdenesEntradas.adodsItemsAfterPost(DataSet: TDataSet);
+begin
+  inherited;
+  if not adodsItems.ControlsDisabled then
+    ActualizarTotales;
+end;
+
+procedure TdmOrdenesEntradas.adodsItemsCalcFields(DataSet: TDataSet);
+begin
+  inherited;
+  if adodsItemsPrecioVenta.AsFloat <> 0 then
+    adodsItemsPorcentajeUtilidad.Value:= ((adodsItemsPrecioVenta.AsFloat - adodsItemsCostoAproximado.AsFloat) / adodsItemsPrecioVenta.AsFloat)*100
+  else
+    adodsItemsPorcentajeUtilidad.Value:= 0;
 end;
 
 procedure TdmOrdenesEntradas.adodsItemsClaveProductoChange(Sender: TField);
@@ -330,7 +354,8 @@ begin
     if adodsItems.State in [dsEdit,dsInsert] then
     begin
       adodsItemsIdProducto.Value:= FIdProducto;
-      adodsItemsCosto.Value:= FPrecio;
+      adodsItemsCosto.Value:= FCosto;
+      adodsItemsPrecioVenta.Value:= FPrecio;
       adodsItemsCantidadSolicitada.Value:= FCantidadSolicitada;
       CalcularItemsImportes;
     end;
@@ -343,13 +368,13 @@ begin
   if adodsItems.State in [dsEdit,dsInsert] then
   begin
     FIdProducto:= GetIdProducto(adodsMasterIdPersona.Value,
-    adodsItemsClaveProducto.AsString, FPrecio, FCantidadSolicitada);
+    adodsItemsClaveProducto.AsString, FCosto, FPrecio, FCantidadSolicitada);
     if FIdProducto = 0 then
       raise Exception.Create(strErrorClave);
   end;
 end;
 
-procedure TdmOrdenesEntradas.adodsItemsPrecioChange(Sender: TField);
+procedure TdmOrdenesEntradas.adodsItemsCostoChange(Sender: TField);
 begin
   inherited;
   if adodsItems.State in [dsEdit,dsInsert] then
@@ -365,6 +390,25 @@ begin
   adodsMasterIdUsuario.Value:= _dmConection.IdUsuario;
   adodsMasterFecha.Value:= Date;
   TfrmOrdenesEntradas(gGridEditForm).SetFoco;
+end;
+
+procedure TdmOrdenesEntradas.adodsMasterTipoCambioChange(Sender: TField);
+begin
+  inherited;
+  // Cunado se modifica el tipo de cambio se actualizan todos los importes de los items
+  adodsItems.DisableControls;
+  try
+    adodsItems.First;
+    while not adodsItems.Eof do
+    begin
+      adodsItems.Edit;
+      CalcularItemsImportes;
+      adodsItems.Post;
+      adodsItems.Next
+    end;
+  finally
+    adodsItems.EnableControls;
+  end;
 end;
 
 procedure TdmOrdenesEntradas.CalcularItemsImportes;
@@ -393,6 +437,7 @@ begin
     SQLWhere:= Format('WHERE IdOrdenEstatus = %d', [Ord(eGenerada)])
   else
     SQLWhere:= '';
+  SQLOrderBy:= 'Order by Fecha DESC';
   if adodsItems.CommandText <> EmptyStr then adodsItems.Open;
   gGridEditForm:= TfrmOrdenesEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
@@ -428,7 +473,7 @@ begin
 end;
 
 function TdmOrdenesEntradas.GetIdProducto(IdPersona: Integer; Clave: String;
-  var Precio, CantidadSolicitada: Double): Integer;
+  var Costo, Precio, CantidadSolicitada: Double): Integer;
 begin
   adoqGetIdProducto.Close;
   try
@@ -438,12 +483,14 @@ begin
     if not adoqGetIdProducto.IsEmpty then
     begin
       CantidadSolicitada:= adoqGetIdProductoPendiente.Value;
-      Precio:= adoqGetIdProductoPrecio.AsFloat;
+      Costo:= adoqGetIdProductoCosto.AsFloat;
+      Precio:= adoqGetIdProductoPrecio.Value;
       Result := adoqGetIdProductoIdProducto.Value;
     end
     else
     begin
       CantidadSolicitada:= 0;
+      Costo:= 0;
       Precio:= 0;
       Result:= 0;
     end;

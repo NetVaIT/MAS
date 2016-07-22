@@ -77,14 +77,8 @@ type
     ppRptDocumento: TppReport;
     ppHeaderBand1: TppHeaderBand;
     ppImage1: TppImage;
-    ppShape1: TppShape;
-    ppShape7: TppShape;
-    ppLabel14: TppLabel;
-    ppLabel15: TppLabel;
     ppLabel35: TppLabel;
-    ppDBText11: TppDBText;
     ppDBText19: TppDBText;
-    ppLine9: TppLine;
     ppDBText5: TppDBText;
     ppDBText6: TppDBText;
     ppDBText7: TppDBText;
@@ -96,7 +90,6 @@ type
     ppLabel12: TppLabel;
     ppLabel13: TppLabel;
     ppLabel18: TppLabel;
-    ppDBMemo1: TppDBMemo;
     ppLabel1: TppLabel;
     ppDBText1: TppDBText;
     ppLabel2: TppLabel;
@@ -116,15 +109,8 @@ type
     ppDBText13: TppDBText;
     ppDBText14: TppDBText;
     ppFooterBand1: TppFooterBand;
-    ppLabel19: TppLabel;
-    ppLabel20: TppLabel;
     ppDBText30: TppDBText;
-    ppDBText31: TppDBText;
-    ppDBText32: TppDBText;
-    ppLabel21: TppLabel;
     ppLine1: TppLine;
-    ppLabel23: TppLabel;
-    ppDBText16: TppDBText;
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
     ppParameterList1: TppParameterList;

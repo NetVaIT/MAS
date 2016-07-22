@@ -46,6 +46,8 @@ type
     btnArancel: TSpeedButton;
     btnGastos: TSpeedButton;
     tvMasterCosto: TcxGridDBColumn;
+    tvMasterPrecioVenta: TcxGridDBColumn;
+    tvMasterPorcentajeUtilidad: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
@@ -126,6 +128,10 @@ begin
   tvMasterImporteTotal.VisibleForCustomization:= Value;
   tvMasterCostoAproximado.Visible:= Value;
   tvMasterCostoAproximado.VisibleForCustomization:= Value;
+  tvMasterPrecioVenta.Visible:= Value;
+  tvMasterPrecioVenta.VisibleForCustomization:= Value;
+  tvMasterPorcentajeUtilidad.Visible:= Value;
+  tvMasterPorcentajeUtilidad.VisibleForCustomization:= Value;
 end;
 
 end.

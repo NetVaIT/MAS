@@ -8,7 +8,8 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     CommandText = 
       'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, IdOrdenEst' +
       'atus, IdPersona, IdMoneda, IdUsuario, Fecha, TipoCambio, SubTota' +
-      'l, IVA, Total, Observaciones from OrdenesEntradas'
+      'l, IVA, Total, Observaciones '#13#10'from OrdenesEntradas'#13#10'Order by Fe' +
+      'cha DESC'
     object adodsMasterIdOrdenEntrada: TAutoIncField
       FieldName = 'IdOrdenEntrada'
       ReadOnly = True
@@ -95,6 +96,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     object adodsMasterTipoCambio: TFMTBCDField
       DisplayLabel = 'Tipo de cambio'
       FieldName = 'TipoCambio'
+      OnChange = adodsMasterTipoCambioChange
       Precision = 18
       Size = 6
     end
@@ -189,10 +191,10 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT        Personas.IdPersona, Personas.IdMoneda, Personas.Id' +
-      'entificador, Personas.RazonSocial AS Provedor, Monedas.Descripci' +
-      'on AS Moneda'#13#10'FROM            Personas INNER JOIN'#13#10'             ' +
-      '            Monedas ON Personas.IdMoneda = Monedas.IdMoneda'
+      'SELECT Personas.IdPersona, Personas.IdMoneda, Personas.Identific' +
+      'ador, Personas.RazonSocial AS Provedor, Monedas.Descripcion AS M' +
+      'oneda'#13#10'FROM Personas '#13#10'LEFT JOIN Monedas ON Personas.IdMoneda = ' +
+      'Monedas.IdMoneda'#13#10'WHERE IdRol = 2'#13#10
     Parameters = <>
     Left = 56
     Top = 304
@@ -245,12 +247,13 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     CursorType = ctStatic
     AfterPost = adodsItemsAfterPost
     AfterDelete = adodsItemsAfterPost
+    OnCalcFields = adodsItemsCalcFields
     CommandText = 
       'select IdOrdenEntradaItem, IdOrdenEntrada, IdDocumentoEntradaDet' +
       'alle, IdProducto, ClaveProducto, Cantidad, CantidadSolicitada, C' +
       'osto, Importe,'#13#10'ImporteMonedaLocal, ImpuestoArancelario, Gastos,' +
-      ' ImporteTotal, CostoAproximado'#13#10'from OrdenesEntradasItems'#13#10'where' +
-      ' IdOrdenEntrada  = :IdOrdenEntrada'
+      ' ImporteTotal, CostoAproximado, PrecioVenta'#13#10'from OrdenesEntrada' +
+      'sItems'#13#10'where IdOrdenEntrada  = :IdOrdenEntrada'
     DataSource = dsmaster
     MasterFields = 'IdOrdenEntrada'
     Parameters = <
@@ -259,6 +262,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 10
       end>
     Left = 24
@@ -299,7 +303,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     end
     object adodsItemsCantidad: TFloatField
       FieldName = 'Cantidad'
-      OnChange = adodsItemsPrecioChange
+      OnChange = adodsItemsCostoChange
     end
     object adodsItemsCantidadSolicitada: TFloatField
       DisplayLabel = 'Solicitada'
@@ -307,6 +311,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     end
     object adodsItemsCosto: TFMTBCDField
       FieldName = 'Costo'
+      OnChange = adodsItemsCostoChange
       currency = True
       Precision = 18
       Size = 6
@@ -327,14 +332,14 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     object adodsItemsImpuestoArancelario: TFMTBCDField
       DisplayLabel = 'Impuesto arancelario'
       FieldName = 'ImpuestoArancelario'
-      OnChange = adodsItemsPrecioChange
+      OnChange = adodsItemsCostoChange
       currency = True
       Precision = 18
       Size = 6
     end
     object adodsItemsGastos: TFMTBCDField
       FieldName = 'Gastos'
-      OnChange = adodsItemsPrecioChange
+      OnChange = adodsItemsCostoChange
       currency = True
       Precision = 18
       Size = 6
@@ -352,6 +357,20 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       currency = True
       Precision = 18
       Size = 6
+    end
+    object adodsItemsPrecioVenta: TFMTBCDField
+      DisplayLabel = 'Precio de venta'
+      FieldName = 'PrecioVenta'
+      currency = True
+      Precision = 18
+      Size = 6
+    end
+    object adodsItemsPorcentajeUtilidad: TFMTBCDField
+      DisplayLabel = 'Porcentaje de utilidad'
+      FieldKind = fkCalculated
+      FieldName = 'PorcentajeUtilidad'
+      DisplayFormat = '0.00 %'
+      Calculated = True
     end
   end
   object dsItems: TDataSource
@@ -518,17 +537,17 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       end
       item
         Name = 'Clave'
-        DataType = ftString
-        NumericScale = 255
-        Precision = 255
-        Size = 255
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
         Value = Null
       end>
     SQL.Strings = (
       
         'SELECT ProductosProveedores.IdProducto, ProductosProveedores.Ult' +
-        'imoPrecio AS Precio, ISNULL(BackorderEntradas.Pendiente, 0) AS P' +
-        'endiente'
+        'imoPrecio AS Costo, Productos.PrecioUnitario AS Precio, ISNULL(B' +
+        'ackorderEntradas.Pendiente, 0) AS Pendiente'
       'FROM ProductosProveedores '
       
         'INNER JOIN Productos ON ProductosProveedores.IdProducto = Produc' +
@@ -545,10 +564,13 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     object adoqGetIdProductoIdProducto: TIntegerField
       FieldName = 'IdProducto'
     end
-    object adoqGetIdProductoPrecio: TFMTBCDField
-      FieldName = 'Precio'
+    object adoqGetIdProductoCosto: TFMTBCDField
+      FieldName = 'Costo'
       Precision = 18
       Size = 6
+    end
+    object adoqGetIdProductoPrecio: TFloatField
+      FieldName = 'Precio'
     end
     object adoqGetIdProductoPendiente: TFloatField
       FieldName = 'Pendiente'
