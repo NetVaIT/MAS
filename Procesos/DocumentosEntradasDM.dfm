@@ -256,9 +256,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Left = 24
     Top = 352
   end
-  object dsmaster: TDataSource
+  object dsMaster: TDataSource
     DataSet = adodsMaster
-    OnDataChange = dsmasterDataChange
+    OnDataChange = dsMasterDataChange
     Left = 160
     Top = 16
   end
@@ -273,7 +273,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       ', ClaveProducto, Cantidad, CantidadPendiente, Precio, Importe'#13#10'F' +
       'ROM DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntrada = :IdDo' +
       'cumentoEntrada'
-    DataSource = dsmaster
+    DataSource = dsMaster
     MasterFields = 'IdDocumentoEntrada'
     Parameters = <
       item
@@ -304,6 +304,17 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       OnChange = adodsDocumentosDetallesClaveProductoChange
       OnValidate = adodsDocumentosDetallesClaveProductoValidate
       Size = 50
+    end
+    object adodsDocumentosDetallesIdentificadorProveedor: TStringField
+      DisplayLabel = 'Identificador proveedor'
+      FieldKind = fkLookup
+      FieldName = 'IdentificadorProveedor'
+      LookupDataSet = adodsProductosProveedores
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdProducto'
+      Size = 50
+      Lookup = True
     end
     object adodsDocumentosDetallesProducto: TStringField
       FieldKind = fkLookup
@@ -3781,17 +3792,18 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end
       object ppLabel10: TppLabel
         UserName = 'Label10'
-        Caption = 'Cant.'
+        AutoSize = False
+        Caption = 'Cantidad'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial Rounded MT Bold'
         Font.Size = 10
         Font.Style = []
         Transparent = True
-        mmHeight = 3969
-        mmLeft = 4233
-        mmTop = 63200
-        mmWidth = 9261
+        mmHeight = 3968
+        mmLeft = 2646
+        mmTop = 63236
+        mmWidth = 15875
         BandType = 0
         LayerName = Foreground
       end
@@ -3805,7 +3817,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Font.Style = []
         Transparent = True
         mmHeight = 3969
-        mmLeft = 43656
+        mmLeft = 75406
         mmTop = 63200
         mmWidth = 20902
         BandType = 0
@@ -3821,7 +3833,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Font.Style = []
         Transparent = True
         mmHeight = 3969
-        mmLeft = 169863
+        mmLeft = 171186
         mmTop = 63200
         mmWidth = 11377
         BandType = 0
@@ -3845,17 +3857,17 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end
       object ppLabel18: TppLabel
         UserName = 'Label18'
-        Caption = 'No.Parte'
+        Caption = 'N'#250'mero'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial Rounded MT Bold'
         Font.Size = 10
         Font.Style = []
         Transparent = True
-        mmHeight = 3969
-        mmLeft = 15346
-        mmTop = 63200
-        mmWidth = 15346
+        mmHeight = 3968
+        mmLeft = 19844
+        mmTop = 63236
+        mmWidth = 13758
         BandType = 0
         LayerName = Foreground
       end
@@ -4108,6 +4120,22 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 0
         LayerName = Foreground
       end
+      object ppLabel3: TppLabel
+        UserName = 'Label3'
+        Caption = 'No. parte'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 10
+        Font.Style = []
+        Transparent = True
+        mmHeight = 3968
+        mmLeft = 47625
+        mmTop = 63765
+        mmWidth = 15875
+        BandType = 0
+        LayerName = Foreground
+      end
     end
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -4131,9 +4159,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         VerticalAlignment = avCenter
         DataPipelineName = 'ppdbpDetalle'
         mmHeight = 4763
-        mmLeft = 4233
+        mmLeft = 2643
         mmTop = 0
-        mmWidth = 8731
+        mmWidth = 15875
         BandType = 4
         LayerName = Foreground
       end
@@ -4151,9 +4179,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         VerticalAlignment = avCenter
         DataPipelineName = 'ppdbpDetalle'
         mmHeight = 4763
-        mmLeft = 15346
+        mmLeft = 19844
         mmTop = 0
-        mmWidth = 27781
+        mmWidth = 26458
         BandType = 4
         LayerName = Foreground
       end
@@ -4172,9 +4200,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         VerticalAlignment = avCenter
         DataPipelineName = 'ppdbpDetalle'
         mmHeight = 4763
-        mmLeft = 43656
+        mmLeft = 75406
         mmTop = 0
-        mmWidth = 115094
+        mmWidth = 87842
         BandType = 4
         LayerName = Foreground
       end
@@ -4194,9 +4222,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         VerticalAlignment = avCenter
         DataPipelineName = 'ppdbpDetalle'
         mmHeight = 4763
-        mmLeft = 160073
+        mmLeft = 164048
         mmTop = 0
-        mmWidth = 20638
+        mmWidth = 18521
         BandType = 4
         LayerName = Foreground
       end
@@ -4218,7 +4246,27 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         mmHeight = 4763
         mmLeft = 182563
         mmTop = 0
-        mmWidth = 20638
+        mmWidth = 21167
+        BandType = 4
+        LayerName = Foreground
+      end
+      object ppDBText11: TppDBText
+        UserName = 'DBText104'
+        DataField = 'IdentificadorProveedor'
+        DataPipeline = ppdbpDetalle
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppdbpDetalle'
+        mmHeight = 4763
+        mmLeft = 47625
+        mmTop = 0
+        mmWidth = 26458
         BandType = 4
         LayerName = Foreground
       end
@@ -4243,9 +4291,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Transparent = True
         DataPipelineName = 'ppdbpMaster'
         mmHeight = 4233
-        mmLeft = 174890
+        mmLeft = 177275
         mmTop = 2119
-        mmWidth = 28310
+        mmWidth = 26458
         BandType = 8
         LayerName = Foreground
       end
@@ -4278,7 +4326,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     MasterDataPipelineName = 'ppdbpMaster'
   end
   object ppdbpMaster: TppDBPipeline
-    DataSource = dsmaster
+    DataSource = dsMaster
     UserName = 'Generales'
     Left = 246
     Top = 18
@@ -4291,8 +4339,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       ', CantidadAnual, CantidadMensual, CantidadPromedio, CantidadFutu' +
       'ro, Backorder'#13#10'FROM            v_ProductosCantidad'
     Parameters = <>
-    Left = 96
-    Top = 192
+    Left = 104
+    Top = 240
   end
   object adoqTipoCambio: TADOQuery
     Connection = _dmConection.ADOConnection
@@ -4319,5 +4367,24 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Parameters = <>
     Left = 308
     Top = 472
+  end
+  object adodsProductosProveedores: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProducto, Identificador '#13#10'from ProductosProveedores'#13#10'WH' +
+      'ERE IdPersonaProveedor = :IdPersona'
+    DataSource = dsMaster
+    MasterFields = 'IdPersona'
+    Parameters = <
+      item
+        Name = 'IdPersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 3050
+      end>
+    Left = 96
+    Top = 200
   end
 end

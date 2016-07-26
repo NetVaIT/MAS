@@ -43,6 +43,11 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
             end>
           Width = 200
         end
+        object tvMasterIdentificadorProveedor: TcxGridDBColumn
+          DataBinding.FieldName = 'IdentificadorProveedor'
+          Options.Focusing = False
+          Width = 200
+        end
         object tvMasterProducto: TcxGridDBColumn
           DataBinding.FieldName = 'Producto'
           Options.Focusing = False
@@ -162,11 +167,10 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited DataSource: TDataSource
     AutoEdit = False
-    DataSet = dmDocumentosEntradas.adodsDocumentosDetalles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -328,7 +332,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

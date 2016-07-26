@@ -23,21 +23,29 @@ inherited frmProductosProveedores: TfrmProductosProveedores
           DataBinding.FieldName = 'Proveedor'
           Width = 304
         end
-        object tvMasterUltimaCompra: TcxGridDBColumn
-          DataBinding.FieldName = 'UltimaCompra'
+        object tvMasterIdentificador: TcxGridDBColumn
+          DataBinding.FieldName = 'Identificador'
         end
         object tvMasterUltimoPrecio: TcxGridDBColumn
           DataBinding.FieldName = 'UltimoPrecio'
         end
+        object tvMasterUltimaCompra: TcxGridDBColumn
+          DataBinding.FieldName = 'UltimaCompra'
+          Visible = False
+        end
         object tvMasterTipoCambio: TcxGridDBColumn
           DataBinding.FieldName = 'TipoCambio'
+          Visible = False
         end
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmProductos.adodsProductosProveedores
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -178,7 +186,7 @@ inherited frmProductosProveedores: TfrmProductosProveedores
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -12,8 +12,6 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         inherited pnlMaster: TPanel
-          ExplicitLeft = -104
-          ExplicitTop = -111
           object Label1: TLabel
             Left = 40
             Top = 40
@@ -24,11 +22,12 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
           end
           object Label2: TLabel
             Left = 40
-            Top = 80
+            Top = 160
             Width = 67
             Height = 13
             Caption = #218'ltima compra'
             FocusControl = cxDBDateEdit1
+            Visible = False
           end
           object Label3: TLabel
             Left = 40
@@ -40,11 +39,20 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
           end
           object Label4: TLabel
             Left = 40
-            Top = 160
+            Top = 198
             Width = 71
             Height = 13
             Caption = 'Tipo de cambio'
             FocusControl = cxDBTextEdit2
+            Visible = False
+          end
+          object Label5: TLabel
+            Left = 40
+            Top = 80
+            Width = 61
+            Height = 13
+            Caption = 'Identificador'
+            FocusControl = cxDBTextEdit3
           end
           object DBLookupComboBox1: TDBLookupComboBox
             Left = 40
@@ -57,10 +65,11 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
           end
           object cxDBDateEdit1: TcxDBDateEdit
             Left = 40
-            Top = 96
+            Top = 176
             DataBinding.DataField = 'UltimaCompra'
             DataBinding.DataSource = DataSource
-            TabOrder = 1
+            TabOrder = 3
+            Visible = False
             Width = 121
           end
           object cxDBTextEdit1: TcxDBTextEdit
@@ -73,19 +82,31 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
           end
           object cxDBTextEdit2: TcxDBTextEdit
             Left = 40
-            Top = 176
+            Top = 214
             DataBinding.DataField = 'TipoCambio'
             DataBinding.DataSource = DataSource
-            TabOrder = 3
+            TabOrder = 4
+            Visible = False
+            Width = 121
+          end
+          object cxDBTextEdit3: TcxDBTextEdit
+            Left = 40
+            Top = 96
+            DataBinding.DataField = 'Identificador'
+            DataBinding.DataSource = DataSource
+            TabOrder = 1
             Width = 121
           end
         end
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmProductos.adodsProductosProveedores
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004005C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -226,7 +247,7 @@ inherited frmProductosProveedoresEdit: TfrmProductosProveedoresEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

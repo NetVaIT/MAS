@@ -249,9 +249,9 @@ inherited dmProductos: TdmProductos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdProductoProveedor, IdProducto, IdPersonaProveedor, Ulti' +
-      'maCompra, UltimoPrecio, TipoCambio from ProductosProveedores'#13#10'wh' +
-      'ere IdProducto = :IdProducto'
+      'select IdProductoProveedor, IdProducto, IdPersonaProveedor, Iden' +
+      'tificador, UltimoPrecio, UltimaCompra, TipoCambio from Productos' +
+      'Proveedores'#13#10'where IdProducto = :IdProducto'
     DataSource = dsMaster
     MasterFields = 'IdProducto'
     Parameters = <
@@ -260,6 +260,7 @@ inherited dmProductos: TdmProductos
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 56
@@ -287,15 +288,19 @@ inherited dmProductos: TdmProductos
       Size = 300
       Lookup = True
     end
-    object adodsProductosProveedoresUltimaCompra: TDateTimeField
-      DisplayLabel = #218'ltima compra'
-      FieldName = 'UltimaCompra'
+    object adodsProductosProveedoresIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 50
     end
     object adodsProductosProveedoresUltimoPrecio: TFMTBCDField
       DisplayLabel = #218'ltimo precio'
       FieldName = 'UltimoPrecio'
       Precision = 18
       Size = 6
+    end
+    object adodsProductosProveedoresUltimaCompra: TDateTimeField
+      DisplayLabel = #218'ltima compra'
+      FieldName = 'UltimaCompra'
     end
     object adodsProductosProveedoresTipoCambio: TFMTBCDField
       DisplayLabel = 'Tipo de cambio'
@@ -305,6 +310,7 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsPersonas: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

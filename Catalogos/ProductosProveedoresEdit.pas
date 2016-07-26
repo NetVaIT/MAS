@@ -32,6 +32,8 @@ type
     cxDBTextEdit1: TcxDBTextEdit;
     Label4: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
+    Label5: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

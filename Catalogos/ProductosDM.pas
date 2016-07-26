@@ -71,6 +71,7 @@ type
     StringField1: TStringField;
     adodsMasterAplicacion: TStringField;
     adodsMasterMarca: TStringField;
+    adodsProductosProveedoresIdentificador: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);

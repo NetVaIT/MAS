@@ -53,6 +53,7 @@ type
     tvMaster2CostoPromedio: TcxGridDBColumn;
     tvMaster2PreicoVenta: TcxGridDBColumn;
     tvMasterPrecioMonedalocal: TcxGridDBColumn;
+    tvMasterIdentificadorProveedor: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
   private

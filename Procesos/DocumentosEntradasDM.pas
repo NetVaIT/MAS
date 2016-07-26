@@ -39,7 +39,7 @@ type
     adodsMasterProvedor: TStringField;
     adodsMasterMoneda: TStringField;
     adodsMasterUsuario: TStringField;
-    dsmaster: TDataSource;
+    dsMaster: TDataSource;
     adodsDocumentosDetalles: TADODataSet;
     adodsDocumentosDetallesIdDocumentoentradaDetalle: TAutoIncField;
     adodsDocumentosDetallesIdDocumentoEntrada: TIntegerField;
@@ -137,6 +137,10 @@ type
     adodsDocumentosDetallesPrecioMonedalocal: TFMTBCDField;
     adodsDocumentosDetallesCostoPromedio: TFloatField;
     adodsDocumentosDetallesPreicoVenta: TFloatField;
+    adodsProductosProveedores: TADODataSet;
+    adodsDocumentosDetallesIdentificadorProveedor: TStringField;
+    ppLabel3: TppLabel;
+    ppDBText11: TppDBText;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -151,7 +155,7 @@ type
     procedure actAutorizarExecute(Sender: TObject);
     procedure actImprimirExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
-    procedure dsmasterDataChange(Sender: TObject; Field: TField);
+    procedure dsMasterDataChange(Sender: TObject; Field: TField);
     procedure actGenDocumentoExecute(Sender: TObject);
     procedure actGenDocumentoUpdate(Sender: TObject);
     procedure actAutorizarUpdate(Sender: TObject);
@@ -489,7 +493,7 @@ begin
   frmListaProductos.Free;
 end;
 
-procedure TdmDocumentosEntradas.dsmasterDataChange(Sender: TObject;
+procedure TdmDocumentosEntradas.dsMasterDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;

@@ -33,6 +33,7 @@ type
     tvMasterUltimaCompra: TcxGridDBColumn;
     tvMasterUltimoPrecio: TcxGridDBColumn;
     tvMasterTipoCambio: TcxGridDBColumn;
+    tvMasterIdentificador: TcxGridDBColumn;
   private
     { Private declarations }
   public
