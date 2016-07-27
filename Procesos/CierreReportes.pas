@@ -25,7 +25,7 @@ type
     PnlTitulo: TPanel;
     Panel1: TPanel;
     GroupBox1: TGroupBox;
-    ChckLstBxREportesCierre: TCheckListBox;
+    clbReportesCierre: TCheckListBox;
     PnlFechas: TPanel;
     Label1: TLabel;
     Label2: TLabel;
@@ -42,14 +42,12 @@ type
     { Public declarations }
   end;
 
-var
-  FrmReportesCierre: TFrmReportesCierre;
-
 implementation
 
 {$R *.dfm}
 
-uses ImpresosSalidasDM, _Utils, rptInventarioExistenciaDM;
+uses ImpresosSalidasDM, _Utils, rptInventarioExistenciaDM,
+  rptVentasUnidadesAcumuladasDM, rptInventarioDM;
 
 procedure TFrmReportesCierre.FormCreate(Sender: TObject);
 var
@@ -66,87 +64,109 @@ begin
   end;
   fechaAux:=encodedate(a,m,1);
   cxDtEdtHasta.date :=fechaAux-1;
-
 end;
 
 procedure TFrmReportesCierre.SpdBtnConsultaFechaClick(Sender: TObject);
 var
   i :Integer;
+  p: Double;
 begin
-  for i:=0 to  ChckLstBxREportesCierre.Count -1 do
+  p := 100 / clbReportesCierre.Count;
+  for i:=0 to clbReportesCierre.Count -1 do
   begin
-    ShowProgress(10,100,'Generando Reportes..' + IntToStr(10) + '%');
-    if ChckLstBxREportesCierre.Checked[i]  then
+    if clbReportesCierre.Checked[i]  then
+    begin
+      ShowProgress(p*i,100,'Generando PDF');
       ImprimeREporte(i, cxDtEdtDesde.Date,cxDtEdtHasta.Date);
+    end;
   end;
-   ShowProgress(100,100);
+  ShowProgress(100,100);
 end;
 
-
 procedure TFrmReportesCierre.ImprimeREporte(cual:Integer; Fini, FFin:TDateTime);
-var                  //Jul 26/16
+var
   DMImpresosSalidas:TDMImpresosSalidas;
   rptInventarioExistencia: TdmrptInventarioExistencia;
+  rptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas;
+  rptInventario: TdmrptInventario;
   ArchiPDF:TFileName;
   Tipo:Integer;
 begin
   DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
   case cual of
-  0,1:
-  begin
-    if cual =0 then
+    0,1:
     begin
-       ArchiPDF:='listaPresupuestos.PDF';
-       tipo:=4;
-       ShowProgress(20,100,'Listado Presupuestos' + IntToStr(20) + '%');
-    end
-    else
-    begin
-      ArchiPDF:='listaFacturas.PDF';
-      Tipo:=1;
-       ShowProgress(30,100,'Listado Facturas Expedidas ' + IntToStr(30) + '%');
-    end;
-    DMImpresosSalidas.ADODtStRepFactUtilidad.Close;
-    DMImpresosSalidas.ADODtStCostoFactura.close;
-    DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('IDTipoDoc').Value:=Tipo;  //Factura /Presupuesto
-    DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FIni').Value:=Fini;
-    DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FFin').Value:=FFin;
-    DMImpresosSalidas.ADODtStRepFactUtilidad.Open;
-    DMImpresosSalidas.ADODtStCostoFactura.Open;
-    case Tipo of
-     1: DMImpresosSalidas.TextoAuxiliar:='FACTURAS EXPEDIDAS DEL '+ DateTostr(Fini)+' AL '+ DateTostr(FFin) ;
-     4: DMImpresosSalidas.TextoAuxiliar:='LISTADO DE CLIENTES (PEDIDOS) '+ DateTostr(Fini)+' AL '+ DateTostr(FFin)  ;
+      if cual =0 then
+      begin
+         ArchiPDF:='listaPresupuestos.PDF';
+         tipo:=4;
+      end
+      else
+      begin
+        ArchiPDF:='listaFacturas.PDF';
+        Tipo:=1;
+      end;
+      DMImpresosSalidas.ADODtStRepFactUtilidad.Close;
+      DMImpresosSalidas.ADODtStCostoFactura.close;
+      DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('IDTipoDoc').Value:=Tipo;  //Factura /Presupuesto
+      DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FIni').Value:=Fini;
+      DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FFin').Value:=FFin;
+      DMImpresosSalidas.ADODtStRepFactUtilidad.Open;
+      DMImpresosSalidas.ADODtStCostoFactura.Open;
+      case Tipo of
+       1: DMImpresosSalidas.TextoAuxiliar:='FACTURAS EXPEDIDAS DEL '+ DateTostr(Fini)+' AL '+ DateTostr(FFin) ;
+       4: DMImpresosSalidas.TextoAuxiliar:='LISTADO DE CLIENTES (PEDIDOS) '+ DateTostr(Fini)+' AL '+ DateTostr(FFin)  ;
+      end;
+
+      DMImpresosSalidas.PrintPDFFile(4,1,False,ArchiPDF);
     end;
 
-    DMImpresosSalidas.PrintPDFFile(4,1,False,ArchiPDF);
-    ShowProgress(30,100,'Generando PDF... ' + IntToStr(30) + '%');
-  end;
+    2:begin
+        ArchiPDF:='ListaCostosInventario.PDF';
 
-  2:begin
-      ArchiPDF:='ListaCostosInventario.PDF';
-
-       ShowProgress(60,100,'Listado Costo inventario... ' + IntToStr(60) + '%');
-      DMImpresosSalidas.adodtstCostoInventario.Close;
-      DMImpresosSalidas.adodtstCostoInventario.Open;
-      DMImpresosSalidas.TextoAuxiliar:='LISTADO COSTO INVENTARIO AL '+ DateTostr(date) ; //Día actual
-      DMImpresosSalidas.PrintPDFFile(5,1,False,ArchiPDF);
-       ShowProgress(70,100,'Generando PDF... ' + IntToStr(70) + '%');
+         ShowProgress(60,100,'Listado Costo inventario... ' + IntToStr(60) + '%');
+        DMImpresosSalidas.adodtstCostoInventario.Close;
+        DMImpresosSalidas.adodtstCostoInventario.Open;
+        DMImpresosSalidas.TextoAuxiliar:='LISTADO COSTO INVENTARIO AL '+ DateTostr(date) ; //Día actual
+        DMImpresosSalidas.PrintPDFFile(5,1,False,ArchiPDF);
+      end;
+    3: begin
+      ArchiPDF:='VentasUnidadesAcumuladas.PDF';
+      rptVentasUnidadesAcumuladas:= TdmrptVentasUnidadesAcumuladas.Create(Self);
+      try
+         rptVentasUnidadesAcumuladas.Title:= 'REPORTE DE VENTAS DE UNIDADES MENSUALES Y ACUMULADAS AL DIA: ' + DateTostr(date);
+         rptVentasUnidadesAcumuladas.PDFFileName:= ArchiPDF;
+         rptVentasUnidadesAcumuladas.Execute
+      finally
+        rptVentasUnidadesAcumuladas.Free;
+      end;
     end;
-  3: begin
-    ArchiPDF:='ListaInventarioExistencia.PDF';
-    rptInventarioExistencia:= TdmrptInventarioExistencia.Create(Self);
-    try
-       rptInventarioExistencia.Title:= 'LISTADO DEL INVENTARIO EXISTENCIAS AL DIA ' + DateTostr(date);
-       rptInventarioExistencia.PDFFileName:= ArchiPDF;
-       rptInventarioExistencia.Execute
-    finally
-      rptInventarioExistencia.Free;
+    4: begin
+      ArchiPDF:='Inventario.PDF';
+      rptInventario:= TdmrptInventario.Create(Self);
+      try
+         rptInventario.Title:= 'REPORTE DE INVENTARIO AL ' + DateTostr(date);
+         rptInventario.PDFFileName:= ArchiPDF;
+         rptInventario.Execute
+      finally
+        rptInventario.Free;
+      end;
     end;
-  end;
+    5: begin
+      ArchiPDF:='ListaInventarioExistencia.PDF';
+      rptInventarioExistencia:= TdmrptInventarioExistencia.Create(Self);
+      try
+         rptInventarioExistencia.Title:= 'LISTADO DEL INVENTARIO EXISTENCIAS AL DIA: ' + DateTostr(date);
+         rptInventarioExistencia.PDFFileName:= ArchiPDF;
+         rptInventarioExistencia.Execute
+      finally
+        rptInventarioExistencia.Free;
+      end;
+    end;
   end;
   DMImpresosSalidas.Free;
   if FileExists(ArchiPDF) then
       ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
-
 end;
+
 end.

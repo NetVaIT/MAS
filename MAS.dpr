@@ -199,7 +199,9 @@ uses
   AjustesEntradasItemsForm in 'Procesos\AjustesEntradasItemsForm.pas' {frmAjustesEntradasItemsForm},
   CierreReportes in 'Procesos\CierreReportes.pas' {FrmReportesCierre},
   _ReportMASDM in 'Reportes\_ReportMASDM.pas' {_dmReportMAS: TDataModule},
-  rptInventarioExistenciaDM in 'Reportes\rptInventarioExistenciaDM.pas' {dmrptInventarioExistencia: TDataModule};
+  rptInventarioExistenciaDM in 'Reportes\rptInventarioExistenciaDM.pas' {dmrptInventarioExistencia: TDataModule},
+  rptVentasUnidadesAcumuladasDM in 'Reportes\rptVentasUnidadesAcumuladasDM.pas' {dmrptVentasUnidadesAcumuladas: TDataModule},
+  rptInventarioDM in 'Reportes\rptInventarioDM.pas' {dmrptInventario: TDataModule};
 
 {$R *.res}
 

@@ -3,9 +3,12 @@ inherited _dmReportMAS: T_dmReportMAS
   inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'Legal (8,5" x 14")'
+    PrinterSetup.mmMarginLeft = 10000
+    PrinterSetup.mmMarginRight = 10000
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 355600
     PrinterSetup.PaperSize = 5
+    mmColumnWidth = 342900
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       mmHeight = 23283
@@ -14,9 +17,11 @@ inherited _dmReportMAS: T_dmReportMAS
         Anchors = [atLeft, atTop]
         Font.Color = clBlack
         Font.Name = 'Courier New'
+        Font.Size = 16
+        Font.Style = []
         mmLeft = 52917
         mmTop = 11906
-        mmWidth = 264584
+        mmWidth = 279665
         LayerName = Foreground
       end
       object ppImage4: TppImage
@@ -2977,32 +2982,34 @@ inherited _dmReportMAS: T_dmReportMAS
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 20
+        Font.Size = 16
         Font.Style = []
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 8731
         mmLeft = 52917
         mmTop = 0
-        mmWidth = 264584
+        mmWidth = 279665
         BandType = 1
         LayerName = Foreground
       end
     end
     inherited ppFooterBand1: TppFooterBand
       inherited ppLineFooter: TppLine
-        mmWidth = 340255
+        mmTop = 0
+        mmWidth = 333376
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
         SaveOrder = -1
         Font.Color = clBlack
+        mmLeft = 5298
         LayerName = Foreground
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
         Font.Color = clBlack
-        mmLeft = 330994
+        mmLeft = 322104
         LayerName = Foreground
       end
     end

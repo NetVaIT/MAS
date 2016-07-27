@@ -8,16 +8,16 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
   inherited ppReport: TppReport
     Columns = 8
     ColumnPositions.Strings = (
-      '6350'
-      '49213'
-      '92075'
-      '134938'
+      '10000'
+      '51950'
+      '93900'
+      '135850'
       '177800'
-      '220663'
-      '263526'
-      '306388')
+      '219750'
+      '261700'
+      '303650')
     Units = utScreenPixels
-    mmColumnWidth = 42862
+    mmColumnWidth = 41950
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       inherited pplblTitle: TppLabel
@@ -48,10 +48,10 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
         Font.Color = clBlack
         Font.Name = 'Courier New'
         Font.Size = 10
-        Font.Style = []
+        Font.Style = [fsBold]
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 0
+        mmHeight = 4233
+        mmLeft = 5300
         mmTop = 0
         mmWidth = 21167
         BandType = 2
@@ -65,11 +65,11 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
         Font.Color = clBlack
         Font.Name = 'Courier New'
         Font.Size = 10
-        Font.Style = []
+        Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
-        mmHeight = 4763
-        mmLeft = 21167
+        mmHeight = 4233
+        mmLeft = 26202
         mmTop = 0
         mmWidth = 15875
         BandType = 2
@@ -80,6 +80,7 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
       mmHeight = 4498
       object ppDBText1: TppDBText
         UserName = 'DBText1'
+        AutoSize = True
         DataField = 'Identificador1'
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
@@ -89,10 +90,10 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
-        mmHeight = 4498
-        mmLeft = 0
+        mmHeight = 4233
+        mmLeft = 5292
         mmTop = 0
-        mmWidth = 21167
+        mmWidth = 14816
         BandType = 4
         LayerName = Foreground
       end
@@ -108,8 +109,8 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'dbpReport'
-        mmHeight = 4498
-        mmLeft = 21167
+        mmHeight = 4233
+        mmLeft = 26202
         mmTop = 0
         mmWidth = 15875
         BandType = 4
@@ -124,6 +125,7 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
     end
     inherited ppFooterBand1: TppFooterBand
       inherited ppLineFooter: TppLine
+        mmWidth = 334434
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
@@ -132,6 +134,8 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
+        mmLeft = 322004
+        mmWidth = 10583
         LayerName = Foreground
       end
     end

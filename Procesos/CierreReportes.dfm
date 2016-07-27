@@ -66,7 +66,7 @@ object FrmReportesCierre: TFrmReportesCierre
     object GroupBox1: TGroupBox
       Left = 16
       Top = 79
-      Width = 297
+      Width = 345
       Height = 209
       Caption = 'Seleccione reportes a generar'
       Font.Charset = DEFAULT_CHARSET
@@ -76,10 +76,10 @@ object FrmReportesCierre: TFrmReportesCierre
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      object ChckLstBxREportesCierre: TCheckListBox
+      object clbReportesCierre: TCheckListBox
         Left = 16
         Top = 32
-        Width = 249
+        Width = 305
         Height = 161
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -90,6 +90,8 @@ object FrmReportesCierre: TFrmReportesCierre
           'Listado de Pedidos de Clientes'
           'Facturas Expedidas'
           'Listado de Costo del Inventario'
+          'Ventas de unidades mensuales y acumuladas'
+          'Reporte de inventario'
           'Listado de inventario existencias')
         ParentFont = False
         TabOrder = 0
