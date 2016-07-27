@@ -33,8 +33,6 @@ object FrmReportesCierre: TFrmReportesCierre
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = -299
-    ExplicitWidth = 990
   end
   object Panel1: TPanel
     Left = 0
@@ -43,10 +41,6 @@ object FrmReportesCierre: TFrmReportesCierre
     Height = 483
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 280
-    ExplicitTop = 248
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object SpdBtnConsultaFecha: TSpeedButton
       Left = 32
       Top = 303
@@ -95,7 +89,8 @@ object FrmReportesCierre: TFrmReportesCierre
         Items.Strings = (
           'Listado de Pedidos de Clientes'
           'Facturas Expedidas'
-          'Listado de Costo del Inventario')
+          'Listado de Costo del Inventario'
+          'Listado de inventario existencias')
         ParentFont = False
         TabOrder = 0
       end

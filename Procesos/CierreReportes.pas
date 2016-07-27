@@ -49,7 +49,7 @@ implementation
 
 {$R *.dfm}
 
-uses ImpresosSalidasDM, _Utils;
+uses ImpresosSalidasDM, _Utils, rptInventarioExistenciaDM;
 
 procedure TFrmReportesCierre.FormCreate(Sender: TObject);
 var
@@ -86,6 +86,7 @@ end;
 procedure TFrmReportesCierre.ImprimeREporte(cual:Integer; Fini, FFin:TDateTime);
 var                  //Jul 26/16
   DMImpresosSalidas:TDMImpresosSalidas;
+  rptInventarioExistencia: TdmrptInventarioExistencia;
   ArchiPDF:TFileName;
   Tipo:Integer;
 begin
@@ -131,6 +132,17 @@ begin
       DMImpresosSalidas.PrintPDFFile(5,1,False,ArchiPDF);
        ShowProgress(70,100,'Generando PDF... ' + IntToStr(70) + '%');
     end;
+  3: begin
+    ArchiPDF:='ListaInventarioExistencia.PDF';
+    rptInventarioExistencia:= TdmrptInventarioExistencia.Create(Self);
+    try
+       rptInventarioExistencia.Title:= 'LISTADO DEL INVENTARIO EXISTENCIAS AL DIA ' + DateTostr(date);
+       rptInventarioExistencia.PDFFileName:= ArchiPDF;
+       rptInventarioExistencia.Execute
+    finally
+      rptInventarioExistencia.Free;
+    end;
+  end;
   end;
   DMImpresosSalidas.Free;
   if FileExists(ArchiPDF) then

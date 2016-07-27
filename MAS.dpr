@@ -197,7 +197,9 @@ uses
   AjustesEntradaForm in 'Procesos\AjustesEntradaForm.pas' {frmAjustesEntradasGrid},
   AjustesEntradasItemsEdit in 'Procesos\AjustesEntradasItemsEdit.pas' {frmAjustesEntradasItems},
   AjustesEntradasItemsForm in 'Procesos\AjustesEntradasItemsForm.pas' {frmAjustesEntradasItemsForm},
-  CierreReportes in 'Procesos\CierreReportes.pas' {FrmReportesCierre};
+  CierreReportes in 'Procesos\CierreReportes.pas' {FrmReportesCierre},
+  _ReportMASDM in 'Reportes\_ReportMASDM.pas' {_dmReportMAS: TDataModule},
+  rptInventarioExistenciaDM in 'Reportes\rptInventarioExistenciaDM.pas' {dmrptInventarioExistencia: TDataModule};
 
 {$R *.res}
 
