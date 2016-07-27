@@ -7,9 +7,11 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 485
+    ExplicitTop = 485
   end
   inherited splDetail2: TSplitter
     Top = 229
+    ExplicitTop = 229
   end
   inherited splDetail1: TSplitter
     Top = 357
@@ -24,29 +26,30 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   inherited pnlDetail2: TPanel
     Top = 360
     Height = 125
-    ExplicitTop = 440
+    ExplicitTop = 360
     ExplicitHeight = 125
   end
   inherited pnlDetail1: TPanel
     Top = 232
     Height = 125
     ExplicitLeft = 0
-    ExplicitTop = 368
+    ExplicitTop = 232
     ExplicitHeight = 125
   end
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 207
-    ExplicitTop = 8
-    ExplicitHeight = 482
+    ExplicitTop = 22
+    ExplicitHeight = 207
     ClientRectBottom = 206
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
-      ExplicitHeight = 411
+      ExplicitHeight = 205
       inherited cxScrollBox1: TcxScrollBox
         Height = 205
+        ExplicitHeight = 205
         inherited tbarData: TToolBar
           ExplicitLeft = 0
           ExplicitTop = 0
@@ -54,8 +57,8 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
         inherited pnlMaster: TPanel
           Height = 178
           ExplicitLeft = 0
-          ExplicitTop = 24
-          ExplicitHeight = 200
+          ExplicitTop = 25
+          ExplicitHeight = 178
           object Label1: TLabel
             Left = 48
             Top = 24
@@ -94,6 +97,13 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
             Width = 69
             Height = 13
             Caption = 'Precio Unitario'
+          end
+          object Label7: TLabel
+            Left = 264
+            Top = 123
+            Width = 63
+            Height = 13
+            Caption = 'Precio Nuevo'
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 48
@@ -137,6 +147,14 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
             DataBinding.DataField = 'PrecioUnitario'
             DataBinding.DataSource = DataSource
             TabOrder = 4
+            Width = 121
+          end
+          object cxDBTextEdit6: TcxDBTextEdit
+            Left = 264
+            Top = 142
+            DataBinding.DataField = 'PrecioNuevo'
+            DataBinding.DataSource = DataSource
+            TabOrder = 5
             OnEditing = cxDBTextEdit5Editing
             Width = 121
           end
@@ -159,7 +177,6 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitTop = 8
     object Label6: TLabel
       Left = 14
       Top = 2
@@ -174,7 +191,7 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -315,7 +332,7 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -852,5 +869,10 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
+  end
+  object DSVerificaActualiza: TDataSource
+    DataSet = DmListaPrecios.ADOQryAuxiliar
+    Left = 642
+    Top = 64
   end
 end

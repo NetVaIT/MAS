@@ -23,24 +23,13 @@ uses
   Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC, Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, ProductosFotosDM, dxGDIPlusClasses, Vcl.Imaging.jpeg,
-  cxSpinEdit, shellApi;
+  cxSpinEdit, shellApi, cxPropertiesStore, cxMemo;
 
 type
   TfrmProductosEdit = class(T_frmStandarGFormEdit)
     datasourceFotos: TDataSource;
     DatasetInsertDoc: TDataSetInsert;
-    PnlFotos: TPanel;
-    DBNavigatorFotos: TDBNavigator;
-    ImgFoto: TImage;
-    BtBtnFotos: TBitBtn;
-    Label9: TLabel;
     DSDocumento: TDataSource;
-    ImgVacio: TImage;
-    Label11: TLabel;
-    DBText1: TDBText;
-    BBtnGuardaNota: TBitBtn;
-    DBMemo1: TDBMemo;
-    bbtnCancela: TBitBtn;
     PnlProducto: TPanel;
     Label1: TLabel;
     Label2: TLabel;
@@ -65,10 +54,32 @@ type
     cxDBTextEdit7: TcxDBTextEdit;
     Label13: TLabel;
     cxDBTextEdit8: TcxDBTextEdit;
-    SpdBtnVerArchivo: TSpeedButton;
     PnlTitulo: TPanel;
     tsProductoProveedor: TcxTabSheet;
     tsProductoAplicacion: TcxTabSheet;
+    cxPropertiesStore1: TcxPropertiesStore;
+    cxPageControl1: TcxPageControl;
+    cxTbShtFotosYDocs: TcxTabSheet;
+    PnlFotos: TPanel;
+    ImgFoto: TImage;
+    Label9: TLabel;
+    ImgVacio: TImage;
+    Label11: TLabel;
+    DBText1: TDBText;
+    SpdBtnVerArchivo: TSpeedButton;
+    DBNavigatorFotos: TDBNavigator;
+    BtBtnFotos: TBitBtn;
+    BBtnGuardaNota: TBitBtn;
+    DBMemo1: TDBMemo;
+    bbtnCancela: TBitBtn;
+    cxTbShtEspecifica: TcxTabSheet;
+    dsEspecificaciones: TDataSource;
+    DBNvgtrEspecifica: TDBNavigator;
+    Label14: TLabel;
+    Label15: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    cxDBMemo1: TcxDBMemo;
+    DBGrid1: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>MAS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -867,6 +867,31 @@
         </DCCReference>
         <DCCReference Include="Reportes\rptVentasProyeccionForm.pas">
             <Form>frmrptVentasProyeccion</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesEntradaDM.pas">
+            <Form>dmAjustesEntradas</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesEntradaEdit.pas">
+            <Form>frmAjustesEntradas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesEntradaForm.pas">
+            <Form>frmAjustesEntradasGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesEntradasItemsEdit.pas">
+            <Form>frmAjustesEntradasItems</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\AjustesEntradasItemsForm.pas">
+            <Form>frmAjustesEntradasItemsForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Procesos\CierreReportes.pas">
+            <Form>FrmReportesCierre</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

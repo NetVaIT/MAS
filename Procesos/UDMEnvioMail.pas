@@ -7,9 +7,10 @@ uses
   IdExplicitTLSClientServerBase, IdMessageClient, IdSMTPBase, IdSMTP,
   IdBaseComponent, IdComponent, IdIOHandler, IdIOHandlerSocket,
   IdIOHandlerStack, IdSSL, IdSSLOpenSSL,idGlobal, IdAttachmentFile, idText, Variants,vcl.forms,
-  Web.HTTPApp, Web.HTTPProd, Data.DB, Data.Win.ADODB;
+  Web.HTTPApp, Web.HTTPProd, Data.DB, Data.Win.ADODB, Dialogs;
 
 type
+//  TPMetodos = (ssslv2,sslv23,sslv3,sslvTLSV1,sslvTLSV1_1,sslvTLSV1_2);
   TDMEnvioMails = class(TDataModule)
     IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
     IdSMTP1: TIdSMTP;
@@ -51,6 +52,7 @@ function TDMEnvioMails.SendEmail(const Recipients: string;
                     const Attach3 : string;
                     AttachLista:TStringList; //Feb22/16
                     AHost,AUserName,APassw,ANomEnvia :string; Apuerto, AMetSSL , AModSSL:Integer):Boolean;
+
 var
   SMTP: TIdSMTP;
   Email: TIdMessage;
@@ -59,15 +61,24 @@ var
   txtPart : TIdText;
   html : TStringList;
   i:Integer; //Feb 22/16
+  X:TIdSSLVersion;
 begin
   SMTP := TIdSMTP.Create(Application);
   Email := TIdMessage.Create(Application);
   SSLHandler := TIdSSLIOHandlerSocketOpenSSL.Create(Application);
   Result:=False;
   try
+    case AMetSSL of
+    0: x:= sslvSSLv2;
+    1: x:= sslvSSLv23;
+    2: x:= sslvSSLv3;
+    3: x:= sslvTLSv1;
+    4: x:= sslvTLSv1;
+    end;
+
     SSLHandler.MaxLineAction := maException;
-    SSLHandler.SSLOptions.Method := sslvTLSv1;
-    SSLHandler.SSLOptions.Mode := sslmUnassigned;
+    SSLHandler.SSLOptions.Method :=X; //sslvTLSv1; 3; Mod jul 22/16   ;//
+    SSLHandler.SSLOptions.Mode := sslmclient;//sslmUnassigned;   Mod jul 22/16
     SSLHandler.SSLOptions.VerifyMode := [];
     SSLHandler.SSLOptions.VerifyDepth := 0;
 
@@ -77,7 +88,7 @@ begin
     SMTP.Username := AUserName;//'interva@floresgaribay.com.mx';
     SMTP.Password := APassw ;//'interva2014';
     //SMTP.Authenticate := True;
-    SMTP.UseTLS := utUseExplicitTLS;
+    SMTP.UseTLS := utUseImplicitTLS;//utUseExplicitTLS;    Mod jul 22/16
 
     Email.From.Address :=AUserName;// 'interva@floresgaribay.com.mx';  //Verificar que sea el correo completo
     Email.From.Name    := ANomEnvia;//'Interva';
@@ -116,11 +127,18 @@ begin
       if FileExists(Attach3) then
         TIdAttachmentFile.Create(email.MessageParts, Attach3);
    *)
+   try   //Jul 18/17
     SMTP.Connect;
     SMTP.Send(Email);
     SMTP.Disconnect;
     Result:=True;
-
+   except
+      on e:exception do    //Jul 18/17
+      begin
+        Result := False;
+        ShowMessage('Error Enviando: '+ e.Message);
+      end;
+   end;
   finally
     SMTP.Free;
     Email.Free;

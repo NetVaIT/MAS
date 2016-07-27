@@ -6,6 +6,8 @@ object DMEnvioMails: TDMEnvioMails
     MaxLineAction = maException
     Port = 0
     DefaultPort = 0
+    SSLOptions.Method = sslvSSLv3
+    SSLOptions.SSLVersions = [sslvSSLv3]
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0

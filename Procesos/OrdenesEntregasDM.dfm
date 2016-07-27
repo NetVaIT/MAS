@@ -14,7 +14,24 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       'dDocumentoGuia, Contenido, Conducto, Servicio, PagoFlete, Valor,' +
       #13#10' Asegurado, CantidadCajas, IdPersonaEmpaca, FechaIniEmpaque, '#13 +
       #10'FechaFinEmpaque, IdEstatusOrdenEntrega from'#13#10' InformacionEntreg' +
-      'as IE where IdEstatusOrdenEntrega =4'
+      'as IE where IdEstatusOrdenEntrega =4'#13#10' and exists (Select * from' +
+      ' InformacionEntregasDetalles IED '#13#10' inner join OrdenesSalidas OS' +
+      ' on IED.IdInfoEntrega= IE.IdInfoEntrega and IED.IdOrdenSalida=OS' +
+      '.idOrdenSalida  '#13#10' where OS.FechaRegistro>:FIni and  OS.FechaReg' +
+      'istro<:FFin )'
+    Parameters = <
+      item
+        Name = 'FIni'
+        DataType = ftDateTime
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'FFin'
+        DataType = ftDateTime
+        Size = -1
+        Value = Null
+      end>
     Left = 32
     Top = 24
     object adodsMasterIdInfoEntrega: TAutoIncField

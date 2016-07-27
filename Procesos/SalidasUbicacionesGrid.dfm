@@ -42,7 +42,6 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     ExplicitWidth = 846
     inherited cxGrid: TcxGrid
       Width = 846
-      ExplicitTop = 23
       ExplicitWidth = 846
       inherited tvMaster: TcxGridDBTableView
         OnCellClick = tvMasterCellClick
@@ -77,9 +76,6 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     inherited tbarGrid: TToolBar
       Width = 846
       ExplicitWidth = 846
-      inherited ToolButton1: TToolButton
-        Visible = True
-      end
       inherited tbtnCerrar: TToolButton
         Visible = False
       end
@@ -123,7 +119,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 608
     Top = 104
     Bitmap = {
-      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -270,7 +266,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 672
     Top = 104
     Bitmap = {
-      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

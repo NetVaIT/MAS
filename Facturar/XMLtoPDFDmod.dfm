@@ -1,7 +1,7 @@
 object dmodXMLtoPDF: TdmodXMLtoPDF
   OldCreateOrder = False
-  Height = 475
-  Width = 742
+  Height = 622
+  Width = 770
   object XMLTransform: TXMLTransform
     Left = 48
     Top = 24

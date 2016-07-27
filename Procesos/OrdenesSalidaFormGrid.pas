@@ -53,6 +53,8 @@ type
     ChckBxXFecha: TCheckBox;
     tvMasternombreC: TcxGridDBColumn;
     tvMasterIdentificadorNvo: TcxGridDBColumn;
+    tvMasterUsuarioCotiza: TcxGridDBColumn;
+    tvMasterUsuarioPedido: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
@@ -108,13 +110,13 @@ end;
 
 procedure TFrmOrdenesSalidaGrid.FormCreate(Sender: TObject);
 var         //Aban Abr 19/16
-  a,m,d:Word;
+  a,m,d:Word;                            //Cambiará a sólo día actual    Jul 25/16
   FechaAux:TDAteTime;
 begin
   inherited;
   DEcodeDate(Date,a,m,d);
   ffiltroEstado:='';
-  cxDtEdtDesde.Date:=EncodeDate(a,m,1);
+  cxDtEdtDesde.Date:=date;//EncodeDate(a,m,1);  Jul 25/16
   m:=m+1;
   if m=13 then
   begin
@@ -123,7 +125,7 @@ begin
   end;
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
-  cxDtEdtHasta.Date:=FechaAux;
+  cxDtEdtHasta.Date:=date+1;//FechaAux;
   SpdBtnConsultaClick(SpdBtnConsulta);
 end;
 
@@ -137,8 +139,8 @@ const
     TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
  +'IdPersonaRevisa, IdPersonaEmpaca, IdPersonaEntrega, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'  //Se agrego persona entrega Jun 15/16
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
- +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio, OS.IDPersona, os.IdOrdenSalidaTipo, os.observaciones, Os.idAlmacen from OrdenesSalidas OS ';
-  CondTipo=' where  IdOrdenSalidaTipo=1 ' ; //Jul 1/16                        // campos  Jul 1/16
+ +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio, OS.IDPersona, os.IdOrdenSalidaTipo, os.observaciones, Os.idAlmacen, os.IdUsuario from OrdenesSalidas OS ';
+  CondTipo=' where  IdOrdenSalidaTipo=1 ' ; //Jul 1/16                        // campos  Jul 1/16                                                //Jul 26/16
   orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin
   inherited;

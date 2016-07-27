@@ -183,7 +183,8 @@ implementation
 {$R *.dfm}
 
 uses CotizacionesDM, CotizacionesFormGrid, _Utils, ListaProductosForm
-  , ProductosFotosMostrar, ListaClientesForm, CotizacionesArchivosDM;    //    ,GeneraOrdenSalida
+  , ProductosFotosMostrar, ListaClientesForm, CotizacionesArchivosDM,
+  _ConectionDmod;    //    ,GeneraOrdenSalida
 
 function TfrmCotizaciones.ActualizaPedidoXSurtirEnInventario(
   IdProducto: Integer; Cantidad: Double): Boolean; //Ene 12/16
@@ -477,6 +478,8 @@ begin
   dsordenSalida.DataSet.FieldByName('Total').asFloat:=DataSource.DataSet.FieldByName('Total').asFloat;
   dsordenSalida.DataSet.FieldByName('IDOrdenEstatus').asInteger:= 1;
   dsordenSalida.DataSet.FieldByName('IDPersona').asInteger:= DataSource.DataSet.FieldByName('IDPersona').asInteger;//Jun 20/16
+  dsordenSalida.DataSet.FieldByName('IDUsuario').asInteger:= _dmConection.IdUsuario;    //Jul 26/16
+
   //Jul 11/16 Agregar datos de Facturación desde DocumentosSalida
   if  DataSource.DataSet.FieldByName('Facturar').AsBoolean then
   begin
@@ -661,6 +664,8 @@ begin
       if (DataSource.DataSet.State =dsBrowse) then
         DataSource.DataSet.Edit;
       DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger:=DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger+1;
+      DataSource.DataSet.FieldByName('IDUsuarioAutPedido').AsInteger:=_dmConection.IdUsuario;//Usuario de Pedido
+
       DataSource.DataSet.Post;
     end;
   end;

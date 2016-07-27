@@ -71,13 +71,23 @@ type
     StringField1: TStringField;
     adodsMasterAplicacion: TStringField;
     adodsMasterMarca: TStringField;
-    adodsProductosProveedoresIdentificador: TStringField;
+    ADODtStEspecificaciones: TADODataSet;
+    ADODtStEspecificacionesIdProductoEspecificacion: TAutoIncField;
+    ADODtStEspecificacionesIdProducto: TIntegerField;
+    ADODtStEspecificacionesIdEspecificacionTipo: TIntegerField;
+    ADODtStEspecificacionesDescripcion: TStringField;
+    ADODtStTipoEspecificacion: TADODataSet;
+    ADODtStTipoEspecificacionIdEspecificacionTipo: TAutoIncField;
+    ADODtStTipoEspecificacionIdentificador: TStringField;
+    ADODtStTipoEspecificacionDescripcion: TStringField;
+    ADODtStEspecificacionesTipo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
     procedure dsProductosFotosDataChange(Sender: TObject; Field: TField);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
+    procedure ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);
   private
     { Private declarations }
     procedure ReadFile(FileName: TFileName);
@@ -147,6 +157,12 @@ begin
 
 end;
 
+procedure TdmProductos.ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);
+begin
+  inherited;
+  adodtsttipoespecificacion.open;
+end;
+
 procedure TdmProductos.DataModuleCreate(Sender: TObject);
 begin
   inherited;
@@ -160,6 +176,8 @@ begin
   TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset:=adodsProductoFotos;
   TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset.open;
   TfrmProductosEdit(gGridEditForm).DSDocumento.Dataset:=ADODsDocumento;
+  TfrmProductosEdit(gGridEditForm).dsEspecificaciones.Dataset:=ADODtStEspecificaciones; //Jul 26/16
+  ADODtStEspecificaciones.Open;
   AdoDSProductoFotos.Open;     //Ya viene abierto
   ADODsDocumento.open;    //Ya viene abierto
   gFormDetail1:= TfrmProductosProveedoresEdit.Create(Self);

@@ -69,6 +69,7 @@ type
     EdtNombre: TEdit;
     ChckBxXFecha: TCheckBox;
     ChckBxFactVivas: TCheckBox;
+    TlBtnReporteUtilidad: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -83,6 +84,8 @@ type
     procedure EdtNombreChange(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure TlBtnReporteUtilidadClick(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -109,7 +112,7 @@ type
     procedure PoneRangoFechas;
     function GetFFiltroNombre: String; //Feb 17/16
 
-
+    procedure ImprimeUtilidades(Fini,FFin:TDateTime; Tipo: Integer);
     { Private declarations }
   public
     { Public declarations }
@@ -137,7 +140,7 @@ implementation
 
 {$R *.dfm}
 
-uses FacturasDM;
+uses FacturasDM, ImpresosSalidasDM;
 
 { TfrmFacturasGrid }
 
@@ -191,11 +194,30 @@ begin           //May 26/16
   end;
 end;
 
+procedure TfrmFacturasGrid.FormCreate(Sender: TObject);
+var
+  fechaAux:TDateTime;  //Cambiado aca.. Jul 25/16   para mantener el filtro al regresar a la consulta
+  a,m,d:Word;
+begin
+  inherited;
+  decodeDate(date,a,m,d);   //D. Abr 19/16
+  cxDtEdtDesde.date:= encodedate(a,m,1);
+  m:=m+1;
+  if m=13 then
+  begin
+    m:=1;
+    a:=a+1;
+  end;
+  fechaAux:=encodedate(a,m,1);
+  cxDtEdtHasta.date :=fechaAux-1;
+
+end;
+
 procedure TfrmFacturasGrid.FormShow(Sender: TObject);
 var
   i :integer;
-  fechaAux:TDateTime;  //Abr 19/16
-  a,m,d:Word;
+ (* fechaAux:TDateTime;  //Abr 19/16
+  a,m,d:Word;*)
 begin
   inherited;
   for i:=0 to ChckLstImpresion.Count-1 do
@@ -211,9 +233,17 @@ begin
   TlBtnGenFactDiaria.Visible:= tipoDocumento=4; //Mar 30/16
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
   TlBtnImpNotaVenta.Enabled:=  tipoDocumento=4;
+
+  TlBtnReporteUtilidad.visible:=(tipoDocumento=4)or(TipoDocumento=1);
+  Case TipoDocumento of
+  1:TlBtnReporteUtilidad.Hint:='Reporte Facturas Expedidas, vigentes y dentro del rango de fechas';
+  4:TlBtnReporteUtilidad.Hint:='Reporte Presupuestos dentro del rango de fechas';
+  end;
+
+
   cxDtEdtDia.Date:=date;
 
-  decodeDate(date,a,m,d);   //D. Abr 19/16
+(*  decodeDate(date,a,m,d);   //D. Abr 19/16
   cxDtEdtDesde.date:= encodedate(a,m,1);
   m:=m+1;
   if m=13 then
@@ -222,7 +252,7 @@ begin
     a:=a+1;
   end;
   fechaAux:=encodedate(a,m,1);
-  cxDtEdtHasta.date :=fechaAux-1;
+  cxDtEdtHasta.date :=fechaAux-1;     *)
   forden:= '';
   PnlFechas.Visible:= (RdGrpNotasVentas.itemindex<>0);
   PoneRangoFechas;
@@ -269,6 +299,7 @@ begin
   TlBtnConsultaClick(TlBtnConsulta);
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
   cxDtEdtDia.Visible:= (RdGrpNotasVentas.itemindex=0);
+
 end;
 
 procedure TfrmFacturasGrid.RdGrpSeleccionClick(Sender: TObject);
@@ -425,6 +456,39 @@ procedure TfrmFacturasGrid.TlBtnRegPDFMouseDown(Sender: TObject;
 begin
   inherited;
   fImpresionGD:=SacaValor;
+end;
+
+procedure TfrmFacturasGrid.TlBtnReporteUtilidadClick(Sender: TObject);
+begin
+  inherited;
+  //Sólo deberia usarse para presupuestos y Facturas vigentes
+  ImprimeUtilidades(cxDtEdtDesde.Date, cxDtEdtHasta.Date,tipoDocumento );
+end;
+
+procedure TfrmFacturasGrid.ImprimeUtilidades(Fini,FFin:TDateTime; Tipo: Integer);
+var                               //Jul 25/16
+  DMImpresosSalidas:TDMImpresosSalidas;
+  ArchiPDF:TFileName;
+begin
+  ArchiPDF:='ReporteFacturas.PDF';
+
+  DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Close;
+  DMImpresosSalidas.ADODtStCostoFactura.close;
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('IDTipoDoc').Value:=Tipo;  //Factura /Presupuesto
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FIni').Value:=Fini;
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FFin').Value:=FFin;
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Open;
+  DMImpresosSalidas.ADODtStCostoFactura.Open;
+  case Tipo of
+   1: DMImpresosSalidas.TextoAuxiliar:='FACTURAS EXPEDIDAS DEL '+ DateTostr(Fini)+' AL '+ DateTostr(FFin) ;
+   4: DMImpresosSalidas.TextoAuxiliar:='LISTADO DE CLIENTES (PEDIDOS) '+ DateTostr(Fini)+' AL '+ DateTostr(FFin)  ;
+  end;
+
+  DMImpresosSalidas.PrintPDFFile(4,1,False,ArchiPDF);
+  DMImpresosSalidas.Free;
+  if FileExists(ArchiPDF) then
+    ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 end.

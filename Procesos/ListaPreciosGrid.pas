@@ -36,7 +36,6 @@ type
     tvMasterIdentificador3: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterPrecioUnitario: TcxGridDBColumn;
-    tvMasterUnidadMedida: TcxGridDBColumn;
     PnlBusqueda: TPanel;
     LblEtiqueta: TLabel;
     EdtNombre: TEdit;
@@ -54,6 +53,11 @@ type
     RxDBLkpCmbProveedor: TRxDBLookupCombo;
     Label4: TLabel;
     DSProveedor: TDataSource;
+    tvMasterPrecioNuevo: TcxGridDBColumn;
+    SpdBtnListaPrecios: TSpeedButton;
+    TlBtnImpresion: TToolButton;
+    SpdBtnAplicacionPrecios: TSpeedButton;
+    DSVerificaActualiza: TDataSource;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
@@ -62,18 +66,31 @@ type
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure RdGrpFiltroClick(Sender: TObject);
     procedure RxDBLkpCmbProveedorClick(Sender: TObject);
+    procedure SpdBtnListaPreciosClick(Sender: TObject);
+    procedure SpdBtnAplicacionPreciosClick(Sender: TObject);
+    procedure DataSourceUpdateData(Sender: TObject);
+    procedure DataSourceStateChange(Sender: TObject);
   private
     fFiltroProducto: String;      //Jul 4/16
     ffiltroRango: String;
     fFiltroProveedor: String;
+    FImprimelista: TBasicAction;
+    FActualizaPrecios: TBasicAction;
 
-    procedure CambiarPrecio(Tipo: Integer;Valor:Double);     //Jul 4/16
+    procedure CambiarPrecio(Tipo: Integer;Valor:Double);
+    procedure SetFImprimeLista(const Value: TBasicAction);
+    procedure SetFActualizaPrecios(const Value: TBasicAction);     //Jul 4/16
+
+    Function ActualizandoPrecios:Boolean;
     { Private declarations }
   public
     { Public declarations }
     Property FiltroProducto:String read fFiltroProducto Write ffiltroProducto;   //Jul 4/16
     Property FiltroRango :String read ffiltroRango write ffiltroRango;   //Jul 4/16
     Property FiltroProveedor:String read fFiltroProveedor Write fFiltroProveedor;   //Jul 5/16
+
+     property actImprimeLista: TBasicAction read FImprimelista write SetFImprimeLista; //Jul 18/16
+     property actActualizaPrecios: TBasicAction read FActualizaPrecios write SetFActualizaPrecios; //Jul 18/16
 
   end;
 
@@ -91,6 +108,21 @@ procedure TFrmListaPreciosGrid.DataSourceDataChange(Sender: TObject;
 begin
   inherited;
   SpdBtnCambiarPrecio.Enabled:=datasource.DataSet.RecordCount>0;
+
+end;
+
+procedure TFrmListaPreciosGrid.DataSourceStateChange(Sender: TObject);
+begin
+  inherited;
+
+  SpdBtnAplicacionPrecios.Enabled:=ActualizandoPrecios;
+end;
+
+procedure TFrmListaPreciosGrid.DataSourceUpdateData(Sender: TObject);
+begin
+  inherited;
+ SpdBtnAplicacionPrecios.Enabled:=ActualizandoPrecios;
+
 end;
 
 procedure TFrmListaPreciosGrid.EdtNombreChange(Sender: TObject);
@@ -143,6 +175,27 @@ begin
   end;
 end;
 
+procedure TFrmListaPreciosGrid.SetFActualizaPrecios(const Value: TBasicAction);
+begin
+  FActualizaPrecios := Value;
+end;
+
+procedure TFrmListaPreciosGrid.SetFImprimeLista(const Value: TBasicAction);
+begin
+  FImprimelista := Value;
+  TlBtnImpresion.action:=Value;
+  TlBtnImpresion.ImageIndex:=13;
+  TlBtnImpresion.Visible:=False;
+end;
+
+procedure TFrmListaPreciosGrid.SpdBtnAplicacionPreciosClick(Sender: TObject);
+begin
+  inherited;
+  actActualizaPrecios.Execute;
+  SpdBtnConsulta.Click;
+  SpdBtnAplicacionPrecios.Enabled:=ActualizandoPrecios;
+end;
+
 procedure TFrmListaPreciosGrid.SpdBtnCambiarPrecioClick(Sender: TObject);
 var
   TextoAux:String;
@@ -159,12 +212,21 @@ begin
      Datasource.DataSet.Filter:='('+TextoAux+')';
      if (FrmCambioPrecios.AOpcionCambio<>-1) and (application.MessageBox(pchar('¿Está seguro de hacer el cambio de precios, a través de '+TextoAux+'?'), 'Confirmación', MB_YESNO )=idYES)then
      begin
-       //Verificar si hacer respaldo de datos actual, perdir que se hacga respaldo antes de...
+       //Se cambio para que se modifique en el PrecioNuevo.
        CambiarPrecio(FrmCambioPrecios.AOpcionCambio,FrmCambioPrecios.AValor);
      end;
   end;
 
 end;
+function TFrmListaPreciosGrid.ActualizandoPrecios: Boolean;
+begin
+  DSVerificaActualiza.DataSet.Close;
+  TAdoQuery(DSVerificaActualiza.DataSet).Sql.clear;
+  TAdoQuery(DSVerificaActualiza.DataSet).Sql.Add('Select count(*) cant from Productos where PrecioNuevo<>PrecioUnitario');
+  TAdoQuery(DSVerificaActualiza.DataSet).open;
+  result:= DSVerificaActualiza.DataSet.fieldbyname('Cant').AsInteger>0;
+end;
+
 procedure TFrmListaPreciosGrid.CambiarPrecio(Tipo:Integer;Valor:Double);
 var cont,i,x:Integer;
 begin
@@ -174,12 +236,12 @@ begin
   while not datasource.dataset.eof do
   begin
     X:= i*100 div cont ;
-    ShowProgress(i,cont,'Actualizando precios..' + IntToStr(x) + '%');
+    ShowProgress(i,cont,'Actualizando precios preliminares..' + IntToStr(x) + '%');
     datasource.dataset.Edit;
     case tipo of
-    0:datasource.dataset.FieldByName('PrecioUnitario').AsFloat:=datasource.dataset.FieldByName('PrecioUnitario').AsFloat*(1+valor/100);  //Incrementa un porcentaje
-    1:datasource.dataset.FieldByName('PrecioUnitario').AsFloat:=datasource.dataset.FieldByName('PrecioUnitario').AsFloat+valor;  //Incrementa un monto
-    2:datasource.dataset.FieldByName('PrecioUnitario').AsFloat:=valor; //Sustituye
+    0:datasource.dataset.FieldByName('PrecioNuevo').AsFloat:=datasource.dataset.FieldByName('PrecioNuevo').AsFloat*(1+valor/100);  //Incrementa un porcentaje
+    1:datasource.dataset.FieldByName('PrecioNuevo').AsFloat:=datasource.dataset.FieldByName('PrecioNuevo').AsFloat+valor;  //Incrementa un monto
+    2:datasource.dataset.FieldByName('PrecioNuevo').AsFloat:=valor; //Sustituye
     end;
     datasource.dataset.Post;
     i:=i+1;
@@ -188,10 +250,13 @@ begin
   ShowProgress(100,100);
 end;
 
-procedure TFrmListaPreciosGrid.SpdBtnConsultaClick(Sender: TObject);
+procedure TFrmListaPreciosGrid.SpdBtnConsultaClick(Sender: TObject);          //  , PA.Aplicacion
 Const SQLText='select P.IdProducto, IdProductoTipo, IdUnidadMedida, '
-+'IdProductoEstatus, Identificador1, Identificador2, Identificador3,'
-+' Descripcion, PrecioUnitario from Productos P inner  join Inventario I on P.IdProducto = I.IdProducto ';
++'IdProductoEstatus, Identificador1, Identificador2, Identificador3,'                                                                  //Jul 22/16
++' Descripcion, PrecioUnitario, PrecioNuevo from Productos P inner  join Inventario I on P.IdProducto = I.IdProducto and P.IDProductoEstatus=1'
+//+' left join ProductosAplicaciones Pa on  PA.IdProducto=P.IDProducto'   //Jul 22/16
+; //Jul 21/16   (verificar si asi)
+
 var WhereSQL:String;
 begin
   inherited;
@@ -218,6 +283,16 @@ begin
 
   Tadodataset(datasource.DataSet).open;
 
+end;
+
+
+
+
+procedure TFrmListaPreciosGrid.SpdBtnListaPreciosClick(Sender: TObject);
+begin
+  inherited;
+
+  TlBtnImpresion.Click;
 end;
 
 end.

@@ -3,6 +3,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -254,13 +255,16 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataField = 'PersonaEmpaca'
               DataSource = DataSource
             end
-            object DBText1: TDBText
+            object DBTxtEstatus: TDBText
               Left = 341
               Top = 35
               Width = 65
               Height = 17
+              Color = clMoneyGreen
               DataField = 'Estatus'
               DataSource = DataSource
+              ParentColor = False
+              Transparent = False
             end
             object DBText2: TDBText
               Left = 435
@@ -442,6 +446,136 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataField = 'TipoSalida'
               DataSource = DataSource
             end
+            object PnlAutorizaYFactura: TPanel
+              Left = 0
+              Top = 152
+              Width = 767
+              Height = 50
+              BevelOuter = bvNone
+              TabOrder = 11
+              Visible = False
+              object Label3: TLabel
+                Left = 262
+                Top = 3
+                Width = 65
+                Height = 13
+                Caption = 'Contrase'#241'a'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object Label4: TLabel
+                Left = 33
+                Top = 2
+                Width = 48
+                Height = 13
+                Caption = 'Autoriza'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object EdtContraAutoriza: TEdit
+                Left = 264
+                Top = 22
+                Width = 110
+                Height = 21
+                PasswordChar = '*'
+                TabOrder = 0
+                OnKeyDown = cxDBDateEdit1KeyDown
+              end
+              object BitBtn5: TBitBtn
+                Tag = 3
+                Left = 569
+                Top = 18
+                Width = 83
+                Height = 25
+                Caption = 'Aceptar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000120B0000120B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+                  555555555555555555555555555555555555555555FF55555555555559055555
+                  55555555577FF5555555555599905555555555557777F5555555555599905555
+                  555555557777FF5555555559999905555555555777777F555555559999990555
+                  5555557777777FF5555557990599905555555777757777F55555790555599055
+                  55557775555777FF5555555555599905555555555557777F5555555555559905
+                  555555555555777FF5555555555559905555555555555777FF55555555555579
+                  05555555555555777FF5555555555557905555555555555777FF555555555555
+                  5990555555555555577755555555555555555555555555555555}
+                NumGlyphs = 2
+                TabOrder = 1
+                OnClick = BtBtnAceptaProcesosClick
+              end
+              object DBLkupCmbBxAutoriza: TDBLookupComboBox
+                Left = 34
+                Top = 21
+                Width = 222
+                Height = 21
+                DataField = 'PersonaAutoriza'
+                DataSource = DataSource
+                TabOrder = 2
+                OnKeyDown = cxDBDateEdit1KeyDown
+              end
+              object BitBtn6: TBitBtn
+                Tag = 3
+                Left = 668
+                Top = 18
+                Width = 83
+                Height = 25
+                Caption = 'Cancelar'
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
+                  999333777FF37FF377733339993000399933333777F777F77733333399970799
+                  93333333777F7377733333333999399933333333377737773333333333990993
+                  3333333333737F73333333333331013333333333333777FF3333333333910193
+                  333333333337773FF3333333399000993333333337377737FF33333399900099
+                  93333333773777377FF333399930003999333337773777F777FF339993370733
+                  9993337773337333777333333333333333333333333333333333333333333333
+                  3333333333333333333333333333333333333333333333333333}
+                NumGlyphs = 2
+                TabOrder = 3
+                OnClick = BtBtnCancelaProcClick
+              end
+              object DBRdGrpGenerar: TDBRadioGroup
+                Left = 390
+                Top = 9
+                Width = 92
+                Height = 41
+                Caption = 'Generar'
+                DataField = 'IdGeneraCFDITipoDoc'
+                DataSource = DataSource
+                Items.Strings = (
+                  'Factura'
+                  'Nota Venta')
+                TabOrder = 4
+                Values.Strings = (
+                  '1'
+                  '4')
+                OnClick = DBRdGrpGenerarClick
+              end
+              object DBChckBxAcumula: TDBCheckBox
+                Left = 488
+                Top = 26
+                Width = 75
+                Height = 17
+                Caption = 'Acumula'
+                DataField = 'Acumula'
+                DataSource = DataSource
+                TabOrder = 5
+                Visible = False
+              end
+            end
             object PnlEmpaca: TPanel
               Left = 0
               Top = 242
@@ -609,8 +743,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 ParentFont = False
               end
               object Label13: TLabel
-                Left = 34
-                Top = 1
+                Left = 32
+                Top = -2
                 Width = 56
                 Height = 13
                 Caption = 'Recolecta'
@@ -1524,139 +1658,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 TabOrder = 18
               end
             end
-            object PnlAutorizaYFactura: TPanel
-              Left = 0
-              Top = 152
-              Width = 767
-              Height = 50
-              BevelOuter = bvNone
-              TabOrder = 11
-              Visible = False
-              object Label3: TLabel
-                Left = 262
-                Top = 3
-                Width = 65
-                Height = 13
-                Caption = 'Contrase'#241'a'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = [fsBold]
-                ParentFont = False
-              end
-              object Label4: TLabel
-                Left = 33
-                Top = 2
-                Width = 48
-                Height = 13
-                Caption = 'Autoriza'
-                Font.Charset = DEFAULT_CHARSET
-                Font.Color = clWindowText
-                Font.Height = -11
-                Font.Name = 'Tahoma'
-                Font.Style = [fsBold]
-                ParentFont = False
-              end
-              object EdtContraAutoriza: TEdit
-                Left = 264
-                Top = 22
-                Width = 110
-                Height = 21
-                PasswordChar = '*'
-                TabOrder = 0
-                OnKeyDown = cxDBDateEdit1KeyDown
-              end
-              object BitBtn5: TBitBtn
-                Tag = 3
-                Left = 569
-                Top = 18
-                Width = 83
-                Height = 25
-                Caption = 'Aceptar'
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000120B0000120B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
-                  555555555555555555555555555555555555555555FF55555555555559055555
-                  55555555577FF5555555555599905555555555557777F5555555555599905555
-                  555555557777FF5555555559999905555555555777777F555555559999990555
-                  5555557777777FF5555557990599905555555777757777F55555790555599055
-                  55557775555777FF5555555555599905555555555557777F5555555555559905
-                  555555555555777FF5555555555559905555555555555777FF55555555555579
-                  05555555555555777FF5555555555557905555555555555777FF555555555555
-                  5990555555555555577755555555555555555555555555555555}
-                NumGlyphs = 2
-                TabOrder = 1
-                OnClick = BtBtnAceptaProcesosClick
-              end
-              object DBLkupCmbBxAutoriza: TDBLookupComboBox
-                Left = 34
-                Top = 21
-                Width = 222
-                Height = 21
-                DataField = 'PersonaAutoriza'
-                DataSource = DataSource
-                TabOrder = 2
-                OnKeyDown = cxDBDateEdit1KeyDown
-              end
-              object BitBtn6: TBitBtn
-                Tag = 3
-                Left = 668
-                Top = 18
-                Width = 83
-                Height = 25
-                Caption = 'Cancelar'
-                Glyph.Data = {
-                  76010000424D7601000000000000760000002800000020000000100000000100
-                  04000000000000010000130B0000130B00001000000000000000000000000000
-                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-                  333333333333333333333333333333333333333FFF33FF333FFF339993370733
-                  999333777FF37FF377733339993000399933333777F777F77733333399970799
-                  93333333777F7377733333333999399933333333377737773333333333990993
-                  3333333333737F73333333333331013333333333333777FF3333333333910193
-                  333333333337773FF3333333399000993333333337377737FF33333399900099
-                  93333333773777377FF333399930003999333337773777F777FF339993370733
-                  9993337773337333777333333333333333333333333333333333333333333333
-                  3333333333333333333333333333333333333333333333333333}
-                NumGlyphs = 2
-                TabOrder = 3
-                OnClick = BtBtnCancelaProcClick
-              end
-              object DBRdGrpGenerar: TDBRadioGroup
-                Left = 390
-                Top = 9
-                Width = 92
-                Height = 41
-                Caption = 'Generar'
-                DataField = 'IdGeneraCFDITipoDoc'
-                DataSource = DataSource
-                Items.Strings = (
-                  'Factura'
-                  'Nota Venta')
-                TabOrder = 4
-                Values.Strings = (
-                  '1'
-                  '4')
-                OnClick = DBRdGrpGenerarClick
-              end
-              object DBChckBxAcumula: TDBCheckBox
-                Left = 488
-                Top = 26
-                Width = 75
-                Height = 17
-                Caption = 'Acumula'
-                DataField = 'Acumula'
-                DataSource = DataSource
-                TabOrder = 5
-                Visible = False
-              end
-            end
             object PnlSalidasUbicacion: TPanel
-              Left = 319
-              Top = 53
+              Left = 312
+              Top = 58
               Width = 631
               Height = 241
               TabOrder = 14
@@ -1980,7 +1984,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2196,7 +2200,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C0021C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002240210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

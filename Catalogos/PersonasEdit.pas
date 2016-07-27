@@ -75,7 +75,7 @@ type
     cxDBLabel3: TcxDBLabel;
     PnlTitulo: TPanel;
     Label16: TLabel;
-    DBLookupComboBox1: TDBLookupComboBox;
+    DBLkpCmbBxEstatus: TDBLookupComboBox;
     cxDBLkupCBxRol: TcxDBLookupComboBox;
     cxDBLabel2: TcxDBLabel;
     ActEjecutaconsulta: TAction;
@@ -177,6 +177,21 @@ procedure TfrmPersonasEdit.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   MostrarPanel; //May 4/16
+  if (rol=  rEmpleado)  or (Rol= rCliente) or (Rol =rProveedor) then    //Jul 26/16
+  begin
+    case DataSource.DataSet.FieldByName('IdPersonaEstatus').AsInteger of
+     1: DBLkpCmbBxEstatus.Color:=  clLime;
+     2: DBLkpCmbBxEstatus.Color:=  $008080FF;
+     3: DBLkpCmbBxEstatus.Color:=  clYellow;
+     4: DBLkpCmbBxEstatus.Color:=  $008080FF;
+     5: DBLkpCmbBxEstatus.Color:=  clRed;
+     else
+        DBLkpCmbBxEstatus.Color:= clwindow;
+    end;
+  end
+  else
+    DBLkpCmbBxEstatus.Color:= clwindow;
+
 end;
 
 procedure TfrmPersonasEdit.DataSourceStateChange(Sender: TObject);
@@ -187,6 +202,7 @@ begin               //jul 16/16
     if rol=  rEmpleado then                                             //
      DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger := 1; //jul 16/16
   end;  *)
+
 end;
 
 procedure TfrmPersonasEdit.edtNombrePropertiesEditValueChanged(Sender: TObject);

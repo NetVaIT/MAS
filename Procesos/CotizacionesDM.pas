@@ -283,6 +283,10 @@ type
     ADODtStOrdenSalidaIDOrdenSalidaTipo: TIntegerField;
     ADODtStOrdenSalidaObservaciones: TStringField;
     ADODtStOrdenSalidaIdAlmacen: TIntegerField;
+    adodsMasterUsuarioReg: TStringField;
+    adodsMasterIDUsuarioAutPedido: TIntegerField;
+    adodsMasterUsuAutPedido: TStringField;
+    ADODtStOrdenSalidaidusuario: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -331,7 +335,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses CotizacionesForm, _Utils, UDMEnvioMail;
+uses CotizacionesForm, _Utils, UDMEnvioMail, _ConectionDmod;
 
 {$R *.dfm}
 
@@ -661,7 +665,7 @@ begin  //Nov 6/15
   adodsMaster.fieldbyname('FechaRegistro').AsDateTime:=Now;
   adodsMaster.fieldbyname('VigenciaDias').AsInteger:=30; //Cambiar a parámetro del sistema
   adodsMaster.fieldbyname('IDMoneda').AsInteger:=106; //DEbe ser parámetro
-  adodsMaster.fieldbyname('IDUsuario').AsInteger:= 1;
+  adodsMaster.fieldbyname('IDUsuario').AsInteger:= _dmConection.IdUsuario; //Ajustado Jul 26/16
   adodsMaster.fieldbyname('IDDocumentoSalidaTipo').AsInteger:= 1;
   adodsMaster.fieldbyname('IDDocumentoSalidaEstatus').AsInteger:= 1;
   adodsMaster.FieldByName('Facturar').AsBoolean:=True; //Jul 15/16 a ver si se ve marcado

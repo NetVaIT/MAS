@@ -1,16 +1,15 @@
-inherited dmDevoluciones: TdmDevoluciones
+inherited dmAjustesEntradas: TdmAjustesEntradas
   OldCreateOrder = True
-  Height = 582
-  Width = 914
+  Height = 593
+  Width = 642
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
-    BeforeOpen = adodsMasterBeforeOpen
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, '#13#10'IdOrdenE' +
-      'status, IdPersona, IdMoneda, IdUsuario, Fecha, '#13#10'TipoCambio, Sub' +
-      'Total, IVA, Total, Observaciones,'#13#10' IdOrdenEntradaTipo from Orde' +
-      'nesEntradas where'#13#10' IdOrdenEntradaTipo=2'
+      'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen,'#13#10' IdOrdenE' +
+      'status, IdPersona, IdMoneda, IdUsuario, Fecha,'#13#10' TipoCambio, Sub' +
+      'Total, IVA, Total, Observaciones,'#13#10'IdOrdenEntradaTipo from Orden' +
+      'esEntradas where'#13#10' idordenentradaTipo>2'
     object adodsMasterIdOrdenEntrada: TAutoIncField
       FieldName = 'IdOrdenEntrada'
       ReadOnly = True
@@ -63,14 +62,13 @@ inherited dmDevoluciones: TdmDevoluciones
     object adodsMasterIdOrdenEntradaTipo: TIntegerField
       FieldName = 'IdOrdenEntradaTipo'
     end
-    object adodsMasterAlmacen: TStringField
+    object adodsMasteralmacen: TStringField
       FieldKind = fkLookup
-      FieldName = 'Almacen'
+      FieldName = 'almacen'
       LookupDataSet = adodsAlmacenes
       LookupKeyFields = 'IdAlmacen'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdAlmacen'
-      Size = 100
       Lookup = True
     end
     object adodsMasterEstatus: TStringField
@@ -80,17 +78,6 @@ inherited dmDevoluciones: TdmDevoluciones
       LookupKeyFields = 'IdOrdenEstatus'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdOrdenEstatus'
-      Size = 50
-      Lookup = True
-    end
-    object adodsMasterCliente: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Cliente'
-      LookupDataSet = adodsPersonas
-      LookupKeyFields = 'IdPersona'
-      LookupResultField = 'RazonSocial'
-      KeyFields = 'IdPersona'
-      Size = 150
       Lookup = True
     end
     object adodsMasterTipoOrden: TStringField
@@ -100,21 +87,30 @@ inherited dmDevoluciones: TdmDevoluciones
       LookupKeyFields = 'IdOrdenEntradaTipo'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdOrdenEntradaTipo'
+      Size = 30
+      Lookup = True
+    end
+    object adodsMasterMoneda: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Moneda'
+      LookupDataSet = ADODtStMonedas
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMoneda'
       Lookup = True
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
+  end
   inherited ActionList: TActionList
-    object ActAplicarEntrada: TAction
-      Caption = 'Aplicar Devoluci'#243'n'
-      OnExecute = ActAplicarEntradaExecute
+    object ActAplicaEntradaXA: TAction
+      Caption = 'Aplicar Ajuste Entrada'
+      OnExecute = ActAplicaEntradaXAExecute
     end
     object ActSeleccionaProducto: TAction
-      Caption = 'SeleccionaProducto'
+      Caption = 'Seleccionar Producto'
       OnExecute = ActSeleccionaProductoExecute
-    end
-    object ActSeleccionItemsDev: TAction
-      Caption = 'ActSeleccionItemsDev'
-      OnExecute = ActSeleccionItemsDevExecute
     end
   end
   object dsmaster: TDataSource
@@ -123,18 +119,17 @@ inherited dmDevoluciones: TdmDevoluciones
     Left = 96
     Top = 16
   end
-  object adodsItems: TADODataSet
+  object ADODtStAjusteEntradaItems: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    BeforeInsert = adodsItemsBeforeInsert
-    AfterPost = adodsItemsAfterPost
-    OnNewRecord = adodsItemsNewRecord
+    AfterPost = ADODtStAjusteEntradaItemsAfterPost
     CommandText = 
-      'select IdOrdenEntradaItem, IdOrdenEntrada, IdProducto,'#13#10' ClavePr' +
-      'oducto, Cantidad, CantidadSolicitada, Importe,'#13#10'ImporteMonedaLoc' +
-      'al, ImporteTotal, Costo, PrecioVenta, '#13#10'CostoAproximado, IdCFDIC' +
-      'onceptoDev'#13#10'from OrdenesEntradasItems'#13#10'where IdOrdenEntrada  = :' +
-      'IdOrdenEntrada'
+      'select IdOrdenEntradaItem, IdOrdenEntrada, '#13#10'IdDocumentoEntradaD' +
+      'etalle, IdProducto, ClaveProducto, Cantidad,'#13#10' CantidadSolicitad' +
+      'a, Costo, Importe, ImporteMonedaLocal,'#13#10'ImpuestoArancelario, Gas' +
+      'tos, ImporteTotal, CostoAproximado, '#13#10'PrecioVenta, IdCFDIConcept' +
+      'oDev from OrdenesEntradasItems where IdOrdenEntrada=:IdOrdenEntr' +
+      'ada'
     DataSource = dsmaster
     IndexFieldNames = 'IdOrdenEntrada'
     MasterFields = 'IdOrdenEntrada'
@@ -145,97 +140,95 @@ inherited dmDevoluciones: TdmDevoluciones
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = 1
+        Value = Null
       end>
-    Left = 24
+    Left = 96
     Top = 80
-    object adodsItemsIdOrdenEntradaItem: TAutoIncField
+    object ADODtStAjusteEntradaItemsIdOrdenEntradaItem: TAutoIncField
       FieldName = 'IdOrdenEntradaItem'
       ReadOnly = True
-      Visible = False
     end
-    object adodsItemsIdOrdenEntrada: TIntegerField
+    object ADODtStAjusteEntradaItemsIdOrdenEntrada: TIntegerField
       FieldName = 'IdOrdenEntrada'
-      Visible = False
     end
-    object adodsItemsIdProducto: TIntegerField
+    object ADODtStAjusteEntradaItemsIdDocumentoEntradaDetalle: TIntegerField
+      FieldName = 'IdDocumentoEntradaDetalle'
+    end
+    object ADODtStAjusteEntradaItemsIdProducto: TIntegerField
       FieldName = 'IdProducto'
-      Visible = False
     end
-    object adodsItemsClaveProducto: TStringField
-      DisplayLabel = 'Identificador'
+    object ADODtStAjusteEntradaItemsClaveProducto: TStringField
       FieldName = 'ClaveProducto'
-      OnChange = adodsItemsClaveProductoChange
+      OnChange = ADODtStAjusteEntradaItemsClaveProductoChange
       Size = 50
     end
-    object adodsItemsProducto: TStringField
+    object ADODtStAjusteEntradaItemsProducto: TStringField
       FieldKind = fkLookup
       FieldName = 'Producto'
       LookupDataSet = adodsProductos
       LookupKeyFields = 'IdProducto'
       LookupResultField = 'Descripcion'
       KeyFields = 'IdProducto'
-      Size = 255
+      Size = 150
       Lookup = True
     end
-    object adodsItemsCantidad: TFloatField
-      FieldName = 'Cantidad'
-      OnChange = adodsItemsCantidadChange
-    end
-    object adodsItemsCantidadSolicitada: TFloatField
-      DisplayLabel = 'Solicitada'
+    object ADODtStAjusteEntradaItemsCantidadSolicitada: TFloatField
       FieldName = 'CantidadSolicitada'
+      OnChange = ADODtStAjusteEntradaItemsCantidadSolicitadaChange
     end
-    object adodsItemsImporte: TFMTBCDField
-      FieldName = 'Importe'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object adodsItemsImporteMonedaLocal: TFMTBCDField
-      DisplayLabel = 'Importe moneda local'
-      FieldName = 'ImporteMonedaLocal'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object adodsItemsImporteTotal: TFMTBCDField
-      DisplayLabel = 'Importe total'
-      FieldName = 'ImporteTotal'
-      currency = True
-      Precision = 18
-      Size = 6
-    end
-    object adodsItemsCosto: TFMTBCDField
+    object ADODtStAjusteEntradaItemsCosto: TFMTBCDField
       FieldName = 'Costo'
       Precision = 18
       Size = 6
     end
-    object adodsItemsPrecioVenta: TFMTBCDField
-      FieldName = 'PrecioVenta'
+    object ADODtStAjusteEntradaItemsImporte: TFMTBCDField
+      FieldName = 'Importe'
       Precision = 18
       Size = 6
     end
-    object adodsItemsCostoAproximado: TFMTBCDField
+    object ADODtStAjusteEntradaItemsImporteMonedaLocal: TFMTBCDField
+      FieldName = 'ImporteMonedaLocal'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAjusteEntradaItemsImpuestoArancelario: TFMTBCDField
+      FieldName = 'ImpuestoArancelario'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAjusteEntradaItemsGastos: TFMTBCDField
+      FieldName = 'Gastos'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAjusteEntradaItemsImporteTotal: TFMTBCDField
+      FieldName = 'ImporteTotal'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAjusteEntradaItemsCostoAproximado: TFMTBCDField
       FieldName = 'CostoAproximado'
       Precision = 18
       Size = 6
     end
-    object adodsItemsIdCFDIConceptoDev: TLargeintField
+    object ADODtStAjusteEntradaItemsPrecioVenta: TFMTBCDField
+      FieldName = 'PrecioVenta'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStAjusteEntradaItemsIdCFDIConceptoDev: TLargeintField
       FieldName = 'IdCFDIConceptoDev'
     end
-  end
-  object dsItems: TDataSource
-    DataSet = adodsItems
-    Left = 96
-    Top = 80
+    object ADODtStAjusteEntradaItemsCantidad: TFloatField
+      FieldName = 'Cantidad'
+    end
   end
   object adodsEstatus: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdOrdenEstatus, Descripcion from OrdenesEstatus'
     Parameters = <>
-    Left = 24
+    Left = 32
     Top = 216
   end
   object adodsAlmacenes: TADODataSet
@@ -243,137 +236,18 @@ inherited dmDevoluciones: TdmDevoluciones
     CursorType = ctStatic
     CommandText = 'select IdAlmacen, Descripcion from Almacenes'
     Parameters = <>
-    Left = 24
+    Left = 32
     Top = 160
   end
   object adodsProductos: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdProducto, Descripcion from Productos'
+    CommandText = 
+      'select IdProducto, Descripcion, Identificador1, Identificador2,'#13 +
+      #10' Identificador3 from Productos'
     Parameters = <>
     Left = 184
     Top = 160
-  end
-  object adodsPersonas: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,P.SaldoCliente'#13 +
-      #10'FROM Personas P'#13#10'where P.IdRol=1  and P.idPersona>-1 and P.IdPe' +
-      'rsonaEstatus=1 '#13#10'order by P.RazonSocial'
-    Parameters = <>
-    Left = 184
-    Top = 16
-    object adodsPersonasIdPersona: TAutoIncField
-      FieldName = 'IdPersona'
-      ReadOnly = True
-    end
-    object adodsPersonasRFC: TStringField
-      FieldName = 'RFC'
-      Size = 13
-    end
-    object adodsPersonasRazonSocial: TStringField
-      FieldName = 'RazonSocial'
-      Size = 300
-    end
-    object adodsPersonasIDRol: TIntegerField
-      FieldName = 'IDRol'
-    end
-    object adodsPersonasSaldoCliente: TFMTBCDField
-      FieldName = 'SaldoCliente'
-      Precision = 18
-      Size = 6
-    end
-  end
-  object ADODtStDireccionesCliente: TADODataSet
-    Connection = _dmConection.ADOConnection
-    CursorType = ctStatic
-    CommandText = 
-      'select PD.IdPersonaDomicilio, PD.IdPersona, Pd.IdDomicilio, '#13#10'Pd' +
-      '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
-      ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
-      'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo'#13#10#13#10'from PersonasD' +
-      'omicilios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomi' +
-      'cilio'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'l' +
-      'eft join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join ' +
-      'Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.id' +
-      'pais=D.Idpais'#13#10#13#10
-    DataSource = dsmaster
-    IndexFieldNames = 'IdPersona'
-    MasterFields = 'IDPersona'
-    Parameters = <>
-    Left = 188
-    Top = 75
-    object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
-      FieldName = 'IdPersonaDomicilio'
-      ReadOnly = True
-    end
-    object ADODtStDireccionesClienteIdPersona: TIntegerField
-      FieldName = 'IdPersona'
-    end
-    object ADODtStDireccionesClienteIdDomicilio: TIntegerField
-      FieldName = 'IdDomicilio'
-    end
-    object ADODtStDireccionesClienteIdDomicilioTipo: TIntegerField
-      FieldName = 'IdDomicilioTipo'
-    end
-    object ADODtStDireccionesClienteIdentificador: TIntegerField
-      FieldName = 'Identificador'
-    end
-    object ADODtStDireccionesClientePredeterminado: TBooleanField
-      FieldName = 'Predeterminado'
-    end
-    object ADODtStDireccionesClienteCalle: TStringField
-      FieldName = 'Calle'
-      Size = 50
-    end
-    object ADODtStDireccionesClienteNoExterior: TStringField
-      FieldName = 'NoExterior'
-      Size = 10
-    end
-    object ADODtStDireccionesClienteNoInterior: TStringField
-      FieldName = 'NoInterior'
-      Size = 10
-    end
-    object ADODtStDireccionesClienteColonia: TStringField
-      FieldName = 'Colonia'
-      Size = 50
-    end
-    object ADODtStDireccionesClienteCodigoPostal: TStringField
-      FieldName = 'CodigoPostal'
-      Size = 10
-    end
-    object ADODtStDireccionesClienteMunicipio: TStringField
-      FieldName = 'Municipio'
-      Size = 50
-    end
-    object ADODtStDireccionesClientePoblacion: TStringField
-      FieldName = 'Poblacion'
-      Size = 150
-    end
-    object ADODtStDireccionesClienteEstado: TStringField
-      FieldName = 'Estado'
-      Size = 50
-    end
-    object ADODtStDireccionesClientePais: TStringField
-      FieldName = 'Pais'
-      Size = 100
-    end
-    object ADODtStDireccionesClienteDirCompleta: TStringField
-      FieldKind = fkCalculated
-      FieldName = 'DirCompleta'
-      Size = 300
-      Calculated = True
-    end
-    object ADODtStDireccionesClienteSaldo: TFMTBCDField
-      FieldName = 'Saldo'
-      Precision = 18
-      Size = 6
-    end
-    object ADODtStDireccionesClienteIdEnvioTipo: TIntegerField
-      FieldName = 'IdEnvioTipo'
-    end
   end
   object ADODtStProductosXEspacio: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -450,12 +324,12 @@ inherited dmDevoluciones: TdmDevoluciones
       ' where IdOrdenEntradaItem=:IdOrdenEntradaItem2'
       '')
     Left = 324
-    Top = 353
+    Top = 315
   end
   object DSInsertaKardex: TDataSource
     AutoEdit = False
-    Left = 324
-    Top = 296
+    Left = 316
+    Top = 368
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -475,10 +349,6 @@ inherited dmDevoluciones: TdmDevoluciones
     end
     object ADODtStProductosKardexIdMoneda: TIntegerField
       FieldName = 'IdMoneda'
-    end
-    object ADODtStProductosKardexContenedor: TStringField
-      FieldName = 'Contenedor'
-      Size = 30
     end
     object ADODtStProductosKardexMovimiento: TStringField
       FieldName = 'Movimiento'
@@ -556,12 +426,6 @@ inherited dmDevoluciones: TdmDevoluciones
     Left = 320
     Top = 240
   end
-  object ADOQryAuxiliar: TADOQuery
-    Connection = _dmConection.ADOConnection
-    Parameters = <>
-    Left = 436
-    Top = 160
-  end
   object ADODtStItemsXDevolver: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -581,8 +445,8 @@ inherited dmDevoluciones: TdmDevoluciones
         Size = -1
         Value = Null
       end>
-    Left = 56
-    Top = 384
+    Left = 40
+    Top = 371
     object ADODtStItemsXDevolverIdCFDIConcepto: TLargeintField
       FieldName = 'IdCFDIConcepto'
       ReadOnly = True
@@ -635,7 +499,6 @@ inherited dmDevoluciones: TdmDevoluciones
     object ADODtStItemsXDevolverCliente: TStringField
       FieldKind = fkLookup
       FieldName = 'Cliente'
-      LookupDataSet = adodsPersonas
       LookupKeyFields = 'IdPersona'
       LookupResultField = 'RazonSocial'
       KeyFields = 'IdPersonaReceptor'
@@ -646,6 +509,29 @@ inherited dmDevoluciones: TdmDevoluciones
       FieldName = 'ValorUnitario'
       Precision = 18
       Size = 6
+    end
+  end
+  object ADODtStMonedas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'select IdMoneda, IdPais, Identificador, Descripcion from Monedas'
+    Parameters = <>
+    Left = 176
+    Top = 360
+    object ADODtStMonedasIdMoneda: TAutoIncField
+      FieldName = 'IdMoneda'
+      ReadOnly = True
+    end
+    object ADODtStMonedasIdPais: TIntegerField
+      FieldName = 'IdPais'
+    end
+    object ADODtStMonedasIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 3
+    end
+    object ADODtStMonedasDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 80
     end
   end
   object adopAplicaEntradaXDev: TADOStoredProc
@@ -673,7 +559,13 @@ inherited dmDevoluciones: TdmDevoluciones
         Precision = 10
         Value = Null
       end>
-    Left = 56
-    Top = 464
+    Left = 80
+    Top = 448
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 428
+    Top = 160
   end
 end

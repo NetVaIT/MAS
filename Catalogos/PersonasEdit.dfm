@@ -5,7 +5,6 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1046
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -63,37 +62,36 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     ExplicitTop = 43
     ExplicitWidth = 1046
     ExplicitHeight = 458
-    ClientRectBottom = 456
-    ClientRectLeft = 2
-    ClientRectRight = 1044
-    ClientRectTop = 28
+    ClientRectBottom = 454
+    ClientRectRight = 1042
+    ClientRectTop = 24
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 1042
-      ExplicitHeight = 428
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 1038
+      ExplicitHeight = 430
       inherited cxScrollBox1: TcxScrollBox
-        Width = 1042
-        Height = 428
-        ExplicitWidth = 1042
-        ExplicitHeight = 428
+        Width = 1038
+        Height = 430
+        ExplicitWidth = 1038
+        ExplicitHeight = 430
         inherited tbarData: TToolBar
-          Width = 1040
+          Width = 1036
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1040
+          ExplicitWidth = 1036
         end
         inherited pnlMaster: TPanel
-          Width = 1040
-          Height = 401
+          Width = 1036
+          Height = 403
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1040
-          ExplicitHeight = 401
+          ExplicitWidth = 1036
+          ExplicitHeight = 403
           object pnlPersona: TPanel
             Left = 0
             Top = 0
-            Width = 1040
+            Width = 1036
             Height = 49
             Align = alTop
             BevelOuter = bvNone
@@ -125,7 +123,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
               Width = 39
               Height = 13
               Caption = 'Estatus '
-              FocusControl = DBLookupComboBox1
+              FocusControl = DBLkpCmbBxEstatus
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 196
@@ -172,11 +170,12 @@ inherited frmPersonasEdit: TfrmPersonasEdit
               TabStop = False
               OnClick = btnWebClick
             end
-            object DBLookupComboBox1: TDBLookupComboBox
+            object DBLkpCmbBxEstatus: TDBLookupComboBox
               Left = 547
               Top = 23
               Width = 154
               Height = 21
+              Color = clAqua
               DataField = 'EstatusPersona'
               DataSource = DataSource
               TabOrder = 4
@@ -215,7 +214,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object pnlPersonaMoral: TPanel
             Left = 0
             Top = 49
-            Width = 1040
+            Width = 1036
             Height = 93
             Align = alTop
             BevelOuter = bvNone
@@ -258,7 +257,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object pnlPersonaFisica: TPanel
             Left = 0
             Top = 142
-            Width = 1040
+            Width = 1036
             Height = 211
             Align = alTop
             BevelOuter = bvNone
@@ -416,8 +415,8 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object PnlCliente: TPanel
             Left = 0
             Top = 353
-            Width = 1040
-            Height = 48
+            Width = 1036
+            Height = 50
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 3
@@ -526,7 +525,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1042
+        Width = 1038
       end
     end
     object tsCorreo: TcxTabSheet
@@ -547,7 +546,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1042
+        Width = 1038
       end
     end
     object tsContactos: TcxTabSheet
@@ -568,7 +567,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1042
+        Width = 1038
       end
     end
     object tsCuentasBancarias: TcxTabSheet
@@ -622,7 +621,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -768,7 +767,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00B80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

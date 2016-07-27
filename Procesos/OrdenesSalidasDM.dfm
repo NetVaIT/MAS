@@ -16,10 +16,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'haIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa, FechaFinRev' +
       'isa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAutoriza, FechaA' +
       'utoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Subtotal, OS.IVA,os.' +
-      'IDPersonaDomicilio, OS.Observaciones, OS.IdAlmacen'#13#10'from Ordenes' +
-      'Salidas OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13#10'Order by IdOr' +
-      'denEstatus,OS.FechaRegistro Desc'
-    Left = 56
+      'IDPersonaDomicilio, OS.Observaciones, OS.IdAlmacen, os.IdUsuario' +
+      #13#10'from OrdenesSalidas OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13 +
+      #10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
+    Left = 64
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
       ReadOnly = True
@@ -292,6 +292,29 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 10
       Lookup = True
     end
+    object adodsMasterIdUsuario: TIntegerField
+      FieldName = 'IdUsuario'
+    end
+    object adodsMasterUsuarioCotiza: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioCotiza'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'UsuarioCotiza'
+      KeyFields = 'IdDocumentoSalida'
+      Size = 100
+      Lookup = True
+    end
+    object adodsMasterUsuarioPedido: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioPedido'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'UsuarioAutPedido'
+      KeyFields = 'IdDocumentoSalida'
+      Size = 100
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -468,7 +491,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select IdOrdenEstatus, Identificador, Descripcion from OrdenesEs' +
       'tatus'
     Parameters = <>
-    Left = 240
+    Left = 248
     Top = 24
     object ADODtStOrdenSalEstatusIdOrdenEstatus: TIntegerField
       FieldName = 'IdOrdenEstatus'
@@ -612,10 +635,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CommandText = 
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
       'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio,' +
-      #13#10'DS.IdPersonaDomicilioEnvio, Facturar'#13#10#13#10' from DocumentosSalida' +
-      's DS'#13#10' inner join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner' +
-      ' join PersonasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomic' +
-      'ilioCliente'
+      #13#10'DS.IdPersonaDomicilioEnvio, Facturar, IdUsuario, IDUsuarioAutP' +
+      'edido'#13#10#13#10' from DocumentosSalidas DS'#13#10' inner join Personas P on P' +
+      '.IDpersona =DS.IdPersona'#13#10'inner join PersonasDomicilios PD on PD' +
+      '.IdPersonaDomicilio =Ds.IDDomicilioCliente'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -670,6 +693,32 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtStDatosDocumentoSalidaFacturar: TBooleanField
       FieldName = 'Facturar'
+    end
+    object ADODtStDatosDocumentoSalidaIdUsuario: TIntegerField
+      FieldName = 'IdUsuario'
+    end
+    object ADODtStDatosDocumentoSalidaUsuarioCotiza: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioCotiza'
+      LookupDataSet = adodsUsuarioCotiza
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Login'
+      KeyFields = 'IdUsuario'
+      Size = 150
+      Lookup = True
+    end
+    object ADODtStDatosDocumentoSalidaIDUsuarioAutPedido: TIntegerField
+      FieldName = 'IDUsuarioAutPedido'
+    end
+    object ADODtStDatosDocumentoSalidaUsuarioAutPedido: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioAutPedido'
+      LookupDataSet = adodsUsuarioCotiza
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Login'
+      KeyFields = 'IDUsuarioAutPedido'
+      Size = 100
+      Lookup = True
     end
   end
   object DSDatosDocSalida: TDataSource
@@ -1580,5 +1629,13 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Precision = 18
       Size = 6
     end
+  end
+  object adodsUsuarioCotiza: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'SELECT IdUsuario, IdPersona, Login FROM Usuarios'
+    Parameters = <>
+    Left = 896
+    Top = 32
   end
 end

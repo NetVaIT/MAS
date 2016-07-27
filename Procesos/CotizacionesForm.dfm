@@ -4,7 +4,6 @@ inherited frmCotizaciones: TfrmCotizaciones
   KeyPreview = True
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -64,21 +63,21 @@ inherited frmCotizaciones: TfrmCotizaciones
     ClientRectBottom = 502
     ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 1275
-      ExplicitHeight = 501
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 1269
+      ExplicitHeight = 495
       inherited cxScrollBox1: TcxScrollBox
         Width = 1275
         Height = 501
-        ExplicitWidth = 1275
-        ExplicitHeight = 501
+        ExplicitWidth = 1269
+        ExplicitHeight = 495
         inherited tbarData: TToolBar
           Width = 1273
           ParentShowHint = False
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1273
+          ExplicitWidth = 1267
           inherited ToolButton14: TToolButton
             AutoSize = True
             ExplicitWidth = 27
@@ -176,8 +175,8 @@ inherited frmCotizaciones: TfrmCotizaciones
           Height = 474
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1273
-          ExplicitHeight = 474
+          ExplicitWidth = 1267
+          ExplicitHeight = 468
           object pnlDetail: TPanel
             Left = 0
             Top = 209
@@ -186,6 +185,8 @@ inherited frmCotizaciones: TfrmCotizaciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitWidth = 1267
+            ExplicitHeight = 148
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -193,6 +194,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 29
               Images = ilAction
               TabOrder = 0
+              ExplicitWidth = 1267
               object TlBtnInserta: TToolButton
                 Left = 0
                 Top = 0
@@ -392,6 +394,7 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 209
             Align = alTop
             TabOrder = 1
+            ExplicitWidth = 1267
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -726,8 +729,8 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 62
             end
             object PnlSumasSaldos: TPanel
-              Left = 768
-              Top = 6
+              Left = 792
+              Top = 79
               Width = 282
               Height = 149
               Color = clWhite
@@ -914,6 +917,8 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 111
             Align = alBottom
             TabOrder = 2
+            ExplicitTop = 357
+            ExplicitWidth = 1267
             object Label2: TLabel
               Left = 530
               Top = 49
@@ -1031,7 +1036,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1241,7 +1246,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C002280210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C0022C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -50,6 +50,7 @@ type
     EdtNombre: TEdit;
     Label3: TLabel;
     ChckBxXFecha: TCheckBox;
+    tvMasterUsuarioReg: TcxGridDBColumn;
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
@@ -138,7 +139,7 @@ procedure TfrmCotizacionesGrid.SpdBtnBuscarClick(Sender: TObject);
 const
   TxtSQL='SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, DS.IdPersona,  IdDocumentoSalidaEstatus, DS.IdMoneda,'+
            'ds.IdUsuario, DS.FechaRegistro, IVA, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioCliente, IDPersonaDomicilioEnvio'+
-           ', NotasInternas, IdPaqueteria, Servicio, Facturar'+ //May 18/16                                                   //Jun 16/16
+           ', NotasInternas, IdPaqueteria, Servicio, Facturar, idUsuarioAutPedido'+ //May 18/16                                                   //Jun 16/16
            ' FROM DocumentosSalidas DS ';            //Jul 14/16
   TxtWhere='where IdDocumentoSalidaTipo=:TipoDocto ';     //Para colocar el inner join y buscar por nombre cliente May 11/16
                                                            //OJO quitar para insertar y modificar....

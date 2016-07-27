@@ -19,7 +19,7 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls, cxPC,
   Vcl.DBCtrls, cxContainer, cxEdit, cxTextEdit, cxDBEdit, cxMaskEdit, cxSpinEdit,
-  Vcl.Buttons, Vcl.Mask;
+  Vcl.Buttons, Vcl.Mask, Vcl.ComCtrls;
 
 type
   TfrmConfiguracionesEdit = class(T_frmEdit)
@@ -35,11 +35,11 @@ type
     cxDBTextEdit9: TcxDBTextEdit;
     PnlDatosCorreoSalida: TPanel;
     Label3: TLabel;
-    cxDBTextEdit2: TcxDBTextEdit;
+    cxDBTxtEdtCorreo: TcxDBTextEdit;
     Label4: TLabel;
-    cxDBTextEdit3: TcxDBTextEdit;
+    cxDBTxtEdtHost: TcxDBTextEdit;
     Label5: TLabel;
-    cxDBTextEdit4: TcxDBTextEdit;
+    cxDBTxtEdtPuerto: TcxDBTextEdit;
     Label6: TLabel;
     cxDBTextEdit5: TcxDBTextEdit;
     Label7: TLabel;
@@ -49,7 +49,11 @@ type
     cxDBTextEdit8: TcxDBTextEdit;
     SpdBtnVerPass: TSpeedButton;
     DBTxtEdtPass: TDBEdit;
+    PrgrsBrEnvioP: TProgressBar;
+    SpdBtnPruebaEnv: TSpeedButton;
+    CBXTipoSEg: TComboBox;
     procedure SpdBtnVerPassClick(Sender: TObject);
+    procedure SpdBtnPruebaEnvClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,7 +64,48 @@ implementation
 
 {$R *.dfm}
 
-uses ConfiguracionDM;
+uses ConfiguracionDM, UDMEnvioMail;
+
+procedure TfrmConfiguracionesEdit.SpdBtnPruebaEnvClick(Sender: TObject);
+var EnviarA:String;
+ ArchivosLista:TStringList;
+begin
+   ArchivosLista:=TStringList.Create;
+  PrgrsBrEnvioP.Position:=0;
+  if (cxDBTxtEdtCorreo.Text<>'') and (DBTxtEdtPass.Text<>'') and (cxDBTxtEdtHost.text<>'') and (cxDBTxtEdtPuerto.text<>'') then
+  begin
+    PrgrsBrEnvioP.visible:=true;
+    if inputquery('Correo receptor','Indique el correo al que se enviará la prueba ', EnviarA)then
+    begin
+      PrgrsBrEnvioP.Position:=PrgrsBrEnvioP.Position+5;
+      Application.ProcessMessages;
+      DMEnvioMails:=TDMEnvioMails.Create(Self);
+      PrgrsBrEnvioP.Position:=PrgrsBrEnvioP.Position+5;
+      Application.ProcessMessages;
+      if DMEnvioMails.SendEmail(EnviarA,'Prueba de Envio  ', 'Esta es una prueba de envio desde el correo base ', '','','', ArchivosLista,
+          cxDBTxtEdtHost.text, cxDBTxtEdtCorreo.text, DBTxtEdtPass.text,'MAS Probando', strToInt(cxDBTxtEdtPuerto.text),
+          CBXTipoSEg.itemindex,0)then    // cxDBLkpCmbBxSegSalida.ItemIndex, cxDBkpCmbBxAutSal.ItemIndex //No se usan adentro
+      begin
+        PrgrsBrEnvioP.Position:=20;
+        Application.ProcessMessages;
+        ShowMessage('Correo enviado');
+      end
+      else
+      begin
+        ShowMessage('Problemas en el envio del Correo. Revise Configuración');
+      end;
+
+      DMEnvioMails.free;
+    end;
+  end
+  else
+  begin
+    ShowMessage('Faltan parámetros de envío');
+  end;
+
+  PrgrsBrEnvioP.visible:=False;
+
+end;
 
 procedure TfrmConfiguracionesEdit.SpdBtnVerPassClick(Sender: TObject);
 begin

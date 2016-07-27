@@ -571,14 +571,14 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               Height = 21
               DataField = 'Moneda'
               DataSource = DataSource
-              TabOrder = 12
+              TabOrder = 10
             end
             object cxDBTextEdit8: TcxDBTextEdit
               Left = 762
               Top = 254
               DataBinding.DataField = 'TipoCambio'
               DataBinding.DataSource = DataSource
-              TabOrder = 14
+              TabOrder = 12
               Width = 105
             end
             object cxDBLabel1: TcxDBLabel
@@ -718,6 +718,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               TitleFont.Height = -11
               TitleFont.Name = 'Tahoma'
               TitleFont.Style = []
+              OnKeyDown = DBGrid2KeyDown
               Columns = <
                 item
                   Expanded = False
@@ -896,7 +897,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 782
     Top = 0
     Bitmap = {
-      494C010102000400AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1116,7 +1117,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     Left = 848
     Top = 0
     Bitmap = {
-      494C01011B00C002240210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011B00C0022C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

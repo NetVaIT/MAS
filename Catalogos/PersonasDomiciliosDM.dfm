@@ -261,7 +261,9 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
   object ADODtStEnvioTipo: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdPaqueteria, Identificador, Descripcion from Paqueterias'
+    CommandText = 
+      'select IdPaqueteria, Identificador, Descripcion '#13#10'from Paqueteri' +
+      'as'#13#10'order by Descripcion'
     Parameters = <>
     Left = 304
     Top = 168

@@ -70,7 +70,7 @@ inherited dmrptVentasProyeccion: TdmrptVentasProyeccion
   end
   inherited ActionList: TActionList
     object actExecute: TAction
-      Caption = 'Poryectar'
+      Caption = 'Proyectar'
       ImageIndex = 13
       OnExecute = actExecuteExecute
     end

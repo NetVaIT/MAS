@@ -50,11 +50,18 @@ type
     Label3: TLabel;
     EdtNombre: TEdit;
     PnlFechas: TPanel;
-    SpdBtnConsulta: TSpeedButton;
     RdGrpEstado: TRadioGroup;
     tvMasterPersonaEmpaca: TcxGridDBColumn;
     tvMasterPersonaEnvia: TcxGridDBColumn;
     tvMasterEstatusOrden: TcxGridDBColumn;
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    cxDtEdtDesde: TcxDateEdit;
+    cxDtEdtHasta: TcxDateEdit;
+    ChckBxXFecha: TCheckBox;
+    ChckBxFactVivas: TCheckBox;
+    SpdBtnConsulta: TSpeedButton;
     procedure EdtNombreChange(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
@@ -104,8 +111,22 @@ begin
 end;
 
 procedure TfrmOrdenesEntregasGrid.FormCreate(Sender: TObject);
+var
+  fechaAux:TDateTime;  //Cambiado aca.. Jul 25/16   para mantener el filtro al regresar a la consulta
+  a,m,d:Word;
 begin
-  inherited;
+  inherited;   //Filtro día Jul 25/16
+  decodeDate(date,a,m,d);   //D. Abr 19/16
+  cxDtEdtDesde.date:= date;//encodedate(a,m,1);
+  m:=m+1;
+  if m=13 then
+  begin
+    m:=1;
+    a:=a+1;
+  end;
+  fechaAux:=encodedate(a,m,1);
+  cxDtEdtHasta.date :=Date+1;//fechaAux-1;
+
   ffiltro:=' where IE.IdEstatusOrdenEntrega= 4'; //Verifivar Jun 13/16
 end;
 
@@ -118,7 +139,7 @@ procedure TfrmOrdenesEntregasGrid.RdGrpEstadoClick(Sender: TObject);
 begin
   inherited;
   case RdGrpEstado.ItemIndex of
-  0:ffiltro:=''; //Todos
+  0:ffiltro:=' where 1=1 '; //Todos
   1:ffiltro:=' where IE.IdEstatusOrdenEntrega= 4';//Autorizada
   2:ffiltro:=' where IE.IdEstatusOrdenEntrega= 5';// Empacada
   3:ffiltro:=' where IE.IdEstatusOrdenEntrega= 6';//Enviadas
@@ -134,15 +155,22 @@ const                          //Cambiar
     +'Conducto, Servicio, PagoFlete, Valor, Asegurado, CantidadCajas, IdPersonaEmpaca,'
     +'FechaIniEmpaque,FechaFinEmpaque, IdEstatusOrdenEntrega from InformacionEntregas IE ';
 
+    TxtFiltroFecha='  and exists (Select * from InformacionEntregasDetalles IED '
+    +' inner join OrdenesSalidas OS on IED.IdInfoEntrega= IE.IdInfoEntrega and IED.IdOrdenSalida=OS.idOrdenSalida '
+    +' where OS.FechaRegistro>:FIni and  OS.FechaRegistro<:FFin )';
+
   //orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin
   inherited;
   //  ffiltro:=' where OS.fechaRegistro >:Fini and Os.FechaRegistro<:FFin';  //Jun 13/16
 
   Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro;//+ffiltroEstado+orden;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+ ffiltroNombre+ffiltro + TxtFiltroFecha;//+ffiltroEstado+orden;
  // ShowMessage(TxtSQL+ ffiltroNombre+ffiltro+ffiltroEstado+orden);
-//No usará filtro por Fecha
+//Si usa filtro Fecha
+  Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:= cxDtEdtDesde.Date;
+  Tadodataset(datasource.DataSet).Parameters.ParamByName('FFin').Value:= cxDtEdtHasta.Date;
+
   Tadodataset(datasource.DataSet).open;
 
 end;

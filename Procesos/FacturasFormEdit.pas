@@ -138,6 +138,8 @@ type
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure DBLookupComboBox1Click(Sender: TObject);
+    procedure DBGrid2KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
@@ -232,6 +234,17 @@ begin
   end
   else
      dsDatoscliente.DataSet:= dsAuxiliar.DataSet; (*//DMFacturas.ADODtStDireccionesCliente*)
+end;
+
+procedure TfrmFacturasFormEdit.DBGrid2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key=13 then
+  begin
+    key:=9;
+  end;
+
 end;
 
 procedure TfrmFacturasFormEdit.DBLookupComboBox1Click(Sender: TObject);

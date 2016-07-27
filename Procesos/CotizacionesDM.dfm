@@ -14,10 +14,10 @@ inherited dmCotizaciones: TdmCotizaciones
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
       'te,'#13#10' IdPersonaDomicilioEnvio, NotasInternas, IdPaqueteria, Serv' +
-      'icio , Facturar'#13#10'FROM DocumentosSalidas where IdDocumentoSalidaT' +
-      'ipo=:TipoDocto'#13#10'and fechaRegistro>DATEADD(MM, DATEDIFF(MM,0,GETD' +
-      'ATE()), 0)'#13#10'order by idDocumentoSalidaEstatus, FechaRegistro Des' +
-      'c'
+      'icio , Facturar'#13#10', IDUsuarioAutPedido'#13#10'FROM DocumentosSalidas wh' +
+      'ere IdDocumentoSalidaTipo=:TipoDocto'#13#10'and fechaRegistro>DATEADD(' +
+      'MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order by idDocumentoSalidaEsta' +
+      'tus, FechaRegistro Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -27,7 +27,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Size = 4
         Value = 0
       end>
-    Left = 72
+    Left = 64
     object adodsMasterIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
       ReadOnly = True
@@ -210,9 +210,32 @@ inherited dmCotizaciones: TdmCotizaciones
     object adodsMasterFacturar: TBooleanField
       FieldName = 'Facturar'
     end
+    object adodsMasterUsuarioReg: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuarioReg'
+      LookupDataSet = adodsUsuario
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Login'
+      KeyFields = 'IdUsuario'
+      Size = 150
+      Lookup = True
+    end
+    object adodsMasterIDUsuarioAutPedido: TIntegerField
+      FieldName = 'IDUsuarioAutPedido'
+    end
+    object adodsMasterUsuAutPedido: TStringField
+      FieldKind = fkLookup
+      FieldName = 'UsuAutPedido'
+      LookupDataSet = adodsUsuario
+      LookupKeyFields = 'IdUsuario'
+      LookupResultField = 'Login'
+      KeyFields = 'IDUsuarioAutPedido'
+      Size = 100
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 328
+    Left = 336
   end
   inherited ActionList: TActionList
     object ActGenPDFCotizacion: TAction
@@ -344,7 +367,7 @@ inherited dmCotizaciones: TdmCotizaciones
   object adodsUsuario: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdUsuario, Nombre FROM Usuarios'
+    CommandText = 'SELECT IdUsuario, IdPersona, Login FROM Usuarios'
     Parameters = <>
     Left = 192
     Top = 224
@@ -369,7 +392,8 @@ inherited dmCotizaciones: TdmCotizaciones
     CommandText = 
       'SELECT P.IdPersona,P.RFC, P.RazonSocial, P.IDRol,'#13#10' P.DiasCredit' +
       'oCliente ,P.SaldoCliente'#13#10'FROM Personas P'#13#10#13#10'where P.IdRol=1  an' +
-      'd P.idPersona>-1'#13#10'order by P.RazonSocial'
+      'd P.idPersona>-1 and P.IdPersonaEstatus=1'#13#10'order by P.RazonSocia' +
+      'l'
     Parameters = <>
     Left = 192
     Top = 40
@@ -491,8 +515,8 @@ inherited dmCotizaciones: TdmCotizaciones
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
       ', IDPersonaDomicilio, IdPersona, IdGeneraCFDITipoDoc, Acumula,'#13#10 +
-      ' IDOrdenSalidaTipo, Observaciones, IdAlmacen'#13#10'from OrdenesSalida' +
-      's where iddocumentoSalida=:IDDocumentoSalida'
+      ' IDOrdenSalidaTipo, Observaciones, IdAlmacen, idusuario'#13#10'from Or' +
+      'denesSalidas where iddocumentoSalida=:IDDocumentoSalida'
     DataSource = DSMaster
     IndexFieldNames = 'IdDocumentoSalida'
     MasterFields = 'IDDocumentoSalida'
@@ -593,6 +617,9 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object ADODtStOrdenSalidaIdAlmacen: TIntegerField
       FieldName = 'IdAlmacen'
+    end
+    object ADODtStOrdenSalidaidusuario: TIntegerField
+      FieldName = 'idusuario'
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet

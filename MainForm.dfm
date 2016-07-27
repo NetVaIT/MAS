@@ -1,11 +1,11 @@
 inherited frmMain: TfrmMain
-  Caption = 'nnnnn'
+  Caption = 'Sistema MAS '
   ClientHeight = 574
   ClientWidth = 881
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 897
-  ExplicitHeight = 613
+  ExplicitHeight = 612
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -28,7 +28,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab5: TdxRibbonTab
       Tag = 4000
-      Active = True
       Caption = 'Compras'
       Groups = <
         item
@@ -66,6 +65,7 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCierre: TdxRibbonTab
       Tag = 7000
+      Active = True
       Caption = 'Cierre'
       Groups = <
         item
@@ -332,7 +332,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 145
-      FloatClientHeight = 324
+      FloatClientHeight = 378
       ItemLinks = <
         item
           Visible = True
@@ -655,6 +655,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBarLargeButton33: TdxBarLargeButton
+      Tag = 47
       Action = actRptVentasProyeccion
       Category = 0
     end
@@ -11873,6 +11874,7 @@ inherited frmMain: TfrmMain
       Category = 'Compras'
       Caption = 'Proyecci'#243'n de compras'
       ImageIndex = 15
+      OnExecute = actCatalogoExecute
     end
     object actCatalogo: TAction [1]
       Category = 'Catalogo'
@@ -12130,6 +12132,7 @@ inherited frmMain: TfrmMain
       Category = 'Cierre'
       Caption = 'Reporte Mensual'
       ImageIndex = 0
+      OnExecute = actCatalogoExecute
     end
     object ActInventario: TAction
       Tag = 32
@@ -12164,6 +12167,7 @@ inherited frmMain: TfrmMain
       Category = 'Almacen'
       Caption = 'Entrada Ajuste'
       ImageIndex = 61
+      OnExecute = actCatalogoExecute
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

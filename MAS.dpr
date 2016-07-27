@@ -191,7 +191,13 @@ uses
   SalidasUbicacionesEdit in 'Procesos\SalidasUbicacionesEdit.pas' {frmSalidasUbicaciones},
   SalidasUbicacionesGrid in 'Procesos\SalidasUbicacionesGrid.pas' {frmSalidasUbicacionesGrid},
   rptVentasProyeccionDM in 'Reportes\rptVentasProyeccionDM.pas' {dmrptVentasProyeccion: TDataModule},
-  rptVentasProyeccionForm in 'Reportes\rptVentasProyeccionForm.pas' {frmrptVentasProyeccion};
+  rptVentasProyeccionForm in 'Reportes\rptVentasProyeccionForm.pas' {frmrptVentasProyeccion},
+  AjustesEntradaDM in 'Procesos\AjustesEntradaDM.pas' {dmAjustesEntradas: TDataModule},
+  AjustesEntradaEdit in 'Procesos\AjustesEntradaEdit.pas' {frmAjustesEntradas},
+  AjustesEntradaForm in 'Procesos\AjustesEntradaForm.pas' {frmAjustesEntradasGrid},
+  AjustesEntradasItemsEdit in 'Procesos\AjustesEntradasItemsEdit.pas' {frmAjustesEntradasItems},
+  AjustesEntradasItemsForm in 'Procesos\AjustesEntradasItemsForm.pas' {frmAjustesEntradasItemsForm},
+  CierreReportes in 'Procesos\CierreReportes.pas' {FrmReportesCierre};
 
 {$R *.res}
 

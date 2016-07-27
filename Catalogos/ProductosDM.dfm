@@ -176,7 +176,7 @@ inherited dmProductos: TdmProductos
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 110
+    Left = 118
     Top = 16
   end
   object adodsProductoDoctos: TADODataSet
@@ -317,7 +317,8 @@ inherited dmProductos: TdmProductos
       'SELECT        Personas.IdPersona, Personas.IdMoneda, Personas.Id' +
       'entificador, Personas.RazonSocial AS Provedor, Monedas.Descripci' +
       'on AS Moneda'#13#10'FROM            Personas INNER JOIN'#13#10'             ' +
-      '            Monedas ON Personas.IdMoneda = Monedas.IdMoneda'
+      '            Monedas ON Personas.IdMoneda = Monedas.IdMoneda'#13#10'ord' +
+      'er by Personas.RazonSocial '
     Parameters = <>
     Left = 168
     Top = 376
@@ -413,6 +414,74 @@ inherited dmProductos: TdmProductos
       KeyFields = 'IdMarca'
       Size = 30
       Lookup = True
+    end
+  end
+  object ADODtStEspecificaciones: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterOpen = ADODtStEspecificacionesAfterOpen
+    CommandText = 
+      'select IdProductoEspecificacion, IdProducto, IdEspecificacionTip' +
+      'o,'#13#10' Descripcion from ProductosEspecificaciones'#13#10'where IDProduct' +
+      'o=:IdProducto'#13#10
+    DataSource = dsMaster
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 320
+    Top = 257
+    object ADODtStEspecificacionesIdProductoEspecificacion: TAutoIncField
+      FieldName = 'IdProductoEspecificacion'
+      ReadOnly = True
+    end
+    object ADODtStEspecificacionesIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStEspecificacionesIdEspecificacionTipo: TIntegerField
+      FieldName = 'IdEspecificacionTipo'
+    end
+    object ADODtStEspecificacionesDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 300
+    end
+    object ADODtStEspecificacionesTipo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Tipo'
+      LookupDataSet = ADODtStTipoEspecificacion
+      LookupKeyFields = 'IdEspecificacionTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdEspecificacionTipo'
+      Lookup = True
+    end
+  end
+  object ADODtStTipoEspecificacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdEspecificacionTipo, Identificador, Descripcion '#13#10'from E' +
+      'specificacionesTipos'
+    Parameters = <>
+    Left = 328
+    Top = 329
+    object ADODtStTipoEspecificacionIdEspecificacionTipo: TAutoIncField
+      FieldName = 'IdEspecificacionTipo'
+      ReadOnly = True
+    end
+    object ADODtStTipoEspecificacionIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStTipoEspecificacionDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
     end
   end
 end

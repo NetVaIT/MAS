@@ -1,63 +1,65 @@
 inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
   Caption = 'Ordenes de Entrega'
-  ClientWidth = 989
+  ClientWidth = 1127
   OnCreate = FormCreate
-  ExplicitWidth = 989
+  ExplicitWidth = 1127
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited splDetail2: TSplitter
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited splDetail1: TSplitter
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnlClose: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnlDetail3: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnlDetail2: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnlDetail1: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnltoolbar: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
   end
   inherited pnlMaster: TPanel
-    Width = 989
+    Width = 1127
     ExplicitWidth = 989
     inherited cxGrid: TcxGrid
-      Top = 41
-      Width = 989
-      Height = 430
-      ExplicitTop = 52
+      Top = 49
+      Width = 1127
+      Height = 422
+      ExplicitTop = 41
       ExplicitWidth = 989
-      ExplicitHeight = 422
+      ExplicitHeight = 430
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
-          Width = 300
+          Width = 285
         end
         object tvMasterEstatusOrden: TcxGridDBColumn
           DataBinding.FieldName = 'EstatusOrden'
+          Width = 95
         end
         object tvMasterConducto: TcxGridDBColumn
           DataBinding.FieldName = 'Conducto'
-          Width = 129
+          Width = 156
         end
         object tvMasterIDResponsableEntrega: TcxGridDBColumn
           DataBinding.FieldName = 'IDResponsableEntrega'
@@ -129,70 +131,96 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
       end
     end
     inherited tbarGrid: TToolBar
-      Width = 989
-      Height = 41
-      ButtonHeight = 43
-      ExplicitWidth = 989
-      ExplicitHeight = 41
+      Width = 1127
+      Height = 49
+      ButtonHeight = 46
+      ExplicitWidth = 1127
+      ExplicitHeight = 49
       inherited ToolButton1: TToolButton
-        ExplicitHeight = 43
+        ExplicitHeight = 46
       end
-      inherited btnEdit: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton10: TToolButton [1]
+        Left = 23
+        Width = 2
+        ExplicitLeft = 23
+        ExplicitWidth = 2
+        ExplicitHeight = 46
       end
-      inherited ToolButton3: TToolButton
-        ExplicitHeight = 43
+      inherited btnEdit: TToolButton [2]
+        Left = 25
+        ExplicitLeft = 25
+        ExplicitHeight = 46
       end
-      inherited ToolButton4: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton3: TToolButton [3]
+        Left = 48
+        ExplicitLeft = 48
+        ExplicitHeight = 46
       end
-      inherited ToolButton5: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton4: TToolButton [4]
+        Left = 71
+        ExplicitLeft = 71
+        ExplicitHeight = 46
       end
-      inherited ToolButton6: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton5: TToolButton [5]
+        Left = 79
+        ExplicitLeft = 79
+        ExplicitHeight = 46
       end
-      inherited ToolButton7: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton6: TToolButton [6]
+        Left = 102
+        ExplicitLeft = 102
+        ExplicitHeight = 46
       end
-      inherited ToolButton8: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton7: TToolButton [7]
+        Left = 125
+        ExplicitLeft = 125
+        ExplicitHeight = 46
       end
-      inherited ToolButton9: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton8: TToolButton [8]
+        Left = 148
+        ExplicitLeft = 148
+        ExplicitHeight = 46
       end
-      inherited ToolButton2: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton9: TToolButton [9]
+        Left = 171
+        ExplicitLeft = 171
+        ExplicitHeight = 46
       end
-      inherited btnPost: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton2: TToolButton [10]
+        Left = 194
+        ExplicitLeft = 194
+        ExplicitHeight = 46
       end
-      inherited btnCancel: TToolButton
-        ExplicitHeight = 43
+      inherited btnPost: TToolButton [11]
+        Left = 202
+        ExplicitLeft = 202
+        ExplicitHeight = 46
       end
-      inherited ToolButton21: TToolButton
-        ExplicitHeight = 43
+      inherited btnCancel: TToolButton [12]
+        Left = 225
+        ExplicitLeft = 225
+        ExplicitHeight = 46
       end
-      inherited ToolButton22: TToolButton
-        ExplicitHeight = 43
+      inherited ToolButton21: TToolButton [13]
+        Left = 248
+        ExplicitLeft = 248
+        ExplicitHeight = 46
       end
-      inherited tbtnCerrar: TToolButton [14]
-        Left = 277
-        ExplicitLeft = 277
-        ExplicitHeight = 43
+      inherited ToolButton22: TToolButton [14]
+        Left = 256
+        ExplicitLeft = 256
+        ExplicitHeight = 46
       end
-      inherited ToolButton10: TToolButton [15]
-        Left = 300
-        Width = 93
-        ExplicitLeft = 300
-        ExplicitWidth = 93
-        ExplicitHeight = 43
+      inherited tbtnCerrar: TToolButton
+        Left = 279
+        ExplicitLeft = 279
+        ExplicitHeight = 46
       end
       object PnlBusqueda: TPanel
-        Left = 393
+        Left = 302
         Top = 0
         Width = 201
-        Height = 43
+        Height = 46
         Align = alRight
         BevelInner = bvLowered
         ParentBackground = False
@@ -216,19 +244,61 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         end
       end
       object PnlFechas: TPanel
-        Left = 594
+        Left = 503
         Top = 0
-        Width = 266
-        Height = 43
+        Width = 202
+        Height = 46
         Align = alRight
         BevelInner = bvLowered
         ParentBackground = False
         TabOrder = 1
+        object RdGrpEstado: TRadioGroup
+          Left = 6
+          Top = 1
+          Width = 186
+          Height = 43
+          Caption = 'Estado'
+          Color = clBtnFace
+          Columns = 2
+          ItemIndex = 1
+          Items.Strings = (
+            'Todos'
+            'Autorizado'
+            'Empacado'
+            'Enviado  ')
+          ParentColor = False
+          TabOrder = 0
+          OnClick = RdGrpEstadoClick
+        end
+      end
+      object Panel1: TPanel
+        Left = 705
+        Top = 0
+        Width = 352
+        Height = 46
+        Align = alRight
+        ParentBackground = False
+        ParentColor = True
+        TabOrder = 2
+        object Label1: TLabel
+          Left = 12
+          Top = 4
+          Width = 30
+          Height = 13
+          Caption = 'Desde'
+        end
+        object Label2: TLabel
+          Left = 164
+          Top = 4
+          Width = 28
+          Height = 13
+          Caption = 'Hasta'
+        end
         object SpdBtnConsulta: TSpeedButton
-          Left = 227
-          Top = 10
+          Left = 312
+          Top = 8
           Width = 25
-          Height = 25
+          Height = 31
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
             04000000000000010000130B0000130B00001000000000000000000000000000
@@ -245,23 +315,35 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
           NumGlyphs = 2
           OnClick = SpdBtnConsultaClick
         end
-        object RdGrpEstado: TRadioGroup
-          Left = 6
-          Top = -2
-          Width = 203
-          Height = 45
-          Caption = 'Estado'
-          Color = clBtnFace
-          Columns = 2
-          ItemIndex = 1
-          Items.Strings = (
-            'Todos'
-            'Autorizado'
-            'Empacado'
-            'Enviado  ')
-          ParentColor = False
+        object cxDtEdtDesde: TcxDateEdit
+          Left = 7
+          Top = 17
           TabOrder = 0
-          OnClick = RdGrpEstadoClick
+          Width = 145
+        end
+        object cxDtEdtHasta: TcxDateEdit
+          Left = 159
+          Top = 17
+          TabOrder = 1
+          Width = 137
+        end
+        object ChckBxXFecha: TCheckBox
+          Left = 376
+          Top = -1
+          Width = 97
+          Height = 20
+          Caption = 'Usar Fecha'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+        end
+        object ChckBxFactVivas: TCheckBox
+          Left = 376
+          Top = 22
+          Width = 153
+          Height = 17
+          Caption = 'Documentos vivos'
+          TabOrder = 3
         end
       end
     end
@@ -275,7 +357,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 608
     Top = 176
     Bitmap = {
-      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -422,7 +504,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 672
     Top = 176
     Bitmap = {
-      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -965,5 +1047,9 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
   inherited cxGridPopupMenu: TcxGridPopupMenu
     Left = 704
     Top = 176
+  end
+  inherited PopupMenu: TPopupMenu
+    Left = 816
+    Top = 264
   end
 end

@@ -94,7 +94,7 @@ type
     ToolButton41: TToolButton;
     ToolButton42: TToolButton;
     DBGrid2: TDBGrid;
-    DBText1: TDBText;
+    DBTxtEstatus: TDBText;
     DBText2: TDBText;
     Label1: TLabel;
     DBTxtSubtotal: TDBText;
@@ -237,7 +237,8 @@ type
     procedure SetFComparteEnvio(const Value: TBasicAction);   //May 23/16
     function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean;
     procedure PermisosEdicion;
-    procedure SetFVerificayCreaResto(const Value: TBasicAction); //May 26/16
+    procedure SetFVerificayCreaResto(const Value: TBasicAction);
+    function CambioColor: TColor; //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -994,10 +995,24 @@ begin
   dsinformacionEntrega.AutoEdit:= not(datasource.DataSet.fieldbyName('idOrdenEstatus').asinteger=6); //Jun 14/16
 
 
-   lblRespEntrega.Visible:=not(Datasource.DataSet.FieldByName('IdPersonaEntrega').IsNull);  //Jun 15/16
+  lblRespEntrega.Visible:=not(Datasource.DataSet.FieldByName('IdPersonaEntrega').IsNull);  //Jun 15/16
+
+  DBTxtEstatus.Color:=CambioColor;  //Jul 22/16
+
 
 end;
+function TFrmOrdenesSalida.CambioColor:TColor;  //Jul 22/16
+begin
+  case Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger of
+  1: result:=clBtnFace;
+  2: result:=clYellow;
+  3: result:=clAqua;
+  4: result:=clLime;
+  5: result:=clMoneyGreen;
+  end;
 
+
+end;
 function TFrmOrdenesSalida.RevisaGenerado(IDOrden:Integer):Boolean;
 begin  //Verifica si es una nota que no se haya generado ya en una Factura Diaria
   TadoQuery(DSQryAuxiliar.DataSet).Close;
@@ -1201,6 +1216,7 @@ begin
 
 
   DSsalidasUbicaciones.dataset.Open;
+  DtSrcOrdenSalItem.dataset.First; //Jul 20/16
   while not DtSrcOrdenSalItem.dataset.eof do
   begin
   //  DSProductosXEspacio.dataset.close;// desde Ene 29/16
@@ -1259,7 +1275,7 @@ end;
 function TFrmOrdenesSalida.VerificaUbicacionProductos(idordenSalida:Integer):Boolean;
 begin
   //necesitamos que se ejecute el  VerificaYCreaResto del moduo de datos
-  AVerificaYCreaResto.Execute;
+  AVerificaYCreaResto.Execute;   //Ajustado para que  busque todas lassalidas ubicacion y  ponga lo que falta
   DSSalidasUbicaciones.DataSet.close;
   DSSalidasUbicaciones.DataSet.open;
 

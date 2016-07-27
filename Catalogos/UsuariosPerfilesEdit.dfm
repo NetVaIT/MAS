@@ -165,11 +165,11 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
                 'Inventario                 |32'
                 'Devoluci'#243'n Producto |31'
                 'SalidasX Ajuste         |33'
-                'Entradas X Ajuste     |36   '
+                'Entradas X Ajuste     |36'
                 'Acomodo Mercanc'#237'a  |46'
                 'Lista de Precios         |34'
                 'Kardex Movtos          |35'
-                'Costo Inventario       |51 ')
+                'Costo Inventario       |51')
               TabOrder = 1
             end
             object ChckLstBxOpcionesVenta: TCheckListBox
@@ -211,6 +211,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
               Height = 128
               ItemHeight = 13
               Items.Strings = (
+                'Proyeccion Compras |47'
                 'Requisici'#243'n                |41'
                 'Orden Compra          |42'
                 'Backorder                 |40'
@@ -343,7 +344,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -484,7 +485,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -2,6 +2,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   Caption = 'frmProductosEdit'
   OnActivate = FormActivate
   OnDestroy = FormDestroy
+  ExplicitTop = -28
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -13,7 +14,7 @@ inherited frmProductosEdit: TfrmProductosEdit
     ExplicitTop = 544
   end
   inherited splDetail1: TSplitter
-    Top = 541
+    Top = 562
     ExplicitTop = 500
   end
   inherited pnlClose: TPanel
@@ -33,35 +34,35 @@ inherited frmProductosEdit: TfrmProductosEdit
     ExplicitTop = 588
   end
   inherited pnlDetail1: TPanel
-    Top = 544
+    Top = 565
+    Height = 20
     ExplicitLeft = 0
-    ExplicitTop = 544
+    ExplicitTop = 565
+    ExplicitHeight = 20
   end
   inherited pcMain: TcxPageControl
     Top = 22
-    Height = 519
+    Height = 540
     Properties.HideTabs = False
     ExplicitTop = 22
     ExplicitHeight = 519
-    ClientRectBottom = 517
-    ClientRectLeft = 2
-    ClientRectRight = 748
-    ClientRectTop = 28
+    ClientRectBottom = 536
+    ClientRectTop = 24
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 746
-      ExplicitHeight = 489
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 742
+      ExplicitHeight = 491
       inherited cxScrollBox1: TcxScrollBox
-        Width = 746
-        Height = 489
-        ExplicitWidth = 746
-        ExplicitHeight = 489
+        Width = 742
+        Height = 512
+        ExplicitWidth = 742
+        ExplicitHeight = 491
         inherited tbarData: TToolBar
-          Width = 744
+          Width = 740
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 744
+          ExplicitWidth = 740
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -69,177 +70,19 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Width = 744
-          Height = 462
+          Width = 740
+          Height = 485
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 744
-          ExplicitHeight = 462
-          object PnlFotos: TPanel
-            Left = 0
-            Top = 273
-            Width = 744
-            Height = 189
-            Align = alClient
-            TabOrder = 0
-            object ImgFoto: TImage
-              Left = 23
-              Top = 18
-              Width = 289
-              Height = 196
-              Stretch = True
-            end
-            object Label9: TLabel
-              Left = 377
-              Top = 24
-              Width = 73
-              Height = 13
-              Caption = 'NombreArchivo'
-            end
-            object ImgVacio: TImage
-              Left = 318
-              Top = 178
-              Width = 72
-              Height = 49
-              Picture.Data = {
-                0A544A504547496D61676517050000FFD8FFE000104A46494600010101006000
-                600000FFDB004300020101020101020202020202020203050303030303060404
-                0305070607070706070708090B0908080A0807070A0D0A0A0B0C0C0C0C07090E
-                0F0D0C0E0B0C0C0CFFDB004301020202030303060303060C0807080C0C0C0C0C
-                0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C
-                0C0C0C0C0C0C0C0C0C0C0C0C0CFFC000110800C600C803012200021101031101
-                FFC4001F0000010501010101010100000000000000000102030405060708090A
-                0BFFC400B5100002010303020403050504040000017D01020300041105122131
-                410613516107227114328191A1082342B1C11552D1F02433627282090A161718
-                191A25262728292A3435363738393A434445464748494A535455565758595A63
-                6465666768696A737475767778797A838485868788898A92939495969798999A
-                A2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6
-                D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4F5F6F7F8F9FAFFC4001F01000301
-                01010101010101010000000000000102030405060708090A0BFFC400B5110002
-                0102040403040705040400010277000102031104052131061241510761711322
-                328108144291A1B1C109233352F0156272D10A162434E125F11718191A262728
-                292A35363738393A434445464748494A535455565758595A636465666768696A
-                737475767778797A82838485868788898A92939495969798999AA2A3A4A5A6A7
-                A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6D7D8D9DAE2E3
-                E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C03010002110311003F00FDFC
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
-                A28A2803FFD9}
-              Stretch = True
-            end
-            object Label11: TLabel
-              Left = 377
-              Top = 68
-              Width = 28
-              Height = 13
-              Caption = 'Notas'
-            end
-            object DBText1: TDBText
-              Left = 377
-              Top = 43
-              Width = 41
-              Height = 13
-              AutoSize = True
-              DataField = 'NombreArchivo'
-              DataSource = DSDocumento
-              OnDblClick = DBText1DblClick
-            end
-            object SpdBtnVerArchivo: TSpeedButton
-              Left = 120
-              Top = 104
-              Width = 103
-              Height = 22
-              Caption = 'Ver Documento'
-              Glyph.Data = {
-                76010000424D7601000000000000760000002800000020000000100000000100
-                04000000000000010000130B0000130B00001000000000000000000000000000
-                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-                3BB33773333773333773B333333B3333333B7333333733333337}
-              NumGlyphs = 2
-              Visible = False
-              OnClick = SpdBtnVerArchivoClick
-            end
-            object DBNavigatorFotos: TDBNavigator
-              Left = 103
-              Top = 221
-              Width = 120
-              Height = 22
-              DataSource = datasourceFotos
-              VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
-              TabOrder = 0
-              OnClick = DBNavigatorFotosClick
-            end
-            object BtBtnFotos: TBitBtn
-              Left = 377
-              Top = 151
-              Width = 112
-              Height = 25
-              Caption = 'Agregar Documentos'
-              TabOrder = 1
-              OnClick = BtBtnFotosClick
-            end
-            object BBtnGuardaNota: TBitBtn
-              Left = 492
-              Top = 151
-              Width = 100
-              Height = 25
-              Caption = 'Guardar Notas'
-              TabOrder = 2
-              OnClick = BBtnGuardaNotaClick
-            end
-            object DBMemo1: TDBMemo
-              Left = 377
-              Top = 87
-              Width = 317
-              Height = 44
-              DataField = 'Notas'
-              DataSource = datasourceFotos
-              TabOrder = 3
-            end
-            object bbtnCancela: TBitBtn
-              Left = 594
-              Top = 151
-              Width = 100
-              Height = 25
-              Caption = 'Cancela Cambios'
-              TabOrder = 4
-              OnClick = bbtnCancelaClick
-            end
-          end
+          ExplicitWidth = 740
+          ExplicitHeight = 464
           object PnlProducto: TPanel
             Left = 0
             Top = 0
-            Width = 744
-            Height = 273
+            Width = 740
+            Height = 225
             Align = alTop
-            TabOrder = 1
+            TabOrder = 0
             object Label1: TLabel
               Left = 24
               Top = 71
@@ -256,8 +99,8 @@ inherited frmProductosEdit: TfrmProductosEdit
               Caption = 'Precio Unitario'
             end
             object Label3: TLabel
-              Left = 210
-              Top = 114
+              Left = 200
+              Top = 111
               Width = 36
               Height = 13
               Caption = 'M'#225'ximo'
@@ -284,15 +127,15 @@ inherited frmProductosEdit: TfrmProductosEdit
               Caption = 'Unidad Medida'
             end
             object Label7: TLabel
-              Left = 24
-              Top = 208
+              Left = 357
+              Top = 162
               Width = 66
               Height = 13
               Caption = 'Producto Tipo'
             end
             object Label8: TLabel
-              Left = 356
-              Top = 162
+              Left = 200
+              Top = 161
               Width = 82
               Height = 13
               Caption = 'Producto Estatus'
@@ -335,8 +178,8 @@ inherited frmProductosEdit: TfrmProductosEdit
               Width = 121
             end
             object cxDBTextEdit3: TcxDBTextEdit
-              Left = 210
-              Top = 130
+              Left = 200
+              Top = 127
               DataBinding.DataField = 'Maximo'
               DataBinding.DataSource = DataSource
               TabOrder = 2
@@ -360,7 +203,7 @@ inherited frmProductosEdit: TfrmProductosEdit
             end
             object cxDBLookupComboBox1: TcxDBLookupComboBox
               Left = 24
-              Top = 177
+              Top = 179
               DataBinding.DataField = 'UnidadMedida'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdUnidadMedida'
@@ -369,11 +212,11 @@ inherited frmProductosEdit: TfrmProductosEdit
                   FieldName = 'Descripcion'
                 end>
               TabOrder = 5
-              Width = 207
+              Width = 130
             end
             object cxDBLookupComboBox2: TcxDBLookupComboBox
-              Left = 24
-              Top = 225
+              Left = 357
+              Top = 179
               DataBinding.DataField = 'ProductoTipo'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdProductoTipo'
@@ -385,8 +228,8 @@ inherited frmProductosEdit: TfrmProductosEdit
               Width = 207
             end
             object cxDBLookupComboBox3: TcxDBLookupComboBox
-              Left = 356
-              Top = 177
+              Left = 200
+              Top = 176
               DataBinding.DataField = 'ProductoEstatus'
               DataBinding.DataSource = DataSource
               Properties.KeyFieldNames = 'IdProductoEstatus'
@@ -395,7 +238,7 @@ inherited frmProductosEdit: TfrmProductosEdit
                   FieldName = 'Descripcion'
                 end>
               TabOrder = 7
-              Width = 145
+              Width = 126
             end
             object cxDBTextEdit6: TcxDBTextEdit
               Left = 24
@@ -422,16 +265,272 @@ inherited frmProductosEdit: TfrmProductosEdit
               Width = 145
             end
           end
+          object cxPageControl1: TcxPageControl
+            Left = 0
+            Top = 225
+            Width = 740
+            Height = 260
+            Align = alClient
+            TabOrder = 1
+            Properties.ActivePage = cxTbShtFotosYDocs
+            Properties.CustomButtons.Buttons = <>
+            ExplicitTop = 273
+            ExplicitHeight = 212
+            ClientRectBottom = 256
+            ClientRectLeft = 4
+            ClientRectRight = 736
+            ClientRectTop = 24
+            object cxTbShtFotosYDocs: TcxTabSheet
+              Caption = 'Fotos y Documentos'
+              ImageIndex = 0
+              ExplicitWidth = 281
+              ExplicitHeight = 165
+              object PnlFotos: TPanel
+                Left = 0
+                Top = 0
+                Width = 732
+                Height = 232
+                Align = alClient
+                TabOrder = 0
+                ExplicitTop = -7
+                ExplicitHeight = 191
+                object ImgFoto: TImage
+                  Left = 23
+                  Top = 18
+                  Width = 289
+                  Height = 196
+                  Stretch = True
+                end
+                object Label9: TLabel
+                  Left = 377
+                  Top = 24
+                  Width = 73
+                  Height = 13
+                  Caption = 'NombreArchivo'
+                end
+                object ImgVacio: TImage
+                  Left = 318
+                  Top = 130
+                  Width = 72
+                  Height = 49
+                  Picture.Data = {
+                    0A544A504547496D61676517050000FFD8FFE000104A46494600010101006000
+                    600000FFDB004300020101020101020202020202020203050303030303060404
+                    0305070607070706070708090B0908080A0807070A0D0A0A0B0C0C0C0C07090E
+                    0F0D0C0E0B0C0C0CFFDB004301020202030303060303060C0807080C0C0C0C0C
+                    0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C
+                    0C0C0C0C0C0C0C0C0C0C0C0C0CFFC000110800C600C803012200021101031101
+                    FFC4001F0000010501010101010100000000000000000102030405060708090A
+                    0BFFC400B5100002010303020403050504040000017D01020300041105122131
+                    410613516107227114328191A1082342B1C11552D1F02433627282090A161718
+                    191A25262728292A3435363738393A434445464748494A535455565758595A63
+                    6465666768696A737475767778797A838485868788898A92939495969798999A
+                    A2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6
+                    D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4F5F6F7F8F9FAFFC4001F01000301
+                    01010101010101010000000000000102030405060708090A0BFFC400B5110002
+                    0102040403040705040400010277000102031104052131061241510761711322
+                    328108144291A1B1C109233352F0156272D10A162434E125F11718191A262728
+                    292A35363738393A434445464748494A535455565758595A636465666768696A
+                    737475767778797A82838485868788898A92939495969798999AA2A3A4A5A6A7
+                    A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7C8C9CAD2D3D4D5D6D7D8D9DAE2E3
+                    E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C03010002110311003F00FDFC
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800A28A2800
+                    A28A2803FFD9}
+                  Stretch = True
+                end
+                object Label11: TLabel
+                  Left = 377
+                  Top = 68
+                  Width = 28
+                  Height = 13
+                  Caption = 'Notas'
+                end
+                object DBText1: TDBText
+                  Left = 377
+                  Top = 43
+                  Width = 41
+                  Height = 13
+                  AutoSize = True
+                  DataField = 'NombreArchivo'
+                  DataSource = DSDocumento
+                  OnDblClick = DBText1DblClick
+                end
+                object SpdBtnVerArchivo: TSpeedButton
+                  Left = 120
+                  Top = 104
+                  Width = 103
+                  Height = 22
+                  Caption = 'Ver Documento'
+                  Glyph.Data = {
+                    76010000424D7601000000000000760000002800000020000000100000000100
+                    04000000000000010000130B0000130B00001000000000000000000000000000
+                    800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                    FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                    333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                    0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                    07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                    07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                    0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                    33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                    B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                    3BB33773333773333773B333333B3333333B7333333733333337}
+                  NumGlyphs = 2
+                  Visible = False
+                  OnClick = SpdBtnVerArchivoClick
+                end
+                object DBNavigatorFotos: TDBNavigator
+                  Left = 103
+                  Top = 221
+                  Width = 120
+                  Height = 22
+                  DataSource = datasourceFotos
+                  VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+                  TabOrder = 0
+                  OnClick = DBNavigatorFotosClick
+                end
+                object BtBtnFotos: TBitBtn
+                  Left = 377
+                  Top = 151
+                  Width = 112
+                  Height = 25
+                  Caption = 'Agregar Documentos'
+                  TabOrder = 1
+                  OnClick = BtBtnFotosClick
+                end
+                object BBtnGuardaNota: TBitBtn
+                  Left = 492
+                  Top = 151
+                  Width = 100
+                  Height = 25
+                  Caption = 'Guardar Notas'
+                  TabOrder = 2
+                  OnClick = BBtnGuardaNotaClick
+                end
+                object DBMemo1: TDBMemo
+                  Left = 377
+                  Top = 87
+                  Width = 317
+                  Height = 44
+                  DataField = 'Notas'
+                  DataSource = datasourceFotos
+                  TabOrder = 3
+                end
+                object bbtnCancela: TBitBtn
+                  Left = 594
+                  Top = 151
+                  Width = 100
+                  Height = 25
+                  Caption = 'Cancela Cambios'
+                  TabOrder = 4
+                  OnClick = bbtnCancelaClick
+                end
+              end
+            end
+            object cxTbShtEspecifica: TcxTabSheet
+              Caption = 'Especificaciones'
+              ImageIndex = 1
+              ExplicitHeight = 184
+              object Label14: TLabel
+                Left = 32
+                Top = 64
+                Width = 54
+                Height = 13
+                Caption = 'Descripcion'
+              end
+              object Label15: TLabel
+                Left = 32
+                Top = 16
+                Width = 20
+                Height = 13
+                Caption = 'Tipo'
+                FocusControl = DBLookupComboBox1
+              end
+              object DBNvgtrEspecifica: TDBNavigator
+                Left = 27
+                Top = 200
+                Width = 270
+                Height = 32
+                DataSource = dsEspecificaciones
+                TabOrder = 0
+                OnClick = DBNavigatorFotosClick
+              end
+              object DBLookupComboBox1: TDBLookupComboBox
+                Left = 32
+                Top = 32
+                Width = 274
+                Height = 21
+                DataField = 'Tipo'
+                DataSource = dsEspecificaciones
+                TabOrder = 1
+              end
+              object cxDBMemo1: TcxDBMemo
+                Left = 32
+                Top = 88
+                DataBinding.DataField = 'Descripcion'
+                DataBinding.DataSource = dsEspecificaciones
+                TabOrder = 2
+                Height = 97
+                Width = 297
+              end
+              object DBGrid1: TDBGrid
+                Left = 360
+                Top = 16
+                Width = 361
+                Height = 177
+                DataSource = dsEspecificaciones
+                TabOrder = 3
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'Tahoma'
+                TitleFont.Style = []
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'Tipo'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'Descripcion'
+                    Width = 300
+                    Visible = True
+                  end>
+              end
+            end
+          end
         end
       end
     end
     object tsProductoProveedor: TcxTabSheet
       Caption = 'Proveedores'
       ImageIndex = 1
+      ExplicitHeight = 491
     end
     object tsProductoAplicacion: TcxTabSheet
       Caption = 'Aplicaciones'
       ImageIndex = 2
+      ExplicitHeight = 491
     end
   end
   object PnlTitulo: TPanel [8]
@@ -457,147 +556,6 @@ inherited frmProductosEdit: TfrmProductosEdit
     DataSet = dmProductos.adodsMaster
     OnDataChange = DataSourceDataChange
   end
-  inherited ilPageControl: TImageList
-    Bitmap = {
-      494C010102000400580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
-      0000000000003600000028000000400000001000000001002000000000000010
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000008C96A5008C8E8400000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFF7F700FFEFEF00FFEF
-      EF00FFEFEF00FFEFEF00FFEFEF00FFEFEF00FFE7E700FFE7E700FFE7E700FFE7
-      E700FFDFDE00FFDFDE00FFD7AD0000000000FF9E0000FFF7F700FFEFEF00FFEF
-      EF00FFEFEF00FFEFEF00FFEFEF00FFEFEF00FFE7E700FFE7E700FFE7E700FFEF
-      EF002979FF006BD7FF00ADAEAD00000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFEFEF00FFEFEF00FFEF
-      EF00FFEFEF00FFEFEF00FFEFEF00FFEFEF00FFE7E700FFE7E700FFDFDE00FFDF
-      DE00FFD7D600FFD7D600FFDFDE0000000000FF9E0000FFEFEF00FFEFEF00FFEF
-      EF00FFEFEF00FFEFEF00FFEFEF00FFEFEF00FFE7E700FFE7E700EFDFDE003179
-      FF006BD7FF00398EFF00EFDFEF00000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFF7F700FFF7F700FFF7
-      F700FFF7F700FFF7F700FFEFEF00FFEFEF00FFEFEF00FFE7E700FFE7E700FFDF
-      DE00FFDFDE00FFD7D600FFDFDE0000000000FF9E0000FFF7F700FFF7F700FFF7
-      F700FFF7F700FFF7F700F7EFEF008C8E8C0084868C00ADA6AD008C8E8C007BA6
-      B500398EFF00F7DFE700FFDFDE00000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFF7F700FFFFFF00FFFF
-      FF00FFFFFF00FFF7F700FFF7F700FFF7F700FFEFEF00FFEFEF00FFE7E700FFE7
-      E700FFDFDE00FFDFDE00FFDFDE0000000000FF9E0000FFF7F700FFFFFF00FFFF
-      FF00FFFFFF00DEDFDE00E7C79400F7CF9400F7CF9C00F7CF8C0063616B009496
-      9400EFDFE700FFDFDE00FFDFDE00000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFF7F700FFEFEF00FFE7E700FFE7
-      E700FFDFDE00FFDFDE00FFDFDE0000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00B5A69400F7D7A500F7D7A500F7D79C00EFCF8C00F7CF9400C6B6
-      BD00FFDFDE00FFDFDE00FFDFDE00000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFF7F700FFEFEF00FFEFEF00FFE7
-      E700FFDFDE00FFDFDE00FFE7E70000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00F7DFAD00F7E7BD00F7E7C600F7DFAD00F7D79C00F7D7A5008C8E
-      9400FFDFDE00FFDFDE00FFE7E700000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFEFEF00FFEFEF00FFE7
-      E700FFE7E700FFDFDE00FFE7E70000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00DECFAD00FFF7DE00FFF7E700F7EFC600F7DFAD00F7D7A5009C96
-      9C00FFE7E700FFDFDE00FFE7E700000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFF7F700FFEFEF00FFE7
-      E700FFE7E700FFDFDE00FFE7E70000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00A5A6AD00FFFFEF00FFFFEF00FFEFCE00F7DFAD00E7CF9C00FFEF
-      EF00FFE7E700FFDFDE00FFE7E700000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFF7F700FFEFEF00FFE7
-      E700FFE7E700FFDFDE00FFE7E70000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00A5A6A500E7DFBD00FFEFBD00B5A69400E7D7DE00FFE7
-      E700FFE7E700FFDFDE00FFE7E700000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFEFEF00FFEFEF00FFE7
-      E700FFE7E700FFDFDE00FFE7E70000000000FF9E0000FFFFFF00FFFFFF00FFFF
-      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFF7F700FFEFEF00FFE7
-      E700FFE7E700FFDFDE00FFE7E700000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E000000000000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000FF9E0000EF860000EF860000EF86
-      0000EF860000EF860000EF860000EF860000EF860000EF860000EF860000EF86
-      0000EF860000EF860000F796000000000000FF9E0000EF860000EF860000EF86
-      0000EF860000EF860000EF860000EF860000EF860000EF860000EF860000EF86
-      0000EF860000EF860000F7960000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000000000000000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E00000000000000000000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E0000FF9E
-      0000FF9E0000FF9E0000FF9E0000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      000000000000000000000000000000000000424D3E000000000000003E000000
-      2800000040000000100000000100010000000000800000000000000000000000
-      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFF900000000
-      0001000100000000000100010000000000010001000000000001000100000000
-      0001000100000000000100010000000000010001000000000001000100000000
-      0001000100000000000100010000000000010001000000000001000100000000
-      8001800100000000FFFFFFFF0000000000000000000000000000000000000000
-      000000000000}
-  end
   inherited ActionList: TActionList
     object DatasetInsertDoc: TDataSetInsert
       Category = 'Dataset'
@@ -608,7 +566,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000
@@ -1156,7 +1114,18 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   object DSDocumento: TDataSource
     DataSet = dmProductos.ADODsDocumento
-    Left = 326
-    Top = 344
+    Left = 454
+    Top = 304
+  end
+  object cxPropertiesStore1: TcxPropertiesStore
+    Components = <>
+    StorageName = 'cxPropertiesStore1'
+    Left = 580
+    Top = 408
+  end
+  object dsEspecificaciones: TDataSource
+    DataSet = dmProductos.ADODtStEspecificaciones
+    Left = 654
+    Top = 328
   end
 end

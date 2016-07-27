@@ -110,6 +110,8 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Height = 177
             Align = alTop
             TabOrder = 0
+            ExplicitLeft = -1
+            ExplicitTop = 4
             object Label1: TLabel
               Left = 298
               Top = 6
@@ -217,8 +219,8 @@ inherited FrmDevoluciones: TFrmDevoluciones
               Width = 217
             end
             object cxDBLabel1: TcxDBLabel
-              Left = 154
-              Top = 51
+              Left = 139
+              Top = 24
               DataBinding.DataField = 'Estatus'
               DataBinding.DataSource = DataSource
               Height = 21
@@ -343,7 +345,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -484,7 +486,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D000E00A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D000E00AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000001313133B515151B600000000000000000000

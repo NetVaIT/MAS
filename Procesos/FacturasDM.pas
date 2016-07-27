@@ -430,6 +430,7 @@ type
     adodsMasterClaveMoneda: TStringField;
     ADODSAuxiliar: TADODataSet;
     ADODtStCostoFactura: TADODataSet;
+    ActImpFacturasPresupuestos: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -453,6 +454,7 @@ type
     procedure ActCancelaNotaVentaExecute(Sender: TObject);
     procedure ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
     procedure ADODtStCFDIConceptosNoIdentificaChange(Sender: TField);
+    procedure adodsMasterBeforeDelete(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -500,6 +502,8 @@ type
     constructor CreateWMostrar(AOwner: TComponent; Muestra: Boolean;TipoDoc:Integer); virtual;
     property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
     property TipoDocumento:Integer read FTipoDoc write FTipoDoc; //Mar 28/16
+
+
 
 
   end;
@@ -1890,6 +1894,39 @@ procedure TDMFacturas.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodtstIdentificadores.Open; //Feb 8/16
+end;
+
+procedure TDMFacturas.adodsMasterBeforeDelete(DataSet: TDataSet);
+begin
+  inherited;
+  //Buscar Conceptos y si no tiene buscar Impuestos para borrar antes de borrar esto sólo si son notas de credito ao cargo...Jul 22/16
+  if DataSet.FieldByName('IDCFDITipoDocumento').asInteger in [2,3] then //Notas credito y cargo , unicas que borran
+  begin
+    adoqryAuxiliar.Close;
+    adoqryAuxiliar.Sql.Clear;
+    adoqryAuxiliar.sql.Add('Select * from CFDIConceptos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+    adoqryAuxiliar.open;
+    if not adoqryAuxiliar.eof then
+    begin
+      ShowMessage('DEbe eliminar primero los conceptos asociados');
+      abort;
+    end
+    else
+    begin
+      adoqryAuxiliar.Close;
+      adoqryAuxiliar.Sql.Clear;
+      adoqryAuxiliar.sql.Add('Select * from CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+      adoqryAuxiliar.open;
+      if not adoqryAuxiliar.eof then
+      begin
+        adoqryAuxiliar.Close;
+        adoqryAuxiliar.Sql.Clear;
+        adoqryAuxiliar.sql.Add('DELETE CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+        adoqryAuxiliar.ExecSQL;
+      end;
+    end;
+
+  end;
 end;
 
 procedure TDMFacturas.adodsMasterBeforeInsert(DataSet: TDataSet);

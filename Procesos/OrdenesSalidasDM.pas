@@ -289,6 +289,14 @@ type
     adodsMasternombreC: TStringField;
     adodsMasterIdentificadorNvo: TStringField;
     actVerificaYcreaResto: TAction;
+    adodsUsuarioCotiza: TADODataSet;
+    ADODtStDatosDocumentoSalidaIdUsuario: TIntegerField;
+    ADODtStDatosDocumentoSalidaUsuarioCotiza: TStringField;
+    adodsMasterUsuarioCotiza: TStringField;
+    adodsMasterIdUsuario: TIntegerField;
+    ADODtStDatosDocumentoSalidaIDUsuarioAutPedido: TIntegerField;
+    ADODtStDatosDocumentoSalidaUsuarioAutPedido: TStringField;
+    adodsMasterUsuarioPedido: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -535,13 +543,19 @@ end;
 procedure TDMOrdenesSalidas.actVerificaYcreaRestoExecute(Sender: TObject);
 var IdOrdenSalItem, IdSalidaUbicacion:integer;           //Jul 15/16
     cantidad:Double;
-begin
+begin             //Revisar
   inherited;
-  IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
-  Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
-  IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger; //Feb 3/16
+  //While ....DEberia hacer recorrido para todos los items de las ordenes de salida
+  ADODtStSalidasUbicaciones.First;
+  while not ADODtStSalidasUbicaciones.eof do //Jul 20/16
+  begin
+    IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
+    Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
+    IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger; //Feb 3/16
 
-  VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion, False);
+    VerificaYCreaResto(IdOrdenSalItem,Cantidad, IdSalidaUbicacion, False);
+    ADODtStSalidasUbicaciones.Next;
+  end;
 end;
 
 procedure TDMOrdenesSalidas.adodsMasterAfterOpen(DataSet: TDataSet);
@@ -760,6 +774,7 @@ begin
                                      //Verificar que tenga el valor actual
 
     CambioCantidad:=False;
+    CantAGuardar:=0; //ya no debe tener Jul 20/16
     ADODtStSalidasUbicaciones.Close;
     ADODtStSalidasUbicaciones.open;
 
@@ -773,29 +788,41 @@ var valor,AGuardarAux:Double;
 begin
   inherited;
   //Jun 28/16 Desde
-  TextoAux:='';
-  valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
-  AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;
-  if CantAGuardar>0 then
-     AGuardarAux:=cantAGuardar;
-  if (AdoDtstProductosXEspacio.fieldbyname('Cantidad').ASFloat - valor ) <AGuardarAux then
+  if ADODtStSalidasUbicaciones.state =dsEdit then
   begin
-    if valor >0 then
-      TextoAux:='Existen Apartados pendientes de aplicar';
-    ShowMessage('Advertencia!! Verifique Existencias en Ubicación.'+TextoAux);
-    abort;
-  end;
-  //Hasta aca Jun 28/16     //Era pero estaba en ceros  CantAGuardar  si no se cambia Jun 28/16
-  valor:=ValorMaximoPosible(AGuardarAux,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
-  if valor <CantAGuardar then
-  begin
-    abort;
-    Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
+
+    TextoAux:='';
+    //Asegurar qu este ubicada en     IdProductoXEspacio respectivo
+
+       AdoDtstProductosXEspacio.Close;
+       AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;
+       AdoDtstProductosXEspacio.filtered:=True;
+       AdoDtstProductosXEspacio.Open;
+                                                   //Verificar cuando se borra par que recalcule
+    valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
+    AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;
+    if CantAGuardar>0 then
+       AGuardarAux:=cantAGuardar;
+    if (AdoDtstProductosXEspacio.fieldbyname('Cantidad').ASFloat - valor ) <AGuardarAux then
+    begin
+      if valor >0 then
+        TextoAux:='Existen Apartados pendientes de aplicar';
+      ShowMessage('Advertencia!! Verifique Existencias en Ubicación.'+TextoAux);
+      abort;
+    end;
+    //Hasta aca Jun 28/16     //Era pero estaba en ceros  CantAGuardar  si no se cambia Jun 28/16
+    valor:=ValorMaximoPosible(AGuardarAux,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
+    if valor <CantAGuardar then
+    begin
+      abort;
+      Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
+    end;
   end;
 end;
 
 function TDMOrdenesSalidas.BuscaSalidaUbicacionXAplicar(IDProductoEspacio, IDSalidaUbicaAct:Integer):Double;//Jun 28/16    //Copiar a... Jul 14/16
 begin
+                                         //Lo que haya de otras ordenes por aplicar
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('Select Sum(Cantidad) as Total from SalidasUbicaciones where IdSalidaUbicacionEstatus<3 and idProductoXEspacio='+ intToStr(IDProductoEspacio)

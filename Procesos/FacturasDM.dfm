@@ -8,6 +8,7 @@ inherited DMFacturas: TDMFacturas
     Filtered = True
     AfterOpen = adodsMasterAfterOpen
     BeforeInsert = adodsMasterBeforeInsert
+    BeforeDelete = adodsMasterBeforeDelete
     OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
@@ -117,12 +118,15 @@ inherited DMFacturas: TDMFacturas
     end
     object adodsMasterTotalImpuestoRetenido: TFloatField
       FieldName = 'TotalImpuestoRetenido'
+      currency = True
     end
     object adodsMasterTotalImpuestoTrasladado: TFloatField
       FieldName = 'TotalImpuestoTrasladado'
+      currency = True
     end
     object adodsMasterSaldoDocumento: TFloatField
       FieldName = 'SaldoDocumento'
+      currency = True
     end
     object adodsMasterFechaCancelacion: TDateTimeField
       FieldName = 'FechaCancelacion'
@@ -170,9 +174,11 @@ inherited DMFacturas: TDMFacturas
     end
     object adodsMasterSubTotal: TFloatField
       FieldName = 'SubTotal'
+      currency = True
     end
     object adodsMasterTotal: TFloatField
       FieldName = 'Total'
+      currency = True
     end
     object adodsMasterMoneda: TStringField
       FieldKind = fkLookup
@@ -303,6 +309,7 @@ inherited DMFacturas: TDMFacturas
     OnNewRecord = adodsMasterNewRecord
   end
   inherited ActionList: TActionList
+    Left = 328
     object ActProcesaFactura: TAction
       Hint = 'Generar CFDI'
       OnExecute = ActProcesaFacturaExecute
@@ -344,11 +351,14 @@ inherited DMFacturas: TDMFacturas
       Caption = 'Cancela Nota Venta'
       OnExecute = ActCancelaNotaVentaExecute
     end
+    object ActImpFacturasPresupuestos: TAction
+      Caption = 'ActImpFacturasPresupuestos'
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
-    Left = 168
-    Top = 16
+    Left = 176
+    Top = 24
   end
   object ADODtStOrdenSalida: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -595,11 +605,13 @@ inherited DMFacturas: TDMFacturas
     object ADODtStCFDIConceptosValorUnitario: TFMTBCDField
       FieldName = 'ValorUnitario'
       OnChange = ADODtStCFDIConceptosValorUnitarioChange
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStCFDIConceptosImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end

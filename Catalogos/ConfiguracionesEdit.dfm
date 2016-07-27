@@ -1,23 +1,23 @@
 inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
   Caption = 'Configuraci'#243'n'
-  ClientHeight = 555
+  ClientHeight = 562
   ClientWidth = 378
   ExplicitWidth = 384
-  ExplicitHeight = 583
+  ExplicitHeight = 590
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl
     Width = 378
-    Height = 514
+    Height = 521
     ExplicitWidth = 378
-    ExplicitHeight = 514
-    ClientRectBottom = 512
+    ExplicitHeight = 521
+    ClientRectBottom = 519
     ClientRectRight = 376
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 2
       ExplicitTop = 28
       ExplicitWidth = 374
-      ExplicitHeight = 484
+      ExplicitHeight = 491
       object Label1: TLabel
         Left = 32
         Top = 24
@@ -104,7 +104,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
         Left = 3
         Top = 217
         Width = 366
-        Height = 254
+        Height = 270
         BevelInner = bvLowered
         TabOrder = 5
         object Label3: TLabel
@@ -113,7 +113,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           Width = 62
           Height = 13
           Caption = 'Correo Envio'
-          FocusControl = cxDBTextEdit2
+          FocusControl = cxDBTxtEdtCorreo
         end
         object Label4: TLabel
           Left = 27
@@ -121,7 +121,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           Width = 51
           Height = 13
           Caption = 'Host Envio'
-          FocusControl = cxDBTextEdit3
+          FocusControl = cxDBTxtEdtHost
         end
         object Label5: TLabel
           Left = 212
@@ -129,7 +129,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           Width = 61
           Height = 13
           Caption = 'Puerto Envio'
-          FocusControl = cxDBTextEdit4
+          FocusControl = cxDBTxtEdtPuerto
         end
         object Label6: TLabel
           Left = 29
@@ -185,7 +185,29 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           NumGlyphs = 2
           OnClick = SpdBtnVerPassClick
         end
-        object cxDBTextEdit2: TcxDBTextEdit
+        object SpdBtnPruebaEnv: TSpeedButton
+          Left = 213
+          Top = 224
+          Width = 97
+          Height = 28
+          Caption = 'Prueba Envio'
+          Glyph.Data = {
+            76010000424D7601000000000000760000002800000020000000100000000100
+            04000000000000010000120B0000120B00001000000000000000000000000000
+            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00550B30555000
+            0000557F57F557777777550B305508888880557F57F575555557550B30508888
+            8805557F57F7FFFFFF75550B300000000055557F5777777777F5550300000000
+            0055557F777F555F77F555007800000070555F77557F5F7757F5007888000077
+            70557755557F775557F508888800777770557F555577555557F5088808077777
+            70557FF5757F555557F5098988077777705577F7557F555557F5999888077777
+            705577755575F55557550988888077770555775555575FFF7555088888888000
+            55557F55555577775555088888880755555575F5555F77555555508888075555
+            5555575FFF775555555555000755555555555577775555555555}
+          NumGlyphs = 2
+          OnClick = SpdBtnPruebaEnvClick
+        end
+        object cxDBTxtEdtCorreo: TcxDBTextEdit
           Left = 29
           Top = 32
           DataBinding.DataField = 'CorreoEnvio'
@@ -193,7 +215,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           TabOrder = 0
           Width = 304
         end
-        object cxDBTextEdit3: TcxDBTextEdit
+        object cxDBTxtEdtHost: TcxDBTextEdit
           Left = 27
           Top = 77
           DataBinding.DataField = 'HostEnvio'
@@ -201,7 +223,7 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           TabOrder = 1
           Width = 155
         end
-        object cxDBTextEdit4: TcxDBTextEdit
+        object cxDBTxtEdtPuerto: TcxDBTextEdit
           Left = 212
           Top = 77
           DataBinding.DataField = 'PuertoEnvio'
@@ -218,8 +240,8 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           Width = 304
         end
         object cxDBTextEdit7: TcxDBTextEdit
-          Left = 212
-          Top = 173
+          Left = 189
+          Top = 174
           DataBinding.DataField = 'TipoSeguridad'
           DataBinding.DataSource = DataSource
           TabOrder = 4
@@ -243,13 +265,39 @@ inherited frmConfiguracionesEdit: TfrmConfiguracionesEdit
           PasswordChar = '*'
           TabOrder = 6
         end
+        object PrgrsBrEnvioP: TProgressBar
+          Left = 213
+          Top = 201
+          Width = 94
+          Height = 17
+          Max = 20
+          MarqueeInterval = 5
+          TabOrder = 7
+          Visible = False
+        end
+        object CBXTipoSEg: TComboBox
+          Left = 237
+          Top = 174
+          Width = 123
+          Height = 21
+          ItemIndex = 3
+          TabOrder = 8
+          Text = 'sslvTLSV1'
+          Items.Strings = (
+            'sslvSSLv2'
+            'sslvsssV23'
+            'sslSSLV3'
+            'sslvTLSV1'
+            'sslvTLSV1_1'
+            'sslvTLSV1_2')
+        end
       end
     end
   end
   inherited pmlMain: TPanel
-    Top = 514
+    Top = 521
     Width = 378
-    ExplicitTop = 514
+    ExplicitTop = 521
     ExplicitWidth = 378
     inherited btnCancel: TButton
       Left = 296

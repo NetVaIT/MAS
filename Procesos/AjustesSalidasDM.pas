@@ -109,6 +109,7 @@ type
     ADODtStDatosInventarioDirIdProductoKardex: TAutoIncField;
     ADODtStProductosExistencia: TFloatField;
     ADODtStAjusteSalidaItemsdisponible: TFloatField;
+    adodsMasterIdUsuario: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActSeleccionaProductoExecute(Sender: TObject);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
@@ -175,7 +176,7 @@ begin
   if ADODtStSalidasUbicaciones.State=dsEdit then
      ADODtStSalidasUbicaciones.Post;
  //Verificar que exista??
-
+  //Tendria que se r para todos   Jul 20/16
   IdOrdenSalItem:= ADODtStSalidasUbicaciones.FieldByName('IdOrdenSalidaItem').AsInteger;
   Cantidad:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').Asfloat;
   IdSalidaUbicacion:= ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').Asinteger;
@@ -221,8 +222,9 @@ begin
   adodsmaster.Edit;
   adodsMasterIdOrdenEstatus.Value:=9;//Aplicada
   adodsMaster.post;
+
   ShowMessage('Realizado'); //Verificar ??
-  //
+  //verificar si se pone bitacora cuando se aplique
 end;
 
 procedure TDMAjustesSalida.ActSeleccionaProductoExecute(Sender: TObject);
@@ -263,7 +265,7 @@ procedure TDMAjustesSalida.adodsMasterNewRecord(DataSet: TDataSet);
 begin
   inherited;
   adodsMasterIdOrdenEstatus.Value:= 1;       //Jul 13/16
-  adodsMasterIdPersonaRecolecta.Value:= _dmConection.IdUsuario;
+  adodsMasterIdUsuario.Value:= _dmConection.IdUsuario; //mod. jul 17/16
   adodsMasterFecharegistro.Value:= now;
   adodsMasterIDOrdenSalidaTipo.Value:=4; //Ajuste, con posibilidad de cambio
   adodsMasteridalmacen.value:=IdAlmacenPrincipal; //Jul 15/16
@@ -412,6 +414,7 @@ begin
                                      //Verificar que tenga el valor actual
 
     CambioCantidad:=False;
+    CantAGuardar:=0; //ya no debe tener Jul 20/16
     ADODtStSalidasUbicaciones.Close;
     ADODtStSalidasUbicaciones.open;
 
@@ -434,23 +437,31 @@ begin
   inherited;
   //Jun 28/16 Desde
   TextoAux:='';
-  valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
-  AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;
-  if CantAGuardar>0 then
-     AGuardarAux:=cantAGuardar;
-  if (AdoDtstProductosXEspacio.fieldbyname('Cantidad').ASFloat - valor ) <AGuardarAux then
+  if ADODtStSalidasUbicaciones.State=dsEdit then   //Jul 20 /16 Para que sólo lo haga si ya tiene algo  /7Hay que ubicadlo
   begin
-    if valor >0 then
-      TextoAux:='Existen Apartados pendientes de aplicar';
-    ShowMessage('Advertencia!! Verifique Existencias en Ubicación.'+TextoAux);
-    abort;
-  end;
-  //Hasta aca Jun 28/16     //Era pero estaba en ceros  CantAGuardar  si no se cambia Jun 28/16
-  valor:=ValorMaximoPosible(AGuardarAux,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
-  if valor <CantAGuardar then
-  begin
-    Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
-    abort;
+    AdoDtstProductosXEspacio.Close;  //Verificar si se elimina de aca
+    AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;
+    AdoDtstProductosXEspacio.filtered:=True;
+    AdoDtstProductosXEspacio.Open;
+    //Jul 20 /16 hasta aca
+    valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
+    AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;
+    if CantAGuardar>0 then
+       AGuardarAux:=cantAGuardar;
+    if (AdoDtstProductosXEspacio.fieldbyname('Cantidad').ASFloat - valor ) <AGuardarAux then
+    begin
+      if valor >0 then
+        TextoAux:='Existen Apartados pendientes de aplicar';
+      ShowMessage('Advertencia!! Verifique Existencias en Ubicación.'+TextoAux);
+      abort;
+    end;
+    //Hasta aca Jun 28/16     //Era pero estaba en ceros  CantAGuardar  si no se cambia Jun 28/16
+    valor:=ValorMaximoPosible(AGuardarAux,DataSet.FieldByName('IdOrdenSalidaItem').ASInteger,DataSet.FieldByName('IdSalidaUbicacion').ASInteger); //Verificar que tenga valor....Feb 2/16
+    if valor <CantAGuardar then
+    begin
+      Showmessage('La Cantidad sobre pasa la orden. Máximo valor a poner '+ floatToStr(Valor));  //Verificar
+      abort;
+    end;
   end;
 
 

@@ -9,8 +9,8 @@ inherited DMAjustesSalida: TDMAjustesSalida
     CommandText = 
       'select idOrdenSalida, IdOrdenEstatus, IdPersonaRecolecta,'#13#10' Fech' +
       'aRegistro, Subtotal, IVA, Total, IdGeneraCFDITipoDoc,'#13#10' Acumula,' +
-      ' IdPersona, IDOrdenSalidaTipo, Observaciones,'#13#10' IdAlmacen from O' +
-      'rdenesSalidas where IdOrdenSalidaTipo>=2'
+      ' IdPersona, IDOrdenSalidaTipo, Observaciones,'#13#10' IdAlmacen, IdUsu' +
+      'ario from OrdenesSalidas where IdOrdenSalidaTipo>=2'
     Left = 32
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -79,6 +79,9 @@ inherited DMAjustesSalida: TDMAjustesSalida
       Size = 50
       Lookup = True
     end
+    object adodsMasterIdUsuario: TIntegerField
+      FieldName = 'IdUsuario'
+    end
   end
   inherited ActionList: TActionList
     object ActSeleccionaProducto: TAction
@@ -86,7 +89,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
       OnExecute = ActSeleccionaProductoExecute
     end
     object ActAplicaSalida: TAction
-      Caption = 'ActAplicaSalida'
+      Caption = 'Aplicar Salida'
       OnExecute = ActAplicaSalidaExecute
     end
     object ActAceptaUbicacion: TAction
@@ -287,7 +290,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
       '  I On P.IDProducto=I.IdProducto '#13#10'and I.IDAlmacen=1'
     Parameters = <>
     Left = 200
-    Top = 80
+    Top = 64
     object ADODtStProductosDescripcion: TStringField
       FieldName = 'Descripcion'
       Size = 255

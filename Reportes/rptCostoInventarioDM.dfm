@@ -1,4 +1,5 @@
 inherited DMrptCostoInventario: TDMrptCostoInventario
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 

@@ -36,13 +36,23 @@ type
     cxDBTextEdit5: TcxDBTextEdit;
     PnlTitulo: TPanel;
     Label6: TLabel;
+    cxDBTextEdit6: TcxDBTextEdit;
+    Label7: TLabel;
+    DSVerificaActualiza: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure cxDBTextEdit5Editing(Sender: TObject; var CanEdit: Boolean);
   private
+    FImprimelista: TBasicAction;
+    FactualizaPrecios: TBasicAction;
+    procedure SetFImprimeLista(const Value: TBasicAction);
+    procedure SetFactualizaPrecios(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+
+     property actImprimeLista: TBasicAction read FImprimelista write SetFImprimeLista; //Jul 18/16
+     property actActualizaprecios: TBasicAction read FactualizaPrecios write SetFactualizaPrecios; //Jul 18/16
   end;
 
 var
@@ -72,7 +82,21 @@ procedure TfrmListaPrecioEdit.FormCreate(Sender: TObject);
 begin
   inherited;
   gFormGrid := TFrmListaPreciosGrid.Create(Self);
+  TFrmListaPreciosGrid(gFormGrid).DSVerificaActualiza.DataSet:= DSVerificaActualiza.DataSet;
 
+end;
+
+
+procedure TfrmListaPrecioEdit.SetFactualizaPrecios(const Value: TBasicAction);
+begin
+  FactualizaPrecios := Value;
+  TFrmListaPreciosGrid(gFormGrid).actActualizaPrecios:=value;
+end;
+
+procedure TfrmListaPrecioEdit.SetFImprimeLista(const Value: TBasicAction);
+begin
+  FImprimelista := Value;
+  TFrmListaPreciosGrid(gFormGrid).actImprimeLista:=Value;
 end;
 
 end.

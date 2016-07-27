@@ -166,7 +166,8 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   AplicacionesConsultaDM, OrdenesEntradasDM, rptAntiguedadSaldosDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
   OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
-  ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM, rptVentasProyeccionDM;
+  ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM, rptVentasProyeccionDM,
+  AjustesEntradaDM, CierreReportes;
 
 { TfrmMain }
 
@@ -223,7 +224,7 @@ begin
    34: gModulo := TdmListaPrecios.Create(Self);  //Jul 1/16
    33: gModulo := TDMAjustesSalida.Create(Self); //Jul 12/16
    35: gModulo := TdmKardexMovimientos.Create(Self); //Jul 6/16
-  //   36: gModulo := TDMAjustesEntrada.Create(Self); //Jul 12/16
+   36: gModulo := TDMAjustesEntradas.Create(Self); //Jul 18/16 ??
    40: gModulo := TdmBackorderEntradas.Create(Self);
    41: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tRequisicion);
    42: gModulo := TdmDocumentosEntradas.CreateWTipo(Self, tOrdenCompra);
@@ -237,6 +238,11 @@ begin
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
    62: gModulo := TdmRptAntiguedadSaldos.create(Self); //Mar23/16
+   70: begin
+         FrmReportesCierre:=TFrmReportesCierre.Create(self);
+         FrmReportesCierre.Parent:=pnlMain;
+         FrmReportesCierre.Show;
+   end;
   end;
   if Assigned(gModulo) then
   begin
@@ -300,6 +306,9 @@ end;
 procedure TfrmMain.DestroyModule;
 begin
   inherited;
+  if FrmReportesCierre<> Nil then
+    FrmReportesCierre.Free;
+
   if Assigned(gModulo) then FreeAndNil(gModulo);
 end;
 
