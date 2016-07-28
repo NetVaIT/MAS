@@ -2,11 +2,12 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'SELECT IdCuentaBancaria, IdPersona, IdCuentaBancariaTipo, IdBanc' +
-      'o, CuentaBancaria, ClabeInterbancaria, IdMoneda, IdDocumento, Sa' +
-      'ldoCuenta, IdCuentaBancariaEstatus FROM CuentasBancarias WHERE I' +
-      'dPersona = :IdPersona'
+      'SELECT IdCuentaBancaria, IdPersona, IdBanco, CuentaBancaria,'#13#10' C' +
+      'labeInterbancaria, IdMoneda, IdDocumentoCarga,'#13#10' SaldoCuenta, Id' +
+      'CuentaBancariaEstatus '#13#10'FROM CuentasBancarias WHERE IdPersona = ' +
+      ':IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -24,20 +25,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
     object adodsMasterIdPersona: TIntegerField
       FieldName = 'IdPersona'
       Visible = False
-    end
-    object adodsMasterIdCuentaBancariaTipo: TIntegerField
-      FieldName = 'IdCuentaBancariaTipo'
-      Visible = False
-    end
-    object adodsMasterCuentaBancariaTipo: TStringField
-      FieldKind = fkLookup
-      FieldName = 'CuentaBancariaTipo'
-      LookupDataSet = adodsCuentaBancariaTipo
-      LookupKeyFields = 'IdCuentaBancariaTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdCuentaBancariaTipo'
-      Size = 50
-      Lookup = True
     end
     object adodsMasterIdBanco: TIntegerField
       FieldName = 'IdBanco'
@@ -75,10 +62,6 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       Size = 50
       Lookup = True
     end
-    object adodsMasterIdDocumento: TIntegerField
-      FieldName = 'IdDocumento'
-      Visible = False
-    end
     object adodsMasterSaldoCuenta: TFMTBCDField
       FieldName = 'SaldoCuenta'
       Precision = 18
@@ -98,6 +81,12 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       Size = 50
       Lookup = True
     end
+    object adodsMasterIdDocumentoCarga: TIntegerField
+      FieldName = 'IdDocumentoCarga'
+    end
+  end
+  inherited ActionList: TActionList
+    Left = 304
   end
   object adodsCuentaBancariaTipo: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -106,8 +95,8 @@ inherited dmCuentasBancarias: TdmCuentasBancarias
       'SELECT IdCuentaBancariaTipo, Descripcion FROM CuentasBancariasTi' +
       'pos'
     Parameters = <>
-    Left = 152
-    Top = 40
+    Left = 200
+    Top = 16
   end
   object adodsBanco: TADODataSet
     Connection = _dmConection.ADOConnection

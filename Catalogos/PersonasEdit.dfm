@@ -62,36 +62,37 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     ExplicitTop = 43
     ExplicitWidth = 1046
     ExplicitHeight = 458
-    ClientRectBottom = 454
-    ClientRectRight = 1042
-    ClientRectTop = 24
+    ClientRectBottom = 456
+    ClientRectLeft = 2
+    ClientRectRight = 1044
+    ClientRectTop = 28
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 1038
-      ExplicitHeight = 430
+      ExplicitLeft = 2
+      ExplicitTop = 28
+      ExplicitWidth = 1042
+      ExplicitHeight = 428
       inherited cxScrollBox1: TcxScrollBox
-        Width = 1038
-        Height = 430
-        ExplicitWidth = 1038
-        ExplicitHeight = 430
+        Width = 1042
+        Height = 428
+        ExplicitWidth = 1042
+        ExplicitHeight = 428
         inherited tbarData: TToolBar
-          Width = 1036
+          Width = 1040
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1036
+          ExplicitWidth = 1040
         end
         inherited pnlMaster: TPanel
-          Width = 1036
-          Height = 403
+          Width = 1040
+          Height = 401
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1036
-          ExplicitHeight = 403
+          ExplicitWidth = 1040
+          ExplicitHeight = 401
           object pnlPersona: TPanel
             Left = 0
             Top = 0
-            Width = 1036
+            Width = 1040
             Height = 49
             Align = alTop
             BevelOuter = bvNone
@@ -214,7 +215,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object pnlPersonaMoral: TPanel
             Left = 0
             Top = 49
-            Width = 1036
+            Width = 1040
             Height = 93
             Align = alTop
             BevelOuter = bvNone
@@ -257,7 +258,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object pnlPersonaFisica: TPanel
             Left = 0
             Top = 142
-            Width = 1036
+            Width = 1040
             Height = 211
             Align = alTop
             BevelOuter = bvNone
@@ -415,8 +416,8 @@ inherited frmPersonasEdit: TfrmPersonasEdit
           object PnlCliente: TPanel
             Left = 0
             Top = 353
-            Width = 1036
-            Height = 50
+            Width = 1040
+            Height = 48
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 3
@@ -525,7 +526,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1038
+        Width = 1042
       end
     end
     object tsCorreo: TcxTabSheet
@@ -546,7 +547,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1038
+        Width = 1042
       end
     end
     object tsContactos: TcxTabSheet
@@ -567,7 +568,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         Height = 21
-        Width = 1038
+        Width = 1042
       end
     end
     object tsCuentasBancarias: TcxTabSheet
@@ -621,7 +622,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -767,7 +768,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

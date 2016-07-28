@@ -25,7 +25,6 @@ uses
 
 type
   TfrmCuentasBancariasEdit = class(T_frmStandarGFormEdit)
-    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     cxDBTextEdit1: TcxDBTextEdit;
@@ -35,10 +34,10 @@ type
     Label6: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
     Label7: TLabel;
-    cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBLookupComboBox3: TcxDBLookupComboBox;
     cxDBLookupComboBox4: TcxDBLookupComboBox;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,5 +49,11 @@ implementation
 {$R *.dfm}
 
 uses CuentasBancariasDM, CuentasBancariasForm;
+
+procedure TfrmCuentasBancariasEdit.FormCreate(Sender: TObject);
+begin
+  inherited;
+  gFormGrid := TfrmCuentasBancarias.Create(Self);
+end;
 
 end.

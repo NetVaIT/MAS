@@ -22,14 +22,12 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.Menus;
 
 type
   TfrmCuentasBancarias = class(T_frmStandarGFormGrid)
     tvMasterIdCuentaBancaria: TcxGridDBColumn;
     tvMasterIdPersona: TcxGridDBColumn;
-    tvMasterIdCuentaBancariaTipo: TcxGridDBColumn;
-    tvMasterCuentaBancariaTipo: TcxGridDBColumn;
     tvMasterIdBanco: TcxGridDBColumn;
     tvMasterBanco: TcxGridDBColumn;
     tvMasterCuentaBancaria: TcxGridDBColumn;
@@ -37,7 +35,6 @@ type
     tvMasterIdMoneda: TcxGridDBColumn;
     tvMasterMoneda: TcxGridDBColumn;
     tvMasterIdDocumento: TcxGridDBColumn;
-    tvMasterSaldoCuenta: TcxGridDBColumn;
     tvMasterIdCuentaBancariaEstatus: TcxGridDBColumn;
     tvMasterCuentaBancariaEstatus: TcxGridDBColumn;
   private

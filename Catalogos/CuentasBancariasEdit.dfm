@@ -1,9 +1,11 @@
 inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
   Caption = 'frmCuentasBancariasEdit'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -11,119 +13,109 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
       ExplicitWidth = 748
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
         inherited pnlMaster: TPanel
-          ExplicitLeft = -1
-          ExplicitTop = 24
-          object Label1: TLabel
-            Left = 34
-            Top = 16
-            Width = 96
-            Height = 13
-            Caption = 'CuentaBancariaTipo'
-          end
+          ExplicitLeft = 0
+          ExplicitTop = 25
           object Label2: TLabel
-            Left = 34
-            Top = 56
+            Left = 32
+            Top = 24
             Width = 29
             Height = 13
             Caption = 'Banco'
           end
           object Label3: TLabel
-            Left = 34
-            Top = 96
+            Left = 32
+            Top = 64
             Width = 76
             Height = 13
             Caption = 'CuentaBancaria'
             FocusControl = cxDBTextEdit1
           end
           object Label4: TLabel
-            Left = 34
-            Top = 136
+            Left = 32
+            Top = 104
             Width = 92
             Height = 13
             Caption = 'ClabeInterbancaria'
             FocusControl = cxDBTextEdit2
           end
           object Label5: TLabel
-            Left = 34
-            Top = 176
+            Left = 32
+            Top = 144
             Width = 38
             Height = 13
             Caption = 'Moneda'
           end
           object Label6: TLabel
-            Left = 34
-            Top = 216
+            Left = 32
+            Top = 184
             Width = 61
             Height = 13
             Caption = 'SaldoCuenta'
             FocusControl = cxDBTextEdit3
+            Visible = False
           end
           object Label7: TLabel
-            Left = 34
-            Top = 256
+            Left = 32
+            Top = 224
             Width = 112
             Height = 13
             Caption = 'CuentaBancariaEstatus'
           end
           object cxDBTextEdit1: TcxDBTextEdit
-            Left = 34
-            Top = 112
+            Left = 32
+            Top = 80
             DataBinding.DataField = 'CuentaBancaria'
             DataBinding.DataSource = DataSource
             TabOrder = 0
             Width = 121
           end
           object cxDBTextEdit2: TcxDBTextEdit
-            Left = 34
-            Top = 152
+            Left = 32
+            Top = 120
             DataBinding.DataField = 'ClabeInterbancaria'
             DataBinding.DataSource = DataSource
             TabOrder = 1
             Width = 121
           end
           object cxDBTextEdit3: TcxDBTextEdit
-            Left = 34
-            Top = 232
+            Left = 32
+            Top = 200
             DataBinding.DataField = 'SaldoCuenta'
             DataBinding.DataSource = DataSource
             TabOrder = 2
+            Visible = False
             Width = 121
           end
-          object cxDBLookupComboBox1: TcxDBLookupComboBox
-            Left = 33
-            Top = 31
-            DataBinding.DataField = 'CuentaBancariaTipo'
+          object cxDBLookupComboBox2: TcxDBLookupComboBox
+            Left = 31
+            Top = 39
+            DataBinding.DataField = 'Banco'
             DataBinding.DataSource = DataSource
             Properties.ListColumns = <>
             TabOrder = 3
             Width = 282
           end
-          object cxDBLookupComboBox2: TcxDBLookupComboBox
-            Left = 33
-            Top = 71
-            DataBinding.DataField = 'Banco'
-            DataBinding.DataSource = DataSource
-            Properties.ListColumns = <>
-            TabOrder = 4
-            Width = 282
-          end
           object cxDBLookupComboBox3: TcxDBLookupComboBox
-            Left = 33
-            Top = 191
+            Left = 31
+            Top = 159
             DataBinding.DataField = 'Moneda'
             DataBinding.DataSource = DataSource
             Properties.ListColumns = <>
-            TabOrder = 5
+            TabOrder = 4
             Width = 234
           end
           object cxDBLookupComboBox4: TcxDBLookupComboBox
-            Left = 33
-            Top = 271
+            Left = 31
+            Top = 239
             DataBinding.DataField = 'CuentaBancariaEstatus'
             DataBinding.DataSource = DataSource
             Properties.ListColumns = <>
-            TabOrder = 6
+            TabOrder = 5
             Width = 234
           end
         end
@@ -135,7 +127,7 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -276,7 +268,7 @@ inherited frmCuentasBancariasEdit: TfrmCuentasBancariasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
