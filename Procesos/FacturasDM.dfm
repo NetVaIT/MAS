@@ -307,6 +307,7 @@ inherited DMFacturas: TDMFacturas
   end
   inherited adodsUpdate: TADODataSet
     OnNewRecord = adodsMasterNewRecord
+    Left = 328
   end
   inherited ActionList: TActionList
     Left = 328

@@ -21,7 +21,7 @@ uses
   dxBar, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.ImgList, dxSkinsForm,
   Vcl.ExtCtrls, dxStatusBar, dxRibbonStatusBar, cxLabel, dxGallery,
   dxGalleryControl, dxRibbonBackstageViewGalleryControl, dxRibbonBackstageView,
-  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit, UsuariosDM;
+  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit, UsuariosDM, CierreReportes;
 
 type
   TfrmMain = class(T_frmMainRibbon)
@@ -144,6 +144,7 @@ type
     gModulo: T_dmStandar;
 //    gReport: T_dmReport;
     dmUsuarios: TdmUsuarios;
+    FrmReportesCierre :TFrmReportesCierre;
     procedure CreateModule(pModulo: Integer; pCaption: String); override;
     procedure ConfigControls; override;
     procedure DestroyModule; override;
@@ -167,7 +168,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
   OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
   ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM, rptVentasProyeccionDM,
-  AjustesEntradaDM, CierreReportes;
+  AjustesEntradaDM;
 
 { TfrmMain }
 
@@ -178,6 +179,7 @@ begin
 end;
 
 procedure TfrmMain.CreateModule(pModulo: Integer; pCaption: String);
+
 begin
   inherited;
   DestroyModule;

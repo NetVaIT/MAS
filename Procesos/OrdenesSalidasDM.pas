@@ -297,6 +297,7 @@ type
     ADODtStDatosDocumentoSalidaIDUsuarioAutPedido: TIntegerField;
     ADODtStDatosDocumentoSalidaUsuarioAutPedido: TStringField;
     adodsMasterUsuarioPedido: TStringField;
+    AdoUsuarioPedido: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -339,6 +340,7 @@ type
     function SacaCorreoReceptor(IdCliente:Integer;var CorreoCliente :String ):Boolean;
     function SacaPaqueteriaNvo(IdPersonaDocicilio: Integer): String;
     function BuscaSalidaUbicacionXAplicar(IDProductoEspacio,IDSalidaUbicaAct: Integer): Double;
+    function NoExisteInfoEntrega(idOrdensalida: Integer): Boolean;
 
 
     { Private declarations }
@@ -447,11 +449,22 @@ end;
 procedure TDMOrdenesSalidas.ActCreaInformacionEnvioExecute(Sender: TObject);
 begin    //May 23/16     //Se llama desde Ordenes de Salida ()
   inherited;
-  LlenaDatosEnvioNvo;
+  if NoExisteInfoEntrega(adodsMasteridOrdenSalida.AsInteger) then //Jul 27/16
+      LlenaDatosEnvioNvo;
 
   AdoDtStInfoEntregaDetalle.Refresh;  //Verificar que actualice
   ADODtStInformacionEnvio.Refresh;
   ADODtStTelefonos.Open;
+end;
+
+function TDMOrdenesSalidas.NoExisteInfoEntrega(idOrdensalida:Integer):Boolean;
+begin
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.SQL.Add('Select * from InformacionentregasDEtalles where idOrdenSalida= '+ intToStr(idordenSalida));
+  ADOQryAuxiliar.Open;
+  result:= ADOQryAuxiliar.eof; //No existe TRUE
+ 
 end;
 
 procedure TDMOrdenesSalidas.ActEnvioCorreoConArchivosExecute(Sender: TObject);
@@ -985,7 +998,13 @@ begin
   TFrmOrdenesSalida(gGridEditForm).ComparteEnvio:=ActCompartirEnvio;//May 23/16
   TFrmOrdenesSalida(gGridEditForm).DsdireccionEnvios.dataset:=ADODtStDireccionesEnvio; //Jun 10/16
   TFrmOrdenesSalida(gGridEditForm).DSProductosXEspacio.DataSet:=ADODtStProductosXEspacio; //Jun 28/16
+   //Jul 27/16  desde
 
+  TFrmOrdenesSalida(gGridEditForm).DSInformacionEntrega.DataSet:=ADODtStInformacionEnvio;
+  TFrmOrdenesSalida(gGridEditForm).DSSalidasUbicaciones.DataSet:=ADODtStSalidasUbicaciones;
+  TFrmOrdenesSalida(gGridEditForm).DSQryAuxiliar.DataSet:=ADOQryAuxiliar;
+  TFrmOrdenesSalida(gGridEditForm).DsCambiosREgreso.DataSet:=ADODtStCambioEstadoInv;
+  //Jul 27/16 hasta
   TFrmOrdenesSalida(gGridEditForm).AVerificaYCreaResto:=actVerificaYcreaResto; //Jul 15/16
 
 
@@ -1104,6 +1123,7 @@ var ID,i:Integer;
 begin
   if adodsMaster.FieldByName('IdPersona').AsInteger<>-1 then
   begin          //Verificar que  nose puedan crear de publico en general
+
     ADODtstInsertaInfoEntrega.Open;
 //    if ADODtStInformacionEnvio.eof then     //Verificar o cambiar....
 //    begin

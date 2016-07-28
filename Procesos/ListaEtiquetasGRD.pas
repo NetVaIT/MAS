@@ -36,6 +36,8 @@ uses OrdenesSalidasDM;
 procedure TFrmListaEtiquetas.BtBtnCancelaClick(Sender: TObject);
 begin
   //Verificar si se pregunta si crear etiqueta individual..//May 23/16
+  FIdEtiqueta:=-1;
+  Close;
 end;
 
 procedure TFrmListaEtiquetas.DBGrdEtiquetasDblClick(Sender: TObject);

@@ -8,7 +8,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 413
+    Top = 429
     Width = 1041
     Visible = True
     ExplicitLeft = 8
@@ -16,12 +16,12 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     ExplicitWidth = 949
   end
   inherited splDetail2: TSplitter
-    Top = 514
+    Top = 533
     Width = 1041
     Visible = True
     ExplicitLeft = 8
-    ExplicitTop = 479
-    ExplicitWidth = 949
+    ExplicitTop = 542
+    ExplicitWidth = 1041
   end
   inherited splDetail1: TSplitter
     Top = 709
@@ -47,22 +47,23 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     ExplicitHeight = 0
   end
   inherited pnlDetail2: TPanel
-    Top = 517
+    Top = 536
     Width = 1041
-    Height = 192
+    Height = 173
     Anchors = [akLeft, akTop]
     Visible = True
-    ExplicitTop = 517
+    ExplicitTop = 536
     ExplicitWidth = 1041
-    ExplicitHeight = 192
+    ExplicitHeight = 173
     object cxGrid1: TcxGrid
       Left = 0
       Top = 30
       Width = 1041
-      Height = 162
+      Height = 143
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
+      ExplicitHeight = 162
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dsOrdenSalidaItems
@@ -117,23 +118,24 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     end
   end
   inherited pnlDetail1: TPanel
-    Top = 416
+    Top = 432
     Width = 1041
-    Height = 98
+    Height = 101
     Anchors = [akLeft, akTop]
     Visible = True
     ExplicitLeft = 0
-    ExplicitTop = 416
+    ExplicitTop = 440
     ExplicitWidth = 1041
-    ExplicitHeight = 98
+    ExplicitHeight = 101
     object cxGrid: TcxGrid
       Left = 0
       Top = 30
       Width = 1041
-      Height = 68
+      Height = 71
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
+      ExplicitHeight = 68
       object tvgrid1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dsOrdenesSalida
@@ -180,11 +182,12 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     end
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 1041
-    Height = 413
+    Height = 407
     ExplicitWidth = 1041
     ExplicitHeight = 413
-    ClientRectBottom = 412
+    ClientRectBottom = 406
     ClientRectRight = 1040
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -193,7 +196,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
       ExplicitHeight = 411
       inherited cxScrollBox1: TcxScrollBox
         Width = 1039
-        Height = 411
+        Height = 405
         ExplicitWidth = 1039
         ExplicitHeight = 411
         inherited tbarData: TToolBar
@@ -210,10 +213,11 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
         end
         inherited pnlMaster: TPanel
           Width = 1037
-          Height = 384
+          Height = 378
+          ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1037
-          ExplicitHeight = 384
+          ExplicitHeight = 376
           object Label1: TLabel
             Left = 32
             Top = 21
@@ -456,7 +460,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Width = 713
             Height = 47
             BevelOuter = bvNone
-            TabOrder = 22
+            TabOrder = 21
             Visible = False
             object Label14: TLabel
               Left = 320
@@ -838,7 +842,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             KeyField = 'IdPersonaDomicilio'
             ListField = 'DirEnviocompleta'
             ListSource = DSDireccionenvios
-            TabOrder = 18
+            TabOrder = 17
           end
           object BtBtnEmpaca: TBitBtn
             Tag = 4
@@ -874,7 +878,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-            TabOrder = 19
+            TabOrder = 18
             OnClick = BtBtnEmpacaClick
           end
           object BtBtnEnviar: TBitBtn
@@ -911,7 +915,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
               FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-            TabOrder = 20
+            TabOrder = 19
             OnClick = BtBtnEmpacaClick
           end
           object BtBtnFinEmpaque: TBitBtn
@@ -935,7 +939,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               33333333337F7F33333333333309033333333333337F7F333333333333090333
               33333333337F7F33333333333300033333333333337773333333}
             NumGlyphs = 2
-            TabOrder = 23
+            TabOrder = 22
             Visible = False
             OnClick = BtBtnFinEmpaqueClick
           end
@@ -943,13 +947,34 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 1041
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '    Ordenes Entrega'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = 8
+    ExplicitTop = 8
+    ExplicitWidth = 750
+  end
   inherited DataSource: TDataSource
     DataSet = dmOrdenesEntregas.adodsMaster
     OnDataChange = DataSourceDataChange
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1090,7 +1115,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

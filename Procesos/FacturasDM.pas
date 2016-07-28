@@ -1295,8 +1295,8 @@ begin
           ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
 
           //Actualiza inventario
-
-          if (adodsMasterIdCFDITipoDocumento.AsInteger=1) or (adodsMasterIdCFDITipoDocumento.AsInteger=4) then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
+                                                           // Jul 27/16 tipo 4 no se timbran , sólo las 1  or (adodsMasterIdCFDITipoDocumento.AsInteger=4)
+          if (adodsMasterIdCFDITipoDocumento.AsInteger=1)  then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
             ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
 
         //  Showmessage('CFDI Generado');//Dic 29/15

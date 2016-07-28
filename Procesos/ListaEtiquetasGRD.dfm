@@ -20,7 +20,6 @@ object FrmListaEtiquetas: TFrmListaEtiquetas
     Height = 57
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 871
     object BtBtnAcepta: TBitBtn
       Tag = 3
       Left = 673

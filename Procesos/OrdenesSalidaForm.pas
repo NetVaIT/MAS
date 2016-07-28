@@ -238,7 +238,9 @@ type
     function ActualizaEtiqueta(IDOrdenSalida: Integer): Boolean;
     procedure PermisosEdicion;
     procedure SetFVerificayCreaResto(const Value: TBasicAction);
-    function CambioColor: TColor; //May 26/16
+    function CambioColor: TColor;
+    function EnviaOrdenSola(idOrden: Integer): Boolean;
+    function GuardaCAjas(idOrden, Cajas: Integer): Boolean; //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -368,8 +370,11 @@ var estatus:Integer;
     btnAux:TbitBtn;
     CreoCFDI, imprimeOS:Boolean;
     IDInfo:Integer;//May 20/16
+    Cancelar:Boolean; //Jul 27/16
+    
 begin
   inherited;
+  Cancelar:=False;  //Jul 27/16
   ImprimeOS:=False; //Feb 11/16
   Estatus:=-1; //Para Cuando vaya a autorizar Dic 15/15
   case (Sender as TBitBtn).tag of
@@ -464,7 +469,9 @@ begin
   if Estatus<>-1 then //Cambio a 4. Solo es para autorizacion
   begin
     //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
-
+    try      //Jul 27/16
+  //    TRansaccion
+  //   _dmConection.ADOConnection.BeginTrans;
     if ExisteEnvioPendiente(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdPersonadomicilio').AsInteger, IDInfo)and
       (Application.MessageBox('¿Desea juntar envíos con una misma etiqueta?','Confirmación de agrupacion de Envíos',MB_YESNO)=ID_YES) then
     begin
@@ -474,61 +481,87 @@ begin
       FrmListaEtiquetas.DSListaEtiquetas.DataSet:=DSQryAuxiliar.DataSet; //Verificar comportamiento Mayo 20 /16
       FrmListaEtiquetas.ShowModal;
       FIDEntregaExistente :=FrmListaEtiquetas.AIdEtiqueta;
+         
       FrmListaEtiquetas.Free;
       //Crear asociacion y actualizar totales, permitir modificacion de Cajas....
-      ComparteEnvio.execute;
-
-
+      if FIDEntregaExistente<>-1 then
+         ComparteEnvio.execute
+      else   
+        if (Application.MessageBox('¿Desea Crear etiqueta individual?','Confirmación de etiquetas',MB_YESNO)=ID_YES)then
+          CrearDatosEnvio.Execute
+        else  
+          Cancelar:=True;
     end
     else
     begin //Crear nueva y mostrar
       CrearDatosEnvio.Execute;
 
     end;
+    if not Cancelar then
+    begin
+    (*  *)
+     //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
+      ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
+      Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
+      if CreoCFDI then
+      begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
+        //Actualizar CFDI en InfoEntrega si es que no tiene uno
+        ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16
 
-  (*  *)
-   //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
-    ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
-    Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
-    if CreoCFDI then
-    begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
-      //Actualizar CFDI en InfoEntrega si es que no tiene uno
-      ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16
+        DSInformacionEntrega.DataSet.Close;
+        DSInformacionEntrega.DataSet.Open;
 
+     //   ChckBxDatosEnvios.Checked:=true;
+     //   PnlInformacionEntrega.Visible:=True;
+
+      end
+      else //Solo cuando no se crea el CFDI
+      begin
+        //Regresar al estatus anterior
+        if datasource.DataSet.State =dsBrowse then
+          datasource.DataSet.Edit;
+        datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
+        datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
+        datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
+        datasource.DataSet.Post;
+        if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then //Abr 1/16
+        begin //Ver si se borra el CFDI (regresar valores de folios??)
+          if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
+          begin
+           //Poner ejecucion de devolucion Jun 10/16
+          end;
+        end;
+
+        //deberia quitar Kardex y posibles datos de CFDIs
+        ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
+      end;
+      dsInfoEntregaDetalle.DataSet.Close;
+      dsInfoEntregaDetalle.DataSet.Open;
       DSInformacionEntrega.DataSet.Close;
       DSInformacionEntrega.DataSet.Open;
 
-   //   ChckBxDatosEnvios.Checked:=true;
-   //   PnlInformacionEntrega.Visible:=True;
-
+      PnlInformacionEntrega.Visible:=True; //May 23/16
+      ChckBxDatosEnvios.Checked:=true;
     end
-    else //Solo cuando no se crea el CFDI
+    else  //Cancelo el proceso y ya no quiere juntar ni poner individual
     begin
-      //Regresar al estatus anterior
       if datasource.DataSet.State =dsBrowse then
         datasource.DataSet.Edit;
       datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
       datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
       datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
       datasource.DataSet.Post;
-      if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then //Abr 1/16
-      begin //Ver si se borra el CFDI (regresar valores de folios??)
-        if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
-        begin
-         //Poner ejecucion de devolucion Jun 10/16
-        end;
-      end;
+    
+    end;//DEl Cancelar
 
-      //deberia quitar Kardex y posibles datos de CFDIs
-      ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
+    Except //Jul 27/16
+      if datasource.DataSet.State =dsBrowse then
+        datasource.DataSet.Edit;
+      datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
+      datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
+      datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
+      datasource.DataSet.Post;
     end;
-    dsInfoEntregaDetalle.DataSet.Close;
-    dsInfoEntregaDetalle.DataSet.Open;
-    DSInformacionEntrega.DataSet.Close;
-    DSInformacionEntrega.DataSet.Open;
-
-    PnlInformacionEntrega.Visible:=True; //May 23/16
-    ChckBxDatosEnvios.Checked:=true;
   end;
   //Jun 10/16 No se hace nada para autorizaci+ón si no hay contraseña o no es Valida
 end;
@@ -723,8 +756,8 @@ begin
       PnlAutorizaYFactura.Visible:=False;
   end;
   4:begin
-     // BtBtnEmpaca.Visible:=True;
-     // Pnlempaca.Visible:=False;
+     BtBtnEmpaca.Visible:=True; //Rehabilitado jul 27/16
+     Pnlempaca.Visible:=False; //Rehabilitado jul 27/16
   end;
 
   end;
@@ -737,6 +770,7 @@ var EstatusNvo:integer;
     CampoFecha:String;
     Esperar:Boolean;
     Cont:integer; //Aban Abr 8/16
+    cajas:String; //Jul 27/16
 begin
   inherited;
   Esperar:=False;
@@ -763,11 +797,27 @@ begin
     end;  *)
 
     4:begin   //Solo si esta autorizada
-        BtBtnFinEmpaque.Visible:=False;
-        EstatusNvo:=5; //Empacada
-        CampoFecha:='FechaFinempaca';
+        cajas:='1';
+        if InputQuery('Solicitud Información', 'Indique la cantidad de Cajas', Cajas )then   //Jul 27/16
+        begin
 
-    end;
+          try
+            strToint(cajas) ;
+            Esperar:=not GuardaCajas(DataSource.dataset.fieldbyname('IdOrdenSalida').asinteger,strToint(cajas));//Guardar Cajas
+
+          except
+             Showmessage('El valor debe ser un número');
+             Esperar:=True;
+          end;
+          BtBtnFinEmpaque.Visible:=False;
+          EstatusNvo:=5;
+          CampoFecha:='FechaFinempaca';
+        end
+        else
+        begin
+          Esperar:=True;
+        end;
+      end;
     10:begin //Acepta despues de recolectar y lo puede pasar a Estatus 2
          //Verificar que tenga ubicación  cada uno de los Items
          if DSSalidasUbicaciones.State=dsEdit then
@@ -795,7 +845,7 @@ begin
     datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
     datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=EstatusNvo;
     datasource.DataSet.Post;
-    if EstatusNvo=5  then //Abr 7/16
+    if EstatusNvo=5  then //Abr 7/16    //Ordenes de Entrega actualizar cuando se hace desde aca... y alreves cuando se hace desde alla.
     begin
        Cont:=-1;
        //Revisar y dar por cerrados Pedidos completados
@@ -845,6 +895,16 @@ begin
    //   Pnlaux.Visible:=False;
    //   btnAux.Visible:=true;
   end;
+end;
+
+function TFrmOrdenesSalida.GuardaCAjas(idOrden, Cajas:Integer):Boolean; //Jul 27/16
+begin
+  DSQryAuxiliar.DataSet.close;
+  TAdoquery(DSQryAuxiliar.DataSet).Sql.clear;
+  TAdoquery(DSQryAuxiliar.DataSet).SQL.ADD('Update InformacionEntregas SET CantidadCajas ='+intToStr(Cajas)
+         +' where IdInfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where where IdOrdenSalida='+intToStr(idOrden)+')');
+  Result:=  TAdoquery(DSQryAuxiliar.DataSet).ExecSQL=1;   //Debe actualizar 1
+
 end;
 
 
@@ -898,8 +958,19 @@ begin
       end;
 
     4:begin
+       //Verficar si esta orden no tiene compañia ne la orden de entrega.. //Jul 27/16
+       if EnviaOrdenSola(datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger)then
+       begin
         BtBtnEmpaca.Visible:=False;
         Pnlempaca.Visible:=True;
+       end
+       else
+       begin
+         if DSQryAuxiliar.DataSet.FieldByName('Cuantos').AsInteger=0 then //debe venir de EnviaOrdenSola Jul 27/16
+            ShowMessage('No Existe orden de entrega NDS')
+         else
+           ShowMessage('Esta orden de salida hace parte de una orden de entrega. Utilice el módulo de Orden de Entrega');
+       end;
     end;
     5:begin //Verificar  Abr 20/16
         if application.MessageBox('¿Mercancía Enviada?','Confirmación cambio estado',MB_YESNO)=idyes then
@@ -911,6 +982,20 @@ begin
     end;
   end;
 end;
+
+function TFrmOrdenesSalida.EnviaOrdenSola(idOrden:Integer):Boolean; //Jul 27/16
+begin
+  DSQryAuxiliar.DataSet.close;
+  TAdoquery(DSQryAuxiliar.DataSet).Sql.clear;
+  TAdoquery(DSQryAuxiliar.DataSet).SQL.ADD('SElect COUNT(*) as Cuantos from InformacionEntregasDetalles ED1 '
+                                          +'where ED1.IdInfoEntrega= (Select IdInfoEntrega from '
+                                          +'InformacionEntregasDetalles where IdOrdenSalida='+intToStr(idOrden)+' ) ');
+  DSQryAuxiliar.DataSet.open;
+
+  Result:=DSQryAuxiliar.DataSet.FieldByName('Cuantos').AsInteger =1;
+
+end;
+
 
 procedure TFrmOrdenesSalida.BtBtnOrdenEmbarqueClick(Sender: TObject);
 begin
@@ -930,9 +1015,10 @@ begin
     BtBtnRevisa.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=2) and
                             (Datasource.DataSet.FieldByName('FechaIniRevisa').IsNull);
 
-    BtBtnEmpaca.Visible:=False; //Jun 13/16
- // Jun 13 /16 desh  BtBtnEmpaca.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
- //                           (Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
+ // jul 27/16   BtBtnEmpaca.Visible:=False; //Jun 13/16
+ // Jun 13 /16 desh
+    BtBtnEmpaca.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and //Rehabilitado jul 27/16
+                            (Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull);
 
     BtBtnFinRecolecta.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=1) and
                             (not Datasource.DataSet.FieldByName('FechaIniRecolecta').IsNull)and
@@ -943,13 +1029,14 @@ begin
     BtBtnAutoriza.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=3) and  //Dic 15/15
                             (Datasource.DataSet.FieldByName('FechaAutoriza').IsNull);
     BtBtnAutoriza.Enabled:= pos('autoriza',_dmConection.PerFuncion)>0 ; //Abr 26/16
-    BtBtnFinEmpaque.Visible:= False; //Jun 13/16
-// Jun 13 /16 desh    BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
-// Jun 13 /16 desh                            (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
-// Jun 13 /16 desh                             (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
+ //   BtBtnFinEmpaque.Visible:= False; //Jun 13/16
+// Jun 13 /16 desh     //rehabilitado
+   BtBtnFinEmpaque.Visible:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger=4) and
+                        (not Datasource.DataSet.FieldByName('FechaIniEmpaca').IsNull)and
+                          (Datasource.DataSet.FieldByName('FechaFinempaca').IsNull);
                                                                                            //4 May 19/16           //Abr 20/16
     ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3);// deshabilitado may 24/16 //and  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<6);//Feb 11/16
-    TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and (not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull); //Feb 17/16
+    TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and ((DSInformacionEntrega.dataset.state<>dsInactive)and(not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull)); //Feb 17/16
     PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3)and ChckBxDatosEnvios.Checked; //4  May 19/16
 
     // ??PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4); //Ene 27/16
@@ -1095,6 +1182,7 @@ procedure TFrmOrdenesSalida.FormCreate(Sender: TObject);
 begin
   inherited;
   Facturando:=False; //May 24/16
+
   gFormGrid := TFrmOrdenesSalidaGrid.Create(Self);
 //  TFrmOrdenesSalidaGrid(gFormGrid).CerrarGrid := actCloseGrid;
 

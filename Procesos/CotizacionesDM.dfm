@@ -1038,7 +1038,7 @@ inherited dmCotizaciones: TdmCotizaciones
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     Left = 674
-    Top = 34
+    Top = 26
     Version = '15.0'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPplnItemsCotizacion'

@@ -128,6 +128,7 @@ begin
   cxDtEdtHasta.date :=Date+1;//fechaAux-1;
 
   ffiltro:=' where IE.IdEstatusOrdenEntrega= 4'; //Verifivar Jun 13/16
+  SpdBtnConsulta.Click;
 end;
 
 function TfrmOrdenesEntregasGrid.GetFFiltroNombre: String;

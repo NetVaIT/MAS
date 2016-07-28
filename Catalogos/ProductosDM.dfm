@@ -176,7 +176,7 @@ inherited dmProductos: TdmProductos
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 118
+    Left = 126
     Top = 16
   end
   object adodsProductoDoctos: TADODataSet
@@ -310,7 +310,6 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsPersonas: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

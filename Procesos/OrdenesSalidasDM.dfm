@@ -713,7 +713,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object ADODtStDatosDocumentoSalidaUsuarioAutPedido: TStringField
       FieldKind = fkLookup
       FieldName = 'UsuarioAutPedido'
-      LookupDataSet = adodsUsuarioCotiza
+      LookupDataSet = AdoUsuarioPedido
       LookupKeyFields = 'IdUsuario'
       LookupResultField = 'Login'
       KeyFields = 'IDUsuarioAutPedido'
@@ -1593,7 +1593,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select  IdOrdenSalidaTipo, Identificador, Descripcion from Orden' +
       'esSalidasTipos'
     Parameters = <>
-    Left = 616
+    Left = 632
     Top = 24
   end
   object adodsClientes: TADODataSet
@@ -1637,5 +1637,13 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Parameters = <>
     Left = 896
     Top = 32
+  end
+  object AdoUsuarioPedido: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 'SELECT IdUsuario, IdPersona, Login FROM Usuarios'
+    Parameters = <>
+    Left = 896
+    Top = 96
   end
 end

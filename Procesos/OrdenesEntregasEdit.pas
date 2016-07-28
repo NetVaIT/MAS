@@ -103,6 +103,7 @@ type
     BitBtn2: TBitBtn;
     DBTxtQuienEntrega: TDBText;
     lblRespEntrega: TLabel;
+    PnlTitulo: TPanel;
     procedure BtBtnImprimeEtiquetaClick(Sender: TObject);
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -118,8 +119,10 @@ type
     procedure ImprimirEtiqueta(IdInfoentrega, IDDocumentoSalida,
       cualRep: Integer);
     procedure SetCargarDocGuia(const Value: TBasicAction);
-    procedure ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo:Integer);
+    procedure ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo, IdPersonaEmp:Integer);
     procedure PermisosEdicion;
+    function GuardaCAjas(idOrden, Cajas: Integer): Boolean;
+    function EnviaOrdenSola(idOrden: Integer): integer;
     { Private declarations }
   public
     { Public declarations }
@@ -223,12 +226,16 @@ begin      //Jun 9/16
   inherited;
    case (Sender as TBitBtn).tag of
    4:begin
-       if application.MessageBox('¿Desea imprimir las Etiquetas y la Orden de embarque?','Confirmación Etiquetas', MB_YESNO)=IDYES then
+       dsOrdenSalidaItems.dataset.refresh;
+       if EnviaOrdenSola (dsOrdenSalidaItems.dataset.fieldbyname('IdOrdenSalida').asinteger) >1 then
+         showmessage('Verifique que todas las ordenes de salida asociadas a la orden de entrega estén empacadas. ');
+
+    (*  DEsh. jul 27/16 if application.MessageBox('¿Desea imprimir las Etiquetas y la Orden de embarque?','Confirmación Etiquetas', MB_YESNO)=IDYES then
        begin
          BtBtnImprimeEtiqueta.Click;
          ShowMessage('Verifique que los datos sean correctos');
          BtBtnOrdenEmbarque.Click;
-       end;
+       end; *)
 
         BtBtnEmpaca.Visible:=False;
         Pnlempaca.Visible:=True;
@@ -240,35 +247,70 @@ begin      //Jun 9/16
    end;
 end;
 
+function TfrmOrdenesEntregasEdit.EnviaOrdenSola(idOrden:Integer):integer; //Jul 27/16
+begin
+  DSQryAuxiliar.DataSet.close;
+  TAdoquery(DSQryAuxiliar.DataSet).Sql.clear;
+  TAdoquery(DSQryAuxiliar.DataSet).SQL.ADD('SElect COUNT(*) as Cuantos from InformacionEntregasDetalles ED1 '
+                                          +'where ED1.IdInfoEntrega= (Select IdInfoEntrega from '
+                                          +'InformacionEntregasDetalles where IdOrdenSalida='+intToStr(idOrden)+' ) ');
+  DSQryAuxiliar.DataSet.open;
+
+  Result:=DSQryAuxiliar.DataSet.FieldByName('Cuantos').AsInteger ;
+
+end;
+
+
 procedure TfrmOrdenesEntregasEdit.BtBtnFinEmpaqueClick(Sender: TObject);
 var      //Jun 10/16
   EstatusNvo, cont:integer;
-  CampoFecha:String;
+  CampoFecha, Cajas:String;
+  Esperar:Boolean ; //Jul 27/16
 begin
   inherited;
+  Esperar:=False;
   case (Sender as TBitBtn).tag of
-     4:begin   //Solo si esta autorizada
+  4:begin   //Solo si esta autorizada
+      if EnviaOrdenSola (dsOrdenSalidaItems.dataset.fieldbyname('IdOrdenSalida').asinteger) >1 then
+         showmessage('Verifique que todas las ordenes de salida asociadas a la orden de entrega estén empacadas. ');
+      cajas:='1';
+      if InputQuery('Solicitud Información', 'Indique la cantidad de Cajas', Cajas )then   //Jul 27/16
+      begin
         BtBtnFinEmpaque.Visible:=False;
-        EstatusNvo:=5; //Empacada
+        EstatusNvo:=5;  //Empacada
         CampoFecha:='FechaFinempaque';
-        BtBtnFinEmpaque.Visible:=False;
+        try
+         cont:=strToint(cajas) ;
+
+          Esperar:=not GuardaCajas(DataSource.dataset.fieldbyname('IDInfoEntrega').asinteger,cont);//Guardar Cajas
+
+        except
+           on e: Exception do
+           begin
+             if  e is EConvertError then
+                 Showmessage('El valor debe ser un número');
+             Esperar:=True;
+           end;
+        end;
+      end
+      else
+      begin
+        Esperar:=True;
+      end;
     end;
   end;
-
-  if datasource.DataSet.State =dsBrowse then
-        datasource.DataSet.Edit;
-  datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
-  datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger:=EstatusNvo;
-  datasource.DataSet.Post;
- // if EstatusNvo=5  then
- // begin
-   // ActualizarOrdenesSalida( datasource.DataSet.FieldByName('IDInformacionEntrega').AsInteger, EstatusNvo);
-
+  if not Esperar then
+  begin
+    if datasource.DataSet.State =dsBrowse then
+          datasource.DataSet.Edit;
+    datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+    datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger:=EstatusNvo;
+    datasource.DataSet.Post;
+    if EstatusNvo=5  then
+    begin
+      ActualizarOrdenesSalida( datasource.DataSet.FieldByName('IDInfoEntrega').AsInteger, EstatusNvo, datasource.DataSet.FieldByName('IDPersonaEmpaca').asInteger);
+    end;
    // Cont:=-1;
-
-
-
-
 
 
    {
@@ -314,23 +356,35 @@ begin
 
   //  end
 
-
+  end; //Del esperar
 
 end;
 
-procedure TfrmOrdenesEntregasEdit.ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo:Integer);
+function TfrmOrdenesEntregasEdit.GuardaCAjas(idOrden, Cajas:Integer):Boolean; //Jul 27/16
+begin
+  DSQryAuxiliar.DataSet.close;
+  TAdoquery(DSQryAuxiliar.DataSet).Sql.clear;
+  TAdoquery(DSQryAuxiliar.DataSet).SQL.ADD('Update InformacionEntregas SET CantidadCajas ='+intToStr(Cajas)
+         +' where IdInfoEntrega='+intToStr(idOrden));  //Aca es directo el id de la entrega
+  Result:=  TAdoquery(DSQryAuxiliar.DataSet).ExecSQL=1;   //Debe actualizar 1
+
+end;
+
+procedure TfrmOrdenesEntregasEdit.ActualizarOrdenesSalida(IdInfoEntrega, IdEstatusNvo, IDPersonaEmp:Integer);
 begin
   dsQryAuxiliar.DataSet.Close;
   TADOQuery(dsQryAuxiliar.DataSet).sql.clear;
   TADOQuery(dsQryAuxiliar.DataSet).Sql.ADD('SElect IED.* from InformacionEntregasDetalles IED '
-                                          +' where IED.idInformacionEntrega='+ intToStr(IdInfoEntrega));
+                                          +' where IED.idInfoEntrega='+ intToStr(IdInfoEntrega));
   TADOQuery(dsQryAuxiliar.DataSet).open;
   while not dsQryAuxiliar.DataSet.eof do
   begin
     dsQryAux2.DataSet.Close;
     TADOQuery(dsQryAux2.DataSet).sql.clear;
     TADOQuery(dsQryAux2.DataSet).Sql.ADD('Update OrdenesSalidas SET IdOrdenEstatus= '+intToStr(IdEstatusNvo)
-                                            +' where idOrdenSalida='+ dsQryAuxiliar.DataSet.FieldByName('IdOrdenSalida').asString);
+                                          +', IDPersonaEmpaca= '+ intToStr(IDPersonaEmp)
+                                          + ', FechaIniEmpaca = GetDate(), fechaFinEmpaca = GETDATE()'
+                                          +' where idOrdenSalida='+ dsQryAuxiliar.DataSet.FieldByName('IdOrdenSalida').asString);
     TADOQuery(dsQryAux2.DataSet).ExecSql;
 
     //Aca se deberia verificar los DocumentoSalidas Items, par aver si estan completos...

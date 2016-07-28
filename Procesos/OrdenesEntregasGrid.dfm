@@ -20,34 +20,34 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
   end
   inherited pnlClose: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
   end
   inherited pnlDetail3: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
   end
   inherited pnlDetail2: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
   end
   inherited pnlDetail1: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
   end
   inherited pnltoolbar: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
   end
   inherited pnlMaster: TPanel
     Width = 1127
-    ExplicitWidth = 989
+    ExplicitWidth = 1127
     inherited cxGrid: TcxGrid
       Top = 49
       Width = 1127
       Height = 422
-      ExplicitTop = 41
-      ExplicitWidth = 989
-      ExplicitHeight = 430
+      ExplicitTop = 49
+      ExplicitWidth = 1127
+      ExplicitHeight = 422
       inherited tvMaster: TcxGridDBTableView
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
@@ -139,76 +139,48 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
       inherited ToolButton1: TToolButton
         ExplicitHeight = 46
       end
-      inherited ToolButton10: TToolButton [1]
-        Left = 23
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 46
+      end
+      inherited ToolButton10: TToolButton
         Width = 2
-        ExplicitLeft = 23
         ExplicitWidth = 2
-        ExplicitHeight = 46
-      end
-      inherited btnEdit: TToolButton [2]
-        Left = 25
-        ExplicitLeft = 25
-        ExplicitHeight = 46
-      end
-      inherited ToolButton3: TToolButton [3]
-        Left = 48
-        ExplicitLeft = 48
-        ExplicitHeight = 46
-      end
-      inherited ToolButton4: TToolButton [4]
-        Left = 71
-        ExplicitLeft = 71
-        ExplicitHeight = 46
-      end
-      inherited ToolButton5: TToolButton [5]
-        Left = 79
-        ExplicitLeft = 79
-        ExplicitHeight = 46
-      end
-      inherited ToolButton6: TToolButton [6]
-        Left = 102
-        ExplicitLeft = 102
-        ExplicitHeight = 46
-      end
-      inherited ToolButton7: TToolButton [7]
-        Left = 125
-        ExplicitLeft = 125
-        ExplicitHeight = 46
-      end
-      inherited ToolButton8: TToolButton [8]
-        Left = 148
-        ExplicitLeft = 148
-        ExplicitHeight = 46
-      end
-      inherited ToolButton9: TToolButton [9]
-        Left = 171
-        ExplicitLeft = 171
-        ExplicitHeight = 46
-      end
-      inherited ToolButton2: TToolButton [10]
-        Left = 194
-        ExplicitLeft = 194
-        ExplicitHeight = 46
-      end
-      inherited btnPost: TToolButton [11]
-        Left = 202
-        ExplicitLeft = 202
-        ExplicitHeight = 46
-      end
-      inherited btnCancel: TToolButton [12]
-        Left = 225
-        ExplicitLeft = 225
-        ExplicitHeight = 46
-      end
-      inherited ToolButton21: TToolButton [13]
-        Left = 248
-        ExplicitLeft = 248
-        ExplicitHeight = 46
-      end
-      inherited ToolButton22: TToolButton [14]
-        Left = 256
-        ExplicitLeft = 256
         ExplicitHeight = 46
       end
       inherited tbtnCerrar: TToolButton
@@ -357,7 +329,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 608
     Top = 176
     Bitmap = {
-      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -504,7 +476,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 672
     Top = 176
     Bitmap = {
-      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -3,7 +3,6 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   ClientWidth = 1295
   OnCreate = FormCreate
   ExplicitWidth = 1295
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -119,6 +118,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         end
         object tvMasterUsuarioPedido: TcxGridDBColumn
           DataBinding.FieldName = 'UsuarioPedido'
+          Width = 100
         end
       end
     end
@@ -318,7 +318,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -465,7 +465,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C001280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1011,6 +1011,6 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   end
   inherited PopupMenu: TPopupMenu
     Left = 568
-    Top = 88
+    Top = 96
   end
 end

@@ -3,7 +3,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -247,7 +246,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataSource = DataSource
             end
             object DBTxtQuienEmpaca: TDBText
-              Left = 93
+              Left = 136
               Top = 242
               Width = 94
               Height = 13
@@ -1090,8 +1089,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             end
             object BtBtnFinEmpaque: TBitBtn
               Tag = 4
-              Left = 303
-              Top = 218
+              Left = 284
+              Top = 256
               Width = 97
               Height = 25
               Caption = 'Fin empaque'
@@ -1662,7 +1661,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Left = 312
               Top = 58
               Width = 631
-              Height = 241
+              Height = 249
               TabOrder = 14
               Visible = False
               object Label22: TLabel
@@ -1984,7 +1983,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400F80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2200,7 +2199,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002240210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002340210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3143,8 +3142,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   object DSInformacionEntrega: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStInformacionEnvio
     OnStateChange = DSInformacionEntregaStateChange
-    Left = 996
-    Top = 136
+    Left = 988
+    Top = 128
   end
   object DSSalidasUbicaciones: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStSalidasUbicaciones
@@ -3164,8 +3163,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DSInsertaKardex: TDataSource
     DataSet = DMOrdenesSalidas.ADOQryInsertaProductoKardex
-    Left = 900
-    Top = 120
+    Left = 884
+    Top = 128
   end
   object PppMnEnviar: TPopupMenu
     Left = 971
@@ -3188,7 +3187,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DSDireccionenvios: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStDireccionesEnvio
-    Left = 956
-    Top = 315
+    Left = 860
+    Top = 267
   end
 end
