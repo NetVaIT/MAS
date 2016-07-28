@@ -70,6 +70,7 @@ type
     ChckBxXFecha: TCheckBox;
     ChckBxFactVivas: TCheckBox;
     TlBtnReporteUtilidad: TToolButton;
+    TlBtnReporteDiarioFacturas: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -86,6 +87,7 @@ type
       Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure TlBtnReporteUtilidadClick(Sender: TObject);
+    procedure TlBtnReporteDiarioFacturasClick(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -140,7 +142,7 @@ implementation
 
 {$R *.dfm}
 
-uses FacturasDM, ImpresosSalidasDM;
+uses FacturasDM, ImpresosSalidasDM, rptRegistroDiarioFacturasDM;
 
 { TfrmFacturasGrid }
 
@@ -456,6 +458,25 @@ procedure TfrmFacturasGrid.TlBtnRegPDFMouseDown(Sender: TObject;
 begin
   inherited;
   fImpresionGD:=SacaValor;
+end;
+
+procedure TfrmFacturasGrid.TlBtnReporteDiarioFacturasClick(Sender: TObject);
+var ArchiPDF: TFileName;
+   rptRegistroDiarioFact: TdmRPTRegistroDiarioFact;
+begin
+  inherited;
+
+  ArchiPDF:='RegistroDiarioFacturas.PDF';
+  rptRegistroDiarioFact:= TdmRPTRegistroDiarioFact.Create(Self);
+  try
+    rptRegistroDiarioFact.Title:= 'REGISTRO DIARIO FACTURAS ' + DateTostr(date);
+    rptRegistroDiarioFact.PDFFileName:= ArchiPDF;
+    rptRegistroDiarioFact.Execute
+  finally
+    rptRegistroDiarioFact.Free;
+  end;
+  if FileExists(ArchiPDF) then
+      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TfrmFacturasGrid.TlBtnReporteUtilidadClick(Sender: TObject);

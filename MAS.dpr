@@ -201,7 +201,8 @@ uses
   _ReportMASDM in 'Reportes\_ReportMASDM.pas' {_dmReportMAS: TDataModule},
   rptInventarioExistenciaDM in 'Reportes\rptInventarioExistenciaDM.pas' {dmrptInventarioExistencia: TDataModule},
   rptVentasUnidadesAcumuladasDM in 'Reportes\rptVentasUnidadesAcumuladasDM.pas' {dmrptVentasUnidadesAcumuladas: TDataModule},
-  rptInventarioDM in 'Reportes\rptInventarioDM.pas' {dmrptInventario: TDataModule};
+  rptInventarioDM in 'Reportes\rptInventarioDM.pas' {dmrptInventario: TDataModule},
+  rptRegistroDiarioFacturasDM in 'Reportes\rptRegistroDiarioFacturasDM.pas' {dmRPTRegistroDiarioFact: TDataModule};
 
 {$R *.res}
 
