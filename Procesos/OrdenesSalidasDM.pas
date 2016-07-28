@@ -1142,6 +1142,8 @@ begin
       ADODtstInsertaInfoEntrega.Fieldbyname('FechaProgramadaEnt').AsDateTime:= Date+10;
       ADODtstInsertaInfoEntrega.Fieldbyname('Conducto').AsString:= SacaPaqueteriaNvo(adodsMaster.FieldByName('IdPersonaDomicilio').AsInteger);//May 12/16
       ADODtstInsertaInfoEntrega.Fieldbyname('Servicio').AsString:=adodsMaster.FieldByName('Servicio').AsString; ;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Contenido').AsString:='REFACCIONES AGRICOLAS' ;//JUL 28/16
+
       ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:= False;
       ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
       ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= False;
