@@ -43,7 +43,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
       Top = 49
       Width = 1217
       Height = 422
-      ExplicitTop = 45
+      ExplicitTop = 49
       ExplicitWidth = 1217
       ExplicitHeight = 422
       inherited tvMaster: TcxGridDBTableView
@@ -252,17 +252,16 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
             Height = 13
             Caption = 'Seleccione proveedor:'
           end
-          object RxDBLkpCmbProveedor: TRxDBLookupCombo
+          object RxDBLkpCmbProveedor: TDBLookupComboBox
             Left = 8
-            Top = 15
-            Width = 164
+            Top = 17
+            Width = 168
             Height = 21
-            DropDownCount = 8
-            LookupField = 'IdPersona'
-            LookupDisplay = 'RazonSocial'
-            LookupSource = DSProveedor
+            KeyField = 'IdPersona'
+            ListField = 'RazonSocial'
+            ListSource = DSProveedor
             TabOrder = 0
-            OnClick = RxDBLkpCmbProveedorClick
+            OnClick = RxDBLkpCmbProveedorxClick
           end
         end
       end
@@ -475,7 +474,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilPageControl: TImageList
     Top = 152
     Bitmap = {
-      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -620,7 +619,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilAction: TImageList
     Top = 152
     Bitmap = {
-      494C01010E00B801440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E00B8014C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000101001E030303430203033E0202
       023E0303033D0303033D0303033E0303033E154F1CAD23F405FF114017980303

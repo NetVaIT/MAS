@@ -23,7 +23,8 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel, cxGridCustomView, cxGrid,
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons, cxContainer, cxTextEdit,
-  cxCurrencyEdit,Data.Win.ADODB, RxLookup;
+  cxCurrencyEdit,Data.Win.ADODB, cxMaskEdit, cxDropDownEdit,
+  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, Vcl.DBCtrls;
 
 type
   TFrmListaPreciosGrid = class(T_frmStandarGFormGrid)
@@ -50,7 +51,6 @@ type
     SpdBtnCambiarPrecio: TSpeedButton;
     PnlProveedor: TPanel;
     RdGrpFiltro: TRadioGroup;
-    RxDBLkpCmbProveedor: TRxDBLookupCombo;
     Label4: TLabel;
     DSProveedor: TDataSource;
     tvMasterPrecioNuevo: TcxGridDBColumn;
@@ -58,6 +58,7 @@ type
     TlBtnImpresion: TToolButton;
     SpdBtnAplicacionPrecios: TSpeedButton;
     DSVerificaActualiza: TDataSource;
+    RxDBLkpCmbProveedor: TDBLookupComboBox;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
@@ -65,7 +66,7 @@ type
     procedure SpdBtnCambiarPrecioClick(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure RdGrpFiltroClick(Sender: TObject);
-    procedure RxDBLkpCmbProveedorClick(Sender: TObject);
+    procedure RxDBLkpCmbProveedorxClick(Sender: TObject);
     procedure SpdBtnListaPreciosClick(Sender: TObject);
     procedure SpdBtnAplicacionPreciosClick(Sender: TObject);
     procedure DataSourceUpdateData(Sender: TObject);
@@ -163,14 +164,15 @@ begin
 
 end;
 
-procedure TFrmListaPreciosGrid.RxDBLkpCmbProveedorClick(Sender: TObject);
+procedure TFrmListaPreciosGrid.RxDBLkpCmbProveedorxClick(Sender: TObject);
 begin
   inherited;
   ffiltroproducto:='';
-  if RxDBLkpCmbProveedor.KeyValue <>'' then
+  if RxDBLkpCmbProveedor.KeyValue <>-1then
   begin
+
     ffiltroProducto:=' inner join ProductosProveedores Pp on PP.IdProducto =P.IdProducto'
-                    +' and PP.IDPersonaProveedor ='+RxDBLkpCmbProveedor.KeyValue;
+                    +' and PP.IDPersonaProveedor ='+intToStr(RxDBLkpCmbProveedor.KeyValue);
 
   end;
 end;
