@@ -31,6 +31,7 @@ type
     Label3: TLabel;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

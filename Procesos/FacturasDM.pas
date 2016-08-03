@@ -431,6 +431,12 @@ type
     ADODSAuxiliar: TADODataSet;
     ADODtStCostoFactura: TADODataSet;
     ActImpFacturasPresupuestos: TAction;
+    ActMostrarGuia: TAction;
+    ADODtStVerificaGuia: TADODataSet;
+    ActDocACotiza: TAction;
+    ADODtStVerificaDocs: TADODataSet;
+    ADODtStVerificaDocsIdDocumento: TIntegerField;
+    ADODtStVerificaDocsNombreArchivo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -455,6 +461,8 @@ type
     procedure ADODtStCFDIConceptosBeforeInsert(DataSet: TDataSet);
     procedure ADODtStCFDIConceptosNoIdentificaChange(Sender: TField);
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
+    procedure ActMostrarGuiaExecute(Sender: TObject);
+    procedure ActDocACotizaExecute(Sender: TObject);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -827,6 +835,34 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
  end;
 end;
 
+procedure TDMFacturas.ActDocACotizaExecute(Sender: TObject);
+var
+   IdDoc:Integer;
+   nombreArchi:TFileName;
+begin
+  inherited;
+//  Select IdDocumentoGuia from InformacionEntregas where IdinfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida = 8100)
+  //Vienen abierto  i debe tener algo
+  ShowProgress(10,100.1,'Obteniendo archivo 10 %');
+
+  IdDoc:= ADODtStVerificaDocs.FieldByName('IdDocumento').AsInteger;
+  ShowProgress(20,100.1,'Obteniendo archivo 20 %');
+  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+  adoDSDocumento.filtered:=True;
+  adoDSDocumento.open;
+  ShowProgress(50,100.1,'Generando archivo 50 %');
+  nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+  ShowProgress(80,100.1,'Generando archivo 80 %');
+  readFile( nombreArchi); //saca Archivo
+  ShowProgress(100,100.1,'Abriendo archivo 100 %');
+
+  if fileExists(nombreArchi) then
+     if ShellExecute(application.Handle, 'open', PChar(nombreArchi), nil, nil, SW_SHOWNORMAL)<=32 then
+      showMessage('No es posible abrir el archivo asociado..');
+  ShowProgress(100,100);
+
+end;
+
 procedure TDMFacturas.ActEnvioCorreoFactExecute(Sender: TObject);
 var
   DmEnvioMail:TDMEnvioMails;
@@ -972,6 +1008,36 @@ begin   //Impresiones de Notas venta y Presupuestos
   ImprimeNotaVPDF(false,nombreNV);  //Era true pero no lo crea como archivo
   ShellExecute(application.Handle, 'open', PChar(nombreNV), nil, nil, SW_SHOWNORMAL);  //Para que se muestre
   ActEnvioCorreoNotasVenta.Execute; // Ahi se pregunta si se quiere enviar  o no//Abr 6/16
+end;
+
+procedure TDMFacturas.ActMostrarGuiaExecute(Sender: TObject);
+var
+   IdDoc:Integer;
+   nombreArchi:TFileName;
+begin
+  inherited;
+//  Select IdDocumentoGuia from InformacionEntregas where IdinfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida = 8100)
+  //Vienen abierto  i debe tener algo
+  ShowProgress(10,100.1,'Obteniendo Guía 10 %');
+  IdDoc:= ADODtStVerificaGuia.FieldByName('IdDocumentoGuia').AsInteger;
+  ShowProgress(20,100.1,'Obteniendo Guía 20 %');
+  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+  adoDSDocumento.filtered:=True;
+  adoDSDocumento.open;
+  ShowProgress(50,100.1,'Generando Guía 50 %');
+  nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
+  ShowProgress(80,100.1,'Generando Guía 80 %');
+  readFile( nombreArchi); //saca Archivo
+ ShowProgress(100,100.1,'Mostrando Guía 100 %');
+
+  if fileExists(nombreArchi) then
+     if ShellExecute(application.Handle, 'open', PChar(nombreArchi), nil, nil, SW_SHOWNORMAL)<=32 then
+      showMessage('No es posible abrir el archivo asociado..');
+
+  ShowProgress(100,100);
+
+
+
 end;
 
 procedure TDMFacturas.ActPreFacturaNotaVentaExecute(Sender: TObject);
@@ -2183,7 +2249,12 @@ begin
   TfrmFacturasFormEdit(gGridEditForm).ActImprimeNotaVenta:= ActImpNotasVenta;
 
   TfrmFacturasFormEdit(gGridEditForm).ActCancelaNotaVenta:= ActCancelaNotaVenta;
-
+  //Desde Ago 1/16
+  TfrmFacturasFormEdit(gGridEditForm).ActDocGuia:=ActMostrarGuia;
+  TfrmFacturasFormEdit(gGridEditForm).ActDocsCotizacion:=ActDocACotiza;
+  TfrmFacturasFormEdit(gGridEditForm).DSVerificaExistenciaGuia.dataset:= ADODtStVerificaGuia;
+  TfrmFacturasFormEdit(gGridEditForm).DsVerificaDocumentos.dataset:=ADODtStVerificaDocs;
+  //hasta Ago 1/16
 
 end;
 

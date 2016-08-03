@@ -22,9 +22,9 @@ uses
   cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
   Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGrid, Vcl.ExtCtrls, RxLookup, Vcl.StdCtrls, cxContainer, dxCore,
+  cxGrid, Vcl.ExtCtrls,  Vcl.StdCtrls, cxContainer, dxCore,
   cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, Vcl.Buttons,
-  cxLabel, cxDBLabel,Data.Win.ADODB;
+  cxLabel, cxDBLabel,Data.Win.ADODB, Vcl.DBCtrls;
 
 type
   TFrmKardexMovimientosGrid = class(T_frmStandarGFormGrid)
@@ -43,7 +43,6 @@ type
     tvMasterCostoUnitario: TcxGridDBColumn;
     PnlProveedor: TPanel;
     Label4: TLabel;
-    RxDBLkpCmbProducto: TRxDBLookupCombo;
     ToolButton11: TToolButton;
     DSProductos: TDataSource;
     PnlFechas: TPanel;
@@ -57,6 +56,7 @@ type
     cxDBLabel1: TcxDBLabel;
     cxDBLabel2: TcxDBLabel;
     cxDBLabel3: TcxDBLabel;
+    RxDBLkpCmbProducto: TDBLookupComboBox;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RxDBLkpCmbProductoChange(Sender: TObject);
     procedure cxDBLblDescAuxClick(Sender: TObject);

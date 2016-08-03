@@ -3,10 +3,10 @@ unit ImpresosSalidasDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB, ppDB, ppDBPipe,
+  winapi.windows,System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB, ppDB, ppDBPipe,
   ppParameter, ppDesignLayer, ppBands, myChkBox, dxGDIPlusClasses, ppCtrls,
   ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport, ppVar,Forms,
-  ppModule, raCodMod;
+  ppModule, raCodMod,shellapi, dialogs;
 
 type
   TDMImpresosSalidas = class(TDataModule)
@@ -292,30 +292,6 @@ type
     ppFooterBand2: TppFooterBand;
     ppDesignLayers2: TppDesignLayers;
     ppDesignLayer2: TppDesignLayer;
-    ppHeaderBand5: TppHeaderBand;
-    ppDetailBand5: TppDetailBand;
-    ppDBText27: TppDBText;
-    ppDBText41: TppDBText;
-    ppDBText43: TppDBText;
-    ppDBText44: TppDBText;
-    ppDBText45: TppDBText;
-    myDBCheckBox6: TmyDBCheckBox;
-    myDBCheckBox8: TmyDBCheckBox;
-    ppDBText46: TppDBText;
-    ppDBText47: TppDBText;
-    ppDBText48: TppDBText;
-    myDBCheckBox9: TmyDBCheckBox;
-    myDBCheckBox11: TmyDBCheckBox;
-    myDBCheckBox12: TmyDBCheckBox;
-    ppLabel4: TppLabel;
-    pplblCajaActPre: TppLabel;
-    ppLabel58: TppLabel;
-    ppDBText49: TppDBText;
-    ppDBText50: TppDBText;
-    ppDBText51: TppDBText;
-    ppFooterBand5: TppFooterBand;
-    ppDesignLayers5: TppDesignLayers;
-    ppDesignLayer5: TppDesignLayer;
     ppRprtFactUtilidades: TppReport;
     ppParameterList6: TppParameterList;
     ppDBPPRepFacturasUtil: TppDBPipeline;
@@ -406,6 +382,29 @@ type
     ppDesignLayers7: TppDesignLayers;
     ppDesignLayer7: TppDesignLayer;
     ppLine3: TppLine;
+    ppHeaderBand5: TppHeaderBand;
+    ppDetailBand5: TppDetailBand;
+    ppDBText27: TppDBText;
+    ppDBText41: TppDBText;
+    ppDBText43: TppDBText;
+    ppDBText44: TppDBText;
+    ppDBText45: TppDBText;
+    myDBCheckBox6: TmyDBCheckBox;
+    myDBCheckBox8: TmyDBCheckBox;
+    ppDBText46: TppDBText;
+    ppDBText47: TppDBText;
+    ppDBText48: TppDBText;
+    myDBCheckBox9: TmyDBCheckBox;
+    myDBCheckBox11: TmyDBCheckBox;
+    myDBCheckBox12: TmyDBCheckBox;
+    ppLabel4: TppLabel;
+    pplblCajaActPre: TppLabel;
+    ppLabel58: TppLabel;
+    ppDBText49: TppDBText;
+    ppDBText50: TppDBText;
+    ppDBText51: TppDBText;
+    ppDesignLayers5: TppDesignLayers;
+    ppDesignLayer5: TppDesignLayer;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -548,7 +547,7 @@ begin
         end;
       end;//DEl else temporarl may 30/16
       *)
-       if (cant>1) then   //Mientras se arregla lo del pdf de varias hojas
+   (*    if (cant>1) then   //Mientras se arregla lo del pdf de varias hojas
       begin
         ppEtiquetaPreimpresa.Template.FileName:=ExtractFilePath(application.exeName)+'EtiquetapreimpresaDir.rtm'; //Jul 8/16
         ppEtiquetaPreimpresa.Template.LoadFromFile;  //Jul 8/16
@@ -563,7 +562,7 @@ begin
             ppEtiquetaPreimpresa.Print;
           end;
       end
-      else
+      else  //29 jul/16 deshabilitado *)
       begin
         ppEtiquetaPreimpresa.Template.FileName:=ExtractFilePath(application.exeName)+'EtiquetapreimpresaPDF.rtm'; //Jul 8/16
         ppEtiquetaPreimpresa.Template.LoadFromFile; //Jul 8/16
@@ -585,6 +584,13 @@ begin
           begin           // ppLblCajaAct
             ppLblCajaActPre.Caption:=intToStr(Actual); //Poner nueva pagina
             ppEtiquetaPreimpresa.Print;
+            //mOSTRAR para imprimir
+            if cant >1 then
+            begin
+               if FileExists(nombrePDF) then
+                 ShellExecute(application.Handle, 'open', PChar(nombrePDF), nil, nil, SW_SHOWNORMAL);
+               showMessage('Imprima la etiqueta par contiuar');
+            end;
           end;
         end;
       end;//DEl else temporarl may 30/16

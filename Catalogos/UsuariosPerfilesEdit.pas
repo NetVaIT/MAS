@@ -49,6 +49,7 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     CheckBox1: TCheckBox;
     ChckLstBxOpcCierre: TCheckListBox;
+    PnlTitulo: TPanel;
     procedure ChckBxCatClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtnActOpcionClick(Sender: TObject);

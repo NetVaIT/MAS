@@ -75,6 +75,12 @@ inherited FrmProductosFotos: TFrmProductosFotos
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -84,7 +90,8 @@ inherited FrmProductosFotos: TFrmProductosFotos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42584.725057685190000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

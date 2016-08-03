@@ -45,6 +45,7 @@ type
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     btnCamviar: TBitBtn;
     cxDBCalcEdit2: TcxDBCalcEdit;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

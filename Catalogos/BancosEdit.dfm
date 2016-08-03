@@ -1,18 +1,30 @@
 inherited frmBancosEdit: TfrmBancosEdit
   Caption = 'frmBancosEdit'
-  OnCreate = FormCreate
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
+    Top = 22
+    Height = 455
+    ClientRectBottom = 454
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
+        Height = 453
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
         inherited pnlMaster: TPanel
+          Height = 426
+          ExplicitLeft = 0
+          ExplicitTop = 25
           object Label1: TLabel
             Left = 32
             Top = 16
@@ -97,9 +109,29 @@ inherited frmBancosEdit: TfrmBancosEdit
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 750
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Bancos'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -44
+    ExplicitWidth = 794
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -245,7 +277,7 @@ inherited frmBancosEdit: TfrmBancosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

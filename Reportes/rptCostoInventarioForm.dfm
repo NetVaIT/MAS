@@ -3,7 +3,10 @@ inherited rptCostoInventario: TrptCostoInventario
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
+    Top = 53
+    Height = 231
     inherited cxGrid: TcxGrid
+      Height = 231
       inherited tvMaster: TcxGridDBTableView
         DataController.Summary.FooterSummaryItems = <
           item
@@ -34,6 +37,24 @@ inherited rptCostoInventario: TrptCostoInventario
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 651
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Costo Inventario'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 9
+  end
   inherited DataSource: TDataSource
     DataSet = DMrptCostoInventario.adodsMaster
   end
@@ -52,6 +73,7 @@ inherited rptCostoInventario: TrptCostoInventario
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42585.482013171300000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

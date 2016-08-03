@@ -52,6 +52,7 @@ type
     DSItemsSalida: TDataSource;
     DSQryAuxiliar: TDataSource;
     DSProductosXEspacio: TDataSource;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure PgCntrlAjustesSalidaChange(Sender: TObject);
     procedure DSSalidasUbicacionesUpdateData(Sender: TObject);

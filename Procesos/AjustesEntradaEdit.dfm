@@ -6,41 +6,55 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 794
+    ExplicitWidth = 794
   end
   inherited splDetail2: TSplitter
     Width = 794
+    ExplicitWidth = 794
   end
   inherited splDetail1: TSplitter
     Width = 794
+    ExplicitWidth = 794
   end
   inherited pnlClose: TPanel
     Width = 794
+    ExplicitWidth = 794
   end
   inherited pnlDetail3: TPanel
     Width = 794
+    ExplicitWidth = 794
   end
   inherited pnlDetail2: TPanel
     Width = 794
+    ExplicitWidth = 794
   end
   inherited pnlDetail1: TPanel
     Width = 794
     ExplicitLeft = 0
     ExplicitTop = 480
+    ExplicitWidth = 794
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 794
+    Height = 455
+    ExplicitWidth = 794
+    ClientRectBottom = 454
     ClientRectRight = 793
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
-      ExplicitWidth = 748
+      ExplicitWidth = 792
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
         Width = 792
+        Height = 453
+        ExplicitWidth = 792
         inherited tbarData: TToolBar
           Width = 790
           ExplicitLeft = 0
           ExplicitTop = 0
+          ExplicitWidth = 790
           object btnAplicarEntrada: TSpeedButton
             Left = 254
             Top = 0
@@ -78,8 +92,10 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
         end
         inherited pnlMaster: TPanel
           Width = 790
-          ExplicitLeft = -24
-          ExplicitTop = 68
+          Height = 426
+          ExplicitLeft = 0
+          ExplicitTop = 25
+          ExplicitWidth = 790
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -87,7 +103,6 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
             Height = 121
             Align = alTop
             TabOrder = 0
-            ExplicitWidth = 746
             object Label1: TLabel
               Left = 298
               Top = 6
@@ -191,23 +206,20 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
             Left = 0
             Top = 121
             Width = 790
-            Height = 207
+            Height = 185
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitTop = 177
-            ExplicitWidth = 838
-            ExplicitHeight = 130
+            ExplicitHeight = 207
           end
           object pnlPie: TPanel
             Left = 0
-            Top = 328
+            Top = 306
             Width = 790
             Height = 120
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 307
-            ExplicitWidth = 838
+            ExplicitTop = 328
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -280,6 +292,26 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
       end
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 794
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Ajustes de Entrada'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -196
+    ExplicitWidth = 990
+  end
   inherited DataSource: TDataSource
     DataSet = dmAjustesEntradas.adodsMaster
     OnDataChange = DataSourceDataChange
@@ -287,7 +319,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -428,7 +460,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

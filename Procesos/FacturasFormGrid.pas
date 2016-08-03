@@ -24,7 +24,7 @@ uses
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, Shellapi, Vcl.StdCtrls,Data.Win.ADODB, Vcl.CheckLst, math,
   Vcl.Menus, cxContainer, dxCore, cxDateUtils, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxCalendar, Vcl.Buttons;
+  cxDropDownEdit, cxCalendar, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmFacturasGrid = class(T_frmStandarGFormGrid)
@@ -71,6 +71,15 @@ type
     ChckBxFactVivas: TCheckBox;
     TlBtnReporteUtilidad: TToolButton;
     TlBtnReporteDiarioFacturas: TToolButton;
+    TlBtnGuia: TToolButton;
+    ToolButton15: TToolButton;
+    TlBtnArchivos: TToolButton;
+    DSVerificaExistenciaGuia: TDataSource;
+    PnlDocumentos: TPanel;
+    DsVerificaDocumentos: TDataSource;
+    DBGrdDocs: TDBGrid;
+    BtBtnCerrar: TBitBtn;
+    BtBtnMostrar: TBitBtn;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -88,6 +97,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure TlBtnReporteUtilidadClick(Sender: TObject);
     procedure TlBtnReporteDiarioFacturasClick(Sender: TObject);
+    procedure TlBtnArchivosClick(Sender: TObject);
+    procedure BtBtnCerrarClick(Sender: TObject);
+    procedure BtBtnMostrarClick(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     RegeneraPDF: TBasicAction;
@@ -101,7 +113,9 @@ type
     ffiltroFecha: String;
     fOrden: String;
     ffiltroNombre: String;
-    ffiltrovivas: String;  //Abr 4/16
+    ffiltrovivas: String;
+    FDocCotizacion: TBasicAction;
+    FDocGuia: TBasicAction;  //Abr 4/16
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
@@ -115,6 +129,8 @@ type
     function GetFFiltroNombre: String; //Feb 17/16
 
     procedure ImprimeUtilidades(Fini,FFin:TDateTime; Tipo: Integer);
+    procedure SETFDocCotizacion(const Value: TBasicAction);
+    procedure SETFDocGuia(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
@@ -133,6 +149,9 @@ type
      Property ElOrden :String read fOrden write fOrden;
      property FiltroNombre:String read GetFFiltroNombre write ffiltroNombre;    //May 26/16
      property FiltroVivas:String read ffiltrovivas write ffiltrovivas; //May 30/16
+
+    property ActDocsCotizacion: TBasicAction read FDocCotizacion  write SETFDocCotizacion;  //Ago 2/16
+    property ActDocGuia: TBasicAction read FDocGuia  write SETFDocGuia; //Ago 2 /16
   end;
 
 var
@@ -146,6 +165,19 @@ uses FacturasDM, ImpresosSalidasDM, rptRegistroDiarioFacturasDM;
 
 { TfrmFacturasGrid }
 
+
+procedure TfrmFacturasGrid.BtBtnCerrarClick(Sender: TObject);
+begin
+  inherited;
+  PnlDocumentos.Visible:=false;
+end;
+
+procedure TfrmFacturasGrid.BtBtnMostrarClick(Sender: TObject);
+begin
+  inherited;
+  ActDocsCotizacion.Execute;
+  PnlDocumentos.Visible:=False;
+end;
 
 procedure TfrmFacturasGrid.ChckLstImpresionClick(Sender: TObject);
 begin
@@ -172,6 +204,26 @@ begin
   inherited;
   TlBtnRegPDF.Enabled:= DataSource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=2;//Solo vigentes //ver si canceladasa tambien
   TlBtnEnvioCorreo.Enabled:= DataSource.DataSet.FieldByName('IdCFDIEstatus').AsInteger=2;
+
+   //Ago 2/16 desde
+  if not DataSource.DataSet.FieldByName('IdOrdenSalida').isNull then
+  begin
+    DSVerificaExistenciaGuia.DataSet.Close;
+    TAdoDataset(DSVerificaExistenciaGuia.DataSet).Parameters.ParamByName('IdOrdenSalida').Value:= DataSource.DataSet.FieldByName('IdOrdenSalida').asinteger ;
+    DSVerificaExistenciaGuia.DataSet.Open;
+    TlBtnGuia.Enabled:= (not DSVerificaExistenciaGuia.DataSet.Eof) and (not DSVerificaExistenciaGuia.DataSet.FieldByName('IdDocumentoGuia').isNull);
+
+    DsVerificaDocumentos.DataSet.Close;
+    TAdoDataset(DsVerificaDocumentos.DataSet).Parameters.ParamByName('IdOrdenSalida').Value:= DataSource.DataSet.FieldByName('IdOrdenSalida').asinteger ;
+    DsVerificaDocumentos.DataSet.Open;
+    TlBtnArchivos.Enabled:= (not DsVerificaDocumentos.DataSet.Eof) and (not DsVerificaDocumentos.DataSet.FieldByName('IdDocumento').isNull);
+  end
+  else
+  begin
+    TlBtnGuia.Enabled:= False;
+    TlBtnArchivos.Enabled:=False;
+  end;
+  //Ago 2/16 hasta
 end;
 
 procedure TfrmFacturasGrid.EdtNombreChange(Sender: TObject);
@@ -212,6 +264,7 @@ begin
   end;
   fechaAux:=encodedate(a,m,1);
   cxDtEdtHasta.date :=fechaAux-1;
+
 
 end;
 
@@ -260,7 +313,7 @@ begin
   PoneRangoFechas;
   ffiltrovivas:=''; //Todas may 30/16
   TlBtnConsultaClick(TlBtnConsulta);
-   //H Abr 19/16
+ //H Abr 19/16
 end;
 function TfrmFacturasGrid.GetFFiltroNombre: String;
 begin
@@ -359,6 +412,22 @@ begin
   TlBtnGenFactDiaria.ShowHint:=true;
 end;
 
+procedure TfrmFacturasGrid.SETFDocCotizacion(const Value: TBasicAction);
+begin      //Ago 2/16
+  FDocCotizacion := Value;
+(*  TlBtnArchivos.Action:=VAlue;
+  TlBtnArchivos.hint:='Mostrar Archivo Asociado';
+  TlBtnArchivos.ImageIndex:=20;  deshabilitadopor la seleccion*)
+end;
+
+procedure TfrmFacturasGrid.SETFDocGuia(const Value: TBasicAction);
+begin
+  FDocGuia := Value;
+  TlBtnGuia.Action:=Value;
+  TlBtnGuia.ImageIndex:=12;
+  TlBtnGuia.hint:='Mostrar Guia';
+end;
+
 procedure TfrmFacturasGrid.setfimpresionGD(const Value: Integer);
 begin
 
@@ -407,6 +476,19 @@ procedure TfrmFacturasGrid.tbarGridClick(Sender: TObject);
 begin
   inherited;
   //Llama al regenerar
+end;
+
+procedure TfrmFacturasGrid.TlBtnArchivosClick(Sender: TObject);
+begin
+  inherited;
+  PnlDocumentos.visible:= (not dsverificadocumentos.dataset.eof) and  (dsverificadocumentos.dataset.RecordCount>1);
+ if not PnlDocumentos.Visible then
+  begin
+    if DsVerificaDocumentos.DataSet.RecordCount=1 then
+      ActDocsCotizacion.Execute;
+
+  end;
+
 end;
 
 procedure TfrmFacturasGrid.TlBtnConsultaClick(Sender: TObject);

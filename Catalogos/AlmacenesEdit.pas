@@ -31,6 +31,7 @@ type
     Label3: TLabel;
     cxDBTextEdit3: TcxDBTextEdit;
     tsEspacios: TcxTabSheet;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

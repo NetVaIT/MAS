@@ -7,8 +7,10 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
     ExplicitTop = 480
   end
   inherited pcMain: TcxPageControl
+    Top = 22
+    Height = 455
     Properties.HideTabs = False
-    ClientRectBottom = 475
+    ClientRectBottom = 453
     ClientRectLeft = 2
     ClientRectRight = 748
     ClientRectTop = 28
@@ -20,7 +22,7 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
       ExplicitHeight = 447
       inherited cxScrollBox1: TcxScrollBox
         Width = 746
-        Height = 447
+        Height = 425
         ExplicitWidth = 746
         ExplicitHeight = 447
         inherited tbarData: TToolBar
@@ -31,7 +33,7 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
         end
         inherited pnlMaster: TPanel
           Width = 744
-          Height = 420
+          Height = 398
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 744
@@ -74,23 +76,51 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
     object tsEstado: TcxTabSheet
       Caption = 'Estados'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsMunicipio: TcxTabSheet
       Caption = 'Municipios'
       ImageIndex = 2
       ExplicitLeft = 1
       ExplicitTop = 27
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsPoblacion: TcxTabSheet
       Caption = 'Poblaciones'
       ImageIndex = 3
       ExplicitLeft = 4
       ExplicitTop = 27
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
+  end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 750
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Ubicaciones'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -44
+    ExplicitWidth = 794
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004003C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -231,7 +261,7 @@ inherited frmUbicacionesEdit: TfrmUbicacionesEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

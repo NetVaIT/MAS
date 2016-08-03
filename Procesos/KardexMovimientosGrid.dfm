@@ -3,42 +3,49 @@ inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
   ClientWidth = 1150
   OnCreate = FormCreate
   ExplicitWidth = 1150
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited splDetail2: TSplitter
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited splDetail1: TSplitter
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnlClose: TPanel
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnlDetail3: TPanel
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnlDetail2: TPanel
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnlDetail1: TPanel
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnltoolbar: TPanel
     Width = 1150
+    ExplicitWidth = 1150
   end
   inherited pnlMaster: TPanel
     Width = 1150
+    ExplicitWidth = 1150
     inherited cxGrid: TcxGrid
       Top = 46
       Width = 1150
       Height = 425
-      ExplicitLeft = -1
       ExplicitTop = 46
-      ExplicitWidth = 1051
+      ExplicitWidth = 1150
       ExplicitHeight = 425
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProductoKardex: TcxGridDBColumn
@@ -95,7 +102,7 @@ inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
       Width = 1150
       Height = 46
       ButtonHeight = 46
-      ExplicitWidth = 1051
+      ExplicitWidth = 1150
       ExplicitHeight = 46
       inherited ToolButton1: TToolButton
         ExplicitHeight = 46
@@ -173,17 +180,16 @@ inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
           Height = 13
           Caption = 'Producto:'
         end
-        object RxDBLkpCmbProducto: TRxDBLookupCombo
+        object RxDBLkpCmbProducto: TDBLookupComboBox
           Left = 8
           Top = 16
-          Width = 233
+          Width = 231
           Height = 21
-          DropDownCount = 8
-          LookupField = 'IdProducto'
-          LookupDisplay = 'Descripcion'
-          LookupSource = DSProductos
-          TabOrder = 0
-          OnChange = RxDBLkpCmbProductoChange
+          KeyField = 'IdProducto'
+          ListField = 'Descripcion'
+          ListSource = DSProductos
+          TabOrder = 4
+          OnClick = RxDBLkpCmbProductoChange
         end
         object cxDBLblDescAux: TcxDBLabel
           Left = 11
@@ -301,7 +307,7 @@ inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
     Left = 768
     Top = 64
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -448,7 +454,7 @@ inherited FrmKardexMovimientosGrid: TFrmKardexMovimientosGrid
     Left = 832
     Top = 64
     Bitmap = {
-      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

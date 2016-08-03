@@ -47,11 +47,12 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     ExplicitHeight = 33
   end
   inherited pcMain: TcxPageControl
+    Top = 22
     Width = 781
-    Height = 485
+    Height = 463
     ExplicitWidth = 781
     ExplicitHeight = 485
-    ClientRectBottom = 484
+    ClientRectBottom = 462
     ClientRectRight = 780
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -60,7 +61,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
       ExplicitHeight = 483
       inherited cxScrollBox1: TcxScrollBox
         Width = 779
-        Height = 483
+        Height = 461
         ExplicitWidth = 779
         ExplicitHeight = 483
         inherited tbarData: TToolBar
@@ -105,7 +106,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
         end
         inherited pnlMaster: TPanel
           Width = 777
-          Height = 456
+          Height = 434
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 777
@@ -114,31 +115,38 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
             Left = 0
             Top = 130
             Width = 777
-            Height = 134
+            Height = 112
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitHeight = 134
             object PgCntrlAjustesSalida: TcxPageControl
               Left = 0
               Top = 0
               Width = 777
-              Height = 134
+              Height = 112
               Align = alClient
               TabOrder = 0
               Properties.ActivePage = tsProductosXSalir
               Properties.CustomButtons.Buttons = <>
               OnChange = PgCntrlAjustesSalidaChange
-              ClientRectBottom = 132
+              ExplicitHeight = 134
+              ClientRectBottom = 110
               ClientRectLeft = 2
               ClientRectRight = 775
               ClientRectTop = 28
               object tsProductosXSalir: TcxTabSheet
                 Caption = 'Productos'
                 ImageIndex = 0
+                ExplicitHeight = 104
               end
               object tsSalidasUbicaciones: TcxTabSheet
                 Caption = 'Salidas Ubicaci'#243'n'
                 ImageIndex = 1
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
               end
             end
           end
@@ -209,12 +217,13 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
           end
           object PnlPie: TPanel
             Left = 0
-            Top = 264
+            Top = 242
             Width = 777
             Height = 192
             Align = alBottom
             BevelOuter = bvNone
             TabOrder = 2
+            ExplicitTop = 264
             object Label2: TLabel
               Left = 28
               Top = 24
@@ -287,6 +296,26 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
       end
     end
   end
+  object PnlTitulo: TPanel [9]
+    Left = 0
+    Top = 0
+    Width = 781
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Ajustes de Salida'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+    ExplicitLeft = -13
+    ExplicitWidth = 794
+  end
   inherited DataSource: TDataSource
     DataSet = DMAjustesSalida.adodsMaster
     Left = 526
@@ -296,7 +325,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 574
     Top = 16
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -439,7 +468,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 704
     Top = 0
     Bitmap = {
-      494C01010C000E00900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

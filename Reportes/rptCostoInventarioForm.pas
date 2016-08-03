@@ -36,6 +36,7 @@ type
     tvMasterExistencia: TcxGridDBColumn;
     tvMastercosto: TcxGridDBColumn;
     tvMasterImporte: TcxGridDBColumn;
+    PnlTitulo: TPanel;
   private
     { Private declarations }
   public

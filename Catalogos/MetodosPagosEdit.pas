@@ -29,6 +29,7 @@ type
     Label2: TLabel;
     cxDBTextEdit2: TcxDBTextEdit;
     cxDBChckBxExigeCta: TcxDBCheckBox;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

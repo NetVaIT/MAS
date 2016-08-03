@@ -49,6 +49,7 @@ type
     cxDBTextEdit4: TcxDBTextEdit;
     cxDBMemo1: TcxDBMemo;
     btnAplicarEntrada: TSpeedButton;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
   private

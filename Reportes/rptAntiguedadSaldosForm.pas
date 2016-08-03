@@ -42,6 +42,7 @@ type
     tvMasterVencidosa60das: TcxGridDBColumn;
     tvMasterVencidosa90das: TcxGridDBColumn;
     tvMasterVencidosmsde90das: TcxGridDBColumn;
+    PnlTitulo: TPanel;
   private
     { Private declarations }
   public

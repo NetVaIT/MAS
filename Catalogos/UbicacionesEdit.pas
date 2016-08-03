@@ -31,6 +31,7 @@ type
     tsEstado: TcxTabSheet;
     tsMunicipio: TcxTabSheet;
     tsPoblacion: TcxTabSheet;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

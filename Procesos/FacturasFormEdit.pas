@@ -134,12 +134,23 @@ type
     DBLkupCmbBxDirAuxiliar: TDBLookupComboBox;
     TlBtnCancelaNV: TToolButton;
     cxDBLabel16: TcxDBLabel;
+    TlBtnDocGuia: TToolButton;
+    TlBtnDocsCotizacion: TToolButton;
+    DSVerificaExistenciaGuia: TDataSource;
+    DsVerificaDocumentos: TDataSource;
+    PnlDocumentos: TPanel;
+    DBGrdDocs: TDBGrid;
+    BtBtnCerrar: TBitBtn;
+    BtBtnMostrar: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure DBLookupComboBox1Click(Sender: TObject);
     procedure DBGrid2KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure TlBtnDocsCotizacionClick(Sender: TObject);
+    procedure BtBtnCerrarClick(Sender: TObject);
+    procedure BtBtnMostrarClick(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
@@ -153,7 +164,9 @@ type
     FTipoDoc: Integer;
     FCFDIDiario: TBasicAction; //Feb 10/16
     ImprimeNotaVenta: TBasicAction;
-    FCancelaNotaVenta: TBasicAction; //Abr 4/16
+    FCancelaNotaVenta: TBasicAction;
+    FDocCotizacion: TBasicAction;
+    FDocGuia: TBasicAction; //Abr 4/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -168,7 +181,9 @@ type
     procedure SetTipoDoc(const Value: Integer);
     procedure SetFCFDIDiario(const Value: TBasicAction);
     procedure SetImprimeNotaVenta(const Value: TBasicAction);
-    procedure SETFCancelaNotaVenta(const Value: TBasicAction);  //ene 7/16
+    procedure SETFCancelaNotaVenta(const Value: TBasicAction);
+    procedure SETFDocCotizacion(const Value: TBasicAction);
+    procedure SETFDocGuia(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -190,6 +205,9 @@ type
     Property ActImprimeNotaVenta: TBasicAction read ImprimeNotaVenta write SetImprimeNotaVenta;  //Abr 4/16
 
     property ActCancelaNotaVenta:TBasicAction read FCancelaNotaVenta  write SETFCancelaNotaVenta;
+
+    property ActDocsCotizacion: TBasicAction read FDocCotizacion  write SETFDocCotizacion;  //Ago 1/16
+    property ActDocGuia: TBasicAction read FDocGuia  write SETFDocGuia; //Ago 1/16
   end;
 
 var
@@ -202,6 +220,19 @@ implementation
 uses FacturasFormGrid, FacturasDM;
 
 
+
+procedure TfrmFacturasFormEdit.BtBtnCerrarClick(Sender: TObject);
+begin
+  inherited;
+  PnlDocumentos.Visible:=false;
+end;
+
+procedure TfrmFacturasFormEdit.BtBtnMostrarClick(Sender: TObject);
+begin
+  inherited;
+  ActDocsCotizacion.Execute;
+  PnlDocumentos.Visible:=False;
+end;
 
 constructor TfrmFacturasFormEdit.CreateWMostrar(AOwner: TComponent;
   Mostrar: Boolean);
@@ -234,6 +265,26 @@ begin
   end
   else
      dsDatoscliente.DataSet:= dsAuxiliar.DataSet; (*//DMFacturas.ADODtStDireccionesCliente*)
+ //Ago 2/16 desde
+  if not DataSource.DataSet.FieldByName('IdOrdenSalida').isNull then
+  begin
+    DSVerificaExistenciaGuia.DataSet.Close;
+    TAdoDataset(DSVerificaExistenciaGuia.DataSet).Parameters.ParamByName('IdOrdenSalida').Value:= DataSource.DataSet.FieldByName('IdOrdenSalida').asinteger ;
+    DSVerificaExistenciaGuia.DataSet.Open;
+    TlBtnDocGuia.Enabled:= (not DSVerificaExistenciaGuia.DataSet.Eof) and (not DSVerificaExistenciaGuia.DataSet.FieldByName('IdDocumentoGuia').isNull);
+    //Ago 3/16
+    DsVerificaDocumentos.DataSet.Close;
+    TAdoDataset(DsVerificaDocumentos.DataSet).Parameters.ParamByName('IdOrdenSalida').Value:= DataSource.DataSet.FieldByName('IdOrdenSalida').asinteger ;
+    DsVerificaDocumentos.DataSet.Open;
+    TlBtnDocsCotizacion.Enabled:= (not DsVerificaDocumentos.DataSet.Eof) and (not DsVerificaDocumentos.DataSet.FieldByName('IdDocumento').isNull);
+
+  end
+  else
+  begin
+    TlBtnDocGuia.Enabled:= False;
+    TlBtnDocsCotizacion.Enabled:=False;    //Ago 3/16
+  end;
+  //Ago 2/16 hasta
 end;
 
 procedure TfrmFacturasFormEdit.DBGrid2KeyDown(Sender: TObject; var Key: Word;
@@ -290,11 +341,18 @@ begin
   3:pnlTitulo.Caption:='  Notas de Cargo';
   4:pnlTitulo.Caption:='  Notas de Venta';
   end;
-                                                  //Va en Cero may 24/16
-  TFrmFacturasGrid(gFormGrid).tipoDocumento := tipoDocumento;   //Mar 30/16
   TlBtnEnvioFactura.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo';   //Jun 2/16
-  TFrmFacturasGrid(gFormGrid).TlBtnEnvioCorreo.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo'; //Jun 2/16
-  TFrmFacturasGrid(gFormGrid).ChckBxFactVivas.Caption:=Trim(pnlTitulo.Caption)+' vivas';
+
+  if assigned(gFormGrid) then    //Ago 2/16
+  begin
+                                                  //Va en Cero may 24/16
+    TFrmFacturasGrid(gFormGrid).tipoDocumento := tipoDocumento;   //Mar 30/16
+
+    TFrmFacturasGrid(gFormGrid).TlBtnEnvioCorreo.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo'; //Jun 2/16
+    TFrmFacturasGrid(gFormGrid).ChckBxFactVivas.Caption:=Trim(pnlTitulo.Caption)+' vivas';
+    TFrmFacturasGrid(gFormGrid).ActDocsCotizacion:=ActDocsCotizacion;  //Ago 2/16
+    TFrmFacturasGrid(gFormGrid).ActDocGuia:=ActDocGuia;   //Ago 2/16
+  end;
 end;
 
 
@@ -353,6 +411,24 @@ begin
   TFrmFacturasGrid(gFormGrid).ActFacturaDiaria:=Value;
 end;
 
+procedure TfrmFacturasFormEdit.SETFDocCotizacion(const Value: TBasicAction);
+begin
+
+  FDocCotizacion := Value;
+(*  TlBtnDocsCotizacion.Action:=Value;
+  TlBtnDocsCotizacion.ImageIndex:=28; *) //Usa su propio click
+  TFrmFacturasGrid(gFormGrid).ActDocsCotizacion:=value;
+end;
+
+procedure TfrmFacturasFormEdit.SETFDocGuia(const Value: TBasicAction);
+begin
+
+  FDocGuia := Value;
+  TlBtnDocGuia.Action:=value;
+  TlBtnDocGuia.ImageIndex:=27;
+  TFrmFacturasGrid(gFormGrid).ActDocGuia:=value;
+end;
+
 procedure TfrmFacturasFormEdit.SetImprimeNotaVenta(const Value: TBasicAction);
 begin
   ImprimeNotaVenta:=Value;
@@ -381,6 +457,18 @@ end;
 procedure TfrmFacturasFormEdit.SetTipoDoc(const Value: Integer);
 begin
   FTipoDoc := Value;
+end;
+
+procedure TfrmFacturasFormEdit.TlBtnDocsCotizacionClick(Sender: TObject);
+begin
+  inherited;
+  PnlDocumentos.Visible:= DsVerificaDocumentos.DataSet.RecordCount>1 ;
+  if not PnlDocumentos.Visible then
+  begin
+    if DsVerificaDocumentos.DataSet.RecordCount=1 then
+      ActDocsCotizacion.Execute;
+
+  end;
 end;
 
 end.

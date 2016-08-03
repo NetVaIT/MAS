@@ -5,7 +5,7 @@ inherited frmMain: TfrmMain
   Font.Height = -32
   OnDestroy = FormDestroy
   ExplicitWidth = 897
-  ExplicitHeight = 612
+  ExplicitHeight = 613
   PixelsPerInch = 96
   TextHeight = 39
   inherited dxRibbon1: TdxRibbon
@@ -18,6 +18,7 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCatalogos: TdxRibbonTab
       Tag = 1000
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -65,7 +66,6 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCierre: TdxRibbonTab
       Tag = 7000
-      Active = True
       Caption = 'Cierre'
       Groups = <
         item
