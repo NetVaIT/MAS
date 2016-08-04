@@ -806,8 +806,12 @@ begin
             Esperar:=not GuardaCajas(DataSource.dataset.fieldbyname('IdOrdenSalida').asinteger,strToint(cajas));//Guardar Cajas
 
           except
+           on e: Exception do
+           begin
+             if  e is EConvertError then    //Agregado Ago 3/16
              Showmessage('El valor debe ser un número');
              Esperar:=True;
+           end;
           end;
           BtBtnFinEmpaque.Visible:=False;
           EstatusNvo:=5;
@@ -902,8 +906,8 @@ begin
   DSQryAuxiliar.DataSet.close;
   TAdoquery(DSQryAuxiliar.DataSet).Sql.clear;
   TAdoquery(DSQryAuxiliar.DataSet).SQL.ADD('Update InformacionEntregas SET CantidadCajas ='+intToStr(Cajas)
-         +' where IdInfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where where IdOrdenSalida='+intToStr(idOrden)+')');
-  Result:=  TAdoquery(DSQryAuxiliar.DataSet).ExecSQL=1;   //Debe actualizar 1
+         +' where IdInfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida='+intToStr(idOrden)+')');
+  Result:=  TAdoquery(DSQryAuxiliar.DataSet).ExecSQL=1;   //Debe actualizar 1       //correccion ago 3/16
 
 end;
 
