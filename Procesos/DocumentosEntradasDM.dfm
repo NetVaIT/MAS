@@ -1,6 +1,6 @@
 inherited dmDocumentosEntradas: TdmDocumentosEntradas
   OldCreateOrder = True
-  Height = 574
+  Height = 634
   Width = 510
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
@@ -38,7 +38,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Visible = False
     end
     object adodsMasterIdPersona: TIntegerField
+      DisplayLabel = 'Proveedor'
       FieldName = 'IdPersona'
+      Required = True
       Visible = False
       OnChange = adodsMasterIdPersonaChange
     end
@@ -337,7 +339,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     object adodsDocumentosDetallesPrecio: TFMTBCDField
       FieldName = 'Precio'
       OnChange = adodsDocumentosDetallesPrecioChange
-      currency = True
+      DisplayFormat = '$,0.0000;-$,0.0000'
+      EditFormat = ',0.0000;-,0.0000'
       Precision = 18
       Size = 6
     end
@@ -506,45 +509,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       'or2, Productos.Identificador3, Productos.Descripcion, '#13#10'ISNULL(P' +
       'roductosProveedores.UltimoPrecio,0) AS PrecioUnitario'#13#10'FROM Prod' +
       'uctosProveedores '#13#10'INNER JOIN Productos ON ProductosProveedores.' +
-      'IdProducto = Productos.IdProducto'#13#10'WHERE ProductosProveedores.Id' +
-      'PersonaProveedor = :IdPersona'#13#10'AND (Identificador1 LIKE :Clave1 ' +
-      '+ '#39'%'#39' or Identificador2 LIKE :Clave2 + '#39'%'#39' or Identificador3 Lik' +
-      'e :Clave3 + '#39'%'#39')'#13#10
-    Parameters = <
-      item
-        Name = 'IdPersona'
-        Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
-        Value = Null
-      end
-      item
-        Name = 'Clave1'
-        DataType = ftString
-        NumericScale = 255
-        Precision = 255
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = 'Clave2'
-        Attributes = [paNullable]
-        DataType = ftString
-        NumericScale = 255
-        Precision = 255
-        Size = 50
-        Value = Null
-      end
-      item
-        Name = 'Clave3'
-        Attributes = [paNullable]
-        DataType = ftString
-        NumericScale = 255
-        Precision = 255
-        Size = 50
-        Value = Null
-      end>
+      'IdProducto = Productos.IdProducto'#13#10
+    Parameters = <>
     Left = 416
     Top = 232
     object adodsListaProductosIdProducto: TIntegerField
@@ -598,8 +564,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Precision = 10
         Value = Null
       end>
-    Left = 40
-    Top = 480
+    Left = 24
+    Top = 416
   end
   object adopCambiarEstatus: TADOStoredProc
     Connection = _dmConection.ADOConnection
@@ -626,13 +592,14 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Precision = 10
         Value = Null
       end>
-    Left = 152
-    Top = 480
+    Left = 136
+    Top = 416
   end
   object dsDetalle: TDataSource
-    DataSet = adodsDocumentosDetalles
+    AutoEdit = False
+    DataSet = adoqryDocumentoDetalles
     Left = 160
-    Top = 72
+    Top = 544
   end
   object ppRptDocumento: TppReport
     AutoStop = False
@@ -689,7 +656,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     Left = 326
-    Top = 18
+    Top = 498
     Version = '15.0'
     mmColumnWidth = 208280
     DataPipelineName = 'ppdbpDetalle'
@@ -3667,7 +3634,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end
       object ppDBText19: TppDBText
         UserName = 'DBText19'
-        DataField = 'Provedor'
+        DataField = 'Proveedor'
         DataPipeline = ppdbpMaster
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -3823,8 +3790,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 0
         LayerName = Foreground
       end
-      object ppLabel12: TppLabel
-        UserName = 'Label12'
+      object pplblPrecio: TppLabel
+        UserName = 'lblPrecio'
         Caption = 'Precio'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3839,8 +3806,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 0
         LayerName = Foreground
       end
-      object ppLabel13: TppLabel
-        UserName = 'Label13'
+      object pplblImporte: TppLabel
+        UserName = 'lblImporte'
         Caption = 'Importe'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4083,7 +4050,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end
       object ppDBText15: TppDBText
         UserName = 'DBText15'
-        DataField = 'ClaveProvedor'
+        DataField = 'ClaveProveedor'
         DataPipeline = ppdbpMaster
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -4206,11 +4173,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 4
         LayerName = Foreground
       end
-      object ppDBText13: TppDBText
+      object ppdbtxtPrecio: TppDBText
         UserName = 'DBText102'
         DataField = 'Precio'
         DataPipeline = ppdbpDetalle
-        DisplayFormat = '$###,##0.00'
+        DisplayFormat = '$#,0.0000;-$#,0.0000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -4228,7 +4195,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 4
         LayerName = Foreground
       end
-      object ppDBText14: TppDBText
+      object ppdbtxtImporte: TppDBText
         UserName = 'DBText103'
         DataField = 'Importe'
         DataPipeline = ppdbpDetalle
@@ -4276,8 +4243,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       mmBottomOffset = 0
       mmHeight = 18521
       mmPrintPosition = 0
-      object ppDBText30: TppDBText
-        UserName = 'DBText30'
+      object ppdbtxtSubTotal: TppDBText
+        UserName = 'dbtxtSubTotal'
         DataField = 'SubTotal'
         DataPipeline = ppdbpMaster
         DisplayFormat = '$###,##0.00'
@@ -4321,15 +4288,15 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object ppdbpDetalle: TppDBPipeline
     DataSource = dsDetalle
     UserName = 'Detalle'
-    Left = 246
-    Top = 82
+    Left = 230
+    Top = 546
     MasterDataPipelineName = 'ppdbpMaster'
   end
   object ppdbpMaster: TppDBPipeline
-    DataSource = dsMaster
+    DataSource = dsDocumento
     UserName = 'Generales'
-    Left = 246
-    Top = 18
+    Left = 230
+    Top = 498
   end
   object adodsCantidad: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -4354,8 +4321,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end>
     SQL.Strings = (
       'SELECT dbo.GetCotizacionMoneda(:IdMoneda) AS Valor')
-    Left = 424
-    Top = 384
+    Left = 112
+    Top = 304
     object adoqTipoCambioValor: TFMTBCDField
       FieldName = 'Valor'
       ReadOnly = True
@@ -4365,8 +4332,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 308
-    Top = 472
+    Left = 244
+    Top = 192
   end
   object adodsProductosProveedores: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -4386,5 +4353,97 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       end>
     Left = 96
     Top = 200
+  end
+  object adoqryDocumento: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdDocumentoEntrada'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        DocumentosEntradas.IdDocumentoEntrada, DocumentosE' +
+        'ntradas.IdDocumentoEntradaAnterior, DocumentosEntradas.IdDocumen' +
+        'toEntradaTipo, DocumentosEntradas.IdDocumentoEntradaEstatus, '
+      
+        '                         DocumentosEntradas.IdPersona, Documento' +
+        'sEntradas.IdMoneda, DocumentosEntradas.IdUsuario, DocumentosEntr' +
+        'adas.Fecha, DocumentosEntradas.TipoCambio, DocumentosEntradas.Su' +
+        'bTotal, '
+      
+        '                         DocumentosEntradas.IVA, DocumentosEntra' +
+        'das.Total, DocumentosEntradasTipos.Descripcion AS Tipo, Document' +
+        'osEntradasEstatus.Descripcion AS Estatus, Personas.Identificador' +
+        ' AS ClaveProveedor, '
+      '                         Personas.RazonSocial AS Proveedor'
+      'FROM            DocumentosEntradas INNER JOIN'
+      
+        '                         DocumentosEntradasTipos ON DocumentosEn' +
+        'tradas.IdDocumentoEntradaTipo = DocumentosEntradasTipos.IdDocume' +
+        'ntoEntradaTipo INNER JOIN'
+      
+        '                         DocumentosEntradasEstatus ON Documentos' +
+        'Entradas.IdDocumentoEntradaEstatus = DocumentosEntradasEstatus.I' +
+        'dDocumentoEntradaEstatus INNER JOIN'
+      
+        '                         Personas ON DocumentosEntradas.IdPerson' +
+        'a = Personas.IdPersona'
+      'WHERE IdDocumentoEntrada = :IdDocumentoEntrada')
+    Left = 56
+    Top = 496
+  end
+  object dsDocumento: TDataSource
+    AutoEdit = False
+    DataSet = adoqryDocumento
+    Left = 160
+    Top = 496
+  end
+  object adoqryDocumentoDetalles: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    DataSource = dsDocumento
+    Parameters = <
+      item
+        Name = 'IdDocumentoEntrada'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT        DocumentosEntradasDetalles.IdDocumentoEntradaDetal' +
+        'le, DocumentosEntradasDetalles.IdDocumentoEntrada, DocumentosEnt' +
+        'radasDetalles.IdProducto, DocumentosEntradasDetalles.ClaveProduc' +
+        'to, '
+      
+        '                         DocumentosEntradasDetalles.Cantidad, Do' +
+        'cumentosEntradasDetalles.CantidadPendiente, DocumentosEntradasDe' +
+        'talles.Precio, DocumentosEntradasDetalles.Importe, Productos.Des' +
+        'cripcion AS Producto, '
+      
+        #9#9#9#9#9#9' (SELECT TOP 1 Identificador FROM ProductosProveedores WHE' +
+        'RE IdPersonaProveedor = DocumentosEntradas.IdPersona AND IdProdu' +
+        'cto = DocumentosEntradasDetalles.IdProducto) AS IdentificadorPro' +
+        'veedor'
+      'FROM            DocumentosEntradasDetalles INNER JOIN'
+      
+        '                         Productos ON DocumentosEntradasDetalles' +
+        '.IdProducto = Productos.IdProducto INNER JOIN'
+      
+        '                         DocumentosEntradas ON DocumentosEntrada' +
+        'sDetalles.IdDocumentoEntrada = DocumentosEntradas.IdDocumentoEnt' +
+        'rada'
+      
+        'WHERE DocumentosEntradasDetalles.IdDocumentoEntrada = :IdDocumen' +
+        'toEntrada')
+    Left = 56
+    Top = 544
   end
 end

@@ -61,6 +61,7 @@ type
     cxDBLabel3: TcxDBLabel;
     btnEmail: TToolButton;
     procedure FormCreate(Sender: TObject);
+    procedure pnlDetailEnter(Sender: TObject);
   private
     { Private declarations }
     FactAutorizar: TBasicAction;
@@ -94,6 +95,17 @@ begin
   inherited;
   gFormGrid := TfrmDocumentosEntradasGrid.Create(Self);
   ContainerDetail1:= pnlDetail;
+end;
+
+procedure TfrmDocumentosEntradas.pnlDetailEnter(Sender: TObject);
+begin
+  inherited;
+  if (DataSource.DataSet.State in [dsInsert]) then
+    try
+      DataSource.DataSet.Post;
+    except
+      raise;
+    end;
 end;
 
 procedure TfrmDocumentosEntradas.SetactAutorizar(const Value: TBasicAction);

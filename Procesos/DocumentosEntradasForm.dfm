@@ -59,6 +59,8 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
     ClientRectBottom = 404
     ClientRectRight = 799
     inherited tsGeneral: TcxTabSheet
+      ExplicitLeft = 1
+      ExplicitTop = 1
       ExplicitWidth = 798
       ExplicitHeight = 403
       inherited cxScrollBox1: TcxScrollBox
@@ -116,6 +118,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
+            OnEnter = pnlDetailEnter
           end
           object pnlEncabezado: TPanel
             Left = 0
@@ -374,7 +377,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -515,7 +518,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010E002803DC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E002803E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

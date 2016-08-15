@@ -23,7 +23,7 @@ uses
   Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC, Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, ProductosFotosDM, dxGDIPlusClasses, Vcl.Imaging.jpeg,
-  cxSpinEdit, shellApi, cxPropertiesStore, cxMemo;
+  cxSpinEdit, shellApi, cxPropertiesStore, cxMemo, cxLabel, cxDBLabel;
 
 type
   TfrmProductosEdit = class(T_frmStandarGFormEdit)
@@ -81,6 +81,7 @@ type
     cxDBMemo1: TcxDBMemo;
     DBGrid1: TDBGrid;
     cxTSPrecioMayoreo: TcxTabSheet;
+    cxDBLabel1: TcxDBLabel;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

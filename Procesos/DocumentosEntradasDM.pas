@@ -87,8 +87,8 @@ type
     ppShape8: TppShape;
     ppLabel10: TppLabel;
     ppLabel11: TppLabel;
-    ppLabel12: TppLabel;
-    ppLabel13: TppLabel;
+    pplblPrecio: TppLabel;
+    pplblImporte: TppLabel;
     ppLabel18: TppLabel;
     ppLabel1: TppLabel;
     ppDBText1: TppDBText;
@@ -106,10 +106,10 @@ type
     ppDBText4: TppDBText;
     ppDBText10: TppDBText;
     ppDBText12: TppDBText;
-    ppDBText13: TppDBText;
-    ppDBText14: TppDBText;
+    ppdbtxtPrecio: TppDBText;
+    ppdbtxtImporte: TppDBText;
     ppFooterBand1: TppFooterBand;
-    ppDBText30: TppDBText;
+    ppdbtxtSubTotal: TppDBText;
     ppLine1: TppLine;
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
@@ -141,6 +141,9 @@ type
     adodsDocumentosDetallesIdentificadorProveedor: TStringField;
     ppLabel3: TppLabel;
     ppDBText11: TppDBText;
+    adoqryDocumento: TADOQuery;
+    dsDocumento: TDataSource;
+    adoqryDocumentoDetalles: TADOQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -177,6 +180,7 @@ type
     function GetCorreoEmisor(ADatosCorreo: TStringList): Boolean;
     function GetCorreoReceptor(IdCliente: Integer;
       var CorreoCliente: String): Boolean;
+    procedure Imprimir(IdDocumentoEntrada: Integer);
     procedure PrintPDFFile(PDFFileName: TFileName; Mostrar: Boolean);
   public
     { Public declarations }
@@ -215,14 +219,28 @@ begin
 end;
 
 procedure TdmDocumentosEntradas.actBuscarProductoExecute(Sender: TObject);
+const
+  SQLSelect = 'SELECT ProductosProveedores.IdProducto, ProductosProveedores.IdPersonaProveedor, Productos.Identificador1, Productos.Identificador2, Productos.Identificador3, Productos.Descripcion, '+
+  'ISNULL(ProductosProveedores.UltimoPrecio,0) AS PrecioUnitario '+
+  'FROM ProductosProveedores '+
+  'INNER JOIN Productos ON ProductosProveedores.IdProducto = Productos.IdProducto ';
 begin
   inherited;
   adodsListaProductos.Close;
-  adodsListaProductos.Parameters.ParamByName('IdPersona').Value:= adodsMasterIdPersona.Value;
-  adodsListaProductos.Parameters.ParamByName('Clave1').Value:= frmListaProductos.Clave;
-  adodsListaProductos.Parameters.ParamByName('Clave2').Value:= frmListaProductos.Clave;
-  adodsListaProductos.Parameters.ParamByName('Clave3').Value:= frmListaProductos.Clave;
-  adodsListaProductos.Open
+  adodsListaProductos.CommandText:= SQLSelect +
+  Format('WHERE ProductosProveedores.IdPersonaProveedor = %d ', [adodsMasterIdPersona.Value]) +
+  Format('AND (Identificador1 LIKE ''%s', [frmListaProductos.Clave]) + '%'' ' +
+  Format('OR Identificador2 LIKE ''%s', [frmListaProductos.Clave]) + '%'' ' +
+  Format('OR Identificador3 LIKE ''%s', [frmListaProductos.Clave]) + '%'') ';
+  adodsListaProductos.Open;
+  if adodsListaProductos.Eof then
+  begin
+    adodsListaProductos.Close;
+    adodsListaProductos.CommandText:= SQLSelect +
+    Format('WHERE ProductosProveedores.IdPersonaProveedor = %d ', [adodsMasterIdPersona.Value]) +
+    Format('AND (Descripcion LIKE ''%s', [frmListaProductos.Clave]) + '%'') ';
+    adodsListaProductos.Open;
+  end;
 end;
 
 procedure TdmDocumentosEntradas.actEmailExecute(Sender: TObject);
@@ -231,7 +249,7 @@ var
   ADatosEmisor: TStringList;
   ArchivosLista: TStringList;
   ArcCotiza, ArcImagen, ArcDoc: TFileName;
-  IdDoc: Integer;
+//  IdDoc: Integer;
   CorreoRec, FechaText: string;
   Tipo, Folio: string;
 begin
@@ -347,7 +365,7 @@ end;
 procedure TdmDocumentosEntradas.actImprimirExecute(Sender: TObject);
 begin
   inherited;
-  ppRptDocumento.Print;
+  Imprimir(adodsMasterIdDocumentoEntrada.Value);
 end;
 
 procedure TdmDocumentosEntradas.actSeleccionaProductoExecute(Sender: TObject);
@@ -528,6 +546,30 @@ begin
   end;
 end;
 
+procedure TdmDocumentosEntradas.Imprimir(IdDocumentoEntrada: Integer);
+  procedure MostrarImportes(Mostrar: Boolean);
+  begin
+    pplblPrecio.Visible:= Mostrar;
+    pplblImporte.Visible:= Mostrar;
+    ppdbtxtPrecio.Visible:= Mostrar;
+    ppdbtxtImporte.Visible:= Mostrar;
+    ppdbtxtSubTotal.Visible:= Mostrar;
+  end;
+begin
+  adoqryDocumento.Close;
+  adoqryDocumentoDetalles.Close;
+  adoqryDocumento.Parameters.ParamByName('IdDocumentoEntrada').Value:= IdDocumentoEntrada;
+  try
+    adoqryDocumento.Open;
+    adoqryDocumentoDetalles.Open;
+    MostrarImportes(Tipo <> tRequisicion);
+    ppRptDocumento.Print;
+  finally
+    adoqryDocumento.Close;
+    adoqryDocumentoDetalles.Close;
+  end;
+end;
+
 procedure TdmDocumentosEntradas.SetBloquear(const Value: Boolean);
 begin
   FBloquear := Value;
@@ -613,7 +655,7 @@ begin
       ppRptDocumento.DeviceType:= 'Printer';
     ppRptDocumento.PrinterSetup.Copies:= 1;
     ppRptDocumento.PrinterSetup.DocumentName:= ExtractFileName(PDFFileName);
-    ppRptDocumento.Print;
+    Imprimir(adodsMasterIdDocumentoEntrada.Value);
   finally
     ppRptDocumento.DeviceType := vDeviceType;
     ppRptDocumento.ShowPrintDialog := vShowPrintDialog;

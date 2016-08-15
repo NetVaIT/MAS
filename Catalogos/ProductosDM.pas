@@ -126,6 +126,7 @@ type
     ppSystemVariable6: TppSystemVariable;
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
+    adodsMasterIdentificador4: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);

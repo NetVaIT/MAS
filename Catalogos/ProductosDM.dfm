@@ -8,8 +8,8 @@ inherited dmProductos: TdmProductos
     CommandText = 
       'SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, ' +
       #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +
-      's '#13#10', Identificador1, Identificador2, Identificador3 FROM Produc' +
-      'tos'
+      's '#13#10',Identificador1, Identificador2, Identificador3 '#13#10',Identific' +
+      'ador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM Productos'
     object adodsMasterIdProducto: TIntegerField
       FieldName = 'IdProducto'
       Visible = False
@@ -25,6 +25,11 @@ inherited dmProductos: TdmProductos
     object adodsMasterIdProductoEstatus: TIntegerField
       FieldName = 'IdProductoEstatus'
       Visible = False
+    end
+    object adodsMasterIdentificador4: TStringField
+      FieldName = 'Identificador'
+      ReadOnly = True
+      Size = 308
     end
     object adodsMasterIdentificador1: TStringField
       DisplayLabel = 'Identificador 1'
@@ -108,6 +113,7 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsUnidadMedida: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdUnidadMedida, Descripcion FROM UnidadesMedida'
@@ -116,6 +122,7 @@ inherited dmProductos: TdmProductos
     Top = 64
   end
   object adodsProductoTipo: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoTipo, Descripcion FROM ProductosTipos'
@@ -124,6 +131,7 @@ inherited dmProductos: TdmProductos
     Top = 120
   end
   object adodsProductoEstatus: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoEstatus, Descripcion FROM ProductosEstatus'
@@ -295,6 +303,8 @@ inherited dmProductos: TdmProductos
     object adodsProductosProveedoresUltimoPrecio: TFMTBCDField
       DisplayLabel = #218'ltimo precio'
       FieldName = 'UltimoPrecio'
+      DisplayFormat = '$,0.0000;-$,0.0000'
+      EditFormat = ',0.0000;-,0.0000'
       Precision = 18
       Size = 6
     end
@@ -533,7 +543,7 @@ inherited dmProductos: TdmProductos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
