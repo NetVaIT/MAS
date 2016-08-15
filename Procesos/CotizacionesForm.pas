@@ -154,6 +154,8 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure SpdBtnBuscaParteClick(Sender: TObject);
     procedure SpdBtnAdjuntarArchivosClick(Sender: TObject);
+    procedure DBLookupComboBox3Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
@@ -394,6 +396,20 @@ begin
    end;
 end;
 
+procedure TfrmCotizaciones.DBLookupComboBox3Click(Sender: TObject);
+begin
+  inherited;
+  if not DsDireccionenvios.dataset.fieldbyname('IdEnviotipo').IsNULL then
+    datasource.DataSet.fieldbyname('IDPaqueteria').AsInteger:= DsDireccionenvios.dataset.fieldbyname('IdEnviotipo').asInteger;
+end;
+
+procedure TfrmCotizaciones.FormActivate(Sender: TObject);
+begin
+  inherited;
+//  if TipoDocumento=2 then        //Ago 10/16
+ //    actShowGridExecute(sender);
+end;
+
 procedure TfrmCotizaciones.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -438,6 +454,8 @@ begin
         PnlTitulo.Caption:='    Cotizaciones';
      (*   DBGrdDetalles.Columns[9].ReadOnly:=False;   //Abr 13/16
         DBGrdDetalles.Columns[10].ReadOnly:=True;*)
+     //   if datasource.State= dsBrowse then //Ago 4/16
+       //    datasetInsert.Execute;  //Verificar
       end;
     2:begin
         SpdBtnCambioEstatus.Caption:='Genera Orden Salida';   //
@@ -456,7 +474,8 @@ begin
 
  // TlBtnEnvioCorreo.Visible:=SpdBtnGenPDFCotiza .visible; //Para que desde el pedido tambien se pueda?? May 2/16
 //  LstBxAdjuntosMail.Visible:=SpdBtnGenPDFCotiza .visible;    //May 2/16
-
+    if TipoDocumento=2 then        //Ago 10/16
+     actShowGridExecute(sender);
 end;
 
 function TfrmCotizaciones.GenerarOrdenSalida(idDocumento: Integer): Boolean; //Nov 18/15
@@ -492,7 +511,10 @@ begin
    dsordenSalida.DataSet.FieldByName('Acumula').asBoolean:= False;
  end;
   //Jul 11/16  hasta aca
-
+ //Metodo de pago se asocia sólo cuando se va a generar la factura  //Ago 4/16
+ //Ago 8/16 Observaciones
+ if (DataSource.dataset.FieldByName('Observaciones').asString<>'') or ( DataSource.dataset.FieldByName('NotasInternas').asString<>'')then
+   dsordenSalida.DataSet.FieldByName('Observaciones').asString:= DataSource.dataset.FieldByName('Observaciones').asString +' '+DataSource.dataset.FieldByName('NotasInternas').asString;
 
   dsordenSalida.DataSet.Post;
 

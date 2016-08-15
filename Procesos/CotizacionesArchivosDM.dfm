@@ -1,4 +1,5 @@
 inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 

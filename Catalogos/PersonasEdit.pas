@@ -210,7 +210,8 @@ begin
   inherited;
   if datasource.State in[dsEdit,dsInsert] then
   begin
-    datasource.DataSet.FieldByName('RazonSocial').AsString:= datasource.DataSet.FieldByName('Nombre').AsString +' '+
+    if datasource.DataSet.FieldByName('Nombre').AsString<>'' then  //Ago 4/16
+      datasource.DataSet.FieldByName('RazonSocial').AsString:= datasource.DataSet.FieldByName('Nombre').AsString +' '+
                                                              datasource.DataSet.FieldByName('ApellidoPaterno').AsString+' '+
                                                              datasource.DataSet.FieldByName('ApellidoMaterno').AsString;
   end;

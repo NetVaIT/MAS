@@ -63,7 +63,6 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitHeight = 162
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dsOrdenSalidaItems
@@ -124,7 +123,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     Anchors = [akLeft, akTop]
     Visible = True
     ExplicitLeft = 0
-    ExplicitTop = 440
+    ExplicitTop = 432
     ExplicitWidth = 1041
     ExplicitHeight = 101
     object cxGrid: TcxGrid
@@ -135,7 +134,6 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitHeight = 68
       object tvgrid1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dsOrdenesSalida
@@ -185,20 +183,21 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     Top = 22
     Width = 1041
     Height = 407
+    ExplicitTop = 22
     ExplicitWidth = 1041
-    ExplicitHeight = 413
+    ExplicitHeight = 407
     ClientRectBottom = 406
     ClientRectRight = 1040
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1039
-      ExplicitHeight = 411
+      ExplicitHeight = 405
       inherited cxScrollBox1: TcxScrollBox
         Width = 1039
         Height = 405
         ExplicitWidth = 1039
-        ExplicitHeight = 411
+        ExplicitHeight = 405
         inherited tbarData: TToolBar
           Width = 1037
           ExplicitLeft = 0
@@ -217,7 +216,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1037
-          ExplicitHeight = 376
+          ExplicitHeight = 378
           object Label1: TLabel
             Left = 32
             Top = 21
@@ -460,7 +459,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             Width = 713
             Height = 47
             BevelOuter = bvNone
-            TabOrder = 21
+            TabOrder = 20
             Visible = False
             object Label14: TLabel
               Left = 320
@@ -634,7 +633,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
             TabOrder = 7
             Width = 278
           end
-          object cxDBRadioGroup1: TcxDBRadioGroup
+          object cxDBRdGrpServicio: TcxDBRadioGroup
             Tag = 50
             Left = 523
             Top = 118
@@ -939,7 +938,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
               33333333337F7F33333333333309033333333333337F7F333333333333090333
               33333333337F7F33333333333300033333333333337773333333}
             NumGlyphs = 2
-            TabOrder = 22
+            TabOrder = 21
             Visible = False
             OnClick = BtBtnFinEmpaqueClick
           end
@@ -964,9 +963,6 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 750
   end
   inherited DataSource: TDataSource
     DataSet = dmOrdenesEntregas.adodsMaster
@@ -974,7 +970,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1115,7 +1111,7 @@ inherited frmOrdenesEntregasEdit: TfrmOrdenesEntregasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -1,7 +1,5 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlDetail1: TPanel
@@ -20,8 +18,8 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           ExplicitTop = 0
         end
         inherited pnlMaster: TPanel
-          ExplicitLeft = 62
-          ExplicitTop = 0
+          ExplicitLeft = 0
+          ExplicitTop = 24
           object Label1: TLabel
             Left = 23
             Top = 16
@@ -66,6 +64,23 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             Height = 13
             Caption = 'Saldo'
             FocusControl = DBLookupComboBox2
+          end
+          object Label13: TLabel
+            Left = 25
+            Top = 335
+            Width = 99
+            Height = 13
+            Caption = 'Metodo Pago Cliente'
+            FocusControl = cxDBEdtCtaCliente
+          end
+          object LblCteCte: TLabel
+            Left = 231
+            Top = 334
+            Width = 71
+            Height = 13
+            Caption = 'Cuenta Cliente'
+            FocusControl = cxDBEdtCtaCliente
+            Visible = False
           end
           object DBLookupComboBox2: TDBLookupComboBox
             Left = 23
@@ -142,6 +157,30 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
             TabOrder = 7
             Width = 131
           end
+          object cxDBLkupCBxMetodoPago: TcxDBLookupComboBox
+            Left = 25
+            Top = 351
+            DataBinding.DataField = 'IdMetododePago'
+            DataBinding.DataSource = DataSource
+            Properties.KeyFieldNames = 'IdMetodoPago'
+            Properties.ListColumns = <
+              item
+                FieldName = 'Descripcion'
+              end>
+            Properties.ListSource = DSMetodoPago
+            Properties.OnEditValueChanged = cxDBLkupCBxMetodoPagoPropertiesEditValueChanged
+            TabOrder = 8
+            Width = 186
+          end
+          object cxDBEdtCtaCliente: TcxDBTextEdit
+            Left = 231
+            Top = 351
+            DataBinding.DataField = 'NumCtaPagoCliente'
+            DataBinding.DataSource = DataSource
+            TabOrder = 9
+            Visible = False
+            Width = 119
+          end
         end
       end
     end
@@ -151,7 +190,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -292,7 +331,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -829,5 +868,15 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
+  end
+  object DSMetodoPago: TDataSource
+    DataSet = dmPersonas.ADOdsMetodoPago
+    Left = 448
+    Top = 360
+  end
+  object DSAuxiliar: TDataSource
+    DataSet = dmPersonasDomicilios.ADODtStAuxiliar
+    Left = 616
+    Top = 344
   end
 end

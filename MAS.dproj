@@ -919,6 +919,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Catalogos\ProductosMayoreoEdit.pas">
+            <Form>FrmProductosPrecioMayoreo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Catalogos\ProductosMayoreoForm.pas">
+            <Form>FrmProductosPrecioMayoreoGrid</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

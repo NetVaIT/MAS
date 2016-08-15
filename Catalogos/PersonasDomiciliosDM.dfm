@@ -1,5 +1,6 @@
 inherited dmPersonasDomicilios: TdmPersonasDomicilios
   OldCreateOrder = True
+  Width = 501
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforePost = adodsMasterBeforePost
@@ -7,8 +8,8 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     CommandText = 
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
       'Tipo, IdEnvioTipo ,Predeterminado, '#13#10'Identificador, Saldo, UsarP' +
-      'araEnvio'#13#10' FROM PersonasDomicilios '#13#10'WHERE IdPersona = :IdPerson' +
-      'a'
+      'araEnvio, IdMetododePago, NumCtaPagoCliente'#13#10' FROM PersonasDomic' +
+      'ilios '#13#10'WHERE IdPersona = :IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -146,6 +147,35 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       DisplayLabel = 'Disponible Para Envio'
       FieldName = 'UsarParaEnvio'
     end
+    object adodsMasterIdMetododePago: TIntegerField
+      FieldName = 'IdMetododePago'
+    end
+    object adodsMasterMetodoPago: TStringField
+      FieldKind = fkLookup
+      FieldName = 'MetodoPago'
+      LookupDataSet = ADODtStMetodoPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMetododePago'
+      Size = 50
+      Lookup = True
+    end
+    object adodsMasterExigeCta: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'ExigeCta'
+      LookupDataSet = ADODtStMetodoPago
+      LookupKeyFields = 'IdMetodoPago'
+      LookupResultField = 'ExigeCuenta'
+      KeyFields = 'IdMetododePago'
+      Lookup = True
+    end
+    object adodsMasterNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
+    end
+  end
+  inherited adodsUpdate: TADODataSet
+    Left = 336
   end
   inherited ActionList: TActionList
     object actUpdate: TAction
@@ -281,8 +311,8 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
         Size = 4
         Value = Null
       end>
-    Left = 64
-    Top = 264
+    Left = 40
+    Top = 272
   end
   object ADODtStMaximoNoCliente: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -291,5 +321,40 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Parameters = <>
     Left = 176
     Top = 264
+  end
+  object ADODtStMetodoPago: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select IdMetodoPago, Identificador, Descripcion, ExigeCuenta,'#13#10' ' +
+      'ClaveSAT2016 from MetodosPago where idMetodoPago>0'
+    Parameters = <>
+    Left = 312
+    Top = 256
+    object ADODtStMetodoPagoIdMetodoPago: TIntegerField
+      FieldName = 'IdMetodoPago'
+    end
+    object ADODtStMetodoPagoIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADODtStMetodoPagoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
+    end
+    object ADODtStMetodoPagoExigeCuenta: TIntegerField
+      FieldName = 'ExigeCuenta'
+    end
+    object ADODtStMetodoPagoClaveSAT2016: TStringField
+      FieldName = 'ClaveSAT2016'
+      Size = 10
+    end
+  end
+  object ADODtStAuxiliar: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 424
+    Top = 256
   end
 end

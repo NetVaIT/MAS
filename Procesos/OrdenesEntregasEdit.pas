@@ -47,7 +47,7 @@ type
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBTextEdit1: TcxDBTextEdit;
     cxDBTextEdit4: TcxDBTextEdit;
-    cxDBRadioGroup1: TcxDBRadioGroup;
+    cxDBRdGrpServicio: TcxDBRadioGroup;
     BtBtnAceptaInfoEnt: TBitBtn;
     BtBtnCancelaInfoEnt: TBitBtn;
     BtBtnImprimeEtiqueta: TBitBtn;
@@ -420,7 +420,8 @@ procedure TfrmOrdenesEntregasEdit.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
-  BtBtnImprimeEtiqueta.Enabled:=datasource.State=dsBrowse;
+  BtBtnImprimeEtiqueta.Enabled:=(datasource.State=dsBrowse)
+                                 and (DataSource.DataSet.FieldByName('Conducto').AsString<>'PERSONAL');  //Ago 9/16
   BtBtnOrdenEmbarque.Enabled:= BtBtnImprimeEtiqueta.Enabled;
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
 
@@ -484,7 +485,7 @@ begin
   Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
   DMImpresosSalidas.PrintPDFFile(CualRep, cuantos,False,ArchiPDF);  //May 30/16      Mientras se coloca en el mismo archivo .. se dejo que se muestre
   DMImpresosSalidas.Free;      //Temporarl
-  if FileExists(ArchiPDF) and (cuantos =1)then //May 30/16
+  if FileExists(ArchiPDF) and ((cuantos =1) or (cualRep=3))then //May 30/16
      ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 
 

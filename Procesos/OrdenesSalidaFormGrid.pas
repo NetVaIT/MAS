@@ -55,6 +55,14 @@ type
     tvMasterIdentificadorNvo: TcxGridDBColumn;
     tvMasterUsuarioCotiza: TcxGridDBColumn;
     tvMasterUsuarioPedido: TcxGridDBColumn;
+    tvMasterFechaIniRecolecta: TcxGridDBColumn;
+    tvMasterFechaFinRecolecta: TcxGridDBColumn;
+    tvMasterFechaIniRevisa: TcxGridDBColumn;
+    tvMasterFechaFinRevisa: TcxGridDBColumn;
+    tvMasterFechaIniEmpaca: TcxGridDBColumn;
+    tvMasterFechaFinEmpaca: TcxGridDBColumn;
+    tvMasterFechaAutoriza: TcxGridDBColumn;
+    tvMasterPersonaAutoriza: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);

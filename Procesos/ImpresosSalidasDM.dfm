@@ -57,15 +57,15 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 378
-    Top = 26
+    Left = 394
+    Top = 18
     Version = '15.0'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPplnItemsOrdenSalida'
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 62177
+      mmHeight = 70908
       mmPrintPosition = 0
       object ppLabel24: TppLabel
         UserName = 'Label1'
@@ -160,6 +160,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         UserName = 'DBText3'
         DataField = 'Total'
         DataPipeline = ppDBPplnGenerales
+        DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -169,7 +170,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnGenerales'
         mmHeight = 4763
-        mmLeft = 16933
+        mmLeft = 19315
         mmTop = 45244
         mmWidth = 61383
         BandType = 0
@@ -224,7 +225,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 107421
-        mmTop = 56893
+        mmTop = 65373
         mmWidth = 33867
         BandType = 0
         LayerName = Foreground
@@ -241,7 +242,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
-        mmTop = 56886
+        mmTop = 65366
         mmWidth = 15081
         BandType = 0
         LayerName = Foreground
@@ -258,7 +259,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 21431
-        mmTop = 56886
+        mmTop = 65366
         mmWidth = 23019
         BandType = 0
         LayerName = Foreground
@@ -275,7 +276,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 48683
-        mmTop = 56886
+        mmTop = 65366
         mmWidth = 23813
         BandType = 0
         LayerName = Foreground
@@ -327,8 +328,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 145257
-        mmTop = 56893
+        mmLeft = 148696
+        mmTop = 65352
         mmWidth = 26988
         BandType = 0
         LayerName = Foreground
@@ -336,7 +337,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel35: TppLabel
         UserName = 'Label101'
         AutoSize = False
-        Caption = 'Cantidad Surtida'
+        Caption = 'Cant. Surtida'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -344,9 +345,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 174096
-        mmTop = 56893
-        mmWidth = 29633
+        mmLeft = 177271
+        mmTop = 65352
+        mmWidth = 23548
         BandType = 0
         LayerName = Foreground
       end
@@ -355,7 +356,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Weight = 0.750000000000000000
         mmHeight = 3969
         mmLeft = 4233
-        mmTop = 61921
+        mmTop = 70401
         mmWidth = 199496
         BandType = 0
         LayerName = Foreground
@@ -3365,6 +3366,49 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 0
         LayerName = Foreground
       end
+      object ppLabel76: TppLabel
+        UserName = 'Label76'
+        AutoSize = False
+        Caption = 'Observaciones'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 4498
+        mmTop = 52652
+        mmWidth = 30692
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBMemo1: TppDBMemo
+        UserName = 'DBMemo1'
+        CharWrap = False
+        DataField = 'Observaciones'
+        DataPipeline = ppDBPplnGenerales
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = []
+        ParentDataPipeline = False
+        RemoveEmptyLines = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnGenerales'
+        mmHeight = 11113
+        mmLeft = 37042
+        mmTop = 52652
+        mmWidth = 147902
+        BandType = 0
+        LayerName = Foreground
+        mmBottomOffset = 0
+        mmOverFlowOffset = 0
+        mmStopPosition = 0
+        mmMinHeight = 0
+        mmLeading = 0
+      end
     end
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -3385,8 +3429,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
         mmHeight = 4763
-        mmLeft = 21696
-        mmTop = 2646
+        mmLeft = 21166
+        mmTop = 1321
         mmWidth = 25929
         BandType = 4
         LayerName = Foreground
@@ -3405,7 +3449,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
         mmHeight = 4763
         mmLeft = 4498
-        mmTop = 2646
+        mmTop = 1321
         mmWidth = 15081
         BandType = 4
         LayerName = Foreground
@@ -3417,17 +3461,16 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         WordWrap = True
-        VerticalAlignment = avCenter
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
-        mmHeight = 7408
+        mmHeight = 7673
         mmLeft = 107156
-        mmTop = 1588
-        mmWidth = 37042
+        mmTop = 1323
+        mmWidth = 39423
         BandType = 4
         LayerName = Foreground
       end
@@ -3438,14 +3481,15 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Size = 9
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
+        WordWrap = True
         DataPipelineName = 'ppDBPplnItemsOrdenSalida'
-        mmHeight = 4763
+        mmHeight = 7673
         mmLeft = 48683
-        mmTop = 2646
+        mmTop = 1322
         mmWidth = 57944
         BandType = 4
         LayerName = Foreground
@@ -3506,7 +3550,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
       ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
       ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
-      #13#10'from OrdenesSalidas where idOrdenSalida=:idOrdenSalida'
+      ', Observaciones'#13#10'from OrdenesSalidas where idOrdenSalida=:idOrde' +
+      'nSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -3516,8 +3561,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Size = 4
         Value = 13
       end>
-    Left = 48
-    Top = 194
+    Left = 56
+    Top = 186
     object ADODtStOrdenSalidaidOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
       ReadOnly = True
@@ -3542,6 +3587,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStOrdenSalidaTotal: TFMTBCDField
       FieldName = 'Total'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -3575,11 +3621,13 @@ object DMImpresosSalidas: TDMImpresosSalidas
     end
     object ADODtStOrdenSalidaSubtotal: TFMTBCDField
       FieldName = 'Subtotal'
+      currency = True
       Precision = 18
       Size = 6
     end
     object ADODtStOrdenSalidaIVA: TFMTBCDField
       FieldName = 'IVA'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -3601,6 +3649,10 @@ object DMImpresosSalidas: TDMImpresosSalidas
       LookupResultField = 'Identificador'
       KeyFields = 'IdDocumentoSalida'
       Lookup = True
+    end
+    object ADODtStOrdenSalidaObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 300
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
@@ -12260,7 +12312,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
         Border.Weight = 0.748799979686737100
-        DataField = 'Telefono'
+        DataField = 'CodigoPostal'
         DataPipeline = ppDBPplnOrdenEmb
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -12587,8 +12639,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
       0000000000000000000000000000000000000000000000000000000007000000
       00000000}
     Template.FileName = 
-      'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\EtiquetaPreimpresaPDF' +
-      '.rtm'
+      'C:\Desarrollo\TractoPartes\MAS\Win32\Release\EtiquetaPreimpresaP' +
+      'DF.rtm'
     Units = utMillimeters
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -12626,7 +12678,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 194
+    Left = 202
     Top = 394
     Version = '15.0'
     mmColumnWidth = 0
@@ -12655,9 +12707,9 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         WordWrap = True
         DataPipelineName = 'ppDBPpLnPreimresa'
-        mmHeight = 15346
+        mmHeight = 9525
         mmLeft = 57150
-        mmTop = 8465
+        mmTop = 8467
         mmWidth = 61648
         BandType = 4
         LayerName = BandLayer6
@@ -12741,7 +12793,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = BandLayer6
       end
-      object myDBCheckBox6: TmyDBCheckBox
+      object myDBChckBxAsegurado: TmyDBCheckBox
         UserName = 'DBCheckBox1'
         CheckBoxColor = clBlack
         BooleanFalse = 'False'
@@ -12773,7 +12825,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = BandLayer6
       end
-      object ppDBText46: TppDBText
+      object ppDBTxtValor: TppDBText
         UserName = 'DBText18'
         DataField = 'Valor'
         DataPipeline = ppDBPpLnPreimresa
@@ -12993,6 +13045,26 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = BandLayer6
       end
+      object ppDBText46: TppDBText
+        UserName = 'DBText46'
+        DataField = 'Observaciones'
+        DataPipeline = ppDBPpLnPreimresa
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'ppDBPpLnPreimresa'
+        mmHeight = 6085
+        mmLeft = 9790
+        mmTop = 18521
+        mmWidth = 109273
+        BandType = 4
+        LayerName = BandLayer6
+      end
     end
     object ppDesignLayers5: TppDesignLayers
       object ppDesignLayer5: TppDesignLayer
@@ -13017,7 +13089,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Legal'
+    PrinterSetup.PaperName = 'Oficio'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -13196,7 +13268,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 658
+    Left = 674
     Top = 26
     Version = '15.0'
     mmColumnWidth = 0
@@ -16641,7 +16713,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object ppDBPPRepFacturasUtil: TppDBPipeline
     DataSource = DSRepFactUtilidad
     UserName = 'Etiqueta3'
-    Left = 626
+    Left = 634
     Top = 86
   end
   object ADODtStRepFactUtilidad: TADODataSet

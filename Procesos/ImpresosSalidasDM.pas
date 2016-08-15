@@ -6,7 +6,7 @@ uses
   winapi.windows,System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB, ppDB, ppDBPipe,
   ppParameter, ppDesignLayer, ppBands, myChkBox, dxGDIPlusClasses, ppCtrls,
   ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd, ppReport, ppVar,Forms,
-  ppModule, raCodMod,shellapi, dialogs;
+  ppModule, raCodMod,shellapi, dialogs, ppStrtch, ppMemo;
 
 type
   TDMImpresosSalidas = class(TDataModule)
@@ -389,9 +389,9 @@ type
     ppDBText43: TppDBText;
     ppDBText44: TppDBText;
     ppDBText45: TppDBText;
-    myDBCheckBox6: TmyDBCheckBox;
+    myDBChckBxAsegurado: TmyDBCheckBox;
     myDBCheckBox8: TmyDBCheckBox;
-    ppDBText46: TppDBText;
+    ppDBTxtValor: TppDBText;
     ppDBText47: TppDBText;
     ppDBText48: TppDBText;
     myDBCheckBox9: TmyDBCheckBox;
@@ -405,6 +405,10 @@ type
     ppDBText51: TppDBText;
     ppDesignLayers5: TppDesignLayers;
     ppDesignLayer5: TppDesignLayer;
+    ppLabel76: TppLabel;
+    ppDBMemo1: TppDBMemo;
+    ADODtStOrdenSalidaObservaciones: TStringField;
+    ppDBText46: TppDBText;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -580,16 +584,19 @@ begin
             ppEtiquetaPreimpresa.PDFSettings.OpenPDFFile := False;
             ppEtiquetaPreimpresa.TextFileName:= nombrePDF;
           end; //Siempre muesta el PDF
+          ppDBTxtValor.Visible:= myDBChckBxAsegurado.Checked;
           for Actual:=1 to Cant do    //Aca no entraria nunca mientras
           begin           // ppLblCajaAct
             ppLblCajaActPre.Caption:=intToStr(Actual); //Poner nueva pagina
             ppEtiquetaPreimpresa.Print;
+
+
             //mOSTRAR para imprimir
             if cant >1 then
             begin
                if FileExists(nombrePDF) then
                  ShellExecute(application.Handle, 'open', PChar(nombrePDF), nil, nil, SW_SHOWNORMAL);
-               showMessage('Imprima la etiqueta par contiuar');
+               showMessage('Imprima la etiqueta para continuar');
             end;
           end;
         end;

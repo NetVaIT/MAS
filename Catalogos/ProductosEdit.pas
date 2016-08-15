@@ -80,6 +80,7 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     cxDBMemo1: TcxDBMemo;
     DBGrid1: TDBGrid;
+    cxTSPrecioMayoreo: TcxTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -230,6 +231,8 @@ begin
  // TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
   dmProductosFotos := TdmProductosFotos.Create(nil); //Pa fotos
  // DataSourceFotos.DataSet.Open;
+   ContainerDetail3:= cxTSPrecioMayoreo;
+
 end;
 
 

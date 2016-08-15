@@ -331,7 +331,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Size = 4
         Value = Null
       end>
-    Left = 416
+    Left = 424
     object adodsUpdateIdDocumento: TAutoIncField
       FieldName = 'IdDocumento'
       ReadOnly = True
@@ -626,7 +626,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Parameters = <>
     SQL.Strings = (
       '')
-    Left = 60
+    Left = 76
     Top = 241
   end
   object ADODtStDatosDocumentoSalida: TADODataSet
@@ -636,14 +636,14 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
       'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio,' +
       #13#10'DS.IdPersonaDomicilioEnvio, Facturar, IdUsuario, IDUsuarioAutP' +
-      'edido'#13#10#13#10' from DocumentosSalidas DS'#13#10' inner join Personas P on P' +
-      '.IDpersona =DS.IdPersona'#13#10'inner join PersonasDomicilios PD on PD' +
-      '.IdPersonaDomicilio =Ds.IDDomicilioCliente'
+      'edido'#13#10' from DocumentosSalidas DS'#13#10' inner join Personas P on P.I' +
+      'Dpersona =DS.IdPersona'#13#10'inner join PersonasDomicilios PD on PD.I' +
+      'dPersonaDomicilio =Ds.IDDomicilioCliente'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
     Parameters = <>
-    Left = 248
+    Left = 256
     Top = 408
     object ADODtStDatosDocumentoSalidaIdPersona: TIntegerField
       FieldName = 'IdPersona'
@@ -796,7 +796,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     MasterFields = 'IdInfoEntrega'
     Parameters = <>
     Left = 440
-    Top = 489
+    Top = 481
     object ADODtStInformacionEnvioIdInfoEntrega: TAutoIncField
       FieldName = 'IdInfoEntrega'
       ReadOnly = True
@@ -900,6 +900,18 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'Conducto'
       Size = 50
       Lookup = True
+    end
+    object ADODtStInformacionEnvioIdPersonaEmpaca: TIntegerField
+      FieldName = 'IdPersonaEmpaca'
+    end
+    object ADODtStInformacionEnvioFechaIniEmpaque: TDateTimeField
+      FieldName = 'FechaIniEmpaque'
+    end
+    object ADODtStInformacionEnvioFechaFinEmpaque: TDateTimeField
+      FieldName = 'FechaFinEmpaque'
+    end
+    object ADODtStInformacionEnvioIdEstatusOrdenEntrega: TIntegerField
+      FieldName = 'IdEstatusOrdenEntrega'
     end
   end
   object ADODtStFacturasCFDI: TADODataSet
@@ -1213,8 +1225,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select IdDocumentoSalidaDetalle,IdAlmacen, IDProducto  from Docu' +
       'mentosSalidasDetalles '#13#10
     Parameters = <>
-    Left = 80
-    Top = 312
+    Left = 72
+    Top = 320
     object ADODtStDocumentoDetalleItemIdAlmacen: TIntegerField
       FieldName = 'IdAlmacen'
     end
@@ -1354,7 +1366,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select IdPaqueteria, Identificador, Descripcion from Paqueterias' +
       ' order by identificador'
     Parameters = <>
-    Left = 56
+    Left = 64
     Top = 400
     object ADODtStPaqueteriasIdPaqueteria: TAutoIncField
       FieldName = 'IdPaqueteria'

@@ -45,14 +45,18 @@ type
   private
     FImprimelista: TBasicAction;
     FactualizaPrecios: TBasicAction;
+    FImprimeMayoreo: TBasicAction;
     procedure SetFImprimeLista(const Value: TBasicAction);
     procedure SetFactualizaPrecios(const Value: TBasicAction);
+    procedure SetFImprimeMayoreo(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
 
      property actImprimeLista: TBasicAction read FImprimelista write SetFImprimeLista; //Jul 18/16
      property actActualizaprecios: TBasicAction read FactualizaPrecios write SetFactualizaPrecios; //Jul 18/16
+     property actImprimeMayoreo: TBasicAction read FImprimeMayoreo write SetFImprimeMayoreo; //Jul 18/16
+
   end;
 
 var
@@ -97,6 +101,12 @@ procedure TfrmListaPrecioEdit.SetFImprimeLista(const Value: TBasicAction);
 begin
   FImprimelista := Value;
   TFrmListaPreciosGrid(gFormGrid).actImprimeLista:=Value;
+end;
+
+procedure TfrmListaPrecioEdit.SetFImprimeMayoreo(const Value: TBasicAction);
+begin
+  FImprimeMayoreo := Value;
+  TFrmListaPreciosGrid(gFormGrid).actImprimeMayoreo:=Value;
 end;
 
 end.

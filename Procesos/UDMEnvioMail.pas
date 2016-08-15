@@ -78,7 +78,7 @@ begin
 
     SSLHandler.MaxLineAction := maException;
     SSLHandler.SSLOptions.Method :=X; //sslvTLSv1; 3; Mod jul 22/16   ;//
-    SSLHandler.SSLOptions.Mode := sslmclient;//sslmUnassigned;   Mod jul 22/16
+    SSLHandler.SSLOptions.Mode := sslmUnassigned;//  sslmclient; Mod jul 22/16
     SSLHandler.SSLOptions.VerifyMode := [];
     SSLHandler.SSLOptions.VerifyDepth := 0;
 
@@ -88,7 +88,7 @@ begin
     SMTP.Username := AUserName;//'interva@floresgaribay.com.mx';
     SMTP.Password := APassw ;//'interva2014';
     //SMTP.Authenticate := True;
-    SMTP.UseTLS := utUseImplicitTLS;//utUseExplicitTLS;    Mod jul 22/16
+    SMTP.UseTLS :=utUseExplicitTLS;  // utUseImplicitTLS;  Mod jul 22/16
 
     Email.From.Address :=AUserName;// 'interva@floresgaribay.com.mx';  //Verificar que sea el correo completo
     Email.From.Name    := ANomEnvia;//'Interva';

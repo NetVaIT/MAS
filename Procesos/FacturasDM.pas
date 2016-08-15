@@ -437,6 +437,8 @@ type
     ADODtStVerificaDocs: TADODataSet;
     ADODtStVerificaDocsIdDocumento: TIntegerField;
     ADODtStVerificaDocsNombreArchivo: TStringField;
+    ADODtStOrdenSalidaIDMetododePago: TIntegerField;
+    ADODtStOrdenSalidaNumCtaPagoCliente: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -742,8 +744,13 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 //    adodsMaster.FieldByName('IDPersonaEmisor').AsInteger:=SacarEmisor;  //ADODtStOrdenSalida.FieldByName('Total').AsFloat;
 
     adodsMaster.FieldByName('IDPersonaReceptor').AsInteger := ADODtStOrdenSalida.FieldByName('IDPersonaCliente').ASInteger;
-    if  not ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').IsNull then //Ene 29/16
-      adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetodoPagoCliente').ASInteger
+    //Se cambia para lusar el metodo de la direccion  FieldByName('IDMetodoPagoCliente').IsNull
+    if  not ADODtStOrdenSalida.FieldByName('IDMetododePago').IsNull then //ajustado Ago 4/16
+    begin
+      adodsMaster.FieldByName('IdMetodoPago').AsInteger := ADODtStOrdenSalida.FieldByName('IDMetododePago').ASInteger;  //ajustado Ago 4/16
+      if not ADODtStOrdenSalida.FieldByName('NumCtaPagoCliente').IsNull then
+         adodsMaster.FieldByName('NumCtaPago').AsString:= ADODtStOrdenSalida.FieldByName('NumCtaPagoCliente').asString;   //ajustado Ago 4/16
+    end
     else
        adodsMaster.FieldByName('IdMetodoPago').AsInteger :=5; //Otros Jun 27/16   //Ene 29/16
     if  not ADODtStOrdenSalida.FieldByName('IDDomicilioCliente').Isnull then

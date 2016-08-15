@@ -56,6 +56,7 @@ type
     procedure EdtNombreChange(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     ffiltro: String;
     FTipoDoc: Integer;
@@ -123,6 +124,13 @@ begin
   cxDtEdtHasta.date :=fechaAux-1;
 
    //H Abr 19/16
+end;
+
+procedure TfrmCotizacionesGrid.FormShow(Sender: TObject);
+begin
+  inherited;
+   if TipoDocumento=2 then //Ago 10/16
+     SpdBtnBuscar.Click;
 end;
 
 function TfrmCotizacionesGrid.GetFFiltroNombre: String;   //May 10/16

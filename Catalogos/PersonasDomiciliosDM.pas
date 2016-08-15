@@ -44,6 +44,17 @@ type
     adodsDomiciliosDomicilio2: TStringField;
     adodsMasterDomicilio2: TStringField;
     adodsMasterUsarParaEnvio: TBooleanField;
+    adodsMasterIdMetododePago: TIntegerField;
+    ADODtStMetodoPago: TADODataSet;
+    adodsMasterMetodoPago: TStringField;
+    ADODtStMetodoPagoIdMetodoPago: TIntegerField;
+    ADODtStMetodoPagoIdentificador: TStringField;
+    ADODtStMetodoPagoDescripcion: TStringField;
+    ADODtStMetodoPagoExigeCuenta: TIntegerField;
+    ADODtStMetodoPagoClaveSAT2016: TStringField;
+    adodsMasterExigeCta: TIntegerField;
+    adodsMasterNumCtaPagoCliente: TStringField;
+    ADODtStAuxiliar: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -102,7 +113,9 @@ begin
   //Poner el numero de cliente si es cliente
   if (dataset.state =dsInsert) and Escliente(Dataset.fieldbyname('IdPersona').AsInteger,IDNvo ) then
   begin
-    DataSet.FieldByName('Identificador').AsString:=IntToSTR(IdNvo);
+    if ((DataSet.FieldByName('IdDomicilioTipo').AsInteger =4)   //Fiscal
+        or (DataSet.FieldByName('IdDomicilioTipo').AsInteger =5)) then //Expedicion
+       DataSet.FieldByName('Identificador').AsString:=IntToSTR(IdNvo);
 
   End;
 
@@ -131,7 +144,7 @@ begin
   ADODtStVerifica.Parameters.ParamByName('IdPersona').Value:=idPersona;
   ADODtStVerifica.open;
 
-  if not ADODtStVerifica.eof then
+  if not ADODtStVerifica.eof then  //Si es cliente
   begin
     ADODtStMaximoNoCliente.Close;
     ADODtStMaximoNoCliente.Open;

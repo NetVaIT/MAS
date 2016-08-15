@@ -3,6 +3,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
   ClientWidth = 1295
   OnCreate = FormCreate
   ExplicitWidth = 1295
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -119,6 +120,38 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
         object tvMasterUsuarioPedido: TcxGridDBColumn
           DataBinding.FieldName = 'UsuarioPedido'
           Width = 100
+        end
+        object tvMasterFechaIniRecolecta: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaIniRecolecta'
+          Visible = False
+        end
+        object tvMasterFechaFinRecolecta: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaFinRecolecta'
+          Visible = False
+        end
+        object tvMasterFechaIniRevisa: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaIniRevisa'
+          Visible = False
+        end
+        object tvMasterFechaFinRevisa: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaFinRevisa'
+          Visible = False
+        end
+        object tvMasterFechaAutoriza: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaAutoriza'
+          Visible = False
+        end
+        object tvMasterPersonaAutoriza: TcxGridDBColumn
+          DataBinding.FieldName = 'PersonaAutoriza'
+          Visible = False
+        end
+        object tvMasterFechaIniEmpaca: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaIniEmpaca'
+          Visible = False
+        end
+        object tvMasterFechaFinEmpaca: TcxGridDBColumn
+          DataBinding.FieldName = 'FechaFinEmpaca'
+          Visible = False
         end
       end
     end
@@ -318,7 +351,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 736
     Top = 80
     Bitmap = {
-      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -465,7 +498,7 @@ inherited FrmOrdenesSalidaGrid: TFrmOrdenesSalidaGrid
     Left = 816
     Top = 80
     Bitmap = {
-      494C01010C00C001300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00C001340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

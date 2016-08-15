@@ -46,11 +46,13 @@ inherited dmPagos: TdmPagos
     end
     object adodsMasterImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsMasterSaldo: TFMTBCDField
       FieldName = 'Saldo'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -359,6 +361,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStClientesSaldoCliente: TFMTBCDField
       FieldName = 'SaldoCliente'
+      currency = True
       Precision = 18
       Size = 6
     end
@@ -429,6 +432,7 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStAplicacionesPagosImporte: TFloatField
       FieldName = 'Importe'
+      currency = True
     end
     object ADODtStAplicacionesPagosserieFactura: TStringField
       FieldKind = fkLookup
@@ -498,9 +502,11 @@ inherited dmPagos: TdmPagos
     end
     object ADODtStConFactPendientesTotal: TFloatField
       FieldName = 'Total'
+      currency = True
     end
     object ADODtStConFactPendientesSaldoDocumento: TFloatField
       FieldName = 'SaldoDocumento'
+      currency = True
     end
   end
   object ADOQryAuxiliar: TADOQuery

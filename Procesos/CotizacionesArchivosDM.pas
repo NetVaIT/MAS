@@ -97,6 +97,7 @@ begin
   TFrmCotizacionesArchivos(gGridForm).EditFile := actEditaDocumento;
 
   AdodsMaster.open;
+
   ADODsDocumento.Open;
 end;
 

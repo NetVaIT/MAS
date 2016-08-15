@@ -406,6 +406,8 @@ begin
       btnAux:=BtBtnEmpaca;
       CampoIDPer:='IDPersonaAutoriza';
       Estatus:=4;
+      //Aca puede ponerse la confirmacion de la generacion de la Factura  //Ago 9/16
+      //datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger
     end;
   4:begin   //Se cambio   Nunca vendra por aca
       campoFecha:='FechaIniEmpaca';
@@ -448,9 +450,15 @@ begin
 
         end;
     //Hasta aca  Jun 16/16
+      end
+      else if  CampoIDPer='IDPersonaEmpaca' then  //Ago 5/16
+      begin
+        DSInformacionEntrega.DataSet.Edit;
+        DSInformacionEntrega.DataSet.Fieldbyname(CampoIdPer).asInteger:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
+        DSInformacionEntrega.DataSet.Fieldbyname('FechaIniEmpaque').asDAtetime:= datasource.DataSet.FieldByName(campoFecha).AsDatetime;
+       // DSInformacionEntrega.DataSet.Fieldbyname('FechaFinEmpaque').asDAtetime:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
+        DSInformacionEntrega.DataSet.Post;
       end;
-
-
     end
     else
     begin
@@ -497,8 +505,10 @@ begin
       CrearDatosEnvio.Execute;
 
     end;
+
     if not Cancelar then
     begin
+
     (*  *)
      //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
       ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
@@ -540,8 +550,8 @@ begin
       DSInformacionEntrega.DataSet.Close;
       DSInformacionEntrega.DataSet.Open;
 
-      PnlInformacionEntrega.Visible:=True; //May 23/16
-      ChckBxDatosEnvios.Checked:=true;
+     // PnlInformacionEntrega.Visible:=True; //May 23/16  //Deshabilitado ago 5/16
+     // ChckBxDatosEnvios.Checked:=true;
     end
     else  //Cancelo el proceso y ya no quiere juntar ni poner individual
     begin
@@ -851,6 +861,13 @@ begin
     datasource.DataSet.Post;
     if EstatusNvo=5  then //Abr 7/16    //Ordenes de Entrega actualizar cuando se hace desde aca... y alreves cuando se hace desde alla.
     begin
+      //Debe existir y estar ubicado //Ago 5/16
+      DSInformacionEntrega.DataSet.Edit;
+      DSInformacionEntrega.DataSet.Fieldbyname('IdEstatusOrdenEntrega').asInteger:= EstatusNvo;
+      DSInformacionEntrega.DataSet.Fieldbyname('FechaFinEmpaque').asDAtetime:= datasource.DataSet.FieldByName(campoFecha).AsDatetime;
+      DSInformacionEntrega.DataSet.Post;
+      //Ago 5/16 hasta aca
+
        Cont:=-1;
        //Revisar y dar por cerrados Pedidos completados
        dsQryAuxiliar.DataSet.Close;
@@ -886,6 +903,8 @@ begin
                                                    +'where idDocumentoSalida=' + DataSource.dataset.fieldbyname('IdDocumentoSalida').asstring);
            TADOQuery(dsQryAuxiliar.DataSet).execSQL;
          end;
+         //Aca solo se harian las que son individuales.. asi que siempre debe actualizar lo de personaEmpaquue en Infoetregas
+         //Se puso directo en cadapaso    //Ago 5/16
 
 
        end;
@@ -981,7 +1000,7 @@ begin
         begin
           datasource.DataSet.Edit;
           datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=6; //Enviado
-          datasource.DataSet.Post;
+          datasource.DataSet.Post;       //Actualizar orden entrega ago 5/16
         end;
     end;
   end;
@@ -1042,7 +1061,7 @@ begin
     ChckBxDatosEnvios.visible:=  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3);// deshabilitado may 24/16 //and  (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger<6);//Feb 11/16
     TlBtnEnvioFactura.Enabled:= (Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4) and ((DSInformacionEntrega.dataset.state<>dsInactive)and(not DSInformacionEntrega.dataset.FieldByName('IdDocumentoGuia').IsNull)); //Feb 17/16
     PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>3)and ChckBxDatosEnvios.Checked; //4  May 19/16
-
+    ///?????????????
     // ??PnlInformacionEntrega.Visible:=(Datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger>4); //Ene 27/16
     PnlSalidasUbicacion.Visible:=False;  //Ene 28/16
 
@@ -1143,7 +1162,8 @@ begin
   BtBtnAceptaInfoEnt.Enabled:=dsInformacionEntrega.State=dsEdit;
   BtBtnCancelaInfoEnt.Enabled:=dsInformacionEntrega.State=DsEdit;
 
-  BtBtnImprimeEtiqueta.Enabled:=dsInformacionEntrega.State=dsBrowse;
+  BtBtnImprimeEtiqueta.Enabled:=(dsInformacionEntrega.State=dsBrowse)
+                               and (dsInformacionentrega.DataSet.FieldByName('Conducto').AsString<>'PERSONAL');  //Ago 9/16
   BtBtnOrdenEmbarque.Enabled:= BtBtnImprimeEtiqueta.Enabled; //May 10/16
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
 end;
@@ -1297,7 +1317,7 @@ begin
   dsInfoEntregaDetalle.DataSet.Open;
   DSInformacionEntrega.DataSet.Close;
   DSInformacionEntrega.DataSet.open; ///Verificar actualice por que el refresh no lo hace //May 5/16
-  PnlInformacionEntrega.Visible:=ChckBxDatosEnvios.Checked;
+  PnlInformacionEntrega.Visible:=ChckBxDatosEnvios.Checked;     //???????????
   PermisosEdicion; //Jun 14/16
 end;
 
@@ -1399,8 +1419,8 @@ begin
   Cuantos:=DMImpresosSalidas.ADODtStDatosEtiqueta.FieldByName('CantidadCajas').AsInteger;
 
   DMImpresosSalidas.PrintPDFFile(CualRep, cuantos,False, ArchiPDF);    //Ajustado may 30/16    '');// prueba
-  DMImpresosSalidas.Free;     //Temporal may 30/16
-  if FileExists(ArchiPDF) and (cuantos =1) then //May 30/16
+  DMImpresosSalidas.Free;     //Temporal may 30/16      //Ago 5/16
+  if FileExists(ArchiPDF) and ((cuantos =1)or (cualrep=3)) then //May 30/16
     ShellExecute(application.Handle, 'open', PChar(ArchiPDF), nil, nil, SW_SHOWNORMAL);
 
 end;

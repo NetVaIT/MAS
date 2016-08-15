@@ -287,6 +287,11 @@ type
     adodsMasterIDUsuarioAutPedido: TIntegerField;
     adodsMasterUsuAutPedido: TStringField;
     ADODtStOrdenSalidaidusuario: TIntegerField;
+    ADODtStDireccionesClienteIDMetododePago: TIntegerField;
+    ADODtStDireccionesClienteNumCtaPagoCliente: TStringField;
+    adodsMasterIDMetPagoDirCli: TIntegerField;
+    adodsMasterCtaCLienteDom: TStringField;
+    ADODtStDireccionesEnvioIdEnvioTipo: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -309,6 +314,7 @@ type
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaNewRecord(DataSet: TDataSet);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     FTipoDoc: Integer;
     FIdDocAct: Integer;
@@ -501,7 +507,7 @@ procedure TdmCotizaciones.adodsCotizacionesDetalleCantidadChange(
 begin
   inherited;  //Verificar comportamiento en precio
   if adodsCotizacionesDetalle.State in [dsEdit,dsInsert] then
-  begin
+  begin                                                          //Trae cero de inicio
     if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat> adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then //Jul 5/16
        beep;
   //  if adodsCotizacionesDetalle.FieldByName('cantidad').AsFloat<= adodsCotizacionesDetalle.FieldByName('Disponible').AsFloat then  //Abr 11/16
@@ -646,6 +652,17 @@ begin
 
 end;
 
+procedure TdmCotizaciones.adodsMasterBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  if adodsMaster.fieldbyname('IDPersona').IsNULL then
+  begin
+    ShowMessage('No seleccionó cliente.');
+    abort;
+  end;
+
+end;
+
 procedure TdmCotizaciones.adodsMasterCalcFields(DataSet: TDataSet);
 var
   vTotal: Double;
@@ -767,6 +784,7 @@ begin
   adodsMaster.Parameters.ParamByName('TipoDocto').Value:=FTipoDoc;
   gGridEditForm.DataSet := adodsMaster;
   TfrmCotizaciones(gGridEditForm).TipoDocumento:= FTipoDoc;
+
   TfrmCotizaciones(gGridEditForm).DataSourceDetail.DataSet:=adodsCotizacionesDetalle;
   TfrmCotizaciones(gGridEditForm).DSAuxiliar.DataSet:=ADODSAuxiliar; //Nov 9/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
@@ -775,6 +793,7 @@ begin
   TfrmCotizaciones(gGridEditForm).ActEnviaCotizacion := ActEnviarXCorreo;
   TfrmCotizaciones(gGridEditForm).dsFotosAux.dataset:=adodsProductoFotos;
   TfrmCotizaciones(gGridEditForm).dsDocumentoAux.DataSet:=ADODsDocumento;
+
 
 end;
 

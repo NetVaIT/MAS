@@ -298,6 +298,10 @@ type
     ADODtStDatosDocumentoSalidaUsuarioAutPedido: TStringField;
     adodsMasterUsuarioPedido: TStringField;
     AdoUsuarioPedido: TADODataSet;
+    ADODtStInformacionEnvioIdPersonaEmpaca: TIntegerField;
+    ADODtStInformacionEnvioFechaIniEmpaque: TDateTimeField;
+    ADODtStInformacionEnvioFechaFinEmpaque: TDateTimeField;
+    ADODtStInformacionEnvioIdEstatusOrdenEntrega: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);

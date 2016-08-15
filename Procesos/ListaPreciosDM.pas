@@ -105,6 +105,44 @@ type
     ADODtStProductosPreciosunidadMedida: TStringField;
     ADOQryAuxiliar: TADOQuery;
     DSProductosPrecios: TDataSource;
+    ppRprtPrecioMayoreo: TppReport;
+    ppParameterList1: TppParameterList;
+    DSPrecioXEscala: TDataSource;
+    ADODtStPrecioXEscala: TADODataSet;
+    ADODtStPrecioXEscalaDescripcion: TStringField;
+    ADODtStPrecioXEscalaidentificador1: TStringField;
+    ADODtStPrecioXEscalaEscala: TFloatField;
+    ADODtStPrecioXEscalaPrecioXEscala: TFloatField;
+    ppDBPplnPrecioMayoreo: TppDBPipeline;
+    ActImpPreciosMayoreo: TAction;
+    ppHeaderBand1: TppHeaderBand;
+    ppImage1: TppImage;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel10: TppLabel;
+    ppLabel11: TppLabel;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLabel16: TppLabel;
+    ppLabel17: TppLabel;
+    ppLabel19: TppLabel;
+    ppSystemVariable4: TppSystemVariable;
+    ppLabel21: TppLabel;
+    ppDetailBand1: TppDetailBand;
+    ppShape2: TppShape;
+    ppDBText5: TppDBText;
+    ppDBText7: TppDBText;
+    ppDBText8: TppDBText;
+    ppDBText9: TppDBText;
+    ppLabel22: TppLabel;
+    ppFooterBand1: TppFooterBand;
+    ppLabel20: TppLabel;
+    ppSystemVariable5: TppSystemVariable;
+    ppSystemVariable6: TppSystemVariable;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterBeforeEdit(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
@@ -119,6 +157,7 @@ type
     procedure ActImpListaPreciosExecute(Sender: TObject);
     procedure ActActualizaPreciosExecute(Sender: TObject);
     procedure ADODtStProductosPreciosCalcFields(DataSet: TDataSet);
+    procedure ActImpPreciosMayoreoExecute(Sender: TObject);
   private
     fDatosViejos: String;
     FAccion: String;
@@ -172,56 +211,65 @@ var cont :integer;
     x,i, con2:integer;
 begin
   inherited;
-  if  (application.MessageBox(pchar('¿Está seguro de hacer el cambio de precios?'), 'Confirmación', MB_YESNO )=idYES) and VerificaClave then
-  begin
-    //
-    ADOdsmaster.Connection.BeginTrans;
-    try
+  if (application.MessageBox(pchar('Asegurese de haber dado de alta los cambios en precios por Escala. Continuar'), 'Confirmación', MB_YESNO )=idYES)  then
+  begin//Ago 11/16   //CAmbiar mecanismo de actualizacionde mayoreo
+    if  (application.MessageBox(pchar('¿Está seguro de hacer el cambio de precios ?'), 'Confirmación', MB_YESNO )=idYES) and VerificaClave then
+    begin
+      //
+      ADOdsmaster.Connection.BeginTrans;
+      try
 
+        ADOQryActualizaInventario.SQL.Clear;
+        ADOQryActualizaInventario.SQL.Add('Update Productos SET PrecioUnitario=PrecioNuevo where (PrecioNuevo is not null) and (PrecioUnitario<>PrecioNuevo)');
+        cont :=ADOQryActualizaInventario.ExecSQL;
+       // application.MessageBox(pchar('Actualizó'+intTostr(cont)+' registros Productos '), 'Informacion', MB_ok );
+        //Nuevo para actualizar Mayoreos Ago 11/16
 
-      ADOQryActualizaInventario.SQL.Clear;
-      ADOQryActualizaInventario.SQL.Add('Update Productos SET PrecioUnitario=PrecioNuevo where (PrecioNuevo is not null) and (PrecioUnitario<>PrecioNuevo)');
-      cont :=ADOQryActualizaInventario.ExecSQL;
-     // application.MessageBox(pchar('Actualizó'+intTostr(cont)+' registros Productos '), 'Informacion', MB_ok );
-
-      ADOQryconsProductos.Close;
-      ADOQryconsProductos.Open;
-      cont:=0;
-      con2:= ADOQryconsProductos.recordcount;
-      i:=1;
-     //Quitar filtro
-      while not ADOQryconsProductos.eof  do
-      begin
-         X:= i*100 div con2 ;
-         ShowProgress(i,con2,'Actualizando precios definitivos..' + IntToStr(x) + '%');
-         ADODtStInventario.Close;
-         AdoDtStInventario.Parameters.ParamByName('IdProducto').value:=ADOQryconsProductos.FieldByName('IdProducto').Asinteger;
-         AdoDtStInventario.open;
-        if not AdoDtStInventario.eof  and (AdoDtStInventario.FieldByName('PrecioVenta').AsFloat <> ADOQryconsProductos.FieldByName('PrecioUnitario').asFloat ) then
+//        DEshabilitado por que el proceso es que se borran los existentes y va una lista nueva...  (Temporar mayoreo) y eliminar campo de precio nuevo en mayoreo
+    //    ADOQryActualizaInventario.SQL.Clear;
+    //    ADOQryActualizaInventario.SQL.Add('Update ProductosPreciosMayoreo SET PrecioXEscala=PrecioXEscalaNuevo where (PrecioXEscala<>PrecioXEscalaNuevo)');
+    //    cont :=ADOQryActualizaInventario.ExecSQL;
+    //    application.MessageBox(pchar('Actualizó'+intTostr(cont)+' registros PreciosXEscala '), 'Informacion', MB_ok );
+        //Nuevo ago 11/16
+        ADOQryconsProductos.Close;
+        ADOQryconsProductos.Open;
+        cont:=0;
+        con2:= ADOQryconsProductos.recordcount;
+        i:=1;
+       //Quitar filtro
+        while not ADOQryconsProductos.eof  do
         begin
-          DVI:= 'IdInv:'+ AdoDtStInventario.FieldByName('IdInventario').AsString+'IDProd:'+AdoDtStInventario.FieldByName('IdProducto').AsString
-          +'-PV:'+AdoDtStInventario.FieldByName('PrecioVenta').AsString;
-         AdoDtStInventario.Edit;
-         AdoDtStInventario.FieldByName('PrecioVenta').AsFloat:=ADOQryconsProductos.FieldByName('PrecioUnitario').asFloat;
-         AdoDtStInventario.Post;
-         DNI:= 'IdInv:'+ AdoDtStInventario.FieldByName('IdInventario').AsString+'IDProd:'+AdoDtStInventario.FieldByName('IdProducto').AsString
-           +'-PV:'+AdoDtStInventario.FieldByName('PrecioVenta').AsString;
-         RegistraBitacora('Inventario',AdoDtStInventario.FieldByName('IdInventario').AsString,DVI,DNI, 'Edita', obs);
+           X:= i*100 div con2 ;
+           ShowProgress(i,con2,'Actualizando precios definitivos..' + IntToStr(x) + '%');
+           ADODtStInventario.Close;
+           AdoDtStInventario.Parameters.ParamByName('IdProducto').value:=ADOQryconsProductos.FieldByName('IdProducto').Asinteger;
+           AdoDtStInventario.open;
+          if not AdoDtStInventario.eof  and (AdoDtStInventario.FieldByName('PrecioVenta').AsFloat <> ADOQryconsProductos.FieldByName('PrecioUnitario').asFloat ) then
+          begin
+            DVI:= 'IdInv:'+ AdoDtStInventario.FieldByName('IdInventario').AsString+'IDProd:'+AdoDtStInventario.FieldByName('IdProducto').AsString
+            +'-PV:'+AdoDtStInventario.FieldByName('PrecioVenta').AsString;
+           AdoDtStInventario.Edit;
+           AdoDtStInventario.FieldByName('PrecioVenta').AsFloat:=ADOQryconsProductos.FieldByName('PrecioUnitario').asFloat;
+           AdoDtStInventario.Post;
+           DNI:= 'IdInv:'+ AdoDtStInventario.FieldByName('IdInventario').AsString+'IDProd:'+AdoDtStInventario.FieldByName('IdProducto').AsString
+             +'-PV:'+AdoDtStInventario.FieldByName('PrecioVenta').AsString;
+           RegistraBitacora('Inventario',AdoDtStInventario.FieldByName('IdInventario').AsString,DVI,DNI, 'Edita', obs);
 
-         cont:=cont+1;
-       end;
-       i:=i+1;
-       ADOQryconsProductos.Next;
+           cont:=cont+1;
+         end;
+         i:=i+1;
+         ADOQryconsProductos.Next;
+        end;
+        ADOdsmaster.Connection.CommitTrans;
+
+        application.MessageBox(pchar('Actualizó '+intTostr(cont)+' registros'), 'Informacion', MB_ok );
+      except
+        ADOdsmaster.Connection.RollbackTrans;
+
       end;
-      ADOdsmaster.Connection.CommitTrans;
-
-      application.MessageBox(pchar('Actualizó '+intTostr(cont)+' registros'), 'Informacion', MB_ok );
-    except
-      ADOdsmaster.Connection.RollbackTrans;
-
+      ShowProgress(100,100);
     end;
-    ShowProgress(100,100);
-  end;
+  end; //Fin del if de precios por mayoreso
 
 
 
@@ -247,6 +295,26 @@ begin
   end;
 end;
 
+procedure TDmListaPrecios.ActImpPreciosMayoreoExecute(Sender: TObject);
+var ArcNombre:String;
+begin
+  inherited;
+  ADODtStPrecioXEscala.Close;
+  ADODtStPrecioXEscala.open;
+  ArcNombre:='ListaPreciosMayoreo.pdf';
+  if FileExists(ArcNombre) then
+    deleteFile(ArcNombre);
+   //PrintPDFFile(True); // deshabilitado para que no muestre desde el Reportbuilder
+  PrintPDFFile(2,1, false,ArcNombre);// que sólo muestre el PDF   //May 13 /16
+  if FileExists(ArcNombre) then  //May 13 /16
+  begin
+    ShellExecute(application.Handle, 'open', PChar(ArcNombre), nil, nil, SW_SHOWNORMAL);
+  end;
+
+
+
+end;
+
 procedure TDmListaPrecios.adodsMasterAfterOpen(DataSet: TDataSet);
 begin
   inherited;
@@ -261,7 +329,7 @@ var
   i:integer;
 begin
   inherited;
-
+  //No se actualiza precios de mayoreo
  (*
   if adodsMaster.Tag = 5 then //Es individual //Jul 6/16
      obs:='IDProducto ='+dataset.FieldByName('IdProducto').AsString
@@ -402,6 +470,29 @@ begin
     // DES ABAN eNE7/16      ppReport.PrinterSetup.DocumentName:= ExtractFileName(vPDFFileName);
       ppRptListaPrecios.Print;
     end;
+   2:begin  //Ago 12/16
+     // ppRptListaPrecios.Template.FileName:=ExtractFilePath(application.exeName)+'ListaPrecios.rtm';   //Es posible que luego se quite y se deje fijo
+     // ppRptListaPrecios.Template.LoadFromFile;
+
+      ppRprtPrecioMayoreo.ShowPrintDialog:= False;
+      ppRprtPrecioMayoreo.ShowCancelDialog:= False;
+      ppRprtPrecioMayoreo.AllowPrintToArchive:= False;
+      if Mostrar then
+        ppRprtPrecioMayoreo.DeviceType:= 'Screen'
+      else
+      begin
+        if nombrePDF<>'' then
+        begin
+          ppRprtPrecioMayoreo.DeviceType:= 'PDF';
+          ppRprtPrecioMayoreo.PDFSettings.OpenPDFFile := False;
+          ppRprtPrecioMayoreo.TextFileName:= nombrePDF;
+        end; //Siempre muesta el PDF
+      end;
+       ppRprtPrecioMayoreo.Print;
+    end;
+
+
+
   end;
 end;
 
@@ -428,8 +519,9 @@ begin
   TfrmListaPrecioEdit(gGridEditForm).DSVerificaActualiza.DataSet:=ADOQryAuxiliar;
   ADODtStBitacora.open;
   TfrmListaPrecioEdit(gGridEditForm).actImprimeLista:=ActImpListaPrecios;
-   TfrmListaPrecioEdit(gGridEditForm).actActualizaprecios :=ActActualizaPrecios;
+  TfrmListaPrecioEdit(gGridEditForm).actActualizaprecios :=ActActualizaPrecios;
 
+  TfrmListaPrecioEdit(gGridEditForm).actImprimeMayoreo:=ActImpPreciosMayoreo;  //Ago 12/16
 end;
 
 procedure TDmListaPrecios.DataModuleDestroy(Sender: TObject);

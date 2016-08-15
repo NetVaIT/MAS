@@ -57,30 +57,37 @@
     end
     object adodsMasterSaldoDocumento: TFloatField
       FieldName = 'SaldoDocumento'
+      currency = True
     end
     object adodsMasterVigentes: TFloatField
       FieldName = 'Vigentes'
       ReadOnly = True
+      currency = True
     end
     object adodsMasterVencidosa30días: TFloatField
       FieldName = 'Vencidos a 30 d'#237'as'
       ReadOnly = True
+      currency = True
     end
     object adodsMasterVencidosa60días: TFloatField
       FieldName = 'Vencidos a 60 d'#237'as'
       ReadOnly = True
+      currency = True
     end
     object adodsMasterVencidosa90días: TFloatField
       FieldName = 'Vencidos a 90 d'#237'as'
       ReadOnly = True
+      currency = True
     end
     object adodsMasterVencidosmásde90días: TFloatField
       FieldName = 'Vencidos m'#225's de 90 d'#237'as'
       ReadOnly = True
+      currency = True
     end
     object adodsMasterTotalImpuestoTrasladado: TFloatField
       FieldName = 'TotalImpuestoTrasladado'
       Visible = False
+      currency = True
     end
     object adodsMasterUUID_TB: TStringField
       FieldName = 'UUID_TB'
@@ -90,14 +97,17 @@
     object adodsMasterTotalImpuestoRetenido: TFloatField
       FieldName = 'TotalImpuestoRetenido'
       Visible = False
+      currency = True
     end
     object adodsMasterTotal: TFloatField
       FieldName = 'Total'
       Visible = False
+      currency = True
     end
     object adodsMasterSubTotal: TFloatField
       FieldName = 'SubTotal'
       Visible = False
+      currency = True
     end
   end
 end

@@ -2,6 +2,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   Caption = 'frmCotizaciones'
   ClientWidth = 1277
   KeyPreview = True
+  OnActivate = FormActivate
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
   PixelsPerInch = 96
@@ -21,6 +22,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   inherited splDetail1: TSplitter
     Top = 525
     Width = 1277
+    Visible = True
     ExplicitTop = 478
     ExplicitWidth = 960
   end
@@ -63,21 +65,21 @@ inherited frmCotizaciones: TfrmCotizaciones
     ClientRectBottom = 502
     ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 1269
-      ExplicitHeight = 495
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 1275
+      ExplicitHeight = 501
       inherited cxScrollBox1: TcxScrollBox
         Width = 1275
         Height = 501
-        ExplicitWidth = 1269
-        ExplicitHeight = 495
+        ExplicitWidth = 1275
+        ExplicitHeight = 501
         inherited tbarData: TToolBar
           Width = 1273
           ParentShowHint = False
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1267
+          ExplicitWidth = 1273
           inherited ToolButton14: TToolButton
             AutoSize = True
             ExplicitWidth = 27
@@ -175,8 +177,8 @@ inherited frmCotizaciones: TfrmCotizaciones
           Height = 474
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1267
-          ExplicitHeight = 468
+          ExplicitWidth = 1273
+          ExplicitHeight = 474
           object pnlDetail: TPanel
             Left = 0
             Top = 209
@@ -185,8 +187,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 1267
-            ExplicitHeight = 148
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -194,7 +194,6 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 29
               Images = ilAction
               TabOrder = 0
-              ExplicitWidth = 1267
               object TlBtnInserta: TToolButton
                 Left = 0
                 Top = 0
@@ -394,7 +393,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 209
             Align = alTop
             TabOrder = 1
-            ExplicitWidth = 1267
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -592,14 +590,14 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'TipoDocumento'
               DataSource = DataSource
-              TabOrder = 5
+              TabOrder = 9
             end
             object cxDBDateEdit1: TcxDBDateEdit
               Left = 291
               Top = 34
               DataBinding.DataField = 'FechaRegistro'
               DataBinding.DataSource = DataSource
-              TabOrder = 6
+              TabOrder = 10
               Width = 145
             end
             object cxDBLabel1: TcxDBLabel
@@ -618,7 +616,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'Direccioncliente'
               DataSource = DataSource
-              TabOrder = 8
+              TabOrder = 12
             end
             object cxDBLabel2: TcxDBLabel
               Left = 193
@@ -657,9 +655,9 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 439
             end
             object DBLkupCmbBxDirAuxiliar: TDBLookupComboBox
-              Left = 370
+              Left = 371
               Top = 77
-              Width = 500
+              Width = 437
               Height = 21
               DataField = 'IdDomicilioCliente'
               DataSource = DataSource
@@ -676,7 +674,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Width = 121
               Height = 149
               ItemHeight = 13
-              TabOrder = 13
+              TabOrder = 17
             end
             object ChckBxAdjuntar: TCheckBox
               Left = 1103
@@ -685,7 +683,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 17
               Caption = 'Adjuntar al Correo'
               Enabled = False
-              TabOrder = 14
+              TabOrder = 18
             end
             object BtBtnAdjuntos: TBitBtn
               Left = 1103
@@ -700,7 +698,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 15
+              TabOrder = 19
               OnClick = BtBtnAdjuntosClick
             end
             object cxDBLabel6: TcxDBLabel
@@ -735,7 +733,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 149
               Color = clWhite
               ParentBackground = False
-              TabOrder = 19
+              TabOrder = 23
               Visible = False
               object Label15: TLabel
                 Left = 29
@@ -865,7 +863,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Height = 21
               DataField = 'EnviarPor'
               DataSource = DataSource
-              TabOrder = 20
+              TabOrder = 6
             end
             object cxDBRadioGroup1: TcxDBRadioGroup
               Left = 208
@@ -884,21 +882,22 @@ inherited frmCotizaciones: TfrmCotizaciones
                   Caption = 'Domicilio'
                   Value = 'Domicilio'
                 end>
-              TabOrder = 21
+              TabOrder = 7
               Height = 43
               Width = 150
             end
             object DBLookupComboBox3: TDBLookupComboBox
-              Left = 364
+              Left = 371
               Top = 170
-              Width = 500
+              Width = 450
               Height = 21
               DataField = 'IdPersonaDomicilioEnvio'
               DataSource = DataSource
               KeyField = 'IdPersonaDomicilio'
               ListField = 'DirEnviocompleta'
               ListSource = DSDireccionenvios
-              TabOrder = 22
+              TabOrder = 8
+              OnClick = DBLookupComboBox3Click
             end
             object cxDBCheckBox1: TcxDBCheckBox
               Left = 370
@@ -906,7 +905,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Caption = 'Facturar'
               DataBinding.DataField = 'Facturar'
               DataBinding.DataSource = DataSource
-              TabOrder = 23
+              TabOrder = 5
               Width = 121
             end
           end
@@ -917,8 +916,6 @@ inherited frmCotizaciones: TfrmCotizaciones
             Height = 111
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 357
-            ExplicitWidth = 1267
             object Label2: TLabel
               Left = 530
               Top = 49
@@ -1036,7 +1033,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400F00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1246,7 +1243,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C0022C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002380210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2232,7 +2229,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   end
   object DSDireccionenvios: TDataSource
     DataSet = dmCotizaciones.ADODtStDireccionesEnvio
-    Left = 1068
+    Left = 1060
     Top = 219
   end
 end

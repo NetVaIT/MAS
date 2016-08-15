@@ -4,7 +4,9 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, ppDB, ppDBPipe, ppParameter, ppDesignLayer, ppBands,
+  ppCtrls, ppVar, dxGDIPlusClasses, ppPrnabl, ppClass, ppCache, ppComm,
+  ppRelatv, ppProd, ppReport;
 
 type
   TdmProductos = class(T_dmStandar)
@@ -81,6 +83,49 @@ type
     ADODtStTipoEspecificacionIdentificador: TStringField;
     ADODtStTipoEspecificacionDescripcion: TStringField;
     ADODtStEspecificacionesTipo: TStringField;
+    ADODtStPreciosMayoreo: TADODataSet;
+    ADODtStPreciosMayoreoIdProductoPrecioMayoreo: TAutoIncField;
+    ADODtStPreciosMayoreoIdProducto: TIntegerField;
+    ADODtStPreciosMayoreoEscala: TFloatField;
+    ADODtStPreciosMayoreoPrecioXEscala: TFloatField;
+    ADODtStPreciosMayoreoProducto: TStringField;
+    ppRprtPrecioMayoreo: TppReport;
+    ppParameterList1: TppParameterList;
+    ppDBPplnPrecioMayoreo: TppDBPipeline;
+    ADODtStPrecioXEscala: TADODataSet;
+    ADODtStPrecioXEscalaidentificador1: TStringField;
+    ADODtStPrecioXEscalaDescripcion: TStringField;
+    ADODtStPrecioXEscalaEscala: TFloatField;
+    ADODtStPrecioXEscalaPrecioXEscala: TFloatField;
+    DSPrecioXEscala: TDataSource;
+    ppHeaderBand1: TppHeaderBand;
+    ppImage1: TppImage;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel10: TppLabel;
+    ppLabel11: TppLabel;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLabel16: TppLabel;
+    ppLabel17: TppLabel;
+    ppLabel19: TppLabel;
+    ppSystemVariable4: TppSystemVariable;
+    ppLabel21: TppLabel;
+    ppDetailBand1: TppDetailBand;
+    ppShape2: TppShape;
+    ppDBText5: TppDBText;
+    ppDBText7: TppDBText;
+    ppDBText8: TppDBText;
+    ppDBText9: TppDBText;
+    ppLabel22: TppLabel;
+    ppFooterBand1: TppFooterBand;
+    ppLabel20: TppLabel;
+    ppSystemVariable5: TppSystemVariable;
+    ppSystemVariable6: TppSystemVariable;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
@@ -100,7 +145,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses ProductosEdit, DocumentosDM, ProductosProveedoresEdit,
-   ProductosAplicacionesEdit;
+   ProductosAplicacionesEdit, ProductosMayoreoEdit;
 
 {$R *.dfm}
 
@@ -185,6 +230,13 @@ begin
   gFormDetail2:= TfrmProductosAplicacionEdit.Create(Self);  //May 12/16
   gFormDetail2.DataSet:= adodtstProductosAplicaciones;     //May 12/16
   TfrmProductosAplicacionEdit(gFormDetail2).DSIdentificadores.DataSet:= adodsMaster;
+
+  ADODtStPreciosMayoreo.Open; //Ago 11/16
+  gFormDetail3:= TFrmProductosPrecioMayoreo.Create(Self);    //Ago 11/16
+  gFormDetail3.DataSet:= ADODtStPreciosMayoreo;     //Ago 11/16
+ //  TFrmProductosPrecioMayoreo(gFormDetail3).DS.DataSet:= adodsMaster; ??   //Ago 11/16
+
+
 end;
 
 procedure TdmProductos.DataModuleDestroy(Sender: TObject);

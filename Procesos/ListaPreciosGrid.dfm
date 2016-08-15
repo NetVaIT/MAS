@@ -1,6 +1,7 @@
 inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   Caption = 'FrmListaPreciosGrid'
   ClientWidth = 1217
+  ExplicitLeft = -306
   ExplicitWidth = 1217
   PixelsPerInch = 96
   TextHeight = 13
@@ -205,13 +206,13 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
       object ToolButton11: TToolButton
         Left = 332
         Top = 0
-        Width = 93
+        Width = 69
         Caption = 'ToolButton11'
         ImageIndex = 12
         Style = tbsSeparator
       end
       object PnlBusqueda: TPanel
-        Left = 425
+        Left = 401
         Top = 0
         Width = 184
         Height = 45
@@ -266,7 +267,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         end
       end
       object RdGrpFiltro: TRadioGroup
-        Left = 609
+        Left = 585
         Top = 0
         Width = 143
         Height = 45
@@ -282,7 +283,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = RdGrpFiltroClick
       end
       object PnlFechas: TPanel
-        Left = 752
+        Left = 728
         Top = 0
         Width = 328
         Height = 45
@@ -352,8 +353,46 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
           Width = 93
         end
       end
+      object RdGrpTipoImp: TRadioGroup
+        Left = 1056
+        Top = 0
+        Width = 89
+        Height = 45
+        Caption = 'Imprimir'
+        Color = clBtnFace
+        ItemIndex = 0
+        Items.Strings = (
+          'Lista Precios'
+          'Escala')
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 3
+        OnClick = RdGrpFiltroClick
+      end
+      object SpdBtnListaPrecios: TSpeedButton
+        Left = 1145
+        Top = 0
+        Width = 32
+        Height = 45
+        Hint = 'Lista de Precios'
+        Glyph.Data = {
+          76010000424D7601000000000000760000002800000020000000100000000100
+          04000000000000010000120B0000120B00001000000000000000000000000000
+          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+          0003377777777777777308888888888888807F33333333333337088888888888
+          88807FFFFFFFFFFFFFF7000000000000000077777777777777770F8F8F8F8F8F
+          8F807F333333333333F708F8F8F8F8F8F9F07F333333333337370F8F8F8F8F8F
+          8F807FFFFFFFFFFFFFF7000000000000000077777777777777773330FFFFFFFF
+          03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
+          03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
+          33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
+          33333337FFFF7733333333300000033333333337777773333333}
+        NumGlyphs = 2
+        OnClick = SpdBtnListaPreciosClick
+      end
       object SpdBtnCambiarPrecio: TSpeedButton
-        Left = 1080
+        Left = 1177
         Top = 0
         Width = 32
         Height = 45
@@ -412,30 +451,8 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         NumGlyphs = 2
         OnClick = SpdBtnCambiarPrecioClick
       end
-      object SpdBtnListaPrecios: TSpeedButton
-        Left = 1112
-        Top = 0
-        Width = 32
-        Height = 45
-        Hint = 'Lista de Precios'
-        Glyph.Data = {
-          76010000424D7601000000000000760000002800000020000000100000000100
-          04000000000000010000120B0000120B00001000000000000000000000000000
-          800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
-          0003377777777777777308888888888888807F33333333333337088888888888
-          88807FFFFFFFFFFFFFF7000000000000000077777777777777770F8F8F8F8F8F
-          8F807F333333333333F708F8F8F8F8F8F9F07F333333333337370F8F8F8F8F8F
-          8F807FFFFFFFFFFFFFF7000000000000000077777777777777773330FFFFFFFF
-          03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
-          03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
-          33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
-          33333337FFFF7733333333300000033333333337777773333333}
-        NumGlyphs = 2
-        OnClick = SpdBtnListaPreciosClick
-      end
       object SpdBtnAplicacionPrecios: TSpeedButton
-        Left = 1144
+        Left = 1209
         Top = 0
         Width = 32
         Height = 45
@@ -457,7 +474,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = SpdBtnAplicacionPreciosClick
       end
       object TlBtnImpresion: TToolButton
-        Left = 1176
+        Left = 1241
         Top = 0
         ImageIndex = 13
         Visible = False
@@ -474,7 +491,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilPageControl: TImageList
     Top = 152
     Bitmap = {
-      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -619,7 +636,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilAction: TImageList
     Top = 152
     Bitmap = {
-      494C01010E00B8014C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E00B801500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000101001E030303430203033E0202
       023E0303033D0303033D0303033E0303033E154F1CAD23F405FF114017980303

@@ -59,6 +59,7 @@ type
     SpdBtnAplicacionPrecios: TSpeedButton;
     DSVerificaActualiza: TDataSource;
     RxDBLkpCmbProveedor: TDBLookupComboBox;
+    RdGrpTipoImp: TRadioGroup;
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure EdtNombreChange(Sender: TObject);
     procedure EdtNombreKeyDown(Sender: TObject; var Key: Word;
@@ -77,12 +78,14 @@ type
     fFiltroProveedor: String;
     FImprimelista: TBasicAction;
     FActualizaPrecios: TBasicAction;
+    FImprimeMayoreo: TBasicAction;
 
     procedure CambiarPrecio(Tipo: Integer;Valor:Double);
     procedure SetFImprimeLista(const Value: TBasicAction);
     procedure SetFActualizaPrecios(const Value: TBasicAction);     //Jul 4/16
 
     Function ActualizandoPrecios:Boolean;
+    procedure SetFImprimeMayoreo(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
@@ -92,6 +95,7 @@ type
 
      property actImprimeLista: TBasicAction read FImprimelista write SetFImprimeLista; //Jul 18/16
      property actActualizaPrecios: TBasicAction read FActualizaPrecios write SetFActualizaPrecios; //Jul 18/16
+     property actImprimeMayoreo: TBasicAction read FImprimeMayoreo write SetFImprimeMayoreo; //Jul 18/16
 
   end;
 
@@ -188,6 +192,12 @@ begin
   TlBtnImpresion.action:=Value;
   TlBtnImpresion.ImageIndex:=13;
   TlBtnImpresion.Visible:=False;
+end;
+
+procedure TFrmListaPreciosGrid.SetFImprimeMayoreo(const Value: TBasicAction);
+begin
+  FImprimeMayoreo := Value;
+
 end;
 
 procedure TFrmListaPreciosGrid.SpdBtnAplicacionPreciosClick(Sender: TObject);
@@ -293,8 +303,10 @@ end;
 procedure TFrmListaPreciosGrid.SpdBtnListaPreciosClick(Sender: TObject);
 begin
   inherited;
-
-  TlBtnImpresion.Click;
+  case RdGrpTipoImp.itemindex of
+  0: TlBtnImpresion.Click;
+  1: actImprimeMayoreo.Execute;
+  end;
 end;
 
 end.

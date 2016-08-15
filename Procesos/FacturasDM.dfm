@@ -373,12 +373,14 @@ inherited DMFacturas: TDMFacturas
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select  OS.*, DS.IDDomicilioCliente, P.IDMetodoPagoCliente ,'#13#10'P.' +
-      'RFC, P.RazonSocial NombreCliente, P.idPersona IDPersonaCliente'#13#10 +
-      'from OrdenesSalidas OS '#13#10'inner join documentosSalidas DS on DS.i' +
-      'ddocumentoSalida= OS.idDocumentoSalida'#13#10'inner Join Personas P on' +
-      ' P.IdPersona= DS.IDPersona'#13#10'where (OS.IdOrdenEstatus=4 or OS.IdO' +
-      'rdenEstatus=10)'#13#10'and  OS.IdOrdenSalida=:IdOrdenSalida'#13#10
+      'select  OS.*, DS.IDDomicilioCliente, P.IDMetodoPagoCliente ,'#13#10'PD' +
+      '.IDMetododePago ,PD.NumCtaPagoCliente,'#13#10'P.RFC, P.RazonSocial Nom' +
+      'breCliente, P.idPersona IDPersonaCliente'#13#10'from OrdenesSalidas OS' +
+      ' '#13#10'inner join documentosSalidas DS on DS.iddocumentoSalida= OS.i' +
+      'dDocumentoSalida'#13#10'inner Join Personas P on P.IdPersona= DS.IDPer' +
+      'sona'#13#10'Left Join PersonasDomicilios PD on DS.IdDomicilioCliente=P' +
+      'D.IdPersonaDomicilio'#13#10'where (OS.IdOrdenEstatus=4 or OS.IdOrdenEs' +
+      'tatus=10)'#13#10'and  OS.IdOrdenSalida=:IdOrdenSalida'#13#10
     DataSource = DSDatosDocSalida
     IndexFieldNames = 'IdDocumentoSalida'
     Parameters = <
@@ -470,6 +472,13 @@ inherited DMFacturas: TDMFacturas
     end
     object ADODtStOrdenSalidaAcumula: TBooleanField
       FieldName = 'Acumula'
+    end
+    object ADODtStOrdenSalidaIDMetododePago: TIntegerField
+      FieldName = 'IDMetododePago'
+    end
+    object ADODtStOrdenSalidaNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
     end
   end
   object DSOrdenSalida: TDataSource

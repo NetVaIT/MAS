@@ -6,13 +6,13 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 620
+    Top = 626
     Width = 1267
     ExplicitTop = 620
     ExplicitWidth = 933
   end
   inherited splDetail2: TSplitter
-    Top = 582
+    Top = 588
     Width = 1267
     Height = 18
     ExplicitLeft = -1
@@ -21,8 +21,9 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ExplicitHeight = 18
   end
   inherited splDetail1: TSplitter
-    Top = 561
+    Top = 567
     Width = 1267
+    Visible = True
     ExplicitTop = 524
     ExplicitWidth = 933
   end
@@ -35,15 +36,15 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ExplicitHeight = 10
   end
   inherited pnlDetail3: TPanel
-    Top = 623
+    Top = 629
     Width = 1267
-    Height = 17
+    Height = 11
     ExplicitTop = 623
     ExplicitWidth = 1267
-    ExplicitHeight = 17
+    ExplicitHeight = 11
   end
   inherited pnlDetail2: TPanel
-    Top = 600
+    Top = 606
     Width = 1267
     Height = 20
     ExplicitTop = 600
@@ -51,7 +52,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ExplicitHeight = 20
   end
   inherited pnlDetail1: TPanel
-    Top = 564
+    Top = 570
     Width = 1267
     Height = 18
     ExplicitLeft = 0
@@ -62,11 +63,11 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   inherited pcMain: TcxPageControl
     Top = 22
     Width = 1267
-    Height = 539
+    Height = 545
     ExplicitTop = 22
     ExplicitWidth = 1267
     ExplicitHeight = 539
-    ClientRectBottom = 538
+    ClientRectBottom = 544
     ClientRectRight = 1266
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -75,7 +76,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
       ExplicitHeight = 537
       inherited cxScrollBox1: TcxScrollBox
         Width = 1265
-        Height = 537
+        Height = 543
         ExplicitWidth = 1265
         ExplicitHeight = 537
         inherited tbarData: TToolBar
@@ -109,7 +110,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
         end
         inherited pnlMaster: TPanel
           Width = 1263
-          Height = 510
+          Height = 516
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1263
@@ -1798,10 +1799,11 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             Left = 0
             Top = 416
             Width = 1263
-            Height = 138
-            Align = alTop
+            Height = 100
+            Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitHeight = 138
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -1885,7 +1887,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Left = 0
               Top = 29
               Width = 1263
-              Height = 109
+              Height = 71
               Align = alClient
               DataSource = DtSrcOrdenSalItem
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -1983,7 +1985,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400FC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2199,7 +2201,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002380210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002480210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

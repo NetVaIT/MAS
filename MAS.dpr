@@ -202,7 +202,9 @@ uses
   rptInventarioExistenciaDM in 'Reportes\rptInventarioExistenciaDM.pas' {dmrptInventarioExistencia: TDataModule},
   rptVentasUnidadesAcumuladasDM in 'Reportes\rptVentasUnidadesAcumuladasDM.pas' {dmrptVentasUnidadesAcumuladas: TDataModule},
   rptInventarioDM in 'Reportes\rptInventarioDM.pas' {dmrptInventario: TDataModule},
-  rptRegistroDiarioFacturasDM in 'Reportes\rptRegistroDiarioFacturasDM.pas' {dmRPTRegistroDiarioFact: TDataModule};
+  rptRegistroDiarioFacturasDM in 'Reportes\rptRegistroDiarioFacturasDM.pas' {dmRPTRegistroDiarioFact: TDataModule},
+  ProductosMayoreoEdit in 'Catalogos\ProductosMayoreoEdit.pas' {FrmProductosPrecioMayoreo},
+  ProductosMayoreoForm in 'Catalogos\ProductosMayoreoForm.pas' {FrmProductosPrecioMayoreoGrid};
 
 {$R *.res}
 
