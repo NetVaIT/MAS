@@ -156,6 +156,7 @@ type
     procedure SpdBtnAdjuntarArchivosClick(Sender: TObject);
     procedure DBLookupComboBox3Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure cxDBLabel4Click(Sender: TObject);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
@@ -167,7 +168,8 @@ type
     procedure SetGenPDFCotiza(const Value: TBasicAction);
     procedure SetEnviaCotizacion(const Value: TBasicAction); // Ene12/16
     procedure CrearArchivos(ListaAdj: TListBox; RutaAdj: String);
-    function CostoDeInventario(IdProd: integer): Double; //Feb 22/16
+    function CostoDeInventario(IdProd: integer): Double;
+    function VerificaUsuario: boolean; //Feb 22/16
 
     { Private declarations }
   public
@@ -252,10 +254,49 @@ begin
     end;
   end;
 end;
+procedure TfrmCotizaciones.cxDBLabel4Click(Sender: TObject);
+//Ago 25/16
+begin
+  inherited;
+  if (FTipoDoc=2) and SpdBtnCambioEstatus.Enabled  and (datasource.DataSet.FieldByName('IdDocumentoSalidaEstatus').AsInteger in [1,4])
+  and (pos('autoriza',_dmConection.PerFuncion)>0) and (application.messageBox(pChar('Desea Cancelar el Pedido ?'),'Confirmación',MB_YESNO)=IDYES) then
+  begin
+    if VerificaUsuario then
+    begin
+      datasource.DataSet.edit;
+      datasource.DataSet.FieldByName('IdDocumentoSalidaEstatus').AsInteger :=3; //Cancelado
+      datasource.DataSet.post;
+      ShowMessage('Pedido Cancelado');
+    end;
+  end;
+
+
+end;
+
+function  TfrmCotizaciones.VerificaUsuario:boolean;
+var               //Ago 25/16
+   clave:String;
+begin
+  if  inputquery('Verificacion de contraseña','Indique su contraseña', clave) then
+  begin
+    DSAuxiliar.DataSet.Close;
+    TAdoDataset(DSAuxiliar.DataSet).commandText:=' SElect * from Usuarios where IdUsuario='+intToStr(_dmConection.IdUsuario) ;
+    DSAuxiliar.DataSet.open;
+    if not DSAuxiliar.DataSet.eof then
+      REsult:=clave =  DSAuxiliar.DataSet.fieldbyname('Password').asstring
+    else
+    begin
+      REsult:=False;
+      Showmessage('No se encontro Usuario. NDS');
+    end;
+    DSAuxiliar.DataSet.Close;
+  end;
+end;
+
 procedure TfrmCotizaciones.cxDBLabel7Click(Sender: TObject);
 begin
   inherited;
-   DSAntSaldos.DataSet.Close;       //May 2/16
+  DSAntSaldos.DataSet.Close;       //May 2/16
   TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:= datasource.DataSet.FieldByName('IdPersona').asInteger;
   DSAntSaldos.DataSet.Open;
   PnlSumasSaldos.Visible:=True;
@@ -266,7 +307,7 @@ procedure TfrmCotizaciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   if DataSource.DataSet.FieldByName('IDDocumentoSalidaTipo').AsInteger=2  then
-    SpdBtnCambioEstatus.Enabled:=RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);// TlBtnCambioEstatus //Feb 9/16   SpdBtnCambioEstatus;
+    SpdBtnCambioEstatus.Enabled:=(DataSource.DataSet.FieldByName('idDocumentoSalidaEstatus').AsInteger<>3) and RevisaFaltantes(DataSource.DataSet.FieldByName('IDDocumentoSalida').AsInteger);// TlBtnCambioEstatus //Feb 9/16   SpdBtnCambioEstatus;
                                                         //Feb 9/16
   pnlMaster.Enabled:=  SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.visible;// SpdBtnCambioEstatus.Enabled and SpdBtnCambioEstatus.Visible;  // ene 11/16
   toolbutton10.enabled:= pnlMaster.Enabled;

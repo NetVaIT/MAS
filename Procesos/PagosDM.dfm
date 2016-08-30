@@ -10,7 +10,7 @@ inherited dmPagos: TdmPagos
       'select IdPagoRegistro, IdBanco, IdMetodoPago, IdPersonaCliente, ' +
       #13#10'IdCuentaBancariaEstadoCuenta, Fecha, Referencia, Importe, Sald' +
       'o,'#13#10' Observaciones,'#13#10' IdDomicilioCliente, FolioPago, SeriePago f' +
-      'rom PagosRegistros'
+      'rom PagosRegistros'#13#10'where fecha >getdate()'
     Left = 40
     object adodsMasterIdPagoRegistro: TLargeintField
       FieldName = 'IdPagoRegistro'
@@ -118,6 +118,9 @@ inherited dmPagos: TdmPagos
       KeyFields = 'IdPersonaCliente'
       Lookup = True
     end
+  end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
   end
   object ADODtStDireccAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -462,7 +465,7 @@ inherited dmPagos: TdmPagos
       'nSalida, IdCFDIEstatus, IdClienteDomicilio, TipoCambio,'#13#10' Serie,' +
       ' Folio, Fecha, Total, SaldoDocumento from CFDI where '#13#10'SaldoDocu' +
       'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3'#13#10' o' +
-      'r IDCFDITipoDocumento=4)'#13#10
+      'r IDCFDITipoDocumento=4)'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaReceptor;IdClienteDomicilio'
     MasterFields = 'IdPersonaCliente;IdDomicilioCliente'

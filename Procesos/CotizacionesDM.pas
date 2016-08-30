@@ -710,7 +710,7 @@ end;
 procedure TdmCotizaciones.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
 var idDocSalida, IDDocItem:Integer;
 //completo:Boolean;
-   Subtotal:Double;
+   Subtotal, IVACal,TotalCal:Double;  // ago 25/16
 begin
   inherited;
   //Verificar si aca actualizar el item respectivo del detalle del documento
@@ -727,10 +727,14 @@ begin
   ADOQryAuxiliar.open;
 
   Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+   //Ago 25/16
+  IVACal:= subtotal*0.16;
+  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
+
 
   ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16)
+  ADOQryAuxiliar.SQL.Clear;                                                                            //  subtotal*0.16       subtotal*1.16
+  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal)
                           +' where IDOrdenSalida ='+IntToStr(idDocSalida));
   ADOQryAuxiliar.ExecSQL;
 

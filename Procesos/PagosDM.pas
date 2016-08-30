@@ -209,7 +209,7 @@ begin
   ADOQryAuxiliar.ExecSQL;
    //
   ActualizaSaldoCliente(DAtaSEt.FieldByName('IDCFDI').ASInteger,DAtaSEt.FieldByName('IDPagoRegistro').asInteger,DataSet.FieldByName('Importe').AsFloat,'- ' );//habilitado mar 7/16
-
+  //Ver si se verifican saldos por diferencias mínimas ago 23/16
 end;
 
 procedure TdmPagos.ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);

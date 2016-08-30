@@ -3,6 +3,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -39,7 +40,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Top = 629
     Width = 1267
     Height = 11
-    ExplicitTop = 623
+    ExplicitTop = 629
     ExplicitWidth = 1267
     ExplicitHeight = 11
   end
@@ -47,7 +48,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Top = 606
     Width = 1267
     Height = 20
-    ExplicitTop = 600
+    ExplicitTop = 606
     ExplicitWidth = 1267
     ExplicitHeight = 20
   end
@@ -56,7 +57,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Width = 1267
     Height = 18
     ExplicitLeft = 0
-    ExplicitTop = 564
+    ExplicitTop = 570
     ExplicitWidth = 1267
     ExplicitHeight = 18
   end
@@ -66,19 +67,19 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     Height = 545
     ExplicitTop = 22
     ExplicitWidth = 1267
-    ExplicitHeight = 539
+    ExplicitHeight = 545
     ClientRectBottom = 544
     ClientRectRight = 1266
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1265
-      ExplicitHeight = 537
+      ExplicitHeight = 543
       inherited cxScrollBox1: TcxScrollBox
         Width = 1265
         Height = 543
         ExplicitWidth = 1265
-        ExplicitHeight = 537
+        ExplicitHeight = 543
         inherited tbarData: TToolBar
           Width = 1263
           ExplicitLeft = 0
@@ -114,7 +115,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1263
-          ExplicitHeight = 510
+          ExplicitHeight = 516
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -1803,7 +1804,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 138
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
@@ -1985,7 +1985,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004000C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400100210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2201,7 +2201,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002480210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C0024C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -169,6 +169,7 @@ object FrmAplicacionPago: TFrmAplicacionPago
       Top = 117
       DataBinding.DataField = 'IdCFDI'
       DataBinding.DataSource = DSAplicacion
+      Visible = False
       Height = 21
       Width = 129
     end

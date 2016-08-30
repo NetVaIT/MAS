@@ -79,6 +79,7 @@ type
     FImprimelista: TBasicAction;
     FActualizaPrecios: TBasicAction;
     FImprimeMayoreo: TBasicAction;
+    FImprimelistaNva: TBasicAction;
 
     procedure CambiarPrecio(Tipo: Integer;Valor:Double);
     procedure SetFImprimeLista(const Value: TBasicAction);
@@ -86,6 +87,7 @@ type
 
     Function ActualizandoPrecios:Boolean;
     procedure SetFImprimeMayoreo(const Value: TBasicAction);
+    procedure SetFImprimeListaNva(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
@@ -96,7 +98,7 @@ type
      property actImprimeLista: TBasicAction read FImprimelista write SetFImprimeLista; //Jul 18/16
      property actActualizaPrecios: TBasicAction read FActualizaPrecios write SetFActualizaPrecios; //Jul 18/16
      property actImprimeMayoreo: TBasicAction read FImprimeMayoreo write SetFImprimeMayoreo; //Jul 18/16
-
+     property actImprimeListaNva: TBasicAction read FImprimelistaNva write SetFImprimeListaNva; //Jul 18/16
   end;
 
 var
@@ -192,6 +194,11 @@ begin
   TlBtnImpresion.action:=Value;
   TlBtnImpresion.ImageIndex:=13;
   TlBtnImpresion.Visible:=False;
+end;
+
+procedure TFrmListaPreciosGrid.SetFImprimeListaNva(const Value: TBasicAction);
+begin
+  FImprimelistaNva := Value;
 end;
 
 procedure TFrmListaPreciosGrid.SetFImprimeMayoreo(const Value: TBasicAction);
@@ -306,6 +313,7 @@ begin
   case RdGrpTipoImp.itemindex of
   0: TlBtnImpresion.Click;
   1: actImprimeMayoreo.Execute;
+   2: actImprimeListaNva.Execute;
   end;
 end;
 

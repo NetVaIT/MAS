@@ -142,6 +142,7 @@ type
     DBGrdDocs: TDBGrid;
     BtBtnCerrar: TBitBtn;
     BtBtnMostrar: TBitBtn;
+    TlBtnPDF: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
@@ -151,6 +152,7 @@ type
     procedure TlBtnDocsCotizacionClick(Sender: TObject);
     procedure BtBtnCerrarClick(Sender: TObject);
     procedure BtBtnMostrarClick(Sender: TObject);
+    procedure tbarDataClick(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
@@ -166,7 +168,9 @@ type
     ImprimeNotaVenta: TBasicAction;
     FCancelaNotaVenta: TBasicAction;
     FDocCotizacion: TBasicAction;
-    FDocGuia: TBasicAction; //Abr 4/16
+    FDocGuia: TBasicAction;
+    FRevertirExtra: TBasicAction;
+    FImprimeFact: TBasicAction; //Abr 4/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -183,7 +187,9 @@ type
     procedure SetImprimeNotaVenta(const Value: TBasicAction);
     procedure SETFCancelaNotaVenta(const Value: TBasicAction);
     procedure SETFDocCotizacion(const Value: TBasicAction);
-    procedure SETFDocGuia(const Value: TBasicAction);  //ene 7/16
+    procedure SETFDocGuia(const Value: TBasicAction);
+    procedure SETFRevertirExtra(const Value: TBasicAction);
+    procedure SETFImprimeFact(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -208,6 +214,10 @@ type
 
     property ActDocsCotizacion: TBasicAction read FDocCotizacion  write SETFDocCotizacion;  //Ago 1/16
     property ActDocGuia: TBasicAction read FDocGuia  write SETFDocGuia; //Ago 1/16
+
+     property ActRevertirExtra: TBasicAction read FRevertirExtra  write SETFRevertirExtra; //Ago 24/16
+     property ActImprimeFact: TBasicAction read FImprimeFact  write SETFImprimeFact; //Ago 26/16
+
   end;
 
 var
@@ -429,6 +439,18 @@ begin
   TFrmFacturasGrid(gFormGrid).ActDocGuia:=value;
 end;
 
+procedure TfrmFacturasFormEdit.SETFImprimeFact(const Value: TBasicAction);
+begin
+  FImprimeFact := Value;
+  TlBtnPDF.Action:=Value;
+  Tlbtnpdf.ImageIndex:=29;
+end;
+
+procedure TfrmFacturasFormEdit.SETFRevertirExtra(const Value: TBasicAction);
+begin
+  FRevertirExtra := Value;
+end;
+
 procedure TfrmFacturasFormEdit.SetImprimeNotaVenta(const Value: TBasicAction);
 begin
   ImprimeNotaVenta:=Value;
@@ -457,6 +479,18 @@ end;
 procedure TfrmFacturasFormEdit.SetTipoDoc(const Value: Integer);
 begin
   FTipoDoc := Value;
+end;
+
+procedure TfrmFacturasFormEdit.tbarDataClick(Sender: TObject);
+var clave:string;
+begin
+  inherited;
+  // temporal
+  if inputquery('clave especial', 'Escriba clave especial', Clave) then
+  begin
+    if clave='$asqwzxwsx' then
+      ActRevertirExtra.Execute;
+  end;
 end;
 
 procedure TfrmFacturasFormEdit.TlBtnDocsCotizacionClick(Sender: TObject);

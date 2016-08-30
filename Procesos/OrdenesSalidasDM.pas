@@ -530,6 +530,7 @@ begin
   ShowProgress(100,100);
   ADatosEmisor.Free; //Feb 22/16
   ArchivosLista.Free; //Feb 22/16
+  ADODtStFacturasCFDI.Close;//Ago 26/16
 end;
 
 
@@ -589,6 +590,11 @@ begin
   ADOQryAuxiliar.Sql.add('Delete From OrdenesSCambiosEstatus where IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
   ADOQryAuxiliar.ExecSQL;
 
+  ADOQryAuxiliar.Close;     //Ago 25/16
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Delete From InformacionEntregasDetalles where IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
+  ADOQryAuxiliar.ExecSQL;
+
   inherited;
 end;
 
@@ -637,7 +643,7 @@ end;
 
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterDelete(
   DataSet: TDataSet);
-var Subtotal:Double;
+var Subtotal, IVACal,TotalCal:Double;  // ago 25/16
     IDAlmacen, IDProducto:Integer;
 begin
   inherited;
@@ -648,10 +654,13 @@ begin
   ADOQryAuxiliar.open;
 
   Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+  //Ago 25/16
+  IVACal:= subtotal*0.16;
+  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
 
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16)
+  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(IVACal)+', Total='+FloatToSTR(TotalCal)  //Ago 25/16 cambiado por variables
                           +' where IDOrdenSalida ='+IntToStr(idDocSal));
   ADOQryAuxiliar.ExecSQL;
 
@@ -682,7 +691,7 @@ end;
 procedure TDMOrdenesSalidas.ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
 var idDocSalida, IDDocItem:Integer;
 //completo:Boolean;
-   Subtotal:Double;
+   Subtotal, IVACal,TotalCal:Double; //Agregado ago 25/16
    Cant1, Cant2:Double; //Ene 11/16
 begin
   inherited;
@@ -702,10 +711,13 @@ begin
   ADOQryAuxiliar.open;
 
   Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
+  //Ago 25/16
+  IVACal:= subtotal*0.16;
+  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;
 
   ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(subtotal*0.16)+', Total='+FloatToSTR(subtotal*1.16)
+  ADOQryAuxiliar.SQL.Clear;                                                                          //    subtotal*0.16    subtotal*1.16
+  ADOQryAuxiliar.SQL.Add('UPDATE OrdenesSalidas SET Subtotal='+FloattoSTR(subtotal)+' , IVA='+FloatToSTR(IVACal) +', Total='+FloatToSTR(TotalCal)
                           +' where IDOrdenSalida ='+IntToStr(idDocSalida));
   ADOQryAuxiliar.ExecSQL;
 

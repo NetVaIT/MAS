@@ -39,24 +39,25 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
     Height = 207
     ExplicitTop = 22
     ExplicitHeight = 207
-    ClientRectBottom = 206
+    ClientRectBottom = 203
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 205
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 742
+      ExplicitHeight = 199
       inherited cxScrollBox1: TcxScrollBox
-        Height = 205
-        ExplicitHeight = 205
+        Width = 742
+        Height = 199
+        ExplicitHeight = 199
         inherited tbarData: TToolBar
           ExplicitLeft = 0
           ExplicitTop = 0
         end
         inherited pnlMaster: TPanel
-          Height = 178
+          Height = 172
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitHeight = 178
+          ExplicitHeight = 172
           object Label1: TLabel
             Left = 48
             Top = 24
@@ -189,7 +190,7 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -330,7 +331,7 @@ inherited frmListaPrecioEdit: TfrmListaPrecioEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00940110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

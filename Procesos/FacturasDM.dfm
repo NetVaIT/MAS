@@ -363,6 +363,14 @@ inherited DMFacturas: TDMFacturas
       Caption = 'ActDocACotiza'
       OnExecute = ActDocACotizaExecute
     end
+    object ActRevertirinventarioExtra: TAction
+      Caption = 'ActRevertirinventarioExtra'
+      OnExecute = ActRevertirinventarioExtraExecute
+    end
+    object ActImprimeFactura: TAction
+      Caption = 'ImprimeFactura'
+      OnExecute = ActImprimeFacturaExecute
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
@@ -1846,7 +1854,7 @@ inherited DMFacturas: TDMFacturas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810

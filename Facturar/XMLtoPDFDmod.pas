@@ -243,6 +243,7 @@ type
     cdsXMLMetPagoNombre: TStringField;
     ppDBText37: TppDBText;
     ppDBPipelineDatosFacturappField73: TppField;
+    ppLblIdentificador: TppLabel;
     procedure cdsXMLCalcFields(DataSet: TDataSet);
     procedure ppReportFileDeviceCreate(Sender: TObject);
     procedure ppImageCBBPrint(Sender: TObject);
@@ -260,8 +261,8 @@ type
 //    procedure SetDocumentType(const Value: Integer);
   public
     { Public declarations }                          //Mar 31/16
-    function GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String=''): TFileName;
-    procedure PrintPDFFile(pXMLFileName: TFileName);
+    function GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String='';identifica:String=''): TFileName;
+    procedure PrintPDFFile(pXMLFileName: TFileName);                                    //Ago 26/16
     procedure ModifyDocument;
     property FileRTM: string read FFileRTM write SetFileRTM;
     property FileXTR: string read FFileXTR write SetFileXTR;
@@ -310,8 +311,8 @@ begin
   end;
 end;
 
-function TdmodXMLtoPDF.GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String=''): TFileName;
-var                                                             //Mar 31/16
+function TdmodXMLtoPDF.GeneratePDFFile(pXMLFileName: TFileName;ATipoDoc:String;Etiqueta:String='';identifica:String=''): TFileName;
+var                                                             //Mar 31/16                       //Ago 26/16
   vPDFFileName: TFileName;
 begin
   Result:= EmptyStr;
@@ -348,6 +349,8 @@ begin
       end;
       ppShpTitulo.pen.Color:=ppShpMarco.Pen.Color;
     end;
+
+    ppLblIdentificador.Caption:=identifica; //Identificador cliente  //Ago 26/16
 
     ppReport.PDFSettings.OpenPDFFile := False;
     ppReport.TextFileName:= vPDFFileName;

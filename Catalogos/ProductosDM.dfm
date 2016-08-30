@@ -10,6 +10,7 @@ inherited dmProductos: TdmProductos
       #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +
       's '#13#10',Identificador1, Identificador2, Identificador3 '#13#10',Identific' +
       'ador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM Productos'
+    Left = 32
     object adodsMasterIdProducto: TIntegerField
       FieldName = 'IdProducto'
       Visible = False
@@ -102,6 +103,9 @@ inherited dmProductos: TdmProductos
       Lookup = True
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 336
+  end
   inherited ActionList: TActionList
     object ActNuevoDocumento: TAction
       Caption = 'ActNuevoDocumento'
@@ -113,7 +117,6 @@ inherited dmProductos: TdmProductos
     end
   end
   object adodsUnidadMedida: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdUnidadMedida, Descripcion FROM UnidadesMedida'
@@ -122,7 +125,6 @@ inherited dmProductos: TdmProductos
     Top = 64
   end
   object adodsProductoTipo: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoTipo, Descripcion FROM ProductosTipos'
@@ -131,7 +133,6 @@ inherited dmProductos: TdmProductos
     Top = 120
   end
   object adodsProductoEstatus: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'SELECT IdProductoEstatus, Descripcion FROM ProductosEstatus'
@@ -184,7 +185,7 @@ inherited dmProductos: TdmProductos
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 110
+    Left = 118
     Top = 16
   end
   object adodsProductoDoctos: TADODataSet

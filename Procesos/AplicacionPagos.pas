@@ -63,6 +63,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
   private
+    function Quitasignos(TextoPesos: String): String;
     { Private declarations }
   public
     { Public declarations }
@@ -79,22 +80,32 @@ uses PagosDM;
 
 procedure TFrmAplicacionPago.BtBtnAplicarClick(Sender: TObject);
 var
-   valor:Double;
+   valor, aux:Double;
    f:String;
-begin                          //Ver si ya tiene el valor
-  Valor:= DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
+begin    
+  f:= quitasignos(DSAplicacion.DataSet.FieldByName('Importe').ASString);  //Ago 15/16
+//  showmessage(f);
+  aux:=strtoFLoat(quitasignos(cxDBLblDisponible.Caption));
+                           //Ver si ya tiene el valor
+  Valor:= StrToFloat(f);//DSAplicacion.DataSet.FieldByName('Importe').ASFloat;//cxDBTxtEdtImporteAplicar.Field.Asfloat;
   inherited;
   if Valor > 0 then
   begin
     // Esta seguro de aplicar al Documento seleccionado del cliente?
-    if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then
+  //  if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then    //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
+    if (Valor>aux)then //de otra forma siempre son iguales
+  //  if abs(DSAplicacion.DataSet.FieldByName('Importe').Asfloat - Valor)>0.001 then
     begin
       ShowMessage('No es posible aplicar un valor mayor al disponible');
       abort;
     end;
     f:=dsConFacturasPendientes.DataSet.FieldByName('Serie').AsString+'-'+dsConFacturasPendientes.DataSet.FieldByName('Folio').AsString;
-    if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
+  //  if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
+    if (dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
+    or (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
     begin
+      if abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0 then
+         showMessage('valor diferencia: '+ floattoStr(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat));
       if Application.MessageBox(pChar('Esta seguro de aplicar el importe al documento '+f +' ?'),'Confirmación',MB_YESNO)=IDYES then
       begin
         with DSAplicacion.DataSet do
@@ -110,12 +121,31 @@ begin                          //Ver si ya tiene el valor
       end;
     end
     else
-      ShowMessage('No es posible aplicar un valor mayor al saldo');
+      ShowMessage('No es posible aplicar un valor mayor al saldo. Diferencia:'+ floattoStr(DSAplicacion.DataSet.FieldByName('Importe').Asfloat-dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat ));
   end
   else
     ShowMessage('No se puede aplicar un valor de 0');
-  BtBtnAplicar.Enabled:= (strtoFLoat(cxDBLblDisponible.Caption)>0) and (DSAplicacion.DataSet.state =dsInsert);
-  BtBtnAgregar.Enabled:= (strtoFLoat(cxDBLblDisponible.Caption)>0) and (DsAplicacion.state =dsBrowse)and (not dsConFacturaspendientes.dataset.eof);
+  //showmessage(quitasignos (cxDBLblDisponible.Caption) ); //Ago 15/16
+  BtBtnAplicar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DSAplicacion.DataSet.state =dsInsert);
+  BtBtnAgregar.Enabled:= (strtoFLoat(quitasignos(cxDBLblDisponible.Caption))>0) and (DsAplicacion.state =dsBrowse)and (not dsConFacturaspendientes.dataset.eof);
+  cxDBTxtEdtImporteAplicar.Enabled:= (DSAplicacion.DataSet.state =dsInsert);//Ago 15/16
+end;
+
+function TFrmAplicacionPago.Quitasignos(TextoPesos:String):String;//Ago 15/16
+var 
+  i:integer;
+begin
+  while pos('$',TextoPesos)>0 do
+  begin
+    i:= pos('$',TextoPesos);
+    DElete(TextoPesos,i,1);
+  end;  
+  while pos(',',TextoPesos)>0 do
+  begin
+    i:= pos(',',TextoPesos);
+    DElete(TextoPesos,i,1);
+  end;
+  Result:= TextoPesos;
 end;
 
 procedure TFrmAplicacionPago.DSAplicacionStateChange(Sender: TObject);

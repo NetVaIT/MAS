@@ -54,6 +54,7 @@ type
       Shift: TShiftState);
     procedure EdtNombreChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FfiltroNombre: String;
     ffiltro: String;
@@ -117,7 +118,14 @@ begin
   FechaAux:=EncodeDate(a,m,1);
   FechaAux:=FechaAux-1;  //Día anterior
   cxDtEdtHasta.Date:=FechaAux;
-  PoneFiltro; //May 30/16
+//  PoneFiltro; //May 30/16    DEshabilitado de aca
+//  SpdBtnConsultaClick(SpdBtnConsulta);
+end;
+
+procedure TFrmPagosGrid.FormShow(Sender: TObject);
+begin
+  inherited;
+  PoneFiltro;//  colocado aca ago 23/16
   SpdBtnConsultaClick(SpdBtnConsulta);
 end;
 

@@ -143,6 +143,54 @@ type
     ppSystemVariable6: TppSystemVariable;
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
+    ADODtStNuevaListaPrecios: TADODataSet;
+    ADODtStNuevaListaPreciosClasificador: TStringField;
+    ADODtStNuevaListaPreciosIdProductoAplicacion: TAutoIncField;
+    ADODtStNuevaListaPreciosIdentificador1: TStringField;
+    ADODtStNuevaListaPreciosProductoCompleto: TStringField;
+    ADODtStNuevaListaPreciosPrecioUnitario: TFloatField;
+    ADODtStNuevaListaPreciosPrecioNuevo: TFloatField;
+    ADODtStNuevaListaPreciosIdProducto: TAutoIncField;
+    ADODtStNuevaListaPreciosIdentificador2: TStringField;
+    ADODtStNuevaListaPreciosIdentificador3: TStringField;
+    ADODtStNuevaListaPreciosIdProductoEstatus: TIntegerField;
+    ADODtStNuevaListaPreciosIdentificadorAP: TStringField;
+    ADODtStNuevaListaPreciosAplicacion: TStringField;
+    ppRprtNvaLista: TppReport;
+    ppHeaderBand2: TppHeaderBand;
+    ppImage2: TppImage;
+    ppLabel18: TppLabel;
+    ppLabel23: TppLabel;
+    ppLabel24: TppLabel;
+    ppLabel25: TppLabel;
+    ppLabel26: TppLabel;
+    ppLabel27: TppLabel;
+    ppLabel28: TppLabel;
+    ppLabel29: TppLabel;
+    ppLabel30: TppLabel;
+    ppLabel31: TppLabel;
+    ppLabel33: TppLabel;
+    ppSystemVariable7: TppSystemVariable;
+    ppDetailBand2: TppDetailBand;
+    ppShape3: TppShape;
+    ppDBText6: TppDBText;
+    ppDBText11: TppDBText;
+    ppDBText12: TppDBText;
+    ppFooterBand2: TppFooterBand;
+    ppLabel34: TppLabel;
+    ppSystemVariable8: TppSystemVariable;
+    ppSystemVariable9: TppSystemVariable;
+    ppDesignLayers2: TppDesignLayers;
+    ppDesignLayer2: TppDesignLayer;
+    ppParameterList2: TppParameterList;
+    ppDBPplnNuevaLista: TppDBPipeline;
+    DSNuevaListaPrecios: TDataSource;
+    ppLabel35: TppLabel;
+    ppDBText13: TppDBText;
+    ActImprimeNuevaLista: TAction;
+    ppGroup1: TppGroup;
+    ppGroupHeaderBand1: TppGroupHeaderBand;
+    ppGroupFooterBand1: TppGroupFooterBand;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterBeforeEdit(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);
@@ -158,6 +206,7 @@ type
     procedure ActActualizaPreciosExecute(Sender: TObject);
     procedure ADODtStProductosPreciosCalcFields(DataSet: TDataSet);
     procedure ActImpPreciosMayoreoExecute(Sender: TObject);
+    procedure ActImprimeNuevaListaExecute(Sender: TObject);
   private
     fDatosViejos: String;
     FAccion: String;
@@ -312,6 +361,24 @@ begin
   end;
 
 
+
+end;
+
+procedure TDmListaPrecios.ActImprimeNuevaListaExecute(Sender: TObject);
+var ArcNombre:String;
+begin
+  inherited;
+  ADODtStNuevaListaPrecios.Close;
+  ADODtStNuevaListaPrecios.open;
+  ArcNombre:='ListaNuevaPrecios.pdf';
+  if FileExists(ArcNombre) then
+    deleteFile(ArcNombre);
+   //PrintPDFFile(True); // deshabilitado para que no muestre desde el Reportbuilder
+  PrintPDFFile(3,1, false,ArcNombre);// que sólo muestre el PDF   //May 13 /16
+  if FileExists(ArcNombre) then  //May 13 /16
+  begin
+    ShellExecute(application.Handle, 'open', PChar(ArcNombre), nil, nil, SW_SHOWNORMAL);
+  end;
 
 end;
 
@@ -490,6 +557,26 @@ begin
       end;
        ppRprtPrecioMayoreo.Print;
     end;
+  3:begin  //Ago 16/16
+      ppRprtNvaLista.Template.FileName:=ExtractFilePath(application.exeName)+'NuevaListaPreciosGrp.rtm';   //Es posible que luego se quite y se deje fijo
+      ppRprtNvaLista.Template.LoadFromFile;
+
+      ppRprtNvaLista.ShowPrintDialog:= False;
+      ppRprtNvaLista.ShowCancelDialog:= False;
+      ppRprtNvaLista.AllowPrintToArchive:= False;
+      if Mostrar then
+        ppRprtNvaLista.DeviceType:= 'Screen'
+      else
+      begin
+        if nombrePDF<>'' then
+        begin
+          ppRprtNvaLista.DeviceType:= 'PDF';
+          ppRprtNvaLista.PDFSettings.OpenPDFFile := False;
+          ppRprtNvaLista.TextFileName:= nombrePDF;
+        end; //Siempre muesta el PDF
+      end;
+      ppRprtNvaLista.Print;
+    end;
 
 
 
@@ -522,6 +609,7 @@ begin
   TfrmListaPrecioEdit(gGridEditForm).actActualizaprecios :=ActActualizaPrecios;
 
   TfrmListaPrecioEdit(gGridEditForm).actImprimeMayoreo:=ActImpPreciosMayoreo;  //Ago 12/16
+  TfrmListaPrecioEdit(gGridEditForm).actImprimeListaNva:=ActImprimeNuevaLista;  //Ago 16/16
 end;
 
 procedure TDmListaPrecios.DataModuleDestroy(Sender: TObject);

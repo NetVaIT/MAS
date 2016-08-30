@@ -22,48 +22,46 @@ inherited frmProductosEdit: TfrmProductosEdit
   inherited pnlClose: TPanel
     Top = 675
     Height = 18
-    ExplicitTop = 632
+    ExplicitTop = 675
     ExplicitHeight = 18
   end
   inherited pnlDetail3: TPanel
     Top = 675
     Height = 0
-    ExplicitTop = 632
+    ExplicitTop = 675
     ExplicitHeight = 0
   end
   inherited pnlDetail2: TPanel
     Top = 631
-    ExplicitTop = 588
+    ExplicitTop = 631
   end
   inherited pnlDetail1: TPanel
     Top = 608
     Height = 20
-    ExplicitTop = 565
+    ExplicitTop = 608
     ExplicitHeight = 20
   end
   inherited pcMain: TcxPageControl
     Top = 43
     Height = 562
     Properties.HideTabs = False
-    ExplicitTop = 22
-    ExplicitHeight = 540
-    ClientRectBottom = 560
-    ClientRectLeft = 2
-    ClientRectRight = 748
-    ClientRectTop = 28
+    ExplicitTop = 43
+    ExplicitHeight = 562
+    ClientRectBottom = 558
+    ClientRectTop = 24
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 2
-      ExplicitTop = 28
-      ExplicitWidth = 746
-      ExplicitHeight = 510
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 742
+      ExplicitHeight = 534
       inherited cxScrollBox1: TcxScrollBox
-        Width = 746
-        Height = 532
-        ExplicitWidth = 746
-        ExplicitHeight = 510
+        Width = 742
+        Height = 534
+        ExplicitWidth = 742
+        ExplicitHeight = 534
         inherited tbarData: TToolBar
-          Width = 744
-          ExplicitWidth = 744
+          Width = 740
+          ExplicitWidth = 740
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -71,14 +69,14 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Width = 744
-          Height = 505
-          ExplicitWidth = 744
-          ExplicitHeight = 483
+          Width = 740
+          Height = 507
+          ExplicitWidth = 740
+          ExplicitHeight = 507
           object PnlProducto: TPanel
             Left = 0
             Top = 0
-            Width = 744
+            Width = 740
             Height = 225
             Align = alTop
             TabOrder = 0
@@ -267,29 +265,26 @@ inherited frmProductosEdit: TfrmProductosEdit
           object cxPageControl1: TcxPageControl
             Left = 0
             Top = 225
-            Width = 744
-            Height = 280
+            Width = 740
+            Height = 282
             Align = alClient
             TabOrder = 1
             Properties.ActivePage = cxTbShtFotosYDocs
             Properties.CustomButtons.Buttons = <>
-            ExplicitHeight = 258
             ClientRectBottom = 278
-            ClientRectLeft = 2
-            ClientRectRight = 742
-            ClientRectTop = 28
+            ClientRectLeft = 4
+            ClientRectRight = 736
+            ClientRectTop = 24
             object cxTbShtFotosYDocs: TcxTabSheet
               Caption = 'Fotos y Documentos'
               ImageIndex = 0
-              ExplicitHeight = 228
               object PnlFotos: TPanel
                 Left = 0
                 Top = 0
-                Width = 740
-                Height = 250
+                Width = 732
+                Height = 254
                 Align = alClient
                 TabOrder = 0
-                ExplicitHeight = 228
                 object ImgFoto: TImage
                   Left = 23
                   Top = 18
@@ -445,7 +440,6 @@ inherited frmProductosEdit: TfrmProductosEdit
             object cxTbShtEspecifica: TcxTabSheet
               Caption = 'Especificaciones'
               ImageIndex = 1
-              ExplicitHeight = 228
               object Label14: TLabel
                 Left = 32
                 Top = 64
@@ -521,17 +515,14 @@ inherited frmProductosEdit: TfrmProductosEdit
     object tsProductoProveedor: TcxTabSheet
       Caption = 'Proveedores'
       ImageIndex = 1
-      ExplicitHeight = 510
     end
     object tsProductoAplicacion: TcxTabSheet
       Caption = 'Aplicaciones'
       ImageIndex = 2
-      ExplicitHeight = 510
     end
     object cxTSPrecioMayoreo: TcxTabSheet
-      Caption = 'Precios Mayoreo'
+      Caption = 'Precios X Escala'
       ImageIndex = 3
-      ExplicitHeight = 510
     end
   end
   object PnlTitulo: TPanel [8]
@@ -566,8 +557,6 @@ inherited frmProductosEdit: TfrmProductosEdit
     Style.Font.Name = 'Tahoma'
     Style.Font.Style = [fsBold]
     Style.IsFontAssigned = True
-    ExplicitLeft = -296
-    ExplicitWidth = 1046
     Height = 21
     Width = 750
   end
@@ -578,7 +567,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -727,7 +716,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

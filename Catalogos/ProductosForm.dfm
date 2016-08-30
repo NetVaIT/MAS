@@ -18,32 +18,34 @@ inherited frmProductos: TfrmProductos
   end
   inherited pnlClose: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
   end
   inherited pnlDetail3: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
   end
   inherited pnlDetail2: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
   end
   inherited pnlDetail1: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
   end
   inherited pnltoolbar: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
   end
   inherited pnlMaster: TPanel
     Width = 1045
-    ExplicitWidth = 800
+    ExplicitWidth = 1045
     inherited cxGrid: TcxGrid
       Top = 36
       Width = 1045
       Height = 435
-      ExplicitWidth = 800
+      ExplicitTop = 36
+      ExplicitWidth = 1045
+      ExplicitHeight = 435
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
@@ -244,7 +246,7 @@ inherited frmProductos: TfrmProductos
   inherited ilPageControl: TImageList
     Top = 152
     Bitmap = {
-      494C010102000400A00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -389,7 +391,7 @@ inherited frmProductos: TfrmProductos
   inherited ilAction: TImageList
     Top = 152
     Bitmap = {
-      494C01010C00B801F80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

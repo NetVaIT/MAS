@@ -21,7 +21,6 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
     Height = 65
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 635
     object Label10: TLabel
       Left = 35
       Top = 12
@@ -67,8 +66,6 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
     Height = 235
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 71
-    ExplicitWidth = 635
     object Label1: TLabel
       Left = 35
       Top = 12
@@ -149,7 +146,7 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
     end
     object cxDBLabel2: TcxDBLabel
       Left = 352
-      Top = 28
+      Top = 31
       DataBinding.DataField = 'Identificador'
       DataBinding.DataSource = DtSrcMostrarDatos
       ParentFont = False
@@ -160,12 +157,12 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       Height = 16
-      Width = 121
+      Width = 61
     end
     object cxDBLabel3: TcxDBLabel
       Left = 290
       Top = 73
-      DataBinding.DataField = 'RazonSocial'
+      DataBinding.DataField = 'FolioPago'
       DataBinding.DataSource = DtSrcMostrarDatos
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET
@@ -175,7 +172,7 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       Height = 21
-      Width = 97
+      Width = 100
     end
     object cxDBLabel4: TcxDBLabel
       Left = 147
@@ -195,7 +192,7 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
     object cxDBLabel5: TcxDBLabel
       Left = 290
       Top = 137
-      DataBinding.DataField = 'RazonSocial'
+      DataBinding.DataField = 'FolioFactura'
       DataBinding.DataSource = DtSrcMostrarDatos
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET
@@ -205,12 +202,12 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       Height = 21
-      Width = 97
+      Width = 100
     end
     object cxDBLabel6: TcxDBLabel
       Left = 147
       Top = 137
-      DataBinding.DataField = 'SeriePago'
+      DataBinding.DataField = 'SerieFactura'
       DataBinding.DataSource = DtSrcMostrarDatos
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET
@@ -235,7 +232,7 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
       Style.Font.Style = [fsBold]
       Style.IsFontAssigned = True
       Height = 21
-      Width = 97
+      Width = 109
     end
     object cxDBLabel8: TcxDBLabel
       Left = 448
@@ -255,7 +252,7 @@ object FrmConfirmaDesaplicacion: TFrmConfirmaDesaplicacion
     object cxDBLabel9: TcxDBLabel
       Left = 32
       Top = 137
-      DataBinding.DataField = 'FolioFactura'
+      DataBinding.DataField = 'FechaFactura'
       DataBinding.DataSource = DtSrcMostrarDatos
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET

@@ -1,7 +1,6 @@
 inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   Caption = 'FrmListaPreciosGrid'
   ClientWidth = 1217
-  ExplicitLeft = -306
   ExplicitWidth = 1217
   PixelsPerInch = 96
   TextHeight = 13
@@ -206,13 +205,13 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
       object ToolButton11: TToolButton
         Left = 332
         Top = 0
-        Width = 69
+        Width = 45
         Caption = 'ToolButton11'
         ImageIndex = 12
         Style = tbsSeparator
       end
       object PnlBusqueda: TPanel
-        Left = 401
+        Left = 377
         Top = 0
         Width = 184
         Height = 45
@@ -267,7 +266,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         end
       end
       object RdGrpFiltro: TRadioGroup
-        Left = 585
+        Left = 561
         Top = 0
         Width = 143
         Height = 45
@@ -283,7 +282,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = RdGrpFiltroClick
       end
       object PnlFechas: TPanel
-        Left = 728
+        Left = 704
         Top = 0
         Width = 328
         Height = 45
@@ -354,23 +353,25 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         end
       end
       object RdGrpTipoImp: TRadioGroup
-        Left = 1056
+        Left = 1032
         Top = 0
-        Width = 89
+        Width = 161
         Height = 45
         Caption = 'Imprimir'
         Color = clBtnFace
+        Columns = 2
         ItemIndex = 0
         Items.Strings = (
           'Lista Precios'
-          'Escala')
+          'Escala'
+          'Lista Nueva')
         ParentBackground = False
         ParentColor = False
         TabOrder = 3
         OnClick = RdGrpFiltroClick
       end
       object SpdBtnListaPrecios: TSpeedButton
-        Left = 1145
+        Left = 1193
         Top = 0
         Width = 32
         Height = 45
@@ -392,7 +393,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = SpdBtnListaPreciosClick
       end
       object SpdBtnCambiarPrecio: TSpeedButton
-        Left = 1177
+        Left = 1225
         Top = 0
         Width = 32
         Height = 45
@@ -452,7 +453,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = SpdBtnCambiarPrecioClick
       end
       object SpdBtnAplicacionPrecios: TSpeedButton
-        Left = 1209
+        Left = 1257
         Top = 0
         Width = 32
         Height = 45
@@ -474,7 +475,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         OnClick = SpdBtnAplicacionPreciosClick
       end
       object TlBtnImpresion: TToolButton
-        Left = 1241
+        Left = 1289
         Top = 0
         ImageIndex = 13
         Visible = False
@@ -491,7 +492,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilPageControl: TImageList
     Top = 152
     Bitmap = {
-      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -636,7 +637,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilAction: TImageList
     Top = 152
     Bitmap = {
-      494C01010E00B801500110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E00B801540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000101001E030303430203033E0202
       023E0303033D0303033D0303033E0303033E154F1CAD23F405FF114017980303
