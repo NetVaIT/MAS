@@ -508,7 +508,8 @@ begin
 
     if not Cancelar then
     begin
-
+      if datasource.DataSet.State =dsEdit then //Ago 31/16 para que guarde tipoFacturacion antes
+         datasource.DataSet.Post;
     (*  *)
      //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
       ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16

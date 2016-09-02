@@ -780,14 +780,24 @@ inherited dmCotizaciones: TdmCotizaciones
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
       ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo,PD.IDMetododePago' +
       ', PD.NumCtaPagoCliente'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
-      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
-      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10
+      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio and (PD.IdDomicili' +
+      'oTipo in (2,4,5) and PD.identificador is not null)'#13#10'Left Join Po' +
+      'blaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios' +
+      ' M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.ides' +
+      'tado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'wher' +
+      'e PD.IdPersona=:IDpersona'#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDPersona'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'IDpersona'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 448
     Top = 392
     object ADODtStDireccionesClienteIdPersonaDomicilio: TAutoIncField
@@ -933,10 +943,11 @@ inherited dmCotizaciones: TdmCotizaciones
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
       ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo'#13#10#13#10'from PersonasD' +
       'omicilios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomi' +
-      'cilio'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'l' +
-      'eft join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join ' +
-      'Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.id' +
-      'pais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      'cilio  and (PD.IdDomicilioTipo in (2,4,5) and PD.identificador i' +
+      's not null)'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblac' +
+      'ion'#13#10'left join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left' +
+      ' Join Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on' +
+      ' Pa.idpais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'

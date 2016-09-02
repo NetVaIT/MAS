@@ -9,7 +9,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810
@@ -8003,18 +8003,20 @@ object DMImpresosSalidas: TDMImpresosSalidas
       #13#10'      ,  EstatusEntrega  '#13#10'      ,IE.  IdTelefono  '#13#10'      ,  ' +
       'Contenido  '#13#10'      ,  Conducto  '#13#10'      ,  Servicio  '#13#10'      ,  ' +
       'PagoFlete  '#13#10'      ,  Valor  '#13#10'      ,  Asegurado  ,'#13#10'      P.Ra' +
-      'zonSocial, PD.Identificador,D.Calle, D.NoExterior, D.NoInterior,' +
-      ' D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripcio' +
-      'n Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, IdDocume' +
-      'ntoGuia'#13#10'  FROM   InformacionEntregas   IE'#13#10#13#10'  inner join Perso' +
-      'nas P on P.IdPersona=IE.IDPersonaCliente'#13#10'  inner join PersonasD' +
-      'omicilios PD on PD.IdPersonaDomicilio=IE.IDPersonaDomicilio'#13#10'  i' +
-      'nner join Domicilios D on D.IdDomicilio=PD.IdDomicilio'#13#10'  inner ' +
-      'join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10'  inner join E' +
-      'stados E on E.IdEstado=D.IdEstado  '#13#10'  Left join Personas PR on ' +
-      'PR.IdPersona=IE.IDResponsableEntrega'#13#10'  Left join Telefonos T on' +
-      ' T.IdTelefono=IE.IdTelefono'#13#10'where IE.IdInfoEntrega=:IdInfoEntre' +
-      'ga'
+      'zonSocial, PDF.Identificador,D.Calle, D.NoExterior, D.NoInterior' +
+      ', D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripci' +
+      'on Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, IdDocum' +
+      'entoGuia, CI.IdClienteDomicilio'#13#10'  FROM   InformacionEntregas   ' +
+      'IE'#13#10#13#10'  inner join Personas P on P.IdPersona=IE.IDPersonaCliente' +
+      #13#10'  inner join PersonasDomicilios PD on PD.IdPersonaDomicilio=IE' +
+      '.IDPersonaDomicilio'#13#10'  inner join Domicilios D on D.IdDomicilio=' +
+      'PD.IdDomicilio'#13#10'  inner join Municipios M on M.IdMunicipio=D.IdM' +
+      'unicipio'#13#10'  inner join Estados E on E.IdEstado=D.IdEstado  '#13#10'  L' +
+      'eft join Personas PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  ' +
+      'Left join Telefonos T on T.IdTelefono=IE.IdTelefono'#13#10'  inner joi' +
+      'n CFDI CI on CI.IdCFDI =IE.IDCFDI'#13#10'  left Join PersonasDomicilio' +
+      's PDF on PDF.IdPersonaDomicilio= CI.IdClienteDomicilio'#13#10'where IE' +
+      '.IdInfoEntrega=:IdInfoEntrega'
     Parameters = <
       item
         Name = 'IdInfoEntrega'
@@ -8242,7 +8244,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -8591,7 +8593,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -13089,7 +13091,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Oficio'
+    PrinterSetup.PaperName = 'Legal (8,5" x 14")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -16874,7 +16876,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704

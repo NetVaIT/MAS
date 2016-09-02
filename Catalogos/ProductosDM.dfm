@@ -104,7 +104,7 @@ inherited dmProductos: TdmProductos
     end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 336
+    Left = 344
   end
   inherited ActionList: TActionList
     object ActNuevoDocumento: TAction

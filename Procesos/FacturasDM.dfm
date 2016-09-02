@@ -1,13 +1,14 @@
 inherited DMFacturas: TDMFacturas
   OldCreateOrder = True
   Height = 663
-  Width = 1037
+  Width = 1252
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     Filter = ' IdCFDITipoDocumento=1'
     Filtered = True
     AfterOpen = adodsMasterAfterOpen
     BeforeInsert = adodsMasterBeforeInsert
+    BeforePost = adodsMasterBeforePost
     BeforeDelete = adodsMasterBeforeDelete
     OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
@@ -598,7 +599,7 @@ inherited DMFacturas: TDMFacturas
         Attributes = [paSigned]
         DataType = ftLargeint
         Precision = 19
-        Value = '12'
+        Value = '8534'
       end>
     Left = 48
     Top = 88
@@ -668,7 +669,7 @@ inherited DMFacturas: TDMFacturas
         Size = 8
         Value = Null
       end>
-    Left = 168
+    Left = 176
     Top = 88
     object ADODtStCFDIImpuestosIdCFDI: TLargeintField
       FieldName = 'IdCFDI'
@@ -747,8 +748,9 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'Predeterminado'
     end
     object ADODtStPersonaEmisorCalle: TStringField
+      DisplayWidth = 50
       FieldName = 'Calle'
-      Size = 30
+      Size = 50
     end
     object ADODtStPersonaEmisorNoExterior: TStringField
       FieldName = 'NoExterior'
@@ -802,7 +804,8 @@ inherited DMFacturas: TDMFacturas
       'iones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M o' +
       'n M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado' +
       '=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where Pe' +
-      '.iDRol=1 and Pe.IdPersona>0 '#13#10'order by Pe.RazonSocial'
+      '.iDRol=1 and Pe.IdPersona>0 and Pe.IdPersonaEstatus=1'#13#10'order by ' +
+      'Pe.RazonSocial'
     Parameters = <>
     Left = 336
     Top = 224
@@ -842,8 +845,9 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'Predeterminado'
     end
     object ADODtStPersonaReceptorCalle: TStringField
+      DisplayWidth = 50
       FieldName = 'Calle'
-      Size = 30
+      Size = 50
     end
     object ADODtStPersonaReceptorNoExterior: TStringField
       FieldName = 'NoExterior'
@@ -940,11 +944,12 @@ inherited DMFacturas: TDMFacturas
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais'#13#10'from PersonasDomicilios PD'#13#10'inner join D' +
-      'omicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblacion' +
-      'es P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on M' +
-      '.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=D.' +
-      'idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais, PD.IDMetododePago,PD.NumCtaPagoCliente'#13#10 +
+      'from PersonasDomicilios PD'#13#10'inner join Domicilios D on PD.IDDomi' +
+      'cilio=D.IDDomicilio'#13#10'Left Join Poblaciones P on P.idPoblacion=d.' +
+      'IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=D.IdMunicip' +
+      'io'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Left Join Pais' +
+      'es Pa on Pa.idpais=D.Idpais'#13#10#13#10#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaDomicilio'
     MasterFields = 'IdClienteDomicilio'
@@ -971,8 +976,9 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'Predeterminado'
     end
     object ADODtStDireccionesClienteCalle: TStringField
+      DisplayWidth = 50
       FieldName = 'Calle'
-      Size = 30
+      Size = 50
     end
     object ADODtStDireccionesClienteNoExterior: TStringField
       FieldName = 'NoExterior'
@@ -1011,6 +1017,13 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'DirCompleta'
       Size = 300
       Calculated = True
+    end
+    object ADODtStDireccionesClienteIDMetododePago: TIntegerField
+      FieldName = 'IDMetododePago'
+    end
+    object ADODtStDireccionesClienteNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
     end
   end
   object adodsArchivosCerKey: TADODataSet
@@ -1324,15 +1337,15 @@ inherited DMFacturas: TDMFacturas
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
-      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
-      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
-      'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais, PD.IDMetododePago,PD.NumCtaPagoCliente'#13#10 +
+      #13#10'from PersonasDomicilios PD'#13#10'inner join Domicilios D on PD.IDDo' +
+      'micilio=D.IDDomicilio'#13#10'Left Join Poblaciones P on P.idPoblacion=' +
+      'd.IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=D.IdMunic' +
+      'ipio'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Left Join Pa' +
+      'ises Pa on Pa.idpais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10 +
+      #13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
-    MasterFields = 'IdPersonaReceptor'
     Parameters = <
       item
         Name = 'IDPersona'
@@ -1404,6 +1417,13 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'DirCompleta'
       Size = 300
       Calculated = True
+    end
+    object ADODtStConsultaDireccionesIDMetododePago: TIntegerField
+      FieldName = 'IDMetododePago'
+    end
+    object ADODtStConsultaDireccionesNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
     end
   end
   object adodsDocumento: TADODataSet
@@ -1714,12 +1734,13 @@ inherited DMFacturas: TDMFacturas
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais,PD.Saldo'#13#10#13#10'from PersonasDomicilios PD'#13#10'i' +
-      'nner join Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Joi' +
-      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
-      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
-      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
-      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo, PD.IDMetododePago,PD.NumCtaPago' +
+      'Cliente'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join Domicilios D o' +
+      'n PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaciones P on P.idP' +
+      'oblacion=d.IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=' +
+      'D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Lef' +
+      't Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.IDPersona=:IDPe' +
+      'rsona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -1796,6 +1817,13 @@ inherited DMFacturas: TDMFacturas
       FieldName = 'Saldo'
       Precision = 18
       Size = 6
+    end
+    object ADODtStDireccAuxiliarIDMetododePago: TIntegerField
+      FieldName = 'IDMetododePago'
+    end
+    object ADODtStDireccAuxiliarNumCtaPagoCliente: TStringField
+      FieldName = 'NumCtaPagoCliente'
+      Size = 30
     end
   end
   object ADODSNotasVenta: TADODataSet

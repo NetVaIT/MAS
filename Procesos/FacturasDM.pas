@@ -441,6 +441,12 @@ type
     ADODtStOrdenSalidaNumCtaPagoCliente: TStringField;
     ActRevertirinventarioExtra: TAction;
     ActImprimeFactura: TAction;
+    ADODtStDireccionesClienteIDMetododePago: TIntegerField;
+    ADODtStDireccionesClienteNumCtaPagoCliente: TStringField;
+    ADODtStConsultaDireccionesIDMetododePago: TIntegerField;
+    ADODtStConsultaDireccionesNumCtaPagoCliente: TStringField;
+    ADODtStDireccAuxiliarIDMetododePago: TIntegerField;
+    ADODtStDireccAuxiliarNumCtaPagoCliente: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ADODtStCFDIImpuestosNewRecord(DataSet: TDataSet);
@@ -469,6 +475,7 @@ type
     procedure ActDocACotizaExecute(Sender: TObject);
     procedure ActRevertirinventarioExtraExecute(Sender: TObject);
     procedure ActImprimeFacturaExecute(Sender: TObject);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     fidordenSal: Integer;
     ffiltro: String;
@@ -742,11 +749,24 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 // ya lo tenia    adodsMaster.FieldByName('TipoComp').asString:= adodsMaster.FieldByName('TipoComprobante').asString;
                                                  //Verificar si se coloca autopmatica por la relacion
     adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
-    adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
-    adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat;
-    adodsMaster.FieldByName('SaldoDocumento').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat; //Ene 14/16
 
-    adodsMaster.FieldByName('TotalImpuestoTrasladado').AsFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
+    adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
+    //Ajuste para no poner IVa en el presupuesto y en los Fletes //Ago 30/16
+    if  (ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger=4)  //solo 4 Fletes no se generan por aca
+            and (not ADODtSTOrdenSalida.fieldByname('Acumula').ASBoolean)  then
+    begin
+      adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;   //Cambiado
+      adodsMaster.FieldByName('SaldoDocumento').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat; //Cambiado
+      adodsMaster.FieldByName('TotalImpuestoTrasladado').AsFloat :=0;//Cambiado
+    end
+    else
+    begin
+      adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat;
+      adodsMaster.FieldByName('SaldoDocumento').AsFloat := ADODtStOrdenSalida.FieldByName('Total').AsFloat; //Ene 14/16
+      adodsMaster.FieldByName('TotalImpuestoTrasladado').AsFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
+    end;
+
+
 //    adodsMaster.FieldByName('IDPersonaEmisor').AsInteger:=SacarEmisor;  //ADODtStOrdenSalida.FieldByName('Total').AsFloat;
 
     adodsMaster.FieldByName('IDPersonaReceptor').AsInteger := ADODtStOrdenSalida.FieldByName('IDPersonaCliente').ASInteger;
@@ -772,10 +792,14 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
 
 
     adodsMaster.Post;
-    ADODtStCFDIImpuestos.Insert;
-   // ADODtStCFDIImpuestos.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').AsInteger; //Verificar asociacion CFDI
-    ADODtStCFDIImpuestos.FieldByName('Importe').asFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
-    ADODtStCFDIImpuestos.Post;
+    //Sólo Facturas  ver donde esta las notas de credito y cargo
+    if  (ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger=1)  then  //Ago 30/16
+    begin
+      ADODtStCFDIImpuestos.Insert;
+     // ADODtStCFDIImpuestos.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').AsInteger; //Verificar asociacion CFDI
+      ADODtStCFDIImpuestos.FieldByName('Importe').asFloat := ADODtStOrdenSalida.FieldByName('IVA').AsFloat;
+      ADODtStCFDIImpuestos.Post;
+    end;
 
 
     while(not ADODtStOrdenSalidaItem.eof) do
@@ -1175,7 +1199,7 @@ begin
   //Habilitado Dic 21/15
   ShowProgress(10,100.1,'Preparando Datos para Generar CFDI ' + IntToStr(10) + '%');  //Jun 2/16
   XMLpdf := TdmodXMLtoPDF.Create(Self);
-  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm';
+  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIIntervaNvo.rtm'; //Ajustado   sep 1/16
   XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
    //Habilitado Dic 21/15 hasta aca
   //verificar si no se intento generar antes
@@ -1323,6 +1347,7 @@ begin
 
         // Definimos todos los conceptos que incluyo la factura
         ShowProgress(50,100.1,'Extrayendo datos de conceptos ' + IntToStr(50) + '%');  //Jun 2/16
+
         ADODtStCFDIConceptos.First;
         while not ADODtStCFDIConceptos.Eof do
         begin
@@ -1335,8 +1360,10 @@ begin
           DocumentoComprobanteFiscal.AgregarConcepto(ConceptoActual);
           ADODtStCFDIConceptos.Next;
         end;
+        ADODtStCFDIImpuestos.Close;
+        ADODtStCFDIImpuestos.Open;  //Verificar que este ubicado
 
-        ADODtStCFDIImpuestos.First;
+       // ADODtStCFDIImpuestos.First;
         while not ADODtStCFDIImpuestos.Eof do
         begin
           if ADODtStCFDIImpuestosTipoImp.AsString='Trasladado' then //Verificar que se coloque
@@ -1574,7 +1601,7 @@ begin
   //nombreArchi:=ExtractfilePath(Application.exename)+nombreArchi;
   //Se manda el nombre del XML
   XMLpdf := TdmodXMLtoPDF.Create(Self);
-  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm'; //dic28/15  HAy  que actualizarlos
+  XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIIntervaNvo.rtm'; //dic28/15  HAy  que actualizarlos
   XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';   //dic28/15
   XMLpdf.CadenaOriginalTimbre:= adodsMasterCadenaOriginal.AsString; //dic 28/15 verificar
   try
@@ -2056,6 +2083,41 @@ begin
 
 end;
 
+procedure TDMFacturas.adodsMasterBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  if DataSet.FieldByName('IDCFDITipoDocumento').AsInteger=5 then //Flete
+  begin  //Colocar Folio de Flete
+    if adodsMasterIdCFDIEstatus.AsInteger =1 then
+    begin
+      //Poner Folio Serie
+      if adodsMasterFolio.AsInteger=0 then
+      begin
+        ADODtStBuscaFolioSerie.Close;
+        ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
+        ADODtStBuscaFolioSerie.Open;
+
+        if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
+        begin
+          adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
+          adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
+
+          ADODtStBuscaFolioSerie.Edit;
+          ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
+          ADODtStBuscaFolioSerie.Post;
+        end
+        else
+        begin
+          ShowMessage('No existen Folios para Fletes. Asegurese de colocarlos ');
+        end;
+      end;
+
+    end;
+  end;
+
+
+end;
+
 procedure TDMFacturas.adodsMasterCalcFields(DataSet: TDataSet);
 var
   vTotal: Double;
@@ -2116,9 +2178,20 @@ begin
   ADOQryAuxiliar.open;
 
   Subtotal:= ADOQryAuxiliar.FieldByName('ValorST').AsFloat;
-   //Ago 25/16
-  IVACal:= subtotal*0.16;
-  TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
+
+  if (adodsMaster.FieldByName('IDCFDITipoDocumento').AsInteger = 5)  //Fletes   //  (adodsMaster.FieldByName('IDCFDITipoDocumento').AsInteger = 4) and(adodsMaster.FieldByName('Acumula').asBoolean)
+         or (adodsMaster.FieldByName('IdCfdiEstatus').AsInteger=5) then  //Remisiones
+  begin
+    IVACal:= 0;
+    TotalCal:= Subtotal;
+  end
+  else
+  begin
+  //Ago 25/16
+    IVACal:= subtotal*0.16;
+    TotalCal:= Subtotal+IVACal; //subtotal*1.16 ;    //Ago 25/16
+  end;
+  //Verificar que no sea Tipo 5 que son Fletes ()
 
   ADOQryAuxiliar.Close;                                                                                       //   subtotal*0.16
   ADOQryAuxiliar.SQL.Clear;                                                                                                                  //  subtotal*1.16                      //  subtotal*1.16
@@ -2127,35 +2200,35 @@ begin
   ADOQryAuxiliar.ExecSQL;
 
   //Acualizar impuestos si no tiene Impuestos //Mar 30/16
-  //Si existe actualizar si no existe crear en tabla de impuestos
-
-  ADOQryAuxiliar.Close;
-  ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
-                        +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
-  ADOQryAuxiliar.Open;
-
-  if not ADOQryAuxiliar.eof then//No existe
-    idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
-  // Mar 31/16
-  if idImp=-1 then //No existe
+  //Si existe actualizar si no existe crear en tabla de impuestos          //Ago 31/16
+  if (adodsMaster.FieldByName('IDCFDITipoDocumento').AsInteger <> 5) and (adodsMaster.FieldByName('IdCfdiEstatus').AsInteger<>5) then
   begin
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
-                          +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(subtotal*0.16)+')');
-    ADOQryAuxiliar.ExecSQL;
-  end
-  else
-  begin
-    ADOQryAuxiliar.Close;
-    ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(subtotal*0.16)
-                          +' where IDCFDIImpuesto ='+IntToStr(idImp));
-    ADOQryAuxiliar.ExecSQL;
-  end;
-  //Hasta aca
+    ADOQryAuxiliar.SQL.Add('SElect * from  CFDIImpuestos where IDCFDI ='+IntToStr(idDocCFDI)
+                          +' and TipoImp=''Trasladado'' and Impuesto=''IVA''');
+    ADOQryAuxiliar.Open;
 
+    if not ADOQryAuxiliar.eof then//No existe
+      idImp:=ADOQryAuxiliar.FieldByName('IDCFDIImpuesto').AsInteger;
+    // Mar 31/16
+    if idImp=-1 then //No existe
+    begin
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('Insert into CFDIImpuestos (IDCFDI, TipoIMP,Impuesto, Tasa, Importe) VAlues('
+                            +IntToStr(idDocCFDI) +', ''Trasladado'', ''IVA'', 16, '+FloatToSTR(IVACal)+')');
+      ADOQryAuxiliar.ExecSQL;                                                                 //  subtotal*0.16 Ago 30 /16 ajustado
+    end
+    else
+    begin
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('UPDATE CFDIImpuestos SET Importe='+FloatToSTR(IVACal)   //subtotal*0.16
+                            +' where IDCFDIImpuesto ='+IntToStr(idImp));
+      ADOQryAuxiliar.ExecSQL;
+    end;  //Hasta aca
+  end; // Fin de if de <>5 (Fletes)
 
   AdoDSMaster.Refresh;
 end;
@@ -2172,14 +2245,21 @@ begin
   inherited;
   if adodsMasterIdCFDITipoDocumento.AsInteger in [3] then  //Se quito el 2 por que ese es como factura
   begin
-    dataset.FieldByName('IDUnidadMedida').AsInteger:=2; //No aplica
-    dataset.FieldByName('Unidad').AsString:='NA'
+    dataset.FieldByName('IDUnidadMedida').AsInteger:=3; //No aplica //Generalmente son Fletes  //Sep 1/16
+    dataset.FieldByName('Unidad').AsString:='FLETE';  //Sep 1/16
+    dataset.FieldByName('Cantidad').AsFloat:=1; //Sep 1/16
+
   end;
   if adodsMasterIdCFDITipoDocumento.AsInteger in [2] then //Jun 27/16
   begin
     dataset.FieldByName('IDUnidadMedida').AsInteger:=1; //PZA
     dataset.FieldByName('Unidad').AsString:='PZA';
     dataset.FieldByName('Cantidad').AsFloat:=1;
+  end;
+  if adodsMasterIdCFDITipoDocumento.AsInteger =5 then  //Flete
+  begin
+    dataset.FieldByName('IDUnidadMedida').AsInteger:=3; //Flete   //Verificar
+    dataset.FieldByName('Unidad').AsString:='FLETE'
   end;
 end;
 
@@ -2368,7 +2448,7 @@ begin
   inherited;
   XMLpdf := TdmodXMLtoPDF.Create(Self);
   try
-    XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIInterva.rtm'; //'FacturaCFDI.rtm';
+    XMLpdf.FileRTM:= ExtractFilePath(Application.ExeName) + 'CFDIIntervaNvo.rtm'; //'FacturaCFDI.rtm';   //Sep 1/16
     XMLpdf.FileXTR:= ExtractFilePath(Application.ExeName) + 'Transfor32.xtr';
     XMLpdf.ModifyDocument;
 //    XMLpdf.GeneratePDFFile(ArchivoRuta);
@@ -2488,7 +2568,7 @@ end;
 
 procedure TDMFacturas.ImprimeNotaVPDF(Mostrar:Boolean;nombre:TFileName='');  //Abr 4/16
 var
-  vPDFFileName: TFileName;
+  vPDFFileName: TFileName;                    //Verificar si reporte de flete es diferente o no tiene  Ago 30/16
 begin
     // Configura el reporte
    case adodsMaster.FieldByName('IdCfdiEstatus').AsInteger of

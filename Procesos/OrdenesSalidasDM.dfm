@@ -491,8 +491,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select IdOrdenEstatus, Identificador, Descripcion from OrdenesEs' +
       'tatus'
     Parameters = <>
-    Left = 248
-    Top = 24
+    Left = 256
+    Top = 16
     object ADODtStOrdenSalEstatusIdOrdenEstatus: TIntegerField
       FieldName = 'IdOrdenEstatus'
     end

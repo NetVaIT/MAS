@@ -2,6 +2,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   Caption = 'frmUsuariosPerfiles'
   ClientWidth = 1048
   ExplicitWidth = 1048
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -38,18 +39,21 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
     Top = 22
     Width = 1048
     Height = 455
+    ExplicitTop = 22
     ExplicitWidth = 1048
+    ExplicitHeight = 455
     ClientRectBottom = 454
     ClientRectRight = 1047
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 1046
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Width = 1046
         Height = 453
         ExplicitWidth = 1046
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           Width = 1044
           ExplicitLeft = 0
@@ -70,6 +74,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1044
+          ExplicitHeight = 426
           object Label1: TLabel
             Left = 32
             Top = 32
@@ -191,7 +196,8 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
                 'Facturas                  |23'
                 'Notas Venta             |24'
                 'Notas Cr'#233'dito          |25'
-                'Notas Cargo            |26')
+                'Notas Cargo            |26'
+                'Fletes                       |28')
               TabOrder = 2
             end
             object ChckLstBxOpcionesCXC: TCheckListBox
@@ -358,9 +364,6 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 794
   end
   inherited DataSource: TDataSource
     DataSet = DmPerfilesUsuario.adodsMaster
@@ -369,7 +372,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -510,7 +513,7 @@ inherited frmUsuariosPerfiles: TfrmUsuariosPerfiles
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

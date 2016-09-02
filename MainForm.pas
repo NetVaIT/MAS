@@ -131,6 +131,8 @@ type
     ActEntradaAjuste: TAction;
     actRptVentasProyeccion: TAction;
     dxBarLargeButton33: TdxBarLargeButton;
+    dxBrLrgBtnFletes: TdxBarLargeButton;
+    ActFletes: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -220,6 +222,9 @@ begin
    25: gModulo := TDMFacturas.CreateWMostrar(Self,True,2); //Credito   Mar 29/16
    26: gModulo := TDMFacturas.CreateWMostrar(Self,True,3); //CArgo Mar 29/16
    27: gModulo := TDMOrdenesEntregas.Create(Self); //Ordenesentega May 27/16
+
+   28: gModulo := TDMFacturas.CreateWMostrar(Self,True,5); //Fletes //Ago 30/16
+
    30: gModulo := TdmAlmacenes.Create(Self);
    31: gModulo := TdmDevoluciones.Create(Self); //Jun 21/16
    32: gModulo := TdmInventario.Create(Self);

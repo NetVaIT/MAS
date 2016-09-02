@@ -282,9 +282,9 @@ begin
   RdGrpSeleccion.Repaint;
 
   RdGrpNotasVentas.Visible:= tipoDocumento=4; //Mar 30/16
-  RdGrpSeleccion.Visible:= tipoDocumento<>4;  //Mar 30/16
-  ChckLstImpresion.Visible:= tipoDocumento<>4; //Mar 30/16
-  LblImpresion.Visible:= tipoDocumento<>4;//Mar 30/16
+  RdGrpSeleccion.Visible:= (tipoDocumento<>4)and  (tipoDocumento<>5); ;  //Mar 30/16         //5 Fletes Ago 30/16
+  ChckLstImpresion.Visible:= (tipoDocumento<>4)and  (tipoDocumento<>5); //Mar 30/16   //5 Fletes Ago 30/16
+  LblImpresion.Visible:= (tipoDocumento<>4)and  (tipoDocumento<>5);//Mar 30/16      //5 Fletes Ago 30/16
   TlBtnGenFactDiaria.Visible:= tipoDocumento=4; //Mar 30/16
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
   TlBtnImpNotaVenta.Enabled:=  tipoDocumento=4;

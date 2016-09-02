@@ -119,9 +119,6 @@ inherited dmPagos: TdmPagos
       Lookup = True
     end
   end
-  inherited adodsUpdate: TADODataSet
-    Left = 328
-  end
   object ADODtStDireccAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
@@ -465,7 +462,7 @@ inherited dmPagos: TdmPagos
       'nSalida, IdCFDIEstatus, IdClienteDomicilio, TipoCambio,'#13#10' Serie,' +
       ' Folio, Fecha, Total, SaldoDocumento from CFDI where '#13#10'SaldoDocu' +
       'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3'#13#10' o' +
-      'r IDCFDITipoDocumento=4)'
+      'r IDCFDITipoDocumento=4 or IDCFDITipoDocumento=5 )'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaReceptor;IdClienteDomicilio'
     MasterFields = 'IdPersonaCliente;IdDomicilioCliente'

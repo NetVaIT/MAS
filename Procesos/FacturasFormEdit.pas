@@ -28,10 +28,10 @@ type
     PnlEncabezado: TPanel;
     Label1: TLabel;
     Label7: TLabel;
-    Label9: TLabel;
+    LblEstatus: TLabel;
     Label10: TLabel;
     DBLookupComboBox1: TDBLookupComboBox;
-    DBLookupComboBox3: TDBLookupComboBox;
+    DBLkpCmbBxEstatus: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBLabel1: TcxDBLabel;
@@ -153,6 +153,7 @@ type
     procedure BtBtnCerrarClick(Sender: TObject);
     procedure BtBtnMostrarClick(Sender: TObject);
     procedure tbarDataClick(Sender: TObject);
+    procedure DBLookupComboBox6Click(Sender: TObject);
   private
     PreFacturas: TBasicAction;
     FacturaCta: TBasicAction;
@@ -255,10 +256,15 @@ procedure TfrmFacturasFormEdit.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
-  pnlmaster.Enabled:=  DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1;   //Prefactura
-  TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4); //Mod. Mar 28/16
+  DBLkpCmbBxEstatus.Visible:=  (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>5);
+  lblestatus.Visible:=  DBLkpCmbBxEstatus.Visible;                                                       //Para los que no se han aplicado por que FLetes y Notas pueden estar aplicados
+  pnlmaster.Enabled:=  (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1)and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat)  ;   //Prefactura       //Mod. Mar 28/16
+  TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4)
+                                              and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>5);  //Ago 30/16
+
   ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
-  TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4);  //feb 17/16
+  TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4)  //feb 17/16
+                                                          and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>5);  //Ago 30/16
   TlBtnCancelaCFDI.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=2) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat) and (DataSource.DataSet.FieldByName('UUID_TB').asString<>'');
   TlBtnCancelaNV.Enabled:= (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=5) and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger=4) and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat); //Jun 15/16
                                                                          //Presupuestos (4 son NV pero se acumulan asi que no se pueden cancelar individual o si??)  //Jun 20/16
@@ -295,6 +301,7 @@ begin
     TlBtnDocsCotizacion.Enabled:=False;    //Ago 3/16
   end;
   //Ago 2/16 hasta
+  TlBtnPDF.Enabled:= DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger in [1,2,3]  ;//DataSource.DataSet.FieldByName('UUID_TB').asString<>''
 end;
 
 procedure TfrmFacturasFormEdit.DBGrid2KeyDown(Sender: TObject; var Key: Word;
@@ -319,9 +326,32 @@ begin
      TadoDataset(dsDireccionCliente.dataset).Parameters.ParamByName('IdPersona').value:= DBLookupComboBox1.KeyValue; //DEberia Funcionar
      dsDireccionCliente.dataset.Open;
      if dsDireccionCliente.dataset.RecordCount >=1 then
-        DataSource.DataSet.FieldByName('IdClienteDomicilio').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
-                                      //FActura cambia
+     begin                                      //FActura cambia
+       DataSource.DataSet.FieldByName('IdClienteDomicilio').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
+       if not dsDireccionCliente.dataset.Fieldbyname('IdMetododePago').Isnull then
+       begin
+         DataSource.DataSet.FieldByName('IdMetodoPago').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IdMetododePago').AsInteger;
+         DataSource.DataSet.FieldByName('NumCtaPago').AsString:= dsDireccionCliente.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
+       end;
+
+     end;
    end;
+end;
+
+procedure TfrmFacturasFormEdit.DBLookupComboBox6Click(Sender: TObject);
+begin
+  inherited;
+
+  if not dsDireccionCliente.dataset.Fieldbyname('IdMetododePago').Isnull then   //Sep 1/16
+  begin
+    DataSource.DataSet.FieldByName('IdMetodoPago').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IdMetododePago').AsInteger;
+    DataSource.DataSet.FieldByName('NumCtaPago').AsString:= dsDireccionCliente.dataset.Fieldbyname('NumCtaPagoCliente').AsString;
+  end
+  else
+  begin
+    DataSource.DataSet.FieldByName('IdMetodoPago').AsInteger:= 5; //Otros
+    DataSource.DataSet.FieldByName('NumCtaPago').AsString:= '';
+  end;
 end;
 
 procedure TfrmFacturasFormEdit.FormCreate(Sender: TObject);
@@ -350,6 +380,7 @@ begin
   2:pnlTitulo.Caption:='  Notas de Crédito';
   3:pnlTitulo.Caption:='  Notas de Cargo';
   4:pnlTitulo.Caption:='  Notas de Venta';
+  5:pnlTitulo.Caption:='  Fletes'; //Ago 30/16
   end;
   TlBtnEnvioFactura.Hint:='Enviar '+Trim(pnlTitulo.Caption)+' por Correo';   //Jun 2/16
 
@@ -486,11 +517,11 @@ var clave:string;
 begin
   inherited;
   // temporal
-  if inputquery('clave especial', 'Escriba clave especial', Clave) then
+(*  if inputquery('clave especial', 'Escriba clave especial', Clave) then
   begin
     if clave='$asqwzxwsx' then
       ActRevertirExtra.Execute;
-  end;
+  end;*)
 end;
 
 procedure TfrmFacturasFormEdit.TlBtnDocsCotizacionClick(Sender: TObject);
