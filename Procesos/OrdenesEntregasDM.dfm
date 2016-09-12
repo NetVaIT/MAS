@@ -13,12 +13,12 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       'CondicionEntrega, Observaciones, EstatusEntrega, IdTelefono,'#13#10' I' +
       'dDocumentoGuia, Contenido, Conducto, Servicio, PagoFlete, Valor,' +
       #13#10' Asegurado, CantidadCajas, IdPersonaEmpaca, FechaIniEmpaque, '#13 +
-      #10'FechaFinEmpaque, IdEstatusOrdenEntrega from'#13#10' InformacionEntreg' +
-      'as IE where IdEstatusOrdenEntrega =4'#13#10' and exists (Select * from' +
-      ' InformacionEntregasDetalles IED '#13#10' inner join OrdenesSalidas OS' +
-      ' on IED.IdInfoEntrega= IE.IdInfoEntrega and IED.IdOrdenSalida=OS' +
-      '.idOrdenSalida  '#13#10' where OS.FechaRegistro>:FIni and  OS.FechaReg' +
-      'istro<:FFin )'
+      #10'FechaFinEmpaque, IdEstatusOrdenEntrega, EtiquetaImpresa,'#13#10' Orde' +
+      'nEmbImpresa from'#13#10' InformacionEntregas IE where IdEstatusOrdenEn' +
+      'trega =4'#13#10' and exists (Select * from InformacionEntregasDetalles' +
+      ' IED '#13#10' inner join OrdenesSalidas OS on IED.IdInfoEntrega= IE.Id' +
+      'InfoEntrega and IED.IdOrdenSalida=OS.idOrdenSalida  '#13#10' where OS.' +
+      'FechaRegistro>:FIni and  OS.FechaRegistro<:FFin )'
     Parameters = <
       item
         Name = 'FIni'
@@ -32,7 +32,7 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
         Size = -1
         Value = Null
       end>
-    Left = 32
+    Left = 40
     Top = 24
     object adodsMasterIdInfoEntrega: TAutoIncField
       DisplayLabel = 'No.Orden Entrega'
@@ -199,10 +199,16 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       KeyFields = 'IdEstatusOrdenEntrega'
       Lookup = True
     end
+    object adodsMasterEtiquetaImpresa: TBooleanField
+      FieldName = 'EtiquetaImpresa'
+    end
+    object adodsMasterOrdenEmbImpresa: TBooleanField
+      FieldName = 'OrdenEmbImpresa'
+    end
   end
   inherited ActionList: TActionList
     object ActCargarGuia: TAction
-      Caption = 'ActCargarGuia'
+      Caption = 'Adjuntar Gu'#237'a'
       OnExecute = ActCargarGuiaExecute
     end
   end

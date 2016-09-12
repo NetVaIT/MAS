@@ -3,8 +3,8 @@ unit AjustesSalidasDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
-  Vcl.ActnList, Data.Win.ADODB, Dialogs;
+  winapi.windows,System.SysUtils, System.Classes, _StandarDMod, Data.DB, System.Actions,
+  Vcl.ActnList, Data.Win.ADODB, Dialogs,Forms;
 const
   IdalmacenPrincipal=1;  //Jul 15/16
 type
@@ -75,10 +75,8 @@ type
     ADODtStSalidasUbicacionesIdSalidaUbicacionEstatus: TIntegerField;
     ADODtStSalidasUbicacionesIdOrdenSalidaItem: TIntegerField;
     ADODtStSalidasUbicacionesIdOrdenSalida: TIntegerField;
-    ADODtStSalidasUbicacionesIdProducto: TIntegerField;
     ADODtStSalidasUbicacionesDisponible: TFloatField;
     ADODtStSalidasUbicacionesEspacioA: TStringField;
-    ADODtStSalidasUbicacionesProducto: TStringField;
     ADODtStProductosXEspacioIdProductoXEspacio: TAutoIncField;
     ADODtStProductosXEspacioIdAlmacen: TIntegerField;
     ADODtStProductosXEspacioIdProducto: TIntegerField;
@@ -88,7 +86,6 @@ type
     ADODtStProductosXEspacioIdOrdenEntradaItem: TIntegerField;
     ADODtStProductosXEspacioCantidad: TFloatField;
     ADODtStProductosXEspacioEspacio: TStringField;
-    ADODtStSalidasUbicacionesElEspacio: TStringField;
     ActAceptaUbicacion: TAction;
     ADOQryInsertaProductoKardex: TADOQuery;
     ADODtStDatosInventarioDir: TADODataSet;
@@ -110,6 +107,30 @@ type
     ADODtStProductosExistencia: TFloatField;
     ADODtStAjusteSalidaItemsdisponible: TFloatField;
     adodsMasterIdUsuario: TIntegerField;
+    ADODtStVerUsuario: TADODataSet;
+    ADODtStVerUsuarioIdUsuario: TAutoIncField;
+    ADODtStVerUsuarioIdPersona: TIntegerField;
+    ADODtStVerUsuarioIdUsuarioEstatus: TIntegerField;
+    ADODtStVerUsuarioIdUsuarioPerfil: TIntegerField;
+    ADODtStVerUsuarioLogin: TStringField;
+    ADODtStVerUsuarioPassword: TStringField;
+    ADODtStVerUsuarioPermiso: TStringField;
+    ADODtStConProducto: TADODataSet;
+    ADODtStConProductoIdOrdenSalidaItem: TAutoIncField;
+    ADODtStConProductoIdOrdenSalida: TIntegerField;
+    ADODtStConProductoIdProducto: TIntegerField;
+    ADODtStConProductoIdUnidadMedida: TIntegerField;
+    ADODtStConProductoClaveProducto: TStringField;
+    ADODtStConProductoCantidadDespachada: TFloatField;
+    ADODtStConProductoCantidadSolicitada: TFloatField;
+    ADODtStConProductoPrecio: TFMTBCDField;
+    ADODtStConProductoImporte: TFMTBCDField;
+    ADODtStConProductoObservaciones: TStringField;
+    ADODtStConProductoCostoUnitario: TFMTBCDField;
+    ADODtStConProductoDescripcion: TStringField;
+    ADODtStSalidasUbicacionesProductoNvo: TStringField;
+    ADODtStSalidasUbicacionesIdproducto: TIntegerField;
+    ADODtStSalidasUbicacionesProducto: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActSeleccionaProductoExecute(Sender: TObject);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
@@ -143,9 +164,10 @@ type
       PorIVA: Double; var AMontoIva, ASubtotal, ATotal: Double): Boolean;
     function VerificaYCreaResto(IdOrdenSalItem: Integer; CantActual: Double;
       idSalidaUbicacion: Integer;muestraMsg:boolean): Boolean;
-    function VerificaUbicacionProductos(idordenSalida: Integer;MostrarMsg:Boolean): Boolean;
+    function VerificaUbicacionProductos(idordenSalida: Integer;MostrarMsg:Boolean;var valor:Integer): Boolean;
     procedure ActualizaKardex(IdOrdenSalida: integer);
-    procedure ActualizaInventarioDir(IDOrdenSalida: Integer);   //Jul 15/16
+    procedure ActualizaInventarioDir(IDOrdenSalida: Integer);
+    function VerificaClave: Boolean;   //Jul 15/16
     { Private declarations }
   public
     CambioCantidad:Boolean; //Jul 14/16
@@ -169,6 +191,7 @@ procedure TDMAjustesSalida.ActAceptaUbicacionExecute(Sender: TObject);
 var IdOrdenSalItem, IdSalidaUbicacion:integer;           //Jul 15/16
     cantidad:Double;
     res:Boolean;
+    x:integer;//Salidas ubicaciones sep 9/16
 begin
   inherited;
  // verificar y cambiar estatus de salidas ubicacion y luego habilitar  boton de acepta ubicacion
@@ -189,42 +212,94 @@ begin
     showmessage('Creo registros, coloque ubicaciones');
   end;
   TfrmAjustesSalidasEdit(gGridEditForm).btnAplicarsalida.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
-                                                     and VerificaUbicacionProductos(AdoDSMaster.fieldbyname('IdOrdenSalida').asinteger,True);
+                                                     and VerificaUbicacionProductos(AdoDSMaster.fieldbyname('IdOrdenSalida').asinteger,True,x);
 
 
 
 end;
                                                                              //Jul 15/16
-function TDMAjustesSalida.VerificaUbicacionProductos(idordenSalida:Integer; mostrarMsg:Boolean):Boolean;
+function TDMAjustesSalida.VerificaUbicacionProductos(idordenSalida:Integer; mostrarMsg:Boolean;var valor:Integer):Boolean;
 begin
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;  //Asegurarse que si le cambia el valor de cantidad se complete el restante sin ubicar.
-  ADOQryAuxiliar.SQL.ADD('Select Count(*) SinUbicacion from SalidasUbicaciones where IdOrdenSalida='+intToSTR(idordenSalida)+' and  idProductoXEspacio is NULL');
+  ADOQryAuxiliar.SQL.ADD('if (Select Count(*) SinUbicacion from SalidasUbicaciones where IdOrdenSalida='+intToSTR(idordenSalida)+')>0 '+
+                         '  Select Count(*) SinUbicacion from SalidasUbicaciones where IdOrdenSalida='+intToSTR(idordenSalida)+' and  idProductoXEspacio is NULL'+
+                          ' else Select -1 Sinubicacion');
+
+//  Select  -1 SinubicacionSelect Count(*) SinUbicacion from SalidasUbicaciones where IdOrdenSalida and  idProductoXEspacio is NULL');
   ADOQryAuxiliar.open;
+  valor :=ADOQryAuxiliar.Fieldbyname('sinubicacion').AsInteger;
   Result:=  ADOQryAuxiliar.Fieldbyname('sinubicacion').AsInteger =0;
                        //Jul 15/16
   if (not result) and mostrarMsg then
-    ShowMessage('Existen Productos sin Identificar Ubicación');
+  begin
+    if ADOQryAuxiliar.Fieldbyname('sinubicacion').AsInteger =-1 then
+      ShowMessage('Debe registrar ubicaciones para los productos')
+    else
+      ShowMessage('Existen Productos sin Identificar Ubicación');
+  end;
   ADOQryAuxiliar.Close;
 
 end;
 
+function  TDMAjustesSalida.VerificaClave:Boolean;
+var
+   clave:String;
+begin
+  Result:=False;
+  clave:='';
+  if InputQuery('Solicitud Contraseña','Indique su contraseña',clave) then
+  begin
+    ADODtStVerUsuario.Close;
+    ADODtStVerUsuario.Parameters.ParamByName('IdUsuario').value:= _dmConection.IdUsuario;
+    ADODtStVerUsuario.Open;
+    if (not ADODtStVerUsuario.Eof)and(clave =ADODtStVerUsuario.fieldbyname('Password').value) then
+    begin
+      REsult:=True;
+    end;
+
+  end;
+
+
+
+end;
 
 procedure TDMAjustesSalida.ActAplicaSalidaExecute(Sender: TObject);
+var
+  seguir:boolean;
+  X: integer;
 begin
   inherited;
-  //1. ubicaciones se habilita este boton si se colocaron ubicaciones??
-  //Aplicar Kardex
-  ActualizaKardex(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);  //Actualiza tambien estatus de salidas ubicacion
-  ActualizaInventariodir(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);
+  seguir:=  VerificaUbicacionProductos(adodsMaster.FieldByName('IdOrdenSalida').AsInteger,true, x) ; //verificacion de ubicaciones
+  if (not seguir)  then
+  begin
+    if (x =-1) then
+    begin
+     if (application.MessageBox(pchar('¿Continuar sin Afectar Ubicaciones ?'), 'Confirmación', MB_YESNO )=idYES) then
+        seguir:=verificaClave;
+    end //Valor mayor que 0 Terminar de ubicar
+    else
+    begin
+      application.MessageBox(pchar('Existen algunas piezas pendientes de identificar su ubicación de salida.'+#13
+                                  +'   Complételas para que el proceso se realice de forma correcta.'), 'Información', MB_OK );
+    end;
 
-  //Verificar
-  adodsmaster.Edit;
-  adodsMasterIdOrdenEstatus.Value:=9;//Aplicada
-  adodsMaster.post;
+  end;
+  if Seguir then
+  begin
+    //1. ubicaciones se habilita este boton si se colocaron ubicaciones??
+    //Aplicar Kardex
+    ActualizaKardex(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);  //Actualiza tambien estatus de salidas ubicacion
+    ActualizaInventariodir(adodsMaster.FieldByName('IdOrdenSalida').AsInteger);
 
-  ShowMessage('Realizado'); //Verificar ??
-  //verificar si se pone bitacora cuando se aplique
+    //Verificar
+    adodsmaster.Edit;
+    adodsMasterIdOrdenEstatus.Value:=9;//Aplicada
+    adodsMaster.post;
+
+    ShowMessage('Realizado'); //Verificar ??
+    //verificar si se pone bitacora cuando se aplique
+  end;
 end;
 
 procedure TDMAjustesSalida.ActSeleccionaProductoExecute(Sender: TObject);
@@ -588,10 +663,13 @@ begin
   inherited;
   Bloquear:= adodsMasterIdOrdenEstatus.Value = Ord(eAplicada);
 
-
-  TfrmAjustesSalidasEdit(gGridEditForm).btnAplicarsalida.Enabled:= (not Bloquear) and
-                                    (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1) and
-                                    VerificaUbicacionProductos(AdoDSMaster.fieldbyname('IdOrdenSalida').asinteger, False);
+  if AdoDSMaster.state in [dsInsert,dsEdit] then //Ajustado para que no lo muestre disponible mientras no tenga ubicaciones   Sep8/16
+     TfrmAjustesSalidasEdit(gGridEditForm).btnAplicarsalida.Enabled:=False
+  else
+    TfrmAjustesSalidasEdit(gGridEditForm).btnAplicarsalida.Enabled:= (not Bloquear) and
+                                    (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1) and (ADODtStAjusteSalidaItems.RecordCount>0);
+//                                    and VerificaUbicacionProductos(AdoDSMaster.fieldbyname('IdOrdenSalida').asinteger, False, X);   Sep 9/16 Para que se valide al ingresar
+  TfrmSalidasUbicaciones(gformDetail2).AHabilitaBoton:=  (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1);     //Sep 9/16
 end;
 
 procedure TDMAjustesSalida.SetBloquear(const Value: Boolean);
@@ -611,8 +689,10 @@ var                        //Jul 15/16
   idProdKdx:Integer;
 begin
   ADODtStAjusteSalidaItems.First;
+
   while not ADODtStAjusteSalidaItems.eof do
   begin
+    showmessage('IdOrdenSalida: '+ADODtStAjusteSalidaItems.FieldByName('IdOrdenSalida').asstring+ 'idordensalidaitem: '+ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
     ADOQryAuxiliar.SQL.add('Select * from   ProductosKardex where  IdOrdenSalidaItem =' +ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);
@@ -636,6 +716,7 @@ begin
       ADOQryInsertaProductoKardex.Parameters.ParamByName('IdAlmacen').Value:=  1; //Almacen Actual  // debe ser variable  Feb 10/16
       ADOQryInsertaProductoKardex.Parameters.ParamByName('IdMoneda').Value:= dmconfiguracion.idmoneda ;  //Jul 15/16
       ADOQryInsertaProductoKardex.ExecSQL;
+
     end;
 
     ADOQryAuxiliar.Close;

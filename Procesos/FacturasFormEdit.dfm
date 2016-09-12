@@ -62,24 +62,24 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
     ExplicitTop = 22
     ExplicitWidth = 990
     ExplicitHeight = 570
-    ClientRectBottom = 566
-    ClientRectRight = 986
+    ClientRectBottom = 569
+    ClientRectRight = 989
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 982
-      ExplicitHeight = 562
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 988
+      ExplicitHeight = 568
       inherited cxScrollBox1: TcxScrollBox
-        Width = 982
-        Height = 562
-        ExplicitWidth = 982
-        ExplicitHeight = 562
+        Width = 988
+        Height = 568
+        ExplicitWidth = 988
+        ExplicitHeight = 568
         inherited tbarData: TToolBar
-          Width = 980
+          Width = 986
           OnClick = tbarDataClick
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 980
+          ExplicitWidth = 986
           object TlBtnEdit: TToolButton
             Left = 254
             Top = 0
@@ -153,35 +153,33 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
         end
         inherited pnlMaster: TPanel
-          Width = 980
-          Height = 535
+          Width = 986
+          Height = 541
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 980
-          ExplicitHeight = 535
+          ExplicitWidth = 986
+          ExplicitHeight = 541
           object Splitter1: TSplitter
             Left = 0
             Top = 313
-            Width = 980
+            Width = 986
             Height = 2
             Cursor = crVSplit
             Align = alTop
-            ExplicitWidth = 986
           end
           object Splitter2: TSplitter
             Left = 0
-            Top = 457
-            Width = 980
+            Top = 463
+            Width = 986
             Height = 2
             Cursor = crVSplit
             Align = alBottom
             ExplicitTop = 482
-            ExplicitWidth = 986
           end
           object PnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 980
+            Width = 986
             Height = 313
             Align = alTop
             TabOrder = 0
@@ -460,7 +458,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 114
-              AnchorX = 411
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 593
@@ -628,7 +625,6 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
               DataBinding.DataSource = DataSource
               Height = 21
               Width = 135
-              AnchorX = 958
             end
             object cxDBLabel16: TcxDBLabel
               Left = 783
@@ -642,15 +638,15 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           object Panel3: TPanel
             Left = 0
             Top = 315
-            Width = 980
-            Height = 142
+            Width = 986
+            Height = 148
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
-              Width = 980
+              Width = 986
               Height = 29
               Images = ilAction
               TabOrder = 0
@@ -732,8 +728,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
             object DBGrid2: TDBGrid
               Left = 0
               Top = 29
-              Width = 980
-              Height = 113
+              Width = 986
+              Height = 119
               Align = alClient
               DataSource = DSCFDIConceptos
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -804,8 +800,8 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
           end
           object Panel1: TPanel
             Left = 0
-            Top = 459
-            Width = 980
+            Top = 465
+            Width = 986
             Height = 76
             Align = alBottom
             TabOrder = 2
@@ -1014,7 +1010,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   inherited ilPageControl: TImageList
     Left = 894
     Bitmap = {
-      494C010102000400C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400CC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1232,7 +1228,7 @@ inherited frmFacturasFormEdit: TfrmFacturasFormEdit
   inherited ilAction: TImageList
     Left = 960
     Bitmap = {
-      494C01011E00C002D00210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011E00C002D40210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

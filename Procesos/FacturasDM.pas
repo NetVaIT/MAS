@@ -2026,35 +2026,52 @@ begin
 end;
 
 procedure TDMFacturas.adodsMasterBeforeDelete(DataSet: TDataSet);
+var continuar:Boolean;
 begin
   inherited;
-  //Buscar Conceptos y si no tiene buscar Impuestos para borrar antes de borrar esto sólo si son notas de credito ao cargo...Jul 22/16
-  if DataSet.FieldByName('IDCFDITipoDocumento').asInteger in [2,3] then //Notas credito y cargo , unicas que borran
+  if DataSet.FieldByName('IDCFDITipoDocumento').asInteger=1   then  //Sep 9/16
   begin
-    adoqryAuxiliar.Close;
-    adoqryAuxiliar.Sql.Clear;
-    adoqryAuxiliar.sql.Add('Select * from CFDIConceptos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
-    adoqryAuxiliar.open;
-    if not adoqryAuxiliar.eof then
-    begin
-      ShowMessage('DEbe eliminar primero los conceptos asociados');
-      abort;
-    end
-    else
+    ShowMessage('No es posible eliminar Facturas');
+    abort;
+  end
+  else
+
+  //Buscar Conceptos y si no tiene buscar Impuestos para borrar antes de borrar esto sólo si son notas de credito ao cargo...Jul 22/16
+  if DataSet.FieldByName('IDCFDITipoDocumento').asInteger in [2,3,5] then //Notas credito y cargo , unicas que borran
+  begin                                                       //Fletes  //Sep 9/16
+    Continuar:=true;
+    if (DataSet.FieldByName('IDCFDITipoDocumento').asInteger in [2,3]) and  (DataSet.FieldByName('folio').asInteger<>0) and
+      (application.messagebox(pchar('¿Esta seguro de Borrar la Nota :'+DataSet.FieldByName('serie').asString+' - '+DataSet.FieldByName('folio').asstring+'?. '
+                             +' No podrá ser reutilizado ese número.'),'Confirmación',MB_YESNO)=IDNo) then
+      Continuar:=False;
+    if Continuar then
     begin
       adoqryAuxiliar.Close;
       adoqryAuxiliar.Sql.Clear;
-      adoqryAuxiliar.sql.Add('Select * from CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+      adoqryAuxiliar.sql.Add('Select * from CFDIConceptos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
       adoqryAuxiliar.open;
       if not adoqryAuxiliar.eof then
       begin
+        ShowMessage('Debe eliminar primero los conceptos asociados');
+        abort;
+      end
+      else
+      begin
         adoqryAuxiliar.Close;
         adoqryAuxiliar.Sql.Clear;
-        adoqryAuxiliar.sql.Add('DELETE CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
-        adoqryAuxiliar.ExecSQL;
+        adoqryAuxiliar.sql.Add('Select * from CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+        adoqryAuxiliar.open;
+        if not adoqryAuxiliar.eof then
+        begin
+          adoqryAuxiliar.Close;
+          adoqryAuxiliar.Sql.Clear;
+          adoqryAuxiliar.sql.Add('DELETE CFDIImpuestos where idCFDI ='+ DataSet.FieldByName('IDCFDI').asstring);
+          adoqryAuxiliar.ExecSQL;
+        end;
       end;
-    end;
-
+    end
+    else //Dijo que no
+      abort;
   end;
 end;
 
@@ -2085,8 +2102,8 @@ end;
 
 procedure TDMFacturas.adodsMasterBeforePost(DataSet: TDataSet);
 begin
-  inherited;
-  if DataSet.FieldByName('IDCFDITipoDocumento').AsInteger=5 then //Flete
+  inherited;                                  //Flete              //Para que ponga el Folio de Notas de credito y cargo  sep 9/16
+  if (DataSet.FieldByName('IDCFDITipoDocumento').AsInteger=5) or (DataSet.FieldByName('IDCFDITipoDocumento').AsInteger in [2,3]) then
   begin  //Colocar Folio de Flete
     if adodsMasterIdCFDIEstatus.AsInteger =1 then
     begin
@@ -2097,18 +2114,27 @@ begin
         ADODtStBuscaFolioSerie.Parameters.ParamByName('IdCFDITipoDocumento').Value:= adodsMasterIdCFDITipoDocumento.AsInteger; //Asegurarse que tenga valor
         ADODtStBuscaFolioSerie.Open;
 
+
         if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
         begin
-          adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
-          adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
+          if (DataSet.FieldByName('IDCFDITipoDocumento').AsInteger in [2,3]) and
+                (application.MessageBox(pchar('Se va a colocar la nota '+ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString+' - '
+             +ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsString+ ' ¿Seguro de continuar?'), 'Confirmación', MB_YESNO )=idYES)  then //SEp 9/16
+          begin
 
-          ADODtStBuscaFolioSerie.Edit;
-          ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
-          ADODtStBuscaFolioSerie.Post;
+            adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
+            adodsMasterSerie.AsString:= ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString;
+
+            ADODtStBuscaFolioSerie.Edit;
+            ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger+1;
+            ADODtStBuscaFolioSerie.Post;
+          end
+          else
+            abort; //
         end
         else
         begin
-          ShowMessage('No existen Folios para Fletes. Asegurese de colocarlos ');
+          ShowMessage('No existen Folios para el Tipo de Documento. Asegurese de colocarlos ');
         end;
       end;
 

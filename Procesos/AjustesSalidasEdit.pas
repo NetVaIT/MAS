@@ -141,6 +141,7 @@ begin
   end;
 
   DSsalidasUbicaciones.dataset.Refresh;
+
 end;
 
 procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesUpdateData(

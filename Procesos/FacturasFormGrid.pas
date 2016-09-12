@@ -293,9 +293,10 @@ begin
   Case TipoDocumento of
   1:TlBtnReporteUtilidad.Hint:='Reporte Facturas Expedidas, vigentes y dentro del rango de fechas';
   4:TlBtnReporteUtilidad.Hint:='Reporte Presupuestos dentro del rango de fechas';
+
   end;
 
-
+  tvMasterEstatus.Visible:=TipoDocumento<>5; //Es paraFletes
   cxDtEdtDia.Date:=date;
 
 (*  decodeDate(date,a,m,d);   //D. Abr 19/16

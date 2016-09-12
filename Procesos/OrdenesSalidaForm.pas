@@ -240,7 +240,8 @@ type
     procedure SetFVerificayCreaResto(const Value: TBasicAction);
     function CambioColor: TColor;
     function EnviaOrdenSola(idOrden: Integer): Boolean;
-    function GuardaCAjas(idOrden, Cajas: Integer): Boolean; //May 26/16
+    function GuardaCAjas(idOrden, Cajas: Integer): Boolean;
+    procedure ActualizaMarcaImpresion(AIdInfoEntrega: Integer; Campo, valor: String); //May 26/16
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
@@ -617,7 +618,9 @@ begin
   TADOQuery(DsQryAuxiliar.DataSet).SQL.Add('Select Os.idOrdenSalida,os.FechaRegistro,IE.* from OrdenesSalidas OS inner join InformacionEntregasDetalles IED ' +
                                   'on IED.IDOrdenSalida=OS.IdOrdenSalida ' +
                                   ' inner join InformacionEntregas IE on IE.IdInfoEntrega=IED.IdInfoEntrega ' +
-                                  ' and os.idOrdenEstatus =4 and OS.IDPersonaDomicilio='+intToStr(IDPerDomicilio)+
+                                  ' and (os.idOrdenEstatus =4 or os.idOrdenEstatus =5) and OS.IDPersonaDomicilio='+intToStr(IDPerDomicilio)+
+                                                                //Ajustado para que use los Empacados tambien Sep 5/16
+                                  ' and os.FechaRegistro>= DATEADD(dd, DATEDIFF(dd,0,GETDATE()), 0) and os.FechaRegistro< DATEADD(dd, DATEDIFF(dd,0,GETDATE()+1), 0)'+ //Para que solo los del Día  Sep 5/16
                                   ' and OS.IDOrdenSalida <> ' +intToSTR(IdOrdenSal));//deberia no existir, porque a penas lo va a crear.
 
    DsQryAuxiliar.DataSet.open;
@@ -938,6 +941,10 @@ begin
   inherited;  //Imprimir La cantidad de etiquetas segun cajas //Feb 15/16
                    // datasource.DataSet.FieldByName('idOrdenSalida').AsInteger Cambio may 27/16
   ImprimirEtiqueta(dsinformacionEntrega.dataset.FieldByName('IdInfoentrega').AsInteger,0, 2); //May 10/16 + CualRep
+  if Application.messageBox('¿Etiqueta impresa correctamente?','Confirmación',MB_YESNO)=IdYes then  //sep 5/16
+    ActualizaMarcaImpresion(DSInformacionEntrega.DataSet.FieldByName('IdInfoentrega').AsInteger, 'EtiquetaImpresa','1');
+
+
   if application.MessageBox('¿Mercancía Enviada?','Confirmación cambio estado',MB_YESNO)=idyes then //Abr 20/16
   begin
     datasource.DataSet.Edit;
@@ -945,6 +952,24 @@ begin
     datasource.DataSet.Post;
   end;
 end;
+
+procedure  TFrmOrdenesSalida.ActualizaMarcaImpresion(AIdInfoEntrega:Integer; Campo, valor :String);  //sep 5/16
+begin
+  DSQryAuxiliar.DataSet.Close;
+  TADOQuery(DSQryAuxiliar.DataSet).sql.clear;
+  TADOQuery(DSQryAuxiliar.DataSet).Sql.ADD('Update InformacionEntregas SET '+Campo+'= '+ valor
+                                       +' where IDInfoEntrega='+ intToStr(AIdInfoEntrega));
+  TADOQuery(DSQryAuxiliar.DataSet).ExecSql;
+
+  DSQryAuxiliar.DataSet.Close;
+  TADOQuery(DSQryAuxiliar.DataSet).sql.clear;
+  TADOQuery(DSQryAuxiliar.DataSet).Sql.ADD('Update OrdenesSalidas SET '+Campo+'= '+ valor
+                                    +' where exists(Select * from InformacionEntregasDetalles where '
+                                    +' OrdenesSalidas.idOrdenSalida=InformacionEntregasDetalles.IdOrdenSalida '
+                                    +' and InformacionEntregasDetalles.IDInfoEntrega='+ intToStr(AIdInfoEntrega)+')');
+  TADOQuery(DSQryAuxiliar.DataSet).ExecSql;
+end;
+
 
 procedure TFrmOrdenesSalida.BtBtnIniciarProceso(Sender: TObject);
 var
@@ -1025,6 +1050,10 @@ procedure TFrmOrdenesSalida.BtBtnOrdenEmbarqueClick(Sender: TObject);
 begin
   inherited;       // datasource.DataSet.FieldByName('idOrdenSalida').AsInteger
   ImprimirEtiqueta(dsinformacionEntrega.dataset.FieldByName('IdInfoentrega').AsInteger,0, 3); //May 10/16
+  if Application.messageBox('¿Orden de Embarque impresa correctamente?','Confirmación',MB_YESNO)=IdYes then  //sep 5/16
+    ActualizaMarcaImpresion(DSInformacionEntrega.DataSet.FieldByName('IdInfoentrega').AsInteger, 'OrdenEmbImpresa','1');
+
+
 end;
 
 procedure TFrmOrdenesSalida.DataSourceDataChange(Sender: TObject;

@@ -28,11 +28,14 @@ type
     procedure FormShow(Sender: TObject);
   private
     FAceptaUbicaciones: TBasicAction;
+    FHabilitaBoton: Boolean;
     procedure SetFAceptaUbicaciones(const Value: TBasicAction);
+    procedure SetFHabilitaBoton(const Value: Boolean);
     { Private declarations }
   public
     { Public declarations }
      property AAceptaUbicaciones:TBasicAction read FAceptaUbicaciones write SetFAceptaUbicaciones; //Jul 15/16
+     property AHabilitaBoton:Boolean read FHabilitaBoton write SetFHabilitaBoton;   //Sep 9/16 para deshabiitar boton de aplicacion ubicacion
   end;
 
 
@@ -55,7 +58,7 @@ procedure TfrmSalidasUbicaciones.FormShow(Sender: TObject);
 begin
  inherited;
   TfrmSalidasUbicacionesGrid(gFormGrid).AAceptaUbicaciones:=AAceptaUbicaciones;
- actShowGrid.Execute;
+  actShowGrid.Execute;
 end;
 
 procedure TfrmSalidasUbicaciones.SetFAceptaUbicaciones(
@@ -65,6 +68,13 @@ begin
 
   //Asignar a formagrig
 
+end;
+
+procedure TfrmSalidasUbicaciones.SetFHabilitaBoton(const Value: Boolean);  //Sep 9/16
+begin
+  FHabilitaBoton := Value;
+  TfrmSalidasUbicacionesGrid(gFormGrid).btnAceptarUbicaciones.Visible:=Value;
+  TfrmSalidasUbicacionesGrid(gFormGrid).pnlMaster.Enabled:=  value;
 end;
 
 end.

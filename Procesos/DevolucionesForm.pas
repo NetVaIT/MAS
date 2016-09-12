@@ -30,6 +30,20 @@ type
     tvMasterFecha: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
+    tvMasterTipoCambio: TcxGridDBColumn;
+    tvMasterSubTotal: TcxGridDBColumn;
+    tvMasterIVA: TcxGridDBColumn;
+    tvMasterAlmacen: TcxGridDBColumn;
+    tvMasterEstatus: TcxGridDBColumn;
+    tvMasterCliente: TcxGridDBColumn;
+    tvMasterTipoOrden: TcxGridDBColumn;
+    tvMasterIdDocumentoEntrada: TcxGridDBColumn;
+    tvMasterIdAlmacen: TcxGridDBColumn;
+    tvMasterIdOrdenEstatus: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterIdMoneda: TcxGridDBColumn;
+    tvMasterIdUsuario: TcxGridDBColumn;
+    tvMasterIdOrdenEntradaTipo: TcxGridDBColumn;
   private
     { Private declarations }
   public

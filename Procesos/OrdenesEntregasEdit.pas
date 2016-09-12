@@ -123,6 +123,7 @@ type
     procedure PermisosEdicion;
     function GuardaCAjas(idOrden, Cajas: Integer): Boolean;
     function EnviaOrdenSola(idOrden: Integer): integer;
+    procedure ActualizaMarcaImpresion(AIdInfoEntrega: Integer; Campo, valor: String);
     { Private declarations }
   public
     { Public declarations }
@@ -400,6 +401,10 @@ procedure TfrmOrdenesEntregasEdit.BtBtnImprimeEtiquetaClick(Sender: TObject);
 begin
   inherited;                                    //Cambio may 27/16
   ImprimirEtiqueta(datasource.DataSet.FieldByName('IdInfoentrega').AsInteger,0, 2);
+
+  if Application.messageBox('¿Etiqueta impresa correctamente?','Confirmación',MB_YESNO)=IdYes then  //sep 5/16
+    ActualizaMarcaImpresion(datasource.DataSet.FieldByName('IdInfoentrega').AsInteger, 'EtiquetaImpresa','1');
+
 (* // Verificar si va
 
   if application.MessageBox('¿Mercancía Enviada?','Confirmación cambio estado',MB_YESNO)=idyes then //Abr 20/16
@@ -414,6 +419,26 @@ procedure TfrmOrdenesEntregasEdit.BtBtnOrdenEmbarqueClick(Sender: TObject);
 begin
   inherited;
   ImprimirEtiqueta(datasource.DataSet.FieldByName('IdInfoentrega').AsInteger,0, 3);
+  if Application.messageBox('¿Orden de Embarque impresa correctamente?','Confirmación',MB_YESNO)=IdYes then  //sep 5/16
+    ActualizaMarcaImpresion(datasource.DataSet.FieldByName('IdInfoentrega').AsInteger, 'OrdenEmbImpresa','1');
+end;
+
+procedure  TfrmOrdenesEntregasEdit.ActualizaMarcaImpresion(AIdInfoEntrega:Integer; Campo, valor:String);  //sep 5/16
+begin
+  dsQryAux2.DataSet.Close;
+  TADOQuery(dsQryAux2.DataSet).sql.clear;
+  TADOQuery(dsQryAux2.DataSet).Sql.ADD('Update InformacionEntregas SET '+Campo+'= '+valor
+                                       +' where IDInfoEntrega='+ intToStr(AIdInfoEntrega));
+  TADOQuery(dsQryAux2.DataSet).ExecSql;
+
+  dsQryAux2.DataSet.Close;
+  TADOQuery(dsQryAux2.DataSet).sql.clear;
+  TADOQuery(dsQryAux2.DataSet).Sql.ADD('Update OrdenesSalidas SET '+Campo+'= '+ valor
+                                    +' where exists(Select * from InformacionEntregasDetalles where '
+                                    +' OrdenesSalidas.idOrdenSalida=InformacionEntregasDetalles.IdOrdenSalida '
+                                    +' and InformacionEntregasDetalles.IDInfoEntrega='+ intToStr(AIdInfoEntrega)+')');
+  TADOQuery(dsQryAux2.DataSet).ExecSql;
+
 end;
 
 procedure TfrmOrdenesEntregasEdit.DataSourceDataChange(Sender: TObject;

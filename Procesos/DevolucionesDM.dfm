@@ -5,6 +5,7 @@ inherited dmDevoluciones: TdmDevoluciones
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforeOpen = adodsMasterBeforeOpen
+    AfterPost = adodsMasterAfterPost
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, '#13#10'IdOrdenE' +

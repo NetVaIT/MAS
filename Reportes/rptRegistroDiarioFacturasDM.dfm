@@ -1,4 +1,6 @@
 inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
+  Height = 413
+  Width = 441
   inherited adodsReport: TADODataSet
     CommandText = 
       'select  Ci.Fecha,P.razonSocial, M.Descripcion as Ciudad,ie.Condu' +
@@ -9,8 +11,8 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       ' PersonasDomicilios Pd on Pd.IdPersonaDomicilio= IE.IDPersonaDom' +
       'icilio'#13#10'  inner join Domicilios D on D.IdDomicilio= Pd.IdDomicil' +
       'io  '#13#10'  inner join Municipios M on M.IdMunicipio=D.IdMunicipio'#13#10 +
-      '  '#13#10'WHERE Ci.fecha>getdate() and ci.fecha<getdate()+1'
-    Top = 16
+      '  '#13#10'WHERE Ci.fecha>DATEADD(dd, DATEDIFF(dd,0,GETDATE()), 0) and ' +
+      'ci.fecha<DATEADD(dd, DATEDIFF(dd,0,GETDATE()+1), 0)'
     object adodsReportFecha: TDateTimeField
       FieldName = 'Fecha'
     end
@@ -54,6 +56,9 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
     Left = 176
   end
   inherited ppReport: TppReport
+    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.mmPaperWidth = 279400
+    PrinterSetup.PaperSize = 1
     Template.FileName = 
       'C:\Desarrollo\TractoPartes\MAS\Procesos\RegistroDiarioFacturas.r' +
       'tm'
@@ -62,6 +67,7 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
     inherited ppTitleBand1: TppTitleBand
       inherited pplblTitle: TppLabel
         SaveOrder = -1
+        mmWidth = 217223
         LayerName = Foreground
       end
       inherited ppImage4: TppImage
@@ -69,6 +75,7 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       end
       inherited ppLabel6: TppLabel
         SaveOrder = -1
+        mmWidth = 217223
         LayerName = Foreground
       end
     end
@@ -76,11 +83,11 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       object ppLabel1: TppLabel
         UserName = 'Label2'
         AutoSize = False
-        Caption = 'Fecha'
+        Caption = 'FECHA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
@@ -93,15 +100,15 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       object ppLabel2: TppLabel
         UserName = 'Label3'
         AutoSize = False
-        Caption = 'Cliente'
+        Caption = 'CLIENTE'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 54504
+        mmLeft = 25619
         mmTop = 1588
         mmWidth = 22754
         BandType = 0
@@ -110,15 +117,15 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       object ppLabel3: TppLabel
         UserName = 'Label4'
         AutoSize = False
-        Caption = 'Ciudad'
+        Caption = 'CIUDAD'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 151607
+        mmLeft = 100727
         mmTop = 1588
         mmWidth = 29633
         BandType = 0
@@ -127,15 +134,15 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       object ppLabel4: TppLabel
         UserName = 'Label5'
         AutoSize = False
-        Caption = 'Linea'
+        Caption = 'L'#205'NEA'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 186793
+        mmLeft = 136708
         mmTop = 1588
         mmWidth = 22225
         BandType = 0
@@ -148,13 +155,13 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 215633
+        mmLeft = 160027
         mmTop = 1588
-        mmWidth = 23548
+        mmWidth = 19844
         BandType = 0
         LayerName = Foreground
       end
@@ -165,11 +172,11 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 241826
+        mmLeft = 180876
         mmTop = 1588
         mmWidth = 23019
         BandType = 0
@@ -182,11 +189,11 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 265897
+        mmLeft = 203092
         mmTop = 1588
         mmWidth = 10054
         BandType = 0
@@ -199,13 +206,13 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 298176
+        mmLeft = 231765
         mmTop = 1588
-        mmWidth = 34406
+        mmWidth = 31485
         BandType = 0
         LayerName = Foreground
       end
@@ -216,11 +223,11 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 10
         Font.Style = []
         Transparent = True
         mmHeight = 4763
-        mmLeft = 278066
+        mmLeft = 213141
         mmTop = 1588
         mmWidth = 17727
         BandType = 0
@@ -235,14 +242,14 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 10
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
         mmLeft = 3440
         mmTop = 265
-        mmWidth = 49213
+        mmWidth = 20638
         BandType = 4
         LayerName = Foreground
       end
@@ -253,14 +260,14 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 54504
+        mmLeft = 25632
         mmTop = 265
-        mmWidth = 96309
+        mmWidth = 74348
         BandType = 4
         LayerName = Foreground
       end
@@ -271,12 +278,12 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 151607
+        mmLeft = 100727
         mmTop = 265
         mmWidth = 34396
         BandType = 4
@@ -289,14 +296,14 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 186793
+        mmLeft = 136744
         mmTop = 265
-        mmWidth = 29898
+        mmWidth = 23283
         BandType = 4
         LayerName = Foreground
       end
@@ -307,14 +314,14 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 218543
+        mmLeft = 162937
         mmTop = 265
-        mmWidth = 21696
+        mmWidth = 14288
         BandType = 4
         LayerName = Foreground
       end
@@ -325,13 +332,13 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 242089
+        mmLeft = 181139
         mmTop = 265
         mmWidth = 7934
         BandType = 4
@@ -344,12 +351,12 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 251876
+        mmLeft = 190131
         mmTop = 265
         mmWidth = 12965
         BandType = 4
@@ -362,12 +369,12 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 267749
+        mmLeft = 204944
         mmTop = 265
         mmWidth = 8202
         BandType = 4
@@ -380,12 +387,12 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 278066
+        mmLeft = 213141
         mmTop = 265
         mmWidth = 17727
         BandType = 4
@@ -398,12 +405,12 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'
-        Font.Size = 12
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 299234
+        mmLeft = 232719
         mmTop = 265
         mmWidth = 26360
         BandType = 4
@@ -412,6 +419,7 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
     end
     inherited ppFooterBand1: TppFooterBand
       inherited ppLineFooter: TppLine
+        mmWidth = 256646
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
@@ -420,6 +428,9 @@ inherited dmRPTRegistroDiarioFact: TdmRPTRegistroDiarioFact
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
+        mmLeft = 247386
+        mmTop = 2646
+        mmWidth = 10583
         LayerName = Foreground
       end
     end

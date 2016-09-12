@@ -37,6 +37,7 @@ type
     tvMasterCostoAproximado: TcxGridDBColumn;
     tvMasterPrecioVenta: TcxGridDBColumn;
     tvMasterProducto: TcxGridDBColumn;
+    tvMasterCantidad: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;

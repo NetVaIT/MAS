@@ -74,8 +74,14 @@ procedure TfrmAjustesEntradas.DataSourceDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
-  btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 18/16
-  DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 18/16
+{  btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 18/16
+  DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 18/16}
+
+  // btnAplicarEntrada.Enabled:=(DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=1)
+ //                               and (DataSource.State=dsBrowse);//Jul 18/16
+ // DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;
+
+
 end;
 
 procedure TfrmAjustesEntradas.FormCreate(Sender: TObject);

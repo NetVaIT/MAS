@@ -37,7 +37,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab4: TdxRibbonTab
       Tag = 2000
-      Active = True
       Caption = 'Ventas'
       Groups = <
         item
@@ -48,6 +47,7 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab3: TdxRibbonTab
       Tag = 3000
+      Active = True
       Caption = 'Almacen'
       Groups = <
         item
@@ -212,7 +212,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 674
       FloatTop = 8
       FloatClientWidth = 103
-      FloatClientHeight = 432
+      FloatClientHeight = 486
       ItemLinks = <
         item
           Visible = True

@@ -2,6 +2,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   Caption = 'frmAjustesEntradas'
   ClientWidth = 794
   ExplicitWidth = 794
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -38,18 +39,21 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
     Top = 22
     Width = 794
     Height = 455
+    ExplicitTop = 22
     ExplicitWidth = 794
+    ExplicitHeight = 455
     ClientRectBottom = 454
     ClientRectRight = 793
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 792
-      ExplicitHeight = 475
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 786
+      ExplicitHeight = 447
       inherited cxScrollBox1: TcxScrollBox
         Width = 792
         Height = 453
-        ExplicitWidth = 792
+        ExplicitWidth = 786
+        ExplicitHeight = 447
         inherited tbarData: TToolBar
           Width = 790
           ExplicitLeft = 0
@@ -95,7 +99,8 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
           Height = 426
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 790
+          ExplicitWidth = 784
+          ExplicitHeight = 420
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -103,6 +108,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
             Height = 121
             Align = alTop
             TabOrder = 0
+            ExplicitWidth = 784
             object Label1: TLabel
               Left = 298
               Top = 6
@@ -210,7 +216,8 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitHeight = 207
+            ExplicitWidth = 784
+            ExplicitHeight = 179
           end
           object pnlPie: TPanel
             Left = 0
@@ -219,7 +226,8 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
             Height = 120
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 328
+            ExplicitTop = 300
+            ExplicitWidth = 784
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -309,8 +317,6 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -196
-    ExplicitWidth = 990
   end
   inherited DataSource: TDataSource
     DataSet = dmAjustesEntradas.adodsMaster
@@ -319,7 +325,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -460,7 +466,7 @@ inherited frmAjustesEntradas: TfrmAjustesEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

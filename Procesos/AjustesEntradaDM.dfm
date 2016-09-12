@@ -4,6 +4,7 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
   Width = 642
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    AfterPost = adodsMasterAfterPost
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen,'#13#10' IdOrdenE' +
@@ -116,13 +117,15 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
   object dsmaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsmasterDataChange
-    Left = 96
-    Top = 16
+    Left = 104
+    Top = 8
   end
   object ADODtStAjusteEntradaItems: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforeInsert = ADODtStAjusteEntradaItemsBeforeInsert
     AfterPost = ADODtStAjusteEntradaItemsAfterPost
+    OnNewRecord = ADODtStAjusteEntradaItemsNewRecord
     CommandText = 
       'select IdOrdenEntradaItem, IdOrdenEntrada, '#13#10'IdDocumentoEntradaD' +
       'etalle, IdProducto, ClaveProducto, Cantidad,'#13#10' CantidadSolicitad' +
@@ -174,7 +177,6 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
     end
     object ADODtStAjusteEntradaItemsCantidadSolicitada: TFloatField
       FieldName = 'CantidadSolicitada'
-      OnChange = ADODtStAjusteEntradaItemsCantidadSolicitadaChange
     end
     object ADODtStAjusteEntradaItemsCosto: TFMTBCDField
       FieldName = 'Costo'
@@ -221,6 +223,7 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
     end
     object ADODtStAjusteEntradaItemsCantidad: TFloatField
       FieldName = 'Cantidad'
+      OnChange = ADODtStAjusteEntradaItemsCantidadChange
     end
   end
   object adodsEstatus: TADODataSet
@@ -246,7 +249,7 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
       'select IdProducto, Descripcion, Identificador1, Identificador2,'#13 +
       #10' Identificador3 from Productos'
     Parameters = <>
-    Left = 184
+    Left = 176
     Top = 160
   end
   object ADODtStProductosXEspacio: TADODataSet

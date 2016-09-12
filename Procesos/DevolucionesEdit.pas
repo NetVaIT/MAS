@@ -78,8 +78,8 @@ uses DevolucionesDM, DevolucionesForm;
 procedure TFrmDevoluciones.DataSourceDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 13/16  (7)
-  DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jun 29/16
+ // btnAplicarEntrada.Enabled:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jul 13/16  (7)
+ // DataSource.AutoEdit:=DataSource.DataSet.FieldByName('IdOrdenEstatus').AsInteger=7;//Jun 29/16
 end;
 
 procedure TFrmDevoluciones.DataSourceStateChange(Sender: TObject);

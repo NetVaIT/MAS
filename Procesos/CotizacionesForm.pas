@@ -553,9 +553,9 @@ begin
  end;
   //Jul 11/16  hasta aca
  //Metodo de pago se asocia sólo cuando se va a generar la factura  //Ago 4/16
- //Ago 8/16 Observaciones
- if (DataSource.dataset.FieldByName('Observaciones').asString<>'') then // AGo 31/16 or ( DataSource.dataset.FieldByName('NotasInternas').asString<>'')then
-   dsordenSalida.DataSet.FieldByName('Observaciones').asString:= DataSource.dataset.FieldByName('Observaciones').asString ;//Ago 31/16+' '+DataSource.dataset.FieldByName('NotasInternas').asString;
+ //Ago 8/16 Observaciones   (DataSource.dataset.FieldByName('Observaciones').asString<>'') then                                                                     // AGo 31/16 or
+ if (DataSource.dataset.FieldByName('NotasInternas').asString<>'')then   //Sep 5/16
+   dsordenSalida.DataSet.FieldByName('Observaciones').asString:= DataSource.dataset.FieldByName('NotasInternas').asString ;//Ago 31/16+' '+DataSource.dataset.FieldByName('NotasInternas').asString;
 
   dsordenSalida.DataSet.Post;
 

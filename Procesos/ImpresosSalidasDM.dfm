@@ -57,7 +57,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
-    Left = 394
+    Left = 402
     Top = 18
     Version = '15.0'
     mmColumnWidth = 0
@@ -3391,8 +3391,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
-        Font.Size = 10
-        Font.Style = []
+        Font.Size = 12
+        Font.Style = [fsBold]
         ParentDataPipeline = False
         RemoveEmptyLines = False
         Transparent = True
@@ -12118,7 +12118,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = BandLayer4
       end
-      object ppDBText36: TppDBText
+      object ppDBMonto: TppDBText
         UserName = 'DBText18'
         Border.BorderPositions = [bpBottom]
         Border.Visible = True
@@ -20392,5 +20392,25 @@ object DMImpresosSalidas: TDMImpresosSalidas
     DataSet = adodtstCostoInventario
     Left = 756
     Top = 354
+  end
+  object ADtStOperacionEstatus: TADODataSet
+    CursorType = ctStatic
+    CommandText = 
+      'select IdEstatusOperacion, Identificador,Descripcion '#13#10'from Oper' +
+      'acionesEstatus Where '#13#10'IdEstatusOperacion>0'
+    Parameters = <>
+    Left = 272
+    Top = 200
+    object ADtStOperacionEstatusIdEstatusOperacion: TIntegerField
+      FieldName = 'IdEstatusOperacion'
+    end
+    object ADtStOperacionEstatusIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object ADtStOperacionEstatusDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 50
+    end
   end
 end

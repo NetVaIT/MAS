@@ -213,7 +213,7 @@ type
     ppDBText33: TppDBText;
     ppDBText34: TppDBText;
     ppDBText35: TppDBText;
-    ppDBText36: TppDBText;
+    ppDBMonto: TppDBText;
     ppDBText37: TppDBText;
     ppDBText38: TppDBText;
     myDBCheckBox10: TmyDBCheckBox;
@@ -409,6 +409,10 @@ type
     ppDBMemo1: TppDBMemo;
     ADODtStOrdenSalidaObservaciones: TStringField;
     ppDBText46: TppDBText;
+    ADtStOperacionEstatus: TADODataSet;
+    ADtStOperacionEstatusIdEstatusOperacion: TIntegerField;
+    ADtStOperacionEstatusIdentificador: TStringField;
+    ADtStOperacionEstatusDescripcion: TStringField;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);
@@ -608,6 +612,8 @@ begin
       ppRptOrdenEmbarque.ShowPrintDialog:= False;
       ppRptOrdenEmbarque.ShowCancelDialog:= False;
       ppRptOrdenEmbarque.AllowPrintToArchive:= False;
+      ppDBMonto.Visible:= ADODtStDatosEtiquetaAsegurado.Value ;
+
       if Mostrar then //May 30/16
         ppRptOrdenEmbarque.DeviceType:= 'Screen'
       else

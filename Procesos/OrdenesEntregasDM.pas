@@ -153,6 +153,8 @@ type
     ADODtStEstatusOrdenIdentificador: TStringField;
     ADODtStEstatusOrdenDescripcion: TStringField;
     adodsMasterEstatusOrden: TStringField;
+    adodsMasterEtiquetaImpresa: TBooleanField;
+    adodsMasterOrdenEmbImpresa: TBooleanField;
     procedure ADODtStTelefonosCalcFields(DataSet: TDataSet);
     procedure adodsMasterAfterOpen(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);

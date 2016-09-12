@@ -8,7 +8,16 @@ inherited FrmDevolucionesGrid: TFrmDevolucionesGrid
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdOrdenEntrada: TcxGridDBColumn
+          Caption = 'NoOrdenEntrada'
           DataBinding.FieldName = 'IdOrdenEntrada'
+          Width = 85
+        end
+        object tvMasterTipoOrden: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoOrden'
+        end
+        object tvMasterCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'Cliente'
+          Width = 300
         end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
@@ -16,9 +25,52 @@ inherited FrmDevolucionesGrid: TFrmDevolucionesGrid
         object tvMasterTotal: TcxGridDBColumn
           DataBinding.FieldName = 'Total'
         end
+        object tvMasterAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'Almacen'
+        end
+        object tvMasterTipoCambio: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoCambio'
+        end
+        object tvMasterSubTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'SubTotal'
+        end
+        object tvMasterIVA: TcxGridDBColumn
+          DataBinding.FieldName = 'IVA'
+        end
+        object tvMasterEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'Estatus'
+        end
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
           Width = 500
+        end
+        object tvMasterIdDocumentoEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoEntrada'
+          Visible = False
+        end
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
+          Visible = False
+        end
+        object tvMasterIdOrdenEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEstatus'
+          Visible = False
+        end
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
+          Visible = False
+        end
+        object tvMasterIdUsuario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUsuario'
+          Visible = False
+        end
+        object tvMasterIdOrdenEntradaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaTipo'
+          Visible = False
         end
       end
     end
@@ -28,7 +80,7 @@ inherited FrmDevolucionesGrid: TFrmDevolucionesGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -169,7 +221,7 @@ inherited FrmDevolucionesGrid: TFrmDevolucionesGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -135,6 +135,7 @@ type
     procedure adodsItemsAfterPost(DataSet: TDataSet);
     procedure ActAplicarEntradaExecute(Sender: TObject);
     procedure ActSeleccionItemsDevExecute(Sender: TObject);
+    procedure adodsMasterAfterPost(DataSet: TDataSet);
   private
 
 
@@ -173,6 +174,14 @@ begin
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
     adopAplicaEntradaXDev.ExecProc;
     RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+    //Actualiza con 7
+    adopAplicaEntradaXDev.Parameters.ParamByName('@IdOrdenEntrada').value:= adodsMasterIdOrdenEntrada.AsInteger;
+    adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
+    adopAplicaEntradaXDev.ExecProc;
+    RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+    //DEbe quedar en aduana
+    application.messagebox('   Entrada por Devolución Aplicada. Items ubicados en Aduana.'+#13
+                          +'Asegúrese de acomodar en ubicacioón real, para que estén disponibles ','Información',MB_ok); //Sep 9/16
   end;
 
 end;
@@ -273,6 +282,9 @@ begin
                                     +' WHERE IdOrdenEntrada= '+intToStr(IdAct));
     if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
        ADodsMaster.Refresh;
+     //Sep 8/16
+    TFrmDevoluciones(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                     and (ADODsItems.RecordCount >0);
   end;
 //  No requerido  ActualizarItemsDevolucion(DataSet.fieldbyname('IdOrdenEntradaItem').asInteger);
 end;
@@ -423,6 +435,14 @@ begin
 //  actModificarArancel.Enabled := not Value;  //Puede ser para acomodar..Jun 21/16
 end;
 
+procedure TdmDevoluciones.adodsMasterAfterPost(DataSet: TDataSet);
+begin
+  inherited;
+ //Sep 8/16
+ TFrmDevoluciones(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                     and (ADODsItems.RecordCount >0);
+end;
+
 procedure TdmDevoluciones.adodsMasterBeforeOpen(DataSet: TDataSet);
 begin
   inherited;
@@ -460,6 +480,8 @@ procedure TdmDevoluciones.dsmasterDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
    Bloquear:= adodsMasterIdOrdenEstatus.Value = Ord(eAplicada);
+   TFrmDevoluciones(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1) //sep9/16
+                                                     and (ADODsItems.RecordCount >0);
 end;
 
 end.

@@ -63,6 +63,8 @@ type
     tvMasterFechaFinEmpaca: TcxGridDBColumn;
     tvMasterFechaAutoriza: TcxGridDBColumn;
     tvMasterPersonaAutoriza: TcxGridDBColumn;
+    tvMasterEtiquetaImpresa: TcxGridDBColumn;
+    tvMasterOrdenEmbImpresa: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
@@ -147,7 +149,7 @@ const
     TxtSQL='select idOrdenSalida, OS.IdDocumentoSalida, IdOrdenEstatus, IdPersonaRecolecta,'
  +'IdPersonaRevisa, IdPersonaEmpaca, IdPersonaEntrega, OS.FechaRegistro, Os.Total, FechaIniRecolecta, FechaFinRecolecta,'  //Se agrego persona entrega Jun 15/16
  +'FechaIniRevisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca, IdPersonaAutoriza, FechaAutoriza,'
- +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio, OS.IDPersona, os.IdOrdenSalidaTipo, os.observaciones, Os.idAlmacen, os.IdUsuario from OrdenesSalidas OS ';
+ +'IdGeneraCFDITipoDoc, Acumula, Os.Subtotal, OS.IVA , Os.IDPersonaDomicilio, OS.IDPersona, os.IdOrdenSalidaTipo, os.observaciones, Os.idAlmacen, os.IdUsuario , os.Etiquetaimpresa, Os.OrdenEmbImpresa from OrdenesSalidas OS ';
   CondTipo=' where  IdOrdenSalidaTipo=1 ' ; //Jul 1/16                        // campos  Jul 1/16                                                //Jul 26/16
   orden=' Order by IdOrdenEstatus,Os.FechaRegistro Desc';
 begin

@@ -83,6 +83,10 @@ inherited DMAjustesSalida: TDMAjustesSalida
       FieldName = 'IdUsuario'
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 336
+    Top = 8
+  end
   inherited ActionList: TActionList
     object ActSeleccionaProducto: TAction
       Caption = 'Selecciona Producto'
@@ -438,15 +442,6 @@ inherited DMAjustesSalida: TDMAjustesSalida
     object ADODtStSalidasUbicacionesIdOrdenSalida: TIntegerField
       FieldName = 'IdOrdenSalida'
     end
-    object ADODtStSalidasUbicacionesIdProducto: TIntegerField
-      FieldKind = fkLookup
-      FieldName = 'IdProducto'
-      LookupDataSet = ADODtStAjusteSalidaItems
-      LookupKeyFields = 'IdOrdenSalidaItem'
-      LookupResultField = 'IdProducto'
-      KeyFields = 'IdOrdenSalidaItem'
-      Lookup = True
-    end
     object ADODtStSalidasUbicacionesDisponible: TFloatField
       FieldKind = fkLookup
       FieldName = 'Disponible'
@@ -465,6 +460,25 @@ inherited DMAjustesSalida: TDMAjustesSalida
       KeyFields = 'IdProductoXEspacio'
       Lookup = True
     end
+    object ADODtStSalidasUbicacionesProductoNvo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'ProductoNvo'
+      LookupDataSet = ADODtStConProducto
+      LookupKeyFields = 'IdOrdenSalidaItem'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdOrdenSalidaItem'
+      Size = 100
+      Lookup = True
+    end
+    object ADODtStSalidasUbicacionesIdproducto: TIntegerField
+      FieldKind = fkLookup
+      FieldName = 'Idproducto'
+      LookupDataSet = ADODtStAjusteSalidaItems
+      LookupKeyFields = 'IdOrdenSalidaItem'
+      LookupResultField = 'IdProducto'
+      KeyFields = 'IdOrdenSalidaItem'
+      Lookup = True
+    end
     object ADODtStSalidasUbicacionesProducto: TStringField
       FieldKind = fkLookup
       FieldName = 'Producto'
@@ -472,17 +486,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
       LookupKeyFields = 'IdOrdenSalidaItem'
       LookupResultField = 'Producto'
       KeyFields = 'IdOrdenSalidaItem'
-      Size = 150
-      Lookup = True
-    end
-    object ADODtStSalidasUbicacionesElEspacio: TStringField
-      FieldKind = fkLookup
-      FieldName = 'ElEspacio'
-      LookupDataSet = ADODtStProductosXEspacio
-      LookupKeyFields = 'IdProductoXEspacio'
-      LookupResultField = 'Espacio'
-      KeyFields = 'IdProductoXEspacio'
-      Size = 50
+      Size = 100
       Lookup = True
     end
   end
@@ -611,5 +615,117 @@ inherited DMAjustesSalida: TDMAjustesSalida
     Parameters = <>
     Left = 436
     Top = 457
+  end
+  object ADODtStVerUsuario: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdUsuario, IdPersona, IdUsuarioEstatus, IdUsuarioPerfil, ' +
+      #13#10'Login, Password, Permiso  from Usuarios'#13#10'where IdUsuario=:IdUs' +
+      'uario'#13#10#13#10
+    Parameters = <
+      item
+        Name = 'IdUsuario'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 56
+    Top = 376
+    object ADODtStVerUsuarioIdUsuario: TAutoIncField
+      FieldName = 'IdUsuario'
+      ReadOnly = True
+    end
+    object ADODtStVerUsuarioIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object ADODtStVerUsuarioIdUsuarioEstatus: TIntegerField
+      FieldName = 'IdUsuarioEstatus'
+    end
+    object ADODtStVerUsuarioIdUsuarioPerfil: TIntegerField
+      FieldName = 'IdUsuarioPerfil'
+    end
+    object ADODtStVerUsuarioLogin: TStringField
+      FieldName = 'Login'
+      Size = 15
+    end
+    object ADODtStVerUsuarioPassword: TStringField
+      FieldName = 'Password'
+      Size = 15
+    end
+    object ADODtStVerUsuarioPermiso: TStringField
+      FieldName = 'Permiso'
+      Size = 255
+    end
+  end
+  object ADODtStConProducto: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select  osi.* , p.Descripcion from   OrdenesSalidasItems osi  '#13#10 +
+      'inner Join  Productos P on P.idproducto=Osi.idproducto'#13#10'where Os' +
+      'i.idordenSalida=:IdOrdensalida'
+    DataSource = dsmaster
+    IndexFieldNames = 'IdOrdenSalida'
+    MasterFields = 'IdOrdensalida'
+    Parameters = <
+      item
+        Name = 'IdOrdensalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 216
+    Top = 376
+    object ADODtStConProductoIdOrdenSalidaItem: TAutoIncField
+      FieldName = 'IdOrdenSalidaItem'
+      ReadOnly = True
+    end
+    object ADODtStConProductoIdOrdenSalida: TIntegerField
+      FieldName = 'IdOrdenSalida'
+    end
+    object ADODtStConProductoIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStConProductoIdUnidadMedida: TIntegerField
+      FieldName = 'IdUnidadMedida'
+    end
+    object ADODtStConProductoClaveProducto: TStringField
+      FieldName = 'ClaveProducto'
+      Size = 50
+    end
+    object ADODtStConProductoCantidadDespachada: TFloatField
+      FieldName = 'CantidadDespachada'
+    end
+    object ADODtStConProductoCantidadSolicitada: TFloatField
+      FieldName = 'CantidadSolicitada'
+    end
+    object ADODtStConProductoPrecio: TFMTBCDField
+      FieldName = 'Precio'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStConProductoImporte: TFMTBCDField
+      FieldName = 'Importe'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStConProductoObservaciones: TStringField
+      FieldName = 'Observaciones'
+      Size = 500
+    end
+    object ADODtStConProductoCostoUnitario: TFMTBCDField
+      FieldName = 'CostoUnitario'
+      Precision = 18
+      Size = 6
+    end
+    object ADODtStConProductoDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 255
+    end
   end
 end

@@ -27,14 +27,20 @@ uses
 type
   TfrmSalidasUbicacionesGrid = class(T_frmStandarGFormGrid)
     tvMasterCantidad: TcxGridDBColumn;
-    tvMasterProducto: TcxGridDBColumn;
     tvMasterEspacioA: TcxGridDBColumn;
     tvMasterDisponible: TcxGridDBColumn;
     DSProductosXEspacio: TDataSource;
     tvMasterIdProductoXEspacio: TcxGridDBColumn;
-    tvMasterElEspacio: TcxGridDBColumn;
     btnAceptarUbicaciones: TSpeedButton;
     ToolButton11: TToolButton;
+    tvMasterIdSalidaUbicacion: TcxGridDBColumn;
+    tvMasterIdProductoKardexS: TcxGridDBColumn;
+    tvMasterIdSalidaUbicacionEstatus: TcxGridDBColumn;
+    tvMasterIdOrdenSalidaItem: TcxGridDBColumn;
+    tvMasterIdOrdenSalida: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
+    tvMasterProductoNvo: TcxGridDBColumn;
+    tvMasterProducto: TcxGridDBColumn;
     procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
@@ -64,6 +70,7 @@ procedure TfrmSalidasUbicacionesGrid.FormShow(Sender: TObject);
 begin
   inherited;
   toolbutton1.Visible:=False;
+
 end;
 
 procedure TfrmSalidasUbicacionesGrid.SetFAceptaUbicaciones(

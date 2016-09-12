@@ -47,9 +47,14 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
         OnCellClick = tvMasterCellClick
         OptionsData.Editing = True
         object tvMasterProducto: TcxGridDBColumn
+          Caption = 'ProductoOri'
           DataBinding.FieldName = 'Producto'
-          Options.Editing = False
-          Width = 391
+          Visible = False
+        end
+        object tvMasterProductoNvo: TcxGridDBColumn
+          Caption = 'Producto'
+          DataBinding.FieldName = 'ProductoNvo'
+          Width = 394
         end
         object tvMasterEspacioA: TcxGridDBColumn
           Caption = 'Espacio salida'
@@ -66,10 +71,32 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
         end
         object tvMasterIdProductoXEspacio: TcxGridDBColumn
           DataBinding.FieldName = 'IdProductoXEspacio'
+          Visible = False
           Width = 95
         end
-        object tvMasterElEspacio: TcxGridDBColumn
-          DataBinding.FieldName = 'ElEspacio'
+        object tvMasterIdSalidaUbicacion: TcxGridDBColumn
+          DataBinding.FieldName = 'IdSalidaUbicacion'
+          Visible = False
+        end
+        object tvMasterIdProductoKardexS: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProductoKardexS'
+          Visible = False
+        end
+        object tvMasterIdSalidaUbicacionEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdSalidaUbicacionEstatus'
+          Visible = False
+        end
+        object tvMasterIdOrdenSalidaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenSalidaItem'
+          Visible = False
+        end
+        object tvMasterIdOrdenSalida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenSalida'
+          Visible = False
+        end
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
         end
       end
     end
@@ -93,6 +120,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
         Width = 131
         Height = 22
         Caption = 'Aceptar Ubicaciones'
+        Enabled = False
         Glyph.Data = {
           76010000424D7601000000000000760000002800000020000000100000000100
           04000000000000010000130B0000130B00001000000000000000000000000000
@@ -119,7 +147,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 608
     Top = 104
     Bitmap = {
-      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -266,7 +294,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 672
     Top = 104
     Bitmap = {
-      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

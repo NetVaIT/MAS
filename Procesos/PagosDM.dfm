@@ -119,6 +119,9 @@ inherited dmPagos: TdmPagos
       Lookup = True
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
+  end
   object ADODtStDireccAuxiliar: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic

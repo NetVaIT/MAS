@@ -260,7 +260,8 @@ begin
   lblestatus.Visible:=  DBLkpCmbBxEstatus.Visible;                                                       //Para los que no se han aplicado por que FLetes y Notas pueden estar aplicados
   pnlmaster.Enabled:=  (DataSource.DataSet.FieldByName('IdCFDIEstatus').asinteger=1)and (DataSource.DataSet.FieldByName('SaldoDocumento').asFloat=DataSource.DataSet.FieldByName('Total').asFloat)  ;   //Prefactura       //Mod. Mar 28/16
   TlBtnGeneraCFDI.Enabled:= pnlmaster.Enabled and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4)
-                                              and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>5);  //Ago 30/16
+                                              and (DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>5)   //Ago 30/16
+                                              and (dsCFDIConceptos.DataSet.RecordCount>0); //Sep 9/16
 
   ToolButton12.Enabled:=  pnlmaster.Enabled;                //Mod. Mar 28/16 ;
   TlBtnEnvioFactura.Enabled:=not TlBtnGeneraCFDI.Enabled and(DataSource.DataSet.FieldByName('IdCFDITipoDocumento').asinteger<>4)  //feb 17/16

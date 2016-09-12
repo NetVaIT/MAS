@@ -16,9 +16,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'haIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa, FechaFinRev' +
       'isa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' IdPersonaAutoriza, FechaA' +
       'utoriza, IdGeneraCFDITipoDoc, Acumula,'#13#10'OS. Subtotal, OS.IVA,os.' +
-      'IDPersonaDomicilio, OS.Observaciones, OS.IdAlmacen, os.IdUsuario' +
-      #13#10'from OrdenesSalidas OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13 +
-      #10'Order by IdOrdenEstatus,OS.FechaRegistro Desc'
+      'IDPersonaDomicilio, OS.Observaciones, '#13#10'OS.IdAlmacen, os.IdUsuar' +
+      'io, Os.EtiquetaImpresa, OS.OrdenEmbImpresa'#13#10'from OrdenesSalidas ' +
+      'OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13#10#13#10'Order by IdOrdenEst' +
+      'atus,OS.FechaRegistro Desc'
     Left = 64
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -315,6 +316,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       Size = 100
       Lookup = True
     end
+    object adodsMasterEtiquetaImpresa: TBooleanField
+      FieldName = 'EtiquetaImpresa'
+    end
+    object adodsMasterOrdenEmbImpresa: TBooleanField
+      FieldName = 'OrdenEmbImpresa'
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -331,7 +338,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Size = 4
         Value = Null
       end>
-    Left = 424
+    Left = 432
     object adodsUpdateIdDocumento: TAutoIncField
       FieldName = 'IdDocumento'
       ReadOnly = True
@@ -912,6 +919,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtStInformacionEnvioIdEstatusOrdenEntrega: TIntegerField
       FieldName = 'IdEstatusOrdenEntrega'
+    end
+    object ADODtStInformacionEnvioEtiquetaImpresa: TBooleanField
+      FieldName = 'EtiquetaImpresa'
+    end
+    object ADODtStInformacionEnvioOrdenEmbImpresa: TBooleanField
+      FieldName = 'OrdenEmbImpresa'
     end
   end
   object ADODtStFacturasCFDI: TADODataSet

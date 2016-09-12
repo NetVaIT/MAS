@@ -62,6 +62,8 @@ type
     ChckBxXFecha: TCheckBox;
     ChckBxFactVivas: TCheckBox;
     SpdBtnConsulta: TSpeedButton;
+    tvMasterEtiquetaImpresa: TcxGridDBColumn;
+    tvMasterOrdenEmbImpresa: TcxGridDBColumn;
     procedure EdtNombreChange(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
     procedure RdGrpEstadoClick(Sender: TObject);
@@ -154,8 +156,8 @@ const                          //Cambiar
     +'IDResponsableEntrega, FechaProgramadaEnt, FechaRealEnt, CondicionEntrega,'
     +' Observaciones, EstatusEntrega, IdTelefono, IdDocumentoGuia, Contenido, '
     +'Conducto, Servicio, PagoFlete, Valor, Asegurado, CantidadCajas, IdPersonaEmpaca,'
-    +'FechaIniEmpaque,FechaFinEmpaque, IdEstatusOrdenEntrega from InformacionEntregas IE ';
-
+    +'FechaIniEmpaque,FechaFinEmpaque, IdEstatusOrdenEntrega, EtiquetaImpresa, OrdenEmbImpresa from InformacionEntregas IE ';
+                                                             //Sep 5/16 impresas
     TxtFiltroFecha='  and exists (Select * from InformacionEntregasDetalles IED '
     +' inner join OrdenesSalidas OS on IED.IdInfoEntrega= IE.IdInfoEntrega and IED.IdOrdenSalida=OS.idOrdenSalida '
     +' where OS.FechaRegistro>:FIni and  OS.FechaRegistro<:FFin )';

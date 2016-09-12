@@ -302,6 +302,10 @@ type
     ADODtStInformacionEnvioFechaIniEmpaque: TDateTimeField;
     ADODtStInformacionEnvioFechaFinEmpaque: TDateTimeField;
     ADODtStInformacionEnvioIdEstatusOrdenEntrega: TIntegerField;
+    ADODtStInformacionEnvioEtiquetaImpresa: TBooleanField;
+    ADODtStInformacionEnvioOrdenEmbImpresa: TBooleanField;
+    adodsMasterEtiquetaImpresa: TBooleanField;
+    adodsMasterOrdenEmbImpresa: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);

@@ -3,7 +3,6 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
   ClientWidth = 1127
   OnCreate = FormCreate
   ExplicitWidth = 1127
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -127,6 +126,12 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
         end
         object tvMasterPersonaEnvia: TcxGridDBColumn
           DataBinding.FieldName = 'PersonaEnvia'
+        end
+        object tvMasterEtiquetaImpresa: TcxGridDBColumn
+          DataBinding.FieldName = 'EtiquetaImpresa'
+        end
+        object tvMasterOrdenEmbImpresa: TcxGridDBColumn
+          DataBinding.FieldName = 'OrdenEmbImpresa'
         end
       end
     end
@@ -329,7 +334,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 608
     Top = 176
     Bitmap = {
-      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -476,7 +481,7 @@ inherited frmOrdenesEntregasGrid: TfrmOrdenesEntregasGrid
     Left = 672
     Top = 176
     Bitmap = {
-      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

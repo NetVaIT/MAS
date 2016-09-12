@@ -122,15 +122,20 @@ begin
   end;
   fechaAux:=encodedate(a,m,1);
   cxDtEdtHasta.date :=fechaAux-1;
-
    //H Abr 19/16
+
 end;
 
 procedure TfrmCotizacionesGrid.FormShow(Sender: TObject);
 begin
   inherited;
-   if TipoDocumento=2 then //Ago 10/16
-     SpdBtnBuscar.Click;
+  // if TipoDocumento=2 then //Ago 10/16  //Deshabilitado Sep 5/16
+  if TipoDocumento=1 then    //Sep 5/16
+  begin
+    cxDtEdtDesde.date:=date;
+    cxDtEdtHasta.date :=date+1;
+  end;
+  SpdBtnBuscar.Click;
 end;
 
 function TfrmCotizacionesGrid.GetFFiltroNombre: String;   //May 10/16

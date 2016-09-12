@@ -212,13 +212,6 @@ type
     ppDBMemo2: TppDBMemo;
     ppDBText9: TppDBText;
     ppDBText46: TppDBText;
-    ppLine2: TppLine;
-    ppLine3: TppLine;
-    ppLine10: TppLine;
-    ppLine11: TppLine;
-    ppLine12: TppLine;
-    ppLine13: TppLine;
-    ppLine15: TppLine;
     ppSummaryBand1: TppSummaryBand;
     ppShape9: TppShape;
     ppLabel14: TppLabel;

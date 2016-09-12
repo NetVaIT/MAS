@@ -109,8 +109,11 @@ type
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure dsmasterDataChange(Sender: TObject; Field: TField);
     procedure ADODtStAjusteEntradaItemsClaveProductoChange(Sender: TField);
-    procedure ADODtStAjusteEntradaItemsCantidadSolicitadaChange(Sender: TField);
     procedure ADODtStAjusteEntradaItemsAfterPost(DataSet: TDataSet);
+    procedure ADODtStAjusteEntradaItemsNewRecord(DataSet: TDataSet);
+    procedure ADODtStAjusteEntradaItemsBeforeInsert(DataSet: TDataSet);
+    procedure ADODtStAjusteEntradaItemsCantidadChange(Sender: TField);
+    procedure adodsMasterAfterPost(DataSet: TDataSet);
   private
     FBloquear: Boolean;
     function CostoEnInventario(idProd: Integer): Double;
@@ -142,10 +145,18 @@ begin
   inherited; //Jul 18/16
   if application.messagebox('¿Está seguro de registrar el ajuste de entrada?','Confirmación',MB_YESNO)=IDYES then
   begin
+    //Aplica con 1
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdOrdenEntrada').value:= adodsMasterIdOrdenEntrada.AsInteger;
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
     adopAplicaEntradaXDev.ExecProc;
     RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+    //Aplica con 7   //Sep 8/16   //Verificar procedimiento para mejorar ya que se crea el producto por espacioAduana
+    adopAplicaEntradaXDev.Parameters.ParamByName('@IdOrdenEntrada').value:= adodsMasterIdOrdenEntrada.AsInteger;
+    adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
+    adopAplicaEntradaXDev.ExecProc;
+    RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+    application.messagebox('      Entrada por Ajuste Aplicada. Items ubicados en Aduana.'+#13
+                          +'Asegúrese de acomodar en ubicacioón real, para que estén disponibles ','Información',MB_ok); //Sep 9/16
   end;
 end;
 
@@ -177,6 +188,14 @@ begin
   frmListaProductos.Free;
 end;
 
+procedure TdmAjustesEntradas.adodsMasterAfterPost(DataSet: TDataSet);
+begin
+  inherited;  //Sep 8/16
+ TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                     and (ADODtStAjusteEntradaItems.RecordCount >0);
+
+end;
+
 procedure TdmAjustesEntradas.adodsMasterNewRecord(DataSet: TDataSet);
 begin                 //Jul 18/16
   inherited;
@@ -187,7 +206,7 @@ begin                 //Jul 18/16
   adodsMasterFecha.Value:= Date;
   adodsMasterIdOrdenEntradaTipo.Value:= 4; //Ajuste
 
-  adodsMasterIdPersona.asInteger:=1;//Sin identificar ...
+  adodsMasterIdPersona.asInteger:= 1;//Sin identificar ...
 end;
 
 procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsAfterPost(
@@ -207,23 +226,20 @@ begin
                                     +' WHERE IdOrdenEntrada= '+intToStr(IdAct));
     if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
        ADodsMaster.Refresh;
+    //Sep 8/16
+    TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                     and (ADODtStAjusteEntradaItems.RecordCount >0);
+
   end;
 end;
 
-procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsCantidadSolicitadaChange(
-  Sender: TField);
-begin                                      //Jul 18/16
+procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsBeforeInsert(
+  DataSet: TDataSet);
+begin
+
+  if AdodsMaster.State=dsInsert then
+     AdodsMaster.post;
   inherited;
-    if ADODtStAjusteEntradaItems.State in [dsEdit,dsInsert] then
-  begin
-    ADODtStAjusteEntradaItems.FieldByName('cantidadSolicitada').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('cantidad').AsFloat;
-    ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Costo').AsFloat* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
-    ADODtStAjusteEntradaItems.FieldByName('ImporteTotal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat;
-
-    ADODtStAjusteEntradaItems.FieldByName('ImporteMonedaLocal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat;//Jun 29/16
-   //?????
-
-  end;
 end;
 
 function TdmAjustesEntradas.CalcularTotales(IDDoc:Integer;Campoid,CampoSum,TablaO:String;PorIVA: Double; var AMontoIva,
@@ -240,6 +256,21 @@ begin
     result:=True;
   except
     result:=False;
+  end;
+end;
+
+procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsCantidadChange(
+  Sender: TField);
+begin
+  inherited;
+  if ADODtStAjusteEntradaItems.State in [dsEdit,dsInsert] then
+  begin
+    ADODtStAjusteEntradaItems.FieldByName('cantidadSolicitada').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('cantidad').AsFloat;
+    ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Costo').AsFloat* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
+    ADODtStAjusteEntradaItems.FieldByName('ImporteTotal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat;
+
+    ADODtStAjusteEntradaItems.FieldByName('ImporteMonedaLocal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat;//Jun 29/16
+  //?????
   end;
 end;
 
@@ -261,6 +292,15 @@ begin
       ADODtStAjusteEntradaItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto)* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
     end;
   end;
+
+end;
+
+procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsNewRecord(
+  DataSet: TDataSet);          //Sep8/16
+begin
+  inherited;
+  DataSet.fieldbyname('Cantidad').ASFloat:=1;
+  DataSet.fieldbyname('CantidadSolicitada').ASFloat:=1;
 
 end;
 
@@ -300,6 +340,10 @@ procedure TdmAjustesEntradas.dsmasterDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   Bloquear:= adodsMasterIdOrdenEstatus.Value = Ord(eAplicada);
+   //Sep 8/16
+  TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                     and (ADODtStAjusteEntradaItems.RecordCount >0);
+
 end;
 
 procedure TdmAjustesEntradas.SetBloquear(const Value: Boolean);
