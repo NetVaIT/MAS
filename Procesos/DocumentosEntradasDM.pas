@@ -144,6 +144,8 @@ type
     adoqryDocumento: TADOQuery;
     dsDocumento: TDataSource;
     adoqryDocumentoDetalles: TADOQuery;
+    actGetDetalleAnterior: TAction;
+    adodsDocumentosDetallesIdDocumentoEntradaDetalleAnterior: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -165,6 +167,8 @@ type
     procedure adodsDocumentosDetallesCalcFields(DataSet: TDataSet);
     procedure actEmailExecute(Sender: TObject);
     procedure actEmailUpdate(Sender: TObject);
+    procedure actGetDetalleAnteriorExecute(Sender: TObject);
+    procedure actGetDetalleAnteriorUpdate(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -182,6 +186,7 @@ type
       var CorreoCliente: String): Boolean;
     procedure Imprimir(IdDocumentoEntrada: Integer);
     procedure PrintPDFFile(PDFFileName: TFileName; Mostrar: Boolean);
+    procedure UpdTotales;
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -195,7 +200,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses DocumentosEntradasForm, DocumentosEntradasDetalleForm, ConfiguracionDM,
-  _ConectionDmod, _Utils, UDMEnvioMail;
+  _ConectionDmod, _Utils, UDMEnvioMail, DocumentosEntradasDetalleAnteriorDM;
 
 {$R *.dfm}
 
@@ -346,6 +351,33 @@ begin
   end;
 end;
 
+procedure TdmDocumentosEntradas.actGetDetalleAnteriorExecute(Sender: TObject);
+var
+  dmDetalleAnterior: TdmDocumentosEntradasDetalleAnterior;
+begin
+  inherited;
+  dmDetalleAnterior := TdmDocumentosEntradasDetalleAnterior.Create(Self);
+  try
+    dmDetalleAnterior.IdDocumentoEntrada:= adodsMasterIdDocumentoEntrada.Value;
+    dmDetalleAnterior.IdPersona:= adodsMasterIdPersona.Value;
+    if dmDetalleAnterior.Execute then
+    begin
+      adodsDocumentosDetalles.Close;
+      adodsDocumentosDetalles.Open;
+      UpdTotales;
+    end;
+  finally
+    dmDetalleAnterior.Free;
+  end;
+end;
+
+procedure TdmDocumentosEntradas.actGetDetalleAnteriorUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Visible:= (Tipo = tFactura);
+  TAction(Sender).Enabled:= (adodsMasterIdDocumentoEntradaEstatus.Value = Ord(eAbierto));
+end;
+
 procedure TdmDocumentosEntradas.actGetTipoCambioExecute(Sender: TObject);
 begin
   inherited;
@@ -385,8 +417,7 @@ procedure TdmDocumentosEntradas.adodsDocumentosDetallesAfterPost(
   DataSet: TDataSet);
 begin
   inherited;
-  adopUpdDocumento.Parameters.ParamByName('@IdDocumentoEntrada').Value:= adodsMasterIdDocumentoEntrada.Value;
-  adopUpdDocumento.ExecProc;
+  UpdTotales;
   RefreshADODS(adodsMaster, adodsMasterIdDocumentoEntrada);
 end;
 
@@ -498,6 +529,7 @@ begin
   gFormDetail1:= TfrmDocumentosEntradasDetalle.Create(Self);
   gFormDetail1.DataSet:= adodsDocumentosDetalles;
   TfrmDocumentosEntradasDetalle(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;
+  TfrmDocumentosEntradasDetalle(gFormDetail1).actGetDetalleAnterior:= actGetDetalleAnterior;
   //Creacion de la lista de producto
   frmListaProductos:= TFrmListaProductos.Create(Self);
   frmListaProductos.DataSet:= adodsListaProductos;
@@ -581,6 +613,12 @@ end;
 procedure TdmDocumentosEntradas.SetTipo(const Value: TPTipo);
 begin
   FTipo := Value;
+end;
+
+procedure TdmDocumentosEntradas.UpdTotales;
+begin
+  adopUpdDocumento.Parameters.ParamByName('@IdDocumentoEntrada').Value:= adodsMasterIdDocumentoEntrada.Value;
+  adopUpdDocumento.ExecProc;
 end;
 
 function TdmDocumentosEntradas.GetCorreoEmisor(ADatosCorreo: TStringList): Boolean;

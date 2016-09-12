@@ -24,7 +24,8 @@ uses
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, cxButtonEdit, Vcl.Menus, cxGridBandedTableView,
   cxGridDBBandedTableView, dxLayoutContainer, cxGridLayoutView,
-  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView;
+  cxGridDBLayoutView, cxGridCardView, cxGridDBCardView, cxGridCustomLayoutView,
+  Vcl.Buttons;
 
 type
   TfrmDocumentosEntradasDetalleGrid = class(T_frmStandarGFormGrid)
@@ -54,15 +55,20 @@ type
     tvMaster2PreicoVenta: TcxGridDBColumn;
     tvMasterPrecioMonedalocal: TcxGridDBColumn;
     tvMasterIdentificadorProveedor: TcxGridDBColumn;
+    btnGetDetalleAnterior: TSpeedButton;
+    tvMasterIdDocumentoEntradaDetalleAnterior: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure DataSetInsertExecute(Sender: TObject);
   private
     FactSeleccionarProducto: TBasicAction;
+    FactGetDetalleAnterior: TBasicAction;
     procedure SetactSeleccionarProducto(const Value: TBasicAction);
+    procedure SetactGetDetalleAnterior(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write SetactSeleccionarProducto;
+    property actGetDetalleAnterior: TBasicAction read FactGetDetalleAnterior write SetactGetDetalleAnterior;
   end;
 
 implementation
@@ -82,6 +88,13 @@ procedure TfrmDocumentosEntradasDetalleGrid.FormCreate(Sender: TObject);
 begin
   inherited;
   ApplyBestFit:= False;
+end;
+
+procedure TfrmDocumentosEntradasDetalleGrid.SetactGetDetalleAnterior(
+  const Value: TBasicAction);
+begin
+  FactGetDetalleAnterior := Value;
+  btnGetDetalleAnterior.Action := Value;
 end;
 
 procedure TfrmDocumentosEntradasDetalleGrid.SetactSeleccionarProducto(

@@ -33,6 +33,10 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
           Visible = False
           Options.Editing = False
         end
+        object tvMasterIdDocumentoEntradaDetalleAnterior: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoEntradaDetalleAnterior'
+          Visible = False
+        end
         object tvMasterClaveProducto: TcxGridDBColumn
           DataBinding.FieldName = 'ClaveProducto'
           PropertiesClassName = 'TcxButtonEditProperties'
@@ -163,6 +167,13 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
       inherited ToolButton4: TToolButton
         Visible = True
       end
+      object btnGetDetalleAnterior: TSpeedButton
+        Left = 308
+        Top = 0
+        Width = 120
+        Height = 22
+        Caption = 'Obtener pendientes'
+      end
     end
   end
   inherited DataSource: TDataSource
@@ -170,7 +181,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -332,7 +343,7 @@ inherited frmDocumentosEntradasDetalleGrid: TfrmDocumentosEntradasDetalleGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

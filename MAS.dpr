@@ -204,7 +204,10 @@ uses
   rptInventarioDM in 'Reportes\rptInventarioDM.pas' {dmrptInventario: TDataModule},
   rptRegistroDiarioFacturasDM in 'Reportes\rptRegistroDiarioFacturasDM.pas' {dmRPTRegistroDiarioFact: TDataModule},
   ProductosMayoreoEdit in 'Catalogos\ProductosMayoreoEdit.pas' {FrmProductosPrecioMayoreo},
-  ProductosMayoreoForm in 'Catalogos\ProductosMayoreoForm.pas' {FrmProductosPrecioMayoreoGrid};
+  ProductosMayoreoForm in 'Catalogos\ProductosMayoreoForm.pas' {FrmProductosPrecioMayoreoGrid},
+  DocumentosEntradasDetalleAnteriorDM in 'Procesos\DocumentosEntradasDetalleAnteriorDM.pas' {dmDocumentosEntradasDetalleAnterior: TDataModule},
+  DocumentosEntradasDetalleAnteriorForm in 'Procesos\DocumentosEntradasDetalleAnteriorForm.pas' {frmDocumentosEntradasDetalleAnterior},
+  VerificarForm in 'Procesos\VerificarForm.pas' {frmVerificar};
 
 {$R *.res}
 

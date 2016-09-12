@@ -190,6 +190,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Hint = 'Obtiene la '#250'ltima cotizaci'#243'n de la moneda'
       OnExecute = actGetTipoCambioExecute
     end
+    object actGetDetalleAnterior: TAction
+      Caption = 'Obtener pendientes'
+      OnExecute = actGetDetalleAnteriorExecute
+      OnUpdate = actGetDetalleAnteriorUpdate
+    end
   end
   object adodsTipos: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -272,9 +277,9 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     OnCalcFields = adodsDocumentosDetallesCalcFields
     CommandText = 
       'SELECT IdDocumentoEntradaDetalle, IdDocumentoEntrada, IdProducto' +
-      ', ClaveProducto, Cantidad, CantidadPendiente, Precio, Importe'#13#10'F' +
-      'ROM DocumentosEntradasDetalles'#13#10'WHERE IdDocumentoEntrada = :IdDo' +
-      'cumentoEntrada'
+      ', IdDocumentoEntradaDetalleAnterior, ClaveProducto, Cantidad, Ca' +
+      'ntidadPendiente, Precio, Importe'#13#10'FROM DocumentosEntradasDetalle' +
+      's'#13#10'WHERE IdDocumentoEntrada = :IdDocumentoEntrada'
     DataSource = dsMaster
     MasterFields = 'IdDocumentoEntrada'
     Parameters = <
@@ -283,6 +288,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 30
       end>
     Left = 24
@@ -298,6 +304,10 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
     object adodsDocumentosDetallesIdProducto: TIntegerField
       FieldName = 'IdProducto'
+      Visible = False
+    end
+    object adodsDocumentosDetallesIdDocumentoEntradaDetalleAnterior: TIntegerField
+      FieldName = 'IdDocumentoEntradaDetalleAnterior'
       Visible = False
     end
     object adodsDocumentosDetallesClaveProducto: TStringField
@@ -451,6 +461,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
   end
   object adodsProductos: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProducto, Descripcion from Productos'
@@ -4299,6 +4310,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 498
   end
   object adodsCantidad: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4336,6 +4348,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 192
   end
   object adodsProductosProveedores: TADODataSet
+    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

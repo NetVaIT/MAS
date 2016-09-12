@@ -28,9 +28,11 @@ type
   private
     { Private declarations }
     FactSeleccionarProducto: TBasicAction;
+    FactGetDetalleAnterior: TBasicAction;
   public
     { Public declarations }
     property actSeleccionarProducto: TBasicAction read FactSeleccionarProducto write FactSeleccionarProducto;
+    property actGetDetalleAnterior: TBasicAction read FactGetDetalleAnterior write FactGetDetalleAnterior;
   end;
 
 implementation
@@ -49,6 +51,7 @@ procedure TfrmDocumentosEntradasDetalle.FormShow(Sender: TObject);
 begin
   inherited;
   TfrmDocumentosEntradasDetalleGrid(gFormGrid).actSeleccionarProducto:= actSeleccionarProducto;
+  TfrmDocumentosEntradasDetalleGrid(gFormGrid).actGetDetalleAnterior := actGetDetalleAnterior;
   actShowGrid.Execute;
 end;
 
