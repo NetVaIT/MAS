@@ -538,9 +538,9 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       item
         Name = 'Clave'
         Attributes = [paSigned]
-        DataType = ftInteger
-        Precision = 10
-        Size = 4
+        DataType = ftString
+        Precision = 255
+        Size = 255
         Value = Null
       end>
     SQL.Strings = (
@@ -559,7 +559,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       
         'WHERE ProductosProveedores.IdPersonaProveedor = :IdPersona AND P' +
         'roductosProveedores.IdProducto = dbo.GetIdProducto(:Clave)')
-    Left = 256
+    Left = 264
     Top = 272
     object adoqGetIdProductoIdProducto: TIntegerField
       FieldName = 'IdProducto'

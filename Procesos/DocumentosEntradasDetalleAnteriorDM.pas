@@ -24,19 +24,25 @@ type
     dxmdPendientesCantidadPendiente: TFloatField;
     dxmdPendientesPrecio: TFMTBCDField;
     dxmdPendientesCantidad: TIntegerField;
+    dxmdPendientesOrden: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
+    procedure dxmdPendientesNewRecord(DataSet: TDataSet);
+    procedure dxmdPendientesCantidadChange(Sender: TField);
   private
     FIdDocumentoEntrada: Integer;
     FIdPersona: Integer;
+    FOrden: Integer;
     { Private declarations }
     procedure SetDetalles;
     procedure SetIdDocumentoEntrada(const Value: Integer);
     procedure SetIdPersona(const Value: Integer);
     procedure CargaPendientes;
+    procedure SetOrden(const Value: Integer);
   public
     { Public declarations }
     property IdDocumentoEntrada: Integer read FIdDocumentoEntrada write SetIdDocumentoEntrada;
     property IdPersona: Integer read FIdPersona write SetIdPersona;
+    property Orden: Integer read FOrden write SetOrden;
     function Execute: Boolean;
   end;
 
@@ -72,6 +78,24 @@ begin
   gGridForm.DataSet:= dxmdPendientes;
 end;
 
+procedure TdmDocumentosEntradasDetalleAnterior.dxmdPendientesCantidadChange(
+  Sender: TField);
+begin
+  inherited;
+  if (Sender.OldValue = 0) and (Sender.Value <> 0) then
+  begin
+    Inc(FOrden);
+    dxmdPendientesOrden.Value:= Orden;
+  end;
+end;
+
+procedure TdmDocumentosEntradasDetalleAnterior.dxmdPendientesNewRecord(
+  DataSet: TDataSet);
+begin
+  inherited;
+  dxmdPendientesOrden.Value := 0;
+end;
+
 function TdmDocumentosEntradasDetalleAnterior.Execute: Boolean;
 var
   frmVerificar: TfrmVerificar;
@@ -94,6 +118,7 @@ end;
 
 procedure TdmDocumentosEntradasDetalleAnterior.SetDetalles;
 begin
+  dxmdPendientes.SortedField:= 'Orden';
   dxmdPendientes.First;
   while not dxmdPendientes.Eof do
   begin
@@ -119,6 +144,11 @@ procedure TdmDocumentosEntradasDetalleAnterior.SetIdPersona(
   const Value: Integer);
 begin
   FIdPersona := Value;
+end;
+
+procedure TdmDocumentosEntradasDetalleAnterior.SetOrden(const Value: Integer);
+begin
+  FOrden := Value;
 end;
 
 end.

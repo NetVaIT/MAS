@@ -41,7 +41,6 @@ object frmVerificar: TfrmVerificar
       Height = 25
       Anchors = [akTop, akRight]
       Caption = 'Procesar'
-      Default = True
       ModalResult = 1
       TabOrder = 0
     end
@@ -51,7 +50,6 @@ object frmVerificar: TfrmVerificar
       Width = 75
       Height = 25
       Anchors = [akTop, akRight]
-      Cancel = True
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1

@@ -41,6 +41,8 @@ type
     tvMasterCantidadPendiente: TcxGridDBColumn;
     tvMasterPrecio: TcxGridDBColumn;
     tvMasterCantidad: TcxGridDBColumn;
+    tvMasterRecId: TcxGridDBColumn;
+    tvMasterOrden: TcxGridDBColumn;
   private
     { Private declarations }
   public

@@ -8,6 +8,10 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
     inherited cxGrid: TcxGrid
       inherited tvMaster: TcxGridDBTableView
         OptionsData.Editing = True
+        object tvMasterRecId: TcxGridDBColumn
+          DataBinding.FieldName = 'RecId'
+          Visible = False
+        end
         object tvMasterIdDocumentoEntradaDetalle: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntradaDetalle'
           Visible = False
@@ -54,6 +58,12 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
         end
         object tvMasterCantidad: TcxGridDBColumn
           DataBinding.FieldName = 'Cantidad'
+          Options.IncSearch = False
+        end
+        object tvMasterOrden: TcxGridDBColumn
+          DataBinding.FieldName = 'Orden'
+          Visible = False
+          Options.IncSearch = False
         end
       end
     end

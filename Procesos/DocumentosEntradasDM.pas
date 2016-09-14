@@ -332,6 +332,9 @@ end;
 procedure TdmDocumentosEntradas.actGenDocumentoUpdate(Sender: TObject);
 begin
   inherited;
+  // No se muestra la accion de registrar prefactura por el cambio a generar
+  // la factura en base a varias ordenes de compra.
+  TAction(Sender).Visible:= (Tipo <> tOrdenCompra);
   case Tipo of
     tRequisicion: begin
       TAction(Sender).Caption:= 'Generar OC';
@@ -418,7 +421,6 @@ procedure TdmDocumentosEntradas.adodsDocumentosDetallesAfterPost(
 begin
   inherited;
   UpdTotales;
-  RefreshADODS(adodsMaster, adodsMasterIdDocumentoEntrada);
 end;
 
 procedure TdmDocumentosEntradas.adodsDocumentosDetallesCalcFields(
@@ -619,6 +621,7 @@ procedure TdmDocumentosEntradas.UpdTotales;
 begin
   adopUpdDocumento.Parameters.ParamByName('@IdDocumentoEntrada').Value:= adodsMasterIdDocumentoEntrada.Value;
   adopUpdDocumento.ExecProc;
+  RefreshADODS(adodsMaster, adodsMasterIdDocumentoEntrada);
 end;
 
 function TdmDocumentosEntradas.GetCorreoEmisor(ADatosCorreo: TStringList): Boolean;

@@ -109,6 +109,7 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
       6964616450656E6469656E746500220000001800070050726563696F00040000
       000300090043616E746964616400}
     SortOptions = []
+    OnNewRecord = dxmdPendientesNewRecord
     Left = 104
     Top = 168
     object dxmdPendientesIdDocumentoEntradaDetalle: TAutoIncField
@@ -149,6 +150,10 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
     end
     object dxmdPendientesCantidad: TIntegerField
       FieldName = 'Cantidad'
+      OnChange = dxmdPendientesCantidadChange
+    end
+    object dxmdPendientesOrden: TIntegerField
+      FieldName = 'Orden'
     end
   end
 end
