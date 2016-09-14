@@ -266,7 +266,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object dsMaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsMasterDataChange
-    Left = 160
+    Left = 168
     Top = 16
   end
   object adodsDocumentosDetalles: TADODataSet
@@ -461,7 +461,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
   end
   object adodsProductos: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 'select IdProducto, Descripcion from Productos'
@@ -4310,7 +4309,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 498
   end
   object adodsCantidad: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -4348,7 +4346,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     Top = 192
   end
   object adodsProductosProveedores: TADODataSet
-    Active = True
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 

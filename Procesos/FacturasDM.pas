@@ -2116,10 +2116,10 @@ begin
 
 
         if (not ADODtStBuscaFolioSerie.eof) and (ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger >0)then
-        begin
-          if (DataSet.FieldByName('IDCFDITipoDocumento').AsInteger in [2,3]) and
+        begin                                       //Sep 14/16
+          if (DataSet.FieldByName('IDCFDITipoDocumento').AsInteger=5)or((DataSet.FieldByName('IDCFDITipoDocumento').AsInteger in [2,3]) and
                 (application.MessageBox(pchar('Se va a colocar la nota '+ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString+' - '
-             +ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsString+ ' ¿Seguro de continuar?'), 'Confirmación', MB_YESNO )=idYES)  then //SEp 9/16
+             +ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsString+ ' ¿Seguro de continuar?'), 'Confirmación', MB_YESNO )=idYES))  then //SEp 9/16
           begin
 
             adodsMasterFolio.AsInteger:= ADODtStBuscaFolioSerie.FieldByName('FolioDoc').AsInteger;
@@ -2285,7 +2285,8 @@ begin
   if adodsMasterIdCFDITipoDocumento.AsInteger =5 then  //Flete
   begin
     dataset.FieldByName('IDUnidadMedida').AsInteger:=3; //Flete   //Verificar
-    dataset.FieldByName('Unidad').AsString:='FLETE'
+    dataset.FieldByName('Unidad').AsString:='FLETE';
+     dataset.FieldByName('Cantidad').AsFloat:=1;  //Sep14/16
   end;
 end;
 
