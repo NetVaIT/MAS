@@ -58,6 +58,13 @@ type
     tvMasterFecha: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterSaldoDocumento: TcxGridDBColumn;
+    tvMasterIdCFDI: TcxGridDBColumn;
+    tvMasterIdCFDITipoDocumento: TcxGridDBColumn;
+    tvMasterIdPersonaReceptor: TcxGridDBColumn;
+    tvMasterIdOrdenSalida: TcxGridDBColumn;
+    tvMasterIdCFDIEstatus: TcxGridDBColumn;
+    tvMasterIdClienteDomicilio: TcxGridDBColumn;
+    tvMasterTipoCambio: TcxGridDBColumn;
     procedure BtBtnAplicarClick(Sender: TObject);
     procedure DSAplicacionStateChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

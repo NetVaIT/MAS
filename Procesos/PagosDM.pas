@@ -109,6 +109,7 @@ type
     ADODtStAplicacionesPagosFolioFactura: TIntegerField;
     ADOQryAuxiliar: TADOQuery;
     adodsMasterIdMetPagSugerido: TIntegerField;
+    ADODtStDireccAuxiliarIDMetododePago: TIntegerField;
     procedure ADODtStDireccionesClienteCalcFields(DataSet: TDataSet);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsMasterAfterPost(DataSet: TDataSet);

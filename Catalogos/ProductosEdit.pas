@@ -82,6 +82,7 @@ type
     DBGrid1: TDBGrid;
     cxTSPrecioMayoreo: TcxTabSheet;
     cxDBLabel1: TcxDBLabel;
+    SpdBtnVerIdentifica: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

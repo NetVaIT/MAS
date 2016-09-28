@@ -112,10 +112,10 @@ inherited dmPagos: TdmPagos
     object adodsMasterIdMetPagSugerido: TIntegerField
       FieldKind = fkLookup
       FieldName = 'IdMetPagSugerido'
-      LookupDataSet = ADODtStClientes
-      LookupKeyFields = 'IdPersona'
-      LookupResultField = 'IdMetodoPagoCliente'
-      KeyFields = 'IdPersonaCliente'
+      LookupDataSet = ADODtStDireccAuxiliar
+      LookupKeyFields = 'IdPersonaDomicilio'
+      LookupResultField = 'IDMetododePago'
+      KeyFields = 'IdDomicilioCliente'
       Lookup = True
     end
   end
@@ -131,12 +131,12 @@ inherited dmPagos: TdmPagos
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio'#13#10'Left Join Poblaci' +
-      'ones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on' +
-      ' M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=' +
-      'D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.' +
-      'IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais, PD.IDMetododePago'#13#10#13#10'from PersonasDomici' +
+      'lios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomicilio' +
+      #13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left j' +
+      'oin Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estad' +
+      'os E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=' +
+      'D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -208,6 +208,9 @@ inherited dmPagos: TdmPagos
       FieldName = 'DirCompleta'
       Size = 150
       Calculated = True
+    end
+    object ADODtStDireccAuxiliarIDMetododePago: TIntegerField
+      FieldName = 'IDMetododePago'
     end
   end
   object ADODtStDireccionesCliente: TADODataSet
@@ -465,7 +468,8 @@ inherited dmPagos: TdmPagos
       'nSalida, IdCFDIEstatus, IdClienteDomicilio, TipoCambio,'#13#10' Serie,' +
       ' Folio, Fecha, Total, SaldoDocumento from CFDI where '#13#10'SaldoDocu' +
       'mento >0 and (IDCFDITipoDocumento=1 or IDCFDITipoDocumento=3'#13#10' o' +
-      'r IDCFDITipoDocumento=4 or IDCFDITipoDocumento=5 )'
+      'r IDCFDITipoDocumento=4 or IDCFDITipoDocumento=5 ) and (IDCFDIEs' +
+      'tatus<>3)'
     DataSource = DSMaster
     IndexFieldNames = 'IdPersonaReceptor;IdClienteDomicilio'
     MasterFields = 'IdPersonaCliente;IdDomicilioCliente'

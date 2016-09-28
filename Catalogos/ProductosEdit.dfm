@@ -38,6 +38,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   inherited pnlDetail1: TPanel
     Top = 608
     Height = 20
+    ExplicitLeft = 0
     ExplicitTop = 608
     ExplicitHeight = 20
   end
@@ -47,21 +48,25 @@ inherited frmProductosEdit: TfrmProductosEdit
     Properties.HideTabs = False
     ExplicitTop = 43
     ExplicitHeight = 562
-    ClientRectBottom = 558
-    ClientRectTop = 24
+    ClientRectBottom = 560
+    ClientRectLeft = 2
+    ClientRectRight = 748
+    ClientRectTop = 28
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 742
-      ExplicitHeight = 534
+      ExplicitLeft = 2
+      ExplicitTop = 28
+      ExplicitWidth = 746
+      ExplicitHeight = 532
       inherited cxScrollBox1: TcxScrollBox
-        Width = 742
-        Height = 534
-        ExplicitWidth = 742
-        ExplicitHeight = 534
+        Width = 746
+        Height = 532
+        ExplicitWidth = 746
+        ExplicitHeight = 532
         inherited tbarData: TToolBar
-          Width = 740
-          ExplicitWidth = 740
+          Width = 744
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 744
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -69,14 +74,16 @@ inherited frmProductosEdit: TfrmProductosEdit
           end
         end
         inherited pnlMaster: TPanel
-          Width = 740
-          Height = 507
-          ExplicitWidth = 740
-          ExplicitHeight = 507
+          Width = 744
+          Height = 505
+          ExplicitLeft = 0
+          ExplicitTop = 25
+          ExplicitWidth = 744
+          ExplicitHeight = 505
           object PnlProducto: TPanel
             Left = 0
             Top = 0
-            Width = 740
+            Width = 744
             Height = 225
             Align = alTop
             TabOrder = 0
@@ -157,6 +164,29 @@ inherited frmProductosEdit: TfrmProductosEdit
               Width = 70
               Height = 13
               Caption = 'Identificador 3'
+            end
+            object SpdBtnVerIdentifica: TSpeedButton
+              Left = 528
+              Top = 45
+              Width = 129
+              Height = 22
+              Caption = 'Verificar Identificador'
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+                003337777777777777F330FFFFFFFFFFF03337F33F333F3337F330FF0FFF0FFF
+                F03337F37F337F3337F330FF0FFF0FFFF03337F37FFF7FFF37F330F00000000F
+                F03337F77777777337F330FFF0FFF0FFF03337F337F337F337F330FFF0FFF0FF
+                F03337F337FFF7FFF7F330FF00000000F03337F37777777737F330FFFF0FFF0F
+                F03337F3337F337F37F330FFFF0FFF0FF03337F33373337337F330FFFFFFFFFF
+                F03337F33333333FF7F330FFFFFFFF00003337F33333337777F330FFFFFFFF0F
+                F03337FFFFFFFF7F373330999999990F033337777777777F733330FFFFFFFF00
+                333337FFFFFFFF77333330000000000333333777777777733333}
+              NumGlyphs = 2
+              Visible = False
+              OnClick = SpdBtnVerArchivoClick
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 24
@@ -265,24 +295,24 @@ inherited frmProductosEdit: TfrmProductosEdit
           object cxPageControl1: TcxPageControl
             Left = 0
             Top = 225
-            Width = 740
-            Height = 282
+            Width = 744
+            Height = 280
             Align = alClient
             TabOrder = 1
             Properties.ActivePage = cxTbShtFotosYDocs
             Properties.CustomButtons.Buttons = <>
             ClientRectBottom = 278
-            ClientRectLeft = 4
-            ClientRectRight = 736
-            ClientRectTop = 24
+            ClientRectLeft = 2
+            ClientRectRight = 742
+            ClientRectTop = 28
             object cxTbShtFotosYDocs: TcxTabSheet
               Caption = 'Fotos y Documentos'
               ImageIndex = 0
               object PnlFotos: TPanel
                 Left = 0
                 Top = 0
-                Width = 732
-                Height = 254
+                Width = 740
+                Height = 250
                 Align = alClient
                 TabOrder = 0
                 object ImgFoto: TImage
@@ -567,7 +597,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -716,7 +746,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

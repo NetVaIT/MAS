@@ -146,7 +146,7 @@ begin
      dsDireccionCliente.dataset.Open;
      if dsDireccionCliente.dataset.RecordCount >=1 then
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
-     if DBLkpCmbBxMPCliente.Text<>null then
+     if DBLkpCmbBxMPCliente.Text<>'' then    //Se quito NULL por que no se ponia
        DBLkpCmbBxMetodoPago.KeyValue :=  DBLkpCmbBxMPCliente.text;
 
    end;

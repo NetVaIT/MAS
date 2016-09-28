@@ -223,6 +223,34 @@ object FrmAplicacionPago: TFrmAplicacionPago
         DataBinding.FieldName = 'SaldoDocumento'
         Width = 136
       end
+      object tvMasterIdCFDI: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCFDI'
+        Visible = False
+      end
+      object tvMasterIdCFDITipoDocumento: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCFDITipoDocumento'
+        Visible = False
+      end
+      object tvMasterIdPersonaReceptor: TcxGridDBColumn
+        DataBinding.FieldName = 'IdPersonaReceptor'
+        Visible = False
+      end
+      object tvMasterIdOrdenSalida: TcxGridDBColumn
+        DataBinding.FieldName = 'IdOrdenSalida'
+        Visible = False
+      end
+      object tvMasterIdCFDIEstatus: TcxGridDBColumn
+        DataBinding.FieldName = 'IdCFDIEstatus'
+        Visible = False
+      end
+      object tvMasterIdClienteDomicilio: TcxGridDBColumn
+        DataBinding.FieldName = 'IdClienteDomicilio'
+        Visible = False
+      end
+      object tvMasterTipoCambio: TcxGridDBColumn
+        DataBinding.FieldName = 'TipoCambio'
+        Visible = False
+      end
     end
     object cxGridLevel1: TcxGridLevel
       GridView = tvMaster
