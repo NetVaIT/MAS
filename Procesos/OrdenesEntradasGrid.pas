@@ -45,6 +45,7 @@ type
     tvMasterTotal: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
     tvMasterUsuario: TcxGridDBColumn;
+    tvMasterIdOrdenEntradaTipo: TcxGridDBColumn;
   private
     FMostrarImporte: Boolean;
     procedure SetMostrarImporte(const Value: Boolean);
