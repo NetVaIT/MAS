@@ -32,6 +32,7 @@ type
     adodsMasterMetodoAutenticacion: TStringField;
     adodsMasterUltimoFolioPago: TIntegerField;
     adodsMasterUltimaSeriePago: TStringField;
+    adodsMasterIdEspacioAduana: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -40,6 +41,7 @@ type
     function GetRutaPago: string;
     function GetDiaPagoActual: TDateTime;
     function GetIdMoneda: Integer;
+    function GetEspacioAduana: Integer;
   public
     { Public declarations }
     property IdMoneda: Integer read GetIdMoneda;
@@ -47,6 +49,8 @@ type
     property DiaPagoActual: TDateTime read GetDiaPagoActual;
     property RutaFacturas: string read GetRutaFactura;
     property RutaPagos: string read GetRutaPago;
+
+    property IDEspacioAduana: Integer read GetEspacioAduana;    // Oct 3/16  IdEspacioAduana
   end;
 
 var
@@ -78,6 +82,11 @@ begin
   finally
     adoqGetDiaPagoActual.Close;
   end;
+end;
+
+function TdmConfiguracion.GetEspacioAduana: Integer;
+begin                                      //Oct 3/16
+  Result:= adodsMasterIdEspacioAduana.Value;
 end;
 
 function TdmConfiguracion.GetIdMoneda: Integer;

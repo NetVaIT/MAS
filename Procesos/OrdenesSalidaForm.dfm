@@ -67,23 +67,23 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
     ExplicitTop = 22
     ExplicitWidth = 1267
     ExplicitHeight = 545
-    ClientRectBottom = 541
-    ClientRectRight = 1263
+    ClientRectBottom = 544
+    ClientRectRight = 1266
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 1259
-      ExplicitHeight = 537
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 1265
+      ExplicitHeight = 543
       inherited cxScrollBox1: TcxScrollBox
-        Width = 1259
-        Height = 537
-        ExplicitWidth = 1259
-        ExplicitHeight = 537
+        Width = 1265
+        Height = 543
+        ExplicitWidth = 1265
+        ExplicitHeight = 543
         inherited tbarData: TToolBar
-          Width = 1257
+          Width = 1263
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1257
+          ExplicitWidth = 1263
           object ToolButton4: TToolButton
             Left = 254
             Top = 0
@@ -109,16 +109,16 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           end
         end
         inherited pnlMaster: TPanel
-          Width = 1257
-          Height = 510
+          Width = 1263
+          Height = 516
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1257
-          ExplicitHeight = 510
+          ExplicitWidth = 1263
+          ExplicitHeight = 516
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 1257
+            Width = 1263
             Height = 416
             Align = alTop
             TabOrder = 0
@@ -1798,15 +1798,15 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
           object PnlDetalle: TPanel
             Left = 0
             Top = 416
-            Width = 1257
-            Height = 94
+            Width = 1263
+            Height = 100
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
             object ToolBar2: TToolBar
               Left = 0
               Top = 0
-              Width = 1257
+              Width = 1263
               Height = 29
               Images = ilAction
               TabOrder = 0
@@ -1885,8 +1885,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
             object DBGrid2: TDBGrid
               Left = 0
               Top = 29
-              Width = 1257
-              Height = 65
+              Width = 1263
+              Height = 71
               Align = alClient
               DataSource = DtSrcOrdenSalItem
               Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
@@ -1984,7 +1984,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400180210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004001C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2200,7 +2200,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002540210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002580210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3148,6 +3148,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   object DSSalidasUbicaciones: TDataSource
     DataSet = DMOrdenesSalidas.ADODtStSalidasUbicaciones
+    OnDataChange = DSSalidasUbicacionesDataChange
     OnUpdateData = DSSalidasUbicacionesUpdateData
     Left = 716
     Top = 192

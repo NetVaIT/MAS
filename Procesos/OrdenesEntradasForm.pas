@@ -58,6 +58,8 @@ type
     cxLabel1: TcxLabel;
     btnRecibr: TSpeedButton;
     btnAplicar: TSpeedButton;
+    SpdBtnAcomodarGenerico: TSpeedButton;
+    ToolButton4: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -67,11 +69,13 @@ type
     FMostrarImporte: Boolean;
     FactAplicar: TBasicAction;
     FactRecibir: TBasicAction;
+    FactAcomodar: TBasicAction;
     procedure SetactCrearOrden(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
     procedure SetMostrarImporte(const Value: Boolean);
     procedure SetactAplicar(const Value: TBasicAction);
     procedure SetactRecibir(const Value: TBasicAction);
+    procedure SetactAcomodar(const Value: TBasicAction);
   public
     { Public declarations }
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
@@ -80,6 +84,8 @@ type
     property actAplicar: TBasicAction read FactAplicar write SetactAplicar;
     property MostrarImporte: Boolean read FMostrarImporte write SetMostrarImporte default False;
     procedure SetFoco;
+
+    property actAcomodar: TBasicAction read FactAcomodar write SetactAcomodar;//ABAN Oct 12/16
   end;
 
 implementation
@@ -99,6 +105,12 @@ procedure TfrmOrdenesEntradas.FormShow(Sender: TObject);
 begin
   inherited;
   TfrmOrdenesEntradasGrid(gFormGrid).MostrarImporte:= MostrarImporte;
+end;
+
+procedure TfrmOrdenesEntradas.SetactAcomodar(const Value: TBasicAction);   //Oct 12/16
+begin
+  FactAcomodar := Value;
+  SpdBtnAcomodarGenerico.Action:=Value;
 end;
 
 procedure TfrmOrdenesEntradas.SetactAplicar(const Value: TBasicAction);

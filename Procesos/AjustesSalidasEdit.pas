@@ -56,6 +56,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PgCntrlAjustesSalidaChange(Sender: TObject);
     procedure DSSalidasUbicacionesUpdateData(Sender: TObject);
+    procedure DSSalidasUbicacionesDataChange(Sender: TObject; Field: TField);
   private
     FactAplicaSalida: TBasicAction;
     procedure SetactAplicaSalida(const Value: TBasicAction);
@@ -142,6 +143,18 @@ begin
 
   DSsalidasUbicaciones.dataset.Refresh;
 
+end;
+
+procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesDataChange(Sender: TObject;
+  Field: TField);
+begin        //Para que el siguiente quede filtrado..  Oct 3/16
+  inherited;
+  if (not (dsSalidasUbicaciones.dataset.eof)) and (dsSalidasUbicaciones.State =dsBrowse)  then
+  begin
+    dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
+    dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
+    dsProductosXEspacio.DataSet.Filtered:=True;
+  end;
 end;
 
 procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesUpdateData(

@@ -2,7 +2,6 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
   Caption = 'frmAjustesSalidasEdit'
   ClientWidth = 781
   ExplicitWidth = 781
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -57,15 +56,15 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     ClientRectBottom = 462
     ClientRectRight = 780
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 773
-      ExplicitHeight = 455
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 779
+      ExplicitHeight = 461
       inherited cxScrollBox1: TcxScrollBox
         Width = 779
         Height = 461
-        ExplicitWidth = 773
-        ExplicitHeight = 455
+        ExplicitWidth = 779
+        ExplicitHeight = 461
         inherited tbarData: TToolBar
           Width = 777
           ExplicitLeft = 0
@@ -112,8 +111,8 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
           Height = 434
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 771
-          ExplicitHeight = 428
+          ExplicitWidth = 777
+          ExplicitHeight = 434
           object pnlDetail: TPanel
             Left = 0
             Top = 130
@@ -122,8 +121,6 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 771
-            ExplicitHeight = 106
             object PgCntrlAjustesSalida: TcxPageControl
               Left = 0
               Top = 0
@@ -134,8 +131,6 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
               Properties.ActivePage = tsProductosXSalir
               Properties.CustomButtons.Buttons = <>
               OnChange = PgCntrlAjustesSalidaChange
-              ExplicitWidth = 771
-              ExplicitHeight = 106
               ClientRectBottom = 110
               ClientRectLeft = 2
               ClientRectRight = 775
@@ -143,18 +138,10 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
               object tsProductosXSalir: TcxTabSheet
                 Caption = 'Productos'
                 ImageIndex = 0
-                ExplicitLeft = 4
-                ExplicitTop = 24
-                ExplicitWidth = 763
-                ExplicitHeight = 78
               end
               object tsSalidasUbicaciones: TcxTabSheet
                 Caption = 'Salidas Ubicaci'#243'n'
                 ImageIndex = 1
-                ExplicitLeft = 4
-                ExplicitTop = 24
-                ExplicitWidth = 763
-                ExplicitHeight = 78
               end
             end
           end
@@ -165,7 +152,6 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
             Height = 130
             Align = alTop
             TabOrder = 1
-            ExplicitWidth = 771
             object Label4: TLabel
               Left = 48
               Top = 21
@@ -232,8 +218,6 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
             Align = alBottom
             BevelOuter = bvNone
             TabOrder = 2
-            ExplicitTop = 236
-            ExplicitWidth = 771
             object Label2: TLabel
               Left = 28
               Top = 24
@@ -333,7 +317,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 574
     Top = 16
     Bitmap = {
-      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -476,7 +460,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 704
     Top = 0
     Bitmap = {
-      494C01010C000E00980110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1018,6 +1002,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
   end
   object DSSalidasUbicaciones: TDataSource
     DataSet = DMAjustesSalida.ADODtStSalidasUbicaciones
+    OnDataChange = DSSalidasUbicacionesDataChange
     OnUpdateData = DSSalidasUbicacionesUpdateData
     Left = 552
     Top = 168

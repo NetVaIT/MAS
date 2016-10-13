@@ -5,7 +5,11 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
+    ExplicitTop = 28
+    ExplicitHeight = 256
     inherited cxGrid: TcxGrid
+      Height = 256
+      ExplicitHeight = 256
       inherited tvMaster: TcxGridDBTableView
         OptionsData.Editing = True
         object tvMasterRecId: TcxGridDBColumn
@@ -62,7 +66,6 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
         end
         object tvMasterOrden: TcxGridDBColumn
           DataBinding.FieldName = 'Orden'
-          Visible = False
           Options.IncSearch = False
         end
       end
@@ -75,7 +78,7 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
     DockControlHeights = (
       0
       0
-      31
+      28
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository

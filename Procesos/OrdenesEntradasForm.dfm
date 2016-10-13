@@ -56,19 +56,19 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
     ExplicitTop = 22
     ExplicitWidth = 800
     ExplicitHeight = 405
-    ClientRectBottom = 404
-    ClientRectRight = 799
+    ClientRectBottom = 401
+    ClientRectRight = 796
     inherited tsGeneral: TcxTabSheet
-      ExplicitWidth = 798
-      ExplicitHeight = 403
+      ExplicitWidth = 792
+      ExplicitHeight = 397
       inherited cxScrollBox1: TcxScrollBox
-        Width = 798
-        Height = 403
-        ExplicitWidth = 798
-        ExplicitHeight = 403
+        Width = 792
+        Height = 397
+        ExplicitWidth = 792
+        ExplicitHeight = 397
         inherited tbarData: TToolBar
-          Width = 796
-          ExplicitWidth = 796
+          Width = 790
+          ExplicitWidth = 790
           object ToolButton3: TToolButton
             Left = 254
             Top = 0
@@ -89,17 +89,32 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
             Width = 90
             Height = 22
           end
+          object ToolButton4: TToolButton
+            Left = 442
+            Top = 0
+            Width = 151
+            Caption = 'ToolButton4'
+            ImageIndex = 13
+            Style = tbsSeparator
+          end
+          object SpdBtnAcomodarGenerico: TSpeedButton
+            Left = 593
+            Top = 0
+            Width = 104
+            Height = 22
+            Caption = 'Acomodo Gen'#233'rico'
+          end
         end
         inherited pnlMaster: TPanel
-          Width = 796
-          Height = 376
-          ExplicitWidth = 796
-          ExplicitHeight = 376
+          Width = 790
+          Height = 370
+          ExplicitWidth = 790
+          ExplicitHeight = 370
           object pnlDetail: TPanel
             Left = 0
             Top = 177
-            Width = 796
-            Height = 88
+            Width = 790
+            Height = 82
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
@@ -107,7 +122,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 796
+            Width = 790
             Height = 177
             Align = alTop
             TabOrder = 0
@@ -260,8 +275,8 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
           end
           object pnlPie: TPanel
             Left = 0
-            Top = 265
-            Width = 796
+            Top = 259
+            Width = 790
             Height = 111
             Align = alBottom
             TabOrder = 2
@@ -371,9 +386,15 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
       Style.IsFontAssigned = True
     end
   end
+  inherited DataSource: TDataSource
+    Left = 646
+    Top = 72
+  end
   inherited ilPageControl: TImageList
+    Left = 686
+    Top = 64
     Bitmap = {
-      494C010102000400C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -512,9 +533,15 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
       8001800100000000FFFFFFFF0000000000000000000000000000000000000000
       000000000000}
   end
+  inherited ActionList: TActionList
+    Left = 718
+    Top = 72
+  end
   inherited ilAction: TImageList
+    Left = 752
+    Top = 64
     Bitmap = {
-      494C01010D002803F00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803F40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000
@@ -1050,6 +1077,8 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
       000000000000}
   end
   inherited cxStyleRepository1: TcxStyleRepository
+    Left = 582
+    Top = 64
     PixelsPerInch = 96
   end
 end

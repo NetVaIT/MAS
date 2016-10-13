@@ -80,7 +80,7 @@ inherited dmrptVentasProyeccion: TdmrptVentasProyeccion
     SortOptions = []
     OnCalcFields = dxmdProyeccionCalcFields
     OnNewRecord = dxmdProyeccionNewRecord
-    Left = 120
+    Left = 128
     Top = 16
     object dxmdProyeccionIdProducto: TIntegerField
       FieldName = 'IdProducto'

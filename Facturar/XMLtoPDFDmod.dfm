@@ -364,7 +364,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810
@@ -4856,6 +4856,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
         Font.Size = 10
         Font.Style = [fsBold, fsItalic]
         Transparent = True
+        Visible = False
         WordWrap = True
         mmHeight = 8202
         mmLeft = 2646

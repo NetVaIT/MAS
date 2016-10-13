@@ -108,6 +108,9 @@ begin
     ShowModule(frmVerificar.pnlMaster,'');
     if frmVerificar.ShowModal = mrOk then
     begin
+      if dxmdPendientes.state=dsEdit then //ABAN Oct 12/16
+         dxmdPendientes.post;
+
       SetDetalles;
       Result:= True;
     end;

@@ -12,14 +12,17 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 455
+    ExplicitTop = 22
+    ExplicitHeight = 455
     ClientRectBottom = 454
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Height = 453
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           ExplicitLeft = 0
           ExplicitTop = 0
@@ -28,6 +31,7 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
           Height = 426
           ExplicitLeft = 0
           ExplicitTop = 25
+          ExplicitHeight = 426
           object Label2: TLabel
             Left = 48
             Top = 32
@@ -74,7 +78,7 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
           object cxDBLabel3: TcxDBLabel
             Left = 48
             Top = 155
-            DataBinding.DataField = 'Movimiento'
+            DataBinding.DataField = 'Producto'
             DataBinding.DataSource = DataSource
             Height = 21
             Width = 393
@@ -140,8 +144,6 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -50
-    ExplicitWidth = 800
     object Label1: TLabel
       Left = 14
       Top = 2
@@ -155,7 +157,7 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -296,7 +298,7 @@ inherited frmKardexMovimientosEdit: TfrmKardexMovimientosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

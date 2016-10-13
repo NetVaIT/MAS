@@ -367,7 +367,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses OrdenesSalidaForm, DocumentosDM, UDMEnvioMail, _Utils;
+uses OrdenesSalidaForm, DocumentosDM, UDMEnvioMail, _Utils, ConfiguracionDM;
 
 {$R *.dfm}
 
@@ -828,9 +828,11 @@ begin
     //Asegurar qu este ubicada en     IdProductoXEspacio respectivo
 
        AdoDtstProductosXEspacio.Close;
+       AdoDtstProductosXEspacio.Parameters.ParamByName('IDAduana').Value:=dmConfiguracion.IDEspacioAduana; //Ajuste para que no aparezcan los de aduana   //Oct 3/16
        AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;
        AdoDtstProductosXEspacio.filtered:=True;
        AdoDtstProductosXEspacio.Open;
+
                                                    //Verificar cuando se borra par que recalcule
     valor := BuscaSalidaUbicacionXAplicar(AdoDtstProductosXEspacio.fieldbyname('IdProductoXEspacio').asinteger,ADODtStSalidasUbicaciones.FieldByName('IDSalidaUbicacion').ASinteger);
     AGuardarAux:= ADODtStSalidasUbicaciones.FieldByName('Cantidad').ASFloat;

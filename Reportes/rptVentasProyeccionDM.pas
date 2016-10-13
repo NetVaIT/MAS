@@ -85,7 +85,11 @@ procedure TdmrptVentasProyeccion.dxmdProyeccionCalcFields(DataSet: TDataSet);
 begin
   inherited;
   dxmdProyeccionCantidadRequerida.Value := (dxmdProyeccionMeses.Value * dxmdProyeccionCantidadPromedio.Value);
-  dxmdProyeccionCantidadComprar.Value := (dxmdProyeccionCantidadRequerida.Value - dxmdProyeccionExistencia.Value - dxmdProyeccionCantidadBackorder.Value);
+
+  if (dxmdProyeccionCantidadRequerida.Value - dxmdProyeccionExistencia.Value - dxmdProyeccionCantidadBackorder.Value>0) then // Aban Oct 3/16
+    dxmdProyeccionCantidadComprar.Value := (dxmdProyeccionCantidadRequerida.Value - dxmdProyeccionExistencia.Value - dxmdProyeccionCantidadBackorder.Value)
+  else
+      dxmdProyeccionCantidadComprar.Value :=0;  //Aban Oct 3/16
 end;
 
 procedure TdmrptVentasProyeccion.dxmdProyeccionNewRecord(DataSet: TDataSet);

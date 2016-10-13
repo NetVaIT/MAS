@@ -209,6 +209,7 @@ type
       Shift: TShiftState);
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure DSSalidasUbicacionesDataChange(Sender: TObject; Field: TField);
 
   private
     FCargarDocGuia: TBasicAction;
@@ -1198,6 +1199,18 @@ begin
   BtBtnAdjGuia.Enabled:= BtBtnImprimeEtiqueta.Enabled;
 end;
 
+procedure TFrmOrdenesSalida.DSSalidasUbicacionesDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;                                                                         //  and ( not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull)
+  if (not (dsSalidasUbicaciones.dataset.eof)) and (dsSalidasUbicaciones.State =dsBrowse)  then   //Para que el siguiente quede filtrado..  Oct 3/16
+  begin
+    dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
+    dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
+    dsProductosXEspacio.DataSet.Filtered:=True;
+  end;
+end;
+
 procedure TFrmOrdenesSalida.DSSalidasUbicacionesUpdateData(Sender: TObject);
 begin
   inherited;
@@ -1243,8 +1256,8 @@ begin
   DataSource.dataset.open; //Nov 25/15
   DtSrcOrdenSalItem.DataSet.Open;
 
-  DSInformacionEntrega.DataSet.Open;
-  TAdoDataset(dsProductosXEspacio.DataSet).Parameters.ParamByName('IDADUANA').Value:=8; //DEbe ser variable de la configuracion
+  DSInformacionEntrega.DataSet.Open;                                                                           //Oct 3/16
+  TAdoDataset(dsProductosXEspacio.DataSet).Parameters.ParamByName('IDADUANA').Value:=dmconfiguracion.IDEspacioAduana; //DEbe ser variable de la configuracion
   dsProductosXEspacio.DataSet.Open;
 
 end;

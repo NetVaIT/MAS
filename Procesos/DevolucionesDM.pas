@@ -372,7 +372,8 @@ begin
       adodsItems.FieldByName('PrecioVenta').AsFloat:=ValUni;
       adodsItems.FieldByName('IdProducto').asInteger:=idproducto;
       adodsItems.FieldByName('Importe').AsFloat:=ValUni* adodsItems.FieldByName('CAntidad').AsFloat;
-      adodsItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto)* adodsItems.FieldByName('CAntidad').AsFloat;
+      adodsItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto);//  (no es un total sep 29/16)  * adodsItems.FieldByName('CAntidad').AsFloat;
+      adodsItems.FieldByName('Costo').AsFloat:=CostoEnInventario(idproducto); /// Sep 29/16
     end;
   end;
 
@@ -399,7 +400,7 @@ begin
   inherited;
   dataset.FieldByName('Cantidad').AsFloat:=1;
   dataset.FieldByName('CantidadSolicitada').AsFloat:=1;
-
+  dataset.Fieldbyname('Costo').asFloat:=0;//Sep 29/16 pero deberia llevar el que tiene en inventario
 end;
 
 function TdmDevoluciones.EncuentraProd(IdProd: String;Var ValUni:Double;var ID:Integer):String;

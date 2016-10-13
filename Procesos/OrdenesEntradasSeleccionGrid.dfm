@@ -6,6 +6,7 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
+      Height = 256
       inherited tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
@@ -47,14 +48,8 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
     DockControlHeights = (
       0
       0
-      31
+      28
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 238
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -64,6 +59,7 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42655.413701307870000000
       AssignedFormatValues = []
       BuiltInReportLink = True
     end

@@ -27,7 +27,8 @@ uses
   cxGridDBTableView, dxPSCore, dxPScxCommon, dxBar, Vcl.ImgList,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns,
   System.Actions, Vcl.ActnList, Vcl.StdCtrls, cxGridLevel, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls, cxDBLookupComboBox, cxBarEditItem, cxCalc;
+  cxGrid, Vcl.ExtCtrls, cxDBLookupComboBox, cxBarEditItem, cxCalc, cxTextEdit,
+  cxSpinEdit;
 
 type
   TfrmrptVentasProyeccion = class(T_frmGrid)
@@ -62,6 +63,8 @@ type
     tvMasterComprar2: TcxGridDBColumn;
     tvMasterProveedor3: TcxGridDBColumn;
     tvMasterComprar3: TcxGridDBColumn;
+    cxBarEditItem2: TcxBarEditItem;
+    cxBrEdtItmMeses: TcxBarEditItem;
   private
     FactExecute: TBasicAction;
     { Private declarations }

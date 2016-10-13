@@ -1,28 +1,27 @@
 inherited frmrptVentasProyeccion: TfrmrptVentasProyeccion
   Caption = 'frmrptVentasProyeccion'
-  ClientWidth = 702
-  ExplicitWidth = 702
-  ExplicitHeight = 457
+  ClientWidth = 863
+  ExplicitWidth = 863
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 702
+    Width = 863
     ExplicitWidth = 702
   end
   inherited splDetail1: TSplitter
-    Width = 702
+    Width = 863
     ExplicitWidth = 702
   end
   inherited splDetail2: TSplitter
-    Width = 702
+    Width = 863
     ExplicitWidth = 702
   end
   inherited pnlMaster: TPanel
-    Width = 702
-    ExplicitWidth = 702
+    Width = 863
+    ExplicitWidth = 863
     inherited cxGrid: TcxGrid
-      Width = 702
-      ExplicitWidth = 702
+      Width = 863
+      ExplicitWidth = 863
       inherited tvMaster: TcxGridDBTableView
         OptionsBehavior.FocusCellOnTab = True
         OptionsBehavior.FocusFirstCellOnNewRecord = True
@@ -137,23 +136,23 @@ inherited frmrptVentasProyeccion: TfrmrptVentasProyeccion
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 702
-    ExplicitWidth = 702
+    Width = 863
+    ExplicitWidth = 863
   end
   inherited pnlDetail2: TPanel
-    Width = 702
-    ExplicitWidth = 702
+    Width = 863
+    ExplicitWidth = 863
   end
   inherited pnlDetail1: TPanel
-    Width = 702
-    ExplicitWidth = 702
+    Width = 863
+    ExplicitWidth = 863
   end
   inherited pnlClose: TPanel
-    Width = 702
-    ExplicitWidth = 702
+    Width = 863
+    ExplicitWidth = 863
     inherited btnClose: TButton
-      Left = 617
-      ExplicitLeft = 617
+      Left = 778
+      ExplicitLeft = 778
     end
   end
   inherited DataSource: TDataSource
@@ -165,12 +164,6 @@ inherited frmrptVentasProyeccion: TfrmrptVentasProyeccion
       0
       31
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 105
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 233
-    end
     inherited dxbFilter: TdxBar
       ItemLinks = <
         item
@@ -245,14 +238,32 @@ inherited frmrptVentasProyeccion: TfrmrptVentasProyeccion
       Hint = 'Meses para la proyecci'#243'n'
       Visible = ivAlways
       ShowCaption = True
+      PropertiesClassName = 'TcxTextEditProperties'
       InternalEditValue = 0
     end
     object btnExecute: TdxBarButton
-      Caption = 'Poryectar'
+      Caption = 'Proyectar'
       Category = 0
+      Hint = 'Proyectar'
       Visible = ivAlways
       ImageIndex = 13
       PaintStyle = psCaptionGlyph
+    end
+    object cxBarEditItem2: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxTextEditProperties'
+    end
+    object cxBrEdtItmMeses: TcxBarEditItem
+      Caption = 'New Item'
+      Category = 0
+      Hint = 'New Item'
+      Visible = ivAlways
+      PropertiesClassName = 'TcxSpinEditProperties'
+      Properties.MinValue = 1.000000000000000000
+      InternalEditValue = 6
     end
   end
   inherited cxStyleRepository: TcxStyleRepository
@@ -263,7 +274,7 @@ inherited frmrptVentasProyeccion: TfrmrptVentasProyeccion
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = []
+      ReportDocument.CreationDate = 42642.430463379630000000
       BuiltInReportLink = True
     end
   end

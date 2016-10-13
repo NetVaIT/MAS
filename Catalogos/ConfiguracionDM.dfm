@@ -5,10 +5,10 @@ inherited dmConfiguracion: TdmConfiguracion
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
-      'SELECT IdPais, IdMoneda, RutaBaseFacturas, '#13#10'CorreoEnvio, HostEn' +
-      'vio, PuertoEnvio, UsuarioCorreo, PasswordCorreo, TipoSeguridad, ' +
-      'MetodoAutenticacion, UltimoFolioPago, UltimaSeriePago'#13#10'FROM Conf' +
-      'iguraciones'
+      'SELECT IdPais, IdMoneda, RutaBaseFacturas, IdEspacioAduana ,'#13#10'Co' +
+      'rreoEnvio, HostEnvio, PuertoEnvio, UsuarioCorreo, PasswordCorreo' +
+      ', TipoSeguridad, MetodoAutenticacion, UltimoFolioPago, UltimaSer' +
+      'iePago'#13#10'FROM Configuraciones'
     object adodsMasterIdPais: TIntegerField
       FieldName = 'IdPais'
       Visible = False
@@ -82,6 +82,9 @@ inherited dmConfiguracion: TdmConfiguracion
       DisplayLabel = 'Ultima Serie Pago'
       FieldName = 'UltimaSeriePago'
     end
+    object adodsMasterIdEspacioAduana: TIntegerField
+      FieldName = 'IdEspacioAduana'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 592
@@ -123,7 +126,7 @@ inherited dmConfiguracion: TdmConfiguracion
     CursorType = ctStatic
     CommandText = 'select IdPais, Descripcion from Paises'
     Parameters = <>
-    Left = 104
+    Left = 112
     Top = 16
   end
   object adodsMonedas: TADODataSet
