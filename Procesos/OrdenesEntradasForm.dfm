@@ -1,76 +1,86 @@
 inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   Caption = 'Orden de entrada'
   ClientHeight = 600
-  ClientWidth = 800
-  ExplicitWidth = 800
+  ClientWidth = 1063
+  ExplicitWidth = 1063
   ExplicitHeight = 600
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Top = 515
-    Width = 800
+    Width = 1063
     ExplicitTop = 515
     ExplicitWidth = 800
   end
   inherited splDetail2: TSplitter
     Top = 471
-    Width = 800
+    Width = 1063
     ExplicitTop = 471
     ExplicitWidth = 800
   end
   inherited splDetail1: TSplitter
     Top = 427
-    Width = 800
+    Width = 1063
     ExplicitTop = 427
     ExplicitWidth = 800
   end
   inherited pnlClose: TPanel
     Top = 559
-    Width = 800
+    Width = 1063
     ExplicitTop = 559
-    ExplicitWidth = 800
+    ExplicitWidth = 1063
   end
   inherited pnlDetail3: TPanel
     Top = 518
-    Width = 800
+    Width = 1063
     ExplicitTop = 518
-    ExplicitWidth = 800
+    ExplicitWidth = 1063
   end
   inherited pnlDetail2: TPanel
     Top = 474
-    Width = 800
+    Width = 1063
     ExplicitTop = 474
-    ExplicitWidth = 800
+    ExplicitWidth = 1063
   end
   inherited pnlDetail1: TPanel
     Top = 430
-    Width = 800
+    Width = 1063
+    ExplicitLeft = 0
     ExplicitTop = 430
-    ExplicitWidth = 800
+    ExplicitWidth = 1063
   end
   inherited pcMain: TcxPageControl
     Top = 22
-    Width = 800
+    Width = 1063
     Height = 405
     TabStop = False
     ExplicitTop = 22
-    ExplicitWidth = 800
+    ExplicitWidth = 1063
     ExplicitHeight = 405
     ClientRectBottom = 401
-    ClientRectRight = 796
+    ClientRectRight = 1059
     inherited tsGeneral: TcxTabSheet
-      ExplicitWidth = 792
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 1055
       ExplicitHeight = 397
       inherited cxScrollBox1: TcxScrollBox
-        Width = 792
+        Width = 1055
         Height = 397
-        ExplicitWidth = 792
+        ExplicitWidth = 1055
         ExplicitHeight = 397
         inherited tbarData: TToolBar
-          Width = 790
-          ExplicitWidth = 790
-          object ToolButton3: TToolButton
+          Width = 1053
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 1053
+          object TlBtnImprimir: TToolButton
             Left = 254
+            Top = 0
+            Action = dmOrdenesEntradas.ActImpresion
+          end
+          object ToolButton3: TToolButton
+            Left = 277
             Top = 0
             Width = 8
             Caption = 'ToolButton3'
@@ -78,19 +88,19 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
             Style = tbsSeparator
           end
           object btnRecibr: TSpeedButton
-            Left = 262
+            Left = 285
             Top = 0
             Width = 90
             Height = 22
           end
           object btnAplicar: TSpeedButton
-            Left = 352
+            Left = 375
             Top = 0
             Width = 90
             Height = 22
           end
           object ToolButton4: TToolButton
-            Left = 442
+            Left = 465
             Top = 0
             Width = 151
             Caption = 'ToolButton4'
@@ -98,22 +108,39 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
             Style = tbsSeparator
           end
           object SpdBtnAcomodarGenerico: TSpeedButton
-            Left = 593
+            Left = 616
             Top = 0
             Width = 104
             Height = 22
             Caption = 'Acomodo Gen'#233'rico'
           end
+          object ToolButton5: TToolButton
+            Left = 720
+            Top = 0
+            Width = 49
+            Caption = 'ToolButton5'
+            ImageIndex = 14
+            Style = tbsSeparator
+          end
+          object SpdBtnAcomodoIndividual: TSpeedButton
+            Left = 769
+            Top = 0
+            Width = 104
+            Height = 22
+            Caption = 'Acomodo Individual'
+          end
         end
         inherited pnlMaster: TPanel
-          Width = 790
+          Width = 1053
           Height = 370
-          ExplicitWidth = 790
+          ExplicitLeft = 0
+          ExplicitTop = 25
+          ExplicitWidth = 1053
           ExplicitHeight = 370
           object pnlDetail: TPanel
             Left = 0
             Top = 177
-            Width = 790
+            Width = 1053
             Height = 82
             Align = alClient
             BevelOuter = bvNone
@@ -122,7 +149,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 790
+            Width = 1053
             Height = 177
             Align = alTop
             TabOrder = 0
@@ -187,6 +214,20 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               Height = 13
               Caption = 'Almacen'
               FocusControl = lcbAlmacen
+            end
+            object Label8: TLabel
+              Left = 312
+              Top = 133
+              Width = 50
+              Height = 13
+              Caption = 'NoFactura'
+            end
+            object Label10: TLabel
+              Left = 510
+              Top = 133
+              Width = 50
+              Height = 13
+              Caption = 'Pedimento'
             end
             object edtMoneda: TDBLookupComboBox
               Left = 9
@@ -272,11 +313,27 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
               DataSource = DataSource
               TabOrder = 2
             end
+            object cxDBLabel1: TcxDBLabel
+              Left = 510
+              Top = 149
+              DataBinding.DataField = 'Pedimento'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 238
+            end
+            object cxDBLabel3: TcxDBLabel
+              Left = 312
+              Top = 149
+              DataBinding.DataField = 'NoFactura'
+              DataBinding.DataSource = DataSource
+              Height = 21
+              Width = 153
+            end
           end
           object pnlPie: TPanel
             Left = 0
             Top = 259
-            Width = 790
+            Width = 1053
             Height = 111
             Align = alBottom
             TabOrder = 2
@@ -361,7 +418,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
   object PnlTitulo: TPanel [8]
     Left = 0
     Top = 0
-    Width = 800
+    Width = 1063
     Height = 22
     Align = alTop
     Color = 5553385
@@ -387,6 +444,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
     end
   end
   inherited DataSource: TDataSource
+    DataSet = dmOrdenesEntradas.adodsMaster
     Left = 646
     Top = 72
   end
@@ -394,7 +452,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
     Left = 686
     Top = 64
     Bitmap = {
-      494C010102000400C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400D00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -541,7 +599,7 @@ inherited frmOrdenesEntradas: TfrmOrdenesEntradas
     Left = 752
     Top = 64
     Bitmap = {
-      494C01010D002803F40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D002803000210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

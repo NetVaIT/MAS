@@ -29,6 +29,9 @@ type
     tvMasterIdPaqueteria: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
+    tvMasterTelefono1: TcxGridDBColumn;
+    tvMasterTelefono2: TcxGridDBColumn;
+    tvMasterContacto: TcxGridDBColumn;
   private
     { Private declarations }
   public

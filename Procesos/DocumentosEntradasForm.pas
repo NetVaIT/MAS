@@ -60,6 +60,11 @@ type
     PnlTitulo: TPanel;
     cxDBLabel3: TcxDBLabel;
     btnEmail: TToolButton;
+    PnlDatosFactura: TPanel;
+    cxDBTextEdit1: TcxDBTextEdit;
+    Label13: TLabel;
+    Label14: TLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure pnlDetailEnter(Sender: TObject);
   private

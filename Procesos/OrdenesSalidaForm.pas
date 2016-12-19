@@ -1167,8 +1167,8 @@ end;
 
 
 procedure TFrmOrdenesSalida.DBGrid1CellClick(Column: TColumn);
-begin
-  inherited;  //Se movio aca porque sólo se usa al editar.
+begin       //verificar que tenga el valor oct 28/16
+  inherited;  //Se movio aca porque sólo se usa al editar.  //Verificer que no tenga problemas de diferencias
   dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
   dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
   dsProductosXEspacio.DataSet.Filtered:=True;
@@ -1202,7 +1202,8 @@ end;
 procedure TFrmOrdenesSalida.DSSalidasUbicacionesDataChange(Sender: TObject;
   Field: TField);
 begin
-  inherited;                                                                         //  and ( not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull)
+  inherited;
+  //Verificar euq el idproducto de salidasubicaciones tenga el valor  Oct 28/16                                                                    //  and ( not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull)
   if (not (dsSalidasUbicaciones.dataset.eof)) and (dsSalidasUbicaciones.State =dsBrowse)  then   //Para que el siguiente quede filtrado..  Oct 3/16
   begin
     dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
@@ -1386,6 +1387,7 @@ begin
         DSsalidasUbicaciones.dataset.insert;
         DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').asinteger;
         DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
+        DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
         DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
         DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
 //        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);

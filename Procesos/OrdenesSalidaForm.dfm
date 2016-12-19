@@ -3,6 +3,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -256,7 +257,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               DataSource = DataSource
             end
             object DBTxtEstatus: TDBText
-              Left = 341
+              Left = 339
               Top = 35
               Width = 65
               Height = 17
@@ -1750,7 +1751,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                   end
                   item
                     Expanded = False
-                    FieldName = 'Producto'
+                    FieldName = 'ProductoDirecto'
                     Width = 187
                     Visible = True
                   end
@@ -1984,7 +1985,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004001C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400240210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2200,7 +2201,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002580210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002600210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

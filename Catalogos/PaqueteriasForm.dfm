@@ -1,14 +1,39 @@
 inherited frmPaqueteriasGrid: TfrmPaqueteriasGrid
   Caption = 'Paqueter'#237'as'
-  ExplicitWidth = 750
+  ClientWidth = 877
+  ExplicitWidth = 877
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 877
+  end
+  inherited splDetail2: TSplitter
+    Width = 877
+  end
+  inherited splDetail1: TSplitter
+    Width = 877
+  end
   inherited pnlClose: TPanel
-    ExplicitTop = 615
+    Width = 877
+  end
+  inherited pnlDetail3: TPanel
+    Width = 877
+  end
+  inherited pnlDetail2: TPanel
+    Width = 877
+  end
+  inherited pnlDetail1: TPanel
+    Width = 877
+  end
+  inherited pnltoolbar: TPanel
+    Width = 877
   end
   inherited pnlMaster: TPanel
+    Width = 877
     inherited cxGrid: TcxGrid
+      Width = 877
+      ExplicitTop = 32
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdPaqueteria: TcxGridDBColumn
           DataBinding.FieldName = 'IdPaqueteria'
@@ -16,12 +41,29 @@ inherited frmPaqueteriasGrid: TfrmPaqueteriasGrid
         end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
+          Width = 107
         end
         object tvMasterDescripcion: TcxGridDBColumn
+          Caption = 'Descripci'#243'n'
           DataBinding.FieldName = 'Descripcion'
-          Width = 300
+          Width = 283
+        end
+        object tvMasterContacto: TcxGridDBColumn
+          DataBinding.FieldName = 'Contacto'
+          Width = 250
+        end
+        object tvMasterTelefono1: TcxGridDBColumn
+          DataBinding.FieldName = 'Telefono1'
+          Width = 100
+        end
+        object tvMasterTelefono2: TcxGridDBColumn
+          DataBinding.FieldName = 'Telefono2'
+          Width = 100
         end
       end
+    end
+    inherited tbarGrid: TToolBar
+      Width = 877
     end
   end
   inherited DataSource: TDataSource
@@ -29,7 +71,7 @@ inherited frmPaqueteriasGrid: TfrmPaqueteriasGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -170,7 +212,7 @@ inherited frmPaqueteriasGrid: TfrmPaqueteriasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

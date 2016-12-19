@@ -1,5 +1,6 @@
 inherited dmPersonasDomicilios: TdmPersonasDomicilios
   OldCreateOrder = True
+  Height = 446
   Width = 501
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
@@ -8,8 +9,9 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     CommandText = 
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
       'Tipo, IdEnvioTipo ,Predeterminado, '#13#10'Identificador, Saldo, UsarP' +
-      'araEnvio, IdMetododePago, NumCtaPagoCliente'#13#10' FROM PersonasDomic' +
-      'ilios '#13#10'WHERE IdPersona = :IdPersona'
+      'araEnvio, IdMetododePago, '#13#10'NumCtaPagoCliente, Servicio, PagoFle' +
+      'te, Asegurado'#13#10' FROM PersonasDomicilios '#13#10'WHERE IdPersona = :IdP' +
+      'ersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -173,6 +175,17 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       FieldName = 'NumCtaPagoCliente'
       Size = 30
     end
+    object adodsMasterServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object adodsMasterPagoFlete: TBooleanField
+      DisplayLabel = 'Pago Flete'
+      FieldName = 'PagoFlete'
+    end
+    object adodsMasterAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 336
@@ -216,7 +229,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       'nes.IdPoblacion'#13#10
     Parameters = <>
     Left = 120
-    Top = 48
+    Top = 40
     object adodsDomiciliosIdDomicilio: TAutoIncField
       FieldName = 'IdDomicilio'
       ReadOnly = True
@@ -356,5 +369,26 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     Parameters = <>
     Left = 424
     Top = 256
+  end
+  object ADODtStPaqueterias: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdPaqueteria, Identificador, Descripcion from Paqueterias' +
+      ' order by identificador'
+    Parameters = <>
+    Left = 40
+    Top = 344
+    object ADODtStPaqueteriasIdPaqueteria: TAutoIncField
+      FieldName = 'IdPaqueteria'
+      ReadOnly = True
+    end
+    object ADODtStPaqueteriasIdentificador: TStringField
+      FieldName = 'Identificador'
+    end
+    object ADODtStPaqueteriasDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 100
+    end
   end
 end

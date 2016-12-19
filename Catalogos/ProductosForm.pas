@@ -79,8 +79,8 @@ begin
   begin
     DataSource.DataSet.Close;                                   //May 11/16    '+ParteAp+ '      ' left join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto)  '+
     TAdoDataset(DataSource.DataSet).commandText:='Select P.*,Identificador1 + '' - '' + P.Descripcion AS Identificador  from Productos P '+  //Ajustado para que funcione consulta Ago 16/16
-                                          ' where(Identificador1 Like '''+IDProd+'%'' or Identificador2 like '''+IDProd+
-                                          '%'' or Identificador3 Like '''+IDProd+'%'')';
+                                          ' where(Identificador1 Like ''%'+IDProd+'%'' or Identificador2 like ''%'+IDProd+
+                                          '%'' or Identificador3 Like ''%'+IDProd+'%'')';               //Ajustados para qu wbusque parcial cualquier pedazo Dic 2/16
     DataSource.DataSet.open;
     if DataSource.DataSet.Eof then
     begin

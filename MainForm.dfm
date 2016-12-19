@@ -364,11 +364,11 @@ inherited frmMain: TfrmMain
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton34'
+          ItemName = 'dxBarLargeButton24'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton24'
+          ItemName = 'dxBarLargeButton34'
         end>
       OneOnRow = True
       Row = 0

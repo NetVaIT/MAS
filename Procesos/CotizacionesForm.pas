@@ -135,6 +135,11 @@ type
     DBLookupComboBox3: TDBLookupComboBox;
     DSDireccionenvios: TDataSource;
     cxDBCheckBox1: TcxDBCheckBox;
+    dsFotos: TDataSource;
+    DsEspecifica: TDataSource;
+    DsDocs: TDataSource;
+    cxDBCheckBox2: TcxDBCheckBox;
+    cxDBCheckBox4: TcxDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure TlBtnBorraClick(Sender: TObject);
     procedure DBGrdDetallesEditButtonClick(Sender: TObject);
@@ -374,6 +379,11 @@ begin
   FrmListaProductos:=TFrmListaProductos.Create(Self);
   FrmListaProductos.DataSet:=DSAuxiliar.DataSet;
   FrmListaProductos.DataSet.Close;  //Adicional par evitar consulta anterior
+  //Para usar Notas y detalles Dic 2/16
+  FrmListaProductos.datasourceFotos.DataSet:=  dsFotos.dataset;
+  FrmListaProductos.dsEspecificaciones.DataSet:=  dsEspecifica.dataset;
+  FrmListaProductos.DSDocumento.DataSet:= dsDocs.dataset; //HAsta aca nov 2/16
+
  // if DataSourceDetail.State in [dsEdit] then
  if (DataSourceDetail.DataSet.FieldByName('ClaveProducto').asString <> '') then
   begin
@@ -433,7 +443,14 @@ begin
         DataSource.DataSet.FieldByName('IdDomicilioCliente').AsInteger:= dsDireccionCliente.dataset.Fieldbyname('IDPersonaDomicilio').AsInteger;
      TAdoDataSet(DSAntSaldos.DataSet).Parameters.ParamByName('IdPersonaReceptor').Value:=DBLkpCmbBxCliente.KeyValue;
      if not dsDireccionCliente.dataset.Fieldbyname('IDEnvioTipo').IsNull then //May18/16
+     begin
        DataSource.DataSet.FieldByName('IDPaqueteria').AsInteger:=dsDireccionCliente.dataset.Fieldbyname('IDEnvioTipo').asInteger;  //May18/16
+       //Dic 17/16 DAtos adicionales
+       DataSource.DataSet.FieldByName('Servicio').asString:=  dsDireccionCliente.dataset.Fieldbyname('Servicio').asString;
+       DataSource.DataSet.FieldByName('PagoFlete').AsBoolean:=dsDireccionCliente.dataset.Fieldbyname('PagoFlete').asboolean;
+       DataSource.DataSet.FieldByName('Asegurado').AsBoolean:=dsDireccionCliente.dataset.Fieldbyname('Asegurado').asboolean;
+       //Hasta aca
+     end;
    end;
 end;
 

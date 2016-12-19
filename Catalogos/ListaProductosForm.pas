@@ -19,7 +19,9 @@ uses
   dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter, cxCustomData,
   cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData,
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, cxGridLevel, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,Data.Win.ADODB;
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,Data.Win.ADODB,
+  cxPCdxBarPopupMenu, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Vcl.Imaging.jpeg,
+  cxPC, shellapi;
 
 type
   TfrmListaProductos = class(TForm)
@@ -41,12 +43,36 @@ type
     ChckBxMostrarAplicacion: TCheckBox;
     tvMasterAplicacion: TcxGridDBColumn;
     tvMasterIdentificador: TcxGridDBColumn;
+    BtBtnFotosNotasyEspecificacion: TBitBtn;
+    cxPgCntrlEspecifica: TcxPageControl;
+    cxTbShtFotosYDocs: TcxTabSheet;
+    PnlFotos: TPanel;
+    ImgFoto: TImage;
+    Label9: TLabel;
+    ImgVacio: TImage;
+    Label11: TLabel;
+    DBText1: TDBText;
+    SpdBtnVerArchivo: TSpeedButton;
+    DBNavigatorFotos: TDBNavigator;
+    cxTbShtEspecifica: TcxTabSheet;
+    DBGrid1: TDBGrid;
+    BtBtnCerrar: TBitBtn;
+    DBText2: TDBText;
+    DSDocumento: TDataSource;
+    datasourceFotos: TDataSource;
+    dsEspecificaciones: TDataSource;
+    BitBtn1: TBitBtn;
+    LblSinfotosDoctos: TLabel;
     procedure tvMasterDblClick(Sender: TObject);
     procedure SpdBtnBuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure BtBtnFotosNotasyEspecificacionClick(Sender: TObject);
+    procedure BtBtnCerrarClick(Sender: TObject);
+    procedure DBNavigatorFotosClick(Sender: TObject; Button: TNavigateBtn);
+    procedure SpdBtnVerArchivoClick(Sender: TObject);
   private
     { Private declarations }
     FDataSet: TDataSet;
@@ -77,6 +103,51 @@ implementation
 {$R *.dfm}
 
 uses ProductosDM, CotizacionesDM;
+
+procedure TfrmListaProductos.BtBtnCerrarClick(Sender: TObject);
+begin
+  cxPgCntrlEspecifica.Visible:=False;
+end;
+
+procedure TfrmListaProductos.BtBtnFotosNotasyEspecificacionClick(
+  Sender: TObject);
+begin
+  dsEspecificaciones.DataSet.Close;
+  TADODataSet(dsEspecificaciones.DataSet).Parameters.ParamByName('IdProducto').Value:=idProducto;
+  dsEspecificaciones.DataSet.Open;
+
+  datasourceFotos.DataSet.Close;
+  TADODataSet(datasourceFotos.DataSet).Parameters.ParamByName('IdProducto').Value:=idProducto;
+  datasourceFotos.DataSet.Open;
+
+  LblSinfotosDoctos.Visible:= datasourceFotos.DataSet.Eof;
+
+  if datasourceFotos.DataSet.Eof and dsEspecificaciones.DataSet.Eof then   //Dic 17/16
+  begin
+    Showmessage('No hay información disponible para este producto');
+  end
+  else
+    cxPgCntrlEspecifica.Visible:=True;
+
+end;
+
+procedure TfrmListaProductos.DBNavigatorFotosClick(Sender: TObject;
+  Button: TNavigateBtn);      //Dic 2/16 Copiado desde edicionprod
+var
+  NombreA:  TFileName;
+begin
+  inherited;
+  if fileExists( dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin                  //DataSourceFotos .
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    SpdBtnVerArchivo.Visible:= (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX'); //Feb 3/16
+    try
+      ImgFoto.Picture.LoadFromFile(NombreA);
+    Except
+      ImgFoto.Picture:=ImgVacio.Picture;
+    end;
+  end;
+end;
 
 procedure TfrmListaProductos.FormCreate(Sender: TObject);
 begin
@@ -154,8 +225,8 @@ begin
      begin
        TAdoDataset(DataSource.DataSet).commandText:='Select P.* '+ParteAp+ 'from Productos P '+
                                           ' left join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto)  '+
-                                          ' where(Identificador1 Like '''+IDProd+'%'' or Identificador2 like '''+IDProd+
-                                          '%'' or Identificador3 Like '''+IDProd+'%'')';
+                                          ' where(Identificador1 Like ''%'+IDProd+'%'' or Identificador2 like ''%'+IDProd+
+                                          '%'' or Identificador3 Like ''%'+IDProd+'%'')';    //Ajuste para que busque parcial  //Dic 2/16
      end;
     DataSource.DataSet.open;
     if DataSource.DataSet.Eof then
@@ -170,6 +241,22 @@ begin
       DataSource.DataSet.open;
     end;
   end;
+end;
+
+procedure TfrmListaProductos.SpdBtnVerArchivoClick(Sender: TObject);
+Var
+  nombreA:String;  //Dic 2/16 Copiado desde edicionprod
+begin
+  inherited;
+  if fileExists(dsDocumento.DataSet.FieldByName('NombreArchivo').AsString) then
+  begin
+    NombreA:=dsDocumento.DataSet.FieldByName('NombreArchivo').AsString;
+    if (upperCase(ExtractFileExt(NombreA))='.PDF') or (upperCase(ExtractFileExt(NombreA))='.DOC') or (upperCase(ExtractFileExt(NombreA))='.DOCX') then
+      ShellExecute(application.Handle, 'open', PChar(NombreA), nil, nil, SW_SHOWNORMAL)
+    else
+      ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
+  end;
+
 end;
 
 procedure TfrmListaProductos.tvMasterCellDblClick(

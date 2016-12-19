@@ -5,6 +5,7 @@ inherited dmProductos: TdmProductos
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforeInsert = adodsMasterBeforeInsert
+    BeforePost = adodsMasterBeforePost
     CommandText = 
       'SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, ' +
       #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +
@@ -155,7 +156,7 @@ inherited dmProductos: TdmProductos
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = 40
+        Value = Null
       end>
     Left = 56
     Top = 248
@@ -544,7 +545,7 @@ inherited dmProductos: TdmProductos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -4128,5 +4129,160 @@ inherited dmProductos: TdmProductos
     DataSet = ADODtStPrecioXEscala
     Left = 700
     Top = 386
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 60
+    Top = 441
+  end
+  object ADOConProdFotos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
+      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 40
+      end>
+    Left = 720
+    Top = 184
+    object IntegerField2: TIntegerField
+      FieldName = 'IdProductoFoto'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object StringField2: TStringField
+      FieldName = 'Notas'
+      Size = 500
+    end
+    object StringField3: TStringField
+      FieldKind = fkLookup
+      FieldName = 'NombreArchivo'
+      LookupDataSet = ADOConDocumentoPF
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumento'
+      Size = 150
+      Lookup = True
+    end
+  end
+  object ADOConProdEspecificacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    AfterOpen = ADODtStEspecificacionesAfterOpen
+    CommandText = 
+      'select IdProductoEspecificacion, IdProducto, IdEspecificacionTip' +
+      'o,'#13#10' Descripcion from ProductosEspecificaciones'#13#10'where IDProduct' +
+      'o=:IdProducto'#13#10
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 960
+    Top = 193
+    object AutoIncField1: TAutoIncField
+      FieldName = 'IdProductoEspecificacion'
+      ReadOnly = True
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object IntegerField6: TIntegerField
+      FieldName = 'IdEspecificacionTipo'
+    end
+    object StringField4: TStringField
+      FieldName = 'Descripcion'
+      Size = 300
+    end
+    object StringField5: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Tipo'
+      LookupDataSet = ADODtStTipoEspecificacion
+      LookupKeyFields = 'IdEspecificacionTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdEspecificacionTipo'
+      Lookup = True
+    end
+  end
+  object ADOConDocumentoPF: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
+      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
+      ' iddocumento=:IdDocumento'
+    DataSource = dsConProdFotos
+    IndexFieldNames = 'IdDocumento'
+    MasterFields = 'IdDocumento'
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 5
+      end>
+    Left = 720
+    Top = 240
+    object AutoIncField2: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object IntegerField7: TIntegerField
+      FieldName = 'IdDocumentoTipo'
+    end
+    object IntegerField8: TIntegerField
+      FieldName = 'IdDocumentoClase'
+    end
+    object StringField6: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object StringField7: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
+    object GuidField1: TGuidField
+      FieldName = 'IdArchivo'
+      FixedChar = True
+      Size = 38
+    end
+    object BlobField1: TBlobField
+      FieldName = 'Archivo'
+    end
+  end
+  object ADOConProdDocto: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoDocumento, IdProducto, IdDocumento, Notas from ' +
+      'ProductosDocumentos'
+    DataSource = dsMaster
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <>
+    Left = 824
+    Top = 240
+  end
+  object dsConProdFotos: TDataSource
+    DataSet = ADOConProdFotos
+    OnDataChange = dsProductosFotosDataChange
+    Left = 824
+    Top = 184
   end
 end

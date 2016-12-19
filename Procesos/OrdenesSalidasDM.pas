@@ -306,6 +306,12 @@ type
     ADODtStInformacionEnvioOrdenEmbImpresa: TBooleanField;
     adodsMasterEtiquetaImpresa: TBooleanField;
     adodsMasterOrdenEmbImpresa: TBooleanField;
+    ADODtStSalidasUbicacionesIdProducto2: TIntegerField;
+    ADODtStSalidasUbicacionesProductoDirecto: TStringField;
+    ADODtStDatosDocumentoSalidaPagoFlete: TBooleanField;
+    ADODtStDatosDocumentoSalidaAsegurado: TBooleanField;
+    adodsMasterPagoFlete: TBooleanField;
+    adodsMasterAsegurado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -818,6 +824,7 @@ procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesBeforePost(     //Copiar a.
   DataSet: TDataSet);
 var valor,AGuardarAux:Double;
     TextoAux:String; //Jun 28/16
+    idprod:Integer;
 begin
   inherited;
   //Jun 28/16 Desde
@@ -826,10 +833,14 @@ begin
 
     TextoAux:='';
     //Asegurar qu este ubicada en     IdProductoXEspacio respectivo
-
+       // Aca deberia tener  el valor
+       if ADODtStSalidasUbicaciones.fieldbyname('IDProducto').Isnull then        //Oct 28/16
+         idprod:= ADODtStSalidasUbicaciones.fieldbyname('IDProductox').asinteger
+       else
+          idprod:=  ADODtStSalidasUbicaciones.fieldbyname('IDProducto').asinteger;
        AdoDtstProductosXEspacio.Close;
        AdoDtstProductosXEspacio.Parameters.ParamByName('IDAduana').Value:=dmConfiguracion.IDEspacioAduana; //Ajuste para que no aparezcan los de aduana   //Oct 3/16
-       AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;
+       AdoDtstProductosXEspacio.filter:= 'IDProducto='+inttostr(idprod);//ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;   //Oct 28/16
        AdoDtstProductosXEspacio.filtered:=True;
        AdoDtstProductosXEspacio.Open;
 
@@ -1046,10 +1057,10 @@ begin
   if ValorNvo>0 then
   begin
     AdoQryauxiliar.Close;
-    AdoQryauxiliar.SQL.Clear;
-    AdoQryauxiliar.SQL.Add('INSERT INTO SalidasUbicaciones (IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, Cantidad) ');
-    AdoQryauxiliar.SQL.Add('SElect  IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, '+ floatToSTR(valorNvo)+' from  SalidasUbicaciones Where IdSalidaUbicacion='+intToStr(idsalidaubicacion));
-    AdoQryauxiliar.ExecSQL;
+    AdoQryauxiliar.SQL.Clear;                              //Oct 28/16 Si se agrega el idproducto debe tambien colocarse aca
+    AdoQryauxiliar.SQL.Add('INSERT INTO SalidasUbicaciones (IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida,IDProducto, Cantidad) ');
+    AdoQryauxiliar.SQL.Add('SElect  IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida,IDProducto, '+ floatToSTR(valorNvo)+' from  SalidasUbicaciones Where IdSalidaUbicacion='+intToStr(idsalidaubicacion));
+    AdoQryauxiliar.ExecSQL;                                    //ASegurarse de hacer la actualización para que todas  tengan en idproducto oct 28/16
     Result:=True;
   end
   else
@@ -1166,9 +1177,9 @@ begin
       ADODtstInsertaInfoEntrega.Fieldbyname('Servicio').AsString:=adodsMaster.FieldByName('Servicio').AsString; ;
       ADODtstInsertaInfoEntrega.Fieldbyname('Contenido').AsString:='REFACCIONES AGRICOLAS' ;//JUL 28/16
 
-      ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:= False;
+      ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:=adodsMaster.FieldByName('PagoFlete').AsBoolean; //Ajustado Dic 18/16 False;
       ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
-      ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= False;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= adodsMaster.FieldByName('Asegurado').AsBoolean; //Ajustado Dic 18/16 False;
       ADODtstInsertaInfoEntrega.Fieldbyname('IDEstatusOrdenEntrega').AsInteger:= adodsMaster.FieldByName('IdOrdenEstatus').AsInteger; //Jun 10/16
 
       ADODtstInsertaInfoEntrega.Post; //Errror de operacion en varios pasos //Fecha

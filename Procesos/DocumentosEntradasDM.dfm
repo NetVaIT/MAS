@@ -1,16 +1,17 @@
 inherited dmDocumentosEntradas: TdmDocumentosEntradas
   OldCreateOrder = True
   Height = 634
-  Width = 510
+  Width = 594
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
-      'select IdDocumentoEntrada, IdDocumentoEntradaAnterior, IdDocumen' +
-      'toEntradaTipo, IdDocumentoEntradaEstatus, IdPersona, IdMoneda, I' +
-      'dUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, Observaciones' +
-      ' from DocumentosEntradas'#13#10'where IdDocumentoEntradaTipo = :IdDocu' +
-      'mentoEntradaTipo'#13#10'Order by Fecha DESC'
+      'select IdDocumentoEntrada, IdDocumentoEntradaAnterior,'#13#10' IdDocum' +
+      'entoEntradaTipo, IdDocumentoEntradaEstatus, IdPersona,'#13#10' IdMoned' +
+      'a, IdUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, '#13#10'Observa' +
+      'ciones, Identificador, Pedimento'#13#10' from DocumentosEntradas'#13#10'wher' +
+      'e IdDocumentoEntradaTipo = :IdDocumentoEntradaTipo'#13#10'Order by Fec' +
+      'ha DESC'
     Parameters = <
       item
         Name = 'IdDocumentoEntradaTipo'
@@ -144,6 +145,13 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       Size = 15
       Lookup = True
     end
+    object adodsMasterIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 10
+    end
+    object adodsMasterPedimento: TStringField
+      FieldName = 'Pedimento'
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 416
@@ -266,7 +274,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object dsMaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsMasterDataChange
-    Left = 168
+    Left = 176
     Top = 16
   end
   object adodsDocumentosDetalles: TADODataSet
@@ -617,7 +625,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810
@@ -4342,8 +4350,8 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object ADOQryAuxiliar: TADOQuery
     Connection = _dmConection.ADOConnection
     Parameters = <>
-    Left = 244
-    Top = 192
+    Left = 252
+    Top = 176
   end
   object adodsProductosProveedores: TADODataSet
     Connection = _dmConection.ADOConnection

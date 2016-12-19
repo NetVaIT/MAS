@@ -5,6 +5,7 @@ inherited frmCotizaciones: TfrmCotizaciones
   OnActivate = FormActivate
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -181,12 +182,14 @@ inherited frmCotizaciones: TfrmCotizaciones
           ExplicitHeight = 468
           object pnlDetail: TPanel
             Left = 0
-            Top = 209
+            Top = 232
             Width = 1267
-            Height = 148
+            Height = 125
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitTop = 209
+            ExplicitHeight = 148
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
@@ -277,7 +280,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               Left = 0
               Top = 29
               Width = 1267
-              Height = 119
+              Height = 96
               Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
               Color = clBtnFace
@@ -390,9 +393,11 @@ inherited frmCotizaciones: TfrmCotizaciones
             Left = 0
             Top = 0
             Width = 1267
-            Height = 209
+            Height = 232
             Align = alTop
             TabOrder = 1
+            ExplicitLeft = -1
+            ExplicitTop = 3
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -867,7 +872,7 @@ inherited frmCotizaciones: TfrmCotizaciones
               TabOrder = 6
             end
             object cxDBRadioGroup1: TcxDBRadioGroup
-              Left = 208
+              Left = 214
               Top = 151
               TabStop = False
               Caption = 'Servicio'
@@ -908,6 +913,24 @@ inherited frmCotizaciones: TfrmCotizaciones
               DataBinding.DataSource = DataSource
               TabOrder = 5
               Width = 121
+            end
+            object cxDBCheckBox2: TcxDBCheckBox
+              Left = 37
+              Top = 200
+              Caption = 'Pago Flete'
+              DataBinding.DataField = 'PagoFlete'
+              DataBinding.DataSource = DataSource
+              TabOrder = 24
+              Width = 81
+            end
+            object cxDBCheckBox4: TcxDBCheckBox
+              Left = 124
+              Top = 200
+              Caption = 'Asegurado'
+              DataBinding.DataField = 'Asegurado'
+              DataBinding.DataSource = DataSource
+              TabOrder = 25
+              Width = 78
             end
           end
           object Panel1: TPanel
@@ -1034,7 +1057,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400000210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1244,7 +1267,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C002480210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002500210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2232,5 +2255,20 @@ inherited frmCotizaciones: TfrmCotizaciones
     DataSet = dmCotizaciones.ADODtStDireccionesEnvio
     Left = 1060
     Top = 219
+  end
+  object dsFotos: TDataSource
+    DataSet = dmCotizaciones.ADOConProdFotos
+    Left = 1150
+    Top = 423
+  end
+  object DsEspecifica: TDataSource
+    DataSet = dmCotizaciones.ADOConProdDocto
+    Left = 1206
+    Top = 423
+  end
+  object DsDocs: TDataSource
+    DataSet = dmCotizaciones.ADOConProdDocto
+    Left = 1150
+    Top = 471
   end
 end

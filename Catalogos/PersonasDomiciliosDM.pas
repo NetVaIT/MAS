@@ -55,6 +55,13 @@ type
     adodsMasterExigeCta: TIntegerField;
     adodsMasterNumCtaPagoCliente: TStringField;
     ADODtStAuxiliar: TADODataSet;
+    ADODtStPaqueterias: TADODataSet;
+    ADODtStPaqueteriasIdPaqueteria: TAutoIncField;
+    ADODtStPaqueteriasIdentificador: TStringField;
+    ADODtStPaqueteriasDescripcion: TStringField;
+    adodsMasterServicio: TStringField;
+    adodsMasterPagoFlete: TBooleanField;
+    adodsMasterAsegurado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);

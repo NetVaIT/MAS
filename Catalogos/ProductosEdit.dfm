@@ -3,7 +3,6 @@ inherited frmProductosEdit: TfrmProductosEdit
   ClientHeight = 693
   OnActivate = FormActivate
   OnDestroy = FormDestroy
-  ExplicitWidth = 750
   ExplicitHeight = 693
   PixelsPerInch = 96
   TextHeight = 13
@@ -186,7 +185,7 @@ inherited frmProductosEdit: TfrmProductosEdit
                 333337FFFFFFFF77333330000000000333333777777777733333}
               NumGlyphs = 2
               Visible = False
-              OnClick = SpdBtnVerArchivoClick
+              OnClick = SpdBtnVerIdentificaClick
             end
             object cxDBTextEdit1: TcxDBTextEdit
               Left = 24
@@ -267,7 +266,7 @@ inherited frmProductosEdit: TfrmProductosEdit
               TabOrder = 9
               Width = 126
             end
-            object cxDBTextEdit6: TcxDBTextEdit
+            object cxDBTxtIdentificador1: TcxDBTextEdit
               Left = 24
               Top = 46
               DataBinding.DataField = 'Identificador1'
@@ -275,7 +274,7 @@ inherited frmProductosEdit: TfrmProductosEdit
               TabOrder = 0
               Width = 145
             end
-            object cxDBTextEdit7: TcxDBTextEdit
+            object cxDBTxtIdentificador2: TcxDBTextEdit
               Left = 191
               Top = 46
               DataBinding.DataField = 'Identificador2'
@@ -283,7 +282,7 @@ inherited frmProductosEdit: TfrmProductosEdit
               TabOrder = 1
               Width = 145
             end
-            object cxDBTextEdit8: TcxDBTextEdit
+            object cxDBTxtIdentificador3: TcxDBTextEdit
               Left = 356
               Top = 46
               DataBinding.DataField = 'Identificador3'
@@ -593,11 +592,12 @@ inherited frmProductosEdit: TfrmProductosEdit
   inherited DataSource: TDataSource
     AutoEdit = False
     DataSet = dmProductos.adodsMaster
+    OnStateChange = DataSourceStateChange
     OnDataChange = DataSourceDataChange
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C0101020004006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -746,7 +746,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000
@@ -1307,5 +1307,10 @@ inherited frmProductosEdit: TfrmProductosEdit
     DataSet = dmProductos.ADODtStEspecificaciones
     Left = 654
     Top = 328
+  end
+  object DSAuxiliar: TDataSource
+    DataSet = dmProductos.ADOQryAuxiliar
+    Left = 678
+    Top = 136
   end
 end

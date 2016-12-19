@@ -70,6 +70,8 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
         ExplicitHeight = 403
         inherited tbarData: TToolBar
           Width = 796
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 796
           object ToolButton3: TToolButton
             Left = 254
@@ -271,6 +273,44 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               TabOrder = 7
               Width = 121
             end
+            object PnlDatosFactura: TPanel
+              Left = 300
+              Top = 90
+              Width = 477
+              Height = 51
+              BevelOuter = bvNone
+              TabOrder = 8
+              object Label13: TLabel
+                Left = 12
+                Top = 3
+                Width = 110
+                Height = 22
+                Caption = 'No. Factura Proveedor'
+              end
+              object Label14: TLabel
+                Left = 152
+                Top = 3
+                Width = 50
+                Height = 13
+                Caption = 'Pedimento'
+                FocusControl = cxDBTextEdit5
+              end
+              object cxDBTextEdit1: TcxDBTextEdit
+                Left = 8
+                Top = 19
+                DataBinding.DataSource = DataSource
+                TabOrder = 0
+                Width = 121
+              end
+              object cxDBTextEdit5: TcxDBTextEdit
+                Left = 152
+                Top = 19
+                DataBinding.DataField = 'Pedimento'
+                DataBinding.DataSource = DataSource
+                TabOrder = 1
+                Width = 249
+              end
+            end
           end
           object pnlPie: TPanel
             Left = 0
@@ -321,7 +361,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
             end
             object cxDBTextEdit3: TcxDBTextEdit
               Left = 627
-              Top = 21
+              Top = 22
               DataBinding.DataField = 'SubTotal'
               DataBinding.DataSource = DataSource
               Enabled = False
@@ -375,9 +415,12 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
       Width = 124
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmDocumentosEntradas.adodsMaster
+  end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -518,7 +561,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010E002803E00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E002803E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

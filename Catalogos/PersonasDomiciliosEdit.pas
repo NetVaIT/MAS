@@ -21,7 +21,8 @@ uses
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxContainer,
   cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxLabel, cxDBLabel, cxCheckBox, cxDBEdit, Vcl.DBCtrls,
-  Vcl.Buttons, Vcl.StdCtrls, cxScrollBox, cxPC,Data.Win.ADODB;
+  Vcl.Buttons, Vcl.StdCtrls, cxScrollBox, cxPC,Data.Win.ADODB, cxGroupBox,
+  cxRadioGroup;
 
 type
   TfrmPersonasDomiciliosEdit = class(T_frmStandarGFormEdit)
@@ -45,6 +46,9 @@ type
     cxDBEdtCtaCliente: TcxDBTextEdit;
     DSMetodoPago: TDataSource;
     DSAuxiliar: TDataSource;
+    cxDBCheckBox2: TcxDBCheckBox;
+    cxDBCheckBox4: TcxDBCheckBox;
+    cxDBRadioGroup1: TcxDBRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure cxDBLookupComboBox1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

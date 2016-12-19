@@ -11,6 +11,9 @@ type
     adodsMasterIdPaqueteria: TIntegerField;
     adodsMasterIdentificador: TStringField;
     adodsMasterDescripcion: TStringField;
+    adodsMasterTelefono1: TStringField;
+    adodsMasterTelefono2: TStringField;
+    adodsMasterContacto: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

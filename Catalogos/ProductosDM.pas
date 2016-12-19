@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, ppDB, ppDBPipe, ppParameter, ppDesignLayer, ppBands,
   ppCtrls, ppVar, dxGDIPlusClasses, ppPrnabl, ppClass, ppCache, ppComm,
-  ppRelatv, ppProd, ppReport;
+  ppRelatv, ppProd, ppReport, dialogs;
 
 type
   TdmProductos = class(T_dmStandar)
@@ -127,6 +127,29 @@ type
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
     adodsMasterIdentificador4: TStringField;
+    ADOQryAuxiliar: TADOQuery;
+    ADOConProdFotos: TADODataSet;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    IntegerField4: TIntegerField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    ADOConProdEspecificacion: TADODataSet;
+    AutoIncField1: TAutoIncField;
+    IntegerField5: TIntegerField;
+    IntegerField6: TIntegerField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    ADOConDocumentoPF: TADODataSet;
+    AutoIncField2: TAutoIncField;
+    IntegerField7: TIntegerField;
+    IntegerField8: TIntegerField;
+    StringField6: TStringField;
+    StringField7: TStringField;
+    GuidField1: TGuidField;
+    BlobField1: TBlobField;
+    ADOConProdDocto: TADODataSet;
+    dsConProdFotos: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);
@@ -134,9 +157,11 @@ type
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
     procedure ReadFile(FileName: TFileName);
+    function VerificaIdentificador: Boolean;
   public
     { Public declarations }
   end;
@@ -201,6 +226,54 @@ begin
   end;
   inherited;
 
+end;
+
+procedure TdmProductos.adodsMasterBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  if not verificaIdentificador then //Nov 7/16
+  begin
+    ShowMessage(' Alguno de los identificadores esta repetido en otro producto o puede que el producto ya este registrado'+#13+
+                ' Producto :'+AdoQryAuxiliar.fieldbyname('Descripcion').asstring + ' id: '+AdoQryAuxiliar.fieldbyname('idproducto').AsString);
+    abort;
+  end;
+end;
+
+function TdmProductos.VerificaIdentificador:Boolean;  //Nov 7/16
+var uno,dos,tres, Cond:String;
+begin
+  inherited;
+  uno:=adodsMaster.fieldbyname('Identificador1').asString;//cxDBTxtIdentificador1.Text;
+  dos:=adodsMaster.fieldbyname('Identificador2').asString;
+  tres:=adodsMaster.fieldbyname('Identificador3').asString;
+
+  AdoQryAuxiliar.Close;
+  AdoQryAuxiliar.sql.clear;
+  AdoQryAuxiliar.sql.Add('Select * from Productos P where (P.identificador1 ='''+uno+''' or P.identificador2 ='''+uno
+                                        +''' or P.identificador3 ='''+uno +'''' );
+  cond:='(P2.identificador1 ='''+ uno+''' or P2.identificador2 ='''+uno+''' or P2.identificador3 ='''+uno +'''';
+  if dos<>'' then
+  begin
+    Cond:=  cond+ ' or P2.identificador2 ='''+dos+''' or P2.identificador2 ='''+dos+''' or P2.identificador3 ='''+dos +'''';
+    AdoQryAuxiliar.sql.Add(' or P.identificador2 ='''+dos+''' or P.identificador1 ='''+dos
+                                        +''' or P.identificador3 ='''+dos +'''' );
+  end;
+  if tres <>'' then
+  begin
+    AdoQryAuxiliar.sql.Add(' or P.identificador3 ='''+tres+''' or P.identificador1 ='''+tres
+                                        +''' or P.identificador2 ='''+tres +'''' );
+    Cond:=  cond+ ' or P2.identificador3 ='''+tres+''' or P2.identificador1 ='''+tres+''' or P2.identificador2 ='''+tres +'''';
+  end;
+  Cond:=  cond+ ')';
+  AdoQryAuxiliar.sql.Add(')');
+  if adodsMaster.State=dsEdit then
+   AdoQryAuxiliar.sql.Add(' and exists (Select * from productos P2 where '+cond+' and (P.idproducto <> P2.idproducto))');
+ // ShowMessage( AdoQryAuxiliar.sql.Text);
+  AdoQryAuxiliar.open;
+  if not AdoQryAuxiliar.eof  then
+    Result:=False
+  else
+    result:=True;
 end;
 
 procedure TdmProductos.ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);

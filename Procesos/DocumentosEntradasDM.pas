@@ -146,6 +146,8 @@ type
     adoqryDocumentoDetalles: TADOQuery;
     actGetDetalleAnterior: TAction;
     adodsDocumentosDetallesIdDocumentoEntradaDetalleAnterior: TIntegerField;
+    adodsMasterIdentificador: TStringField;
+    adodsMasterPedimento: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -528,6 +530,7 @@ begin
   TfrmDocumentosEntradas(gGridEditForm).actImprimir := actImprimir;
   TfrmDocumentosEntradas(gGridEditForm).actEmail := actEmail;
   TfrmDocumentosEntradas(gGridEditForm).actTipoCambio:= actGetTipoCambio;
+  TfrmDocumentosEntradas(gGridEditForm).PnlDatosFactura.Visible:=(Tipo=tFactura);
   gFormDetail1:= TfrmDocumentosEntradasDetalle.Create(Self);
   gFormDetail1.DataSet:= adodsDocumentosDetalles;
   TfrmDocumentosEntradasDetalle(gFormDetail1).actSeleccionarProducto:= actSeleccionaProducto;

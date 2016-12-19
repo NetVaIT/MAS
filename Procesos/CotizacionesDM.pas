@@ -292,6 +292,37 @@ type
     adodsMasterIDMetPagoDirCli: TIntegerField;
     adodsMasterCtaCLienteDom: TStringField;
     ADODtStDireccionesEnvioIdEnvioTipo: TIntegerField;
+    ADOConProdFotos: TADODataSet;
+    IntegerField6: TIntegerField;
+    IntegerField7: TIntegerField;
+    IntegerField8: TIntegerField;
+    StringField11: TStringField;
+    StringField12: TStringField;
+    ADOConProdEspecificacion: TADODataSet;
+    AutoIncField2: TAutoIncField;
+    IntegerField9: TIntegerField;
+    IntegerField10: TIntegerField;
+    StringField13: TStringField;
+    ADOConDocumentoPF: TADODataSet;
+    AutoIncField3: TAutoIncField;
+    IntegerField11: TIntegerField;
+    IntegerField12: TIntegerField;
+    StringField15: TStringField;
+    StringField16: TStringField;
+    GuidField1: TGuidField;
+    BlobField1: TBlobField;
+    ADOConProdDocto: TADODataSet;
+    dsConProdFotos: TDataSource;
+    DSConProductos: TDataSource;
+    ADOConProdEspecificacionTipo: TStringField;
+    ADODtStDireccionesClienteServicio: TStringField;
+    ADODtStDireccionesClientePagoFlete: TBooleanField;
+    ADODtStDireccionesClienteAsegurado: TBooleanField;
+    adodsMasterPagoFlete: TBooleanField;
+    adodsMasterAsegurado: TBooleanField;
+    ADODtStDireccAuxiliarServicio: TStringField;
+    ADODtStDireccAuxiliarPagoFlete: TBooleanField;
+    ADODtStDireccAuxiliarAsegurado: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);
@@ -798,7 +829,9 @@ begin
   TfrmCotizaciones(gGridEditForm).dsFotosAux.dataset:=adodsProductoFotos;
   TfrmCotizaciones(gGridEditForm).dsDocumentoAux.DataSet:=ADODsDocumento;
 
-
+  TfrmCotizaciones(gGridEditForm).dsFotos.dataset:=ADOConProdFotos;         //Dic 17/16
+  TfrmCotizaciones(gGridEditForm).dsDocs.DataSet:=ADOConProdDocto;          //Dic 17/16
+  TfrmCotizaciones(gGridEditForm).dsEspecifica.DataSet:=ADOConProdEspecificacion;   //Dic 17/16
 end;
 
 

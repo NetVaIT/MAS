@@ -22,7 +22,7 @@ uses
   cxGridPopupMenu, cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions,
   Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ToolWin, cxGridLevel,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGrid, Vcl.ExtCtrls, cxDBLookupComboBox, Vcl.Buttons;
+  cxGrid, Vcl.ExtCtrls, cxDBLookupComboBox, Vcl.Buttons, Data.Win.ADODB;
 
 type
   TfrmSalidasUbicacionesGrid = class(T_frmStandarGFormGrid)
@@ -41,6 +41,9 @@ type
     tvMasterIdProducto: TcxGridDBColumn;
     tvMasterProductoNvo: TcxGridDBColumn;
     tvMasterProducto: TcxGridDBColumn;
+    DSQryAuxiliar: TDataSource;
+    tvMasterProductolleno: TcxGridDBColumn;
+    tvMasterProductoDirecto: TcxGridDBColumn;
     procedure tvMasterCellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
@@ -51,6 +54,7 @@ type
   private
     FAceptaUbicaciones: TBasicAction;
     procedure SetFAceptaUbicaciones(const Value: TBasicAction);
+    function SacaIdProducto(idOrdenSalidaItem: integer): integer;
     { Private declarations }
   public
     { Public declarations }
@@ -83,17 +87,36 @@ end;
 procedure TfrmSalidasUbicacionesGrid.tvMasterCellClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+var idproducto:integer;
 begin
+
   inherited;
  // if datasource.State=dsEdit then
   begin
-    dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
-    dsProductosXEspacio.DataSet.Filter:='IDProducto='+datasource.DataSet.fieldbyname('IDProducto').AsString;
-    dsProductosXEspacio.DataSet.Filtered:=True;
-    dsProductosXEspacio.DataSet.Open;
+    idproducto:=SacaIdProducto(datasource.DataSet.fieldbyname('idOrdenSalidaItem').Asinteger) ;
+    if idproducto<>-1 then
+    begin
+      dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
+      dsProductosXEspacio.DataSet.Filter:='IDProducto='+ intTostr(idproducto);//+datasource.DataSet.fieldbyname('IDProducto').AsString;
+      dsProductosXEspacio.DataSet.Filtered:=True;
+      dsProductosXEspacio.DataSet.Open;   //Se supone abierto
+    end
+    else
+      Showmessage('Inconsistencia NDS. '+ datasource.DataSet.fieldbyname('idOrdenSalidaItem').AsString);
   end;
 end;
 
+function  TfrmSalidasUbicacionesGrid.SacaIdProducto(idOrdenSalidaItem:integer):integer; //Oct 24/16
+begin
+  Result:=-1;
+  DSQryAuxiliar.DataSet.Close;
+  TADOQuery(dSQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(dSQryAuxiliar.DataSet).SQL.Add('Select idProducto from OrdenesSalidasItems where IdOrdenSalidaItem='+inttostr(idOrdenSalidaItem));
+  TADOQuery(dSQryAuxiliar.DataSet).Open;
+  if not (DSQryAuxiliar.DataSet.eof) then
+     Result:=DSQryAuxiliar.DataSet.fieldbyname('IdProducto').AsInteger;
+
+end;
 procedure TfrmSalidasUbicacionesGrid.tvMasterCellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);

@@ -1198,6 +1198,7 @@ var
 
   FechaAux:TDAteTime;//Porque si se intento generar le mande la misma fecha original
   TipoDoc:String; //Mar 31/16 para enviar como parametro
+  IdCFDIAuxiliar, idOrdenSalAux:integer; //Oct 27/16 para verificar que este en el mismo
 begin
   inherited;
   //Habilitado Dic 21/15
@@ -1408,6 +1409,9 @@ begin
          // adodsMaster
           adodsMasterIdCFDIEstatus.AsInteger:=2; //Dic 29/15
             //Sep 27/16  Ajuste desde
+          IdCFDIAuxiliar:= adodsMasterIdCFDI.AsInteger;// Oct 27/16
+          idOrdenSalAux:= adodsMasterIdOrdenSalida.AsInteger; // Oct 27/16
+
           adodsMaster.Post; //Se puso esto primero  y luego se asocia el resto
 
           adodsMaster.Edit;
@@ -1434,13 +1438,24 @@ begin
           adodsMaster.Post;
 
           ShowProgress(80,100.1,'Actualizando Datos Cliente ' + IntToStr(80) + '%');  //Jun 2/16
-          //Actualiza Saldos  Mar 1/16                                                                                                                 //Mar 7/16
-          ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
+
+          if IdCFDIAuxiliar <> adodsMasterIdCFDI.value then    //oct 26/16
+             Respuesta:=Respuesta+'R'+intToStr(IdCFDIAuxiliar)+' CFDI C'+ intTostr(adodsMasterIdCFDI.value)
+          //Actualiza Saldos  Mar 1/16
+          else  //TEmporel mientras se identifica  el problema                                                                                      //Mar 7/16
+            ActualizaSaldoCliente(adodsMasterIdCFDI.value,adodsMasterIdPersonaReceptor.Value,adodsMasterIdClienteDomicilio.value, adodsMasterTotal.Value,'+ ');
 
           //Actualiza inventario
                                                            // Jul 27/16 tipo 4 no se timbran , sólo las 1  or (adodsMasterIdCFDITipoDocumento.AsInteger=4)
           if (adodsMasterIdCFDITipoDocumento.AsInteger=1)  then //abr 15/16 Solo Factura o Notas Ventas (No Notas Credito ni Cargo)
-            ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
+          begin
+            if adodsMasterIdOrdenSalida.Value <> idOrdenSalAux then // Oct 26/16
+               Respuesta:=Respuesta+'2 '+'RCFDI '+intToStr(IdCFDIAuxiliar)+' CFDI C'+ intTostr(adodsMasterIdCFDI.value)+
+                       ' OSR'+intToStr(idOrdenSalAux)+' OS C'+ intTostr(adodsMasterIdOrdenSalida.Value)
+            else
+              ActualizaInventario(adodsMasterIdOrdenSalida.Value,adodsMasterIdCFDI.value);  //Feb 8/16
+          end;
+          // Oct 26/16
 
         //  Showmessage('CFDI Generado');//Dic 29/15
 
@@ -1768,8 +1783,9 @@ begin
       end;
       if cont=0 then
       begin
+        Texto:='UI';
         ADOQryActualizaInventario.SQL.Clear;                   // PedidoXSurtir  =PedidoXSurtir cambio //Abr 11/16
-        ADOQryActualizaInventario.SQL.Add('Update Inventario SET Apartado  =Apartado-'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+        ADOQryActualizaInventario.SQL.Add('Update Inventario SET Apartado =Apartado-'+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' ,Existencia =Existencia- '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
                                          +' Where IdProducto='+ADODtStDatosActInv.FieldByName('IDProducto').AsString
                                          +' and IDALmacen= '+ADODtStDatosActInv.FieldByName('IDAlmacen').ASString);
@@ -1791,9 +1807,9 @@ begin
         begin
           IDPXE:= AdoQryAuxiliar.FieldByName('IdProductoXEspacio').Value;
 
-          //necesitamos el id de productoXEspacio producto
-          ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16
-          ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+ADODtStDatosActInv.FieldByName('Cantidad').AsString
+          //necesitamos el id de productoXEspacio producto                                         //Solo puede afectar si hay varias ubicaciones en almacen
+          ADOQryActualizaInventario.SQL.Clear; //No estaba Mar 8/16                               // Nov 1/16  era   ADODtStDatosActInv deberia ser de la salida ubicacion
+          ADOQryActualizaInventario.SQL.Add('Update ProductosXEspacio SET Cantidad = Cantidad - '+AdoQryAuxiliar.FieldByName('Cantidad').AsString
                                            +' where IDProducto='+ADODtStDatosActInv.FieldByName('IdProducto').asString
                                            +' and IdAlmacen= '+ADODtStDatosActInv.FieldByName('IdAlmacen').asString+' and IDProductoXEspacio='+intToStr(IDPXE));
                                                                                                                      //Agregado Ab. 14, por si hay mas ubicaciones

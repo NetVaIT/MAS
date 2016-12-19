@@ -131,6 +131,9 @@ type
     ADODtStSalidasUbicacionesProductoNvo: TStringField;
     ADODtStSalidasUbicacionesIdproducto: TIntegerField;
     ADODtStSalidasUbicacionesProducto: TStringField;
+    ADODtStSalidasUbicacionesProductolleno: TStringField;
+    ADODtStSalidasUbicacionesIdProducto2: TIntegerField;
+    ADODtStSalidasUbicacionesProductoDirecto: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ActSeleccionaProductoExecute(Sender: TObject);
     procedure adodsMasterBeforeOpen(DataSet: TDataSet);
@@ -149,6 +152,7 @@ type
     procedure ADODtStSalidasUbicacionesAfterPost(DataSet: TDataSet);
     procedure ADODtStSalidasUbicacionesAfterDelete(DataSet: TDataSet);
     procedure ActAceptaUbicacionExecute(Sender: TObject);
+    procedure ADODtStSalidasUbicacionesCalcFields(DataSet: TDataSet);
   private
     CantAGuardar:Double; //Jul 14/16
     FBloquear: Boolean;
@@ -460,10 +464,10 @@ begin
   Valornvo:=ValorMaximoPosible(-1,IdOrdenSalItem,idsalidaUbicacion);
   if ValorNvo>0 then
   begin
-    AdoQryauxiliar.Close;
+    AdoQryauxiliar.Close;                                      //Oct 28/16 Si se agrega el idproducto debe tambien colocarse aca (ya 31)
     AdoQryauxiliar.SQL.Clear;
-    AdoQryauxiliar.SQL.Add('INSERT INTO SalidasUbicaciones (IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, Cantidad) ');
-    AdoQryauxiliar.SQL.Add('SElect  IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, '+ floatToSTR(valorNvo)+' from  SalidasUbicaciones Where IdSalidaUbicacion='+intToStr(idsalidaubicacion));
+    AdoQryauxiliar.SQL.Add('INSERT INTO SalidasUbicaciones (IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida,IdProducto, Cantidad) ');
+    AdoQryauxiliar.SQL.Add('SElect  IdSalidaUbicacionEstatus,IdOrdenSalidaItem, IDOrdenSalida, IDProducto, '+ floatToSTR(valorNvo)+' from  SalidasUbicaciones Where IdSalidaUbicacion='+intToStr(idsalidaubicacion));
     AdoQryauxiliar.ExecSQL;
     Result:=True;
   end
@@ -501,6 +505,7 @@ procedure TDMAjustesSalida.ADODtStSalidasUbicacionesBeforeOpen(
   DataSet: TDataSet);
 begin
   inherited;
+  ADODtStProductosXEspacio.Parameters.ParamByName('IdAduana').Value:=dmconfiguracion.IDEspacioAduana; //Oct 21/16
   ADODtStProductosXEspacio.Open;
 end;
 
@@ -514,8 +519,10 @@ begin
   TextoAux:='';
   if ADODtStSalidasUbicaciones.State=dsEdit then   //Jul 20 /16 Para que sólo lo haga si ya tiene algo  /7Hay que ubicadlo
   begin
+
     AdoDtstProductosXEspacio.Close;  //Verificar si se elimina de aca
-    AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;
+    ADODtStProductosXEspacio.Parameters.ParamByName('IdAduana').Value:=dmconfiguracion.IDEspacioAduana; //Oct 21/16
+    AdoDtstProductosXEspacio.filter:= 'IDProducto='+ADODtStSalidasUbicaciones.fieldbyname('IDProducto').AsString;     //Estaba asi sólo verificar que tenga el valor oct 28/16
     AdoDtstProductosXEspacio.filtered:=True;
     AdoDtstProductosXEspacio.Open;
     //Jul 20 /16 hasta aca
@@ -539,6 +546,17 @@ begin
     end;
   end;
 
+
+end;
+
+procedure TDMAjustesSalida.ADODtStSalidasUbicacionesCalcFields(
+  DataSet: TDataSet);
+begin
+  inherited;
+  if ADODtStSalidasUbicaciones.fieldbyname('Producto').asstring<>'' then
+    ADODtStSalidasUbicaciones.fieldbyname('Productolleno').asstring:= ADODtStSalidasUbicaciones.fieldbyname('Producto').asstring
+  else
+    ADODtStSalidasUbicaciones.fieldbyname('Productolleno').asstring:= ADODtStSalidasUbicaciones.fieldbyname('ProductoNvo').asstring ;
 
 end;
 
@@ -692,7 +710,7 @@ begin
 
   while not ADODtStAjusteSalidaItems.eof do
   begin
-    showmessage('IdOrdenSalida: '+ADODtStAjusteSalidaItems.FieldByName('IdOrdenSalida').asstring+ 'idordensalidaitem: '+ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);
+    // deshab 28 Oct showmessage('IdOrdenSalida: '+ADODtStAjusteSalidaItems.FieldByName('IdOrdenSalida').asstring+ 'idordensalidaitem: '+ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
     ADOQryAuxiliar.SQL.add('Select * from   ProductosKardex where  IdOrdenSalidaItem =' +ADODtStAjusteSalidaItems.fieldbyname('idOrdenSalidaItem').AsString);

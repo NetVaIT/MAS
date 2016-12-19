@@ -138,10 +138,18 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
               object tsProductosXSalir: TcxTabSheet
                 Caption = 'Productos'
                 ImageIndex = 0
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
               end
               object tsSalidasUbicaciones: TcxTabSheet
                 Caption = 'Salidas Ubicaci'#243'n'
                 ImageIndex = 1
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 0
+                ExplicitHeight = 0
               end
             end
           end
@@ -317,7 +325,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 574
     Top = 16
     Bitmap = {
-      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -460,7 +468,7 @@ inherited frmAjustesSalidasEdit: TfrmAjustesSalidasEdit
     Left = 704
     Top = 0
     Bitmap = {
-      494C01010C000E009C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

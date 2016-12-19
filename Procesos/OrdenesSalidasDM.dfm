@@ -20,7 +20,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'io, Os.EtiquetaImpresa, OS.OrdenEmbImpresa'#13#10'from OrdenesSalidas ' +
       'OS'#13#10'where IdOrdenSalidaTipo=1 -- Jul 1/16'#13#10#13#10'Order by IdOrdenEst' +
       'atus,OS.FechaRegistro Desc'
-    Left = 64
+    Left = 56
+    Top = 24
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
       ReadOnly = True
@@ -322,6 +323,24 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     object adodsMasterOrdenEmbImpresa: TBooleanField
       FieldName = 'OrdenEmbImpresa'
     end
+    object adodsMasterPagoFlete: TBooleanField
+      FieldKind = fkLookup
+      FieldName = 'PagoFlete'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'PagoFlete'
+      KeyFields = 'IdDocumentoSalida'
+      Lookup = True
+    end
+    object adodsMasterAsegurado: TBooleanField
+      FieldKind = fkLookup
+      FieldName = 'Asegurado'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'Asegurado'
+      KeyFields = 'IdDocumentoSalida'
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -338,7 +357,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Size = 4
         Value = Null
       end>
-    Left = 432
+    Left = 440
     object adodsUpdateIdDocumento: TAutoIncField
       FieldName = 'IdDocumento'
       ReadOnly = True
@@ -419,8 +438,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = 10
+        Value = 8122
       end>
     Left = 56
     Top = 96
@@ -641,16 +659,17 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CursorType = ctStatic
     CommandText = 
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
-      'dPaqueteria, DS.Servicio, DS.IdDomicilioCliente, PD.IDDomicilio,' +
-      #13#10'DS.IdPersonaDomicilioEnvio, Facturar, IdUsuario, IDUsuarioAutP' +
-      'edido'#13#10' from DocumentosSalidas DS'#13#10' inner join Personas P on P.I' +
-      'Dpersona =DS.IdPersona'#13#10'inner join PersonasDomicilios PD on PD.I' +
-      'dPersonaDomicilio =Ds.IDDomicilioCliente'
+      'dPaqueteria, DS.Servicio, DS.PagoFlete,DS.Asegurado,'#13#10'DS.IdDomic' +
+      'ilioCliente, PD.IDDomicilio,'#13#10'DS.IdPersonaDomicilioEnvio, Factur' +
+      'ar, IdUsuario, IDUsuarioAutPedido'#13#10' from DocumentosSalidas DS'#13#10' ' +
+      'inner join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner join P' +
+      'ersonasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomicilioCli' +
+      'ente'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
     Parameters = <>
-    Left = 256
+    Left = 248
     Top = 408
     object ADODtStDatosDocumentoSalidaIdPersona: TIntegerField
       FieldName = 'IdPersona'
@@ -726,6 +745,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IDUsuarioAutPedido'
       Size = 100
       Lookup = True
+    end
+    object ADODtStDatosDocumentoSalidaPagoFlete: TBooleanField
+      FieldName = 'PagoFlete'
+    end
+    object ADODtStDatosDocumentoSalidaAsegurado: TBooleanField
+      FieldName = 'Asegurado'
     end
   end
   object DSDatosDocSalida: TDataSource
@@ -1027,8 +1052,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CommandText = 
       'select IdSalidaUbicacion, IdProductoKardexS, IdProductoXEspacio,' +
       #13#10' Cantidad, IdSalidaUbicacionEstatus,  IdOrdenSalidaItem, IdOrd' +
-      'enSalida '#13#10'from SalidasUbicaciones where IdOrdenSalida =:IdOrden' +
-      'Salida'
+      'enSalida, IdProducto '#13#10'from SalidasUbicaciones where IdOrdenSali' +
+      'da =:IdOrdenSalida'
     DataSource = dsMaster
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -1039,7 +1064,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         DataType = ftInteger
         Precision = 10
         Size = 4
-        Value = Null
+        Value = 8122
       end>
     Left = 248
     Top = 481
@@ -1068,7 +1093,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtStSalidasUbicacionesIdProducto: TIntegerField
       FieldKind = fkLookup
-      FieldName = 'IdProducto'
+      FieldName = 'IdProductoX'
       LookupDataSet = ADODtStOrdenSalidaItem
       LookupKeyFields = 'IdOrdenSalidaItem'
       LookupResultField = 'IdProducto'
@@ -1104,6 +1129,19 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdProductoXEspacio'
       Lookup = True
     end
+    object ADODtStSalidasUbicacionesIdProducto2: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStSalidasUbicacionesProductoDirecto: TStringField
+      FieldKind = fkLookup
+      FieldName = 'ProductoDirecto'
+      LookupDataSet = adodsProductos
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdProducto'
+      Size = 150
+      Lookup = True
+    end
   end
   object DSOrdenSalidaItem: TDataSource
     DataSet = ADODtStOrdenSalidaItem
@@ -1117,6 +1155,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       'select Pe.*, E.Descripcion as Espacio from ProductosXEspacio PE'#13 +
       #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio and Pe.IdEspa' +
       'cio<>:IDAduana'
+    DataSource = DSSalidaUbicacion
+    IndexFieldNames = 'IdProducto'
     Parameters = <
       item
         Name = 'IDAduana'
@@ -1226,8 +1266,8 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
   end
   object DSSalidaUbicacion: TDataSource
     DataSet = ADODtStSalidasUbicaciones
-    Left = 108
-    Top = 480
+    Left = 68
+    Top = 472
   end
   object ADODtStDocumentoDetalleItem: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1510,7 +1550,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
         Value = Null
       end>
     Left = 72
-    Top = 568
+    Top = 544
     object ADODtStDireccionesEnvioIdPersonaDomicilio: TAutoIncField
       FieldName = 'IdPersonaDomicilio'
       ReadOnly = True

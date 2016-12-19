@@ -11,7 +11,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
       'aRegistro, Subtotal, IVA, Total, IdGeneraCFDITipoDoc,'#13#10' Acumula,' +
       ' IdPersona, IDOrdenSalidaTipo, Observaciones,'#13#10' IdAlmacen, IdUsu' +
       'ario from OrdenesSalidas where IdOrdenSalidaTipo>=2'
-    Left = 32
+    Left = 40
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
       ReadOnly = True
@@ -121,9 +121,9 @@ inherited DMAjustesSalida: TDMAjustesSalida
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = 5983
+        Value = 5984
       end>
-    Left = 56
+    Left = 64
     Top = 80
     object ADODtStAjusteSalidaItemsIdOrdenSalidaItem: TAutoIncField
       FieldName = 'IdOrdenSalidaItem'
@@ -226,8 +226,17 @@ inherited DMAjustesSalida: TDMAjustesSalida
     BeforeOpen = adodsMasterBeforeOpen
     CommandText = 
       'select Pe.*, E.Descripcion as Espacio from ProductosXEspacio PE'#13 +
-      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'#13#10
-    Parameters = <>
+      #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'#13#10'where Pe.idE' +
+      'spacio<>:IDaduana'
+    Parameters = <
+      item
+        Name = 'IDaduana'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 424
     Top = 232
     object ADODtStProductosXEspacioIdProductoXEspacio: TAutoIncField
@@ -401,11 +410,12 @@ inherited DMAjustesSalida: TDMAjustesSalida
     BeforePost = ADODtStSalidasUbicacionesBeforePost
     AfterPost = ADODtStSalidasUbicacionesAfterPost
     AfterDelete = ADODtStSalidasUbicacionesAfterDelete
+    OnCalcFields = ADODtStSalidasUbicacionesCalcFields
     CommandText = 
       'select IdSalidaUbicacion, IdProductoKardexS, IdProductoXEspacio,' +
-      #13#10' Cantidad, IdSalidaUbicacionEstatus,  IdOrdenSalidaItem, IdOrd' +
-      'enSalida '#13#10'from SalidasUbicaciones where IdOrdenSalida =:IdOrden' +
-      'Salida'
+      #13#10' Cantidad, IdSalidaUbicacionEstatus,  IdOrdenSalidaItem,  IdOr' +
+      'denSalida, IdProducto '#13#10'from SalidasUbicaciones where IdOrdenSal' +
+      'ida =:IdOrdenSalida'
     DataSource = dsmaster
     IndexFieldNames = 'IdOrdenSalida'
     MasterFields = 'IdOrdenSalida'
@@ -415,9 +425,10 @@ inherited DMAjustesSalida: TDMAjustesSalida
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = 5983
+        Size = 4
+        Value = 5984
       end>
-    Left = 216
+    Left = 224
     Top = 229
     object ADODtStSalidasUbicacionesIdSalidaUbicacion: TAutoIncField
       FieldName = 'IdSalidaUbicacion'
@@ -472,7 +483,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
     end
     object ADODtStSalidasUbicacionesIdproducto: TIntegerField
       FieldKind = fkLookup
-      FieldName = 'Idproducto'
+      FieldName = 'IdproductoX'
       LookupDataSet = ADODtStAjusteSalidaItems
       LookupKeyFields = 'IdOrdenSalidaItem'
       LookupResultField = 'IdProducto'
@@ -487,6 +498,26 @@ inherited DMAjustesSalida: TDMAjustesSalida
       LookupResultField = 'Producto'
       KeyFields = 'IdOrdenSalidaItem'
       Size = 100
+      Lookup = True
+    end
+    object ADODtStSalidasUbicacionesProductolleno: TStringField
+      DisplayLabel = 'Producto OK'
+      FieldKind = fkCalculated
+      FieldName = 'Productolleno'
+      Size = 150
+      Calculated = True
+    end
+    object ADODtStSalidasUbicacionesIdProducto2: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object ADODtStSalidasUbicacionesProductoDirecto: TStringField
+      FieldKind = fkLookup
+      FieldName = 'ProductoDirecto'
+      LookupDataSet = ADODtStProductos
+      LookupKeyFields = 'IdProducto'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdProducto'
+      Size = 150
       Lookup = True
     end
   end
@@ -676,8 +707,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
-        Size = 4
-        Value = Null
+        Value = 5984
       end>
     Left = 216
     Top = 376

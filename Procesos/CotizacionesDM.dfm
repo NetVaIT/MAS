@@ -1,7 +1,7 @@
 inherited dmCotizaciones: TdmCotizaciones
   OldCreateOrder = True
-  Height = 628
-  Width = 886
+  Height = 715
+  Width = 1162
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     AfterOpen = adodsMasterAfterOpen
@@ -14,11 +14,12 @@ inherited dmCotizaciones: TdmCotizaciones
       'SELECT IdDocumentoSalida, IdDocumentoSalidaTipo, IdPersona,'#13#10' Id' +
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
-      'te,'#13#10' IdPersonaDomicilioEnvio, NotasInternas, IdPaqueteria, Serv' +
-      'icio , Facturar'#13#10', IDUsuarioAutPedido'#13#10'FROM DocumentosSalidas wh' +
-      'ere IdDocumentoSalidaTipo=:TipoDocto'#13#10'and fechaRegistro>GETDATE(' +
-      ')             -- DATEADD(MM, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order' +
-      ' by idDocumentoSalidaEstatus, FechaRegistro Desc'
+      'te,'#13#10' IdPersonaDomicilioEnvio, NotasInternas, Servicio , Factura' +
+      'r'#13#10', IDUsuarioAutPedido, PagoFlete, Asegurado, IdPaqueteria'#13#10'FRO' +
+      'M DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDocto'#13#10'and ' +
+      'fechaRegistro>GETDATE()             -- DATEADD(MM, DATEDIFF(MM,0' +
+      ',GETDATE()), 0)'#13#10'order by idDocumentoSalidaEstatus, FechaRegistr' +
+      'o Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -253,9 +254,15 @@ inherited dmCotizaciones: TdmCotizaciones
       Size = 30
       Lookup = True
     end
+    object adodsMasterPagoFlete: TBooleanField
+      FieldName = 'PagoFlete'
+    end
+    object adodsMasterAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 344
+    Left = 352
   end
   inherited ActionList: TActionList
     object ActGenPDFCotizacion: TAction
@@ -779,16 +786,17 @@ inherited dmCotizaciones: TdmCotizaciones
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
       ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo,PD.IDMetododePago' +
-      ', PD.NumCtaPagoCliente'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner join' +
-      ' Domicilios D on PD.IDDomicilio=D.IDDomicilio and (PD.IdDomicili' +
-      'oTipo in (2,4,5) and PD.identificador is not null)'#13#10'Left Join Po' +
-      'blaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios' +
-      ' M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.ides' +
-      'tado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'wher' +
-      'e PD.IdPersona=:IDpersona'#13#10#13#10
+      ','#13#10'PD.NumCtaPagoCliente, PD.Servicio, PD.PagoFlete,PD.Asegurado'#13 +
+      #10'from PersonasDomicilios PD'#13#10'inner join Domicilios D on PD.IDDom' +
+      'icilio=D.IDDomicilio and (PD.IdDomicilioTipo in (2,4,5) and PD.i' +
+      'dentificador is not null)'#13#10'Left Join Poblaciones P on P.idPoblac' +
+      'ion=d.IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=D.IdM' +
+      'unicipio'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Left Joi' +
+      'n Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.IdPersona=:IDpersona' +
+      #13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
-    MasterFields = 'IDPersona'
+    MasterFields = 'IDpersona'
     Parameters = <
       item
         Name = 'IDpersona'
@@ -876,6 +884,17 @@ inherited dmCotizaciones: TdmCotizaciones
       FieldName = 'NumCtaPagoCliente'
       Size = 30
     end
+    object ADODtStDireccionesClienteServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object ADODtStDireccionesClientePagoFlete: TBooleanField
+      DisplayLabel = 'Pago Flete'
+      FieldName = 'PagoFlete'
+    end
+    object ADODtStDireccionesClienteAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -941,13 +960,14 @@ inherited dmCotizaciones: TdmCotizaciones
       '.IdDomicilioTipo, PD.Identificador, Pd.Predeterminado '#13#10',D.Calle' +
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
-      ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo'#13#10#13#10'from PersonasD' +
-      'omicilios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomi' +
-      'cilio  and (PD.IdDomicilioTipo in (2,4,5) and PD.identificador i' +
-      's not null)'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblac' +
-      'ion'#13#10'left join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left' +
-      ' Join Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on' +
-      ' Pa.idpais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo, '#13#10'PD.Servicio, P' +
+      'D.PagoFlete, PD.Asegurado'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner j' +
+      'oin Domicilios D on PD.IDDomicilio=D.IDDomicilio  and (PD.IdDomi' +
+      'cilioTipo in (2,4,5) and PD.identificador is not null)'#13#10'Left Joi' +
+      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
+      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
+      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
+      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -1028,6 +1048,16 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStDireccAuxiliarIdEnvioTipo: TIntegerField
       FieldName = 'IdEnvioTipo'
     end
+    object ADODtStDireccAuxiliarServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object ADODtStDireccAuxiliarPagoFlete: TBooleanField
+      FieldName = 'PagoFlete'
+    end
+    object ADODtStDireccAuxiliarAsegurado: TBooleanField
+      FieldName = 'Asegurado'
+    end
   end
   object ppRprtCotizacion: TppReport
     AutoStop = False
@@ -1036,7 +1066,7 @@ inherited dmCotizaciones: TdmCotizaciones
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810
@@ -5410,5 +5440,156 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStDireccionesEnvioIdEnvioTipo: TIntegerField
       FieldName = 'IdEnvioTipo'
     end
+  end
+  object ADOConProdFotos: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
+      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 40
+      end>
+    Left = 768
+    Top = 544
+    object IntegerField6: TIntegerField
+      FieldName = 'IdProductoFoto'
+    end
+    object IntegerField7: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object IntegerField8: TIntegerField
+      FieldName = 'IdDocumento'
+    end
+    object StringField11: TStringField
+      FieldName = 'Notas'
+      Size = 500
+    end
+    object StringField12: TStringField
+      FieldKind = fkLookup
+      FieldName = 'NombreArchivo'
+      LookupDataSet = ADOConDocumentoPF
+      LookupKeyFields = 'IdDocumento'
+      LookupResultField = 'NombreArchivo'
+      KeyFields = 'IdDocumento'
+      Size = 150
+      Lookup = True
+    end
+  end
+  object ADOConProdEspecificacion: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoEspecificacion, IdProducto, PE.IdEspecificacion' +
+      'Tipo, '#13#10'E.Descripcion as Tipo, PE.Descripcion from ProductosEspe' +
+      'cificaciones PE'#13#10'inner join EspecificacionesTipos E on E.IdEspec' +
+      'ificacionTipo=PE.IdEspecificacionTipo'#13#10'where IDProducto=:IdProdu' +
+      'cto'#13#10
+    Parameters = <
+      item
+        Name = 'IdProducto'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 1000
+    Top = 553
+    object AutoIncField2: TAutoIncField
+      FieldName = 'IdProductoEspecificacion'
+      ReadOnly = True
+    end
+    object IntegerField9: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object IntegerField10: TIntegerField
+      FieldName = 'IdEspecificacionTipo'
+    end
+    object StringField13: TStringField
+      FieldName = 'Descripcion'
+      Size = 300
+    end
+    object ADOConProdEspecificacionTipo: TStringField
+      FieldName = 'Tipo'
+      Size = 50
+    end
+  end
+  object ADOConDocumentoPF: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
+      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
+      ' iddocumento=:IdDocumento'
+    DataSource = dsConProdFotos
+    IndexFieldNames = 'IdDocumento'
+    MasterFields = 'IdDocumento'
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 5
+      end>
+    Left = 760
+    Top = 600
+    object AutoIncField3: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object IntegerField11: TIntegerField
+      FieldName = 'IdDocumentoTipo'
+    end
+    object IntegerField12: TIntegerField
+      FieldName = 'IdDocumentoClase'
+    end
+    object StringField15: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object StringField16: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
+    object GuidField1: TGuidField
+      FieldName = 'IdArchivo'
+      FixedChar = True
+      Size = 38
+    end
+    object BlobField1: TBlobField
+      FieldName = 'Archivo'
+    end
+  end
+  object ADOConProdDocto: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdProductoDocumento, IdProducto, IdDocumento, Notas from ' +
+      'ProductosDocumentos'
+    DataSource = dsConProdFotos
+    IndexFieldNames = 'IdProducto'
+    MasterFields = 'IdProducto'
+    Parameters = <>
+    Left = 880
+    Top = 600
+  end
+  object dsConProdFotos: TDataSource
+    DataSet = ADOConProdFotos
+    OnDataChange = dsProductosFotosDataChange
+    Left = 864
+    Top = 544
+  end
+  object DSConProductos: TDataSource
+    DataSet = adodsProductos
+    OnDataChange = dsProductosFotosDataChange
+    Left = 664
+    Top = 544
   end
 end

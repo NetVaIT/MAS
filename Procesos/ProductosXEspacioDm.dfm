@@ -1,5 +1,7 @@
 inherited dmProductosXEspacio: TdmProductosXEspacio
   OldCreateOrder = True
+  Height = 348
+  Width = 596
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
@@ -12,7 +14,7 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
       'ctosXEspacio '#13#10'INNER JOIN Almacenes ON ProductosXEspacio.IdAlmac' +
       'en = Almacenes.IdAlmacen'#13#10'INNER JOIN Productos ON ProductosXEspa' +
       'cio.IdProducto = Productos.IdProducto'#13#10'INNER JOIN Espacios ON Pr' +
-      'oductosXEspacio.IdEspacio = Espacios.IdEspacio'
+      'oductosXEspacio.IdEspacio = Espacios.IdEspacio'#13#10
     object adodsMasterIdProductoXEspacio: TAutoIncField
       FieldName = 'IdProductoXEspacio'
       ReadOnly = True
@@ -67,6 +69,10 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
       Caption = 'Cambiar'
       ImageIndex = 11
       OnExecute = actCambiarExecute
+    end
+    object ActAjusteSUyPXE: TAction
+      Caption = 'ActAjusteSUyPXE'
+      OnExecute = ActAjusteSUyPXEExecute
     end
   end
   object adodsAlmacenes: TADODataSet
@@ -148,24 +154,28 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdProductoXEspacioO'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@IdEspacioD'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@CantidadD'
         Attributes = [paNullable]
         DataType = ftFloat
         Precision = 15
+        Value = Null
       end
       item
         Name = '@IdProductoXEspacioDestino'
@@ -173,8 +183,28 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
         DataType = ftInteger
         Direction = pdInputOutput
         Precision = 10
+        Value = Null
       end>
     Left = 312
     Top = 200
+  end
+  object ADtStAuxiliarAjuste: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdOrdenSalida, IdOrdenSalidaItem, Cantidad, '#13#10'IdProductoK' +
+      'ardexS, IdProductoXEspacio, IdSalidaUbicacion,'#13#10' IdSalidaUbicaci' +
+      'onEstatus, IdPXE, IdProducto, IDProductoenPXE, '#13#10'CAntEspacio, Ex' +
+      'istProdReal, existenciaProdMalo, '#13#10'CantEnEspacioMALO, cantKardex' +
+      ' from vw_auxiliarAjuste'
+    Parameters = <>
+    Left = 40
+    Top = 280
+  end
+  object ADOQryAuxiliar: TADOQuery
+    Connection = _dmConection.ADOConnection
+    Parameters = <>
+    Left = 132
+    Top = 281
   end
 end

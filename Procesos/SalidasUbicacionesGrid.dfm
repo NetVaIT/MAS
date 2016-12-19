@@ -54,7 +54,12 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
         object tvMasterProductoNvo: TcxGridDBColumn
           Caption = 'Producto'
           DataBinding.FieldName = 'ProductoNvo'
-          Width = 394
+          Visible = False
+          Width = 269
+        end
+        object tvMasterProductolleno: TcxGridDBColumn
+          DataBinding.FieldName = 'Productolleno'
+          Width = 350
         end
         object tvMasterEspacioA: TcxGridDBColumn
           Caption = 'Espacio salida'
@@ -92,11 +97,14 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
         end
         object tvMasterIdOrdenSalida: TcxGridDBColumn
           DataBinding.FieldName = 'IdOrdenSalida'
-          Visible = False
+          Width = 99
         end
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
           Visible = False
+        end
+        object tvMasterProductoDirecto: TcxGridDBColumn
+          DataBinding.FieldName = 'ProductoDirecto'
         end
       end
     end
@@ -147,7 +155,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 608
     Top = 104
     Bitmap = {
-      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -294,7 +302,7 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     Left = 672
     Top = 104
     Bitmap = {
-      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -846,5 +854,10 @@ inherited frmSalidasUbicacionesGrid: TfrmSalidasUbicacionesGrid
     DataSet = DMAjustesSalida.ADODtStProductosXEspacio
     Left = 577
     Top = 240
+  end
+  object DSQryAuxiliar: TDataSource
+    DataSet = DMAjustesSalida.ADOQryAuxiliar
+    Left = 721
+    Top = 216
   end
 end

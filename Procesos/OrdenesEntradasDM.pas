@@ -4,7 +4,10 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, Vcl.Dialogs, System.UITypes, ListaProductosForm;
+  Data.DB, Data.Win.ADODB, Vcl.Dialogs, System.UITypes, ListaProductosForm,
+  ppDB, ppDBPipe, ppParameter, ppDesignLayer, ppCtrls, ppBands,
+  dxGDIPlusClasses, ppPrnabl, ppClass, ppCache, ppComm, ppRelatv, ppProd,
+  ppReport;
 
 resourcestring
   strErrorClave = 'No encontro el artículo para este proveedor, favor de teclear uno valido.';
@@ -118,6 +121,77 @@ type
     ADODtStProductosXEspacioADEspacio: TStringField;
     ADODtStProductosXEspacioADCantidad: TFloatField;
     ADODtStVerificaAduana: TADODataSet;
+    dsDetalle: TDataSource;
+    ppRptDocumento: TppReport;
+    ppHeaderBand1: TppHeaderBand;
+    ppImage1: TppImage;
+    ppDBText5: TppDBText;
+    ppDBText6: TppDBText;
+    ppDBText7: TppDBText;
+    ppDBText8: TppDBText;
+    ppDBText9: TppDBText;
+    ppShape8: TppShape;
+    ppLabel10: TppLabel;
+    ppLabel11: TppLabel;
+    ppLabel18: TppLabel;
+    ppLabel1: TppLabel;
+    ppDBText1: TppDBText;
+    ppDBText2: TppDBText;
+    ppDBText3: TppDBText;
+    ppLabel3: TppLabel;
+    ppDBText13: TppDBText;
+    ppDBText14: TppDBText;
+    ppLabel4: TppLabel;
+    ppDBText15: TppDBText;
+    ppLabel5: TppLabel;
+    ppDBText16: TppDBText;
+    ppLabel6: TppLabel;
+    ppDBText17: TppDBText;
+    ppDBText18: TppDBText;
+    ppLabel7: TppLabel;
+    ppDBText19: TppDBText;
+    ppLabel2: TppLabel;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel12: TppLabel;
+    ppLabel13: TppLabel;
+    ppLabel14: TppLabel;
+    ppLabel15: TppLabel;
+    ppLabel16: TppLabel;
+    ppDetailBand1: TppDetailBand;
+    ppDBText4: TppDBText;
+    ppDBText10: TppDBText;
+    ppDBText12: TppDBText;
+    ppDBText11: TppDBText;
+    ppDBText20: TppDBText;
+    ppDBText21: TppDBText;
+    ppDBText22: TppDBText;
+    ppDBText23: TppDBText;
+    ppDBText24: TppDBText;
+    ppDBText25: TppDBText;
+    ppDBText26: TppDBText;
+    ppDBText27: TppDBText;
+    ppSummaryBand1: TppSummaryBand;
+    ppLine1: TppLine;
+    ppDBCalc1: TppDBCalc;
+    ppDBCalc2: TppDBCalc;
+    ppDBCalc3: TppDBCalc;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
+    ppParameterList1: TppParameterList;
+    ppdbpDetalle: TppDBPipeline;
+    ppdbpMaster: TppDBPipeline;
+    adoqryDocumento: TADOQuery;
+    dsDocumento: TDataSource;
+    adoqryDocumentoDetalles: TADOQuery;
+    ActImpresion: TAction;
+    ADODtStDatosFacturaDocs: TADODataSet;
+    ADODtStDatosFacturaDocsIdDocumentoEntrada: TAutoIncField;
+    ADODtStDatosFacturaDocsIdentificador: TStringField;
+    ADODtStDatosFacturaDocsPedimento: TStringField;
+    adodsMasterNoFactura: TStringField;
+    adodsMasterPedimento: TStringField;
+    ActAcomodoIndividual: TAction;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -140,6 +214,9 @@ type
     procedure adodsItemsCalcFields(DataSet: TDataSet);
     procedure actAcomodarGenericoExecute(Sender: TObject);
     procedure actAcomodarGenericoUpdate(Sender: TObject);
+    procedure ActImpresionExecute(Sender: TObject);
+    procedure ActAcomodoIndividualExecute(Sender: TObject);
+    procedure ActAcomodoIndividualUpdate(Sender: TObject);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -160,6 +237,8 @@ type
     procedure SetTipo(const Value: TPTipo);
     procedure ActualizarTotales;
     function VerificaProdEnAduana(IdOrdenEntrada:Integer):Boolean; //Oct 12/16
+    procedure Imprimir(IdDocumentoEntrada: Integer);
+    function VerificaActualAcomodo: Boolean; //Oct 20/16 Del codigo de Jessus
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -192,6 +271,12 @@ begin
       adoqTipoCambio.Close;
     end;
   end;
+end;
+
+procedure TdmOrdenesEntradas.ActImpresionExecute(Sender: TObject);
+begin
+  inherited;
+   Imprimir(adodsMasterIdOrdenEntrada.Value); //
 end;
 
 procedure TdmOrdenesEntradas.actModificarArancelExecute(Sender: TObject);
@@ -289,7 +374,7 @@ begin
       ADODtStProductosXEspacioAD.Close;
       ADODtStProductosXEspacioAD.Parameters.ParamByName('IDAduana').value:= IdEspacioAd;
       ADODtStProductosXEspacioAD.Parameters.ParamByName('IDOrdenEntradaItem').Value:= adodsItemsIdOrdenEntradaItem.Value;
-      ADODtStProductosXEspacioAD.open;
+      ADODtStProductosXEspacioAD.open;   //Se cambio filtro para que traiga solo los que no estan en 0 .. deben coincidir tal cual con los de los items ya que van por item //Nov 7/16
       CantidadPasar:= adodsItemsCantidad.Value;
       if not ADODtStProductosXEspacioAD.Eof then
       begin
@@ -312,6 +397,63 @@ procedure TdmOrdenesEntradas.actAcomodarGenericoUpdate(Sender: TObject);
 begin
   inherited;
    TAction(Sender).Enabled:= VerificaProdEnAduana(adodsMasterIdOrdenEntrada.Value) and (adodsMasterIdOrdenEstatus.Value = Ord(eAplicada));  //Oct 12/16
+end;
+
+procedure TdmOrdenesEntradas.ActAcomodoIndividualExecute(Sender: TObject);
+var
+  IdAlmacen, IdEspacioAd, IdEspGenerico, cuantos, cont :Integer;
+  CantidadPasar:Double;
+begin               //Falta probar
+  inherited;
+  cont:=0;
+  IdEspacioAd:=dmconfiguracion.IDEspacioAduana;
+  IdEspGenerico:=1; //Es e quie tienen ellos deficnido pero luego hay que tomarlo de una lista
+  if MessageDlg('Se colocará el producto '+adodsItemsProducto.AsString +' en el espacio Generico. ¿Esta seguro?', mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    ADODtStProductosXEspacioAD.Close;
+    ADODtStProductosXEspacioAD.Parameters.ParamByName('IDAduana').value:= IdEspacioAd;
+    ADODtStProductosXEspacioAD.Parameters.ParamByName('IDOrdenEntradaItem').Value:= adodsItemsIdOrdenEntradaItem.Value;
+    ADODtStProductosXEspacioAD.open;
+    CantidadPasar:= adodsItemsCantidad.Value;
+    if not ADODtStProductosXEspacioAD.Eof then
+    begin
+      adospSetProductosXEspacio.Parameters.ParamByName('@IdProductoXEspacioO').Value:= ADODtStProductosXEspacioADIdProductoXEspacio.Value;
+      adospSetProductosXEspacio.Parameters.ParamByName('@IdEspacioD').Value:= IdEspGenerico;
+      adospSetProductosXEspacio.Parameters.ParamByName('@CantidadD').Value:= CantidadPasar;
+      adospSetProductosXEspacio.ExecProc;
+      cont:=cont+1;
+    end
+    else
+      Showmessage(' idoi:'+adodsItemsIdOrdenEntradaItem.asstring+' Producto  '+ adodsItemsProducto.AsString +' No encontrado en Aduana' );
+    if cont >0 then
+       Showmessage('Se actualizó el registro');
+  end;
+
+end;
+
+procedure TdmOrdenesEntradas.ActAcomodoIndividualUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Visible:= (Tipo = TOrdenEntrada);
+  TAction(Sender).Enabled:=  (adodsMasterIdOrdenEstatus.Value = Ord(eAplicada)) and VerificaActualAcomodo;
+
+ end;
+
+function TdmOrdenesEntradas.VerificaActualAcomodo:Boolean;  //Nov 7/16
+var
+  IdEspacioAd:integer;
+
+begin
+  Result:=False;
+  IdEspacioAd:=dmConfiguracion.IDEspacioAduana;
+  ADODtStProductosXEspacioAD.Close;
+  ADODtStProductosXEspacioAD.Parameters.ParamByName('IDAduana').value:= IdEspacioAd;
+  ADODtStProductosXEspacioAD.Parameters.ParamByName('IDOrdenEntradaItem').Value:= adodsItemsIdOrdenEntradaItem.Value;
+  ADODtStProductosXEspacioAD.open;
+  if not ADODtStProductosXEspacioAD.eof then
+    result:= adodsItemsCantidad.Value = ADODtStProductosXEspacioADCantidad.Value;
+
+
 end;
 
 procedure TdmOrdenesEntradas.actAplicarEntradaExecute(Sender: TObject);
@@ -370,7 +512,8 @@ begin
       adopGenOrdenEntrada.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
       adopGenOrdenEntrada.ExecProc;
       RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
-      TfrmOrdenesEntradas(gGridEditForm).DataSource.DataSet.First; //Oct 12/16
+      adodsMaster.Locate('IdDocumentoEntrada',IdDocumentoEntrada,[]);  //Oct 19/16
+   //   TfrmOrdenesEntradas(gGridEditForm).DataSource.DataSet.First; //Oct 12/16
     end;
 end;
 
@@ -404,7 +547,7 @@ end;
 procedure TdmOrdenesEntradas.adodsItemsCalcFields(DataSet: TDataSet);
 begin
   inherited;
-  if adodsItemsPrecioVenta.AsFloat <> 0 then                                                                    //ajuste Utilidad sobre costo(era adodsItemsPrecioVenta)   Oct 12/16
+  if adodsItemsCostoAproximado.AsFloat <> 0 then  // era precioVenta Oct 13/16                                                                  //ajuste Utilidad sobre costo(era adodsItemsPrecioVenta)   Oct 12/16
     adodsItemsPorcentajeUtilidad.Value:= ((adodsItemsPrecioVenta.AsFloat - adodsItemsCostoAproximado.AsFloat) / adodsItemsCostoAproximado.AsFloat)*100
   else
     adodsItemsPorcentajeUtilidad.Value:= 0;
@@ -498,9 +641,9 @@ begin
   //Coloca el filtrado
   SQLSelect:= 'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, IdOrdenEstatus, IdPersona, IdMoneda, IdUsuario, Fecha, TipoCambio, SubTotal, IVA, Total, Observaciones from OrdenesEntradas';
   if (Tipo = tEntradaMercacia) then
-    SQLWhere:= Format('WHERE IdOrdenEstatus = %d', [Ord(eGenerada)])
+    SQLWhere:= Format('WHERE IdOrdenEntradaTipo =1 and IdOrdenEstatus = %d', [Ord(eGenerada)])   //oct 24/16 mostrar solo compras
   else
-    SQLWhere:= '';
+    SQLWhere:= 'WHERE IdOrdenEntradaTipo =1'; //era '' Oct 24/16 para que sólo muestre Compras
   SQLOrderBy:= 'Order by Fecha DESC';
   if adodsItems.CommandText <> EmptyStr then adodsItems.Open;
   gGridEditForm:= TfrmOrdenesEntradas.Create(Self);
@@ -511,6 +654,8 @@ begin
   TfrmOrdenesEntradas(gGridEditForm).actRecibir := actRecibirMercancia;
   TfrmOrdenesEntradas(gGridEditForm).actAplicar := actAplicarEntrada;
   TfrmOrdenesEntradas(gGridEditForm).actAcomodar := actAcomodarGenerico; //ABAN Oct 12/16
+  TfrmOrdenesEntradas(gGridEditForm).actImprimir := ActImpresion;  //Oct 21/16
+  TfrmOrdenesEntradas(gGridEditForm).actAcomodarInd:=ActAcomodoIndividual; //Nov 7/16
 
   gFormDetail1:= TfrmOrdenesEntradasItems.Create(Self);
   gFormDetail1.DataSet:= adodsItems;
@@ -562,6 +707,22 @@ begin
     end;
   finally
     adoqGetIdProducto.Close;
+  end;
+end;
+
+procedure TdmOrdenesEntradas.Imprimir(IdDocumentoEntrada: Integer);
+begin   //Oct 20/16 del codigo de Jesus
+  adoqryDocumento.Close;
+  adoqryDocumentoDetalles.Close;        //Tenia idDocumentoEntrada oct 20/16
+  adoqryDocumento.Parameters.ParamByName('IdOrdenEntrada').Value:= IdDocumentoEntrada;
+  try
+    adoqryDocumento.Open;
+    adoqryDocumentoDetalles.Open;
+//    MostrarImportes(Tipo <> tRequisicion);
+    ppRptDocumento.Print;
+  finally
+    adoqryDocumento.Close;
+    adoqryDocumentoDetalles.Close;
   end;
 end;
 

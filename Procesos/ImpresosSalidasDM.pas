@@ -413,6 +413,15 @@ type
     ADtStOperacionEstatusIdEstatusOperacion: TIntegerField;
     ADtStOperacionEstatusIdentificador: TStringField;
     ADtStOperacionEstatusDescripcion: TStringField;
+    ADODtStOrdenSalidaIDPaqueteria: TIntegerField;
+    ADODtStOrdenSalidaServicio: TStringField;
+    ADODtStOrdenSalidaPaqueteria: TStringField;
+    ppLabel79: TppLabel;
+    ppDBText36: TppDBText;
+    ppLabel81: TppLabel;
+    ppDBText61: TppDBText;
+    ppLabel85: TppLabel;
+    ppDBText64: TppDBText;
     procedure ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaItemCalcFields(DataSet: TDataSet);
     procedure ADODtStOrdenSalidaAfterOpen(DataSet: TDataSet);

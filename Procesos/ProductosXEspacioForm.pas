@@ -51,13 +51,16 @@ type
   private
     FCambio: TDataSet;
     FactCambiar: TBasicAction;
+    FactAjustar: TBasicAction;
     procedure SetCambio(const Value: TDataSet);
     procedure SetactCambiar(const Value: TBasicAction);
+    procedure SetactAjustar(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
     property Cambio: TDataSet read FCambio write SetCambio;
     property actCambiar: TBasicAction read FactCambiar write SetactCambiar;
+    property actAjustar: TBasicAction read FactAjustar write SetactAjustar;
   end;
 
 implementation
@@ -76,6 +79,12 @@ procedure TfrmProductosXEspacio.FormShow(Sender: TObject);
 begin
   inherited;
   actShowGrid.Execute;
+end;
+
+procedure TfrmProductosXEspacio.SetactAjustar(const Value: TBasicAction);
+begin
+  FactAjustar := Value;
+  TfrmProductosXEspacioGrid(gFormGrid).actAjustar:=value;
 end;
 
 procedure TfrmProductosXEspacio.SetactCambiar(const Value: TBasicAction);

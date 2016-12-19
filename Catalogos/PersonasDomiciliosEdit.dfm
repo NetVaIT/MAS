@@ -1,5 +1,7 @@
 inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   Caption = 'frmPersonasDomiciliosEdit'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlDetail1: TPanel
@@ -8,18 +10,28 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 742
+      ExplicitHeight = 469
       inherited cxScrollBox1: TcxScrollBox
+        Width = 742
+        Height = 469
+        ExplicitWidth = 742
+        ExplicitHeight = 469
         inherited tbarData: TToolBar
+          Width = 740
           ExplicitLeft = 0
           ExplicitTop = 0
+          ExplicitWidth = 740
         end
         inherited pnlMaster: TPanel
+          Width = 740
+          Height = 442
           ExplicitLeft = 0
-          ExplicitTop = 24
+          ExplicitTop = 27
+          ExplicitWidth = 740
+          ExplicitHeight = 442
           object Label1: TLabel
             Left = 23
             Top = 16
@@ -67,7 +79,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object Label13: TLabel
             Left = 25
-            Top = 335
+            Top = 367
             Width = 99
             Height = 13
             Caption = 'Metodo Pago Cliente'
@@ -75,7 +87,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object LblCteCte: TLabel
             Left = 231
-            Top = 334
+            Top = 366
             Width = 71
             Height = 13
             Caption = 'Cuenta Cliente'
@@ -150,7 +162,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object cxDBCheckBox3: TcxDBCheckBox
             Left = 23
-            Top = 288
+            Top = 340
             Caption = 'Disponible Para Envio'
             DataBinding.DataField = 'UsarParaEnvio'
             DataBinding.DataSource = DataSource
@@ -159,7 +171,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object cxDBLkupCBxMetodoPago: TcxDBLookupComboBox
             Left = 25
-            Top = 351
+            Top = 383
             DataBinding.DataField = 'IdMetododePago'
             DataBinding.DataSource = DataSource
             Properties.KeyFieldNames = 'IdMetodoPago'
@@ -174,23 +186,62 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
           end
           object cxDBEdtCtaCliente: TcxDBTextEdit
             Left = 231
-            Top = 351
+            Top = 383
             DataBinding.DataField = 'NumCtaPagoCliente'
             DataBinding.DataSource = DataSource
             TabOrder = 9
             Visible = False
             Width = 119
           end
+          object cxDBCheckBox2: TcxDBCheckBox
+            Left = 184
+            Top = 296
+            Caption = 'Pago Flete'
+            DataBinding.DataField = 'PagoFlete'
+            DataBinding.DataSource = DataSource
+            TabOrder = 10
+            Width = 121
+          end
+          object cxDBCheckBox4: TcxDBCheckBox
+            Left = 311
+            Top = 296
+            Caption = 'Asegurado'
+            DataBinding.DataField = 'Asegurado'
+            DataBinding.DataSource = DataSource
+            TabOrder = 11
+            Width = 121
+          end
         end
       end
     end
+  end
+  object cxDBRadioGroup1: TcxDBRadioGroup [8]
+    Left = 28
+    Top = 308
+    TabStop = False
+    Caption = 'Servicio'
+    DataBinding.DataField = 'Servicio'
+    DataBinding.DataSource = DataSource
+    Properties.Columns = 2
+    Properties.Items = <
+      item
+        Caption = 'Ocurre'
+        Value = 'Ocurre'
+      end
+      item
+        Caption = 'Domicilio'
+        Value = 'Domicilio'
+      end>
+    TabOrder = 5
+    Height = 43
+    Width = 150
   end
   inherited DataSource: TDataSource
     DataSet = dmPersonasDomicilios.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -331,7 +382,7 @@ inherited frmPersonasDomiciliosEdit: TfrmPersonasDomiciliosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E006C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00700110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

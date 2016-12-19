@@ -23,7 +23,7 @@ uses
   Vcl.StdCtrls, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxScrollBox, cxPC, Vcl.Grids,
   Vcl.DBGrids, Vcl.Buttons, ProductosFotosDM, dxGDIPlusClasses, Vcl.Imaging.jpeg,
-  cxSpinEdit, shellApi, cxPropertiesStore, cxMemo, cxLabel, cxDBLabel;
+  cxSpinEdit, shellApi, cxPropertiesStore, cxMemo, cxLabel, cxDBLabel,Data.Win.ADODB;
 
 type
   TfrmProductosEdit = class(T_frmStandarGFormEdit)
@@ -48,12 +48,12 @@ type
     cxDBLookupComboBox2: TcxDBLookupComboBox;
     cxDBLookupComboBox3: TcxDBLookupComboBox;
     ToolButton3: TToolButton;
-    cxDBTextEdit6: TcxDBTextEdit;
+    cxDBTxtIdentificador1: TcxDBTextEdit;
     Label10: TLabel;
     Label12: TLabel;
-    cxDBTextEdit7: TcxDBTextEdit;
+    cxDBTxtIdentificador2: TcxDBTextEdit;
     Label13: TLabel;
-    cxDBTextEdit8: TcxDBTextEdit;
+    cxDBTxtIdentificador3: TcxDBTextEdit;
     PnlTitulo: TPanel;
     tsProductoProveedor: TcxTabSheet;
     tsProductoAplicacion: TcxTabSheet;
@@ -83,6 +83,7 @@ type
     cxTSPrecioMayoreo: TcxTabSheet;
     cxDBLabel1: TcxDBLabel;
     SpdBtnVerIdentifica: TSpeedButton;
+    DSAuxiliar: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure DataSetEditExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -97,6 +98,8 @@ type
     procedure FormActivate(Sender: TObject);
     procedure DBText1DblClick(Sender: TObject);
     procedure SpdBtnVerArchivoClick(Sender: TObject);
+    procedure DataSourceStateChange(Sender: TObject);
+    procedure SpdBtnVerIdentificaClick(Sender: TObject);
   private
     { Private declarations }
     FEditFile: TBasicAction;
@@ -183,6 +186,13 @@ begin
   inherited; //Nov 12 para guardar notas
   BBtnGuardaNota.Enabled:=datasourceFotos.State=dsEdit;
   bbtnCancela.Enabled:=datasourceFotos.State=dsEdit;
+end;
+
+procedure TfrmProductosEdit.DataSourceStateChange(Sender: TObject);
+begin
+  inherited;
+  SpdBtnVerIdentifica.Visible:=datasource.DataSet.State in[dsEdit,dsInsert];
+
 end;
 
 procedure TfrmProductosEdit.DBNavigatorFotosClick(Sender: TObject;
@@ -286,6 +296,45 @@ begin
     else
       ShowMessage('No se puede mostrar el archivo de  extension'+ ExtractFileExt(NombreA) ) ;
   end;
+end;
+
+procedure TfrmProductosEdit.SpdBtnVerIdentificaClick(Sender: TObject);
+var uno,dos,tres, Cond:String;           //Nov 4/16
+begin
+  inherited;
+  uno:=cxDBTxtIdentificador1.Text;
+  dos:=cxDBTxtIdentificador2.Text;
+  tres:=cxDBTxtIdentificador3.Text;
+
+  dsAuxiliar.DataSet.Close;
+  TAdoQuery(dsAuxiliar.DataSet).sql.clear;
+  TAdoQuery(dsAuxiliar.DataSet).sql.Add('Select * from Productos P where (P.identificador1 ='''+uno+''' or P.identificador2 ='''+uno
+                                        +''' or P.identificador3 ='''+uno +'''' );
+  cond:='(P2.identificador1 ='''+ uno+''' or P2.identificador2 ='''+uno+''' or P2.identificador3 ='''+uno +'''';
+  if dos<>'' then
+  begin
+    Cond:=  cond+ ' or P2.identificador2 ='''+dos+''' or P2.identificador2 ='''+dos+''' or P2.identificador3 ='''+dos +'''';
+    TAdoQuery(dsAuxiliar.DataSet).sql.Add(' or P.identificador2 ='''+dos+''' or P.identificador1 ='''+dos
+                                        +''' or P.identificador3 ='''+dos +'''' );
+  end;
+  if tres <>'' then
+  begin
+    TAdoQuery(dsAuxiliar.DataSet).sql.Add(' or P.identificador3 ='''+tres+''' or P.identificador1 ='''+tres
+                                        +''' or P.identificador2 ='''+tres +'''' );
+    Cond:=  cond+ ' or P2.identificador3 ='''+tres+''' or P2.identificador1 ='''+tres+''' or P2.identificador2 ='''+tres +'''';
+  end;
+  Cond:=  cond+ ')';
+  TAdoQuery(dsAuxiliar.DataSet).sql.Add(')');
+  if Datasource.State=dsEdit then
+    TAdoQuery(dsAuxiliar.DataSet).sql.Add(' and exists (Select * from productos P2 where '+cond+' and (P.idproducto <> P2.idproducto))');
+  ShowMessage( TAdoQuery(dsAuxiliar.DataSet).sql.Text);
+  dsAuxiliar.DataSet.open;
+  if not dsAuxiliar.DataSet.eof  then
+    ShowMessage(' Alguno de los identificadores esta repetido en otro producto o puede que el producto ya este registrado'+#13+
+                ' Producto :'+dsAuxiliar.DataSet.fieldbyname('Descripcion').asstring + ' id: '+dsAuxiliar.DataSet.fieldbyname('idproducto').AsString)
+  else
+    ShowMessage(' Verificación correcta');
+
 end;
 
 end.

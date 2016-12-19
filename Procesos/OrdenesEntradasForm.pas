@@ -60,6 +60,13 @@ type
     btnAplicar: TSpeedButton;
     SpdBtnAcomodarGenerico: TSpeedButton;
     ToolButton4: TToolButton;
+    TlBtnImprimir: TToolButton;
+    Label8: TLabel;
+    Label10: TLabel;
+    cxDBLabel1: TcxDBLabel;
+    cxDBLabel3: TcxDBLabel;
+    SpdBtnAcomodoIndividual: TSpeedButton;
+    ToolButton5: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -70,12 +77,16 @@ type
     FactAplicar: TBasicAction;
     FactRecibir: TBasicAction;
     FactAcomodar: TBasicAction;
+    FactImprimir: TBasicAction;
+    FactAcomodarInd: TBasicAction;
     procedure SetactCrearOrden(const Value: TBasicAction);
     procedure SetactTipoCambio(const Value: TBasicAction);
     procedure SetMostrarImporte(const Value: Boolean);
     procedure SetactAplicar(const Value: TBasicAction);
     procedure SetactRecibir(const Value: TBasicAction);
     procedure SetactAcomodar(const Value: TBasicAction);
+    procedure SetactImprimir(const Value: TBasicAction);
+    procedure SetactAcomodarInd(const Value: TBasicAction);
   public
     { Public declarations }
     property actTipoCambio: TBasicAction read FactTipoCambio write SetactTipoCambio;
@@ -86,6 +97,9 @@ type
     procedure SetFoco;
 
     property actAcomodar: TBasicAction read FactAcomodar write SetactAcomodar;//ABAN Oct 12/16
+    property actImprimir: TBasicAction read FactImprimir write SetactImprimir; //Oct 21/16
+
+     property actAcomodarInd: TBasicAction read FactAcomodarInd write SetactAcomodarInd;//ABAN Nov 7/16
   end;
 
 implementation
@@ -113,6 +127,12 @@ begin
   SpdBtnAcomodarGenerico.Action:=Value;
 end;
 
+procedure TfrmOrdenesEntradas.SetactAcomodarInd(const Value: TBasicAction);
+begin                                   //Nov 7/16
+  FactAcomodarInd := Value;
+  SpdBtnAcomodoIndividual.Action:=value;
+end;
+
 procedure TfrmOrdenesEntradas.SetactAplicar(const Value: TBasicAction);
 begin
   FactAplicar := Value;
@@ -123,6 +143,12 @@ procedure TfrmOrdenesEntradas.SetactCrearOrden(const Value: TBasicAction);
 begin
   FactCrearOrden := Value;
   ToolButton10.Action:= Value;
+end;
+
+procedure TfrmOrdenesEntradas.SetactImprimir(const Value: TBasicAction);
+begin
+  FactImprimir := Value;
+  TlBtnImprimir.Action:=value;
 end;
 
 procedure TfrmOrdenesEntradas.SetactRecibir(const Value: TBasicAction);

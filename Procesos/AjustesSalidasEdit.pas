@@ -63,6 +63,7 @@ type
     procedure CrearSalidasUbicacion;
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
+    function SacaIdProducto(idOrdenSalidaItem: integer): integer;
     { Private declarations }
   public
     { Public declarations }
@@ -131,6 +132,7 @@ begin
         DSsalidasUbicaciones.dataset.insert;
         DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalida').asinteger;
         DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
+        DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= dsItemsSalida.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
         DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
         DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
 //        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);
@@ -147,14 +149,32 @@ end;
 
 procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesDataChange(Sender: TObject;
   Field: TField);
+var idProducto:Integer;
 begin        //Para que el siguiente quede filtrado..  Oct 3/16
   inherited;
   if (not (dsSalidasUbicaciones.dataset.eof)) and (dsSalidasUbicaciones.State =dsBrowse)  then
   begin
+    //Saca IdProducto con IDordenSalidaItem
+    if dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').Isnull then //Oct 28/16
+       idProducto:= SacaIdProducto(dssalidasUbicaciones.DataSet.fieldbyname('IDOrdenSalidaItem').AsInteger)   //Oct 24/16
+    else
+       idProducto:= dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').asinteger;  //Oct 28/16
     dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
-    dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
+    dsProductosXEspacio.DataSet.Filter:='IDProducto='+intToStr(IdProducto);//dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
     dsProductosXEspacio.DataSet.Filtered:=True;
   end;
+end;
+
+function  TfrmAjustesSalidasEdit.SacaIdProducto(idOrdenSalidaItem:integer):integer; //Oct 24/16
+begin
+  Result:=-1;
+  DSQryAuxiliar.DataSet.Close;
+  TADOQuery(dSQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(dSQryAuxiliar.DataSet).SQL.Add('Select idProducto from OrdenesSalidasItems where IdOrdenSalidaItem='+inttostr(idOrdenSalidaItem));
+  TADOQuery(dSQryAuxiliar.DataSet).Open;
+  if not (DSQryAuxiliar.DataSet.eof) then
+     Result:=DSQryAuxiliar.DataSet.fieldbyname('IdProducto').AsInteger;
+
 end;
 
 procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesUpdateData(

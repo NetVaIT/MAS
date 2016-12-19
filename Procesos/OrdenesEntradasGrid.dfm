@@ -1,11 +1,37 @@
 inherited frmOrdenesEntradasGrid: TfrmOrdenesEntradasGrid
   Caption = 'frmOrdenesEntradasGrid'
-  ExplicitWidth = 750
-  ExplicitHeight = 650
+  ClientWidth = 1004
+  ExplicitWidth = 1004
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 1004
+  end
+  inherited splDetail2: TSplitter
+    Width = 1004
+  end
+  inherited splDetail1: TSplitter
+    Width = 1004
+  end
+  inherited pnlClose: TPanel
+    Width = 1004
+  end
+  inherited pnlDetail3: TPanel
+    Width = 1004
+  end
+  inherited pnlDetail2: TPanel
+    Width = 1004
+  end
+  inherited pnlDetail1: TPanel
+    Width = 1004
+  end
+  inherited pnltoolbar: TPanel
+    Width = 1004
+  end
   inherited pnlMaster: TPanel
+    Width = 1004
     inherited cxGrid: TcxGrid
+      Width = 1004
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdOrdenEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdOrdenEntrada'
@@ -82,10 +108,13 @@ inherited frmOrdenesEntradasGrid: TfrmOrdenesEntradasGrid
         end
       end
     end
+    inherited tbarGrid: TToolBar
+      Width = 1004
+    end
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -226,7 +255,7 @@ inherited frmOrdenesEntradasGrid: TfrmOrdenesEntradasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B8012C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801300110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

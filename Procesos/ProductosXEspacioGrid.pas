@@ -38,10 +38,14 @@ type
     tvMasterProducto: TcxGridDBColumn;
     tvMasterEspacio: TcxGridDBColumn;
     tvMasterCantidad: TcxGridDBColumn;
+    TlbAjuste: TToolButton;
   private
+    FactAjustar: TBasicAction;
+    procedure SetactAjustar(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
+    property actAjustar: TBasicAction read FactAjustar write SetactAjustar;
   end;
 
 implementation
@@ -49,5 +53,14 @@ implementation
 {$R *.dfm}
 
 uses ProductosXEspacioDm;
+
+{ TfrmProductosXEspacioGrid }
+
+procedure TfrmProductosXEspacioGrid.SetactAjustar(const Value: TBasicAction);
+begin
+  FactAjustar := Value;
+  TlbAjuste.Action:=Value;
+  TlbAjuste.ImageIndex:=12;
+end;
 
 end.

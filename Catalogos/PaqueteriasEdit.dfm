@@ -1,5 +1,7 @@
 inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
   Caption = 'Edicion Paqueter'#237'as'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlDetail1: TPanel
@@ -9,24 +11,34 @@ inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 455
-    ClientRectBottom = 454
+    ExplicitTop = 22
+    ExplicitHeight = 455
+    ClientRectBottom = 451
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitLeft = 4
+      ExplicitTop = 4
+      ExplicitWidth = 742
+      ExplicitHeight = 447
       inherited cxScrollBox1: TcxScrollBox
-        Height = 453
+        Width = 742
+        Height = 447
+        ExplicitWidth = 742
+        ExplicitHeight = 447
         inherited tbarData: TToolBar
+          Width = 740
           ExplicitLeft = 0
           ExplicitTop = 0
+          ExplicitWidth = 740
         end
         inherited pnlMaster: TPanel
-          Height = 426
+          Width = 740
+          Height = 420
           ExplicitLeft = 0
-          ExplicitTop = 25
+          ExplicitTop = 24
+          ExplicitWidth = 740
+          ExplicitHeight = 420
           object Label2: TLabel
-            Left = 31
+            Left = 34
             Top = 24
             Width = 61
             Height = 13
@@ -34,15 +46,39 @@ inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
             FocusControl = cxDBTextEdit1
           end
           object Label3: TLabel
-            Left = 31
-            Top = 64
+            Left = 34
+            Top = 66
             Width = 54
             Height = 13
             Caption = 'Descripcion'
             FocusControl = cxDBTextEdit2
           end
+          object Label1: TLabel
+            Left = 35
+            Top = 158
+            Width = 51
+            Height = 13
+            Caption = 'Tel'#233'fono 1'
+            FocusControl = cxDBTextEdit3
+          end
+          object Label4: TLabel
+            Left = 200
+            Top = 158
+            Width = 51
+            Height = 13
+            Caption = 'Tel'#233'fono 2'
+            FocusControl = cxDBTextEdit4
+          end
+          object Label5: TLabel
+            Left = 34
+            Top = 111
+            Width = 44
+            Height = 13
+            Caption = 'Contacto'
+            FocusControl = cxDBTextEdit5
+          end
           object cxDBTextEdit1: TcxDBTextEdit
-            Left = 31
+            Left = 34
             Top = 40
             DataBinding.DataField = 'Identificador'
             DataBinding.DataSource = DataSource
@@ -50,12 +86,36 @@ inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
             Width = 121
           end
           object cxDBTextEdit2: TcxDBTextEdit
-            Left = 31
-            Top = 80
+            Left = 34
+            Top = 82
             DataBinding.DataField = 'Descripcion'
             DataBinding.DataSource = DataSource
             TabOrder = 1
             Width = 394
+          end
+          object cxDBTextEdit3: TcxDBTextEdit
+            Left = 35
+            Top = 174
+            DataBinding.DataField = 'Telefono1'
+            DataBinding.DataSource = DataSource
+            TabOrder = 3
+            Width = 145
+          end
+          object cxDBTextEdit4: TcxDBTextEdit
+            Left = 200
+            Top = 174
+            DataBinding.DataField = 'Telefono2'
+            DataBinding.DataSource = DataSource
+            TabOrder = 4
+            Width = 146
+          end
+          object cxDBTextEdit5: TcxDBTextEdit
+            Left = 34
+            Top = 127
+            DataBinding.DataField = 'Contacto'
+            DataBinding.DataSource = DataSource
+            TabOrder = 2
+            Width = 312
           end
         end
       end
@@ -78,15 +138,13 @@ inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -44
-    ExplicitWidth = 794
   end
   inherited DataSource: TDataSource
     DataSet = DMPaqueterias.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400640110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400680110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -227,7 +285,7 @@ inherited frmPaqueteriasEdit: TfrmPaqueteriasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E008C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

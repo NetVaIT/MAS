@@ -9,14 +9,17 @@ inherited frmProductosXEspacio: TfrmProductosXEspacio
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 455
+    ExplicitTop = 22
+    ExplicitHeight = 455
     ClientRectBottom = 454
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Height = 453
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           ExplicitLeft = 0
           ExplicitTop = 0
@@ -25,6 +28,7 @@ inherited frmProductosXEspacio: TfrmProductosXEspacio
           Height = 426
           ExplicitLeft = 0
           ExplicitTop = 25
+          ExplicitHeight = 426
           object Label1: TLabel
             Left = 23
             Top = 165
@@ -205,12 +209,10 @@ inherited frmProductosXEspacio: TfrmProductosXEspacio
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -44
-    ExplicitWidth = 794
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -351,7 +353,7 @@ inherited frmProductosXEspacio: TfrmProductosXEspacio
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

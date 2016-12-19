@@ -9,7 +9,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 3810
@@ -65,7 +65,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 70908
+      mmHeight = 80169
       mmPrintPosition = 0
       object ppLabel24: TppLabel
         UserName = 'Label1'
@@ -142,7 +142,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel27: TppLabel
         UserName = 'Label3'
         AutoSize = False
-        Caption = 'Total'
+        Caption = 'Total:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -225,7 +225,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 107421
-        mmTop = 65373
+        mmTop = 73853
         mmWidth = 33867
         BandType = 0
         LayerName = Foreground
@@ -242,7 +242,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
-        mmTop = 65366
+        mmTop = 73846
         mmWidth = 15081
         BandType = 0
         LayerName = Foreground
@@ -259,7 +259,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 21431
-        mmTop = 65366
+        mmTop = 73846
         mmWidth = 23019
         BandType = 0
         LayerName = Foreground
@@ -276,7 +276,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 48683
-        mmTop = 65366
+        mmTop = 73846
         mmWidth = 23813
         BandType = 0
         LayerName = Foreground
@@ -294,7 +294,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         mmHeight = 4763
         mmLeft = 4498
         mmTop = 38629
-        mmWidth = 14023
+        mmWidth = 14553
         BandType = 0
         LayerName = Foreground
       end
@@ -329,7 +329,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 148696
-        mmTop = 65352
+        mmTop = 73832
         mmWidth = 26988
         BandType = 0
         LayerName = Foreground
@@ -346,7 +346,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 177271
-        mmTop = 65352
+        mmTop = 73832
         mmWidth = 23548
         BandType = 0
         LayerName = Foreground
@@ -356,7 +356,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Weight = 0.750000000000000000
         mmHeight = 3969
         mmLeft = 4233
-        mmTop = 70401
+        mmTop = 78881
         mmWidth = 199496
         BandType = 0
         LayerName = Foreground
@@ -3332,7 +3332,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel37: TppLabel
         UserName = 'Label37'
         AutoSize = False
-        Caption = 'C'#243'digo'
+        Caption = 'C'#243'digo:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -3369,7 +3369,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       object ppLabel76: TppLabel
         UserName = 'Label76'
         AutoSize = False
-        Caption = 'Observaciones'
+        Caption = 'Observaciones:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'
@@ -3378,7 +3378,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Transparent = True
         mmHeight = 4763
         mmLeft = 4498
-        mmTop = 52652
+        mmTop = 61132
         mmWidth = 30692
         BandType = 0
         LayerName = Foreground
@@ -3399,7 +3399,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipelineName = 'ppDBPplnGenerales'
         mmHeight = 11113
         mmLeft = 37042
-        mmTop = 52652
+        mmTop = 61132
         mmWidth = 147902
         BandType = 0
         LayerName = Foreground
@@ -3408,6 +3408,78 @@ object DMImpresosSalidas: TDMImpresosSalidas
         mmStopPosition = 0
         mmMinHeight = 0
         mmLeading = 0
+      end
+      object ppLabel79: TppLabel
+        UserName = 'Label79'
+        AutoSize = False
+        Caption = 'Paqueter'#237'a:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 4498
+        mmTop = 52913
+        mmWidth = 21431
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText36: TppDBText
+        UserName = 'DBText36'
+        DataField = 'Paqueteria'
+        DataPipeline = ppDBPplnGenerales
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnGenerales'
+        mmHeight = 4763
+        mmLeft = 27252
+        mmTop = 52913
+        mmWidth = 64029
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLabel81: TppLabel
+        UserName = 'Label81'
+        AutoSize = False
+        Caption = 'Servicio:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = [fsBold]
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 117475
+        mmTop = 52913
+        mmWidth = 17463
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppDBText61: TppDBText
+        UserName = 'DBText61'
+        DataField = 'Servicio'
+        DataPipeline = ppDBPplnGenerales
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 12
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        DataPipelineName = 'ppDBPplnGenerales'
+        mmHeight = 4763
+        mmLeft = 136261
+        mmTop = 52913
+        mmWidth = 46302
+        BandType = 0
+        LayerName = Foreground
       end
     end
     object ppDetailBand1: TppDetailBand
@@ -3546,12 +3618,15 @@ object DMImpresosSalidas: TDMImpresosSalidas
     CursorType = ctStatic
     AfterOpen = ADODtStOrdenSalidaAfterOpen
     CommandText = 
-      'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdPer' +
-      'sonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'FechaRegistro' +
-      ', Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIniRevisa,' +
-      ' FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10' Subtotal, IVA' +
-      ', Observaciones'#13#10'from OrdenesSalidas where idOrdenSalida=:idOrde' +
-      'nSalida'
+      'select idOrdenSalida,Os.IdDocumentoSalida, IdOrdenEstatus, '#13#10'IdP' +
+      'ersonaRecolecta, IdPersonaRevisa, IdPersonaEmpaca, '#13#10'OS.FechaReg' +
+      'istro,Os.Total, FechaIniRecolecta, FechaFinRecolecta, '#13#10'FechaIni' +
+      'Revisa, FechaFinRevisa, FechaIniEmpaca, FechaFinEmpaca,'#13#10'Os.Subt' +
+      'otal, Os.IVA, Os.Observaciones, DS.IDPaqueteria, ds.Servicio,'#13#10'P' +
+      '.Identificador as Paqueteria'#13#10'from OrdenesSalidas OS'#13#10' inner joi' +
+      'n DocumentosSalidas DS on DS.IdDocumentoSalida=os.idDocumentoSal' +
+      'ida'#13#10'left join Paqueterias P on P.idpaqueteria=DS.IdPaqueteria'#13#10 +
+      'where idOrdenSalida=:idOrdenSalida'
     Parameters = <
       item
         Name = 'idOrdenSalida'
@@ -3653,6 +3728,16 @@ object DMImpresosSalidas: TDMImpresosSalidas
     object ADODtStOrdenSalidaObservaciones: TStringField
       FieldName = 'Observaciones'
       Size = 300
+    end
+    object ADODtStOrdenSalidaIDPaqueteria: TIntegerField
+      FieldName = 'IDPaqueteria'
+    end
+    object ADODtStOrdenSalidaServicio: TStringField
+      FieldName = 'Servicio'
+      Size = 50
+    end
+    object ADODtStOrdenSalidaPaqueteria: TStringField
+      FieldName = 'Paqueteria'
     end
   end
   object ADODtStOrdenSalidaItem: TADODataSet
@@ -3798,8 +3883,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Precision = 10
         Value = Null
       end>
-    Left = 56
-    Top = 24
+    Left = 48
+    Top = 16
     object adodSDocumentoSalidaIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
       ReadOnly = True
@@ -7990,6 +8075,366 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta'
     Left = 50
     Top = 422
+    object ppDBPplnEtiquetasppField1: TppField
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField3: TppField
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField4: TppField
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 3
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField5: TppField
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 4
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField6: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 5
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField7: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 6
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField8: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 7
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField9: TppField
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField10: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField11: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 10
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField12: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 11
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField13: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 12
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField14: TppField
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 13
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField15: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 14
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField16: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 15
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField17: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 16
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField18: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 17
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField19: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 18
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField20: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 19
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField21: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 20
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField22: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 21
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField23: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 22
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField24: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 23
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField25: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 24
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField26: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 25
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField27: TppField
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 26
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField28: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 27
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField29: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField30: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 29
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField31: TppField
+      FieldAlias = 'CantidadCajas'
+      FieldName = 'CantidadCajas'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 30
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField32: TppField
+      FieldAlias = 'IdDocumentoGuia'
+      FieldName = 'IdDocumentoGuia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 31
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField33: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 32
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField34: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 33
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField35: TppField
+      FieldAlias = 'Lada'
+      FieldName = 'Lada'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 34
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnEtiquetasppField36: TppField
+      FieldAlias = 'TelefonoCompleto'
+      FieldName = 'TelefonoCompleto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 35
+      Searchable = False
+      Sortable = False
+    end
   end
   object ADODtStDatosEtiqueta: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -8001,22 +8446,22 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'sableEntrega  '#13#10'      ,  FechaProgramadaEnt  '#13#10'      ,  FechaRea' +
       'lEnt  '#13#10'      ,  CondicionEntrega  '#13#10'      ,Ie.  Observaciones  ' +
       #13#10'      ,  EstatusEntrega  '#13#10'      ,IE.  IdTelefono  '#13#10'      ,  ' +
-      'Contenido  '#13#10'      ,  Conducto  '#13#10'      ,  Servicio  '#13#10'      ,  ' +
-      'PagoFlete  '#13#10'      ,  Valor  '#13#10'      ,  Asegurado  ,'#13#10'      P.Ra' +
-      'zonSocial, PDF.Identificador,D.Calle, D.NoExterior, D.NoInterior' +
-      ', D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.Descripci' +
-      'on Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, IdDocum' +
-      'entoGuia, CI.IdClienteDomicilio'#13#10'  FROM   InformacionEntregas   ' +
-      'IE'#13#10#13#10'  inner join Personas P on P.IdPersona=IE.IDPersonaCliente' +
-      #13#10'  inner join PersonasDomicilios PD on PD.IdPersonaDomicilio=IE' +
-      '.IDPersonaDomicilio'#13#10'  inner join Domicilios D on D.IdDomicilio=' +
-      'PD.IdDomicilio'#13#10'  inner join Municipios M on M.IdMunicipio=D.IdM' +
-      'unicipio'#13#10'  inner join Estados E on E.IdEstado=D.IdEstado  '#13#10'  L' +
-      'eft join Personas PR on PR.IdPersona=IE.IDResponsableEntrega'#13#10'  ' +
-      'Left join Telefonos T on T.IdTelefono=IE.IdTelefono'#13#10'  inner joi' +
-      'n CFDI CI on CI.IdCFDI =IE.IDCFDI'#13#10'  left Join PersonasDomicilio' +
-      's PDF on PDF.IdPersonaDomicilio= CI.IdClienteDomicilio'#13#10'where IE' +
-      '.IdInfoEntrega=:IdInfoEntrega'
+      'Contenido  '#13#10'      ,  Conducto  '#13#10'      , IE.Servicio  '#13#10'      ,' +
+      '  IE.PagoFlete  '#13#10'      ,  Valor  '#13#10'      , IE.Asegurado  ,'#13#10'   ' +
+      '   P.RazonSocial, PDF.Identificador,D.Calle, D.NoExterior, D.NoI' +
+      'nterior, D.Colonia,D.CodigoPostal, e.Descripcion  as Estado,M.De' +
+      'scripcion Municipio,'#13#10'P.RFC, T.Telefono, T.Lada, CantidadCajas, ' +
+      'IdDocumentoGuia, CI.IdClienteDomicilio'#13#10'  FROM   InformacionEntr' +
+      'egas   IE'#13#10#13#10'  inner join Personas P on P.IdPersona=IE.IDPersona' +
+      'Cliente'#13#10'  inner join PersonasDomicilios PD on PD.IdPersonaDomic' +
+      'ilio=IE.IDPersonaDomicilio'#13#10'  inner join Domicilios D on D.IdDom' +
+      'icilio=PD.IdDomicilio'#13#10'  inner join Municipios M on M.IdMunicipi' +
+      'o=D.IdMunicipio'#13#10'  inner join Estados E on E.IdEstado=D.IdEstado' +
+      '  '#13#10'  Left join Personas PR on PR.IdPersona=IE.IDResponsableEntr' +
+      'ega'#13#10'  Left join Telefonos T on T.IdTelefono=IE.IdTelefono'#13#10'  in' +
+      'ner join CFDI CI on CI.IdCFDI =IE.IDCFDI'#13#10'  left Join PersonasDo' +
+      'micilios PDF on PDF.IdPersonaDomicilio= CI.IdClienteDomicilio'#13#10'w' +
+      'here IE.IdInfoEntrega=:IdInfoEntrega'
     Parameters = <
       item
         Name = 'IdInfoEntrega'
@@ -8244,7 +8689,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -8593,7 +9038,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -8734,7 +9179,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000007000000
       00000000}
-    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Procesos\ordenEmbarque.rtm'
+    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\ordenEmbarque.rtm'
     Units = utScreenPixels
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -12195,7 +12640,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipelineName = 'ppDBPplnOrdenEmb'
         mmHeight = 13226
         mmLeft = 42333
-        mmTop = 56887
+        mmTop = 56357
         mmWidth = 10578
         BandType = 4
         LayerName = BandLayer4
@@ -12359,7 +12804,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         DataPipelineName = 'ppDBPplnOrdenEmb'
         mmHeight = 13226
         mmLeft = 138382
-        mmTop = 56886
+        mmTop = 56356
         mmWidth = 10844
         BandType = 4
         LayerName = BandLayer4
@@ -12471,6 +12916,47 @@ object DMImpresosSalidas: TDMImpresosSalidas
         BandType = 4
         LayerName = BandLayer4
       end
+      object ppLabel85: TppLabel
+        UserName = 'Label202'
+        AutoSize = False
+        Caption = 'OBSERVACIONES'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial Rounded MT Bold'
+        Font.Size = 9
+        Font.Style = [fsBold]
+        Transparent = True
+        WordWrap = True
+        mmHeight = 3967
+        mmLeft = 6879
+        mmTop = 67735
+        mmWidth = 34131
+        BandType = 4
+        LayerName = BandLayer4
+      end
+      object ppDBText64: TppDBText
+        UserName = 'DBText201'
+        Border.BorderPositions = [bpBottom]
+        Border.Visible = True
+        Border.Weight = 0.748799979686737100
+        DataField = 'Observaciones'
+        DataPipeline = ppDBPplnOrdenEmb
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 10
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppDBPplnOrdenEmb'
+        mmHeight = 5027
+        mmLeft = 42333
+        mmTop = 67469
+        mmWidth = 155311
+        BandType = 4
+        LayerName = BandLayer4
+      end
     end
     object ppFooterBand4: TppFooterBand
       Background.Brush.Style = bsClear
@@ -12493,6 +12979,366 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta1'
     Left = 314
     Top = 454
+    object ppDBPplnOrdenEmbppField1: TppField
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField3: TppField
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField4: TppField
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 3
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField5: TppField
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 4
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField6: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 5
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField7: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 6
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField8: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 7
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField9: TppField
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField10: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField11: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 10
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField12: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 11
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField13: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 12
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField14: TppField
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 13
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField15: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 14
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField16: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 15
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField17: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 16
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField18: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 17
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField19: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 18
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField20: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 19
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField21: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 20
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField22: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 21
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField23: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 22
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField24: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 23
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField25: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 24
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField26: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 25
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField27: TppField
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 26
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField28: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 27
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField29: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField30: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 29
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField31: TppField
+      FieldAlias = 'CantidadCajas'
+      FieldName = 'CantidadCajas'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 30
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField32: TppField
+      FieldAlias = 'IdDocumentoGuia'
+      FieldName = 'IdDocumentoGuia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 31
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField33: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 32
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField34: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 33
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField35: TppField
+      FieldAlias = 'Lada'
+      FieldName = 'Lada'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 34
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPplnOrdenEmbppField36: TppField
+      FieldAlias = 'TelefonoCompleto'
+      FieldName = 'TelefonoCompleto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 35
+      Searchable = False
+      Sortable = False
+    end
   end
   object ppEtiquetaPreimpresa: TppReport
     PrinterSetup.BinName = 'Default'
@@ -12641,8 +13487,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
       0000000000000000000000000000000000000000000000000000000007000000
       00000000}
     Template.FileName = 
-      'C:\Desarrollo\TractoPartes\MAS\Win32\Release\EtiquetaPreimpresaP' +
-      'DF.rtm'
+      'C:\Desarrollo\TractoPartes\MAS\Win32\Debug\EtiquetaPreimpresaPDF' +
+      '.rtm'
     Units = utMillimeters
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
@@ -13083,6 +13929,366 @@ object DMImpresosSalidas: TDMImpresosSalidas
     UserName = 'Etiqueta2'
     Left = 186
     Top = 454
+    object ppDBPpLnPreimresappField1: TppField
+      FieldAlias = 'IdInfoEntrega'
+      FieldName = 'IdInfoEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 0
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField2: TppField
+      FieldAlias = 'IdCFDI'
+      FieldName = 'IdCFDI'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 1
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField3: TppField
+      FieldAlias = 'IDPersonaCliente'
+      FieldName = 'IDPersonaCliente'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 2
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField4: TppField
+      FieldAlias = 'IDPersonaDomicilio'
+      FieldName = 'IDPersonaDomicilio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 3
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField5: TppField
+      FieldAlias = 'IDResponsableEntrega'
+      FieldName = 'IDResponsableEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 4
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField6: TppField
+      FieldAlias = 'CondicionEntrega'
+      FieldName = 'CondicionEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 5
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField7: TppField
+      FieldAlias = 'Observaciones'
+      FieldName = 'Observaciones'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 6
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField8: TppField
+      FieldAlias = 'EstatusEntrega'
+      FieldName = 'EstatusEntrega'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 7
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField9: TppField
+      FieldAlias = 'IdTelefono'
+      FieldName = 'IdTelefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField10: TppField
+      FieldAlias = 'Contenido'
+      FieldName = 'Contenido'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField11: TppField
+      FieldAlias = 'Conducto'
+      FieldName = 'Conducto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 10
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField12: TppField
+      FieldAlias = 'Servicio'
+      FieldName = 'Servicio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 11
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField13: TppField
+      FieldAlias = 'PagoFlete'
+      FieldName = 'PagoFlete'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 12
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField14: TppField
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 13
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField15: TppField
+      FieldAlias = 'Asegurado'
+      FieldName = 'Asegurado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 14
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField16: TppField
+      FieldAlias = 'RazonSocial'
+      FieldName = 'RazonSocial'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 15
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField17: TppField
+      FieldAlias = 'Calle'
+      FieldName = 'Calle'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 16
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField18: TppField
+      FieldAlias = 'NoExterior'
+      FieldName = 'NoExterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 17
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField19: TppField
+      FieldAlias = 'NoInterior'
+      FieldName = 'NoInterior'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 18
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField20: TppField
+      FieldAlias = 'Colonia'
+      FieldName = 'Colonia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 19
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField21: TppField
+      FieldAlias = 'CodigoPostal'
+      FieldName = 'CodigoPostal'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 20
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField22: TppField
+      FieldAlias = 'Estado'
+      FieldName = 'Estado'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 21
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField23: TppField
+      FieldAlias = 'Municipio'
+      FieldName = 'Municipio'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 22
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField24: TppField
+      FieldAlias = 'RFC'
+      FieldName = 'RFC'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 23
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField25: TppField
+      FieldAlias = 'Direccioncompleta'
+      FieldName = 'Direccioncompleta'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 24
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField26: TppField
+      FieldAlias = 'Telefono'
+      FieldName = 'Telefono'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 25
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField27: TppField
+      FieldAlias = 'Identificador'
+      FieldName = 'Identificador'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 26
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField28: TppField
+      FieldAlias = 'OcurreChk'
+      FieldName = 'OcurreChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 27
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField29: TppField
+      FieldAlias = 'DomicilioChk'
+      FieldName = 'DomicilioChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField30: TppField
+      FieldAlias = 'CobrarChk'
+      FieldName = 'CobrarChk'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 29
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField31: TppField
+      FieldAlias = 'CantidadCajas'
+      FieldName = 'CantidadCajas'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 30
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField32: TppField
+      FieldAlias = 'IdDocumentoGuia'
+      FieldName = 'IdDocumentoGuia'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 31
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField33: TppField
+      FieldAlias = 'FechaProgramadaEnt'
+      FieldName = 'FechaProgramadaEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 32
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField34: TppField
+      FieldAlias = 'FechaRealEnt'
+      FieldName = 'FechaRealEnt'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 33
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField35: TppField
+      FieldAlias = 'Lada'
+      FieldName = 'Lada'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 34
+      Searchable = False
+      Sortable = False
+    end
+    object ppDBPpLnPreimresappField36: TppField
+      FieldAlias = 'TelefonoCompleto'
+      FieldName = 'TelefonoCompleto'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 35
+      Searchable = False
+      Sortable = False
+    end
   end
   object ppRprtFactUtilidades: TppReport
     AutoStop = False
@@ -13091,7 +14297,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Legal (8,5" x 14")'
+    PrinterSetup.PaperName = 'Oficio'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
@@ -16876,7 +18082,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Duplex = dpVertical
-    PrinterSetup.PaperName = 'Letter (8,5" x 11")'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
     PrinterSetup.mmMarginBottom = 3704
