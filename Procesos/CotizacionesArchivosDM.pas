@@ -56,7 +56,10 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+//  AdodsMaster.open;      //aca pasado  Ene 13/17
+//  ADODsDocumento.Open;  //aca pasado  Ene 13/17
+
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faDoc;
   Id := adodsMasterIdDocumento.AsInteger;
   if Id  <> 0 then
@@ -74,7 +77,10 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+//  AdodsMaster.open;      //aca pasado  Ene 13/17
+//  ADODsDocumento.Open;  //aca pasado  Ene 13/17
+
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faDoc;
   Id := dmDocumentos.Add;
   if  Id <> 0 then
@@ -96,9 +102,9 @@ begin
   TFrmCotizacionesArchivos(gGridForm).InsertFile := actNuevoDocumento;
   TFrmCotizacionesArchivos(gGridForm).EditFile := actEditaDocumento;
 
-  AdodsMaster.open;
+//  AdodsMaster.open; //Deshabilitado de aca pasado antes de nuevo documento  Ene 13/17
 
-  ADODsDocumento.Open;
+//  ADODsDocumento.Open;   //Deshabilitado de aca pasado antes de nuevo documento  Ene 13/17
 end;
 
 procedure TdmCotizacionesArchivos.ReadFile(FileName: TFileName);

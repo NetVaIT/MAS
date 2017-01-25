@@ -14,7 +14,8 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
       'ctosXEspacio '#13#10'INNER JOIN Almacenes ON ProductosXEspacio.IdAlmac' +
       'en = Almacenes.IdAlmacen'#13#10'INNER JOIN Productos ON ProductosXEspa' +
       'cio.IdProducto = Productos.IdProducto'#13#10'INNER JOIN Espacios ON Pr' +
-      'oductosXEspacio.IdEspacio = Espacios.IdEspacio'#13#10
+      'oductosXEspacio.IdEspacio = Espacios.IdEspacio'#13#10'order by product' +
+      'os.orden'
     object adodsMasterIdProductoXEspacio: TAutoIncField
       FieldName = 'IdProductoXEspacio'
       ReadOnly = True

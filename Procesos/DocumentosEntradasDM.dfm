@@ -280,6 +280,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object adodsDocumentosDetalles: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    BeforeInsert = adodsDocumentosDetallesBeforeInsert
     AfterPost = adodsDocumentosDetallesAfterPost
     AfterDelete = adodsDocumentosDetallesAfterPost
     OnCalcFields = adodsDocumentosDetallesCalcFields

@@ -4,34 +4,40 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   KeyPreview = True
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
+  ExplicitTop = -151
   ExplicitWidth = 1046
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Top = 589
+    Top = 612
     Width = 1046
     ExplicitTop = 589
     ExplicitWidth = 1046
   end
   inherited splDetail2: TSplitter
-    Top = 545
+    Top = 587
     Width = 1046
     ExplicitTop = 545
     ExplicitWidth = 1046
   end
   inherited splDetail1: TSplitter
-    Top = 501
+    Top = 559
     Width = 1046
     ExplicitTop = 501
     ExplicitWidth = 1046
   end
   inherited pnlClose: TPanel
+    Top = 632
     Width = 1046
+    Height = 18
     TabOrder = 3
+    ExplicitTop = 632
     ExplicitWidth = 1046
+    ExplicitHeight = 18
   end
   inherited pnlDetail3: TPanel
-    Top = 592
+    Top = 615
     Width = 1046
     Height = 17
     TabOrder = 1
@@ -40,29 +46,33 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     ExplicitHeight = 17
   end
   inherited pnlDetail2: TPanel
-    Top = 548
+    Top = 590
     Width = 1046
-    ExplicitTop = 548
+    Height = 22
+    ExplicitTop = 571
     ExplicitWidth = 1046
+    ExplicitHeight = 22
   end
   inherited pnlDetail1: TPanel
-    Top = 504
+    Top = 562
     Width = 1046
+    Height = 25
     TabOrder = 4
     ExplicitLeft = 0
-    ExplicitTop = 504
+    ExplicitTop = 520
     ExplicitWidth = 1046
+    ExplicitHeight = 25
   end
   inherited pcMain: TcxPageControl
     Top = 43
     Width = 1046
-    Height = 458
+    Height = 516
     Properties.HideTabs = False
     OnChange = pcMainChange
     ExplicitTop = 43
     ExplicitWidth = 1046
     ExplicitHeight = 458
-    ClientRectBottom = 456
+    ClientRectBottom = 514
     ClientRectLeft = 2
     ClientRectRight = 1044
     ClientRectTop = 28
@@ -73,7 +83,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
       ExplicitHeight = 428
       inherited cxScrollBox1: TcxScrollBox
         Width = 1042
-        Height = 428
+        Height = 486
         ExplicitWidth = 1042
         ExplicitHeight = 428
         inherited tbarData: TToolBar
@@ -84,7 +94,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
         end
         inherited pnlMaster: TPanel
           Width = 1040
-          Height = 401
+          Height = 459
           ExplicitLeft = 0
           ExplicitTop = 25
           ExplicitWidth = 1040
@@ -264,6 +274,8 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             BevelOuter = bvNone
             TabOrder = 2
             Visible = False
+            ExplicitLeft = -3
+            ExplicitTop = 174
             object Label5: TLabel
               Left = 16
               Top = 2
@@ -417,11 +429,12 @@ inherited frmPersonasEdit: TfrmPersonasEdit
             Left = 0
             Top = 353
             Width = 1040
-            Height = 48
+            Height = 106
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 3
             Visible = False
+            ExplicitHeight = 75
             object LblCteCte: TLabel
               Left = 223
               Top = 6
@@ -499,16 +512,71 @@ inherited frmPersonasEdit: TfrmPersonasEdit
               AnchorX = 602
             end
           end
+          object pnlproveedor: TPanel
+            Left = 0
+            Top = 353
+            Width = 1040
+            Height = 106
+            Align = alClient
+            BevelOuter = bvNone
+            TabOrder = 4
+            Visible = False
+            ExplicitTop = 416
+            ExplicitHeight = 40
+            object Label17: TLabel
+              Left = 17
+              Top = 0
+              Width = 80
+              Height = 13
+              Caption = 'Clave Proveedor'
+              FocusControl = cxDBTxtEdtClavePrv
+            end
+            object Label18: TLabel
+              Left = 154
+              Top = 0
+              Width = 41
+              Height = 13
+              Caption = 'Moneda '
+              FocusControl = cxDBEdtCtaCliente
+            end
+            object cxDBTxtEdtClavePrv: TcxDBTextEdit
+              Left = 16
+              Top = 15
+              DataBinding.DataField = 'Identificador'
+              DataBinding.DataSource = DataSource
+              TabOrder = 0
+              OnKeyDown = cmbTipoPersonaKeyDown
+              Width = 111
+            end
+            object cxDBLkpCmbBxMoneda: TcxDBLookupComboBox
+              Left = 154
+              Top = 15
+              DataBinding.DataField = 'MonedaPrv'
+              DataBinding.DataSource = DataSource
+              Properties.KeyFieldNames = 'IdMetodoPago'
+              Properties.ListColumns = <
+                item
+                  FieldName = 'Descripcion'
+                end>
+              Properties.ListSource = DSMetodoPago
+              Properties.OnEditValueChanged = cxDBLkupCBxMetodoPagoPropertiesChange
+              TabOrder = 1
+              OnKeyDown = cmbTipoPersonaKeyDown
+              Width = 186
+            end
+          end
         end
       end
     end
     object tsDomicilio: TcxTabSheet
       Caption = 'Domicilio'
       ImageIndex = 1
+      ExplicitHeight = 428
     end
     object tsTelefono: TcxTabSheet
       Caption = 'Telefono'
       ImageIndex = 2
+      ExplicitHeight = 428
       object cxDBLblDomicilio: TcxDBLabel
         Left = 0
         Top = 0
@@ -530,6 +598,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsCorreo: TcxTabSheet
       Caption = 'Correo'
       ImageIndex = 3
+      ExplicitHeight = 428
       object cxDBLabel4: TcxDBLabel
         Left = 0
         Top = 0
@@ -551,6 +620,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsContactos: TcxTabSheet
       Caption = 'Contactos'
       ImageIndex = 4
+      ExplicitHeight = 428
       object cxDBLabel5: TcxDBLabel
         Left = 0
         Top = 0
@@ -572,10 +642,12 @@ inherited frmPersonasEdit: TfrmPersonasEdit
     object tsCuentasBancarias: TcxTabSheet
       Caption = 'Cuentas Bancarias'
       ImageIndex = 5
+      ExplicitHeight = 428
     end
     object TSCertificadosCSD: TcxTabSheet
       Caption = 'Certificados CSD'
       ImageIndex = 6
+      ExplicitHeight = 428
     end
   end
   object cxDBLabel1: TcxDBLabel [8]
@@ -620,7 +692,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400A40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -766,7 +838,7 @@ inherited frmPersonasEdit: TfrmPersonasEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00C40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00C80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

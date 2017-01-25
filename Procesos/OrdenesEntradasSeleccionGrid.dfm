@@ -6,7 +6,7 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
   TextHeight = 13
   inherited pnlMaster: TPanel
     inherited cxGrid: TcxGrid
-      Height = 256
+      ExplicitTop = -3
       inherited tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
@@ -20,15 +20,21 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
         object tvMasterTipo: TcxGridDBColumn
           DataBinding.FieldName = 'Tipo'
         end
+        object tvMasterFacturaProveedor: TcxGridDBColumn
+          Caption = 'Factura Proveedor'
+          DataBinding.FieldName = 'FacturaProveedor'
+          Width = 100
+        end
         object tvMasterNumero: TcxGridDBColumn
           DataBinding.FieldName = 'Numero'
+          Visible = False
         end
         object tvMasterFecha: TcxGridDBColumn
           DataBinding.FieldName = 'Fecha'
         end
         object tvMasterIdentificador: TcxGridDBColumn
           DataBinding.FieldName = 'Identificador'
-          Width = 66
+          Width = 71
         end
         object tvMasterProvedor: TcxGridDBColumn
           DataBinding.FieldName = 'Provedor'
@@ -44,11 +50,14 @@ inherited frmOrdenesEntradasSeleccionGrid: TfrmOrdenesEntradasSeleccionGrid
       end
     end
   end
+  inherited DataSource: TDataSource
+    DataSet = dmOrdenesEntradas.adodsFacturas
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      28
+      31
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository

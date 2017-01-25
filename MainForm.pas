@@ -21,7 +21,8 @@ uses
   dxBar, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.ImgList, dxSkinsForm,
   Vcl.ExtCtrls, dxStatusBar, dxRibbonStatusBar, cxLabel, dxGallery,
   dxGalleryControl, dxRibbonBackstageViewGalleryControl, dxRibbonBackstageView,
-  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit, UsuariosDM, CierreReportes;
+  cxClasses, dxRibbon, _StandarDMod, _StandarMDFormEdit, UsuariosDM, CierreReportes,
+  cxTextEdit, cxMemo;
 
 type
   TfrmMain = class(T_frmMainRibbon)
@@ -133,13 +134,18 @@ type
     dxBarLargeButton33: TdxBarLargeButton;
     dxBrLrgBtnFletes: TdxBarLargeButton;
     ActFletes: TAction;
+    cxMmErrorProceso: TcxMemo;
+    dxBrLrgBtnReporteVentasXCliente: TdxBarLargeButton;
+    ActRepVentasXCliente: TAction;
     procedure actCatalogoExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure dxRibbon1ApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure cxMmErrorProcesoPropertiesChange(Sender: TObject);
   private
+    fCargandoBitacora: Boolean; //Dic 26/16
     procedure UsarPermisos;
     { Private declarations }
   protected
@@ -152,7 +158,7 @@ type
     procedure DestroyModule; override;
   public
     { Public declarations }
-
+    property CargandoBitacora:Boolean read fCargandoBitacora write fCargandoBitacora;//Dic 26/16
   end;
 
 var
@@ -242,6 +248,9 @@ begin
    47: gModulo := TdmrptVentasProyeccion.Create(Self);
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
+
+  // 52: gModulo := TdmrptcostoInventario.Create(Self);  //Ene 24/17
+
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
    62: gModulo := TdmRptAntiguedadSaldos.create(Self); //Mar23/16
@@ -257,6 +266,21 @@ begin
     Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription;
   end;
 end;
+procedure TfrmMain.cxMmErrorProcesoPropertiesChange(Sender: TObject);
+var   //Jun 22/16
+  year, month, day : Word;
+  xFileName : String;
+begin      //ver si el LoadfromFile no dispara esto.... Jun 22/16
+  // Cada que cambie el texto de la bitacora voy a grabar el archivo
+  if not CargandoBitacora then  //Jun 22/16
+  begin
+    DecodeDate(now, year, month, day );
+    xFileName := 'LOGError_' + IntToStR( year ) + IntToStr( month ) + IntToStr( Day ) + '.txt';
+   // if FileExists(ExtractFilePath( Application.ExeName ) + '\' + xFileName) then
+    cxMmErrorProceso.Lines.SaveToFile( ExtractFilePath( Application.ExeName ) + '\' + xFileName  );
+  end;
+end;
+
 procedure TfrmMain.ConfigControls;
 begin
   inherited;
@@ -334,9 +358,22 @@ begin
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
+var
+  year, month, day : Word;   //Dic 26/16
+  xFileName : String;
 begin
   inherited;
   dmUsuarios:= TdmUsuarios.Create(nil);
+  //Dic 26/16 Proceso para crear registro de problemas
+  xFileName := 'LOGError_' + IntToStR( year ) + IntToStr( month ) + IntToStr( Day ) + '.txt';
+
+  if FileExists(ExtractFilePath( Application.ExeName ) + '\' + xFileName) then
+  begin
+    cxMmErrorProceso.Lines.LoadFromFile(ExtractFilePath( Application.ExeName ) + '\' + xFileName);
+  end;
+   fCargandoBitacora:=False;
+
+
 end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);

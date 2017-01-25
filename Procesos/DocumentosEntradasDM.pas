@@ -171,6 +171,7 @@ type
     procedure actEmailUpdate(Sender: TObject);
     procedure actGetDetalleAnteriorExecute(Sender: TObject);
     procedure actGetDetalleAnteriorUpdate(Sender: TObject);
+    procedure adodsDocumentosDetallesBeforeInsert(DataSet: TDataSet);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -361,6 +362,9 @@ var
   dmDetalleAnterior: TdmDocumentosEntradasDetalleAnterior;
 begin
   inherited;
+  if adodsMaster.state in [dsinsert,dsEdit]then // Dic 30/16
+     adodsMaster.post;
+
   dmDetalleAnterior := TdmDocumentosEntradasDetalleAnterior.Create(Self);
   try
     dmDetalleAnterior.IdDocumentoEntrada:= adodsMasterIdDocumentoEntrada.Value;
@@ -423,6 +427,14 @@ procedure TdmDocumentosEntradas.adodsDocumentosDetallesAfterPost(
 begin
   inherited;
   UpdTotales;
+end;
+
+procedure TdmDocumentosEntradas.adodsDocumentosDetallesBeforeInsert(
+  DataSet: TDataSet);
+begin
+  inherited;
+  if adodsmaster.State in [dsInsert,dsedit] then  // dic 30/16
+    adodsmaster.Post;
 end;
 
 procedure TdmDocumentosEntradas.adodsDocumentosDetallesCalcFields(

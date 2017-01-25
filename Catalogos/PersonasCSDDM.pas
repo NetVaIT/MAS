@@ -69,7 +69,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faKEY;
   Id := adodsMasterIdDocumentoKEY.AsInteger;
   if Id  <> 0 then

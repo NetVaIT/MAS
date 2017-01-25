@@ -10,7 +10,8 @@ inherited dmProductos: TdmProductos
       'SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, ' +
       #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +
       's '#13#10',Identificador1, Identificador2, Identificador3 '#13#10',Identific' +
-      'ador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM Productos'
+      'ador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM Productos'#13#10'or' +
+      'der by orden'
     Left = 32
     object adodsMasterIdProducto: TIntegerField
       FieldName = 'IdProducto'

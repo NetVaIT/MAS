@@ -357,10 +357,27 @@ var Total,MontoIVA,SubTotal:Double;
     IdAct:Integer;
 begin
   inherited;
-  IdAct:= DataSet.fieldbyname('IdOrdenSalida').asInteger;
-  if CalcularTotales(IdAct,'IdOrdenSalida','Importe', //Para sacar el calculo //Se cambio x costos Jun 29/16
-                      'OrdenesSalidasItems',PIVA,MontoIVA,SubTotal,Total) then
+    //Ene 20/17
+  Total:=0;
+  MontoIVA:=0;
+  SubTotal:=0;
+  if (ADODtStAjusteSalidaItems.RecordCount >0) then      //Ene 20/17
   begin
+    IdAct:= DataSet.fieldbyname('IdOrdenSalida').asInteger;
+    if CalcularTotales(IdAct,'IdOrdenSalida','Importe', //Para sacar el calculo //Se cambio x costos Jun 29/16
+                        'OrdenesSalidasItems',PIVA,MontoIVA,SubTotal,Total) then
+    begin
+      adoQryauxiliar.Close;
+      TAdoquery(AdoQryAuxiliar).SQL.Clear;
+      TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE OrdenesSalidas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
+                                      +' WHERE IdOrdenSalida= '+intToStr(IdAct));
+      if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
+         ADodsMaster.Refresh;
+    end;
+  end
+  else      //Ene 20/17
+  begin
+    IdAct:= adodsMaster.fieldbyname('IdOrdenSalida').asInteger;
     adoQryauxiliar.Close;
     TAdoquery(AdoQryAuxiliar).SQL.Clear;
     TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE OrdenesSalidas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
@@ -654,6 +671,9 @@ end;
 procedure TDMAjustesSalida.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+   adodsmaster.Close;  //Ene 24/17
+  adodsmaster.Parameters.ParamByName('Fini').Value:=date;     //Ene 24/17
+  adodsmaster.Parameters.ParamByName('FFin').Value:=date +1; //Ene 24/17
   gGridEditForm:= TfrmAjustesSalidasEdit.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   if ADODtStAjusteSalidaItems.CommandText <> EmptyStr then

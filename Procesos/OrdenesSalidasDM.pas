@@ -312,6 +312,8 @@ type
     ADODtStDatosDocumentoSalidaAsegurado: TBooleanField;
     adodsMasterPagoFlete: TBooleanField;
     adodsMasterAsegurado: TBooleanField;
+    ADODtStDatosDocumentoSalidaAnotacionEnvio: TStringField;
+    adodsMasterAnotacionEnvio: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -404,7 +406,7 @@ var        //Feb 15/16
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(Self);
   dmDocumentos.FileAllowed := faall;
   Id := ADODtStInformacionEnvioIdDocumentoGuia.AsInteger;
   if Id  <> 0 then
@@ -1180,7 +1182,10 @@ begin
       ADODtstInsertaInfoEntrega.Fieldbyname('PagoFlete').AsBoolean:=adodsMaster.FieldByName('PagoFlete').AsBoolean; //Ajustado Dic 18/16 False;
       ADODtstInsertaInfoEntrega.Fieldbyname('Valor').AsFloat:=  adodsMaster.FieldByName('Total').ASFloat;
       ADODtstInsertaInfoEntrega.Fieldbyname('Asegurado').AsBoolean:= adodsMaster.FieldByName('Asegurado').AsBoolean; //Ajustado Dic 18/16 False;
+      ADODtstInsertaInfoEntrega.Fieldbyname('Observaciones').AsString:= adodsMaster.FieldByName('AnotacionEnvio').AsString; //Ajustado Dic 19/16 ;
+
       ADODtstInsertaInfoEntrega.Fieldbyname('IDEstatusOrdenEntrega').AsInteger:= adodsMaster.FieldByName('IdOrdenEstatus').AsInteger; //Jun 10/16
+
 
       ADODtstInsertaInfoEntrega.Post; //Errror de operacion en varios pasos //Fecha
       id:=   ADODtstInsertaInfoEntrega.Fieldbyname('IdInfoentrega').AsInteger;

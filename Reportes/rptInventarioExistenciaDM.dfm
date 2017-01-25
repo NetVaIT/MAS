@@ -3,7 +3,7 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
     CommandText = 
       'SELECT P.Identificador1, I.Existencia'#13#10'FROM  Inventario AS I '#13#10'I' +
       'NNER JOIN Productos AS P ON P.IdProducto = I.IdProducto'#13#10'ORDER B' +
-      'Y P.Identificador1'
+      'Y P.orden --P.Identificador1'
   end
   inherited ppReport: TppReport
     Columns = 8

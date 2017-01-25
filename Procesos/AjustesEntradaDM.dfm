@@ -10,7 +10,25 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
       'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen,'#13#10' IdOrdenE' +
       'status, IdPersona, IdMoneda, IdUsuario, Fecha,'#13#10' TipoCambio, Sub' +
       'Total, IVA, Total, Observaciones,'#13#10'IdOrdenEntradaTipo from Orden' +
-      'esEntradas where'#13#10' idordenentradaTipo>2'
+      'esEntradas where'#13#10' idordenentradaTipo>2 and fecha>=:fini and fec' +
+      'ha<=:ffin'
+    Parameters = <
+      item
+        Name = 'fini'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'ffin'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
     object adodsMasterIdOrdenEntrada: TAutoIncField
       FieldName = 'IdOrdenEntrada'
       ReadOnly = True
@@ -113,18 +131,22 @@ inherited dmAjustesEntradas: TdmAjustesEntradas
       Caption = 'Seleccionar Producto'
       OnExecute = ActSeleccionaProductoExecute
     end
+    object ActImpresionAjuste: TAction
+      Caption = 'ActImpresionAjuste'
+    end
   end
   object dsmaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsmasterDataChange
     Left = 104
-    Top = 8
+    Top = 16
   end
   object ADODtStAjusteEntradaItems: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     BeforeInsert = ADODtStAjusteEntradaItemsBeforeInsert
     AfterPost = ADODtStAjusteEntradaItemsAfterPost
+    AfterDelete = ADODtStAjusteEntradaItemsAfterPost
     OnNewRecord = ADODtStAjusteEntradaItemsNewRecord
     CommandText = 
       'select IdOrdenEntradaItem, IdOrdenEntrada, '#13#10'IdDocumentoEntradaD' +

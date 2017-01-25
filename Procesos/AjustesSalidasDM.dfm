@@ -10,7 +10,27 @@ inherited DMAjustesSalida: TDMAjustesSalida
       'select idOrdenSalida, IdOrdenEstatus, IdPersonaRecolecta,'#13#10' Fech' +
       'aRegistro, Subtotal, IVA, Total, IdGeneraCFDITipoDoc,'#13#10' Acumula,' +
       ' IdPersona, IDOrdenSalidaTipo, Observaciones,'#13#10' IdAlmacen, IdUsu' +
-      'ario from OrdenesSalidas where IdOrdenSalidaTipo>=2'
+      'ario from OrdenesSalidas where'#13#10' IdOrdenSalidaTipo>=2'#13#10'and FEcha' +
+      'Registro >=:FIni and FEchaRegistro<=:FFin'
+    Parameters = <
+      item
+        Name = 'FIni'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'FFin'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
     Left = 40
     object adodsMasteridOrdenSalida: TAutoIncField
       FieldName = 'idOrdenSalida'
@@ -104,6 +124,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
   object ADODtStAjusteSalidaItems: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterClose = ADODtStAjusteSalidaItemsAfterPost
     BeforeInsert = ADODtStAjusteSalidaItemsBeforeInsert
     AfterPost = ADODtStAjusteSalidaItemsAfterPost
     OnNewRecord = ADODtStAjusteSalidaItemsNewRecord
@@ -227,7 +248,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
     CommandText = 
       'select Pe.*, E.Descripcion as Espacio from ProductosXEspacio PE'#13 +
       #10'inner join Espacios E on E.IdEspacio=PE.IdEspacio'#13#10'where Pe.idE' +
-      'spacio<>:IDaduana'
+      'spacio<>:IDaduana'#13#10'and Pe.Cantidad >0'
     Parameters = <
       item
         Name = 'IDaduana'
@@ -379,7 +400,7 @@ inherited DMAjustesSalida: TDMAjustesSalida
   object dsmaster: TDataSource
     DataSet = adodsMaster
     OnDataChange = dsmasterDataChange
-    Left = 96
+    Left = 104
     Top = 16
   end
   object ADODtStOrdenEstatus: TADODataSet

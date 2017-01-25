@@ -25,6 +25,7 @@ type
     dxmdPendientesPrecio: TFMTBCDField;
     dxmdPendientesCantidad: TIntegerField;
     dxmdPendientesOrden: TIntegerField;
+    dxmdPendientesFacturaProveedor: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dxmdPendientesNewRecord(DataSet: TDataSet);
     procedure dxmdPendientesCantidadChange(Sender: TField);

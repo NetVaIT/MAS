@@ -122,7 +122,7 @@ const
          +'   (getdate() - CI.Fecha < 120 + PR.DiasCreditoCliente) THEN CI.SaldoDocumento END AS ''Vencidos a 90 días'', CASE WHEN getdate()'
          +'   - CI.Fecha >= 120 + PR.DiasCreditoCliente THEN CI.SaldoDocumento END AS ''Vencidos más de 90 días'''
          +' FROM         CFDI AS CI INNER JOIN Personas AS PR ON CI.IdPersonaReceptor = PR.IdPersona'
-         +' WHERE    (CI.SaldoDocumento > 0)   AND (Ci.IdPersonaReceptor <> - 1)  And  '
+         +' WHERE    (Ci.IdPersonaReceptor <> - 1)  And  ' //deshabilitado mientras dic 28/16  (CI.SaldoDocumento > 0)   AND
          +'( (Ci.IdCFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 1) OR  '
          +'  (CI.IdCFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 3) OR '
          +'  (CI.IdCFDIEstatus = 4) AND (Ci.IdCFDITipoDocumento = 4) OR '

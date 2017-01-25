@@ -46,6 +46,8 @@ inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
+      ReportDocument.CreationDate = 42755.483110092590000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

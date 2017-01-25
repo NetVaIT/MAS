@@ -1,129 +1,79 @@
-inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
-  Caption = 'frmRptAntiguedadSaldos'
-  ClientWidth = 1166
-  ExplicitWidth = 1166
+inherited RptVentasXCliente: TRptVentasXCliente
+  Caption = 'RptVentasXCliente'
+  ClientWidth = 875
+  ExplicitWidth = 875
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited splDetail1: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited splDetail2: TSplitter
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited pnlMaster: TPanel
-    Top = 100
-    Width = 1166
-    Height = 184
-    ExplicitTop = 100
-    ExplicitWidth = 1166
-    ExplicitHeight = 184
+    Top = 78
+    Width = 875
+    Height = 206
     inherited cxGrid: TcxGrid
-      Width = 1166
-      Height = 184
-      ExplicitWidth = 1166
-      ExplicitHeight = 184
+      Width = 875
+      Height = 206
+      ExplicitLeft = 1
+      ExplicitWidth = 875
+      ExplicitHeight = 206
       inherited tvMaster: TcxGridDBTableView
-        object tvMasterCliente: TcxGridDBColumn
-          DataBinding.FieldName = 'Cliente'
-          Width = 308
+        object tvMasterIdPersonaReceptor: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaReceptor'
+          Visible = False
         end
-        object tvMasterDias: TcxGridDBColumn
-          DataBinding.FieldName = 'Dias'
-          Width = 48
+        object tvMasterDescripcion: TcxGridDBColumn
+          DataBinding.FieldName = 'Descripcion'
+          Width = 107
         end
-        object tvMasterFecha: TcxGridDBColumn
-          DataBinding.FieldName = 'Fecha'
+        object tvMasterRazonSocial: TcxGridDBColumn
+          DataBinding.FieldName = 'RazonSocial'
+          Width = 395
         end
-        object tvMasterSerie: TcxGridDBColumn
-          DataBinding.FieldName = 'Serie'
-          Width = 70
+        object tvMasteridcfditipodocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'idcfditipodocumento'
+          Visible = False
         end
-        object tvMasterFolio: TcxGridDBColumn
-          DataBinding.FieldName = 'Folio'
-          Width = 77
-        end
-        object tvMasterSaldoDocumento: TcxGridDBColumn
-          DataBinding.FieldName = 'SaldoDocumento'
-          Width = 92
-        end
-        object tvMasterVigentes: TcxGridDBColumn
-          DataBinding.FieldName = 'Vigentes'
-          Width = 75
-        end
-        object tvMasterVencidosa30das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 30 d'#237'as'
-          Width = 93
-        end
-        object tvMasterVencidosa60das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 60 d'#237'as'
-          Width = 95
-        end
-        object tvMasterVencidosa90das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos a 90 d'#237'as'
-          Width = 93
-        end
-        object tvMasterVencidosmsde90das: TcxGridDBColumn
-          DataBinding.FieldName = 'Vencidos m'#225's de 90 d'#237'as'
-          Width = 124
+        object tvMasterSumaTotal: TcxGridDBColumn
+          DataBinding.FieldName = 'SumaTotal'
+          Width = 170
         end
       end
     end
   end
   inherited pnlDetail3: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited pnlDetail2: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited pnlDetail1: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
+    Width = 875
   end
   inherited pnlClose: TPanel
-    Width = 1166
-    ExplicitWidth = 1166
-    DesignSize = (
-      1166
-      41)
+    Width = 875
+    ExplicitTop = 422
     inherited btnClose: TButton
-      Left = 1081
-      ExplicitLeft = 1081
+      Left = 790
     end
   end
-  object PnlTitulo: TPanel [8]
+  object PnlFiltros: TPanel [8]
     Left = 0
-    Top = 0
-    Width = 1166
-    Height = 22
-    Align = alTop
-    Alignment = taLeftJustify
-    Caption = '     Antiguedad de Saldos'
-    Color = 5553385
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentBackground = False
-    ParentFont = False
-    TabOrder = 9
-  end
-  object PnlFiltros: TPanel [9]
-    Left = 0
-    Top = 53
-    Width = 1166
+    Top = 31
+    Width = 875
     Height = 47
     Align = alTop
     ParentBackground = False
-    TabOrder = 10
+    TabOrder = 9
+    ExplicitLeft = -515
+    ExplicitTop = 53
+    ExplicitWidth = 1166
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -147,7 +97,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         Width = 163
         Height = 21
         TabOrder = 0
-        OnKeyDown = EdtNombreKeyDown
       end
     end
     object PnlFechas: TPanel
@@ -214,6 +163,8 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
         Width = 82
         Height = 20
         Caption = 'Usar Fecha'
+        Checked = True
+        State = cbChecked
         TabOrder = 2
       end
     end
@@ -245,7 +196,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmRptAntiguedadSaldos.adodsMaster
+    DataSet = dmrptVentasXCliente.adodsReport
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -253,12 +204,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
       0
       31
       0)
-    inherited dxbNavigator: TdxBar
-      DockedLeft = 107
-    end
-    inherited dxbTools: TdxBar
-      DockedLeft = 238
-    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -268,7 +213,7 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      ReportDocument.CreationDate = 42585.483476608800000000
+      ReportDocument.CreationDate = 42760.381338460650000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end

@@ -162,6 +162,7 @@ type
     procedure DBLookupComboBox3Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure cxDBLabel4Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FTipoDoc: Integer;
     GenPDFCotiza: TBasicAction; //Feb4/16
@@ -449,6 +450,7 @@ begin
        DataSource.DataSet.FieldByName('Servicio').asString:=  dsDireccionCliente.dataset.Fieldbyname('Servicio').asString;
        DataSource.DataSet.FieldByName('PagoFlete').AsBoolean:=dsDireccionCliente.dataset.Fieldbyname('PagoFlete').asboolean;
        DataSource.DataSet.FieldByName('Asegurado').AsBoolean:=dsDireccionCliente.dataset.Fieldbyname('Asegurado').asboolean;
+       DataSource.DataSet.FieldByName('AnotacionEnvio').asString:=  dsDireccionCliente.dataset.Fieldbyname('Anotaciones').asString;
        //Hasta aca
      end;
    end;
@@ -475,9 +477,15 @@ begin
   gFormGrid := TfrmCotizacionesGrid.Create(Self);
  // TfrmCotizacionesGrid(gFormGrid).CerrarGrid := actCloseGrid;  //Se vaa acolocar en el estandar hay que quitarlo de aca Ene 13/16
   DataSource.DataSet.open;
-  DataSourceDetail.DataSet.Open;
-  dmCotizacionesArchivos := TdmCotizacionesArchivos.Create(nil); //Pa ARchivos asociados
+  DataSourceDetail.DataSet.Open;                           //Era nil
+  dmCotizacionesArchivos := TdmCotizacionesArchivos.Create(self); //Pa ARchivos asociados     //REvisar que es lo que esta haciendo de mas para
 
+end;
+
+procedure TfrmCotizaciones.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  FreeAndNil(dmCotizacionesArchivos);  //Ene  12/17
 end;
 
 procedure TfrmCotizaciones.FormKeyPress(Sender: TObject; var Key: Char);

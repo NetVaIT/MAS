@@ -40,6 +40,7 @@ type
     tvMasterProvedor: TcxGridDBColumn;
     tvMasterTotal: TcxGridDBColumn;
     tvMasterObservaciones: TcxGridDBColumn;
+    tvMasterFacturaProveedor: TcxGridDBColumn;
     procedure tvMasterDblClick(Sender: TObject);
   private
     { Private declarations }

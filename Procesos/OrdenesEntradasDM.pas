@@ -192,6 +192,7 @@ type
     adodsMasterNoFactura: TStringField;
     adodsMasterPedimento: TStringField;
     ActAcomodoIndividual: TAction;
+    adodsFacturasFacturaProveedor: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);

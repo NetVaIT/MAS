@@ -181,7 +181,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faJPG;
   Id := adodsProductoFotosIdDocumento.AsInteger;
   if Id  <> 0 then
@@ -198,7 +198,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faJPG;  //era ALL
   Id := dmDocumentos.Add;
   if  Id <> 0 then
@@ -293,12 +293,12 @@ begin
 //  TfrmProductosEdit(gGridEditForm).EditFile := actEditaDocumento;
 //  adodsMaster.open;
   TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset:=adodsProductoFotos;
-  TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset.open;
+//  TfrmProductosEdit(gGridEditForm).DataSourceFotos.Dataset.open;  verificar   Deshabilitado ene 13/17
   TfrmProductosEdit(gGridEditForm).DSDocumento.Dataset:=ADODsDocumento;
   TfrmProductosEdit(gGridEditForm).dsEspecificaciones.Dataset:=ADODtStEspecificaciones; //Jul 26/16
   ADODtStEspecificaciones.Open;
-  AdoDSProductoFotos.Open;     //Ya viene abierto
-  ADODsDocumento.open;    //Ya viene abierto
+ // AdoDSProductoFotos.Open;     //Ya viene abierto   DEshabilitado Ene 13/17
+ // ADODsDocumento.open;    //Ya viene abierto     DEshabilitado Ene 13/17
   gFormDetail1:= TfrmProductosProveedoresEdit.Create(Self);
   gFormDetail1.DataSet:= adodsProductosProveedores;
   gFormDetail2:= TfrmProductosAplicacionEdit.Create(Self);  //May 12/16

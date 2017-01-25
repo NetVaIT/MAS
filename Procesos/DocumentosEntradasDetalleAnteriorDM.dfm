@@ -78,7 +78,8 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
         'to, '
       
         'DocumentosEntradasDetalles.CantidadPendiente, DocumentosEntradas' +
-        'Detalles.Precio, 0 AS Cantidad'
+        'Detalles.Precio, 0 AS Cantidad,'
+      'DocumentosEntradas.Identificador as FacturaProveedor'
       'FROM DocumentosEntradasDetalles '
       
         'INNER JOIN DocumentosEntradas ON DocumentosEntradasDetalles.IdDo' +
@@ -120,6 +121,11 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
     end
     object dxmdPendientesIdProducto: TIntegerField
       FieldName = 'IdProducto'
+    end
+    object dxmdPendientesFacturaProveedor: TStringField
+      DisplayLabel = 'Factura Proveedor'
+      FieldName = 'FacturaProveedor'
+      Size = 10
     end
     object dxmdPendientesNumero: TIntegerField
       DisplayLabel = 'N'#250'mero'

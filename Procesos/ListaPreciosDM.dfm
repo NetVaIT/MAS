@@ -17,7 +17,7 @@ inherited DmListaPrecios: TDmListaPrecios
       'oEstatus, Identificador1, Identificador2, Identificador3,'#13#10'P.Des' +
       'cripcion, PrecioUnitario, PrecioNuevo from Productos P'#13#10'inner jo' +
       'in Inventario I on P.IdProducto = I.IdProducto and P.IdProductoE' +
-      'status=1'#13#10
+      'status=1'#13#10'order by P.orden'
     Left = 56
     object adodsMasterIdProducto: TAutoIncField
       FieldName = 'IdProducto'
@@ -3749,7 +3749,7 @@ inherited DmListaPrecios: TDmListaPrecios
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
-    Left = 116
+    Left = 124
     Top = 18
   end
   object ADODtStAplicaciones: TADODataSet
@@ -3860,8 +3860,9 @@ inherited DmListaPrecios: TDmListaPrecios
       'cripcion, PrecioUnitario, PrecioNuevo, PA.Aplicacion, Pa.IdProdu' +
       'ctoAplicacion  from Productos P'#13#10'inner join Inventario I on P.Id' +
       'Producto = I.IdProducto and P.IdProductoEstatus=1'#13#10'left join Pro' +
-      'ductosAplicaciones Pa on  PA.IdProducto=P.IDProducto'#13#10#13#10'-- where' +
-      ' IdProductoAplicacion is not null'#13#10#13#10'-- order by Pa.IdMarca'
+      'ductosAplicaciones Pa on  PA.IdProducto=P.IDProducto'#13#10'order by P' +
+      '.orden'#13#10'-- where IdProductoAplicacion is not null'#13#10#13#10'-- order by' +
+      ' Pa.IdMarca'
     Parameters = <>
     Left = 464
     Top = 176

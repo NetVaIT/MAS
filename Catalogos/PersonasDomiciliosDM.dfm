@@ -10,8 +10,8 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       'SELECT IdPersonaDomicilio, IdPersona, IdDomicilio,'#13#10' IdDomicilio' +
       'Tipo, IdEnvioTipo ,Predeterminado, '#13#10'Identificador, Saldo, UsarP' +
       'araEnvio, IdMetododePago, '#13#10'NumCtaPagoCliente, Servicio, PagoFle' +
-      'te, Asegurado'#13#10' FROM PersonasDomicilios '#13#10'WHERE IdPersona = :IdP' +
-      'ersona'
+      'te, Asegurado, Anotaciones'#13#10' FROM PersonasDomicilios '#13#10'WHERE IdP' +
+      'ersona = :IdPersona'
     Parameters = <
       item
         Name = 'IdPersona'
@@ -186,9 +186,13 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
     object adodsMasterAsegurado: TBooleanField
       FieldName = 'Asegurado'
     end
+    object adodsMasterAnotaciones: TStringField
+      FieldName = 'Anotaciones'
+      Size = 100
+    end
   end
   inherited adodsUpdate: TADODataSet
-    Left = 336
+    Left = 328
   end
   inherited ActionList: TActionList
     object actUpdate: TAction
@@ -229,7 +233,7 @@ inherited dmPersonasDomicilios: TdmPersonasDomicilios
       'nes.IdPoblacion'#13#10
     Parameters = <>
     Left = 120
-    Top = 40
+    Top = 32
     object adodsDomiciliosIdDomicilio: TAutoIncField
       FieldName = 'IdDomicilio'
       ReadOnly = True

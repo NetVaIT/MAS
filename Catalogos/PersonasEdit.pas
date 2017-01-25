@@ -82,6 +82,11 @@ type
     cxDBLblDomicilio: TcxDBLabel;
     cxDBLabel4: TcxDBLabel;
     cxDBLabel5: TcxDBLabel;
+    pnlproveedor: TPanel;
+    Label17: TLabel;
+    cxDBTxtEdtClavePrv: TcxDBTextEdit;
+    cxDBLkpCmbBxMoneda: TcxDBLookupComboBox;
+    Label18: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnWebClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -156,6 +161,7 @@ begin
     datasource.DataSet.FieldByName('idrol').Asinteger:=integer(ROL);   //no coincide con los de la BD
     pnlPersonaFisica.Visible:=(cmbTipoPersona.editValue =1);
     pnlPersonaMoral.Visible := (cmbTipoPersona.editValue =2);
+    pnlproveedor.Visible:=Rol = rProveedor;  //Dic 30/16
  //   MostrarPanel; //Movido aca   //Cambiado
   end;
 end;
@@ -289,6 +295,8 @@ begin
   dmPersonasCSD.MasterFields := 'IdPersona';   //Dic 21/15
   dmPersonasCSD.ShowModule(TSCertificadosCSD,''); //Dic 21/15
 
+  pnlproveedor.Visible:=Rol = rProveedor;  //Dic 30/16
+
   TSCertificadosCSD.TabVisible:=  Rol=rEmisor ;
   case Rol of   //Mar 2/16
     rCliente: PnlTitulo.Caption:='Clientes';
@@ -362,7 +370,7 @@ begin
     pnlPersonaMoral.Visible := DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 2;  //
     pnlPersonaFisica.Visible := DataSource.DataSet.FieldByName('IdPersonaTipo').AsInteger = 1;
     PnlCliente.Visible:= DataSource.DataSet.FieldByName('Idrol').AsInteger =1;
-
+    pnlproveedor.Visible:=Rol = rProveedor;  //Dic 30/16
     LblCteCte.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;;
     cxDBEdtCtaCliente.Visible:=DataSource.DataSet.FieldByName('ExigeCta').asinteger=1;
   end;

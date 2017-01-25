@@ -6,7 +6,7 @@ inherited DMrptCostoInventario: TDMrptCostoInventario
       'select P.Identificador1,  p.Descripcion  ,  I.Existencia, I.Cost' +
       'oPromedio Costo , (I.Existencia* I.CostoPromedio) as Importe fro' +
       'm Inventario  I '#13#10'inner join  Productos P on P.IDProducto=I.IdPr' +
-      'oducto'#13#10'order by  P.Identificador1'
+      'oducto'#13#10'order by  P.orden'
     object adodsMasterIdentificador1: TStringField
       DisplayLabel = 'N'#250'mero Art'#237'culo'
       FieldName = 'Identificador1'

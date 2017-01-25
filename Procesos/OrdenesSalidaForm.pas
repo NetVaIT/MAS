@@ -512,6 +512,14 @@ begin
     begin
       if datasource.DataSet.State =dsEdit then //Ago 31/16 para que guarde tipoFacturacion antes
          datasource.DataSet.Post;
+       if (datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4)  and
+           ( datasource.DataSet.FieldByName('IVA').asfloat <>0) then //Dic 28/16 Para que quite el iva si no factura
+       begin
+         datasource.DataSet.Edit;
+         datasource.DataSet.FieldByName('Total').ASfloat:=  datasource.DataSet.FieldByName('SubTotal').ASfloat;
+         datasource.DataSet.FieldByName('IVA').asfloat:=0;
+         datasource.DataSet.Post;
+       end; //Dic 28/16 Para que quite el iva si no factura
     (*  *)
      //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
       ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
@@ -915,7 +923,7 @@ begin
        end;
      end
      else
-       if EstatusNvo=3 then //Abr 11/16
+       if EstatusNvo=3 then //Abr 11/16   //Paso de recoleccion a revisión
        begin  //poner de PedidosXSurtir  a Apartado
          ActualizaApartado.Execute;
        end;
@@ -1182,7 +1190,7 @@ begin
  DBChckBxAcumula.visible:=DBRdGrpGenerar.itemindex=1;
  case DBRdGrpGenerar.itemindex of
  0: Dataset.FieldByName('Acumula').ASBoolean:= False;
- 1: Dataset.FieldByName('Acumula').ASBoolean:= True;
+ 1: Dataset.FieldByName('Acumula').ASBoolean:= True; //Esto lo deja pendiente para FActura General
  end;
 
 end;
@@ -1229,7 +1237,8 @@ begin
   dmFacturas.ActCrearPrefacturas.Execute;
  // dmFActuras.Muestra:=False;
   CFDICreado:= dmFActuras.CreoCFDI; //Solo trae valor
-  if CFDICreado and (IDGenTipoDoc<>4) then   //Mod Mar 28/16
+                                          //Dic 19/16  // verificar si luego hay que enviar hacia afuera este valor
+  if CFDICreado and (IDGenTipoDoc<>4) and (not dmFActuras.CreadaAntes)then  //Ajuste para que se mande crear si no esta Ene3/17 //Mod Mar 28/16
     dmFacturas.ActProcesaFactura.Execute;
   if CFDICreado and (IDGenTipoDoc=4) then //Reporte, impresion y envio  //Abr 7/16
   begin

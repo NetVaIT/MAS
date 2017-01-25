@@ -71,6 +71,14 @@ type
     adodsMasterNumCtaPagoCliente: TStringField;
     adodsMasterDiasCreditoCliente: TIntegerField;
     ActEjecutarConsulta: TAction;
+    adodsMasterIdMoneda: TIntegerField;
+    adodsMasterIdentificador: TStringField;
+    ADODtStMonedas: TADODataSet;
+    ADODtStMonedasIdMoneda: TAutoIncField;
+    ADODtStMonedasIdPais: TIntegerField;
+    ADODtStMonedasIdentificador: TStringField;
+    ADODtStMonedasDescripcion: TStringField;
+    adodsMasterMonedaPrv: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure ActEjecutarConsultaExecute(Sender: TObject);
@@ -147,6 +155,8 @@ begin
   if Rol=rEmpleado then //Jul 16/16
     Dataset.fieldbyname('IdPersonaTipo').AsInteger:=1; // Porque no se asigna
   Dataset.fieldbyname('IdPersonaEstatus').AsInteger:=1; //Activo //May 5/16
+   if Rol=rProveedor then //Dic 30/16
+    Dataset.fieldbyname('IdMoneda').AsInteger:=106;
 end;
 
 constructor TdmPersonas.CreateWRol(AOwner: TComponent; Rol: TPRol);
@@ -166,6 +176,7 @@ begin
   // Busqueda
   SQLSelect:= 'SELECT IdPersona, IdPersonaTipo, IdRol, IdSexo, IdEstadoCivil, IdPais, IdMetodoPagoCliente, IdRegimenFiscalEmisor, IdPersonaEstatus, IdDocumentoLogoEmisor, RFC, CURP, RazonSocial, Nombre, ApellidoPaterno, ' +
   'ApellidoMaterno, LugarNacimiento, FechaNacimiento, NumCtaPagoCliente, SaldoCliente,  NSSEmpleado, DiasCreditoCliente ' +
+  ', identificador, IdMoneda '+ //dic 30/16
   'FROM Personas ';
   SQLOrderBy:= 'ORDER BY RazonSocial';
   SetFilter;//actSearch.Execute;   //May 4 deshabilitado para prueba

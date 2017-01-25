@@ -45,6 +45,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   inherited pnlDetail1: TPanel
     Top = 430
     Width = 800
+    ExplicitLeft = 0
     ExplicitTop = 430
     ExplicitWidth = 800
   end
@@ -110,6 +111,8 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
         inherited pnlMaster: TPanel
           Width = 796
           Height = 376
+          ExplicitLeft = 0
+          ExplicitTop = 25
           ExplicitWidth = 796
           ExplicitHeight = 376
           object pnlDetail: TPanel
@@ -284,7 +287,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
                 Left = 12
                 Top = 3
                 Width = 110
-                Height = 22
+                Height = 13
                 Caption = 'No. Factura Proveedor'
               end
               object Label14: TLabel
@@ -298,6 +301,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
               object cxDBTextEdit1: TcxDBTextEdit
                 Left = 8
                 Top = 19
+                DataBinding.DataField = 'Identificador'
                 DataBinding.DataSource = DataSource
                 TabOrder = 0
                 Width = 121
@@ -420,7 +424,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400A80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -561,7 +565,7 @@ inherited frmDocumentosEntradas: TfrmDocumentosEntradas
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010E002803E40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E002803E80110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000002000000070000001000000018000000210000001D0000

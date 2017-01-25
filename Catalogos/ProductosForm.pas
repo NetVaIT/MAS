@@ -72,7 +72,7 @@ begin
     DataSource.DataSet.Close;                                   //May 11/16 , PA.Aplicacion, PA.Identificador  IdentificadorAplica
     TAdoDataset(DataSource.DataSet).commandText:='Select distinct(P.IdProducto) ,P.*,Identificador1 + '' - '' + P.Descripcion AS Identificador from Productos P '+
                                                  ' inner join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto'+
-                                                  ' and  PA.Aplicacion like''%'+IDProd +'%'') ';
+                                                  ' and  PA.Aplicacion like''%'+IDProd +'%'') order by P.Orden '; //ajuste orden dic23/16
    DataSource.DataSet.open;
   end
   else  //Sin filtro por aplicacion
@@ -80,12 +80,12 @@ begin
     DataSource.DataSet.Close;                                   //May 11/16    '+ParteAp+ '      ' left join ProductosAplicaciones PA on (P.IdProducto=PA.IdProducto)  '+
     TAdoDataset(DataSource.DataSet).commandText:='Select P.*,Identificador1 + '' - '' + P.Descripcion AS Identificador  from Productos P '+  //Ajustado para que funcione consulta Ago 16/16
                                           ' where(Identificador1 Like ''%'+IDProd+'%'' or Identificador2 like ''%'+IDProd+
-                                          '%'' or Identificador3 Like ''%'+IDProd+'%'')';               //Ajustados para qu wbusque parcial cualquier pedazo Dic 2/16
+                                          '%'' or Identificador3 Like ''%'+IDProd+'%'')order by P.Orden '; //ajuste orden dic23/16           //Ajustados para qu wbusque parcial cualquier pedazo Dic 2/16
     DataSource.DataSet.open;
     if DataSource.DataSet.Eof then
     begin
       DataSource.DataSet.Close;                                  //corregido para que funcione consulta ago 16/16
-      TAdoDataset(DataSource.DataSet).commandText:='Select P.* , Identificador1 + '' - '' + P.Descripcion AS Identificador '+ParteAp+' from Productos P where P.Descripcion like ''%'+IDProd+ '%''';
+      TAdoDataset(DataSource.DataSet).commandText:='Select P.* , Identificador1 + '' - '' + P.Descripcion AS Identificador '+ParteAp+' from Productos P where P.Descripcion like ''%'+IDProd+ '%'' order by P.Orden '; //ajuste orden dic23/16
       DataSource.DataSet.open;
     end;
   end;

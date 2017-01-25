@@ -10,7 +10,7 @@ inherited dmPersonas: TdmPersonas
       'Estatus, IdDocumentoLogoEmisor, RFC, CURP, '#13#10'RazonSocial, Nombre' +
       ', ApellidoPaterno, '#13#10'ApellidoMaterno, LugarNacimiento, FechaNaci' +
       'miento, '#13#10'NumCtaPagoCliente, SaldoCliente, '#13#10'NSSEmpleado, DiasCr' +
-      'editoCliente'#13#10'FROM Personas'
+      'editoCliente, IdMoneda, Identificador'#13#10'FROM Personas'
     Left = 48
     object adodsMasterIdPersona: TAutoIncField
       FieldName = 'IdPersona'
@@ -179,6 +179,24 @@ inherited dmPersonas: TdmPersonas
     object adodsMasterDiasCreditoCliente: TIntegerField
       FieldName = 'DiasCreditoCliente'
     end
+    object adodsMasterIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object adodsMasterIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 5
+    end
+    object adodsMasterMonedaPrv: TStringField
+      FieldKind = fkLookup
+      FieldName = 'MonedaPrv'
+      LookupDataSet = ADODtStMonedas
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdMoneda'
+      Visible = False
+      Size = 25
+      Lookup = True
+    end
   end
   inherited ActionList: TActionList
     object ActEjecutarConsulta: TAction
@@ -340,6 +358,31 @@ inherited dmPersonas: TdmPersonas
     object ADOdsEstatusDescripcion: TStringField
       FieldName = 'Descripcion'
       Size = 50
+    end
+  end
+  object ADODtStMonedas: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdMoneda, IdPais, Identificador, Descripcion '#13#10'from Moned' +
+      'as'
+    Parameters = <>
+    Left = 320
+    Top = 152
+    object ADODtStMonedasIdMoneda: TAutoIncField
+      FieldName = 'IdMoneda'
+      ReadOnly = True
+    end
+    object ADODtStMonedasIdPais: TIntegerField
+      FieldName = 'IdPais'
+    end
+    object ADODtStMonedasIdentificador: TStringField
+      FieldName = 'Identificador'
+      Size = 3
+    end
+    object ADODtStMonedasDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 80
     end
   end
 end

@@ -3,9 +3,9 @@ inherited frmCotizaciones: TfrmCotizaciones
   ClientWidth = 1277
   KeyPreview = True
   OnActivate = FormActivate
+  OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   ExplicitWidth = 1277
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -63,24 +63,24 @@ inherited frmCotizaciones: TfrmCotizaciones
     ExplicitTop = 22
     ExplicitWidth = 1277
     ExplicitHeight = 503
-    ClientRectBottom = 499
-    ClientRectRight = 1273
+    ClientRectBottom = 502
+    ClientRectRight = 1276
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 1269
-      ExplicitHeight = 495
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 1275
+      ExplicitHeight = 501
       inherited cxScrollBox1: TcxScrollBox
-        Width = 1269
-        Height = 495
-        ExplicitWidth = 1269
-        ExplicitHeight = 495
+        Width = 1275
+        Height = 501
+        ExplicitWidth = 1275
+        ExplicitHeight = 501
         inherited tbarData: TToolBar
-          Width = 1267
+          Width = 1273
           ParentShowHint = False
           ExplicitLeft = 0
           ExplicitTop = 0
-          ExplicitWidth = 1267
+          ExplicitWidth = 1273
           inherited ToolButton14: TToolButton
             AutoSize = True
             ExplicitWidth = 27
@@ -174,26 +174,24 @@ inherited frmCotizaciones: TfrmCotizaciones
           end
         end
         inherited pnlMaster: TPanel
-          Width = 1267
-          Height = 468
+          Width = 1273
+          Height = 474
           ExplicitLeft = 0
           ExplicitTop = 25
-          ExplicitWidth = 1267
-          ExplicitHeight = 468
+          ExplicitWidth = 1273
+          ExplicitHeight = 474
           object pnlDetail: TPanel
             Left = 0
             Top = 232
-            Width = 1267
-            Height = 125
+            Width = 1273
+            Height = 131
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitTop = 209
-            ExplicitHeight = 148
             object tbarGrid: TToolBar
               Left = 0
               Top = 0
-              Width = 1267
+              Width = 1273
               Height = 29
               Images = ilAction
               TabOrder = 0
@@ -279,8 +277,8 @@ inherited frmCotizaciones: TfrmCotizaciones
             object DBGrdDetalles: TDBGrid
               Left = 0
               Top = 29
-              Width = 1267
-              Height = 96
+              Width = 1273
+              Height = 102
               Hint = 'Doble click para adjuntar archivos asociados de cada producto'
               Align = alClient
               Color = clBtnFace
@@ -392,12 +390,10 @@ inherited frmCotizaciones: TfrmCotizaciones
           object PnlEncabezado: TPanel
             Left = 0
             Top = 0
-            Width = 1267
+            Width = 1273
             Height = 232
             Align = alTop
             TabOrder = 1
-            ExplicitLeft = -1
-            ExplicitTop = 3
             object Label1: TLabel
               Left = 453
               Top = 13
@@ -935,8 +931,8 @@ inherited frmCotizaciones: TfrmCotizaciones
           end
           object Panel1: TPanel
             Left = 0
-            Top = 357
-            Width = 1267
+            Top = 363
+            Width = 1273
             Height = 111
             Align = alBottom
             TabOrder = 2
@@ -1057,7 +1053,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 966
     Top = 80
     Bitmap = {
-      494C010102000400080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400100210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1267,7 +1263,7 @@ inherited frmCotizaciones: TfrmCotizaciones
     Left = 1032
     Top = 80
     Bitmap = {
-      494C01011900C002500210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011900C002580210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

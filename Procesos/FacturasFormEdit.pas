@@ -171,7 +171,8 @@ type
     FDocCotizacion: TBasicAction;
     FDocGuia: TBasicAction;
     FRevertirExtra: TBasicAction;
-    FImprimeFact: TBasicAction; //Abr 4/16
+    FImprimeFact: TBasicAction;
+    FAplicaOSPendientes: TBasicAction; //Abr 4/16
 
     procedure SetFacturaCta(const Value: TBasicAction);
     procedure SetPreFacturas(const Value: TBasicAction);
@@ -190,7 +191,8 @@ type
     procedure SETFDocCotizacion(const Value: TBasicAction);
     procedure SETFDocGuia(const Value: TBasicAction);
     procedure SETFRevertirExtra(const Value: TBasicAction);
-    procedure SETFImprimeFact(const Value: TBasicAction);  //ene 7/16
+    procedure SETFImprimeFact(const Value: TBasicAction);
+    procedure SETFAplicaOSPendientes(const Value: TBasicAction);  //ene 7/16
 
     { Private declarations }
   public
@@ -219,6 +221,7 @@ type
      property ActRevertirExtra: TBasicAction read FRevertirExtra  write SETFRevertirExtra; //Ago 24/16
      property ActImprimeFact: TBasicAction read FImprimeFact  write SETFImprimeFact; //Ago 26/16
 
+     property ActAplicaOSPendientes: TBasicAction read FAplicaOSPendientes  write SETFAplicaOSPendientes; //Dic28 /16
   end;
 
 var
@@ -437,6 +440,14 @@ begin
   FacturaCta := Value;
   TlBtnGeneraCFDI.Action:=Value;
   TlBtnGeneraCFDI.ImageIndex:=23; //Dic 10/15
+
+end;
+
+procedure TfrmFacturasFormEdit.SETFAplicaOSPendientes(
+  const Value: TBasicAction);
+begin
+  FAplicaOSPendientes := Value;
+  TFrmFacturasGrid(gFormGrid).ActAplicaOSPendientes:=Value;
 
 end;
 

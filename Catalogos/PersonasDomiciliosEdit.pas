@@ -49,6 +49,8 @@ type
     cxDBCheckBox2: TcxDBCheckBox;
     cxDBCheckBox4: TcxDBCheckBox;
     cxDBRadioGroup1: TcxDBRadioGroup;
+    Label6: TLabel;
+    cxDBTextEdit1: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
     procedure cxDBLookupComboBox1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

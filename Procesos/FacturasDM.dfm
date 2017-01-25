@@ -372,6 +372,10 @@ inherited DMFacturas: TDMFacturas
       Caption = 'ImprimeFactura'
       OnExecute = ActImprimeFacturaExecute
     end
+    object ActAplicaOrdenPendiente: TAction
+      Caption = 'ActAplicaOrdenPendiente'
+      OnExecute = ActAplicaOrdenPendienteExecute
+    end
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster

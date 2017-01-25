@@ -207,7 +207,11 @@ uses
   ProductosMayoreoForm in 'Catalogos\ProductosMayoreoForm.pas' {FrmProductosPrecioMayoreoGrid},
   DocumentosEntradasDetalleAnteriorDM in 'Procesos\DocumentosEntradasDetalleAnteriorDM.pas' {dmDocumentosEntradasDetalleAnterior: TDataModule},
   DocumentosEntradasDetalleAnteriorForm in 'Procesos\DocumentosEntradasDetalleAnteriorForm.pas' {frmDocumentosEntradasDetalleAnterior},
-  VerificarForm in 'Procesos\VerificarForm.pas' {frmVerificar};
+  VerificarForm in 'Procesos\VerificarForm.pas' {frmVerificar},
+  rptAjustesEntradasDM in 'Reportes\rptAjustesEntradasDM.pas' {dmRptAjustesEntrada: TDataModule},
+  rptAjustesSalidasDM in 'Reportes\rptAjustesSalidasDM.pas' {dmrptAjusteSalida: TDataModule},
+  rptVentasXClienteDM in 'Reportes\rptVentasXClienteDM.pas' {dmrptVentasXCliente: TDataModule},
+  rptVentasXClienteForm in 'Reportes\rptVentasXClienteForm.pas' {RptVentasXCliente};
 
 {$R *.res}
 

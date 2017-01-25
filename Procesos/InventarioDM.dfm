@@ -1,10 +1,11 @@
 inherited dmInventario: TdmInventario
+  OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     CommandText = 
       'Select I.* , P.Descripcion, P.identificador1,P.Identificador2, P' +
       '.Identificador3, P.PrecioUnitario from '#13#10'Inventario I inner join' +
-      ' Productos P on P.IdProducto=I.idproducto'
+      ' Productos P on P.IdProducto=I.idproducto'#13#10'order by Orden'
     object adodsMasterIdInventario: TAutoIncField
       FieldName = 'IdInventario'
       ReadOnly = True

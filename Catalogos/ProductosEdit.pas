@@ -241,7 +241,7 @@ begin
   ContainerDetail1:= tsProductoProveedor;
   ContainerDetail2:= tsProductoAplicacion;  //May 12/16
  // TfrmProductos(gFormGrid).CerrarGrid := actCloseGrid;
-  dmProductosFotos := TdmProductosFotos.Create(nil); //Pa fotos
+  dmProductosFotos := TdmProductosFotos.Create(self); //Pa fotos
  // DataSourceFotos.DataSet.Open;
    ContainerDetail3:= cxTSPrecioMayoreo;
 
@@ -251,7 +251,7 @@ end;
 procedure TfrmProductosEdit.FormDestroy(Sender: TObject);
 begin
   inherited;
-   FreeAndNil(dmProductosFotos);
+  FreeAndNil(dmProductosFotos);
 end;
 
 procedure TfrmProductosEdit.FormShow(Sender: TObject);

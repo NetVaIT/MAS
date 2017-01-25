@@ -80,6 +80,7 @@ type
     DBGrdDocs: TDBGrid;
     BtBtnCerrar: TBitBtn;
     BtBtnMostrar: TBitBtn;
+    TlBtnAplicaOSPendiente: TToolButton;
     procedure tbarGridClick(Sender: TObject);
     procedure RdGrpSeleccionClick(Sender: TObject);
     procedure TlBtnConsultaClick(Sender: TObject);
@@ -115,7 +116,8 @@ type
     ffiltroNombre: String;
     ffiltrovivas: String;
     FDocCotizacion: TBasicAction;
-    FDocGuia: TBasicAction;  //Abr 4/16
+    FDocGuia: TBasicAction;
+    FAplicaOSPendientes: TBasicAction;  //Abr 4/16
     procedure SetPreFacturas(const Value: TBasicAction);
     procedure SetRegeneraPDF(const Value: TBasicAction);
     procedure SetConsulta(const Value: TBasicAction);
@@ -131,6 +133,7 @@ type
     procedure ImprimeUtilidades(Fini,FFin:TDateTime; Tipo: Integer);
     procedure SETFDocCotizacion(const Value: TBasicAction);
     procedure SETFDocGuia(const Value: TBasicAction);
+    procedure SETFAplicaOSPendientes(const Value: TBasicAction);
     { Private declarations }
   public
     { Public declarations }
@@ -152,6 +155,7 @@ type
 
     property ActDocsCotizacion: TBasicAction read FDocCotizacion  write SETFDocCotizacion;  //Ago 2/16
     property ActDocGuia: TBasicAction read FDocGuia  write SETFDocGuia; //Ago 2 /16
+    property ActAplicaOSPendientes: TBasicAction read FAplicaOSPendientes  write SETFAplicaOSPendientes; //Dic28 /16
   end;
 
 var
@@ -402,6 +406,13 @@ begin //Feb 17/16
   TlBtnEnvioCorreo.Action:=Value;
   TlBtnEnvioCorreo.ImageIndex:=15;
   TlBtnEnvioCorreo.Hint:='Enviar '+Caption+' por Correo';
+end;
+
+procedure TfrmFacturasGrid.SETFAplicaOSPendientes(const Value: TBasicAction);
+begin
+  FAplicaOSPendientes := Value;
+  TlBtnAplicaOSPendiente.Action:=value; //Poner boton
+  TlBtnAplicaOSPendiente.Imageindex:=  21;
 end;
 
 procedure TfrmFacturasGrid.SetFCFDIDiario(const Value: TBasicAction);

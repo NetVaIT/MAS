@@ -323,6 +323,9 @@ type
     ADODtStDireccAuxiliarServicio: TStringField;
     ADODtStDireccAuxiliarPagoFlete: TBooleanField;
     ADODtStDireccAuxiliarAsegurado: TBooleanField;
+    adodsMasterAnotacionEnvio: TStringField;
+    ADODtStDireccionesClienteAnotaciones: TStringField;
+    ADODtStDireccAuxiliaranotaciones: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
     procedure adodsCotizacionesDetalleClaveProductoChange(Sender: TField);

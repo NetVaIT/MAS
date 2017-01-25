@@ -341,6 +341,16 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdDocumentoSalida'
       Lookup = True
     end
+    object adodsMasterAnotacionEnvio: TStringField
+      FieldKind = fkLookup
+      FieldName = 'AnotacionEnvio'
+      LookupDataSet = ADODtStDatosDocumentoSalida
+      LookupKeyFields = 'IDDocumentoSalida'
+      LookupResultField = 'AnotacionEnvio'
+      KeyFields = 'IdDocumentoSalida'
+      Size = 100
+      Lookup = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     CursorType = ctStatic
@@ -642,7 +652,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 132
+    Left = 140
     Top = 24
   end
   object ADOQryAuxiliar: TADOQuery
@@ -659,12 +669,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     CursorType = ctStatic
     CommandText = 
       'select DS.IdPersona, ds.IDDocumentoSalida, P.RazonSocial, '#13#10'DS.I' +
-      'dPaqueteria, DS.Servicio, DS.PagoFlete,DS.Asegurado,'#13#10'DS.IdDomic' +
-      'ilioCliente, PD.IDDomicilio,'#13#10'DS.IdPersonaDomicilioEnvio, Factur' +
-      'ar, IdUsuario, IDUsuarioAutPedido'#13#10' from DocumentosSalidas DS'#13#10' ' +
-      'inner join Personas P on P.IDpersona =DS.IdPersona'#13#10'inner join P' +
-      'ersonasDomicilios PD on PD.IdPersonaDomicilio =Ds.IDDomicilioCli' +
-      'ente'
+      'dPaqueteria, DS.Servicio, DS.PagoFlete,DS.Asegurado,DS.Anotacion' +
+      'Envio,'#13#10'DS.IdDomicilioCliente, PD.IDDomicilio,'#13#10'DS.IdPersonaDomi' +
+      'cilioEnvio, Facturar, IdUsuario, IDUsuarioAutPedido'#13#10' from Docum' +
+      'entosSalidas DS'#13#10' inner join Personas P on P.IDpersona =DS.IdPer' +
+      'sona'#13#10'inner join PersonasDomicilios PD on PD.IdPersonaDomicilio ' +
+      '=Ds.IDDomicilioCliente'
     DataSource = dsMaster
     IndexFieldNames = 'IDDocumentoSalida'
     MasterFields = 'IdDocumentoSalida'
@@ -751,6 +761,10 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     end
     object ADODtStDatosDocumentoSalidaAsegurado: TBooleanField
       FieldName = 'Asegurado'
+    end
+    object ADODtStDatosDocumentoSalidaAnotacionEnvio: TStringField
+      FieldName = 'AnotacionEnvio'
+      Size = 100
     end
   end
   object DSDatosDocSalida: TDataSource

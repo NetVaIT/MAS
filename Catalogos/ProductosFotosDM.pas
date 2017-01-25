@@ -54,7 +54,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faDoc;
   Id := adodsMasterIdDocumento.AsInteger;
   if Id  <> 0 then
@@ -71,7 +71,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faDoc;
   Id := dmDocumentos.Add;
   if  Id <> 0 then

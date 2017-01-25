@@ -206,6 +206,9 @@ inherited dmOrdenesEntregas: TdmOrdenesEntregas
       FieldName = 'OrdenEmbImpresa'
     end
   end
+  inherited adodsUpdate: TADODataSet
+    Left = 328
+  end
   inherited ActionList: TActionList
     object ActCargarGuia: TAction
       Caption = 'Adjuntar Gu'#237'a'

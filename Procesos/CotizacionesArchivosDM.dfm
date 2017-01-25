@@ -52,7 +52,7 @@ inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
   end
   object dsMaster: TDataSource
     DataSet = adodsMaster
-    Left = 104
+    Left = 112
     Top = 16
   end
   object ADODsDocumento: TADODataSet

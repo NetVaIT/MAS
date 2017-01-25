@@ -15,11 +15,11 @@ inherited dmCotizaciones: TdmCotizaciones
       'DocumentoSalidaEstatus, IdMoneda, IdUsuario, FechaRegistro,'#13#10' IV' +
       'A, SubTotal, Total, VigenciaDias, Observaciones,IdDomicilioClien' +
       'te,'#13#10' IdPersonaDomicilioEnvio, NotasInternas, Servicio , Factura' +
-      'r'#13#10', IDUsuarioAutPedido, PagoFlete, Asegurado, IdPaqueteria'#13#10'FRO' +
-      'M DocumentosSalidas where IdDocumentoSalidaTipo=:TipoDocto'#13#10'and ' +
-      'fechaRegistro>GETDATE()             -- DATEADD(MM, DATEDIFF(MM,0' +
-      ',GETDATE()), 0)'#13#10'order by idDocumentoSalidaEstatus, FechaRegistr' +
-      'o Desc'
+      'r'#13#10', IDUsuarioAutPedido, PagoFlete, Asegurado, IdPaqueteria, Ano' +
+      'tacionEnvio'#13#10'FROM DocumentosSalidas where IdDocumentoSalidaTipo=' +
+      ':TipoDocto'#13#10'and fechaRegistro>GETDATE()             -- DATEADD(M' +
+      'M, DATEDIFF(MM,0,GETDATE()), 0)'#13#10'order by idDocumentoSalidaEstat' +
+      'us, FechaRegistro Desc'
     Parameters = <
       item
         Name = 'TipoDocto'
@@ -259,6 +259,10 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object adodsMasterAsegurado: TBooleanField
       FieldName = 'Asegurado'
+    end
+    object adodsMasterAnotacionEnvio: TStringField
+      FieldName = 'AnotacionEnvio'
+      Size = 100
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -538,7 +542,7 @@ inherited dmCotizaciones: TdmCotizaciones
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
-    Left = 132
+    Left = 140
     Top = 16
   end
   object ADODtStOrdenSalida: TADODataSet
@@ -786,14 +790,14 @@ inherited dmCotizaciones: TdmCotizaciones
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
       ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo,PD.IDMetododePago' +
-      ','#13#10'PD.NumCtaPagoCliente, PD.Servicio, PD.PagoFlete,PD.Asegurado'#13 +
-      #10'from PersonasDomicilios PD'#13#10'inner join Domicilios D on PD.IDDom' +
-      'icilio=D.IDDomicilio and (PD.IdDomicilioTipo in (2,4,5) and PD.i' +
-      'dentificador is not null)'#13#10'Left Join Poblaciones P on P.idPoblac' +
-      'ion=d.IdPoblacion'#13#10'left join Municipios M on M.idmunicipio=D.IdM' +
-      'unicipio'#13#10'Left Join Estados E on E.idestado=D.idestado'#13#10'Left Joi' +
-      'n Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.IdPersona=:IDpersona' +
-      #13#10#13#10
+      ','#13#10'PD.NumCtaPagoCliente, PD.Servicio, PD.PagoFlete,PD.Asegurado,' +
+      #13#10'PD.Anotaciones'#13#10'from PersonasDomicilios PD'#13#10'inner join Domicil' +
+      'ios D on PD.IDDomicilio=D.IDDomicilio and (PD.IdDomicilioTipo in' +
+      ' (2,4,5) and PD.identificador is not null)'#13#10'Left Join Poblacione' +
+      's P on P.idPoblacion=d.IdPoblacion'#13#10'left join Municipios M on M.' +
+      'idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.idestado=D.i' +
+      'destado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10'where PD.IdP' +
+      'ersona=:IDpersona'#13#10#13#10
     DataSource = DSMaster
     IndexFieldNames = 'IdPersona'
     MasterFields = 'IDpersona'
@@ -895,6 +899,10 @@ inherited dmCotizaciones: TdmCotizaciones
     object ADODtStDireccionesClienteAsegurado: TBooleanField
       FieldName = 'Asegurado'
     end
+    object ADODtStDireccionesClienteAnotaciones: TStringField
+      FieldName = 'Anotaciones'
+      Size = 100
+    end
   end
   object ADODtStProductosKardex: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -961,13 +969,13 @@ inherited dmCotizaciones: TdmCotizaciones
       ', D.NoExterior, D.NoInterior, D.Colonia, D.CodigoPostal,'#13#10'M.DEsc' +
       'ripcion Municipio, P.Descripcion Poblacion, E.Descripcion Estado' +
       ','#13#10'Pa.descripcion Pais,PD.Saldo,PD.IdEnvioTipo, '#13#10'PD.Servicio, P' +
-      'D.PagoFlete, PD.Asegurado'#13#10#13#10'from PersonasDomicilios PD'#13#10'inner j' +
-      'oin Domicilios D on PD.IDDomicilio=D.IDDomicilio  and (PD.IdDomi' +
-      'cilioTipo in (2,4,5) and PD.identificador is not null)'#13#10'Left Joi' +
-      'n Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10'left join Munici' +
-      'pios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join Estados E on E.' +
-      'idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.idpais=D.Idpais'#13#10 +
-      'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
+      'D.PagoFlete, PD.Asegurado, PD.anotaciones'#13#10#13#10'from PersonasDomici' +
+      'lios PD'#13#10'inner join Domicilios D on PD.IDDomicilio=D.IDDomicilio' +
+      '  and (PD.IdDomicilioTipo in (2,4,5) and PD.identificador is not' +
+      ' null)'#13#10'Left Join Poblaciones P on P.idPoblacion=d.IdPoblacion'#13#10 +
+      'left join Municipios M on M.idmunicipio=D.IdMunicipio'#13#10'Left Join' +
+      ' Estados E on E.idestado=D.idestado'#13#10'Left Join Paises Pa on Pa.i' +
+      'dpais=D.Idpais'#13#10'where PD.IDPersona=:IDPersona'#13#10#13#10#13#10#13#10
     Parameters = <
       item
         Name = 'IDPersona'
@@ -1057,6 +1065,10 @@ inherited dmCotizaciones: TdmCotizaciones
     end
     object ADODtStDireccAuxiliarAsegurado: TBooleanField
       FieldName = 'Asegurado'
+    end
+    object ADODtStDireccAuxiliaranotaciones: TStringField
+      FieldName = 'anotaciones'
+      Size = 100
     end
   end
   object ppRprtCotizacion: TppReport

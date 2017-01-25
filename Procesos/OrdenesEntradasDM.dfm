@@ -509,15 +509,16 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       ', '#13#10'DocumentosEntradas.IdDocumentoEntrada AS Numero, DocumentosE' +
       'ntradas.Fecha, Personas.Identificador, Personas.RazonSocial AS P' +
       'rovedor, '#13#10'DocumentosEntradas.Total, DocumentosEntradas.Observac' +
-      'iones'#13#10'FROM DocumentosEntradas '#13#10'INNER JOIN DocumentosEntradasDe' +
-      'talles ON DocumentosEntradas.IdDocumentoEntrada = DocumentosEntr' +
-      'adasDetalles.IdDocumentoEntrada'#13#10'INNER JOIN Personas ON Document' +
-      'osEntradas.IdPersona = Personas.IdPersona'#13#10'INNER JOIN Documentos' +
-      'EntradasTipos ON DocumentosEntradas.IdDocumentoEntradaTipo = Doc' +
-      'umentosEntradasTipos.IdDocumentoEntradaTipo'#13#10'WHERE (DocumentosEn' +
-      'tradas.IdDocumentoEntradaTipo = 3) AND (DocumentosEntradas.IdDoc' +
-      'umentoEntradaEstatus = 2) AND (DocumentosEntradasDetalles.Cantid' +
-      'adPendiente > 0)'#13#10'ORDER BY DocumentosEntradas.Fecha'
+      'iones, DocumentosEntradas.Identificador as FacturaProveedor'#13#10'FRO' +
+      'M DocumentosEntradas '#13#10'INNER JOIN DocumentosEntradasDetalles ON ' +
+      'DocumentosEntradas.IdDocumentoEntrada = DocumentosEntradasDetall' +
+      'es.IdDocumentoEntrada'#13#10'INNER JOIN Personas ON DocumentosEntradas' +
+      '.IdPersona = Personas.IdPersona'#13#10'INNER JOIN DocumentosEntradasTi' +
+      'pos ON DocumentosEntradas.IdDocumentoEntradaTipo = DocumentosEnt' +
+      'radasTipos.IdDocumentoEntradaTipo'#13#10'WHERE (DocumentosEntradas.IdD' +
+      'ocumentoEntradaTipo = 3) AND (DocumentosEntradas.IdDocumentoEntr' +
+      'adaEstatus = 2) AND (DocumentosEntradasDetalles.CantidadPendient' +
+      'e > 0)'#13#10'ORDER BY DocumentosEntradas.Fecha'
     Parameters = <>
     Left = 256
     Top = 208
@@ -533,6 +534,10 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     object adodsFacturasTipo: TStringField
       FieldName = 'Tipo'
       Size = 15
+    end
+    object adodsFacturasFacturaProveedor: TStringField
+      FieldName = 'FacturaProveedor'
+      Size = 10
     end
     object adodsFacturasNumero: TAutoIncField
       FieldName = 'Numero'

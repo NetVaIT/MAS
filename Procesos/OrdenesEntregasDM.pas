@@ -185,7 +185,7 @@ var        //Ajustado y colocado Jun 9/16
   Id : Integer;
 begin
   inherited;
-  dmDocumentos := TdmDocumentos.Create(nil);
+  dmDocumentos := TdmDocumentos.Create(self);
   dmDocumentos.FileAllowed := faall;
   Id := ADOdsMasterIdDocumentoGuia.AsInteger;
   if Id  <> 0 then

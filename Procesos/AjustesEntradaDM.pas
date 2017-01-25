@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  Data.DB, Data.Win.ADODB, Forms,winapi.windows, Dialogs;
+  Data.DB, Data.Win.ADODB, Forms,winapi.windows, Dialogs,ShellApi;
 
 type
   TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada, eAplicada);
@@ -103,6 +103,7 @@ type
     ActSeleccionaProducto: TAction;
     ADODtStAjusteEntradaItemsCantidad: TFloatField;
     ADOQryAuxiliar: TADOQuery;
+    ActImpresionAjuste: TAction;
     procedure ActAplicaEntradaXAExecute(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure ActSeleccionaProductoExecute(Sender: TObject);
@@ -136,7 +137,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 uses _ConectionDmod, _Utils, AjustesEntradaEdit, AjustesEntradasItemsEdit,
-  ListaProductosForm, ConfiguracionDM;
+  ListaProductosForm, ConfiguracionDM, rptAjustesEntradasDM;
 
 {$R *.dfm}
 
@@ -216,21 +217,40 @@ var Total,MontoIVA,SubTotal:Double;
     IdAct:Integer;
 begin
   inherited;
-  IdAct:= DataSet.fieldbyname('IdOrdenEntrada').asInteger;
-  if CalcularTotales(IdAct,'IdOrdenEntrada','Costo * Cantidad', //Para sacar el calculo //Se cambio x costos Jun 29/16
-                      'OrdenesEntradasItems',PIVA,MontoIVA,SubTotal,Total) then
+   //Ene 20/17
+  Total:=0;
+  MontoIVA:=0;
+  SubTotal:=0;
+  if  (ADODtStAjusteEntradaItems.RecordCount >0) then   //Ene 20/17   Para usar tambien al borrar
   begin
-    adoQryauxiliar.Close;
-    TAdoquery(AdoQryAuxiliar).SQL.Clear;
-    TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE OrdenesEntradas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
-                                    +' WHERE IdOrdenEntrada= '+intToStr(IdAct));
-    if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
-       ADodsMaster.Refresh;
-    //Sep 8/16
-    TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
-                                                     and (ADODtStAjusteEntradaItems.RecordCount >0);
+    IdAct:= DataSet.fieldbyname('IdOrdenEntrada').asInteger;
+    if CalcularTotales(IdAct,'IdOrdenEntrada','Costo * Cantidad', //Para sacar el calculo //Se cambio x costos Jun 29/16
+                        'OrdenesEntradasItems',PIVA,MontoIVA,SubTotal,Total) then
+    begin
+      adoQryauxiliar.Close;
+      TAdoquery(AdoQryAuxiliar).SQL.Clear;
+      TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE OrdenesEntradas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
+                                      +' WHERE IdOrdenEntrada= '+intToStr(IdAct));
+      if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
+         ADodsMaster.Refresh;
+      //Sep 8/16
+      TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                       and (ADODtStAjusteEntradaItems.RecordCount >0);
+
+    end;
+  end
+  else   //Para que si se elimino todo quite totales  //Ene 20/17
+  begin
+      IdAct:= adodsmaster.fieldbyname('IdOrdenEntrada').asInteger;
+      TAdoquery(AdoQryAuxiliar).SQL.Clear;
+      TAdoquery(AdoQryAuxiliar).SQL.Add('UPDATE OrdenesEntradas SET SUBTOTAL='+FloatTostr(SubTotal)+', IVA='+FloatToStr(MontoIVA)+', Total='+FloatTostr(Total)
+                                      +' WHERE IdOrdenEntrada= '+intToStr(IdAct));
+      if TAdoquery(AdoQryAuxiliar).ExecSQL =1 then
+         ADodsMaster.Refresh;
 
   end;
+  TfrmAjustesEntradas(gGridEditForm).btnAplicarEntrada.Enabled:= (AdoDSMaster.fieldbyname('IdOrdenEstatus').asinteger=1)
+                                                       and (ADODtStAjusteEntradaItems.RecordCount >0);
 end;
 
 procedure TdmAjustesEntradas.ADODtStAjusteEntradaItemsBeforeInsert(
@@ -289,6 +309,7 @@ begin
       ADODtStAjusteEntradaItems.FieldByName('PrecioVenta').AsFloat:=ValUni;
       ADODtStAjusteEntradaItems.FieldByName('IdProducto').asInteger:=idproducto;
       ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat:=ValUni* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
+      ADODtStAjusteEntradaItems.FieldByName('Costo').AsFloat:=CostoEnInventario(idproducto); //Ene 20/17
       ADODtStAjusteEntradaItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto)* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
     end;
   end;
@@ -316,13 +337,20 @@ begin
     Result:=ADODSAuxiliar.FieldByName('CostoPromedio').asFloat;
   end
   else
+  begin
+    Result:=0;  //Ene 20/17
     ShowMessage('No existe el producto en inventario... NDS');
+
+  end;
   ADODSAuxiliar.Close;
 end;
 
 procedure TdmAjustesEntradas.DataModuleCreate(Sender: TObject);
 begin
   inherited;
+  adodsmaster.Close;  //Ene 23/17
+  adodsmaster.Parameters.ParamByName('Fini').Value:=date;     //Ene 23/17
+  adodsmaster.Parameters.ParamByName('FFin').Value:=date +1; //Ene 23/17
   gGridEditForm:= TfrmAjustesEntradas.Create(Self);
   gGridEditForm.DataSet := adodsMaster;
   if ADODtStAjusteEntradaItems.CommandText <> EmptyStr then

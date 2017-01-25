@@ -3,6 +3,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   ClientHeight = 693
   OnActivate = FormActivate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
   ExplicitHeight = 693
   PixelsPerInch = 96
   TextHeight = 13
@@ -307,6 +308,10 @@ inherited frmProductosEdit: TfrmProductosEdit
             object cxTbShtFotosYDocs: TcxTabSheet
               Caption = 'Fotos y Documentos'
               ImageIndex = 0
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object PnlFotos: TPanel
                 Left = 0
                 Top = 0
@@ -469,6 +474,10 @@ inherited frmProductosEdit: TfrmProductosEdit
             object cxTbShtEspecifica: TcxTabSheet
               Caption = 'Especificaciones'
               ImageIndex = 1
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object Label14: TLabel
                 Left = 32
                 Top = 64
@@ -544,14 +553,26 @@ inherited frmProductosEdit: TfrmProductosEdit
     object tsProductoProveedor: TcxTabSheet
       Caption = 'Proveedores'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsProductoAplicacion: TcxTabSheet
       Caption = 'Aplicaciones'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object cxTSPrecioMayoreo: TcxTabSheet
       Caption = 'Precios X Escala'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object PnlTitulo: TPanel [8]
@@ -597,7 +618,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -746,7 +767,7 @@ inherited frmProductosEdit: TfrmProductosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010F008002BC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F008002C00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000005000000130000
       001A0000001B0000001C0000001D0000001E0000001F00000021000000220000

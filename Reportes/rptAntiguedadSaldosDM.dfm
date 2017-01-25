@@ -27,8 +27,9 @@
       '                   - CI.Fecha >= 120 + PR.DiasCreditoCliente THE' +
       'N CI.SaldoDocumento END AS '#39'Vencidos m'#225's de 90 d'#237'as'#39#13#10'FROM      ' +
       '   CFDI AS CI INNER JOIN'#13#10'                      Personas AS PR O' +
-      'N CI.IdPersonaReceptor = PR.IdPersona'#13#10'WHERE    (CI.SaldoDocumen' +
-      'to > 0)   AND (Ci.IdPersonaReceptor <> - 1)'#13#10'And      (    (Ci.I' +
+      'N CI.IdPersonaReceptor = PR.IdPersona'#13#10'WHERE   -- (CI.SaldoDocum' +
+      'ento > 0)   AND  -- mientras para que muestre todo'#13#10'            ' +
+      '              (Ci.IdPersonaReceptor <> - 1)'#13#10'And      (    (Ci.I' +
       'dCFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 1) OR'#13#10'         ' +
       '       (CI.IdCFDIEstatus = 2) AND (Ci.IdCFDITipoDocumento = 3) O' +
       'R'#13#10'                (CI.IdCFDIEstatus = 4) AND (Ci.IdCFDITipoDocu' +

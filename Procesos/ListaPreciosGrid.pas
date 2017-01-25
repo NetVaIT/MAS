@@ -275,7 +275,7 @@ Const SQLText='select P.IdProducto, IdProductoTipo, IdUnidadMedida, '
 +' Descripcion, PrecioUnitario, PrecioNuevo from Productos P inner  join Inventario I on P.IdProducto = I.IdProducto and P.IDProductoEstatus=1'
 //+' left join ProductosAplicaciones Pa on  PA.IdProducto=P.IDProducto'   //Jul 22/16
 ; //Jul 21/16   (verificar si asi)
-
+orden=' order by P.orden'; //Ene 24/17
 var WhereSQL:String;
 begin
   inherited;
@@ -297,7 +297,7 @@ begin
     else
        whereSQL:=' where '+FiltroRAngo;
   end;
-   Tadodataset(datasource.DataSet).CommandText:=SQLText+ whereSQL;
+   Tadodataset(datasource.DataSet).CommandText:=SQLText+ whereSQL+ orden;
   // ShowMessage(SQLText+ whereSQL);
 
   Tadodataset(datasource.DataSet).open;

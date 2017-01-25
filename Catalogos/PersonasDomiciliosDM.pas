@@ -62,6 +62,7 @@ type
     adodsMasterServicio: TStringField;
     adodsMasterPagoFlete: TBooleanField;
     adodsMasterAsegurado: TBooleanField;
+    adodsMasterAnotaciones: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actUpdateExecute(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -93,7 +94,7 @@ var
   Id : Integer;
 begin
   inherited;
-  dmDomicilios := TdmDomicilios.Create(nil);
+  dmDomicilios := TdmDomicilios.Create(self);
   Id := adodsMasterIdDomicilio.AsInteger;
   if Id  <> 0 then
   begin
