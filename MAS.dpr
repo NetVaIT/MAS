@@ -210,8 +210,8 @@ uses
   VerificarForm in 'Procesos\VerificarForm.pas' {frmVerificar},
   rptAjustesEntradasDM in 'Reportes\rptAjustesEntradasDM.pas' {dmRptAjustesEntrada: TDataModule},
   rptAjustesSalidasDM in 'Reportes\rptAjustesSalidasDM.pas' {dmrptAjusteSalida: TDataModule},
-  rptVentasXClienteDM in 'Reportes\rptVentasXClienteDM.pas' {dmrptVentasXCliente: TDataModule},
-  rptVentasXClienteForm in 'Reportes\rptVentasXClienteForm.pas' {RptVentasXCliente};
+  rptVentasXClienteForm in 'Reportes\rptVentasXClienteForm.pas' {RptVentasXCliente},
+  ConVentasXClienteDM in 'Reportes\ConVentasXClienteDM.pas' {dmConVentasXCliente: TDataModule};
 
 {$R *.res}
 

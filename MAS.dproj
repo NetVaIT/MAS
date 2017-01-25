@@ -950,14 +950,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Reportes\rptVentasXClienteDM.pas">
-            <Form>dmrptVentasXCliente</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="Reportes\rptVentasXClienteForm.pas">
             <Form>RptVentasXCliente</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Reportes\ConVentasXClienteDM.pas">
+            <Form>dmConVentasXCliente</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

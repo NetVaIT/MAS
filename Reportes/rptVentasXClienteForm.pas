@@ -65,7 +65,8 @@ implementation
 
 {$R *.dfm}
 
-uses rptVentasXClienteDM;
+uses ConVentasXClienteDM;
+
 
 procedure TRptVentasXCliente.FormCreate(Sender: TObject);
 var      //Ene 25/17
@@ -73,6 +74,7 @@ var      //Ene 25/17
   FechaAux:TDAteTime;
 begin
   inherited;
+
   DEcodeDate(Date,a,m,d);
 
   cxDtEdtInicio.Date:=EncodeDate(a,m,1);
@@ -88,6 +90,7 @@ begin
 
   ChckLstBxTipoDoc.Checked[0]:=True; //Para poner al inicio la de Facturas Ene 25/17
   SpdBtnConsultaClick(SpdBtnConsulta);
+
 end;
 
 procedure TRptVentasXCliente.SpdBtnConsultaClick(Sender: TObject); //Ene 25/17
@@ -98,14 +101,15 @@ const
 
   TxtGroup=' group by IdPersonaReceptor, P.RazonSocial,Td.Descripcion, c.idcfditipodocumento '  ;
 
-  TxtOrder='order by P.RazonSocial ';
+  TxtOrder=' order by P.RazonSocial ';
 var
-   FiltroCliente, FiltroFecha, FiltroTipo:String;
+   FiltroCliente, FiltroFecha, FiltroTipo, auxTitulo:String;
    i, aux:Integer;
 begin
 
   inherited;
   Filtrotipo:='';
+  auxTitulo:='';
   if EdtNombre.Text<>'' then
     FiltroCliente:=' and P.Razonsocial like ''%'+EdtNombre.Text+'%'''
   else
@@ -128,14 +132,19 @@ begin
          FiltroTipo:=FiltroTipo+' or c.IdCFDITipoDocumento=' +intTostr(Aux)
        else
          FiltroTipo:=' C.IdCFDITipoDocumento=' +intTostr(Aux);
+      if  auxTitulo<>'' then
+        auxTitulo:= auxTitulo+','+ ChckLstBxTipoDoc.Items[i]
+      else
+        auxTitulo:=  ChckLstBxTipoDoc.Items[i] ;
     end;
+
   end;
 
   if FiltroTipo<>'' then
      FiltroTipo:=' and ('+FiltroTipo+')';
   Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder);
   Tadodataset(datasource.DataSet).Close;
-  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder;
+  Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+TxtGroup+ TxtOrder;
   if filtroFecha <>''then
   begin
     Tadodataset(datasource.DataSet).Parameters.ParamByName('FIni').Value:=cxDtEdtInicio.Date;
@@ -145,6 +154,10 @@ begin
 
 
   Tadodataset(datasource.DataSet).open;
-
+  tvMaster.ApplyBestFit(); //Agregado para que se acomode?? Ene 25/17
+  if filtroFecha<>'' then
+    printtitle:='Ventas por Cliente ('+auxTitulo+') del '+dateToStr(cxDtEdtInicio.Date) + ' al '+dateToStr(cxDtEdtFin.Date+1)
+  else
+    printtitle:='Ventas por Cliente ('+auxTitulo+')';
 end;
 end.

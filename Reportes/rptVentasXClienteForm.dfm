@@ -6,41 +6,56 @@ inherited RptVentasXCliente: TRptVentasXCliente
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 875
+    ExplicitWidth = 875
   end
   inherited splDetail1: TSplitter
     Width = 875
+    ExplicitWidth = 875
   end
   inherited splDetail2: TSplitter
     Width = 875
+    ExplicitWidth = 875
   end
   inherited pnlMaster: TPanel
     Top = 78
     Width = 875
     Height = 206
+    ExplicitTop = 78
+    ExplicitWidth = 875
+    ExplicitHeight = 206
     inherited cxGrid: TcxGrid
       Width = 875
       Height = 206
-      ExplicitLeft = 1
+      ExplicitTop = 3
       ExplicitWidth = 875
       ExplicitHeight = 206
       inherited tvMaster: TcxGridDBTableView
+        DataController.Summary.FooterSummaryItems = <
+          item
+            Kind = skSum
+            Column = tvMasterSumaTotal
+          end>
+        OptionsView.Footer = True
         object tvMasterIdPersonaReceptor: TcxGridDBColumn
           DataBinding.FieldName = 'IdPersonaReceptor'
           Visible = False
         end
         object tvMasterDescripcion: TcxGridDBColumn
+          Caption = 'Tipo'
           DataBinding.FieldName = 'Descripcion'
-          Width = 107
+          Width = 121
         end
         object tvMasterRazonSocial: TcxGridDBColumn
+          Caption = 'Raz'#243'n Social'
           DataBinding.FieldName = 'RazonSocial'
-          Width = 395
+          Width = 450
         end
         object tvMasteridcfditipodocumento: TcxGridDBColumn
           DataBinding.FieldName = 'idcfditipodocumento'
           Visible = False
         end
         object tvMasterSumaTotal: TcxGridDBColumn
+          Caption = 'Total'
           DataBinding.FieldName = 'SumaTotal'
           Width = 170
         end
@@ -49,18 +64,22 @@ inherited RptVentasXCliente: TRptVentasXCliente
   end
   inherited pnlDetail3: TPanel
     Width = 875
+    ExplicitWidth = 875
   end
   inherited pnlDetail2: TPanel
     Width = 875
+    ExplicitWidth = 875
   end
   inherited pnlDetail1: TPanel
     Width = 875
+    ExplicitWidth = 875
   end
   inherited pnlClose: TPanel
     Width = 875
-    ExplicitTop = 422
+    ExplicitWidth = 875
     inherited btnClose: TButton
       Left = 790
+      ExplicitLeft = 790
     end
   end
   object PnlFiltros: TPanel [8]
@@ -71,9 +90,6 @@ inherited RptVentasXCliente: TRptVentasXCliente
     Align = alTop
     ParentBackground = False
     TabOrder = 9
-    ExplicitLeft = -515
-    ExplicitTop = 53
-    ExplicitWidth = 1166
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -187,16 +203,18 @@ inherited RptVentasXCliente: TRptVentasXCliente
         Columns = 2
         ItemHeight = 13
         Items.Strings = (
-          'Facturas '
+          'Facturas'
           'Notas Cargo'
           'Notas Venta'
           'Fletes')
         TabOrder = 0
+        ExplicitLeft = -2
+        ExplicitTop = -1
       end
     end
   end
   inherited DataSource: TDataSource
-    DataSet = dmrptVentasXCliente.adodsReport
+    DataSet = dmConVentasXCliente.adodsMaster
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
@@ -206,6 +224,8 @@ inherited RptVentasXCliente: TRptVentasXCliente
       0)
   end
   inherited cxStyleRepository: TcxStyleRepository
+    Left = 40
+    Top = 104
     PixelsPerInch = 96
   end
   inherited cxImageList: TcxImageList
@@ -214,7 +234,6 @@ inherited RptVentasXCliente: TRptVentasXCliente
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42760.381338460650000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

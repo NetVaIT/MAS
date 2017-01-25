@@ -115,7 +115,6 @@ inherited frmMain: TfrmMain
   inherited pnlMain: TPanel
     Width = 881
     Height = 396
-    ExplicitTop = 161
     ExplicitWidth = 881
     ExplicitHeight = 396
     object cxMmErrorProceso: TcxMemo
@@ -322,7 +321,7 @@ inherited frmMain: TfrmMain
       FloatLeft = 970
       FloatTop = 8
       FloatClientWidth = 119
-      FloatClientHeight = 108
+      FloatClientHeight = 162
       ItemLinks = <
         item
           Visible = True
@@ -683,6 +682,7 @@ inherited frmMain: TfrmMain
       Category = 0
     end
     object dxBrLrgBtnReporteVentasXCliente: TdxBarLargeButton
+      Tag = 52
       Action = ActRepVentasXCliente
       Category = 0
     end
@@ -12544,9 +12544,11 @@ inherited frmMain: TfrmMain
       OnExecute = actCatalogoExecute
     end
     object ActRepVentasXCliente: TAction
+      Tag = 52
       Category = 'Reportes'
       Caption = 'Ventas X Cliente'
       ImageIndex = 63
+      OnExecute = actCatalogoExecute
     end
   end
   inherited dxBarScreenTipRepository: TdxBarScreenTipRepository

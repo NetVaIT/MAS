@@ -1,34 +1,61 @@
 inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   Caption = 'frmRptAntiguedadSaldos'
+  ClientHeight = 656
   ClientWidth = 1166
   ExplicitWidth = 1166
+  ExplicitHeight = 656
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
+    Top = 571
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited splDetail1: TSplitter
+    Top = 483
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited splDetail2: TSplitter
+    Top = 527
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited pnlMaster: TPanel
     Top = 100
     Width = 1166
-    Height = 184
+    Height = 383
     ExplicitTop = 100
     ExplicitWidth = 1166
     ExplicitHeight = 184
     inherited cxGrid: TcxGrid
       Width = 1166
-      Height = 184
+      Height = 383
       ExplicitWidth = 1166
       ExplicitHeight = 184
       inherited tvMaster: TcxGridDBTableView
+        DataController.Summary.FooterSummaryItems = <
+          item
+            Kind = skSum
+            Column = tvMasterVencidosa30das
+          end
+          item
+            Kind = skSum
+            Column = tvMasterVencidosa60das
+          end
+          item
+            Kind = skSum
+            Column = tvMasterVencidosa90das
+          end
+          item
+            Kind = skSum
+            Column = tvMasterVencidosmsde90das
+          end
+          item
+            Kind = skSum
+            Column = tvMasterVigentes
+          end>
+        OptionsView.Footer = True
         object tvMasterCliente: TcxGridDBColumn
           DataBinding.FieldName = 'Cliente'
           Width = 308
@@ -76,18 +103,22 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
     end
   end
   inherited pnlDetail3: TPanel
+    Top = 574
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited pnlDetail2: TPanel
+    Top = 530
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited pnlDetail1: TPanel
+    Top = 486
     Width = 1166
     ExplicitWidth = 1166
   end
   inherited pnlClose: TPanel
+    Top = 615
     Width = 1166
     ExplicitWidth = 1166
     DesignSize = (
@@ -269,7 +300,6 @@ inherited frmRptAntiguedadSaldos: TfrmRptAntiguedadSaldos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.483476608800000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

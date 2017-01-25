@@ -176,7 +176,7 @@ uses BancosDM, _Utils, MonedasDM, UbicacionesDM, MonedasCotizacionesDM,
   rptCostoInventarioDM, UsuariosPerfilesDM, _ConectionDmod, PaqueteriasDM,
   OrdenesEntregasDM, ProductosXEspacioDm, DevolucionesDM, InventarioDM,
   ListaPreciosDM, KardexMovimientosDM, AjustesSalidasDM, rptVentasProyeccionDM,
-  AjustesEntradaDM;
+  AjustesEntradaDM, ConVentasXClienteDM;
 
 { TfrmMain }
 
@@ -249,7 +249,7 @@ begin
    50: gModulo := TdmrptVentasUnidades.Create(Self);
    51: gModulo := TdmrptcostoInventario.Create(Self);  //Abr 15/16
 
-  // 52: gModulo := TdmrptcostoInventario.Create(Self);  //Ene 24/17
+   52: gModulo := TdmConVentasXCliente.Create(Self);  //Ene 24/17
 
    60: gModulo := TdmPagos.create(Self); //Feb 24/16
    61: gModulo := TdmAplicacionesConsulta.create(Self);
