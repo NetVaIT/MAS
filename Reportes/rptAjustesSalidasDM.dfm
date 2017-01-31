@@ -4,12 +4,12 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       'Select Os.FechaRegistro, OSI.IdOrdenSalida,  OSI.ClaveProducto,'#13 +
       #10' P.Descripcion,  OSI. CantidadSolicitada,osi.cantidaddespachada' +
       ','#13#10'OSI.CostoUnitario, OSI.Precio,'#13#10' OSI.Importe, i.CostoPromedio' +
-      ', (i.costopromedio *Osi.CAntidaddespachada) as ImporteTotal'#13#10' fr' +
-      'om OrdenesSalidasItems OSI inner join Ordenessalidas OS '#13#10'      ' +
-      '     on OS. IdOrdenSalida =osi.IDOrdensalida'#13#10#13#10'inner Join Produ' +
-      'ctos P on P.idproducto= OSI.idproducto '#13#10'inner join inventario I' +
-      ' on I.idproducto=P.idproducto'#13#10'Where os.idordenSalidatipo =4'#13#10' a' +
-      'nd '#13#10'OS.FEchaRegistro >=:FIni and OS.FEchaRegistro<=:FFin'
+      ', (OSI.CostoUnitario *Osi.CAntidaddespachada) as ImporteTotal'#13#10' ' +
+      'from OrdenesSalidasItems OSI inner join Ordenessalidas OS '#13#10'    ' +
+      '       on OS. IdOrdenSalida =osi.IDOrdensalida'#13#10#13#10'inner Join Pro' +
+      'ductos P on P.idproducto= OSI.idproducto '#13#10'inner join inventario' +
+      ' I on I.idproducto=P.idproducto'#13#10'Where os.idordenSalidatipo =4'#13#10 +
+      ' and '#13#10'OS.FEchaRegistro >=:FIni and OS.FEchaRegistro<=:FFin'
     Parameters = <
       item
         Name = 'FIni'
@@ -51,25 +51,30 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
     end
     object adodsReportCostoUnitario: TFMTBCDField
       FieldName = 'CostoUnitario'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsReportPrecio: TFMTBCDField
       FieldName = 'Precio'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsReportImporte: TFMTBCDField
       FieldName = 'Importe'
+      currency = True
       Precision = 18
       Size = 6
     end
     object adodsReportCostoPromedio: TFloatField
       FieldName = 'CostoPromedio'
+      currency = True
     end
     object adodsReportImporteTotal: TFloatField
       FieldName = 'ImporteTotal'
       ReadOnly = True
+      currency = True
     end
   end
   inherited ppReport: TppReport
@@ -81,7 +86,7 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
     inherited ppTitleBand1: TppTitleBand
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        Font.Name = 'arial'
+        Font.Size = 12
         mmLeft = 52122
         mmWidth = 142000
         LayerName = Foreground
@@ -91,7 +96,6 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       end
       inherited ppLabel6: TppLabel
         SaveOrder = -1
-        Font.Name = 'Arial'
         mmLeft = 52122
         mmWidth = 142000
         LayerName = Foreground
@@ -104,7 +108,7 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Fecha'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
@@ -121,12 +125,12 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Clave Producto'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 20108
+        mmLeft = 23283
         mmTop = 0
         mmWidth = 29369
         BandType = 0
@@ -138,12 +142,12 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Descripci'#243'n'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 52917
+        mmLeft = 54504
         mmTop = 0
         mmWidth = 25665
         BandType = 0
@@ -155,14 +159,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Cantidad'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 134673
+        mmLeft = 137054
         mmTop = 0
-        mmWidth = 15875
+        mmWidth = 19315
         BandType = 0
         LayerName = Foreground
       end
@@ -172,14 +176,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Costo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 153194
+        mmLeft = 156369
         mmTop = 0
-        mmWidth = 18521
+        mmWidth = 16933
         BandType = 0
         LayerName = Foreground
       end
@@ -189,12 +193,12 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Importe'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 174361
+        mmLeft = 176742
         mmTop = 0
         mmWidth = 15875
         BandType = 0
@@ -208,15 +212,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 2910
+        mmLeft = 1323
         mmTop = 265
-        mmWidth = 16933
+        mmWidth = 19844
         BandType = 4
         LayerName = Foreground
       end
@@ -226,13 +230,13 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 20108
+        mmLeft = 23283
         mmTop = 265
         mmWidth = 30956
         BandType = 4
@@ -244,13 +248,13 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 52917
+        mmLeft = 54504
         mmTop = 265
         mmWidth = 80169
         BandType = 4
@@ -262,13 +266,13 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 134673
+        mmLeft = 137054
         mmTop = 265
         mmWidth = 16933
         BandType = 4
@@ -276,19 +280,20 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       end
       object ppDBText5: TppDBText
         UserName = 'DBText5'
-        DataField = 'CostoPromedio'
+        DataField = 'CostoUnitario'
         DataPipeline = dbpReport
+        DisplayFormat = '$#,0.0000;-$#,0.0000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 154782
+        mmLeft = 156369
         mmTop = 265
-        mmWidth = 16933
+        mmWidth = 18521
         BandType = 4
         LayerName = Foreground
       end
@@ -296,15 +301,16 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         UserName = 'DBText6'
         DataField = 'ImporteTotal'
         DataPipeline = dbpReport
+        DisplayFormat = '$#,0.0000;-$#,0.0000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 174361
+        mmLeft = 176742
         mmTop = 265
         mmWidth = 16933
         BandType = 4
@@ -318,16 +324,16 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       end
       inherited pplblPrintDate: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         mmLeft = 5292
-        mmWidth = 37835
+        mmWidth = 46302
         LayerName = Foreground
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'Arial'
-        mmLeft = 182563
-        mmWidth = 10319
+        Font.Name = 'Courier New'
+        mmLeft = 181769
+        mmWidth = 11113
         LayerName = Foreground
       end
     end
@@ -355,7 +361,7 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Caption = 'Totales'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
         Transparent = True
@@ -372,15 +378,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 134673
+        mmLeft = 137054
         mmTop = 4498
-        mmWidth = 17727
+        mmWidth = 16933
         BandType = 7
         LayerName = Foreground
       end
@@ -388,17 +394,18 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         UserName = 'DBCalc3'
         DataField = 'ImporteTotal'
         DataPipeline = dbpReport
+        DisplayFormat = '$#,0.0000;-$#,0.0000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Name = 'Arial'
-        Font.Size = 10
+        Font.Name = 'Courier New'
+        Font.Size = 9
         Font.Style = []
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 174361
+        mmLeft = 176742
         mmTop = 4498
-        mmWidth = 19315
+        mmWidth = 18255
         BandType = 7
         LayerName = Foreground
       end

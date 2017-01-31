@@ -158,6 +158,8 @@ type
     procedure adodsMasterBeforeInsert(DataSet: TDataSet);
     procedure ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);
     procedure adodsMasterBeforePost(DataSet: TDataSet);
+    procedure ADODtStProductosAplicacionesBeforePost(DataSet: TDataSet);
+    procedure ADODtStProductosAplicacionesAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
     procedure ReadFile(FileName: TFileName);
@@ -280,6 +282,23 @@ procedure TdmProductos.ADODtStEspecificacionesAfterOpen(DataSet: TDataSet);
 begin
   inherited;
   adodtsttipoespecificacion.open;
+end;
+
+procedure TdmProductos.ADODtStProductosAplicacionesAfterInsert(
+  DataSet: TDataSet);
+begin
+  inherited;
+  //Verificar que lade productos este guardada... //Ene 25/17
+  if adodsMaster.State in [dsInsert, dsEdit] then
+     adodsMaster.Post;
+end;
+
+procedure TdmProductos.ADODtStProductosAplicacionesBeforePost(
+  DataSet: TDataSet);
+begin
+  inherited;
+ //VErificar que tenga idmarca parta que pueda verse en el listado de precios ene 25/17
+
 end;
 
 procedure TdmProductos.DataModuleCreate(Sender: TObject);

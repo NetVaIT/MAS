@@ -377,6 +377,8 @@ inherited dmProductos: TdmProductos
   object ADODtStProductosAplicaciones: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    AfterInsert = ADODtStProductosAplicacionesAfterInsert
+    BeforePost = ADODtStProductosAplicacionesBeforePost
     CommandText = 
       'select IdProductoAplicacion, IdMarca, IdProducto, Identificador,' +
       ' Descripcion, Aplicacion from ProductosAplicaciones'#13#10'where Idpro' +

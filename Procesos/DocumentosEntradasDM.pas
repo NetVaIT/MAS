@@ -148,6 +148,27 @@ type
     adodsDocumentosDetallesIdDocumentoEntradaDetalleAnterior: TIntegerField;
     adodsMasterIdentificador: TStringField;
     adodsMasterPedimento: TStringField;
+    ppDBTxtTextoFactura: TppDBText;
+    adoqryDocumentoTextoEnc: TStringField;
+    adoqryDocumentoIdDocumentoEntrada: TAutoIncField;
+    adoqryDocumentoIdDocumentoEntradaAnterior: TIntegerField;
+    adoqryDocumentoIdDocumentoEntradaTipo: TIntegerField;
+    adoqryDocumentoIdDocumentoEntradaEstatus: TIntegerField;
+    adoqryDocumentoIdPersona: TIntegerField;
+    adoqryDocumentoIdMoneda: TIntegerField;
+    adoqryDocumentoIdUsuario: TIntegerField;
+    adoqryDocumentoFecha: TDateTimeField;
+    adoqryDocumentoTipoCambio: TFMTBCDField;
+    adoqryDocumentoSubTotal: TFMTBCDField;
+    adoqryDocumentoIVA: TFMTBCDField;
+    adoqryDocumentoTotal: TFMTBCDField;
+    adoqryDocumentoTipo: TStringField;
+    adoqryDocumentoEstatus: TStringField;
+    adoqryDocumentoClaveProveedor: TStringField;
+    adoqryDocumentoProveedor: TStringField;
+    adoqryDocumentoFactura: TStringField;
+    adoqryDocumentopedimento: TStringField;
+    adoqryDocumentoMoneda: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure adodsMasterNewRecord(DataSet: TDataSet);
@@ -172,6 +193,7 @@ type
     procedure actGetDetalleAnteriorExecute(Sender: TObject);
     procedure actGetDetalleAnteriorUpdate(Sender: TObject);
     procedure adodsDocumentosDetallesBeforeInsert(DataSet: TDataSet);
+    procedure adoqryDocumentoCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -519,6 +541,16 @@ begin
   TfrmDocumentosEntradas(gGridEditForm).SetFoco;
 end;
 
+procedure TdmDocumentosEntradas.adoqryDocumentoCalcFields(DataSet: TDataSet);
+begin
+  inherited;  //Ene 30/17
+  Dataset.FieldByName('TextoEnc').AsString:= 'Factura: '+Dataset.FieldByName('Factura').AsString
+  +' de '+ Dataset.FieldByName('ClaveProveedor').AsString +' por '+
+  Dataset.FieldByName('Total').AsString +' '+Dataset.FieldByName('Moneda').AsString+' a  TC:'+Dataset.FieldByName('TipoCambio').AsString  +#13+
+  ' Total Moneda Nacional: '+FloatToSTR(Dataset.FieldByName('Total').asfloat*Dataset.FieldByName('TipoCambio').asFloat)+
+  ' Pedimento:'+Dataset.FieldByName('Pedimento').AsString;
+end;
+
 constructor TdmDocumentosEntradas.CreateWTipo(AOwner: TComponent; Tipo: TPTipo);
 begin
   FTipo:= Tipo;
@@ -612,6 +644,7 @@ begin
     adoqryDocumento.Open;
     adoqryDocumentoDetalles.Open;
     MostrarImportes(Tipo <> tRequisicion);
+    ppDBTxtTextoFactura.Visible:= Tipo = tFactura; //Ene 30/17
     ppRptDocumento.Print;
   finally
     adoqryDocumento.Close;

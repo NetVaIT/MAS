@@ -187,12 +187,12 @@ type
     ActImpresion: TAction;
     ADODtStDatosFacturaDocs: TADODataSet;
     ADODtStDatosFacturaDocsIdDocumentoEntrada: TAutoIncField;
-    ADODtStDatosFacturaDocsIdentificador: TStringField;
-    ADODtStDatosFacturaDocsPedimento: TStringField;
     adodsMasterNoFactura: TStringField;
     adodsMasterPedimento: TStringField;
     ActAcomodoIndividual: TAction;
     adodsFacturasFacturaProveedor: TStringField;
+    ADODtStDatosFacturaDocsIdentificador: TStringField;
+    ADODtStDatosFacturaDocsPedimento: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);

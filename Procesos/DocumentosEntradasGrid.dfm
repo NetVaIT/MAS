@@ -1,11 +1,38 @@
 inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   Caption = 'frmDocumentosEntradasGrid'
-  ExplicitWidth = 750
+  ClientWidth = 1184
+  ExplicitWidth = 1184
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 1184
+  end
+  inherited splDetail2: TSplitter
+    Width = 1184
+  end
+  inherited splDetail1: TSplitter
+    Width = 1184
+  end
+  inherited pnlClose: TPanel
+    Width = 1184
+  end
+  inherited pnlDetail3: TPanel
+    Width = 1184
+  end
+  inherited pnlDetail2: TPanel
+    Width = 1184
+  end
+  inherited pnlDetail1: TPanel
+    Width = 1184
+  end
+  inherited pnltoolbar: TPanel
+    Width = 1184
+  end
   inherited pnlMaster: TPanel
+    Width = 1184
     inherited cxGrid: TcxGrid
+      Width = 1184
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdDocumentoEntrada: TcxGridDBColumn
           DataBinding.FieldName = 'IdDocumentoEntrada'
@@ -77,13 +104,16 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
         end
       end
     end
+    inherited tbarGrid: TToolBar
+      Width = 1184
+    end
   end
   inherited DataSource: TDataSource
     DataSet = dmDocumentosEntradas.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400EC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400F00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -224,7 +254,7 @@ inherited frmDocumentosEntradasGrid: TfrmDocumentosEntradasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C00B801100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

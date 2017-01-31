@@ -139,7 +139,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       LookupKeyFields = 'IdDocumentoEntrada'
       LookupResultField = 'Identificador'
       KeyFields = 'IdDocumentoEntrada'
-      Size = 10
+      Size = 50
       Lookup = True
     end
     object adodsMasterPedimento: TStringField
@@ -149,6 +149,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       LookupKeyFields = 'IdDocumentoEntrada'
       LookupResultField = 'Pedimento'
       KeyFields = 'IdDocumentoEntrada'
+      Size = 50
       Lookup = True
     end
   end
@@ -537,7 +538,7 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     end
     object adodsFacturasFacturaProveedor: TStringField
       FieldName = 'FacturaProveedor'
-      Size = 10
+      Size = 50
     end
     object adodsFacturasNumero: TAutoIncField
       FieldName = 'Numero'
@@ -4967,10 +4968,11 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
     end
     object ADODtStDatosFacturaDocsIdentificador: TStringField
       FieldName = 'Identificador'
-      Size = 10
+      Size = 50
     end
     object ADODtStDatosFacturaDocsPedimento: TStringField
       FieldName = 'Pedimento'
+      Size = 50
     end
   end
 end

@@ -1,7 +1,7 @@
 inherited dmDocumentosEntradas: TdmDocumentosEntradas
   OldCreateOrder = True
   Height = 634
-  Width = 594
+  Width = 761
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     OnNewRecord = adodsMasterNewRecord
@@ -21,6 +21,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         Size = 4
         Value = 2
       end>
+    Left = 32
     object adodsMasterIdDocumentoEntrada: TAutoIncField
       FieldName = 'IdDocumentoEntrada'
       ReadOnly = True
@@ -53,16 +54,6 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       FieldName = 'IdUsuario'
       Visible = False
     end
-    object adodsMasterTipo: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Tipo'
-      LookupDataSet = adodsTipos
-      LookupKeyFields = 'IdDocumentoEntradaTipo'
-      LookupResultField = 'Descripcion'
-      KeyFields = 'IdDocumentoEntradaTipo'
-      Size = 15
-      Lookup = True
-    end
     object adodsMasterEstatus: TStringField
       FieldKind = fkLookup
       FieldName = 'Estatus'
@@ -85,6 +76,16 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       LookupResultField = 'Identificador'
       KeyFields = 'IdPersona'
       Size = 10
+      Lookup = True
+    end
+    object adodsMasterTipo: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Tipo'
+      LookupDataSet = adodsTipos
+      LookupKeyFields = 'IdDocumentoEntradaTipo'
+      LookupResultField = 'Descripcion'
+      KeyFields = 'IdDocumentoEntradaTipo'
+      Size = 15
       Lookup = True
     end
     object adodsMasterProvedor: TStringField
@@ -147,10 +148,11 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     end
     object adodsMasterIdentificador: TStringField
       FieldName = 'Identificador'
-      Size = 10
+      Size = 50
     end
     object adodsMasterPedimento: TStringField
       FieldName = 'Pedimento'
+      Size = 50
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -258,7 +260,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object adodsMonedas: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'select IdMoneda, Descripcion from Monedas'
+    CommandText = 'select IdMoneda, Descripcion, Identificador from Monedas'
     Parameters = <>
     Left = 24
     Top = 296
@@ -4122,6 +4124,26 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         BandType = 0
         LayerName = Foreground
       end
+      object ppDBTxtTextoFactura: TppDBText
+        UserName = 'DBTxtTextoFactura'
+        DataField = 'TextoEnc'
+        DataPipeline = ppdbpMaster
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 11
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        WordWrap = True
+        DataPipelineName = 'ppdbpMaster'
+        mmHeight = 11377
+        mmLeft = 85990
+        mmTop = 38629
+        mmWidth = 105834
+        BandType = 0
+        LayerName = Foreground
+      end
     end
     object ppDetailBand1: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -4376,6 +4398,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   object adoqryDocumento: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnCalcFields = adoqryDocumentoCalcFields
     Parameters = <
       item
         Name = 'IdDocumentoEntrada'
@@ -4400,7 +4423,10 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
         'das.Total, DocumentosEntradasTipos.Descripcion AS Tipo, Document' +
         'osEntradasEstatus.Descripcion AS Estatus, Personas.Identificador' +
         ' AS ClaveProveedor, '
-      '                         Personas.RazonSocial AS Proveedor'
+      
+        '                         Personas.RazonSocial AS Proveedor,Docum' +
+        'entosEntradas.Identificador Factura, DocumentosEntradas.pediment' +
+        'o'
       'FROM            DocumentosEntradas INNER JOIN'
       
         '                         DocumentosEntradasTipos ON DocumentosEn' +
@@ -4416,6 +4442,92 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
       'WHERE IdDocumentoEntrada = :IdDocumentoEntrada')
     Left = 56
     Top = 496
+    object adoqryDocumentoTextoEnc: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'TextoEnc'
+      Size = 500
+      Calculated = True
+    end
+    object adoqryDocumentoIdDocumentoEntrada: TAutoIncField
+      FieldName = 'IdDocumentoEntrada'
+      ReadOnly = True
+    end
+    object adoqryDocumentoIdDocumentoEntradaAnterior: TIntegerField
+      FieldName = 'IdDocumentoEntradaAnterior'
+    end
+    object adoqryDocumentoIdDocumentoEntradaTipo: TIntegerField
+      FieldName = 'IdDocumentoEntradaTipo'
+    end
+    object adoqryDocumentoIdDocumentoEntradaEstatus: TIntegerField
+      FieldName = 'IdDocumentoEntradaEstatus'
+    end
+    object adoqryDocumentoIdPersona: TIntegerField
+      FieldName = 'IdPersona'
+    end
+    object adoqryDocumentoIdMoneda: TIntegerField
+      FieldName = 'IdMoneda'
+    end
+    object adoqryDocumentoIdUsuario: TIntegerField
+      FieldName = 'IdUsuario'
+    end
+    object adoqryDocumentoFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object adoqryDocumentoTipoCambio: TFMTBCDField
+      FieldName = 'TipoCambio'
+      Precision = 18
+      Size = 6
+    end
+    object adoqryDocumentoSubTotal: TFMTBCDField
+      FieldName = 'SubTotal'
+      LookupDataSet = _dmConection.adoqUsuarios
+      Precision = 18
+      Size = 6
+    end
+    object adoqryDocumentoIVA: TFMTBCDField
+      FieldName = 'IVA'
+      Precision = 18
+      Size = 6
+    end
+    object adoqryDocumentoTotal: TFMTBCDField
+      FieldName = 'Total'
+      Precision = 18
+      Size = 6
+    end
+    object adoqryDocumentoTipo: TStringField
+      FieldName = 'Tipo'
+      Size = 15
+    end
+    object adoqryDocumentoEstatus: TStringField
+      FieldName = 'Estatus'
+      Size = 50
+    end
+    object adoqryDocumentoClaveProveedor: TStringField
+      FieldName = 'ClaveProveedor'
+      Size = 5
+    end
+    object adoqryDocumentoProveedor: TStringField
+      FieldName = 'Proveedor'
+      Size = 300
+    end
+    object adoqryDocumentoFactura: TStringField
+      FieldName = 'Factura'
+      Size = 50
+    end
+    object adoqryDocumentopedimento: TStringField
+      FieldName = 'pedimento'
+      Size = 50
+    end
+    object adoqryDocumentoMoneda: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Moneda'
+      LookupDataSet = adodsMonedas
+      LookupKeyFields = 'IdMoneda'
+      LookupResultField = 'Identificador'
+      KeyFields = 'IdMoneda'
+      Size = 10
+      Lookup = True
+    end
   end
   object dsDocumento: TDataSource
     AutoEdit = False
