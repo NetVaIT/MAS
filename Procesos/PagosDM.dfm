@@ -1,5 +1,7 @@
 inherited dmPagos: TdmPagos
   OldCreateOrder = True
+  Height = 471
+  Width = 652
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
     BeforeInsert = adodsMasterBeforeInsert

@@ -108,10 +108,12 @@ begin
     end;
     f:=dsConFacturasPendientes.DataSet.FieldByName('Serie').AsString+'-'+dsConFacturasPendientes.DataSet.FieldByName('Folio').AsString;
   //  if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
-    if (dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
-    or (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.0001) then  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
-    begin
-      if abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0 then
+    if ((dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
+          and (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.01)) //FEb 21/17
+
+    or (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.01) then //FEb 21/17 Era  0.0001  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
+    begin                                                                                                                               //era 0
+      if abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)>0.01 then
          showMessage('valor diferencia: '+ floattoStr(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat));
       if Application.MessageBox(pChar('Esta seguro de aplicar el importe al documento '+f +' ?'),'Confirmación',MB_YESNO)=IDYES then
       begin

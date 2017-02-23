@@ -5,8 +5,11 @@ inherited rptCostoInventario: TrptCostoInventario
   inherited pnlMaster: TPanel
     Top = 53
     Height = 231
+    ExplicitTop = 53
+    ExplicitHeight = 231
     inherited cxGrid: TcxGrid
       Height = 231
+      ExplicitHeight = 231
       inherited tvMaster: TcxGridDBTableView
         DataController.Summary.FooterSummaryItems = <
           item
@@ -64,6 +67,12 @@ inherited rptCostoInventario: TrptCostoInventario
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96
@@ -74,7 +83,6 @@ inherited rptCostoInventario: TrptCostoInventario
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42585.482013171300000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

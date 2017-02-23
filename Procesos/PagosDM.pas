@@ -121,6 +121,7 @@ type
   private
     function ActualizaSaldoCliente(IDCFDI, IDPagoRegistro: Integer;
       Importe: Double;operacion:String): Boolean;
+    procedure ActualizaSaldo(tabla, campo, campoID:String;idreg:integer);
     { Private declarations }
   public
     { Public declarations }
@@ -151,7 +152,17 @@ begin
   ADODtStConfiguraciones.FieldByName('UltimoFolioPago').AsInteger :=FolioAct;
   ADODtStConfiguraciones.Post;
 
+ // Actualizar aca el saldo si es menor que 0.01 //dejar en 0 feb 22/17
+  if abs(dataset.fieldbyname('Saldo').AsExtended) <0.01 then
+    ActualizaSaldo('PagosRegistros', 'Saldo','IdPagoRegistro',dataset.fieldbyname('IdPagoRegistro').asinteger); //
+end;
 
+procedure TdmPagos.ActualizaSaldo(tabla , campo, campoID:String;idreg:integer);
+begin      //feb 22/17
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.clear;
+  ADOQryAuxiliar.SQL.Add('UPDATE '+Tabla+' SET '+campo+'=0 where abs('+campo+')<0.01 and '+CampoId+' = '+inttostr(idreg));
+  ADOQryAuxiliar.ExecSQL;
 end;
 
 procedure TdmPagos.adodsMasterBeforeInsert(DataSet: TDataSet);
@@ -204,13 +215,21 @@ begin
                         +' where IDCFDI='+DAtaSEt.FieldByName('IDCFDI').ASString);
   ADOQryAuxiliar.ExecSQL;
 
+    // Actualizar aca el saldo si es menor que 0.01 //dejar en 0 feb 22/17
+
+  ActualizaSaldo('CFDI', 'SALDODocumento','IDCFDI',dataset.fieldbyname('IDCFDI').asinteger); //  feb 21/17 se controla internamente <=0.01
+
+
   ADOQryAuxiliar.SQL.Clear;
   ADOQryAuxiliar.SQL.Add('UPDATE PagosRegistros SET SALDO=SALDO - '+DataSet.FieldByName('Importe').AsString
                         +' where IDPagoRegistro='+DAtaSEt.FieldByName('IDPagoRegistro').ASString);
   ADOQryAuxiliar.ExecSQL;
+
+  ActualizaSaldo('PagosRegistros', 'Saldo','IdPagoRegistro',dataset.fieldbyname('IdPagoRegistro').asinteger); //  feb 21/17 se controla internamente <=0.01
    //
   ActualizaSaldoCliente(DAtaSEt.FieldByName('IDCFDI').ASInteger,DAtaSEt.FieldByName('IDPagoRegistro').asInteger,DataSet.FieldByName('Importe').AsFloat,'- ' );//habilitado mar 7/16
   //Ver si se verifican saldos por diferencias mínimas ago 23/16
+  //Verificacion Saldos < 0.01 ?? y actualizar a 0 //FEb 21/17
 end;
 
 procedure TdmPagos.ADODtStAplicacionesPagosNewRecord(DataSet: TDataSet);
