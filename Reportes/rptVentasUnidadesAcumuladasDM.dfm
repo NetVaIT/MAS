@@ -8,7 +8,7 @@ inherited dmrptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas
       'CantidadPromedio, v_ProductosCantidad.CantidadFuturo, v_Producto' +
       'sCantidad.Backorder'#13#10'FROM v_ProductosCantidad '#13#10'INNER JOIN Produ' +
       'ctos ON v_ProductosCantidad.IdProducto = Productos.IdProducto'#13#10'O' +
-      'RDER BY Productos.Identificador1'#13#10
+      'RDER BY Productos.Orden -- mar17/17'
   end
   inherited ppReport: TppReport
     Units = utScreenPixels

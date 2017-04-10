@@ -1,5 +1,7 @@
 inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   Caption = 'frmMetodosPagosEdit'
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlDetail1: TPanel
@@ -9,14 +11,17 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   inherited pcMain: TcxPageControl
     Top = 22
     Height = 455
+    ExplicitTop = 22
+    ExplicitHeight = 455
     ClientRectBottom = 454
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
       ExplicitTop = 1
       ExplicitWidth = 748
-      ExplicitHeight = 475
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Height = 453
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           ExplicitLeft = 0
           ExplicitTop = 0
@@ -27,6 +32,7 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
           ParentCtl3D = False
           ExplicitLeft = 0
           ExplicitTop = 25
+          ExplicitHeight = 426
           object Label1: TLabel
             Left = 32
             Top = 16
@@ -42,6 +48,14 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
             Height = 13
             Caption = 'Descripcion'
             FocusControl = cxDBTextEdit2
+          end
+          object Label3: TLabel
+            Left = 32
+            Top = 136
+            Width = 49
+            Height = 13
+            Caption = 'Clave SAT'
+            FocusControl = cxDBTextEdit3
           end
           object cxDBTextEdit1: TcxDBTextEdit
             Left = 32
@@ -71,6 +85,14 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
             TabOrder = 2
             Width = 121
           end
+          object cxDBTextEdit3: TcxDBTextEdit
+            Left = 32
+            Top = 152
+            DataBinding.DataField = 'ClaveSAT2016'
+            DataBinding.DataSource = DataSource1
+            TabOrder = 3
+            Width = 121
+          end
         end
       end
     end
@@ -92,12 +114,10 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
     ParentBackground = False
     ParentFont = False
     TabOrder = 5
-    ExplicitLeft = -44
-    ExplicitWidth = 794
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -238,7 +258,7 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010C000E00440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -775,5 +795,10 @@ inherited frmMetodosPagosEdit: TfrmMetodosPagosEdit
   end
   inherited cxStyleRepository1: TcxStyleRepository
     PixelsPerInch = 96
+  end
+  object DataSource1: TDataSource
+    DataSet = dmMetodosPagos.adodsMaster
+    Left = 360
+    Top = 312
   end
 end

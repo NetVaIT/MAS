@@ -50,6 +50,8 @@ type
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
     TlBtnReporteAjusteSalida: TToolButton;
+    tvMasterOrdenEstatus: TcxGridDBColumn;
+    tvMasterIdUsuario: TcxGridDBColumn;
     procedure SpdBtnConsultaFechaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure TlBtnReporteAjusteSalidaClick(Sender: TObject);

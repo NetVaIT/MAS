@@ -30,6 +30,9 @@ type
     cxDBTextEdit2: TcxDBTextEdit;
     cxDBChckBxExigeCta: TcxDBCheckBox;
     PnlTitulo: TPanel;
+    DataSource1: TDataSource;
+    Label3: TLabel;
+    cxDBTextEdit3: TcxDBTextEdit;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

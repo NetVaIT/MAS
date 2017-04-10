@@ -1,5 +1,5 @@
 inherited frmMain: TfrmMain
-  Caption = 'Sistema MAS '
+  Caption = 'Sistema MAS - V. 1.0.0.1'
   ClientHeight = 574
   ClientWidth = 881
   Font.Height = -32
@@ -18,6 +18,7 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCatalogos: TdxRibbonTab
       Tag = 1000
+      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -77,7 +78,6 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab7: TdxRibbonTab
       Tag = 5000
-      Active = True
       Caption = 'Reportes'
       Groups = <
         item

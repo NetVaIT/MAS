@@ -10,7 +10,8 @@ inherited dmrptInventario: TdmrptInventario
       'ntario.CostoTotal, '#13#10'v_ProductosInventario.ImporteEntradaMensual' +
       ', v_ProductosInventario.ImporteSalidaMensual'#13#10'FROM v_ProductosIn' +
       'ventario '#13#10'INNER JOIN Productos ON v_ProductosInventario.IdProdu' +
-      'cto = Productos.IdProducto'#13#10'ORDER BY Productos.Identificador1'
+      'cto = Productos.IdProducto'#13#10'ORDER BY Productos.Orden -- mar 17/ ' +
+      '17'
   end
   inherited ppReport: TppReport
     Units = utScreenPixels

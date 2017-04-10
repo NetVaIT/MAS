@@ -100,7 +100,7 @@ begin
   begin
     // Esta seguro de aplicar al Documento seleccionado del cliente?
   //  if DSAplicacion.DataSet.FieldByName('Importe').Asfloat > Valor then    //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
-    if (Valor>aux)then //de otra forma siempre son iguales
+    if (Valor>aux)and (abs(valor-aux)>0.01)then //de otra forma siempre son iguales
   //  if abs(DSAplicacion.DataSet.FieldByName('Importe').Asfloat - Valor)>0.001 then
     begin
       ShowMessage('No es posible aplicar un valor mayor al disponible');
@@ -108,8 +108,8 @@ begin
     end;
     f:=dsConFacturasPendientes.DataSet.FieldByName('Serie').AsString+'-'+dsConFacturasPendientes.DataSet.FieldByName('Folio').AsString;
   //  if dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat then
-    if ((dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat)
-          and (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.01)) //FEb 21/17
+    if ((dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat >= DSAplicacion.DataSet.FieldByName('Importe').Asfloat) )
+        // para aplicar menos   and (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.01)) //FEb 21/17
 
     or (abs(dsConFacturasPendientes.dataset.FieldByName('SaldoDocumento').Asfloat - DSAplicacion.DataSet.FieldByName('Importe').Asfloat)<0.01) then //FEb 21/17 Era  0.0001  //Ajustar para evitar centavos perdidos   C. Ago 23/16 pendiente
     begin                                                                                                                               //era 0

@@ -30,9 +30,11 @@ inherited dmInventario: TdmInventario
     end
     object adodsMasterCostoPromedio: TFloatField
       FieldName = 'CostoPromedio'
+      currency = True
     end
     object adodsMasterPrecioVenta: TFloatField
       FieldName = 'PrecioVenta'
+      currency = True
     end
     object adodsMasterVirtual: TFloatField
       FieldName = 'Virtual'

@@ -31,11 +31,13 @@ type
     btnUpdateFileCER: TSpeedButton;
     Label4: TLabel;
     btnUpdateFileKEY: TSpeedButton;
-    cxDBTextEdit1: TcxDBTextEdit;
+    cxDBTxtEdtPass: TcxDBTextEdit;
     cxDBLabel1: TcxDBLabel;
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBLabel2: TcxDBLabel;
+    SpdBtnVerPass: TSpeedButton;
     procedure FormCreate(Sender: TObject);
+    procedure SpdBtnVerPassClick(Sender: TObject);
   private
     FUpdateFileCER: TBasicAction;
     FUpdateFileKEY: TBasicAction;
@@ -77,6 +79,15 @@ procedure TFrmPersonasCSDEdit.SetUpdateFileKEY(const Value: TBasicAction);
 begin
   FUpdateFileKEY := Value;
   btnUpdateFileKEY.Action := Value;
+end;
+
+procedure TFrmPersonasCSDEdit.SpdBtnVerPassClick(Sender: TObject);
+begin
+  inherited;
+   if SpdBtnVerPass.Down then
+    cxDBTxtEdtPass.properties.echomode :=eemNormal
+  else
+     cxDBTxtEdtPass.properties.echomode :=eemPassword;
 end;
 
 end.

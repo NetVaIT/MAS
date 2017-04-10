@@ -4,7 +4,7 @@ object frmVerificar: TfrmVerificar
   BorderStyle = bsSizeToolWin
   Caption = 'Verificar'
   ClientHeight = 761
-  ClientWidth = 634
+  ClientWidth = 727
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,24 +18,26 @@ object frmVerificar: TfrmVerificar
   object pnlMaster: TPanel
     Left = 0
     Top = 41
-    Width = 634
+    Width = 727
     Height = 720
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 634
   end
   object pnlMain: TPanel
     Left = 0
     Top = 0
-    Width = 634
+    Width = 727
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 634
     DesignSize = (
-      634
+      727
       41)
     object btnOk: TButton
-      Left = 471
+      Left = 564
       Top = 6
       Width = 75
       Height = 25
@@ -43,9 +45,10 @@ object frmVerificar: TfrmVerificar
       Caption = 'Procesar'
       ModalResult = 1
       TabOrder = 0
+      ExplicitLeft = 471
     end
     object btnCancel: TButton
-      Left = 552
+      Left = 645
       Top = 6
       Width = 75
       Height = 25
@@ -53,6 +56,7 @@ object frmVerificar: TfrmVerificar
       Caption = 'Cancelar'
       ModalResult = 2
       TabOrder = 1
+      ExplicitLeft = 552
     end
     object lblInfo: TcxLabel
       Left = 16

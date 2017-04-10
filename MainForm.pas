@@ -262,8 +262,8 @@ begin
   end;
   if Assigned(gModulo) then
   begin
-    gModulo.ShowModule(pnlMain, pCaption);
-    Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription;
+    gModulo.ShowModule(pnlMain, pCaption);                                                   //Agregado manual Mar 29/17
+    Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription+ ' Ver.1.0.0.1';
   end;
 end;
 procedure TfrmMain.cxMmErrorProcesoPropertiesChange(Sender: TObject);
@@ -338,7 +338,7 @@ procedure TfrmMain.DestroyModule;
 begin
   inherited;
   if FrmReportesCierre<> Nil then
-    FrmReportesCierre.Free;
+     FreeAndNil(FrmReportesCierre);//  FrmReportesCierre.Free; Mar 27/17
 
   if Assigned(gModulo) then FreeAndNil(gModulo);
 end;
@@ -387,6 +387,7 @@ begin
   inherited;
   dmConfiguracion.ShowModule(dxtshConfiguracion, '');
   dmUsuarios.ShowModule(dxtshUsuarios, '');
+  Caption:=Caption+ ' Ver.1.0.0.1';  //Mar 29/17
 end;
 
 end.

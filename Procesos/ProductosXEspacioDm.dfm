@@ -10,12 +10,16 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
       'cio, ProductosXEspacio.IdCategoria, Almacenes.Descripcion AS Alm' +
       'acen, '#13#10'Productos.Identificador1, Productos.Identificador2, Prod' +
       'uctos.Identificador3, Productos.Descripcion AS Producto, Espacio' +
-      's.Descripcion AS Espacio, ProductosXEspacio.Cantidad'#13#10'FROM Produ' +
-      'ctosXEspacio '#13#10'INNER JOIN Almacenes ON ProductosXEspacio.IdAlmac' +
-      'en = Almacenes.IdAlmacen'#13#10'INNER JOIN Productos ON ProductosXEspa' +
-      'cio.IdProducto = Productos.IdProducto'#13#10'INNER JOIN Espacios ON Pr' +
-      'oductosXEspacio.IdEspacio = Espacios.IdEspacio'#13#10'order by product' +
-      'os.orden'
+      's.Descripcion AS Espacio, ProductosXEspacio.Cantidad'#13#10', Producto' +
+      'sXEspacio.IdOrdenEntradaItem'#13#10',OE.IdOrdenEntradaTipo, oe.IdOrden' +
+      'Entrada'#13#10'FROM ProductosXEspacio '#13#10'INNER JOIN Almacenes ON Produc' +
+      'tosXEspacio.IdAlmacen = Almacenes.IdAlmacen'#13#10'INNER JOIN Producto' +
+      's ON ProductosXEspacio.IdProducto = Productos.IdProducto'#13#10'INNER ' +
+      'JOIN Espacios ON ProductosXEspacio.IdEspacio = Espacios.IdEspaci' +
+      'o'#13#10'left join OrdenesEntradasItems OEI On ProductosXespacio.idord' +
+      'enentradaitem=OEI.IdOrdenEntradaItem'#13#10'left join OrdenesEntradas ' +
+      'OE on OEI.IdOrdenEntrada=Oe.IdOrdenEntrada '#13#10'order by productos.' +
+      'orden'
     object adodsMasterIdProductoXEspacio: TAutoIncField
       FieldName = 'IdProductoXEspacio'
       ReadOnly = True
@@ -63,6 +67,16 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
     end
     object adodsMasterCantidad: TFloatField
       FieldName = 'Cantidad'
+    end
+    object adodsMasterIdOrdenEntradaItem: TIntegerField
+      FieldName = 'IdOrdenEntradaItem'
+    end
+    object adodsMasterIdOrdenEntradaTipo: TIntegerField
+      FieldName = 'IdOrdenEntradaTipo'
+    end
+    object adodsMasterIdOrdenEntrada: TAutoIncField
+      FieldName = 'IdOrdenEntrada'
+      ReadOnly = True
     end
   end
   inherited ActionList: TActionList

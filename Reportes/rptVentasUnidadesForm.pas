@@ -44,6 +44,7 @@ type
     tvMasterCantidadPromedio: TcxGridDBColumn;
     tvMasterCantidadFuturo: TcxGridDBColumn;
     tvMasterBackorder: TcxGridDBColumn;
+    PnlTitulo: TPanel;
   private
     FDataSetPeriodo: TDataSet;
     function GetIdPeriodo: Integer;

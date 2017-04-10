@@ -1,11 +1,52 @@
 inherited frmProductosXEspacioGrid: TfrmProductosXEspacioGrid
   Caption = 'frmProductosXEspacioGrid'
-  ExplicitWidth = 750
+  ClientWidth = 1164
+  ExplicitWidth = 1164
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited splDetail2: TSplitter
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited splDetail1: TSplitter
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited pnlClose: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited pnlDetail3: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited pnlDetail2: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited pnlDetail1: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
+  end
+  inherited pnltoolbar: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
+  end
   inherited pnlMaster: TPanel
+    Width = 1164
+    ExplicitWidth = 1164
     inherited cxGrid: TcxGrid
+      Top = 33
+      Width = 1164
+      Height = 438
+      ExplicitTop = 33
+      ExplicitWidth = 1164
+      ExplicitHeight = 438
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProductoXEspacio: TcxGridDBColumn
           DataBinding.FieldName = 'IdProductoXEspacio'
@@ -53,9 +94,74 @@ inherited frmProductosXEspacioGrid: TfrmProductosXEspacioGrid
         object tvMasterCantidad: TcxGridDBColumn
           DataBinding.FieldName = 'Cantidad'
         end
+        object tvMasterIdOrdenEntradaItem: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaItem'
+          Visible = False
+        end
+        object tvMasterIdOrdenEntradaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaTipo'
+          Visible = False
+        end
+        object tvMasterIdOrdenEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntrada'
+          Visible = False
+        end
       end
     end
     inherited tbarGrid: TToolBar
+      Width = 1164
+      Height = 33
+      ButtonHeight = 31
+      ExplicitWidth = 1164
+      ExplicitHeight = 33
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited ToolButton10: TToolButton
+        ExplicitHeight = 31
+      end
+      inherited tbtnCerrar: TToolButton
+        ExplicitHeight = 31
+      end
       object TlbAjuste: TToolButton
         Left = 308
         Top = 0
@@ -63,11 +169,33 @@ inherited frmProductosXEspacioGrid: TfrmProductosXEspacioGrid
         Caption = 'Ajuste'
         ImageIndex = 12
       end
+      object RdGrpTipoEntrada: TRadioGroup
+        Left = 331
+        Top = 0
+        Width = 342
+        Height = 31
+        Caption = 'Registro Almac'#233'n'
+        Color = clWhite
+        Columns = 4
+        ItemIndex = 0
+        Items.Strings = (
+          'General'
+          'Compras'
+          'Devoluciones'
+          'Ajustes')
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        OnClick = RdGrpTipoEntradaClick
+      end
     end
+  end
+  inherited DataSource: TDataSource
+    DataSet = dmProductosXEspacio.adodsMaster
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -208,7 +336,7 @@ inherited frmProductosXEspacioGrid: TfrmProductosXEspacioGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D00B801340110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D00B8013C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       000000000000000000000000000000000000EFFFFF00F3FFFF00FBFFF900FFFF
       F800FBFEFC00FAFFF900D8EED200C0D8BA00D6E4D800FAFFFC00FBFFFB00FDFF

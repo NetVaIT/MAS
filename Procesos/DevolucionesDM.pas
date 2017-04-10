@@ -5,6 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
   Data.DB, Data.Win.ADODB, dialogs,forms,winapi.windows;
+const
+  IdAlmacenPrincipal = 1; //Abr 10/17
 
 type
   TPEstatus = (eNone, eGenerada, eRecoleccion, eRevision, eAutorizacion, eEmpaque, eEnvio, eRecibida, eCancelada, eAplicada);
@@ -174,6 +176,7 @@ begin
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
     adopAplicaEntradaXDev.ExecProc;
     RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+
     //Actualiza con 7
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdOrdenEntrada').value:= adodsMasterIdOrdenEntrada.AsInteger;
     adopAplicaEntradaXDev.Parameters.ParamByName('@IdUsuario').value:=_dmConection.IdUsuario;
@@ -181,7 +184,7 @@ begin
     RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
     //DEbe quedar en aduana
     application.messagebox('   Entrada por Devolución Aplicada. Items ubicados en Aduana.'+#13
-                          +'Asegúrese de acomodar en ubicacioón real, para que estén disponibles ','Información',MB_ok); //Sep 9/16
+                          +'Asegúrese de acomodar en ubicación real, para que estén disponibles ','Información',MB_ok); //Sep 9/16
   end;
 
 end;
@@ -459,6 +462,8 @@ begin
   adodsMasterIdUsuario.Value:= _dmConection.IdUsuario;
   adodsMasterFecha.Value:= Date;
   adodsMasterIdOrdenEntradaTipo.Value:=2; //Jun 27/16
+  adodsMasterIdAlmacen.Value:= idAlmacenPrincipal; //Abr 10/17
+
 end;
 
 procedure TdmDevoluciones.DataModuleCreate(Sender: TObject);

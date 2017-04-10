@@ -41,6 +41,9 @@ type
     ADtStAuxiliarAjuste: TADODataSet;
     ActAjusteSUyPXE: TAction;
     ADOQryAuxiliar: TADOQuery;
+    adodsMasterIdOrdenEntradaItem: TIntegerField;
+    adodsMasterIdOrdenEntradaTipo: TIntegerField;
+    adodsMasterIdOrdenEntrada: TAutoIncField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actCambiarExecute(Sender: TObject);
     procedure ActAjusteSUyPXEExecute(Sender: TObject);
@@ -151,7 +154,7 @@ begin
   TfrmProductosXEspacio(gGridEditForm).Cambio:= mdCambio;
   TfrmProductosXEspacio(gGridEditForm).actCambiar:= actCambiar;
   TfrmProductosXEspacio(gGridEditForm).actAjustar:=ActAjusteSUyPXE;
-  Adodsmaster.Filter:='cantidad <>0  or (cantidad = 0 and IdEspacio<>'+ intToStr(dmConfiguracion.IDEspacioAduana)+')';//Nov 7/16
+  Adodsmaster.Filter:='(cantidad <>0  or (cantidad = 0 and IdEspacio<>'+ intToStr(dmConfiguracion.IDEspacioAduana)+'))';//Nov 7/16
   Adodsmaster.Filtered:= True;
   mdCambio.Open;
   mdCambio.Insert;

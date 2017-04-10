@@ -10,8 +10,8 @@ inherited dmrptVentasProyeccion: TdmrptVentasProyeccion
       'CantidadPromedio, v_ProductosCantidad.CantidadFuturo, v_Producto' +
       'sCantidad.CantidadBackorder, v_ProductosCantidad.Backorder'#13#10'FROM' +
       ' v_ProductosCantidad '#13#10'INNER JOIN Productos ON v_ProductosCantid' +
-      'ad.IdProducto = Productos.IdProducto'#13#10'ORDER BY Productos.Identif' +
-      'icador1'#13#10
+      'ad.IdProducto = Productos.IdProducto'#13#10'ORDER BY  Productos.Orden ' +
+      '--Productos.Identificador1'#13#10
     object adodsMasterIdProducto: TAutoIncField
       FieldName = 'IdProducto'
       ReadOnly = True

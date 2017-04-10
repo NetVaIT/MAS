@@ -43,6 +43,9 @@ type
     tvMasterCantidad: TcxGridDBColumn;
     tvMasterRecId: TcxGridDBColumn;
     tvMasterOrden: TcxGridDBColumn;
+    tvMasterFacturaProveedor: TcxGridDBColumn;
+    tvMasterSeleccionados: TcxGridDBColumn;
+    tvMasterRestante: TcxGridDBColumn;
   private
     { Private declarations }
   public

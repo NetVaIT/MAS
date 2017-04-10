@@ -46,6 +46,13 @@ type
     cxDtEdtDesde: TcxDateEdit;
     cxDtEdtHasta: TcxDateEdit;
     ChckBxXFecha: TCheckBox;
+    tvMasterIdDocumentoEntrada: TcxGridDBColumn;
+    tvMasterIdAlmacen: TcxGridDBColumn;
+    tvMasterIdOrdenEstatus: TcxGridDBColumn;
+    tvMasterIdPersona: TcxGridDBColumn;
+    tvMasterIdMoneda: TcxGridDBColumn;
+    tvMasterIdUsuario: TcxGridDBColumn;
+    tvMasterIdOrdenEntradaTipo: TcxGridDBColumn;
     procedure TlBtnImpresionClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaFechaClick(Sender: TObject);

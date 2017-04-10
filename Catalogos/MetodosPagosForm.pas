@@ -22,7 +22,7 @@ uses
   cxClasses, Vcl.StdActns, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.ImgList, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ComCtrls, Vcl.ToolWin,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.Menus;
 
 type
   TfrmMetodosPagos = class(T_frmStandarGFormGrid)
@@ -30,6 +30,7 @@ type
     tvMasterIdentificador: TcxGridDBColumn;
     tvMasterDescripcion: TcxGridDBColumn;
     tvMasterExigeCuenta: TcxGridDBColumn;
+    tvMasterClaveSAT2016: TcxGridDBColumn;
   private
     { Private declarations }
   public

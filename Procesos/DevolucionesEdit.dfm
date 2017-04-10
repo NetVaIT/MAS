@@ -2,6 +2,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   Caption = 'FrmDevoluciones'
   ClientWidth = 842
   ExplicitWidth = 842
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -44,15 +45,15 @@ inherited FrmDevoluciones: TFrmDevoluciones
     ClientRectBottom = 454
     ClientRectRight = 841
     inherited tsGeneral: TcxTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 4
-      ExplicitWidth = 834
-      ExplicitHeight = 447
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitWidth = 840
+      ExplicitHeight = 453
       inherited cxScrollBox1: TcxScrollBox
         Width = 840
         Height = 453
-        ExplicitWidth = 834
-        ExplicitHeight = 447
+        ExplicitWidth = 840
+        ExplicitHeight = 453
         inherited tbarData: TToolBar
           Width = 838
           Height = 24
@@ -101,8 +102,8 @@ inherited FrmDevoluciones: TFrmDevoluciones
           Height = 427
           ExplicitLeft = 0
           ExplicitTop = 24
-          ExplicitWidth = 832
-          ExplicitHeight = 421
+          ExplicitWidth = 838
+          ExplicitHeight = 427
           object pnlEncabezado: TPanel
             Left = 0
             Top = 0
@@ -110,7 +111,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Height = 177
             Align = alTop
             TabOrder = 0
-            ExplicitWidth = 832
             object Label1: TLabel
               Left = 298
               Top = 6
@@ -234,8 +234,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitWidth = 832
-            ExplicitHeight = 124
           end
           object pnlPie: TPanel
             Left = 0
@@ -244,8 +242,6 @@ inherited FrmDevoluciones: TFrmDevoluciones
             Height = 120
             Align = alBottom
             TabOrder = 2
-            ExplicitTop = 301
-            ExplicitWidth = 832
             object Label2: TLabel
               Left = 604
               Top = 49
@@ -348,7 +344,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400800110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400840110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -489,7 +485,7 @@ inherited FrmDevoluciones: TFrmDevoluciones
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D000E00B00110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D000E00B40110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000001313133B515151B600000000000000000000

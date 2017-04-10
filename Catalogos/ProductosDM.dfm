@@ -547,7 +547,7 @@ inherited dmProductos: TdmProductos
     DataPipeline = ppDBPplnPrecioMayoreo
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True

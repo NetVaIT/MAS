@@ -4,6 +4,7 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
   Width = 761
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    BeforePost = adodsMasterBeforePost
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select IdDocumentoEntrada, IdDocumentoEntradaAnterior,'#13#10' IdDocum' +
@@ -627,19 +628,19 @@ inherited dmDocumentosEntradas: TdmDocumentosEntradas
     DataPipeline = ppdbpDetalle
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
-    PrinterSetup.mmMarginBottom = 3810
+    PrinterSetup.mmMarginBottom = 10000
     PrinterSetup.mmMarginLeft = 3810
-    PrinterSetup.mmMarginRight = 3810
+    PrinterSetup.mmMarginRight = 5000
     PrinterSetup.mmMarginTop = 3810
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
     PrinterSetup.PaperSize = 1
     Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Procesos\Cotizacion.rtm'
-    Units = utScreenPixels
+    Units = utMillimeters
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'

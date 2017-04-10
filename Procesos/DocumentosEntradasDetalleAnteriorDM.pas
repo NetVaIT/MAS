@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, _StandarDMod, System.Actions, Vcl.ActnList,
-  System.UITypes, Data.DB, Data.Win.ADODB, dxmdaset;
+  System.UITypes, Data.DB, Data.Win.ADODB, dxmdaset, dialogs;
 
 resourcestring
   StrSelectInfo = 'Productos pendientes.';
@@ -26,9 +26,28 @@ type
     dxmdPendientesCantidad: TIntegerField;
     dxmdPendientesOrden: TIntegerField;
     dxmdPendientesFacturaProveedor: TStringField;
+    ADOQrySumaSeleccionados: TADOQuery;
+    ADOQrySumaSeleccionadosIdDocumentoEntradaDetalleAnterior: TIntegerField;
+    ADOQrySumaSeleccionadosSuma: TFloatField;
+    dxmdPendientesseleccionados: TIntegerField;
+    dxmdPendientesRestantes: TIntegerField;
+    adoqryPendientesIdDocumentoEntradaDetalle: TAutoIncField;
+    adoqryPendientesIdDocumentoEntrada: TIntegerField;
+    adoqryPendientesIdProducto: TIntegerField;
+    adoqryPendientesNumero: TIntegerField;
+    adoqryPendientesClaveProducto: TStringField;
+    adoqryPendientesIdentificadorProveedor: TStringField;
+    adoqryPendientesProducto: TStringField;
+    adoqryPendientesCantidadPendiente: TFloatField;
+    adoqryPendientesPrecio: TFMTBCDField;
+    adoqryPendientesCantidad: TIntegerField;
+    adoqryPendientesFacturaProveedor: TStringField;
+    adoqryPendientesSeleccionados: TIntegerField;
+    adoqryPendientesRestantes: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dxmdPendientesNewRecord(DataSet: TDataSet);
     procedure dxmdPendientesCantidadChange(Sender: TField);
+    procedure adoqryPendientesCalcFields(DataSet: TDataSet);
   private
     FIdDocumentoEntrada: Integer;
     FIdPersona: Integer;
@@ -57,8 +76,33 @@ uses VerificarForm, DocumentosEntradasDetalleAnteriorForm;
 
 { TdmDocumentosEntradasDetalleAnterior }
 
+procedure TdmDocumentosEntradasDetalleAnterior.adoqryPendientesCalcFields(
+  DataSet: TDataSet);
+begin
+  inherited;
+  //Mar 28/17
+ // adoqryPendientesrestante.AsInteger:=adoqryPendientesCantidadPendiente.AsInteger- adoqryPendientesSeleccionados.AsInteger;
+  ADOQrySumaSeleccionados.Close; //Mar 28/17
+  ADOQrySumaSeleccionados.Parameters.ParamByName('IDDocumentoEntrada').Value:=  IdDocumentoEntrada;
+  ADOQrySumaSeleccionados.Parameters.ParamByName('IDDocumentoEntradaDetalleAnterior').Value:= adoqryPendientesIdDocumentoEntradaDetalle.Value;
+  ADOQrySumaSeleccionados.Open;
+  if ADOQrySumaSeleccionados.EOF or ADOQrySumaSeleccionados.fieldbyname('Suma').Isnull then
+    adoqryPendientesseleccionados.Value:= 0
+  else
+    adoqryPendientesseleccionados.Value:= ADOQrySumaSeleccionados.fieldbyname('Suma').AsInteger;
+
+ adoqryPendientesRestantes.Asinteger:= adoqryPendientesCantidadPendiente.AsInteger- adoqryPendientesseleccionados.AsInteger;
+
+
+
+end;
+
 procedure TdmDocumentosEntradasDetalleAnterior.CargaPendientes;
 begin
+//  ADOQrySumaSeleccionados.Close; //Mar 28/17
+//  ADOQrySumaSeleccionados.Parameters.ParamByName('IDDocumentoEntrada').Value:=  IdDocumentoEntrada;
+//  ADOQrySumaSeleccionados.Open;
+
   adoqryPendientes.Close;
   adoqryPendientes.Parameters.ParamByName('IdPersona').Value := IdPersona;
   adoqryPendientes.Open;
@@ -83,6 +127,9 @@ procedure TdmDocumentosEntradasDetalleAnterior.dxmdPendientesCantidadChange(
   Sender: TField);
 begin
   inherited;
+  if dxmdPendientesCantidad.AsInteger>dxmdPendientesRestantes.asinteger then    //Mar 28/17
+    showMessage('Cantidad mayor que Cantidad Restante');
+
   if (Sender.OldValue = 0) and (Sender.Value <> 0) then
   begin
     Inc(FOrden);

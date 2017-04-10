@@ -380,7 +380,7 @@ inherited DMFacturas: TDMFacturas
   object DSMaster: TDataSource
     DataSet = adodsMaster
     Left = 176
-    Top = 24
+    Top = 16
   end
   object ADODtStOrdenSalida: TADODataSet
     Connection = _dmConection.ADOConnection
@@ -1885,11 +1885,11 @@ inherited DMFacturas: TDMFacturas
     DataPipeline = ppDBPplnItemsNotaVenta
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
-    PrinterSetup.mmMarginBottom = 3810
+    PrinterSetup.mmMarginBottom = 10054
     PrinterSetup.mmMarginLeft = 3810
     PrinterSetup.mmMarginRight = 3810
     PrinterSetup.mmMarginTop = 3810

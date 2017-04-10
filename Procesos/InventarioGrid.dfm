@@ -2,37 +2,46 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
   Caption = 'FrmInventarioGrid'
   ClientWidth = 1019
   ExplicitWidth = 1019
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited splDetail2: TSplitter
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited splDetail1: TSplitter
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnlClose: TPanel
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnlDetail3: TPanel
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnlDetail2: TPanel
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnlDetail1: TPanel
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnltoolbar: TPanel
     Width = 1019
+    ExplicitWidth = 1019
   end
   inherited pnlMaster: TPanel
     Width = 1019
+    ExplicitWidth = 1019
     inherited cxGrid: TcxGrid
       Width = 1019
+      ExplicitWidth = 1019
       inherited tvMaster: TcxGridDBTableView
         object tvMasteridentificador1: TcxGridDBColumn
           DataBinding.FieldName = 'identificador1'
@@ -87,6 +96,112 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
     end
     inherited tbarGrid: TToolBar
       Width = 1019
+      ButtonHeight = 25
+      ExplicitWidth = 1019
+      inherited ToolButton1: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited btnEdit: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton3: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton4: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton5: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton6: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton7: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton8: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton9: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton2: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited btnPost: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited btnCancel: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton21: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton22: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited ToolButton10: TToolButton
+        ExplicitHeight = 25
+      end
+      inherited tbtnCerrar: TToolButton
+        ExplicitHeight = 25
+      end
+      object ToolButton11: TToolButton
+        Left = 308
+        Top = 0
+        Width = 124
+        Caption = 'ToolButton11'
+        ImageIndex = 12
+        Style = tbsSeparator
+      end
+      object EdtBuscar: TEdit
+        Left = 432
+        Top = 0
+        Width = 202
+        Height = 25
+        Hint = 'Coloque parte del nombre o de alguno de los n'#250'meros del producto'
+        TabOrder = 0
+      end
+      object SpdBtnBuscar: TBitBtn
+        Left = 634
+        Top = 0
+        Width = 26
+        Height = 25
+        Default = True
+        Glyph.Data = {
+          AA030000424DAA03000000000000360000002800000011000000110000000100
+          18000000000074030000C40E0000C40E00000000000000000000241CED241CED
+          241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+          ED241CED241CED241CED241CED00241CED241CED241CED241CED241CED241CED
+          241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+          ED00241CED241CEDFFFBFFB5AAA5F7FBF7241CED241CED241CED241CED241CED
+          241CED241CED241CED241CED241CED241CED241CED00241CED241CEDBD9E8C73
+          38219C7973F7FBF7241CED241CED241CED241CED241CED241CED241CED241CED
+          241CED241CED241CED00241CED241CEDE7DBCE945131844931AD8A73F7FBF724
+          1CED241CED241CED241CED241CED241CED241CED241CED241CED241CED00241C
+          ED241CED241CEDE7DBCEA56142A55931BD8E73F7FBF7F7E7E7DECBBDE7CBBDF7
+          EFF7241CED241CED241CED241CED241CED00241CED241CED241CED241CEDE7E3
+          DEB57142B56942B57D5AB56942B56942B56942B56942DEBAA5FFFBFF241CED24
+          1CED241CED00241CED241CED241CED241CED241CEDE7E3DEB57142B57142B571
+          42D6A684D6A684B57142B57142DEBEA5241CED241CED241CED00241CED241CED
+          241CED241CED241CEDE7DBCEC67942C6865AF7EFE7FFFBFFFFFBFFF7E7DEC679
+          42C67942F7EFE7241CED241CED00241CED241CED241CED241CED241CEDD6BA8C
+          C68242E7C7A5FFFFFFFFFFFFFFFFFFFFFFFFD6B28CC68242E7CBB5241CED241C
+          ED00241CED241CED241CED241CED241CEDE7BA8CC68A42E7CBB5FFFFFFFFFFFF
+          FFFFFFFFFFFFE7BA8CC68A42E7CBB5241CED241CED00241CED241CED241CED24
+          1CED241CEDE7D3B5D69242D6A66BF7FBF7FFFFFFFFFFFFF7F3F7D69E5AD69242
+          F7E7DE241CED241CED00241CED241CED241CED241CED241CEDF7FBF7D6AE6BD6
+          9A42D6AE6BE7D3B5E7D3B5D6A65AD69A42D6B66BFFFBFF241CED241CED00241C
+          ED241CED241CED241CED241CED241CEDF7EFDEE7BE5AD6AA31D6AA31D6AA31D6
+          AA31E7BE6BF7F3E7241CED241CED241CED00241CED241CED241CED241CED241C
+          ED241CED241CEDFFFBF7F7DFB5E7D78CE7D78CF7E7BDFFFBFF241CED241CED24
+          1CED241CED00241CED241CED241CED241CED241CED241CED241CED241CED241C
+          ED241CED241CED241CED241CED241CED241CED241CED241CED00241CED241CED
+          241CED241CED241CED241CED241CED241CED241CED241CED241CED241CED241C
+          ED241CED241CED241CED241CED00}
+        TabOrder = 1
+        OnClick = SpdBtnBuscarClick
+      end
     end
   end
   inherited DataSource: TDataSource
@@ -98,7 +213,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
     Left = 576
     Top = 112
     Bitmap = {
-      494C010102000400FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -245,7 +360,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
     Left = 640
     Top = 112
     Bitmap = {
-      494C01010C00B801200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

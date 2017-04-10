@@ -8,11 +8,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
     DataPipeline = ppDBPplnItemsOrdenSalida
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
-    PrinterSetup.mmMarginBottom = 3810
+    PrinterSetup.mmMarginBottom = 10054
     PrinterSetup.mmMarginLeft = 3810
     PrinterSetup.mmMarginRight = 3810
     PrinterSetup.mmMarginTop = 3810
@@ -8687,7 +8687,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object ppRprtEtiquetaSobre: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
@@ -9037,7 +9037,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object ppRptOrdenEmbarque: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
@@ -13343,7 +13343,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   object ppEtiquetaPreimpresa: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'Custom'
     PrinterSetup.PrinterName = 'Default'
@@ -14295,12 +14295,12 @@ object DMImpresosSalidas: TDMImpresosSalidas
     DataPipeline = ppDBPPRepFacturasUtil
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'Oficio'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
-    PrinterSetup.mmMarginBottom = 3704
+    PrinterSetup.mmMarginBottom = 10000
     PrinterSetup.mmMarginLeft = 3810
     PrinterSetup.mmMarginRight = 3810
     PrinterSetup.mmMarginTop = 3810
@@ -14439,7 +14439,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       0000000000000000000000000000000000000000000000000000000007000000
       00000000}
     Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Procesos\PedidosFacturas.rtm'
-    Units = utMillimeters
+    Units = utScreenPixels
     AllowPrintToFile = True
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
@@ -18047,7 +18047,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
       'select P.Identificador1,  p.Descripcion  ,  I.Existencia, I.Cost' +
       'oPromedio Costo , (I.Existencia* I.CostoPromedio) as Importe fro' +
       'm Inventario  I '#13#10'inner join  Productos P on P.IDProducto=I.IdPr' +
-      'oducto'#13#10'order by  P.Identificador1'
+      'oducto'#13#10'order by  P.Orden -- mar 17/17'
     Parameters = <>
     Left = 640
     Top = 352
@@ -18081,11 +18081,11 @@ object DMImpresosSalidas: TDMImpresosSalidas
     DataPipeline = ppDBPplnCostoInventario
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = True
-    PrinterSetup.mmMarginBottom = 3704
+    PrinterSetup.mmMarginBottom = 10000
     PrinterSetup.mmMarginLeft = 3810
     PrinterSetup.mmMarginRight = 3810
     PrinterSetup.mmMarginTop = 3810

@@ -50,6 +50,7 @@ type
     tvMasterRazonSocial: TcxGridDBColumn;
     tvMasteridcfditipodocumento: TcxGridDBColumn;
     tvMasterSumaTotal: TcxGridDBColumn;
+    PnlTitulo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure SpdBtnConsultaClick(Sender: TObject);
   private
@@ -142,7 +143,7 @@ begin
 
   if FiltroTipo<>'' then
      FiltroTipo:=' and ('+FiltroTipo+')';
-  Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder);
+ // Showmessage('Consulta '+TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+ TxtOrder);
   Tadodataset(datasource.DataSet).Close;
   Tadodataset(datasource.DataSet).CommandText:=TxtSQL+FiltroCliente+filtroFecha+FiltroTipo+TxtGroup+ TxtOrder;
   if filtroFecha <>''then

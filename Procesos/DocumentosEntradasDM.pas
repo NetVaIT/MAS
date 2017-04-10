@@ -194,6 +194,7 @@ type
     procedure actGetDetalleAnteriorUpdate(Sender: TObject);
     procedure adodsDocumentosDetallesBeforeInsert(DataSet: TDataSet);
     procedure adoqryDocumentoCalcFields(DataSet: TDataSet);
+    procedure adodsMasterBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
     frmListaProductos: TfrmListaProductos;
@@ -212,6 +213,7 @@ type
     procedure Imprimir(IdDocumentoEntrada: Integer);
     procedure PrintPDFFile(PDFFileName: TFileName; Mostrar: Boolean);
     procedure UpdTotales;
+    function ExisteOtraFacturaAbierta(IdPersonaProv: Integer): Boolean;
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -517,6 +519,29 @@ begin
   begin
     adodsDocumentosDetallesImporte.Value:= adodsDocumentosDetallesPrecio.Value * adodsDocumentosDetallesCantidad.Value;
   end;
+end;
+
+procedure TdmDocumentosEntradas.adodsMasterBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  if ExisteOtraFacturaAbierta(adodsMasterIdPersona.AsInteger) then   //Mar 29/17
+  begin
+    ShowMessage('Existe una Factura Abierta para el mismo proveedor');
+    abort;
+  end;
+end;
+
+function TdmDocumentosEntradas.ExisteOtraFacturaAbierta(IdPersonaProv:Integer):Boolean;//Mar 29/17
+begin      //Ajuste para evitar dos facturas abiertas al tiempo del mismo proveedor, por control de totales de pedidos
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.SQL.Clear;
+  ADOQryAuxiliar.Sql.Add('Select * From DocumentosEntradas where IdDocumentoEntradaEstatus= 1 and IDPersona ='
+                        +intToSTR(IdPersonaProv)+ ' and IDDocumentoEntradaTipo= 3 ') ;
+  if adodsMasterIdDocumentoEntrada.AsString<>'' then
+     ADOQryAuxiliar.Sql.Add(' and  IdDocumentoEntrada <> '+ adodsMasterIdDocumentoEntrada.AsString);
+
+  ADOQryAuxiliar.Open;
+  Result:=not ADOQryAuxiliar.Eof;
 end;
 
 procedure TdmDocumentosEntradas.adodsMasterIdPersonaChange(Sender: TField);

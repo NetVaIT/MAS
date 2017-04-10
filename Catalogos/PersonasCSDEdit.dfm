@@ -4,6 +4,10 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
+  inherited pnlDetail1: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 480
+  end
   inherited pcMain: TcxPageControl
     inherited tsGeneral: TcxTabSheet
       ExplicitLeft = 1
@@ -11,7 +15,13 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
       ExplicitWidth = 748
       ExplicitHeight = 475
       inherited cxScrollBox1: TcxScrollBox
+        inherited tbarData: TToolBar
+          ExplicitLeft = 0
+          ExplicitTop = 0
+        end
         inherited pnlMaster: TPanel
+          ExplicitLeft = 0
+          ExplicitTop = 24
           object Label1: TLabel
             Left = 16
             Top = 16
@@ -25,7 +35,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
             Width = 27
             Height = 13
             Caption = 'Clave'
-            FocusControl = cxDBTextEdit1
+            FocusControl = cxDBTxtEdtPass
           end
           object Label3: TLabel
             Left = 16
@@ -53,13 +63,38 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
             Width = 23
             Height = 22
           end
-          object cxDBTextEdit1: TcxDBTextEdit
+          object SpdBtnVerPass: TSpeedButton
+            Left = 375
+            Top = 172
+            Width = 23
+            Height = 21
+            AllowAllUp = True
+            GroupIndex = 1
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              04000000000000010000130B0000130B00001000000000000000000000000000
+              800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+              3333333333FFFFF3333333333999993333333333F77777FFF333333999999999
+              3333333777333777FF3333993333339993333377FF3333377FF3399993333339
+              993337777FF3333377F3393999333333993337F777FF333337FF993399933333
+              399377F3777FF333377F993339993333399377F33777FF33377F993333999333
+              399377F333777FF3377F993333399933399377F3333777FF377F993333339993
+              399377FF3333777FF7733993333339993933373FF3333777F7F3399933333399
+              99333773FF3333777733339993333339933333773FFFFFF77333333999999999
+              3333333777333777333333333999993333333333377777333333}
+            NumGlyphs = 2
+            OnClick = SpdBtnVerPassClick
+          end
+          object cxDBTxtEdtPass: TcxDBTextEdit
             Left = 16
             Top = 172
             DataBinding.DataField = 'Clave'
             DataBinding.DataSource = DataSource
+            Properties.EchoMode = eemPassword
+            Properties.PasswordChar = '*'
             TabOrder = 0
-            Width = 382
+            Width = 353
           end
           object cxDBLabel1: TcxDBLabel
             Left = 14
@@ -94,7 +129,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -235,7 +270,7 @@ inherited FrmPersonasCSDEdit: TFrmPersonasCSDEdit
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D00C002740110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D00C002780110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

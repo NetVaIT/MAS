@@ -2,6 +2,7 @@ inherited RptVentasXCliente: TRptVentasXCliente
   Caption = 'RptVentasXCliente'
   ClientWidth = 875
   ExplicitWidth = 875
+  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -17,16 +18,15 @@ inherited RptVentasXCliente: TRptVentasXCliente
     ExplicitWidth = 875
   end
   inherited pnlMaster: TPanel
-    Top = 78
+    Top = 100
     Width = 875
-    Height = 206
+    Height = 184
     ExplicitTop = 78
     ExplicitWidth = 875
     ExplicitHeight = 206
     inherited cxGrid: TcxGrid
       Width = 875
-      Height = 206
-      ExplicitTop = 3
+      Height = 184
       ExplicitWidth = 875
       ExplicitHeight = 206
       inherited tvMaster: TcxGridDBTableView
@@ -84,12 +84,13 @@ inherited RptVentasXCliente: TRptVentasXCliente
   end
   object PnlFiltros: TPanel [8]
     Left = 0
-    Top = 31
+    Top = 53
     Width = 875
     Height = 47
     Align = alTop
     ParentBackground = False
     TabOrder = 9
+    ExplicitTop = 31
     object PnlBusqueda: TPanel
       Left = 202
       Top = 1
@@ -208,10 +209,27 @@ inherited RptVentasXCliente: TRptVentasXCliente
           'Notas Venta'
           'Fletes')
         TabOrder = 0
-        ExplicitLeft = -2
-        ExplicitTop = -1
       end
     end
+  end
+  object PnlTitulo: TPanel [9]
+    Left = 0
+    Top = 0
+    Width = 875
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Ventas por Cliente'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 10
+    ExplicitTop = -9
   end
   inherited DataSource: TDataSource
     DataSet = dmConVentasXCliente.adodsMaster
@@ -222,6 +240,12 @@ inherited RptVentasXCliente: TRptVentasXCliente
       0
       31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     Left = 40
@@ -234,6 +258,7 @@ inherited RptVentasXCliente: TRptVentasXCliente
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42760.381338460650000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

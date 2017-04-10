@@ -363,7 +363,7 @@ object dmodXMLtoPDF: TdmodXMLtoPDF
     DataPipeline = ppDBPipelineDatosDetalleFactura
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.Duplex = dpVertical
+    PrinterSetup.Duplex = dpDefault
     PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False

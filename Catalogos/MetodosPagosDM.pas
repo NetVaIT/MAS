@@ -12,6 +12,7 @@ type
     adodsMasterIdentificador: TStringField;
     adodsMasterDescripcion: TStringField;
     adodsMasterExigeCuenta: TIntegerField;
+    adodsMasterClaveSAT2016: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

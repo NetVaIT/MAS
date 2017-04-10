@@ -11,7 +11,7 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
       'tidad.CantidadFuturo, v_ProductosCantidad.Backorder'#13#10'FROM       ' +
       '     v_ProductosCantidad INNER JOIN'#13#10'                         Pr' +
       'oductos ON v_ProductosCantidad.IdProducto = Productos.IdProducto' +
-      #13#10'ORDER BY Productos.Identificador1'#13#10
+      #13#10'ORDER BY Productos.Orden -- mar 17/17'#13#10
     object adodsMasterIdProducto: TAutoIncField
       FieldName = 'IdProducto'
       ReadOnly = True
@@ -57,6 +57,7 @@ inherited dmrptVentasUnidades: TdmrptVentasUnidades
       DisplayLabel = 'Futuro en meses'
       FieldName = 'CantidadFuturo'
       ReadOnly = True
+      DisplayFormat = '###,###.##'
     end
     object adodsMasterBackorder: TStringField
       FieldName = 'Backorder'

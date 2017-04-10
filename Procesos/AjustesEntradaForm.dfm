@@ -1,6 +1,8 @@
 inherited frmAjustesEntradasGrid: TfrmAjustesEntradasGrid
   Caption = 'frmAjustes'
   OnCreate = FormCreate
+  ExplicitWidth = 750
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -47,6 +49,34 @@ inherited frmAjustesEntradasGrid: TfrmAjustesEntradasGrid
         object tvMasterObservaciones: TcxGridDBColumn
           DataBinding.FieldName = 'Observaciones'
         end
+        object tvMasterIdDocumentoEntrada: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoEntrada'
+          Visible = False
+        end
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
+          Visible = False
+        end
+        object tvMasterIdOrdenEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEstatus'
+          Visible = False
+        end
+        object tvMasterIdPersona: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersona'
+          Visible = False
+        end
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
+          Visible = False
+        end
+        object tvMasterIdUsuario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdUsuario'
+          Visible = False
+        end
+        object tvMasterIdOrdenEntradaTipo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenEntradaTipo'
+          Visible = False
+        end
       end
     end
     inherited tbarGrid: TToolBar
@@ -69,7 +99,6 @@ inherited frmAjustesEntradasGrid: TfrmAjustesEntradasGrid
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 21
       object Label1: TLabel
         Left = 0
         Top = 6
@@ -135,7 +164,7 @@ inherited frmAjustesEntradasGrid: TfrmAjustesEntradasGrid
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -276,7 +305,7 @@ inherited frmAjustesEntradasGrid: TfrmAjustesEntradasGrid
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01010D00B801400110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D00B801440110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       000000000000000000000000000000000000FFFFFF00CCAACC00000000000000
       0000000000000000000000000000000000000000000000000000000000000000

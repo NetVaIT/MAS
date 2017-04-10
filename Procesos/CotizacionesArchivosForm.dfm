@@ -1,5 +1,5 @@
 inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
-  Caption = 'frmCotizacionesArchivos'
+  Caption = 'Archivos asociados a Cotizaci'#243'n'
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -47,7 +47,6 @@ inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42755.483110092590000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

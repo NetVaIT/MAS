@@ -18,10 +18,13 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
     ExplicitWidth = 702
   end
   inherited pnlMaster: TPanel
+    Top = 53
     Width = 702
+    Height = 231
     ExplicitWidth = 702
     inherited cxGrid: TcxGrid
       Width = 702
+      Height = 231
       ExplicitWidth = 702
       inherited tvMaster: TcxGridDBTableView
         object tvMasterIdProducto: TcxGridDBColumn
@@ -87,6 +90,25 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
       ExplicitLeft = 617
     end
   end
+  object PnlTitulo: TPanel [8]
+    Left = 0
+    Top = 0
+    Width = 702
+    Height = 22
+    Align = alTop
+    Alignment = taLeftJustify
+    Caption = '     Ventas de Unidades'
+    Color = 5553385
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 9
+    ExplicitLeft = 8
+  end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
@@ -129,7 +151,8 @@ inherited frmrptVentasUnidades: TfrmrptVentasUnidades
   end
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42811.662646365740000000
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

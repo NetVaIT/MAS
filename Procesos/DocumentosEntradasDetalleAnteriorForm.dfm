@@ -1,15 +1,28 @@
 inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnterior
   Caption = 'frmDocumentosEntradasDetalleAnterior'
-  ExplicitWidth = 651
+  ClientWidth = 1153
+  ExplicitWidth = 1153
   ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splDetail3: TSplitter
+    Width = 1153
+    ExplicitWidth = 1153
+  end
+  inherited splDetail1: TSplitter
+    Width = 1153
+    ExplicitWidth = 1153
+  end
+  inherited splDetail2: TSplitter
+    Width = 1153
+    ExplicitWidth = 1153
+  end
   inherited pnlMaster: TPanel
-    ExplicitTop = 28
-    ExplicitHeight = 256
+    Width = 1153
+    ExplicitWidth = 1153
     inherited cxGrid: TcxGrid
-      Height = 256
-      ExplicitHeight = 256
+      Width = 1153
+      ExplicitWidth = 1153
       inherited tvMaster: TcxGridDBTableView
         OptionsData.Editing = True
         object tvMasterRecId: TcxGridDBColumn
@@ -50,10 +63,20 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
         object tvMasterProducto: TcxGridDBColumn
           DataBinding.FieldName = 'Producto'
           Options.Editing = False
-          Width = 304
+          Width = 292
+        end
+        object tvMasterSeleccionados: TcxGridDBColumn
+          DataBinding.FieldName = 'Seleccionados'
+          Options.Editing = False
+          Width = 75
+        end
+        object tvMasterRestante: TcxGridDBColumn
+          DataBinding.FieldName = 'Restantes'
+          Options.Editing = False
         end
         object tvMasterCantidadPendiente: TcxGridDBColumn
           DataBinding.FieldName = 'CantidadPendiente'
+          Visible = False
           Options.Editing = False
         end
         object tvMasterPrecio: TcxGridDBColumn
@@ -68,18 +91,50 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
           DataBinding.FieldName = 'Orden'
           Options.IncSearch = False
         end
+        object tvMasterFacturaProveedor: TcxGridDBColumn
+          DataBinding.FieldName = 'FacturaProveedor'
+          Visible = False
+          Options.Editing = False
+        end
       end
+    end
+  end
+  inherited pnlDetail3: TPanel
+    Width = 1153
+    ExplicitWidth = 1153
+  end
+  inherited pnlDetail2: TPanel
+    Width = 1153
+    ExplicitWidth = 1153
+  end
+  inherited pnlDetail1: TPanel
+    Width = 1153
+    ExplicitWidth = 1153
+  end
+  inherited pnlClose: TPanel
+    Width = 1153
+    ExplicitWidth = 1153
+    inherited btnClose: TButton
+      Left = 1068
+      ExplicitLeft = 1068
     end
   end
   inherited DataSource: TDataSource
     AutoEdit = True
+    DataSet = dmDocumentosEntradasDetalleAnterior.dxmdPendientes
   end
   inherited dxBarManager: TdxBarManager
     DockControlHeights = (
       0
       0
-      28
+      31
       0)
+    inherited dxbNavigator: TdxBar
+      DockedLeft = 107
+    end
+    inherited dxbTools: TdxBar
+      DockedLeft = 238
+    end
   end
   inherited cxStyleRepository: TcxStyleRepository
     PixelsPerInch = 96

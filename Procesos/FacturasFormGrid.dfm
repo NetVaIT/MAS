@@ -275,6 +275,170 @@ inherited frmFacturasGrid: TfrmFacturasGrid
         object tvMasterMoneda: TcxGridDBColumn
           DataBinding.FieldName = 'Moneda'
         end
+        object tvMasterIdCFDI: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDI'
+          Visible = False
+        end
+        object tvMasterIdCFDIFormaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIFormaPago'
+          Visible = False
+        end
+        object tvMasterIdMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMetodoPago'
+          Visible = False
+        end
+        object tvMasterIdMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'IdMoneda'
+          Visible = False
+        end
+        object tvMasterIdPersonaEmisor: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaEmisor'
+          Visible = False
+        end
+        object tvMasterIdPersonaReceptor: TcxGridDBColumn
+          DataBinding.FieldName = 'IdPersonaReceptor'
+          Visible = False
+        end
+        object tvMasterIdCFDITipoDocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDITipoDocumento'
+          Visible = False
+        end
+        object tvMasterIdDocumentoCBB: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoCBB'
+          Visible = False
+        end
+        object tvMasterIdDocumentoXML: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoXML'
+          Visible = False
+        end
+        object tvMasterIdDocumentoPDF: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoPDF'
+          Visible = False
+        end
+        object tvMasterIdCFDIEstatus: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIEstatus'
+          Visible = False
+        end
+        object tvMasterIdCFDIFacturaGral: TcxGridDBColumn
+          DataBinding.FieldName = 'IdCFDIFacturaGral'
+          Visible = False
+        end
+        object tvMasterCuentaCte: TcxGridDBColumn
+          DataBinding.FieldName = 'CuentaCte'
+          Visible = False
+        end
+        object tvMasterTipoCambio: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoCambio'
+          Visible = False
+        end
+        object tvMasterLugarExpedicion: TcxGridDBColumn
+          DataBinding.FieldName = 'LugarExpedicion'
+          Visible = False
+        end
+        object tvMasterSello: TcxGridDBColumn
+          DataBinding.FieldName = 'Sello'
+          Visible = False
+        end
+        object tvMasterCondPago: TcxGridDBColumn
+          DataBinding.FieldName = 'CondPago'
+          Visible = False
+        end
+        object tvMasterNoCertificado: TcxGridDBColumn
+          DataBinding.FieldName = 'NoCertificado'
+          Visible = False
+        end
+        object tvMasterCertificado: TcxGridDBColumn
+          DataBinding.FieldName = 'Certificado'
+          Visible = False
+        end
+        object tvMasterDescto: TcxGridDBColumn
+          DataBinding.FieldName = 'Descto'
+          Visible = False
+        end
+        object tvMasterMotivoDescto: TcxGridDBColumn
+          DataBinding.FieldName = 'MotivoDescto'
+          Visible = False
+        end
+        object tvMasterNumCtaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'NumCtaPago'
+          Visible = False
+        end
+        object tvMasterCadenaOriginal: TcxGridDBColumn
+          DataBinding.FieldName = 'CadenaOriginal'
+          Visible = False
+        end
+        object tvMasterTotalImpuestoRetenido: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalImpuestoRetenido'
+          Visible = False
+        end
+        object tvMasterPorcentajeIVA: TcxGridDBColumn
+          DataBinding.FieldName = 'PorcentajeIVA'
+          Visible = False
+        end
+        object tvMasterEmailCliente: TcxGridDBColumn
+          DataBinding.FieldName = 'EmailCliente'
+          Visible = False
+        end
+        object tvMasterSelloCFD_TB: TcxGridDBColumn
+          DataBinding.FieldName = 'SelloCFD_TB'
+          Visible = False
+        end
+        object tvMasterSelloSAT_TB: TcxGridDBColumn
+          DataBinding.FieldName = 'SelloSAT_TB'
+          Visible = False
+        end
+        object tvMasterCertificadoSAT_TB: TcxGridDBColumn
+          DataBinding.FieldName = 'CertificadoSAT_TB'
+          Visible = False
+        end
+        object tvMasterMetodoPago: TcxGridDBColumn
+          DataBinding.FieldName = 'MetodoPago'
+          Visible = False
+        end
+        object tvMasterIdClienteDomicilio: TcxGridDBColumn
+          DataBinding.FieldName = 'IdClienteDomicilio'
+          Visible = False
+        end
+        object tvMasterRFC: TcxGridDBColumn
+          DataBinding.FieldName = 'RFC'
+          Visible = False
+        end
+        object tvMasterFormaPago: TcxGridDBColumn
+          DataBinding.FieldName = 'FormaPago'
+          Visible = False
+        end
+        object tvMasterIdentificadorCte: TcxGridDBColumn
+          DataBinding.FieldName = 'IdentificadorCte'
+          Visible = False
+        end
+        object tvMasterIdOrdenSalida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdOrdenSalida'
+          Visible = False
+        end
+        object tvMasterRFCEmisor: TcxGridDBColumn
+          DataBinding.FieldName = 'RFCEmisor'
+          Visible = False
+        end
+        object tvMasterTipoComprobante: TcxGridDBColumn
+          DataBinding.FieldName = 'TipoComprobante'
+          Visible = False
+        end
+        object tvMasterDirCompletaCte: TcxGridDBColumn
+          DataBinding.FieldName = 'DirCompletaCte'
+          Visible = False
+        end
+        object tvMasterTotalEnLetra: TcxGridDBColumn
+          DataBinding.FieldName = 'TotalEnLetra'
+          Visible = False
+        end
+        object tvMasterMetPagoClaveSAT: TcxGridDBColumn
+          DataBinding.FieldName = 'MetPagoClaveSAT'
+          Visible = False
+        end
+        object tvMasterClaveMoneda: TcxGridDBColumn
+          DataBinding.FieldName = 'ClaveMoneda'
+          Visible = False
+        end
       end
     end
     inherited tbarGrid: TToolBar
@@ -557,7 +721,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 600
     Top = 104
     Bitmap = {
-      494C010102000400480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101020004004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -704,7 +868,7 @@ inherited frmFacturasGrid: TfrmFacturasGrid
     Left = 672
     Top = 96
     Bitmap = {
-      494C01011600D001080210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011600D0010C0210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

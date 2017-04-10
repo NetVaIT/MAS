@@ -57,6 +57,7 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
   object adoqryPendientes: TADOQuery
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
+    OnCalcFields = adoqryPendientesCalcFields
     Parameters = <
       item
         Name = 'IdPersona'
@@ -96,19 +97,72 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
       'AND DocumentosEntradas.IdDocumentoEntradaEstatus = 3 '
       'AND DocumentosEntradas.IdPersona = :IdPersona')
     Left = 104
-    Top = 104
+    Top = 96
+    object adoqryPendientesIdDocumentoEntradaDetalle: TAutoIncField
+      FieldName = 'IdDocumentoEntradaDetalle'
+      ReadOnly = True
+    end
+    object adoqryPendientesIdDocumentoEntrada: TIntegerField
+      FieldName = 'IdDocumentoEntrada'
+    end
+    object adoqryPendientesIdProducto: TIntegerField
+      FieldName = 'IdProducto'
+    end
+    object adoqryPendientesNumero: TIntegerField
+      FieldName = 'Numero'
+    end
+    object adoqryPendientesClaveProducto: TStringField
+      FieldName = 'ClaveProducto'
+      Size = 50
+    end
+    object adoqryPendientesIdentificadorProveedor: TStringField
+      FieldName = 'IdentificadorProveedor'
+      Size = 50
+    end
+    object adoqryPendientesProducto: TStringField
+      FieldName = 'Producto'
+      Size = 255
+    end
+    object adoqryPendientesCantidadPendiente: TFloatField
+      FieldName = 'CantidadPendiente'
+    end
+    object adoqryPendientesPrecio: TFMTBCDField
+      FieldName = 'Precio'
+      Precision = 18
+      Size = 6
+    end
+    object adoqryPendientesCantidad: TIntegerField
+      FieldName = 'Cantidad'
+      ReadOnly = True
+    end
+    object adoqryPendientesFacturaProveedor: TStringField
+      FieldName = 'FacturaProveedor'
+      Size = 50
+    end
+    object adoqryPendientesSeleccionados: TIntegerField
+      FieldKind = fkCalculated
+      FieldName = 'Seleccionados'
+      Calculated = True
+    end
+    object adoqryPendientesRestantes: TIntegerField
+      FieldKind = fkCalculated
+      FieldName = 'Restantes'
+      Calculated = True
+    end
   end
   object dxmdPendientes: TdxMemData
     Indexes = <>
     Persistent.Data = {
-      5665728FC2F5285C8FFE3F0A000000040000000C001A004964446F63756D656E
+      5665728FC2F5285C8FFE3F0D000000040000000C001A004964446F63756D656E
       746F456E7472616461446574616C6C650004000000030013004964446F63756D
-      656E746F456E7472616461000400000003000B00496450726F647563746F0004
-      000000030007004E756D65726F003200000001000E00436C61766550726F6475
-      63746F0032000000010017004964656E746966696361646F7250726F76656564
-      6F7200FF0000000100090050726F647563746F00080000000600120043616E74
-      6964616450656E6469656E746500220000001800070050726563696F00040000
-      000300090043616E746964616400}
+      656E746F456E7472616461000400000003000B00496450726F647563746F000A
+      000000010011004661637475726150726F766565646F72000400000003000700
+      4E756D65726F003200000001000E00436C61766550726F647563746F00320000
+      00010017004964656E746966696361646F7250726F766565646F7200FF000000
+      0100090050726F647563746F00080000000600120043616E746964616450656E
+      6469656E746500220000001800070050726563696F0004000000030009004361
+      6E74696461640004000000030006004F7264656E000400000003000E0053656C
+      656363696F6E61646F7300}
     SortOptions = []
     OnNewRecord = dxmdPendientesNewRecord
     Left = 104
@@ -160,6 +214,50 @@ inherited dmDocumentosEntradasDetalleAnterior: TdmDocumentosEntradasDetalleAnter
     end
     object dxmdPendientesOrden: TIntegerField
       FieldName = 'Orden'
+    end
+    object dxmdPendientesseleccionados: TIntegerField
+      FieldName = 'Seleccionados'
+    end
+    object dxmdPendientesRestantes: TIntegerField
+      FieldName = 'Restantes'
+    end
+  end
+  object ADOQrySumaSeleccionados: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IDDocumentoEntrada'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'IdDocumentoEntradaDetalleAnterior'
+        DataType = ftInteger
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'Select IdDocumentoEntradaDetalleAnterior ,Sum (cantidadPendiente' +
+        ') as Suma from DocumentosEntradasDetalles DED'
+      
+        'where exists(Select * from DocumentosEntradas DE where DE.IDdocu' +
+        'mentoEntrada=:IDDocumentoEntrada '
+      'and DED.IdDocumentoEntrada=DE.IdDocumentoEntrada)'
+      
+        'and Ded. IdDocumentoEntradaDetalleAnterior=:IdDocumentoEntradaDe' +
+        'talleAnterior'
+      'Group by IdDocumentoEntradaDetalleAnterior')
+    Left = 304
+    Top = 160
+    object ADOQrySumaSeleccionadosIdDocumentoEntradaDetalleAnterior: TIntegerField
+      FieldName = 'IdDocumentoEntradaDetalleAnterior'
+    end
+    object ADOQrySumaSeleccionadosSuma: TFloatField
+      FieldName = 'Suma'
+      ReadOnly = True
     end
   end
 end
