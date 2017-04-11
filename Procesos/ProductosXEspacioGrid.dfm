@@ -174,7 +174,7 @@ inherited frmProductosXEspacioGrid: TfrmProductosXEspacioGrid
         Top = 0
         Width = 342
         Height = 31
-        Caption = 'Registro Almac'#233'n'
+        Caption = 'Ubicaci'#243'n Almac'#233'n'
         Color = clWhite
         Columns = 4
         ItemIndex = 0

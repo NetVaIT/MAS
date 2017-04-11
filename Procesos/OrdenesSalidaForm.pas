@@ -849,6 +849,7 @@ begin
          //Verificar que tenga ubicación  cada uno de los Items
          if DSSalidasUbicaciones.State=dsEdit then
             DSSalidasUbicaciones.dataset.Post;
+         //Asegurarse que no haya desfases en este punto pendiente /// &&&&&&&&&&&&&&&& Abr 10/17
          if VerificaUbicacionProductos(DataSource.dataset.fieldbyname('IdOrdenSalida').asinteger) then   //Verificar y ocultar
          begin
            EstatusNvo:=2; //REcolectada      //Master

@@ -88,6 +88,7 @@ inherited dmProductosXEspacio: TdmProductosXEspacio
     object ActAjusteSUyPXE: TAction
       Caption = 'ActAjusteSUyPXE'
       OnExecute = ActAjusteSUyPXEExecute
+      OnUpdate = ActAjusteSUyPXEUpdate
     end
   end
   object adodsAlmacenes: TADODataSet

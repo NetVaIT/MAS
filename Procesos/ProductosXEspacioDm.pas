@@ -47,6 +47,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure actCambiarExecute(Sender: TObject);
     procedure ActAjusteSUyPXEExecute(Sender: TObject);
+    procedure ActAjusteSUyPXEUpdate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,7 +70,7 @@ var          //nov 2/16
 begin      //Para los aplicados
   inherited;
   //Iniciar transaccion
-
+  //verificar que hace este proceso ____ abr 10/17
   cadena:='';
   ADOQryAuxiliar.Close;
   ADtStAuxiliarAjuste.close;
@@ -124,6 +125,15 @@ begin      //Para los aplicados
       ShowMessage('Termino ajuste');
   end;
 
+end;
+
+procedure TdmProductosXEspacio.ActAjusteSUyPXEUpdate(Sender: TObject);
+begin
+  inherited;    //Abr 11/17
+  ADtStAuxiliarAjuste.close;
+  ADtStAuxiliarAjuste.Open;
+  TAction(Sender).Enabled:= (not ADtStAuxiliarAjuste.eof) ;
+  ADtStAuxiliarAjuste.close;
 end;
 
 procedure TdmProductosXEspacio.actCambiarExecute(Sender: TObject);
