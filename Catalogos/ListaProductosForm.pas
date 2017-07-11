@@ -292,8 +292,18 @@ begin
 //  Precio:=Datasource.DataSet.FieldByName('PrecioUnitario').AsFloat;
   if not Datasource.DataSet.eof then
   begin
-    Acepto:=True;
-    Close;
+    if  Datasource.DataSet.fieldbyname('IdProductoEstatus').asInteger=1 then// jun 9/17
+    begin
+      Acepto:=True;
+      Close;
+    end
+    else
+    begin
+      ShowMessage('Producto no disponible para la venta');
+
+      Acepto:=False;
+      Close;
+  end;
   end
   else
   begin

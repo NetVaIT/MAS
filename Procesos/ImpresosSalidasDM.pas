@@ -447,6 +447,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses ConfiguracionDM;
+
 {$R *.dfm}
 procedure TDMImpresosSalidas.ADODtStDatosEtiquetaCalcFields(DataSet: TDataSet);
 begin
@@ -487,6 +489,8 @@ var Texto:String;
 begin
   Texto:='';
   ADODtStBuscaUbicacion.Close;
+
+  ADODtStBuscaUbicacion.Parameters.ParamByName('IDEspacioAduana').Value:=dmConfiguracion.IDEspacioAduana;  //Jun 12/17
   ADODtStBuscaUbicacion.Parameters.ParamByName('IDProducto').Value:=IdProd;
   ADODtStBuscaUbicacion.Parameters.ParamByName('IDAlmacen').VAlue:=IdAlm;
   ADODtStBuscaUbicacion.open;

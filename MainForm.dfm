@@ -18,7 +18,6 @@ inherited frmMain: TfrmMain
     end
     object dxRbnTbCatalogos: TdxRibbonTab
       Tag = 1000
-      Active = True
       Caption = 'Cat'#225'logos'
       Groups = <
         item
@@ -38,6 +37,7 @@ inherited frmMain: TfrmMain
     end
     object dxRibbon1Tab4: TdxRibbonTab
       Tag = 2000
+      Active = True
       Caption = 'Ventas'
       Groups = <
         item

@@ -211,7 +211,8 @@ uses
   rptAjustesEntradasDM in 'Reportes\rptAjustesEntradasDM.pas' {dmRptAjustesEntrada: TDataModule},
   rptAjustesSalidasDM in 'Reportes\rptAjustesSalidasDM.pas' {dmrptAjusteSalida: TDataModule},
   rptVentasXClienteForm in 'Reportes\rptVentasXClienteForm.pas' {RptVentasXCliente},
-  ConVentasXClienteDM in 'Reportes\ConVentasXClienteDM.pas' {dmConVentasXCliente: TDataModule};
+  ConVentasXClienteDM in 'Reportes\ConVentasXClienteDM.pas' {dmConVentasXCliente: TDataModule},
+  rptDevolucionDM in 'Reportes\rptDevolucionDM.pas' {dmRptDevolucion: TDataModule};
 
 {$R *.res}
 

@@ -449,6 +449,7 @@ begin
       ADODtStAjusteSalidaItems.FieldByName('Precio').AsFloat:=ValUni;
       ADODtStAjusteSalidaItems.FieldByName('IdProducto').asInteger:=idproducto;
       ADODtStAjusteSalidaItems.FieldByName('Importe').AsFloat:=ValUni* ADODtStAjusteSalidaItems.FieldByName('CantidadSolicitada').AsFloat;
+      ADODtStAjusteSalidaItems.FieldByName('CostoUnitario').AsFloat:= CostoEnInventario(idproducto) ;// abr 28/17 costo actual
     end;
   end;
 

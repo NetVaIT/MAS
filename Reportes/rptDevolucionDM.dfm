@@ -1,21 +1,17 @@
-inherited dmrptAjusteSalida: TdmrptAjusteSalida
+inherited dmRptDevolucion: TdmRptDevolucion
   inherited adodsReport: TADODataSet
     CommandText = 
-      'Select Os.FechaRegistro, OSI.IdOrdenSalida,  OSI.ClaveProducto,'#13 +
-      #10' P.Descripcion,  OSI. CantidadSolicitada,osi.cantidaddespachada' +
-      ','#13#10'OSI.CostoUnitario, OSI.Precio,'#13#10' OSI.Importe, i.CostoPromedio' +
-      ','#13#10'case when OSI.CostoUnitario is null then (I.CostoPromedio *Os' +
-      'i.CAntidaddespachada)  else'#13#10' (OSI.CostoUnitario *Osi.CAntidadde' +
-      'spachada) end as ImporteTotal'#13#10' from OrdenesSalidasItems OSI inn' +
-      'er join Ordenessalidas OS '#13#10'           on OS. IdOrdenSalida =osi' +
-      '.IDOrdensalida'#13#10#13#10'inner Join Productos P on P.idproducto= OSI.id' +
-      'producto '#13#10'inner join inventario I on I.idproducto=P.idproducto'#13 +
-      #10'Where os.idordenSalidatipo =4'#13#10' and '#13#10'OS.FEchaRegistro >=:FIni ' +
-      'and OS.FEchaRegistro<=:FFin'
+      'Select OE.FEcha, OEI.IdOrdenEntrada,  OEI.ClaveProducto,'#13#10' P.Des' +
+      'cripcion,  OEI. Cantidad,'#13#10'OEI.CostoAproximado, OEI.Costo,OEI.Pr' +
+      'ecioVenta, OEI.ImporteTotal,'#13#10'CAse when OEI.ImporteTotal =0 then' +
+      #13#10'OEI. Cantidad*OEI.Costo else OEI.ImporteTotal end'#13#10' as CostoTo' +
+      'talCal'#13#10' from OrdenesEntradasItems OEI inner join OrdenesEntrada' +
+      's OE '#13#10'           on OE. IdOrdenEntrada =oei.IDOrdenEntrada'#13#10#13#10'i' +
+      'nner Join Productos P on P.idproducto= OEI.idproducto'#13#10'Where oe.' +
+      'idordenentradatipo =2 and OE.FEcha >=:FIni and OE.FEcha<=:FFin'
     Parameters = <
       item
         Name = 'FIni'
-        Attributes = [paNullable]
         DataType = ftDateTime
         NumericScale = 3
         Precision = 23
@@ -24,18 +20,17 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       end
       item
         Name = 'FFin'
-        Attributes = [paNullable]
         DataType = ftDateTime
         NumericScale = 3
         Precision = 23
         Size = 16
         Value = Null
       end>
-    object adodsReportFechaRegistro: TDateTimeField
-      FieldName = 'FechaRegistro'
+    object adodsReportFEcha: TDateTimeField
+      FieldName = 'FEcha'
     end
-    object adodsReportIdOrdenSalida: TIntegerField
-      FieldName = 'IdOrdenSalida'
+    object adodsReportIdOrdenEntrada: TIntegerField
+      FieldName = 'IdOrdenEntrada'
     end
     object adodsReportClaveProducto: TStringField
       FieldName = 'ClaveProducto'
@@ -45,53 +40,45 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       FieldName = 'Descripcion'
       Size = 255
     end
-    object adodsReportCantidadSolicitada: TFloatField
-      FieldName = 'CantidadSolicitada'
+    object adodsReportCantidad: TFloatField
+      FieldName = 'Cantidad'
     end
-    object adodsReportcantidaddespachada: TFloatField
-      FieldName = 'cantidaddespachada'
-    end
-    object adodsReportCostoUnitario: TFMTBCDField
-      FieldName = 'CostoUnitario'
-      currency = True
+    object adodsReportCostoAproximado: TFMTBCDField
+      FieldName = 'CostoAproximado'
       Precision = 18
       Size = 6
     end
-    object adodsReportPrecio: TFMTBCDField
-      FieldName = 'Precio'
-      currency = True
+    object adodsReportCosto: TFMTBCDField
+      FieldName = 'Costo'
       Precision = 18
       Size = 6
     end
-    object adodsReportImporte: TFMTBCDField
-      FieldName = 'Importe'
-      currency = True
+    object adodsReportPrecioVenta: TFMTBCDField
+      FieldName = 'PrecioVenta'
       Precision = 18
       Size = 6
     end
-    object adodsReportCostoPromedio: TFloatField
-      FieldName = 'CostoPromedio'
-      currency = True
-    end
-    object adodsReportImporteTotal: TFloatField
+    object adodsReportImporteTotal: TFMTBCDField
       FieldName = 'ImporteTotal'
+      Precision = 18
+      Size = 6
+    end
+    object adodsReportCostoTotalCal: TFloatField
+      FieldName = 'CostoTotalCal'
       ReadOnly = True
-      currency = True
     end
   end
-  inherited ppReport: TppReport
+  inherited ppReport: TppReport [2]
     PrinterSetup.Orientation = poPortrait
     PrinterSetup.mmPaperHeight = 355600
     PrinterSetup.mmPaperWidth = 215900
-    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Reportes\AjustesSAlida.rtm'
-    Left = 248
+    Template.FileName = 'C:\Desarrollo\TractoPartes\MAS\Reportes\DEVOLUCION.rtm'
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       inherited pplblTitle: TppLabel
         SaveOrder = -1
-        Font.Size = 12
-        mmLeft = 52122
-        mmWidth = 142000
+        Font.Size = 10
+        mmWidth = 137319
         LayerName = Foreground
       end
       inherited ppImage4: TppImage
@@ -99,15 +86,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
       end
       inherited ppLabel6: TppLabel
         SaveOrder = -1
-        mmLeft = 52122
-        mmWidth = 142000
+        mmWidth = 137319
         LayerName = Foreground
       end
     end
     inherited ppHeaderBand1: TppHeaderBand
-      mmHeight = 6085
+      mmHeight = 6350
       object ppLabel2: TppLabel
-        UserName = 'Label2'
+        UserName = 'Label3'
         AutoSize = False
         Caption = 'Fecha'
         Font.Charset = DEFAULT_CHARSET
@@ -124,7 +110,7 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         LayerName = Foreground
       end
       object ppLabel3: TppLabel
-        UserName = 'Label3'
+        UserName = 'Label4'
         AutoSize = False
         Caption = 'Clave '
         Font.Charset = DEFAULT_CHARSET
@@ -134,14 +120,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 23283
+        mmLeft = 21960
         mmTop = 0
         mmWidth = 29369
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel4: TppLabel
-        UserName = 'Label4'
+        UserName = 'Label5'
         AutoSize = False
         Caption = 'Descripci'#243'n'
         Font.Charset = DEFAULT_CHARSET
@@ -151,14 +137,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 54504
+        mmLeft = 52917
         mmTop = 0
         mmWidth = 25665
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel5: TppLabel
-        UserName = 'Label5'
+        UserName = 'Label6'
         AutoSize = False
         Caption = 'Cantidad'
         Font.Charset = DEFAULT_CHARSET
@@ -166,17 +152,16 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Font.Name = 'Courier New'
         Font.Size = 10
         Font.Style = [fsBold]
-        TextAlignment = taCentered
         Transparent = True
         mmHeight = 4763
-        mmLeft = 132292
+        mmLeft = 127794
         mmTop = 0
-        mmWidth = 17992
+        mmWidth = 17727
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel7: TppLabel
-        UserName = 'Label6'
+        UserName = 'Label7'
         AutoSize = False
         Caption = 'Costo'
         Font.Charset = DEFAULT_CHARSET
@@ -187,14 +172,14 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 153723
+        mmLeft = 148167
         mmTop = 0
-        mmWidth = 17463
+        mmWidth = 17727
         BandType = 0
         LayerName = Foreground
       end
       object ppLabel8: TppLabel
-        UserName = 'Label7'
+        UserName = 'Label8'
         AutoSize = False
         Caption = 'Importe'
         Font.Charset = DEFAULT_CHARSET
@@ -205,9 +190,9 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 4763
-        mmLeft = 174887
+        mmLeft = 173832
         mmTop = 0
-        mmWidth = 17995
+        mmWidth = 15875
         BandType = 0
         LayerName = Foreground
       end
@@ -217,9 +202,9 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 1587
+        mmHeight = 530
         mmLeft = 1323
-        mmTop = 5027
+        mmTop = 5028
         mmWidth = 193675
         BandType = 0
         LayerName = Foreground
@@ -228,7 +213,7 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
     inherited ppDetailBand1: TppDetailBand
       object ppDBText1: TppDBText
         UserName = 'DBText1'
-        DataField = 'FechaRegistro'
+        DataField = 'FEcha'
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -238,9 +223,9 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 1323
-        mmTop = 265
-        mmWidth = 18785
+        mmLeft = 2910
+        mmTop = 529
+        mmWidth = 17727
         BandType = 4
         LayerName = Foreground
       end
@@ -256,9 +241,9 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 23283
-        mmTop = 265
-        mmWidth = 30956
+        mmLeft = 21167
+        mmTop = 529
+        mmWidth = 29369
         BandType = 4
         LayerName = Foreground
       end
@@ -274,15 +259,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 54504
-        mmTop = 265
-        mmWidth = 76729
+        mmLeft = 52123
+        mmTop = 529
+        mmWidth = 74083
         BandType = 4
         LayerName = Foreground
       end
       object ppDBText4: TppDBText
         UserName = 'DBText4'
-        DataField = 'cantidaddespachada'
+        DataField = 'Cantidad'
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -293,15 +278,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 132292
-        mmTop = 265
-        mmWidth = 17992
+        mmLeft = 127000
+        mmTop = 529
+        mmWidth = 15875
         BandType = 4
         LayerName = Foreground
       end
       object ppDBText5: TppDBText
         UserName = 'DBText5'
-        DataField = 'CostoPromedio'
+        DataField = 'Costo'
         DataPipeline = dbpReport
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
@@ -313,15 +298,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 152136
-        mmTop = 265
-        mmWidth = 19050
+        mmLeft = 147373
+        mmTop = 529
+        mmWidth = 18521
         BandType = 4
         LayerName = Foreground
       end
       object ppDBText6: TppDBText
         UserName = 'DBText6'
-        DataField = 'ImporteTotal'
+        DataField = 'CostoTotalCal'
         DataPipeline = dbpReport
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
@@ -333,37 +318,35 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4763
-        mmLeft = 173832
-        mmTop = 265
-        mmWidth = 19050
+        mmLeft = 169334
+        mmTop = 529
+        mmWidth = 20373
         BandType = 4
         LayerName = Foreground
       end
     end
     inherited ppFooterBand1: TppFooterBand
+      mmHeight = 7408
       inherited ppLineFooter: TppLine
-        mmWidth = 193676
+        mmHeight = 1058
+        mmWidth = 193675
         LayerName = Foreground
       end
       inherited pplblPrintDate: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'Courier New'
-        mmLeft = 5292
-        mmWidth = 46302
         LayerName = Foreground
       end
       inherited pplblPageNo: TppSystemVariable
         SaveOrder = -1
-        Font.Name = 'Courier New'
-        mmLeft = 181769
-        mmWidth = 11113
+        mmLeft = 182404
+        mmTop = 2116
         LayerName = Foreground
       end
     end
     object ppSummaryBand1: TppSummaryBand [4]
       Background.Brush.Style = bsClear
       mmBottomOffset = 0
-      mmHeight = 13229
+      mmHeight = 9790
       mmPrintPosition = 0
       object ppLine1: TppLine
         UserName = 'LineFooter1'
@@ -371,15 +354,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Pen.Color = clGray
         Pen.Width = 2
         Weight = 1.500000000000000000
-        mmHeight = 2910
-        mmLeft = 2381
-        mmTop = 265
+        mmHeight = 1323
+        mmLeft = 1323
+        mmTop = 1056
         mmWidth = 193675
         BandType = 7
         LayerName = Foreground
       end
-      object ppLabel9: TppLabel
-        UserName = 'Label8'
+      object ppLabel1: TppLabel
+        UserName = 'Label2'
         AutoSize = False
         Caption = 'Totales'
         Font.Charset = DEFAULT_CHARSET
@@ -389,15 +372,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Font.Style = [fsBold]
         Transparent = True
         mmHeight = 4763
-        mmLeft = 110861
-        mmTop = 4233
+        mmLeft = 108215
+        mmTop = 3173
         mmWidth = 15875
         BandType = 7
         LayerName = Foreground
       end
       object ppDBCalc1: TppDBCalc
         UserName = 'DBCalc1'
-        DataField = 'cantidaddespachada'
+        DataField = 'Cantidad'
         DataPipeline = dbpReport
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -408,15 +391,15 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 134404
-        mmTop = 4498
-        mmWidth = 16933
+        mmLeft = 127783
+        mmTop = 3173
+        mmWidth = 17727
         BandType = 7
         LayerName = Foreground
       end
       object ppDBCalc3: TppDBCalc
         UserName = 'DBCalc3'
-        DataField = 'ImporteTotal'
+        DataField = 'CostoTotalCal'
         DataPipeline = dbpReport
         DisplayFormat = '$#,0.00;-$#,0.00'
         Font.Charset = DEFAULT_CHARSET
@@ -428,12 +411,16 @@ inherited dmrptAjusteSalida: TdmrptAjusteSalida
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4498
-        mmLeft = 175419
-        mmTop = 4498
-        mmWidth = 18256
+        mmLeft = 170921
+        mmTop = 2117
+        mmWidth = 19315
         BandType = 7
         LayerName = Foreground
       end
     end
+  end
+  inherited mdParams: TdxMemData [3]
+  end
+  inherited dbpReport: TppDBPipeline [4]
   end
 end

@@ -11,7 +11,25 @@ inherited dmDevoluciones: TdmDevoluciones
       'select IdOrdenEntrada, IdDocumentoEntrada, IdAlmacen, '#13#10'IdOrdenE' +
       'status, IdPersona, IdMoneda, IdUsuario, Fecha, '#13#10'TipoCambio, Sub' +
       'Total, IVA, Total, Observaciones,'#13#10' IdOrdenEntradaTipo from Orde' +
-      'nesEntradas where'#13#10' IdOrdenEntradaTipo=2'
+      'nesEntradas where'#13#10' IdOrdenEntradaTipo=2'#13#10'and fecha>=:fini and f' +
+      'echa<=:ffin'#13#10
+    Parameters = <
+      item
+        Name = 'fini'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = 'ffin'
+        DataType = ftDateTime
+        NumericScale = 3
+        Precision = 23
+        Size = 16
+        Value = Null
+      end>
     object adodsMasterIdOrdenEntrada: TAutoIncField
       FieldName = 'IdOrdenEntrada'
       ReadOnly = True

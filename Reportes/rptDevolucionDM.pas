@@ -1,22 +1,22 @@
-unit rptAjustesEntradasDM;
+unit rptDevolucionDM;
 
 interface
 
 uses
-  System.SysUtils, System.Classes, _ReportMASDM, dxmdaset, ppParameter,
-  ppDesignLayer, ppVar, ppCtrls, ppBands, dxGDIPlusClasses, ppPrnabl, ppClass,
-  ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, Data.DB,
+  System.SysUtils, System.Classes, _ReportMASDM, ppCtrls, ppBands, ppDB,
+  dxmdaset, ppParameter, ppDesignLayer, ppVar, dxGDIPlusClasses, ppPrnabl,
+  ppClass, ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDBPipe, Data.DB,
   Data.Win.ADODB;
 
 type
-  TdmRptAjustesEntrada = class(T_dmReportMAS)
-    ppLabel1: TppLabel;
-    ppDBText1: TppDBText;
+  TdmRptDevolucion = class(T_dmReportMAS)
     ppLabel2: TppLabel;
     ppLabel3: TppLabel;
     ppLabel4: TppLabel;
     ppLabel5: TppLabel;
     ppLabel7: TppLabel;
+    ppLabel8: TppLabel;
+    ppDBText1: TppDBText;
     ppDBText2: TppDBText;
     ppDBText3: TppDBText;
     ppDBText4: TppDBText;
@@ -24,9 +24,9 @@ type
     ppDBText6: TppDBText;
     ppSummaryBand1: TppSummaryBand;
     ppLine1: TppLine;
+    ppLabel1: TppLabel;
     ppDBCalc1: TppDBCalc;
     ppDBCalc3: TppDBCalc;
-    ppLabel8: TppLabel;
     adodsReportFEcha: TDateTimeField;
     adodsReportIdOrdenEntrada: TIntegerField;
     adodsReportClaveProducto: TStringField;
@@ -46,7 +46,7 @@ type
   end;
 
 var
-  dmRptAjustesEntrada: TdmRptAjustesEntrada;
+  dmRptDevolucion: TdmRptDevolucion;
 
 implementation
 
@@ -54,12 +54,10 @@ implementation
 
 {$R *.dfm}
 
-{ TdmRptAjustesEntrada }
-
-procedure TdmRptAjustesEntrada.AssignParam;
+procedure TdmRptDevolucion.AssignParam;
 begin
   inherited;
-  //
+//
 end;
 
 end.

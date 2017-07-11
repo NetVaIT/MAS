@@ -2,6 +2,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
   Caption = 'FrmInventarioGrid'
   ClientWidth = 1019
   ExplicitWidth = 1019
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -92,60 +93,23 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
           DataBinding.FieldName = 'PrecioUnitario'
           Visible = False
         end
+        object tvMasterIdInventario: TcxGridDBColumn
+          DataBinding.FieldName = 'IdInventario'
+          Visible = False
+        end
+        object tvMasterIdAlmacen: TcxGridDBColumn
+          DataBinding.FieldName = 'IdAlmacen'
+          Visible = False
+        end
+        object tvMasterIdProducto: TcxGridDBColumn
+          DataBinding.FieldName = 'IdProducto'
+          Visible = False
+        end
       end
     end
     inherited tbarGrid: TToolBar
       Width = 1019
-      ButtonHeight = 25
       ExplicitWidth = 1019
-      inherited ToolButton1: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited btnEdit: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton3: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton4: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton5: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton6: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton7: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton8: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton9: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton2: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited btnPost: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited btnCancel: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton21: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton22: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited ToolButton10: TToolButton
-        ExplicitHeight = 25
-      end
-      inherited tbtnCerrar: TToolButton
-        ExplicitHeight = 25
-      end
       object ToolButton11: TToolButton
         Left = 308
         Top = 0
@@ -158,7 +122,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
         Left = 432
         Top = 0
         Width = 202
-        Height = 25
+        Height = 22
         Hint = 'Coloque parte del nombre o de alguno de los n'#250'meros del producto'
         TabOrder = 0
       end
@@ -166,7 +130,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
         Left = 634
         Top = 0
         Width = 26
-        Height = 25
+        Height = 22
         Default = True
         Glyph.Data = {
           AA030000424DAA03000000000000360000002800000011000000110000000100
@@ -213,7 +177,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
     Left = 576
     Top = 112
     Bitmap = {
-      494C010102000400000110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -360,7 +324,7 @@ inherited FrmInventarioGrid: TFrmInventarioGrid
     Left = 640
     Top = 112
     Bitmap = {
-      494C01010C00B801240110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C00B801280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

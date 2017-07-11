@@ -374,9 +374,15 @@ begin
     begin                     //Mod. Jun 27/16
       adodsItems.FieldByName('PrecioVenta').AsFloat:=ValUni;
       adodsItems.FieldByName('IdProducto').asInteger:=idproducto;
-      adodsItems.FieldByName('Importe').AsFloat:=ValUni* adodsItems.FieldByName('CAntidad').AsFloat;
+                                                 //Abr 28/17
+      adodsItems.FieldByName('Importe').AsFloat:=CostoEnInventario(idproducto)* adodsItems.FieldByName('CAntidad').AsFloat;    //No es valUni  abr 28/17 debe se costo
       adodsItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto);//  (no es un total sep 29/16)  * adodsItems.FieldByName('CAntidad').AsFloat;
       adodsItems.FieldByName('Costo').AsFloat:=CostoEnInventario(idproducto); /// Sep 29/16
+
+      adodsItems.FieldByName('ImporteTotal').AsFloat:=adodsItems.FieldByName('Importe').AsFloat;// Abr 28/17
+      adodsItems.FieldByName('ImporteMonedaLocal').AsFloat:=adodsItems.FieldByName('Importe').AsFloat;// Abr 28/17
+      ///
+      ///
     end;
   end;
 

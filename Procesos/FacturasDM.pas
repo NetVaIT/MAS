@@ -486,7 +486,8 @@ type
     fCreoCFDI: Boolean;
     FMuestra: Boolean;//Ene7/16
     FTipoDoc:Integer; //Mar 29/16
-    fCreadaAntes: Boolean;  //Dic 19/16
+    fCreadaAntes: Boolean;
+    FGenSinAct: boolean;  //Dic 19/16
 
     procedure ReadFileCERKEY(FileNameCER,FileNameKEY: TFileName);
     function ConvierteFechaT_DT(Texto: String): TDateTime;
@@ -535,6 +536,7 @@ type
     property Muestra:Boolean read FMuestra write SetMuestra; //Feb 10/16
     property TipoDocumento:Integer read FTipoDoc write FTipoDoc; //Mar 28/16
 
+    Property GeneraSinActualizar:boolean read FGenSinAct write FGenSinAct; //Jun 13/17
 
 
 
@@ -667,7 +669,7 @@ begin
         reset(F);
         readln(F,Respuesta);
         CloseFile(F);
-         if pos('previamente',Respuesta)>0 then
+        if pos('previamente',Respuesta)>0 then
         begin
           adodsMaster.Edit;
           adodsMasterFechaCancelacion.AsDateTime:=Now;
@@ -752,6 +754,7 @@ begin
 end;
 
 procedure TDMFacturas.ActCrearPrefacturasExecute(Sender: TObject);   (*SOLO USAR PARA FACTURAS Y NOTAS DE VENTA *)
+var auxIDOS:integer;
 begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que mandar el id de la orden)
   inherited;
     //Verificar y generar prefacturas() Orden sigue como Revisada, pero cuando se genere la Factura se cambiará a autorizada
@@ -778,12 +781,19 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
         //Verificar el tipo de comprobante(ingreso egreso)
     // ya lo tenia    adodsMaster.FieldByName('TipoComp').asString:= adodsMaster.FieldByName('TipoComprobante').asString;
                                                      //Verificar si se coloca autopmatica por la relacion
-        adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
+    (*    if GeneraSinActualizar then        //jun
+        begin
+          auxidos:= ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
+          adodsMaster.FieldByName('IdOrdenSalida').AsInteger := 45698;   //Verificar consultas asociadas jun 14/17
+        end
+        else*)
+          adodsMaster.FieldByName('IdOrdenSalida').AsInteger := ADODtStOrdenSalida.FieldByName('IdOrdenSalida').AsInteger;
 
         adodsMaster.FieldByName('Subtotal').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;
         //Ajuste para no poner IVa en el presupuesto y en los Fletes //Ago 30/16
         if  (ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger=4)  //solo 4 Fletes no se generan por aca
-                and (not ADODtSTOrdenSalida.fieldByname('Acumula').ASBoolean)  then
+                //and (not ADODtSTOrdenSalida.fieldByname('Acumula').ASBoolean)   //DEshabilitado.. aca nunca deberia acumular Jun 15/17 para evitarlo
+                then
         begin
           adodsMaster.FieldByName('Total').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat;   //Cambiado
           adodsMaster.FieldByName('SaldoDocumento').AsFloat := ADODtStOrdenSalida.FieldByName('Subtotal').AsFloat; //Cambiado
@@ -815,7 +825,8 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
     //    adodsMaster.FieldByName('').AsInteger := ADODtStOrdenSalida.FieldByName('').ASInteger;
 
        if (ADODtSTOrdenSalida.fieldByname('IdGeneraCFDITipoDoc').ASInteger=4)
-                and not ADODtSTOrdenSalida.fieldByname('Acumula').ASBoolean then  //Abr 1/16 Es Presupuesto
+                (*and not ADODtSTOrdenSalida.fieldByname('Acumula').ASBoolean *)  //deshabilitado jun 15/17 nunca dewbe tener Acumula
+                then  //Abr 1/16 Es Presupuesto
        begin
          adodsMaster.FieldByName('IdCfdiEstatus').AsInteger := 5; //Presupuesto
        end;
@@ -884,7 +895,7 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
             ADODtStBuscaFolioSerie.FieldByName('SerieDoc').AsString:='NV';
             ADODtStBuscaFolioSerie.Post;
           end;
-          if adodsMaster.FieldByName('IDCFDIEstatus').AsInteger=5 then //Abr 1/16   //Presupuesto
+          if (adodsMaster.FieldByName('IDCFDIEstatus').AsInteger=5) and (not GeneraSinActualizar) then //Abr 1/16   //Presupuesto
           begin
             ActualizaSaldoCliente(adodsMaster.FieldByName('IDCFDI').AsInteger,adodsMaster.FieldByName('IDPersonaReceptor').AsInteger,                //Creando Remision
                                   adodsMaster.FieldByName('IdClienteDomicilio').AsInteger, adodsMaster.FieldByName('SaldoDocumento').AsFloat,'+');
@@ -898,7 +909,9 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
         FCreadaAntes:=False;
         fCreoCFDI:=True;
      except
+
        fCreoCFDI:=False;
+      // raise;
      end;
   end //DEl if Existe CFDI  Dic 19/16
   else
@@ -906,6 +919,7 @@ begin   //Dic 16/15 Mod. para que sólo cree la prefactura Actual (habria que man
     fCreoCFDI:=True;
     FCreadaAntes:=True;
   end;
+
 end;
 
 function TDMFacturas.ExisteFacturaPrevia(idOrdensalida:Integer) :Boolean;
@@ -923,16 +937,25 @@ procedure TDMFacturas.ActDocACotizaExecute(Sender: TObject);
 var
    IdDoc:Integer;
    nombreArchi:TFileName;
+   ConsultaBase, Adicional:String;  //Abr 25/17 agilizar consulta
 begin
   inherited;
-//  Select IdDocumentoGuia from InformacionEntregas where IdinfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida = 8100)
+  ConsultaBase:=' SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos ';
+//  Select IdDocumentoGuia from InformacionEntregas where IdinfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida = 8100);
   //Vienen abierto  i debe tener algo
   ShowProgress(10,100.1,'Obteniendo archivo 10 %');
 
   IdDoc:= ADODtStVerificaDocs.FieldByName('IdDocumento').AsInteger;
   ShowProgress(20,100.1,'Obteniendo archivo 20 %');
-  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-  adoDSDocumento.filtered:=True;
+  Adicional :=' where IdDocumento='+intToSTR(IDDoc);   //Abr 25/17 agilizar consulta
+
+  adoDSDocumento.Close; //Para poderlo poner  //Abr 25/17
+  adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+//  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+ // adoDSDocumento.filtered:=True;
+  //Cambio consulta    //Abr 25/17 agilizar consulta
+
   adoDSDocumento.open;
   ShowProgress(50,100.1,'Generando archivo 50 %');
   nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
@@ -1111,15 +1134,24 @@ procedure TDMFacturas.ActMostrarGuiaExecute(Sender: TObject);
 var
    IdDoc:Integer;
    nombreArchi:TFileName;
+   ConsultaBase, Adicional:String;  //Abr 25/17 agilizar consulta
 begin
   inherited;
+  ConsultaBase:=' SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos '; //Abr 25/17 agilizar consulta
+
 //  Select IdDocumentoGuia from InformacionEntregas where IdinfoEntrega=(Select IdInfoEntrega from InformacionEntregasDetalles where IdOrdenSalida = 8100)
   //Vienen abierto  i debe tener algo
   ShowProgress(10,100.1,'Obteniendo Guía 10 %');
   IdDoc:= ADODtStVerificaGuia.FieldByName('IdDocumentoGuia').AsInteger;
   ShowProgress(20,100.1,'Obteniendo Guía 20 %');
-  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-  adoDSDocumento.filtered:=True;
+  //Pendiente  CAmbiar consulta para que no se tarde Abr 25/17
+  Adicional :=' where IdDocumento='+intToSTR(IDDoc);   //Abr 25/17 agilizar consulta
+
+  adoDSDocumento.Close; //Para poderlo poner  //Abr 25/17
+  adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+ // adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+//  adoDSDocumento.filtered:=True;
   adoDSDocumento.open;
   ShowProgress(50,100.1,'Generando Guía 50 %');
   nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
@@ -1138,7 +1170,7 @@ begin
 end;
 
 procedure TDMFacturas.ActPreFacturaNotaVentaExecute(Sender: TObject);
-var
+var               //FActura diaria .. (No usada por ellos)
   SumaST, SumaIVA, SumaTotal, SumaDescto:Double;
   IdNvo:Integer;
   ListaOrdenSalidas: String;
@@ -1878,26 +1910,42 @@ var      //Dic 22/15
   nombreArchi, nomImagen,nomAux:TfileName;
   XMLpdf: TdmodXMLtoPDF;
   TipoDoc:String; //Mar 31/16
+  ConsultaBase, Adicional:String;  //Abr 25/17 agilizar consulta
 begin
   inherited;
+  ConsultaBase:=' SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos ';  //Abr 25/17 agilizar consulta
   Avance:=0; //Ene8/16
   ShowProgress(5,100.1,'Buscando Archivos...' + IntToStr(5) + '%');
   ConvierteBinADec(DMImpresion,ArrBinario);
     //Sacar ID del Archivo XML del Master
   idDoc:=adodsMasteridDocumentoXML.asInteger;
-  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-  adoDSDocumento.filtered:=True;
+
+//  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+//  adoDSDocumento.filtered:=True;
+    //Pendiente  CAmbiar consulta para que no se tarde Abr 25/17
+  Adicional :=' where IdDocumento='+intToSTR(IDDoc);   //Abr 25/17 agilizar consulta
+  adoDSDocumento.Close; //Para poderlo poner  //Abr 25/17
+  adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+
   adoDSDocumento.open;
   nombreArchi:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
 
   readFile( nombreArchi); //sacaxml
 
+
   //Sacar PNG Ene6/16
   idDoc:=adodsMasterIdDocumentoCBB.asInteger;
   if idDoc>0 then
-  begin
-    adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
-    adoDSDocumento.filtered:=True;
+  begin     // CAmbio consulta para que no se tarde Abr 25/17
+    adoDSDocumento.Close;  //Abr 25/17  Por si no tiene  que se mantnga abierto
+    Adicional :=' where IdDocumento='+intToSTR(IDDoc);   //Abr 25/17 agilizar consulta
+
+    adoDSDocumento.Close; //Para poderlo poner  //Abr 25/17
+    adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+  //  adoDSDocumento.filter:='IdDocumento='+intToSTR(IDDoc);
+  //  adoDSDocumento.filtered:=True;
+
     adoDSDocumento.open;
     nomImagen:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
 
@@ -2171,10 +2219,14 @@ begin
         adopCopiaOrdenSalida.Parameters.ParamByName('@IdOrdenSalida').Value:= IDOrdenSalida;
         adopCopiaOrdenSalida.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdPersona;  //deberia ser persona y no usuario  nmandaba usuario
         adopCopiaOrdenSalida.ExecProc;         //Actualizado Jun 13/16
+        //VErificar si se debe crear salida ubicacion aca en estatus 1 e igual que la otra?? que quedaria cancelada Jun 13/17
+
+
       end;
 
 
       ADODtStDatosActInv.Connection.CommitTrans;
+      ShowMessage('Recuerde Regresar el proceso hasta al pedido, para poder establecer las salidas de forma correcta');
     end
     else
     begin
@@ -2725,10 +2777,20 @@ end;
 function TDMFacturas.GetFileName(IdDocumento: Integer): TFileName;
 var             //Cambio Feb 17/16
   FileName: TFileName;
+  ConsultaBase, Adicional:String;  //Abr 25/17 agilizar consulta
 begin
+  ConsultaBase:=' SELECT IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos ';  //Abr 25/17 Agilizar consulta
+
   adoDSDocumento.Close;
-  adoDSDocumento.filter:='IdDocumento='+intToSTR(IdDocumento);
-  adoDSDocumento.filtered:=True;
+ // adoDSDocumento.filter:='IdDocumento='+intToSTR(IdDocumento);
+ // adoDSDocumento.filtered:=True;
+
+    //Cambio consulta para que no se tarde Abr 25/17
+  Adicional :=' where IdDocumento='+intToSTR(IdDocumento);   //Abr 25/17 agilizar consulta
+
+  adoDSDocumento.CommandText:= ConsultaBase+Adicional;    //Abr 25/17 agilizar consulta
+
   adoDSDocumento.open;
   FileName:=ExtractFileName(AdoDSDocumentoNombreArchivo.asstring);
 
@@ -2799,9 +2861,17 @@ end;
 function TDMFacturas.CargaXMLPDFaFS(Archivo: string; Describe : string):integer;
 var
   FacturaXML : TFileName;
+  ConsultaBase:String; //Abr 25/17
 begin
+  adoDSDocumento.Close; // Para evitar error
+  ConsultaBase:=' SELECT Top (20) IdDocumento, IdDocumentoTipo, IdDocumentoClase,Descripcion,'
+               +' NombreArchivo, IdArchivo, Archivo FROM Documentos ';  //Abr 25/17
   FacturaXML := Archivo;
+    //Pendiente  CAmbiar consulta para que no se tarde Abr 25/17
+  adoDSDocumento.CommandText:= ConsultaBase; //Abr 26/17 FAltaba
+
   adodsDocumento.Open;
+
   adodsDocumento.Insert;
   adodsDocumentoIdDocumentoTipo.Value := 2;
   adodsDocumentoIdDocumentoClase.Value := 1;

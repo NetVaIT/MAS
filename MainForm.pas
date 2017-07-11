@@ -262,9 +262,9 @@ begin
   end;
   if Assigned(gModulo) then
   begin
-    gModulo.ShowModule(pnlMain, pCaption);                                                   //Agregado manual Mar 29/17
-    Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription+ ' Ver.1.0.0.1';
-  end;
+    gModulo.ShowModule(pnlMain, pCaption);                                                   //Agregado manual Mar 29/17  //Jul3/17 //Jul 11/17 autoriza 7
+    Caption := pCaption + strSeparador + strProductName + strSeparador + strFileDescription+ ' Ver.1.0.0.7';  //may 4/17   //May8/17 Docs //jun9 /17 sin descontinuados 4
+  end;                                                                               //Jun 16/17 ajustes 5
 end;
 procedure TfrmMain.cxMmErrorProcesoPropertiesChange(Sender: TObject);
 var   //Jun 22/16
@@ -363,6 +363,7 @@ var
   xFileName : String;
 begin
   inherited;
+  DEcodeDAte(date,year, month, day ); //Jun 9/17
   dmUsuarios:= TdmUsuarios.Create(nil);
   //Dic 26/16 Proceso para crear registro de problemas
   xFileName := 'LOGError_' + IntToStR( year ) + IntToStr( month ) + IntToStr( Day ) + '.txt';
@@ -385,9 +386,12 @@ end;
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
   inherited;
-  dmConfiguracion.ShowModule(dxtshConfiguracion, '');
-  dmUsuarios.ShowModule(dxtshUsuarios, '');
-  Caption:=Caption+ ' Ver.1.0.0.1';  //Mar 29/17
-end;
+  if(pos('autoriza',_dmConection.PerFuncion)>0)then //Jul 11/17
+  begin
+    dmConfiguracion.ShowModule(dxtshConfiguracion, '');
+    dmUsuarios.ShowModule(dxtshUsuarios, '');
+  end;
+  Caption:=Caption+ ' Ver.1.0.0.7';  //Mar 29/17         //may 4/17  //May 8/17 Docs     //jun9 /17 sin descontinuados4  //jun 16/17 Ajustes 5
+end;                                                    //Jul 3/17 6     //Jul 11/17
 
 end.

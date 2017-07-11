@@ -8,11 +8,11 @@ inherited dmProductos: TdmProductos
     BeforePost = adodsMasterBeforePost
     CommandText = 
       'SELECT IdProducto, Descripcion, IdUnidadMedida, PrecioUnitario, ' +
-      #13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, IdProductoEstatu' +
-      's '#13#10',Identificador1, Identificador2, Identificador3 '#13#10',Identific' +
-      'ador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM Productos'#13#10'or' +
-      'der by orden'
-    Left = 32
+      #13#10'PrecioNuevo,'#13#10'Maximo, Minimo, PuntoReorden, IdProductoTipo, Id' +
+      'ProductoEstatus '#13#10',Identificador1, Identificador2, Identificador' +
+      '3 '#13#10',Identificador1 + '#39' - '#39' + Descripcion AS Identificador'#13#10'FROM' +
+      ' Productos'#13#10'order by orden'
+    Left = 40
     object adodsMasterIdProducto: TIntegerField
       FieldName = 'IdProducto'
       Visible = False
@@ -104,6 +104,10 @@ inherited dmProductos: TdmProductos
       Size = 50
       Lookup = True
     end
+    object adodsMasterPrecioNuevo: TFloatField
+      FieldName = 'PrecioNuevo'
+      currency = True
+    end
   end
   inherited adodsUpdate: TADODataSet
     Left = 344
@@ -146,8 +150,8 @@ inherited dmProductos: TdmProductos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
-      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+      'select TOP(20) IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' ' +
+      'from ProductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
     DataSource = dsMaster
     IndexFieldNames = 'IdProducto'
     MasterFields = 'IdProducto'
@@ -157,6 +161,7 @@ inherited dmProductos: TdmProductos
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = Null
       end>
     Left = 56
@@ -207,9 +212,9 @@ inherited dmProductos: TdmProductos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
-      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
-      ' iddocumento=:IdDocumento'
+      'select TOP(20) IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13 +
+      #10'Descripcion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documento' +
+      's'#13#10'where iddocumento=:IdDocumento'
     DataSource = dsProductosFotos
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IdDocumento'
@@ -219,6 +224,7 @@ inherited dmProductos: TdmProductos
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 5
       end>
     Left = 56
@@ -4143,14 +4149,15 @@ inherited dmProductos: TdmProductos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
-      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+      'select TOP(20) IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' ' +
+      'from ProductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
     Parameters = <
       item
         Name = 'IdProducto'
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 40
       end>
     Left = 720
@@ -4226,9 +4233,9 @@ inherited dmProductos: TdmProductos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
-      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
-      ' iddocumento=:IdDocumento'
+      'select Top(20) IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13 +
+      #10'Descripcion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documento' +
+      's'#13#10'where iddocumento=:IdDocumento'
     DataSource = dsConProdFotos
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IdDocumento'
@@ -4238,6 +4245,7 @@ inherited dmProductos: TdmProductos
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 5
       end>
     Left = 720

@@ -193,6 +193,7 @@ type
     adodsFacturasFacturaProveedor: TStringField;
     ADODtStDatosFacturaDocsIdentificador: TStringField;
     ADODtStDatosFacturaDocsPedimento: TStringField;
+    ADODtStVerificaCantEnCero: TADODataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure actSeleccionaProductoExecute(Sender: TObject);
     procedure actGetTipoCambioExecute(Sender: TObject);
@@ -239,7 +240,8 @@ type
     procedure ActualizarTotales;
     function VerificaProdEnAduana(IdOrdenEntrada:Integer):Boolean; //Oct 12/16
     procedure Imprimir(IdDocumentoEntrada: Integer);
-    function VerificaActualAcomodo: Boolean; //Oct 20/16 Del codigo de Jessus
+    function VerificaActualAcomodo: Boolean;
+    function VerificaCantidadesXRecibir(IdOrdenEntrada: Integer): Boolean; //Oct 20/16 Del codigo de Jessus
   public
     { Public declarations }
     constructor CreateWTipo(AOwner: TComponent; Tipo: TPTipo); virtual;
@@ -341,19 +343,44 @@ end;
 procedure TdmOrdenesEntradas.actRecibirMercanciaExecute(Sender: TObject);
 begin
   inherited;
-  if MessageDlg(strAllowReceive, mtConfirmation, mbYesNo, 0) = mrYes then
+  if adodsItems.State =dsEdit then   //Jun 14/17
+      adodsItems.Post;
+  if (not adodsItems.Eof)  then
   begin
-    adopSetEstatus.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
-    adopSetEstatus.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
-    adopSetEstatus.ExecProc;
-    RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
-  end;
+    if  VerificaCantidadesXRecibir(adodsMasterIdOrdenEntrada.Value) then  //Jun 14/17     //Verificar que todas las cantidades tengan valor//
+    begin
+      if MessageDlg(strAllowReceive, mtConfirmation, mbYesNo, 0) = mrYes then
+      begin
+        adopSetEstatus.Parameters.ParamByName('@IdOrdenEntrada').Value:= adodsMasterIdOrdenEntrada.Value;
+        adopSetEstatus.Parameters.ParamByName('@IdUsuario').Value:= _dmConection.IdUsuario;
+        adopSetEstatus.ExecProc;
+        RefreshADODS(adodsMaster, adodsMasterIdOrdenEntrada);
+      end;
+    end
+    else
+    begin   //Jun 14/17
+      ShowMessage ('No es posible recibir mercancías con cantidades en Cero (0). Recuerde que una vez recibidas este valor no se puede cambiar.');
+    end;
+  end
+  else          //Jun 14/17
+    ShowMessage ('No se tiene productos para recibir.');
 end;
 
+Function  TdmOrdenesEntradas.VerificaCantidadesXRecibir(IdOrdenEntrada: Integer) :Boolean;   //Jun 14/17
+begin
+  ADODtStVerificaCantEnCero.Close;
+  ADODtStVerificaCantEnCero.Parameters.ParamByName('IDOrdenEntrada').value:=IdOrdenEntrada;
+  ADODtStVerificaCantEnCero.Open;
+  result:= ADODtStVerificaCantEnCero.eof ; // no tiene nada en cero..
+
+  ADODtStVerificaCantEnCero.Close;
+
+end;
 procedure TdmOrdenesEntradas.actRecibirMercanciaUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eGenerada));
+
 end;
 
 procedure TdmOrdenesEntradas.actAcomodarGenericoExecute(Sender: TObject);     //Oct 12/16
@@ -474,6 +501,7 @@ begin
   inherited;
   TAction(Sender).Visible:= (Tipo = TOrdenEntrada);
   TAction(Sender).Enabled:= (adodsMasterIdOrdenEstatus.Value = Ord(eRecibida));
+  adodsItemsCantidad.ReadOnly:=(adodsMasterIdOrdenEstatus.Value = Ord(eRecibida)); //Jun 14/17
 end;
 
 procedure TdmOrdenesEntradas.actBuscarProductoExecute(Sender: TObject);

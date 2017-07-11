@@ -8,6 +8,7 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Filtered = True
     AfterOpen = adodsMasterAfterOpen
     BeforeDelete = adodsMasterBeforeDelete
+    OnCalcFields = adodsMasterCalcFields
     OnNewRecord = adodsMasterNewRecord
     CommandText = 
       'select idOrdenSalida, IdDocumentoSalida, IdOrdenEstatus, IdPerso' +
@@ -350,6 +351,12 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
       KeyFields = 'IdDocumentoSalida'
       Size = 100
       Lookup = True
+    end
+    object adodsMasterDatosCFDI: TStringField
+      FieldKind = fkCalculated
+      FieldName = 'DatosCFDI'
+      Size = 150
+      Calculated = True
     end
   end
   inherited adodsUpdate: TADODataSet
@@ -1724,5 +1731,48 @@ inherited DMOrdenesSalidas: TDMOrdenesSalidas
     Parameters = <>
     Left = 896
     Top = 96
+  end
+  object ADOQryDAtosCFDI: TADOQuery
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'IdOrdensalida'
+        Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    SQL.Strings = (
+      'Select CI.* , CE.Descripcion Estatus  from CFDI CI '
+      'inner join CFDIEstatus CE  on CE. IDCFDIEStatus=CI.IDCFDIEstatus'
+      '  where idOrdenSalida=:IdOrdensalida')
+    Left = 764
+    Top = 25
+    object ADOQryDAtosCFDIIdOrdenSalida: TIntegerField
+      FieldName = 'IdOrdenSalida'
+    end
+    object ADOQryDAtosCFDITipoComp: TStringField
+      FieldName = 'TipoComp'
+      Size = 10
+    end
+    object ADOQryDAtosCFDISerie: TStringField
+      FieldName = 'Serie'
+    end
+    object ADOQryDAtosCFDIFolio: TLargeintField
+      FieldName = 'Folio'
+    end
+    object ADOQryDAtosCFDIFecha: TDateTimeField
+      FieldName = 'Fecha'
+    end
+    object ADOQryDAtosCFDILugarExpedicion: TStringField
+      FieldName = 'LugarExpedicion'
+      Size = 100
+    end
+    object ADOQryDAtosCFDIEstatus: TStringField
+      FieldName = 'Estatus'
+      Size = 15
+    end
   end
 end

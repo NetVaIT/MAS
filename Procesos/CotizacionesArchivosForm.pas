@@ -33,6 +33,9 @@ type
   TfrmCotizacionesArchivos = class(T_frmGrid)
     tvMasterNombreArchivo: TcxGridDBColumn;
     tvMasterNotas: TcxGridDBColumn;
+    tvMasterIdDocumentoSalidaArchivo: TcxGridDBColumn;
+    tvMasterIdDocumentoSalida: TcxGridDBColumn;
+    tvMasterIdDocumento: TcxGridDBColumn;
     procedure DatasetInsertExecute(Sender: TObject);
     procedure DatasetEditExecute(Sender: TObject);
   private
@@ -83,7 +86,8 @@ var  LaNota:String;
 begin
   inherited;
   InsertFile.Execute;
-  if inputquery('Agregar o Editar nota','Nota',LaNota) then
+      //May 8/17 para que sino  no guarde vacio.
+  if (dataset.FieldByName('idDocumento').AsInteger<>0) and  inputquery('Agregar o Editar nota','Nota',LaNota) then
   begin
     if Dataset.State=dsBrowse then
       DAtaset.Edit;

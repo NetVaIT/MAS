@@ -8,10 +8,11 @@ inherited dmrptInventario: TdmrptInventario
       'roductosInventario.CantidadSalidaMensual, v_ProductosInventario.' +
       'Existencia, v_ProductosInventario.CostoPromedio, v_ProductosInve' +
       'ntario.CostoTotal, '#13#10'v_ProductosInventario.ImporteEntradaMensual' +
-      ', v_ProductosInventario.ImporteSalidaMensual'#13#10'FROM v_ProductosIn' +
-      'ventario '#13#10'INNER JOIN Productos ON v_ProductosInventario.IdProdu' +
-      'cto = Productos.IdProducto'#13#10'ORDER BY Productos.Orden -- mar 17/ ' +
-      '17'
+      ', v_ProductosInventario.ImporteSalidaMensual, ( v_ProductosInven' +
+      'tario.CantidadSalidaMensual* v_ProductosInventario.CostoPromedio' +
+      ') as CostoSalidaMensual'#13#10'FROM v_ProductosInventario '#13#10'INNER JOIN' +
+      ' Productos ON v_ProductosInventario.IdProducto = Productos.IdPro' +
+      'ducto'#13#10'ORDER BY Productos.Orden -- mar 17/ 17'
   end
   inherited ppReport: TppReport
     Units = utScreenPixels
@@ -440,7 +441,7 @@ inherited dmrptInventario: TdmrptInventario
       end
       object ppDBText11: TppDBText
         UserName = 'DBText11'
-        DataField = 'ImporteSalidaMensual'
+        DataField = 'CostoSalidaMensual'
         DataPipeline = dbpReport
         DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = ANSI_CHARSET
@@ -529,7 +530,7 @@ inherited dmrptInventario: TdmrptInventario
       end
       object ppDBCalc3: TppDBCalc
         UserName = 'DBCalc3'
-        DataField = 'ImporteSalidaMensual'
+        DataField = 'CostoSalidaMensual'
         DataPipeline = dbpReport
         DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = ANSI_CHARSET

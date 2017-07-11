@@ -314,6 +314,15 @@ type
     adodsMasterAsegurado: TBooleanField;
     ADODtStDatosDocumentoSalidaAnotacionEnvio: TStringField;
     adodsMasterAnotacionEnvio: TStringField;
+    adodsMasterDatosCFDI: TStringField;
+    ADOQryDAtosCFDI: TADOQuery;
+    ADOQryDAtosCFDIIdOrdenSalida: TIntegerField;
+    ADOQryDAtosCFDITipoComp: TStringField;
+    ADOQryDAtosCFDISerie: TStringField;
+    ADOQryDAtosCFDIFolio: TLargeintField;
+    ADOQryDAtosCFDIFecha: TDateTimeField;
+    ADOQryDAtosCFDILugarExpedicion: TStringField;
+    ADOQryDAtosCFDIEstatus: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ADODtStOrdenSalidaItemCantidadDespachadaChange(Sender: TField);
     procedure ADODtStOrdenSalidaItemAfterPost(DataSet: TDataSet);
@@ -341,6 +350,7 @@ type
     procedure ADODtStDireccionesEnvioCalcFields(DataSet: TDataSet);
     procedure adodsMasterBeforeDelete(DataSet: TDataSet);
     procedure actVerificaYcreaRestoExecute(Sender: TObject);
+    procedure adodsMasterCalcFields(DataSet: TDataSet);
   private
     CantAGuardar:Double;
     IdDocDet, IdDocSal: Integer; //Abr 13/16 Actu despues de borrar
@@ -357,6 +367,7 @@ type
     function SacaPaqueteriaNvo(IdPersonaDocicilio: Integer): String;
     function BuscaSalidaUbicacionXAplicar(IDProductoEspacio,IDSalidaUbicaAct: Integer): Double;
     function NoExisteInfoEntrega(idOrdensalida: Integer): Boolean;
+
 
 
     { Private declarations }
@@ -431,34 +442,80 @@ end;
 
 procedure TDMOrdenesSalidas.ActCompartirEnvioExecute(Sender: TObject);
 var IdInfoEntrega:Integer;
+    IdAuxiliar:Integer;//jun 15/17
+    cambiar:boolean; //Jun 15/17
 begin
   inherited;
   //Tomar losdatos de IDOrdenNueva, IdEntregaExistente, crear Relacion
   //Actualizar total y mostrar.. Para ajustes... Estatus de la nueva orden... Consolidado y quien tiene la orden original debe empacar todo.
   //Asegurarse que si esta en  medio del empaque se avise..
   IdInfoEntrega:=TFrmOrdenesSalida(gGridEditForm).AIdEntregaExistente;
+
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.SQL.Clear;
-  ADOQryAuxiliar.SQL.Add('Insert into InformacionEntregasDetalles (IDInfoentrega, IDordenSalida) Values('+intToStr(IdInfoEntrega)+','+adodsMaster.FieldByName('IdOrdenSalida').Asstring+ ')');
-  if ADOQryAuxiliar.ExecSQL<>1 then
-    ShowMessage('Error Compartiendo Etiqueta de envio NDS')
-  else
+
+  ADOQryAuxiliar.SQL.Add(' Select * from InformacionEntregasDetalles where IdOrdenSalida=' +adodsMaster.FieldByName('IdOrdenSalida').Asstring
+                        +' and IDInfoentrega='+ intToStr(IdInfoEntrega));  //Jun 15/17 ??
+
+  ADOQryAuxiliar.Open;
+
+  if ADOQryAuxiliar.eof then //No existe el par..
   begin
-    //Actualiza totales y se coloca Estatus nuevo a la Orden.. S
     ADOQryAuxiliar.Close;
     ADOQryAuxiliar.SQL.Clear;
-    ADOQryAuxiliar.SQL.Add('Update InformacionEntregas SET Valor=Valor+'+adodsMaster.FieldByName('Total').Asstring+ ' where IdInfoEntrega='+intToStr(IdInfoEntrega));
+
+    ADOQryAuxiliar.SQL.Add(' Insert into InformacionEntregasDetalles (IDInfoentrega, IDordenSalida) Values('+intToStr(IdInfoEntrega)+','+adodsMaster.FieldByName('IdOrdenSalida').Asstring+ ')');
     if ADOQryAuxiliar.ExecSQL<>1 then
-       ShowMessage('Error Actualizando Total NDS')
+      ShowMessage('Error Compartiendo Etiqueta de envio NDS')
     else
+    begin
+      //Actualiza totales y se coloca Estatus nuevo a la Orden.. S
+      ADOQryAuxiliar.Close;
+      ADOQryAuxiliar.SQL.Clear;
+      ADOQryAuxiliar.SQL.Add('Update InformacionEntregas SET Valor=Valor+'+adodsMaster.FieldByName('Total').Asstring+ ' where IdInfoEntrega='+intToStr(IdInfoEntrega));
+      if ADOQryAuxiliar.ExecSQL<>1 then
+         ShowMessage('Error Actualizando Total NDS')
+      else
+      begin
+        ADOQryAuxiliar.Close;
+        ADOQryAuxiliar.SQL.Clear;
+        ADOQryAuxiliar.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus=10 where IDOrdenSalida='+adodsMaster.FieldByName('IdOrdenSalida').Asstring);
+        if ADOQryAuxiliar.ExecSQL<>1 then
+           ShowMessage('Error Actualizando Orden NDS')
+      end;
+    end;
+  end
+  else //Existe puede ser que se haya cambiado en la cancelación
+  //Solo se debe asegurar  la actualizacion de estatus de la orden
+  begin
+    IdAuxiliar:=  ADOQryAuxiliar.FieldByName('IdInfoEntrega').asInteger;
+
+    //Buscar los estatus de las ordenes de salida asociadas
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.SQL.Clear;
+    ADOQryAuxiliar.SQL.Add('Select IED.*, Os.IDOrdenEstatus from InformacionEntregasDetalles IED inner join OrdenesSalidas os on os.Idordensalida=ied.idordensalida '+
+                           ' where IED.IdInfoEntrega=' +intToStr(IdAuxiliar));
+
+                           //Verificar los diferentes a el son 10
+    ADOQryAuxiliar.Open;
+    Cambiar:=False;
+    while not ADOQryAuxiliar.eof do
+    begin
+      if (ADOQryAuxiliar.FieldByName('idordensalida').AsInteger <> adodsMaster.FieldByName('IdOrdenSalida').AsInteger)  and
+         (adodsMaster.FieldByName('IdOrdenEstatus').ASInteger<>10) then
+         Cambiar:=True;
+      ADOQryAuxiliar.Next;
+    end;
+    if Cambiar then
     begin
       ADOQryAuxiliar.Close;
       ADOQryAuxiliar.SQL.Clear;
       ADOQryAuxiliar.SQL.Add('Update OrdenesSalidas SET IDOrdenEstatus=10 where IDOrdenSalida='+adodsMaster.FieldByName('IdOrdenSalida').Asstring);
       if ADOQryAuxiliar.ExecSQL<>1 then
-         ShowMessage('Error Actualizando Orden NDS')
+             ShowMessage('Error Actualizando Orden NDS 2')
     end;
   end;
+  ADOQryAuxiliar.Close;
 
 end;
 
@@ -595,7 +652,21 @@ begin
 end;
 
 procedure TDMOrdenesSalidas.adodsMasterBeforeDelete(DataSet: TDataSet);
+var
+   idinfoent:Integer;
+   Total:Double;
 begin
+  Total:=0;  //Jun 15/17  D
+  idinfoent:=-1;
+
+  ADOQryAuxiliar.Close;
+  ADOQryAuxiliar.Sql.Clear;
+  ADOQryAuxiliar.Sql.add('Select * from   InformacionEntregasDetalles where  IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
+  ADOQryAuxiliar.open;
+  if not ADOQryAuxiliar.eof then
+    idinfoent:=ADOQryAuxiliar.FieldByName('IdInfoEntrega').asinteger;
+  //Jun 15/17   H
+
   //Borrar de OrdenesSCambiosEstatus    Jun 28/16
   ADOQryAuxiliar.Close;
   ADOQryAuxiliar.Sql.Clear;
@@ -607,7 +678,46 @@ begin
   ADOQryAuxiliar.Sql.add('Delete From InformacionEntregasDetalles where IdOrdenSalida ='+DataSet.FieldByName('IdOrdenSalida').AsString);
   ADOQryAuxiliar.ExecSQL;
 
+  if idinfoent <>-1 then   //Jun 15/17  D
+  begin
+    ADOQryAuxiliar.Close;
+    ADOQryAuxiliar.Sql.Clear;
+    ADOQryAuxiliar.Sql.add('Select IED.IdInfoEntrega, IE.Asegurado,ie.Valor,sum(os.Total) as STotal from   InformacionEntregasDetalles IED'
+                        +' inner join InformacionEntregas ie on ie.IdInfoEntrega=ied.IdInfoEntrega'
+                        +' inner join ordenesSalidas os on os.Idordensalida=ied.Idordensalida'
+                        +' Where IED.IdInfoEntrega= '+intTostr(idinfoent)
+                        +' group by IED.IdInfoEntrega,IE.Valor, IE.Asegurado');
+
+    ADOQryAuxiliar.Open;
+    if not ADOQryAuxiliar.eof then
+      Total:=ADOQryAuxiliar.FieldByName('STotal').AsFloat;
+    if Total>0 then
+    begin
+      ADOQryAuxiliar.Close;     //Ago 25/16
+      ADOQryAuxiliar.Sql.Clear;
+      ADOQryAuxiliar.Sql.add('Update InformacionEntregas SET valor= '+floatToStr(total)+' where IdInfoEntrega ='+intTostr(idinfoent));
+      ADOQryAuxiliar.ExecSQL;
+    end;
+  end; //Jun 15/17  H
+
   inherited;
+end;
+
+procedure TDMOrdenesSalidas.adodsMasterCalcFields(DataSet: TDataSet);
+begin    //Jun 12/17
+  inherited;
+  //Verificar existencia de CFDI y mandar datos
+  adoQryDatosCFDI.Close;
+  adoQryDatosCFDI.Parameters.ParamByName('IdOrdensalida').Value:=dataset.FieldByName('idOrdensalida').AsInteger;
+  adoQryDatosCFDI.open;
+
+  if not adoQryDatosCFDI.eof then
+    dataset.FieldByName('DatosCFDI').AsString:=adoQryDatosCFDI.fieldbyname('Serie').AsString
+                                               +'-'+adoQryDatosCFDI.fieldbyname('Folio').AsString
+                                               +' '+ adoQryDatosCFDI.fieldbyname('Estatus').AsString
+  else
+    dataset.FieldByName('DatosCFDI').AsString:='Sin Datos';
+
 end;
 
 procedure TDMOrdenesSalidas.adodsMasterNewRecord(DataSet: TDataSet);
@@ -879,6 +989,8 @@ begin
   Result:=  ADOQryAuxiliar.FieldByName('Total').AsFloat;
 end;
 
+
+
 procedure TDMOrdenesSalidas.ADODtStSalidasUbicacionesCantidadChange(     //Copiar a... Jul 14/16
   Sender: TField);
 var
@@ -1049,6 +1161,7 @@ begin
   TfrmCotizaciones(gGridEditForm).DSOrdenSalida.DataSet:=ADODtStOrdenSalida; //Nov 18/15
   TfrmCotizaciones(gGridEditForm).DSOrdenSalidaItems.DataSet:=ADODtStOrdenSalidaItem; //Nov 18/15*)
 end;
+
 
 function TDMOrdenesSalidas.VerificaYCreaResto(IdOrdenSalItem:Integer; CantActual:Double; idSalidaUbicacion:Integer;muestraMsg:boolean):Boolean;  //Ajustado  //Feb 3/16 //Copiar a... Jul 14/16
 var

@@ -41,6 +41,9 @@ type
     EdtBuscar: TEdit;
     SpdBtnBuscar: TBitBtn;
     ToolButton11: TToolButton;
+    tvMasterIdInventario: TcxGridDBColumn;
+    tvMasterIdAlmacen: TcxGridDBColumn;
+    tvMasterIdProducto: TcxGridDBColumn;
     procedure SpdBtnBuscarClick(Sender: TObject);
   private
     { Private declarations }

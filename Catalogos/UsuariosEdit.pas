@@ -35,6 +35,7 @@ type
     DBLookupComboBox1: TDBLookupComboBox;
     SpdBtnVerPass: TSpeedButton;
     procedure SpdBtnVerPassClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +46,13 @@ implementation
 
 {$R *.dfm}
 
-uses UsuariosDM;
+uses UsuariosDM, _ConectionDmod;
+
+procedure TfrmUsuariosEdit.FormShow(Sender: TObject);
+begin
+  inherited;
+  SpdBtnVerPass.visible:= (pos('autoriza',_dmConection.PerFuncion)>0);
+end;
 
 procedure TfrmUsuariosEdit.SpdBtnVerPassClick(Sender: TObject);
 begin

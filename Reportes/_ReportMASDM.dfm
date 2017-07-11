@@ -2,13 +2,13 @@ inherited _dmReportMAS: T_dmReportMAS
   OldCreateOrder = True
   inherited ppReport: TppReport
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'Legal (8,5" x 14")'
+    PrinterSetup.PaperName = 'Oficio'
     PrinterSetup.mmMarginLeft = 10000
     PrinterSetup.mmMarginRight = 10000
     PrinterSetup.mmPaperHeight = 215900
     PrinterSetup.mmPaperWidth = 355600
     PrinterSetup.PaperSize = 5
-    mmColumnWidth = 342900
+    mmColumnWidth = 335600
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       mmHeight = 23283

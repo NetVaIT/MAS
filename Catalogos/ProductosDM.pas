@@ -150,6 +150,7 @@ type
     BlobField1: TBlobField;
     ADOConProdDocto: TADODataSet;
     dsConProdFotos: TDataSource;
+    adodsMasterPrecioNuevo: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure actNuevoDocumentoExecute(Sender: TObject);
     procedure actEditaDocumentoExecute(Sender: TObject);

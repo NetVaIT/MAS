@@ -2,6 +2,7 @@ inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
   OldCreateOrder = True
   inherited adodsMaster: TADODataSet
     CursorType = ctStatic
+    OnCalcFields = adodsMasterCalcFields
     CommandText = 
       'select IdDocumentoSalidaArchivo, IdDocumentoSalida, IdDocumento,' +
       #13#10' Notas from DocumentosSalidasArchivos '#13#10'where IdDocumentoSalid' +
@@ -25,19 +26,25 @@ inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
     object adodsMasterIdDocumento: TIntegerField
       FieldName = 'IdDocumento'
     end
+    object adodsMasterNotas: TStringField
+      FieldName = 'Notas'
+      Size = 200
+    end
     object adodsMasterNombreArchivo: TStringField
-      FieldKind = fkLookup
+      FieldKind = fkCalculated
       FieldName = 'NombreArchivo'
+      Size = 500
+      Calculated = True
+    end
+    object adodsMasterotronombre: TStringField
+      FieldKind = fkLookup
+      FieldName = 'otronombre'
       LookupDataSet = ADODsDocumento
       LookupKeyFields = 'IdDocumento'
       LookupResultField = 'NombreArchivo'
       KeyFields = 'IdDocumento'
-      Size = 150
+      Size = 300
       Lookup = True
-    end
-    object adodsMasterNotas: TStringField
-      FieldName = 'Notas'
-      Size = 200
     end
   end
   inherited ActionList: TActionList
@@ -60,11 +67,20 @@ inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
     CursorType = ctStatic
     CommandText = 
       'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, Descripci' +
-      'on, NombreArchivo, IdArchivo, Archivo'#13#10' from Documentos'
+      'on, NombreArchivo, IdArchivo, Archivo'#13#10' from Documentos where id' +
+      'Documento=:IdDocumento'
     DataSource = dsMaster
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IDDocumento'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
     Left = 104
     Top = 83
     object ADODsDocumentoIdDocumento: TAutoIncField
@@ -129,5 +145,36 @@ inherited dmCotizacionesArchivos: TdmCotizacionesArchivos
     Parameters = <>
     Left = 104
     Top = 248
+  end
+  object ADODtStDocumentoCon: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, Descripci' +
+      'on, NombreArchivo, IdArchivo, Archivo'#13#10' from Documentos where id' +
+      'Documento=:IdDocumento'
+    Parameters = <
+      item
+        Name = 'IdDocumento'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 304
+    Top = 163
+    object ADODtStDocumentoConIdDocumento: TAutoIncField
+      FieldName = 'IdDocumento'
+      ReadOnly = True
+    end
+    object ADODtStDocumentoConDescripcion: TStringField
+      FieldName = 'Descripcion'
+      Size = 200
+    end
+    object ADODtStDocumentoConNombreArchivo: TStringField
+      FieldName = 'NombreArchivo'
+      Size = 200
+    end
   end
 end

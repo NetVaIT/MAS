@@ -3857,7 +3857,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
   end
   object DSOrdenSalidaItems: TDataSource
     DataSet = ADODtStOrdenSalidaItem
-    Left = 284
+    Left = 292
     Top = 250
   end
   object adodSDocumentoSalida: TADODataSet
@@ -3883,7 +3883,7 @@ object DMImpresosSalidas: TDMImpresosSalidas
         Precision = 10
         Value = Null
       end>
-    Left = 48
+    Left = 56
     Top = 16
     object adodSDocumentoSalidaIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
@@ -8622,7 +8622,8 @@ object DMImpresosSalidas: TDMImpresosSalidas
     CommandText = 
       'select PE.Cantidad, PE.IDCategoria,E.Descripcion '#13#10'from Producto' +
       'sXEspacio PE '#13#10'inner join Espacios E on E.idEspacio=PE.IdEspacio' +
-      #13#10'where IDProducto=:IdProducto and Pe.IdAlmacen=:IdAlmacen'
+      #13#10'where IDProducto=:IdProducto and Pe.IdAlmacen=:IdAlmacen'#13#10'and ' +
+      'Pe.IdEspacio <> :IDespacioAduana -- jun 12/17'#13#10
     Parameters = <
       item
         Name = 'IdProducto'
@@ -8635,6 +8636,14 @@ object DMImpresosSalidas: TDMImpresosSalidas
       item
         Name = 'IdAlmacen'
         Attributes = [paSigned, paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end
+      item
+        Name = 'IDespacioAduana'
+        Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
         Size = 4

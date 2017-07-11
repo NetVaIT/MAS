@@ -10,6 +10,9 @@ inherited dmrptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas
       'ctos ON v_ProductosCantidad.IdProducto = Productos.IdProducto'#13#10'O' +
       'RDER BY Productos.Orden -- mar17/17'
   end
+  inherited dsReport: TDataSource
+    Left = 112
+  end
   inherited ppReport: TppReport
     Units = utScreenPixels
     mmColumnWidth = 203200
@@ -188,7 +191,7 @@ inherited dmrptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas
         mmHeight = 4233
         mmLeft = 5292
         mmTop = 0
-        mmWidth = 14816
+        mmWidth = 16933
         BandType = 4
         LayerName = Foreground
       end
@@ -242,7 +245,7 @@ inherited dmrptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas
         Transparent = True
         DataPipelineName = 'dbpReport'
         mmHeight = 4233
-        mmLeft = 164042
+        mmLeft = 163514
         mmTop = 0
         mmWidth = 29104
         BandType = 4
@@ -252,6 +255,7 @@ inherited dmrptVentasUnidadesAcumuladas: TdmrptVentasUnidadesAcumuladas
         UserName = 'DBText6'
         DataField = 'CantidadPromedio'
         DataPipeline = dbpReport
+        DisplayFormat = '#,0.00;-#,0.00'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Name = 'Courier New'

@@ -6,18 +6,17 @@ inherited dmrptInventarioExistencia: TdmrptInventarioExistencia
       'Y P.orden --P.Identificador1'
   end
   inherited ppReport: TppReport
-    Columns = 8
+    Columns = 7
     ColumnPositions.Strings = (
-      '10000'
-      '51950'
-      '93900'
-      '135850'
-      '177800'
-      '219750'
-      '261700'
-      '303650')
+      '10054'
+      '57944'
+      '105834'
+      '153723'
+      '201613'
+      '249503'
+      '297392')
     Units = utScreenPixels
-    mmColumnWidth = 41950
+    mmColumnWidth = 47942
     DataPipelineName = 'dbpReport'
     inherited ppTitleBand1: TppTitleBand
       inherited pplblTitle: TppLabel

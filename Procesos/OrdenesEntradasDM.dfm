@@ -5123,4 +5123,22 @@ inherited dmOrdenesEntradas: TdmOrdenesEntradas
       Size = 50
     end
   end
+  object ADODtStVerificaCantEnCero: TADODataSet
+    Connection = _dmConection.ADOConnection
+    CursorType = ctStatic
+    CommandText = 
+      'Select * from OrdenesEntradasItems'#13#10'where idOrdenEntrada=:IdOrde' +
+      'nEntrada and Cantidad =0'
+    Parameters = <
+      item
+        Name = 'IdOrdenentrada'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Size = 4
+        Value = Null
+      end>
+    Left = 656
+    Top = 416
+  end
 end

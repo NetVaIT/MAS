@@ -64,6 +64,8 @@ type
     function ExisteCompleto(idOrdenSalidaItem: Integer;
       var Falta: Double): Boolean;
     function SacaIdProducto(idOrdenSalidaItem: integer): integer;
+    function ExisteEnSalidasUbicacion(IdOrdenSalida:Integer):Boolean;  //Jun 13/17
+    function CreaEnSalidaUbicacion(IdOrdenSalida:Integer):integer;  //Jun 13/17
     { Private declarations }
   public
     { Public declarations }
@@ -113,38 +115,60 @@ begin
 end;
 
 
+function TfrmAjustesSalidasEdit.CreaEnSalidaUbicacion(
+  IdOrdenSalida: Integer): integer;       //Jun 13/17
+begin
+  TAdoQuery(dsQryAuxiliar.DataSet).Close;
+  TAdoQuery(dsQryAuxiliar.DataSet).SQL.Clear;
+  TAdoQuery(dsQryAuxiliar.DataSet).SQL.Add('INSERT INTO SalidasUbicaciones(IdOrdenSalida,IDOrdensalidaItem,IdProducto,Cantidad, IdSalidaUbicacionEstatus)'+
+    ' SELECT IdOrdenSalida,IDOrdensalidaItem, IdProducto,CantidadDespachada,1 FROM OrdenesSalidasItems WHERE CantidadDespachada>0 and IdOrdenSalida= '+intToStr(IdOrdenSalida));
+
+  REsult:=  TAdoQuery(dsQryAuxiliar.DataSet).ExecSQL;
+end;
+
 procedure TfrmAjustesSalidasEdit.CrearSalidasUbicacion;   //Jul 14/16
 var
   Faltante:Double;
+  REgistros:Integer;
 begin
-  DSsalidasUbicaciones.dataset.Open;
-  while not dsItemsSalida.dataset.eof do
+  if not  ExisteEnSalidasUbicacion(dsItemsSalida.dataset.fieldbyname('IdOrdenSalida').asinteger) then //Jun 13/17
   begin
-  //  DSProductosXEspacio.dataset.close;// desde Ene 29/16
-   // TAdoDataset(DSProductosXEspacio.dataset).Parameters.ParamByName('IdProducto').Value:= DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger;
-
-    Faltante:=dsItemsSalida.dataset.fieldbyname('CantidadDespachada').asFloat;
-    if not ExisteCompleto(dsItemsSalida.dataset.fieldbyname('IdOrdenSalidaItem').asinteger,Faltante) then
+    Registros:=CreaEnSalidaUbicacion(dsItemsSalida.dataset.fieldbyname('IdOrdenSalida').asinteger);
+    //cxLblCantidad.Caption:= inttostr(registros);
+  end
+  else
+  begin
+    DSsalidasUbicaciones.dataset.Close;     //Jun 13/17
+    DSsalidasUbicaciones.dataset.Open;
+    while not dsItemsSalida.dataset.eof do
     begin
-      if Faltante>0.000001  then
+    //  DSProductosXEspacio.dataset.close;// desde Ene 29/16
+     // TAdoDataset(DSProductosXEspacio.dataset).Parameters.ParamByName('IdProducto').Value:= DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger;
+
+      Faltante:=dsItemsSalida.dataset.fieldbyname('CantidadDespachada').asFloat;
+      if not ExisteCompleto(dsItemsSalida.dataset.fieldbyname('IdOrdenSalidaItem').asinteger,Faltante) then
       begin
-        //Crear adicional e ingresar
-        DSsalidasUbicaciones.dataset.insert;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalida').asinteger;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= dsItemsSalida.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
-        DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
-//        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);
+        if Faltante>0.000001  then
+        begin
+          //Crear adicional e ingresar
+          DSsalidasUbicaciones.dataset.insert;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalida').asinteger;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= dsItemsSalida.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= dsItemsSalida.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
+          DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
+  //        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);
 
-        DSsalidasUbicaciones.dataset.post;
+          DSsalidasUbicaciones.dataset.post;
+        end;
       end;
+      dsItemsSalida.dataset.next;
     end;
-    dsItemsSalida.dataset.next;
   end;
-
-  DSsalidasUbicaciones.dataset.Refresh;
-
+  if  DSsalidasUbicaciones.dataset.state =dsbrowse then
+    DSsalidasUbicaciones.dataset.Refresh
+  else
+     DSsalidasUbicaciones.dataset.open;
 end;
 
 procedure TfrmAjustesSalidasEdit.DSSalidasUbicacionesDataChange(Sender: TObject;
@@ -200,5 +224,17 @@ begin
 end;
 
 
+
+function TfrmAjustesSalidasEdit.ExisteEnSalidasUbicacion(
+  IdOrdenSalida: Integer): Boolean;
+begin
+ //Jun 13/17
+  TADOQuery(DsQryAuxiliar.DataSet).close;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(DsQryAuxiliar.DataSet).sql.Add('Select * from SALIDASUbicaciones where IdOrdenSalida='+ intToStr(IdOrdensalida));
+  TADOQuery(DsQryAuxiliar.DataSet).Open;
+  Result:=not  TADOQuery(DsQryAuxiliar.DataSet).eof; //Existe
+  TADOQuery(DsQryAuxiliar.DataSet).close;
+end;
 
 end.

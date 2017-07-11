@@ -333,11 +333,12 @@ begin
   TlBtnGenFactDiaria.Visible:= tipoDocumento=4; //Mar 30/16
   TlBtnGenFactDiaria.Enabled:=(RdGrpNotasVentas.itemindex=0)and (datasource.dataset.RecordCount>0);
   TlBtnImpNotaVenta.Enabled:=  tipoDocumento=4;
-
-  TlBtnReporteUtilidad.visible:=(tipoDocumento=4)or(TipoDocumento=1);
+                                                                        //Jul 3/17
+  TlBtnReporteUtilidad.visible:=(tipoDocumento=4)or(TipoDocumento=1) or (TipoDocumento=2);
   Case TipoDocumento of
   1:TlBtnReporteUtilidad.Hint:='Reporte Facturas Expedidas, vigentes y dentro del rango de fechas';
   4:TlBtnReporteUtilidad.Hint:='Reporte Presupuestos dentro del rango de fechas';
+  2:TlBtnReporteUtilidad.Hint:='Reporte Notas de Credito vigentes y dentro del rango';  //Jul 3/17
 
   end;
 
@@ -626,12 +627,16 @@ var                               //Jul 25/16
   DMImpresosSalidas:TDMImpresosSalidas;
   ArchiPDF:TFileName;
 begin
-  ArchiPDF:='ReporteFacturas.PDF';
+  case Tipo of
+    1: ArchiPDF:='ReporteFacturas.PDF';
+    4: ArchiPDF:='ReporteRemisiones.PDF';
+    2: ArchiPDF:='ReporteNotasCredito.PDF';
+   end;
 
   DMImpresosSalidas:=TDMImpresosSalidas.Create(Self);
   DMImpresosSalidas.ADODtStRepFactUtilidad.Close;
   DMImpresosSalidas.ADODtStCostoFactura.close;
-  DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('IDTipoDoc').Value:=Tipo;  //Factura /Presupuesto
+  DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('IDTipoDoc').Value:=Tipo;  //Factura /Presupuesto   //NOTACREDITO jul 3/17
   DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FIni').Value:=Fini;
   DMImpresosSalidas.ADODtStRepFactUtilidad.Parameters.ParamByName('FFin').Value:=FFin;
   DMImpresosSalidas.ADODtStRepFactUtilidad.Open;
@@ -639,6 +644,7 @@ begin
   case Tipo of
    1: DMImpresosSalidas.TextoAuxiliar:='FACTURAS EXPEDIDAS DEL '+ DateTostr(Fini)+' AL '+ DateTostr(FFin) ;
    4: DMImpresosSalidas.TextoAuxiliar:='LISTADO DE CLIENTES (PEDIDOS) '+ DateTostr(Fini)+' AL '+ DateTostr(FFin)  ;
+   2: DMImpresosSalidas.TextoAuxiliar:='NOTAS DE CREDITO DEL'+ DateTostr(Fini)+' AL '+ DateTostr(FFin) ; //jUL 3/17
   end;
 
   DMImpresosSalidas.PrintPDFFile(4,1,False,ArchiPDF);

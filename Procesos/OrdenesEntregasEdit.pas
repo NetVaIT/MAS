@@ -307,10 +307,10 @@ begin
     datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
     datasource.DataSet.FieldByName('IDEstatusOrdenEntrega').AsInteger:=EstatusNvo;
     datasource.DataSet.Post;
-    if EstatusNvo=5  then
+  (*  if EstatusNvo=5  then
     begin
       ActualizarOrdenesSalida( datasource.DataSet.FieldByName('IDInfoEntrega').AsInteger, EstatusNvo, datasource.DataSet.FieldByName('IDPersonaEmpaca').asInteger);
-    end;
+    end;   //DEshabilitado por que ya lo tenia con los datos reales  , ya que lo ajusta en el after post*)
    // Cont:=-1;
 
 

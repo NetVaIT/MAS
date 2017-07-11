@@ -2,6 +2,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   Caption = 'FrmListaPreciosGrid'
   ClientWidth = 1217
   ExplicitWidth = 1217
+  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -51,7 +52,6 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         object tvMasterIdProducto: TcxGridDBColumn
           DataBinding.FieldName = 'IdProducto'
           Visible = False
-          VisibleForCustomization = False
         end
         object tvMasterIdProductoTipo: TcxGridDBColumn
           DataBinding.FieldName = 'IdProductoTipo'
@@ -66,7 +66,6 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
         object tvMasterIdProductoEstatus: TcxGridDBColumn
           DataBinding.FieldName = 'IdProductoEstatus'
           Visible = False
-          VisibleForCustomization = False
         end
         object tvMasterIdentificador1: TcxGridDBColumn
           Caption = 'Identificador 1'
@@ -492,7 +491,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilPageControl: TImageList
     Top = 152
     Bitmap = {
-      494C010102000400180110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400200110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -637,7 +636,7 @@ inherited FrmListaPreciosGrid: TFrmListaPreciosGrid
   inherited ilAction: TImageList
     Top = 152
     Bitmap = {
-      494C01010E00B801540110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E00B8015C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000101001E030303430203033E0202
       023E0303033D0303033D0303033E0303033E154F1CAD23F405FF114017980303

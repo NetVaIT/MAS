@@ -2,7 +2,6 @@ inherited RptVentasXCliente: TRptVentasXCliente
   Caption = 'RptVentasXCliente'
   ClientWidth = 875
   ExplicitWidth = 875
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -258,7 +257,6 @@ inherited RptVentasXCliente: TRptVentasXCliente
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42760.381338460650000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

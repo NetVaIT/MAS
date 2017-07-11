@@ -308,9 +308,13 @@ begin
     begin                     //Mod. Jun 27/16
       ADODtStAjusteEntradaItems.FieldByName('PrecioVenta').AsFloat:=ValUni;
       ADODtStAjusteEntradaItems.FieldByName('IdProducto').asInteger:=idproducto;
-      ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat:=ValUni* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
+                                                                //Abr 28/17
+      ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat:=CostoEnInventario(idproducto)* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat; //Era VAluni que era precio , pero ingresa con costo //Abr 28/17
       ADODtStAjusteEntradaItems.FieldByName('Costo').AsFloat:=CostoEnInventario(idproducto); //Ene 20/17
-      ADODtStAjusteEntradaItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto)* ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
+      ADODtStAjusteEntradaItems.FieldByName('CostoAproximado').AsFloat:=CostoEnInventario(idproducto);//Abr 28/17  No es calculo. * ADODtStAjusteEntradaItems.FieldByName('CAntidad').AsFloat;
+
+      ADODtStAjusteEntradaItems.FieldByName('ImporteTotal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat;   //Abr 28/17
+      ADODtStAjusteEntradaItems.FieldByName('ImporteMonedaLocal').AsFloat:=ADODtStAjusteEntradaItems.FieldByName('Importe').AsFloat; //Abr 28/17
     end;
   end;
 

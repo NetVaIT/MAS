@@ -69,7 +69,7 @@ inherited dmPersonasCSD: TdmPersonasCSD
   object adodsDocumento: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
+    CommandText = 'SELECT Top(20) IdDocumento, NombreArchivo FROM Documentos'
     Parameters = <>
     Left = 104
     Top = 72
@@ -77,7 +77,7 @@ inherited dmPersonasCSD: TdmPersonasCSD
   object adodsDocumento2: TADODataSet
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
-    CommandText = 'SELECT IdDocumento, NombreArchivo FROM Documentos'
+    CommandText = 'SELECT Top(20) IdDocumento, NombreArchivo FROM Documentos'
     Parameters = <>
     Left = 104
     Top = 128

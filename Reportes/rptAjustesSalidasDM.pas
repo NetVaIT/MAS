@@ -38,6 +38,7 @@ type
     ppLabel9: TppLabel;
     ppDBCalc1: TppDBCalc;
     ppDBCalc3: TppDBCalc;
+    ppLine2: TppLine;
   private
     { Private declarations }
   public

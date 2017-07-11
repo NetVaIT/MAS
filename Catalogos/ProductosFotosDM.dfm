@@ -52,8 +52,8 @@ inherited dmProductosFotos: TdmProductosFotos
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, Descripci' +
-      'on, NombreArchivo, IdArchivo, Archivo'#13#10' from Documentos'
+      'select Top(200) IdDocumento, IdDocumentoTipo, IdDocumentoClase, ' +
+      'Descripcion, NombreArchivo, IdArchivo, Archivo'#13#10' from Documentos'
     DataSource = dsMaster
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IDDocumento'

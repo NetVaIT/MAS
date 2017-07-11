@@ -3,7 +3,6 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   ClientWidth = 1267
   OnActivate = FormActivate
   ExplicitWidth = 1267
-  ExplicitHeight = 650
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -446,6 +445,28 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               Height = 17
               DataField = 'TipoSalida'
               DataSource = DataSource
+            end
+            object Label32: TLabel
+              Left = 1136
+              Top = 64
+              Width = 118
+              Height = 13
+              Caption = 'Factura o Nota venta'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object DBTxtFacturaONota: TDBText
+              Left = 1136
+              Top = 83
+              Width = 118
+              Height = 17
+              DataField = 'DatosCFDI'
+              DataSource = DataSource
+              OnDblClick = DBTxtFacturaONotaDblClick
             end
             object PnlAutorizaYFactura: TPanel
               Left = 0
@@ -1660,8 +1681,8 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
               end
             end
             object PnlSalidasUbicacion: TPanel
-              Left = 218
-              Top = 151
+              Left = 319
+              Top = 58
               Width = 631
               Height = 249
               TabOrder = 14
@@ -1730,10 +1751,10 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 OnClick = BtBtnFinGenProcesoClick
               end
               object DBGrid1: TDBGrid
-                Left = 21
-                Top = 31
+                Left = 39
+                Top = 49
                 Width = 590
-                Height = 159
+                Height = 138
                 DataSource = DSSalidasUbicaciones
                 Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgTitleClick, dgTitleHotTrack]
                 TabOrder = 2
@@ -1793,6 +1814,10 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
                 NumGlyphs = 2
                 TabOrder = 4
                 OnClick = BtBtnCancelaClick
+              end
+              object cxLblCantidad: TcxLabel
+                Left = 560
+                Top = 225
               end
             end
           end
@@ -1985,7 +2010,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilPageControl: TImageList
     Bitmap = {
-      494C010102000400340210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000400440210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2201,7 +2226,7 @@ inherited FrmOrdenesSalida: TFrmOrdenesSalida
   end
   inherited ilAction: TImageList
     Bitmap = {
-      494C01011800C002700210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011800C002800210001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000007000000001002000000000000070
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -603,12 +603,16 @@ begin
                                ''' or Identificador2='''+IDProd+''' or Identificador3='''+IDProd+
                                ''')';
     ADODSAuxiliar.open;
-    if not ADODSAuxiliar.eof then
+    if not ADODSAuxiliar.eof  then
     begin
-      ValUni:= ADODSAuxiliar.FieldByName('PrecioUnitario').AsFloat;
-      ID:=ADODSAuxiliar.FieldByName('IdProducto').asinteger ; //Valor del IDinterno
-      Result:=ADODSAuxiliar.FieldByName('Descripcion').AsString;
-
+      if ADODSAuxiliar.FieldByName('IdProductoEstatus').AsInteger=1 then   //Jun 9/17
+      begin
+        ValUni:= ADODSAuxiliar.FieldByName('PrecioUnitario').AsFloat;
+        ID:=ADODSAuxiliar.FieldByName('IdProducto').asinteger ; //Valor del IDinterno
+        Result:=ADODSAuxiliar.FieldByName('Descripcion').AsString;
+      end
+      else
+        Showmessage('Producto No Disponible para la venta');   //Jun 9/17
     end;
   end;
   ADODSAuxiliar.Close;

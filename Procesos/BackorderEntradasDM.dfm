@@ -11,7 +11,7 @@ inherited dmBackorderEntradas: TdmBackorderEntradas
       'erEntradas.Pendiente'#13#10'FROM BackorderEntradas '#13#10'INNER JOIN Person' +
       'as ON BackorderEntradas.IdPersona = Personas.IdPersona'#13#10'INNER JO' +
       'IN Productos ON BackorderEntradas.IdProducto = Productos.IdProdu' +
-      'cto'
+      'cto'#13#10'order by  Productos.orden -- may 9/17 ABAN'
     object adodsMasterIdBackorderEntrada: TAutoIncField
       FieldName = 'IdBackorderEntrada'
       ReadOnly = True

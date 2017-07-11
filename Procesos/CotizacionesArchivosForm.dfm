@@ -1,5 +1,5 @@
 inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
-  Caption = 'Archivos asociados a Cotizaci'#243'n'
+  Caption = 'Archivos asociados a Cotizaci'#243'n o Pedido'
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlMaster: TPanel
@@ -14,6 +14,18 @@ inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
         object tvMasterNotas: TcxGridDBColumn
           DataBinding.FieldName = 'Notas'
           Width = 345
+        end
+        object tvMasterIdDocumentoSalidaArchivo: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoSalidaArchivo'
+          Visible = False
+        end
+        object tvMasterIdDocumentoSalida: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumentoSalida'
+          Visible = False
+        end
+        object tvMasterIdDocumento: TcxGridDBColumn
+          DataBinding.FieldName = 'IdDocumento'
+          Visible = False
         end
       end
     end
@@ -47,6 +59,7 @@ inherited frmCotizacionesArchivos: TfrmCotizacionesArchivos
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42755.483110092590000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -52,6 +52,7 @@ implementation
 {$R *.dfm}
 
 { TdmrptInventario }
+//Se agrego CostoSalidamensual, pro que estaba el Importe de la venta
 
 procedure TdmrptInventario.AssignParam;
 begin

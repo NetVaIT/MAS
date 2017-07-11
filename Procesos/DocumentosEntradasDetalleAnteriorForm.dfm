@@ -2,7 +2,6 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
   Caption = 'frmDocumentosEntradasDetalleAnterior'
   ClientWidth = 1153
   ExplicitWidth = 1153
-  ExplicitHeight = 457
   PixelsPerInch = 96
   TextHeight = 13
   inherited splDetail3: TSplitter
@@ -145,7 +144,6 @@ inherited frmDocumentosEntradasDetalleAnterior: TfrmDocumentosEntradasDetalleAnt
   inherited dxComponentPrinter: TdxComponentPrinter
     inherited dxcplGrid: TdxGridReportLink
       ReportDocument.CreationDate = 42621.584186284720000000
-      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

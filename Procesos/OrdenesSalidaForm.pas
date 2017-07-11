@@ -184,6 +184,9 @@ type
     DBText7: TDBText;
     Label31: TLabel;
     DBText8: TDBText;
+    Label32: TLabel;
+    DBTxtFacturaONota: TDBText;
+    cxLblCantidad: TcxLabel;
     procedure BtBtnIniciarProceso(Sender: TObject);
     procedure DataSourceDataChange(Sender: TObject; Field: TField);
     procedure BtBtnFinGenProcesoClick(Sender: TObject);
@@ -210,6 +213,7 @@ type
     procedure BtBtnOrdenEmbarqueClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DSSalidasUbicacionesDataChange(Sender: TObject; Field: TField);
+    procedure DBTxtFacturaONotaDblClick(Sender: TObject);
 
   private
     FCargarDocGuia: TBasicAction;
@@ -243,10 +247,16 @@ type
     function EnviaOrdenSola(idOrden: Integer): Boolean;
     function GuardaCAjas(idOrden, Cajas: Integer): Boolean;
     procedure ActualizaMarcaImpresion(AIdInfoEntrega: Integer; Campo, valor: String); //May 26/16
+
+
+    function ExisteEnSalidasUbicacion(IdOrdenSalida:Integer):Boolean;  //Jun 13/17
+    function CreaEnSalidaUbicacion(IdOrdenSalida:Integer):integer;  //Jun 13/17
+
+
     { Private declarations }
   public
     { Public declarations }                                  // Mod. Mar 28/16
-    procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer);
+    procedure Facturar(IDOrden:Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer; Especial:Boolean =False); //Ajustado jun 13/17
     Procedure ActualizaKardex(IdOrdenSalida:integer);
     property CargarDocGuia: TBasicAction read FCargarDocGuia write SetCargarDocGuia;
     property EnviaCorreoConDocs: TBasicAction read FEnviaCorreoConDocs write SetEnviaCorreoConDocs;
@@ -297,6 +307,8 @@ begin
       TadoQuery(DSQryAuxiliar.DataSet).Close;
       TadoQuery(DSQryAuxiliar.DataSet).SQL.Clear;
       TadoQuery(DSQryAuxiliar.DataSet).SQL.ADD('Update SalidasUbicaciones SET IdProductoKardexS='+intToStr(idProdKdx)+' where idordenSalidaItem= '+ intToStr(DtSrcOrdenSalItem.DataSet.fieldbyname('idOrdenSalidaItem').AsInteger));
+      ///Aca puede estar actualizando incompleto  jun 12/17  No
+
       TadoQuery(DSQryAuxiliar.DataSet).ExecSQL;
     end;
     DtSrcOrdenSalItem.DataSet.Next;
@@ -373,9 +385,12 @@ var estatus:Integer;
     CreoCFDI, imprimeOS:Boolean;
     IDInfo:Integer;//May 20/16
     Cancelar:Boolean; //Jul 27/16
-    
+    seguir:Boolean;//jun 15/17
+    Texto:String; //jun 15/17
+
 begin
   inherited;
+  Seguir:=True; //Jun 15/17
   Cancelar:=False;  //Jul 27/16
   ImprimeOS:=False; //Feb 11/16
   Estatus:=-1; //Para Cuando vaya a autorizar Dic 15/15
@@ -408,8 +423,16 @@ begin
       btnAux:=BtBtnEmpaca;
       CampoIDPer:='IDPersonaAutoriza';
       Estatus:=4;
+
       //Aca puede ponerse la confirmacion de la generacion de la Factura  //Ago 9/16
       //datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger
+      if datasource.DataSet.state =dsedit then
+          datasource.DataSet.post;
+      if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then     //Jun 15/17
+         Texto:= 'Esta a punto de generar una Nota de Venta. Esta seguro?';
+      if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=1  then
+         Texto:= 'Esta a punto de generar una Factura. Esta seguro?';
+      Seguir:= application.MessageBox(pchar(TExto),'Confirmación', MB_YESNO )=idYES;   //Jun 15/17
     end;
   4:begin   //Se cambio   Nunca vendra por aca
       campoFecha:='FechaIniEmpaca';
@@ -422,169 +445,174 @@ begin
     end;
 
   end;
-
-  if (clave<>'') and (not datasource.DataSet.FieldByName(CampoIDPer).IsNull) then
+  if seguir then    //Jun 15/17
   begin
-    if datasource.DataSet.FieldByName(CampoClave).AsString =Clave then
+    if (clave<>'') and (not datasource.DataSet.FieldByName(CampoIDPer).IsNull) then
     begin
-      if datasource.DataSet.State =dsBrowse then
-        datasource.DataSet.Edit;
-      datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
-      if Estatus<>-1 then
-        datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=Estatus;
-      datasource.DataSet.Post;
-      if ImprimeOS then //Feb 11/16
-       //ShowMessage('Imprimir Orden Salida');
-         ImprimirOrdenSalida(datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdDocumentoSalida').AsInteger);
-      Pnlaux.Visible:=False;
-      if Estatus = -1 then //Jun 17/16
-         btnAux.Visible:=true;
-      if  CampoIDPer='IDPersonaRevisa' then  //Para que lo ponga cualdo es revision
-      begin //Movido  aca  Jun 16/16   desde
-        if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then    //no deberia estar en nulo se coloco desde la creacion segun lo que traiga el Doc.
-        begin
-          if datasource.Dataset.state=dsBrowse then
-            datasource.DataSet.Edit;
-
-          datasource.DataSet.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1;
-          datasource.DataSet.FieldByName('Acumula').AsBoolean:=False;
-          datasource.DataSet.post;
-
-        end;
-    //Hasta aca  Jun 16/16
-      end
-      else if  CampoIDPer='IDPersonaEmpaca' then  //Ago 5/16
+      if datasource.DataSet.FieldByName(CampoClave).AsString =Clave then
       begin
-        DSInformacionEntrega.DataSet.Edit;
-        DSInformacionEntrega.DataSet.Fieldbyname(CampoIdPer).asInteger:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
-        DSInformacionEntrega.DataSet.Fieldbyname('FechaIniEmpaque').asDAtetime:= datasource.DataSet.FieldByName(campoFecha).AsDatetime;
-       // DSInformacionEntrega.DataSet.Fieldbyname('FechaFinEmpaque').asDAtetime:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
-        DSInformacionEntrega.DataSet.Post;
+        if datasource.DataSet.State =dsBrowse then
+          datasource.DataSet.Edit;
+        datasource.DataSet.FieldByName(campoFecha).AsDateTime:=Now;
+        if Estatus<>-1 then
+          datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=Estatus;
+        datasource.DataSet.Post;
+        if ImprimeOS then //Feb 11/16
+         //ShowMessage('Imprimir Orden Salida');
+           ImprimirOrdenSalida(datasource.DataSet.FieldByName('IDOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdDocumentoSalida').AsInteger);
+        Pnlaux.Visible:=False;
+        if Estatus = -1 then //Jun 17/16
+           btnAux.Visible:=true;
+        if  CampoIDPer='IDPersonaRevisa' then  //Para que lo ponga cualdo es revision
+        begin //Movido  aca  Jun 16/16   desde
+          if datasource.Dataset.FieldByName('IDGeneraCFDITipoDoc').IsNull then    //no deberia estar en nulo se coloco desde la creacion segun lo que traiga el Doc.
+          begin
+            if datasource.Dataset.state=dsBrowse then
+              datasource.DataSet.Edit;
+
+            datasource.DataSet.FieldByName('IDGeneraCFDITipoDoc').AsInteger:=1;
+            datasource.DataSet.FieldByName('Acumula').AsBoolean:=False;
+            datasource.DataSet.post;
+
+          end;
+      //Hasta aca  Jun 16/16
+        end
+        else if  CampoIDPer='IDPersonaEmpaca' then  //Ago 5/16
+        begin
+          DSInformacionEntrega.DataSet.Edit;
+          DSInformacionEntrega.DataSet.Fieldbyname(CampoIdPer).asInteger:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
+          DSInformacionEntrega.DataSet.Fieldbyname('FechaIniEmpaque').asDAtetime:= datasource.DataSet.FieldByName(campoFecha).AsDatetime;
+         // DSInformacionEntrega.DataSet.Fieldbyname('FechaFinEmpaque').asDAtetime:= datasource.DataSet.FieldByName(CampoIdPer).AsInteger;
+          DSInformacionEntrega.DataSet.Post;
+        end;
+      end
+      else
+      begin
+        Estatus:=-1; //Jun10/16 Para que no actualice el resto cuando no coincide
+        //Clave incorrecta
+        ShowMessage('Contraseña incorrecta');
       end;
     end
     else
     begin
       Estatus:=-1; //Jun10/16 Para que no actualice el resto cuando no coincide
-      //Clave incorrecta
-      ShowMessage('Contraseña incorrecta');
+      ShowMessage('Debe seleccionar la persona y colocar su contraseña');
     end;
-  end
-  else
-  begin
-    Estatus:=-1; //Jun10/16 Para que no actualice el resto cuando no coincide
-    ShowMessage('Debe seleccionar la persona y colocar su contraseña');
-  end;
-  //Si es 4 autorizo bien... Se debe generar la Factura directamente
+    //Si es 4 autorizo bien... Se debe generar la Factura directamente
 
-  if Estatus<>-1 then //Cambio a 4. Solo es para autorizacion
-  begin
-    //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
-    try      //Jul 27/16
-  //    TRansaccion
-  //   _dmConection.ADOConnection.BeginTrans;
-    if ExisteEnvioPendiente(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdPersonadomicilio').AsInteger, IDInfo)and
-      (Application.MessageBox('¿Desea juntar envíos con una misma etiqueta?','Confirmación de agrupacion de Envíos',MB_YESNO)=ID_YES) then
+    if Estatus<>-1 then //Cambio a 4. Solo es para autorizacion
     begin
-  //    if IDInfo=-1 then //Hay más de un registro
+      //Verificar existencia de más pedidos del cliente en proceso de empaque May 19/16
+      try      //Jul 27/16
+    //    TRansaccion
+    //   _dmConection.ADOConnection.BeginTrans;
+      if ExisteEnvioPendiente(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger,datasource.DataSet.FieldByName('IdPersonadomicilio').AsInteger, IDInfo)and
+        (Application.MessageBox('¿Desea juntar envíos con una misma etiqueta?','Confirmación de agrupacion de Envíos',MB_YESNO)=ID_YES) then
+      begin
+    //    if IDInfo=-1 then //Hay más de un registro
 
-      FrmListaEtiquetas:=TFrmListaEtiquetas.create(self);
-      FrmListaEtiquetas.DSListaEtiquetas.DataSet:=DSQryAuxiliar.DataSet; //Verificar comportamiento Mayo 20 /16
-      FrmListaEtiquetas.ShowModal;
-      FIDEntregaExistente :=FrmListaEtiquetas.AIdEtiqueta;
-         
-      FrmListaEtiquetas.Free;
-      //Crear asociacion y actualizar totales, permitir modificacion de Cajas....
-      if FIDEntregaExistente<>-1 then
-         ComparteEnvio.execute
-      else   
-        if (Application.MessageBox('¿Desea Crear etiqueta individual?','Confirmación de etiquetas',MB_YESNO)=ID_YES)then
-          CrearDatosEnvio.Execute
-        else  
-          Cancelar:=True;
-    end
-    else
-    begin //Crear nueva y mostrar
-      CrearDatosEnvio.Execute;
+        FrmListaEtiquetas:=TFrmListaEtiquetas.create(self);
+        FrmListaEtiquetas.DSListaEtiquetas.DataSet:=DSQryAuxiliar.DataSet; //Verificar comportamiento Mayo 20 /16
+        FrmListaEtiquetas.ShowModal;
+        FIDEntregaExistente :=FrmListaEtiquetas.AIdEtiqueta;
 
-    end;
+        FrmListaEtiquetas.Free;
+        //Crear asociacion y actualizar totales, permitir modificacion de Cajas....
+        if FIDEntregaExistente<>-1 then
+           ComparteEnvio.execute
+        else
+          if (Application.MessageBox('¿Desea Crear etiqueta individual?','Confirmación de etiquetas',MB_YESNO)=ID_YES)then
+            CrearDatosEnvio.Execute
+          else
+            Cancelar:=True;
+      end
+      else
+      begin //Crear nueva y mostrar
+        CrearDatosEnvio.Execute;
 
-    if not Cancelar then
-    begin
-      if datasource.DataSet.State =dsEdit then //Ago 31/16 para que guarde tipoFacturacion antes
-         datasource.DataSet.Post;
-       if (datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4)  and
-           ( datasource.DataSet.FieldByName('IVA').asfloat <>0) then //Dic 28/16 Para que quite el iva si no factura
-       begin
-         datasource.DataSet.Edit;
-         datasource.DataSet.FieldByName('Total').ASfloat:=  datasource.DataSet.FieldByName('SubTotal').ASfloat;
-         datasource.DataSet.FieldByName('IVA').asfloat:=0;
-         datasource.DataSet.Post;
-       end; //Dic 28/16 Para que quite el iva si no factura
-    (*  *)
-     //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
-      ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
-      Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
-      if CreoCFDI then
-      begin//Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
-        //Actualizar CFDI en InfoEntrega si es que no tiene uno
-        ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16
+      end;
 
+      if not Cancelar then
+      begin
+        if datasource.DataSet.State =dsEdit then //Ago 31/16 para que guarde tipoFacturacion antes
+           datasource.DataSet.Post;
+         if (datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4)  and
+             ( datasource.DataSet.FieldByName('IVA').asfloat <>0) then //Dic 28/16 Para que quite el iva si no factura
+         begin
+           datasource.DataSet.Edit;
+           datasource.DataSet.FieldByName('Total').ASfloat:=  datasource.DataSet.FieldByName('SubTotal').ASfloat;
+           datasource.DataSet.FieldByName('IVA').asfloat:=0;
+           datasource.DataSet.Post;
+         end; //Dic 28/16 Para que quite el iva si no factura
+      (*  *)
+       //showmessage('Mandar generacion de Factura');  //Try y si no se deja tratar de regresar todo??
+        ActualizaKardex(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger); //Verifica si existe o no                 //Mod. Mar 28/16
+        Facturar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger);
+        if CreoCFDI then
+        begin
+          datasource.DataSet.refresh;
+
+          //Verificar si quedó al menos creada como Prefactura, si no hay que regresar al estado antes de autorizar.
+          //Actualizar CFDI en InfoEntrega si es que no tiene uno
+          ActualizaEtiqueta(datasource.DataSet.FieldByName('IdOrdenSalida').AsInteger); //May 26/16
+
+          DSInformacionEntrega.DataSet.Close;
+          DSInformacionEntrega.DataSet.Open;
+
+       //   ChckBxDatosEnvios.Checked:=true;
+       //   PnlInformacionEntrega.Visible:=True;
+
+        end
+        else //Solo cuando no se crea el CFDI
+        begin
+          //Regresar al estatus anterior
+          if datasource.DataSet.State =dsBrowse then
+            datasource.DataSet.Edit;
+          datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
+          datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
+          datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
+          datasource.DataSet.Post;
+          if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then //Abr 1/16
+          begin //Ver si se borra el CFDI (regresar valores de folios??)
+            if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
+            begin
+             //Poner ejecucion de devolucion Jun 10/16
+            end;
+          end;
+
+          //deberia quitar Kardex y posibles datos de CFDIs
+          ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
+        end;
+        dsInfoEntregaDetalle.DataSet.Close;
+        dsInfoEntregaDetalle.DataSet.Open;
         DSInformacionEntrega.DataSet.Close;
         DSInformacionEntrega.DataSet.Open;
 
-     //   ChckBxDatosEnvios.Checked:=true;
-     //   PnlInformacionEntrega.Visible:=True;
-
+       // PnlInformacionEntrega.Visible:=True; //May 23/16  //Deshabilitado ago 5/16
+       // ChckBxDatosEnvios.Checked:=true;
       end
-      else //Solo cuando no se crea el CFDI
+      else  //Cancelo el proceso y ya no quiere juntar ni poner individual
       begin
-        //Regresar al estatus anterior
         if datasource.DataSet.State =dsBrowse then
           datasource.DataSet.Edit;
         datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
         datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
         datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
         datasource.DataSet.Post;
-        if datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4 then //Abr 1/16
-        begin //Ver si se borra el CFDI (regresar valores de folios??)
-          if not datasource.DataSet.FieldByName('Acumula').asBoolean then //Es presupuesto.. Deshacer actualizaciones de Inventario, Clientes e informacionEntrega
-          begin
-           //Poner ejecucion de devolucion Jun 10/16
-          end;
-        end;
 
-        //deberia quitar Kardex y posibles datos de CFDIs
-        ShowMessage('Hubo errores Intentando generar el CFDI, verifique Catálogos genéricos');
+      end;//DEl Cancelar
+
+      Except //Jul 27/16
+        if datasource.DataSet.State =dsBrowse then
+          datasource.DataSet.Edit;
+        datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
+        datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
+        datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
+        datasource.DataSet.Post;
       end;
-      dsInfoEntregaDetalle.DataSet.Close;
-      dsInfoEntregaDetalle.DataSet.Open;
-      DSInformacionEntrega.DataSet.Close;
-      DSInformacionEntrega.DataSet.Open;
+    end;  //Jun 10/16 No se hace nada para autorizaci+ón si no hay contraseña o no es Valida
+  end;//del seguir //jun 15/17
 
-     // PnlInformacionEntrega.Visible:=True; //May 23/16  //Deshabilitado ago 5/16
-     // ChckBxDatosEnvios.Checked:=true;
-    end
-    else  //Cancelo el proceso y ya no quiere juntar ni poner individual
-    begin
-      if datasource.DataSet.State =dsBrowse then
-        datasource.DataSet.Edit;
-      datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
-      datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
-      datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
-      datasource.DataSet.Post;
-    
-    end;//DEl Cancelar
-
-    Except //Jul 27/16
-      if datasource.DataSet.State =dsBrowse then
-        datasource.DataSet.Edit;
-      datasource.DataSet.FieldByName(campoFecha).Value:=NULL;
-      datasource.DataSet.FieldByName('IDPersonaAutoriza').Value:=NULL;
-      datasource.DataSet.FieldByName('IDOrdenEstatus').AsInteger:=3; //Regresa al estado anterior??
-      datasource.DataSet.Post;
-    end;
-  end;
-  //Jun 10/16 No se hace nada para autorizaci+ón si no hay contraseña o no es Valida
 end;
 
 function TFrmOrdenesSalida.ActualizaEtiqueta(IDOrdenSalida:Integer):Boolean; //May 26/16
@@ -615,6 +643,16 @@ begin
   end;
 
 
+end;
+
+function TFrmOrdenesSalida.ExisteEnSalidasUbicacion(IdOrdenSalida: Integer): Boolean;
+begin                                                                                 //Jun 13/17
+  TADOQuery(DsQryAuxiliar.DataSet).close;
+  TADOQuery(DsQryAuxiliar.DataSet).SQL.Clear;
+  TADOQuery(DsQryAuxiliar.DataSet).sql.Add('Select * from SALIDASUbicaciones where IdOrdenSalida='+ intToStr(IdOrdensalida));
+  TADOQuery(DsQryAuxiliar.DataSet).Open;
+  Result:=not  TADOQuery(DsQryAuxiliar.DataSet).eof; //Existe
+  TADOQuery(DsQryAuxiliar.DataSet).close;
 end;
 
 function TFrmOrdenesSalida.ExisteEnvioPendiente(IdOrdenSal, IDPerDomicilio:integer; var idInfoEntrega:integer):Boolean; //May 19/16
@@ -796,6 +834,7 @@ var EstatusNvo:integer;
     cajas:String; //Jul 27/16
 begin
   inherited;
+  cxLblCantidad.Caption:=''; //Solo para mostrar en la lsita de salidas cuantos creo..jun 13/17
   Esperar:=False;
   case (Sender as TBitBtn).tag of
     1:begin
@@ -1196,6 +1235,22 @@ begin
 
 end;
 
+procedure TFrmOrdenesSalida.DBTxtFacturaONotaDblClick(Sender: TObject);
+var Clave:String;
+    CreoCFDI:Boolean;
+begin
+  inherited;                                                                                                            //Solo para presupuesto
+  if (DBTxtFacturaONota.Caption='Sin Datos')  and  (datasource.dataset.fieldbyname('IdOrdenEstatus').asInteger>=4) and (datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger=4)  then
+  begin
+    if inputquery('Clave especial', 'Escriba clave especial', Clave) then
+    begin
+      if clave='$asqwzxwsx' then
+       FActurar(datasource.DataSet.FieldByName('idOrdenSalida').AsInteger, CreoCFDI, datasource.DataSet.FieldByName('idGeneraCFDItipoDoc').AsInteger ,True);
+    end;
+  end;
+  datasource.DataSet.Refresh;
+end;
+
 procedure TFrmOrdenesSalida.DSInformacionEntregaStateChange(Sender: TObject);
 begin
   inherited;
@@ -1212,8 +1267,9 @@ procedure TFrmOrdenesSalida.DSSalidasUbicacionesDataChange(Sender: TObject;
   Field: TField);
 begin
   inherited;
-  //Verificar euq el idproducto de salidasubicaciones tenga el valor  Oct 28/16                                                                    //  and ( not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull)
-  if (not (dsSalidasUbicaciones.dataset.eof)) and (dsSalidasUbicaciones.State =dsBrowse)  then   //Para que el siguiente quede filtrado..  Oct 3/16
+  //Verificar euq el idproducto de salidasubicaciones tenga el valor  Oct 28/16
+ // and(not (dsSalidasUbicaciones.dataset.eof))  //Jul 9/17            //  and ( not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull) //Jul 09/17
+  if (dsSalidasUbicaciones.State =dsBrowse) and (not dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').isnull) then   //Para que el siguiente quede filtrado..  Oct 3/16
   begin
     dsProductosXEspacio.DataSet.Filtered:=False;                                                  // DtSrcOrdenSalItem     //No tiene datos
     dsProductosXEspacio.DataSet.Filter:='IDProducto='+dssalidasUbicaciones.DataSet.fieldbyname('IDProducto').AsString;
@@ -1228,13 +1284,16 @@ begin
     DSSalidasUbicaciones.DataSet.Refresh;
 end;
 
-procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer); //Mod Mar 28/16
 
+
+procedure TFrmOrdenesSalida.Facturar(IDOrden: Integer;var CFDICreado:Boolean;IDGenTipoDoc:integer; Especial:Boolean =False); //Mod Mar 28/16
+                           //VEr donde se llama con el parametro de sin actualizar.. jun 13/17
 begin
   FFacturando:=True;
                                                //Mar 29/16
   dmFacturas := TdmFacturas.CreateWMostrar(nil,True,IDGenTipoDoc);  //Era false pero verificar  a ver si no da el aV
   dmFActuras.PIDordenSalida:=IDOrden;
+  dmFacturas.GeneraSinActualizar:=Especial; // Jun 13/17  //Normalmente va FAlse.. asi que siempre actualizaria
   dmFacturas.ActCrearPrefacturas.Execute;
  // dmFActuras.Muestra:=False;
   CFDICreado:= dmFActuras.CreoCFDI; //Solo trae valor
@@ -1375,41 +1434,68 @@ begin
   PermisosEdicion; //Jun 14/16
 end;
 
+function TFrmOrdenesSalida.CreaEnSalidaUbicacion(
+  IdOrdenSalida: Integer): integer;
+begin
+  TAdoQuery(dsQryAuxiliar.DataSet).Close;
+  TAdoQuery(dsQryAuxiliar.DataSet).SQL.Clear;
+  TAdoQuery(dsQryAuxiliar.DataSet).SQL.Add('INSERT INTO SalidasUbicaciones(IdOrdenSalida,IDOrdensalidaItem,IdProducto,Cantidad, IdSalidaUbicacionEstatus)'+
+    ' SELECT IdOrdenSalida,IDOrdensalidaItem, IdProducto,CantidadDespachada,1 FROM OrdenesSalidasItems WHERE CantidadDespachada>0 and IdOrdenSalida= '+intToStr(IdOrdenSalida));
+
+  REsult:=  TAdoQuery(dsQryAuxiliar.DataSet).ExecSQL;
+end;
+
 procedure TFrmOrdenesSalida.CrearSalidasUbicacion;   //Ene 28/16
 var
   Faltante:Double;
+  Registros:Integer;
 begin
-
-
-  DSsalidasUbicaciones.dataset.Open;
-  DtSrcOrdenSalItem.dataset.First; //Jul 20/16
-  while not DtSrcOrdenSalItem.dataset.eof do
+  //verificar que no exista en Salidas Ubicacion datos de la OrdenSalida DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').asinteger
+  if not  ExisteEnSalidasUbicacion(DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').AsInteger) then
   begin
-  //  DSProductosXEspacio.dataset.close;// desde Ene 29/16
-   // TAdoDataset(DSProductosXEspacio.dataset).Parameters.ParamByName('IdProducto').Value:= DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger;
+    Registros:=CreaEnSalidaUbicacion(DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').AsInteger);
+    cxLblCantidad.Caption:= inttostr(registros);
+  end
+  else
+  begin//Si no usar Crear directo con los datos de la Ordende salida ITems de la orden de salida
+     //Si existiese algo debe usar lo que se tiene
+    DSsalidasUbicaciones.dataset.Close; //Jun 13/17
 
-    Faltante:=DtSrcOrdenSalItem.dataset.fieldbyname('CantidadDespachada').asFloat;
-    if not ExisteCompleto(DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalidaItem').asinteger,Faltante) then
+    DSsalidasUbicaciones.dataset.Open;
+    DtSrcOrdenSalItem.dataset.First; //Jul 20/16
+    while not DtSrcOrdenSalItem.dataset.eof do
     begin
-      if Faltante>0.000001  then
+    //  DSProductosXEspacio.dataset.close;// desde Ene 29/16
+     // TAdoDataset(DSProductosXEspacio.dataset).Parameters.ParamByName('IdProducto').Value:= DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger;
+
+      Faltante:=DtSrcOrdenSalItem.dataset.fieldbyname('CantidadDespachada').asFloat;
+      if not ExisteCompleto(DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalidaItem').asinteger,Faltante) then
       begin
-        //Crear adicional e ingresar
-        DSsalidasUbicaciones.dataset.insert;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').asinteger;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
-        DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
-        DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
-//        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);
+        if Faltante>0.000001  then
+        begin
+          //Crear adicional e ingresar
+          DSsalidasUbicaciones.dataset.insert;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalida').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalida').asinteger;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdOrdenSalidaItem').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('IdOrdenSalidaItem').asinteger;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdProducto').asinteger:= DtSrcOrdenSalItem.dataset.fieldbyname('idproducto').asInteger;//Oct 28/16;
+          DSsalidasUbicaciones.dataset.fieldbyname('Cantidad').ASFloat:= Faltante;
+          DSsalidasUbicaciones.dataset.fieldbyname('IdSalidaUbicacionEstatus').asinteger:= 1;//Registrado, cuando el usuario coloque el dato de ProductoEspacio --> En Proceso
+  //        DSsalidasUbicaciones.dataset.fieldbyname('IdProductoXEspacio').asinteger:= BuscaProductoDisponible(DtSrcOrdenSalItem.dataset.fieldbyname('IdProducto').asinteger);
 
-        DSsalidasUbicaciones.dataset.post;
+          DSsalidasUbicaciones.dataset.post;
+        end;
       end;
+      DtSrcOrdenSalItem.dataset.next;
     end;
-    DtSrcOrdenSalItem.dataset.next;
   end;
+  if  DSsalidasUbicaciones.dataset.state =dsbrowse then   //Jun 15/17
+    DSsalidasUbicaciones.dataset.Refresh
+  else
+     DSsalidasUbicaciones.dataset.open;
 
-  DSsalidasUbicaciones.dataset.Refresh;
 
+
+  //Re verificar por qué no se estan creando todos y se estan pasando asi jun 12/17
 
 end;
 

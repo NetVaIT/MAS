@@ -308,7 +308,7 @@ inherited DMFacturas: TDMFacturas
   end
   inherited adodsUpdate: TADODataSet
     OnNewRecord = adodsMasterNewRecord
-    Left = 336
+    Left = 344
   end
   inherited ActionList: TActionList
     Left = 328
@@ -379,7 +379,7 @@ inherited DMFacturas: TDMFacturas
   end
   object DSMaster: TDataSource
     DataSet = adodsMaster
-    Left = 176
+    Left = 184
     Top = 16
   end
   object ADODtStOrdenSalida: TADODataSet
@@ -393,9 +393,9 @@ inherited DMFacturas: TDMFacturas
       'dDocumentoSalida'#13#10'inner Join Personas P on P.IdPersona= DS.IDPer' +
       'sona'#13#10'Left Join PersonasDomicilios PD on DS.IdDomicilioCliente=P' +
       'D.IdPersonaDomicilio'#13#10'where (OS.IdOrdenEstatus=4 or OS.IdOrdenEs' +
-      'tatus=10)'#13#10'and  OS.IdOrdenSalida=:IdOrdenSalida'#13#10
-    DataSource = DSDatosDocSalida
-    IndexFieldNames = 'IdDocumentoSalida'
+      'tatus=10 or ( OS.IdOrdenEstatus=5 and OS.IdOrdenSalida=45698 ))'#13 +
+      #10'and  OS.IdOrdenSalida=:IdOrdenSalida                           ' +
+      '  '
     Parameters = <
       item
         Name = 'IdOrdenSalida'

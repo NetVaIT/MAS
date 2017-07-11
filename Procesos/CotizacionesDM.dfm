@@ -29,7 +29,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Size = 4
         Value = 0
       end>
-    Left = 64
+    Left = 72
     object adodsMasterIdDocumentoSalida: TAutoIncField
       FieldName = 'IdDocumentoSalida'
       ReadOnly = True
@@ -421,7 +421,7 @@ inherited dmCotizaciones: TdmCotizaciones
       '.Apartado ) as ExistenciaReal,'#13#10' I.PedidoXSurtir as PorSurtir, I' +
       '.Apartado as PorFacturar, I.virtual as EnAduana'#13#10' FROM Productos' +
       ' P'#13#10' inner join Inventario  I On P.IDProducto=I.IdProducto '#13#10'and' +
-      ' I.IDAlmacen=1'
+      ' I.IDAlmacen=1 --and P.IdProductoEstatus=1 -- jun 9/17'
     Parameters = <>
     Left = 64
     Top = 148
@@ -5096,8 +5096,8 @@ inherited dmCotizaciones: TdmCotizaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10' from Pro' +
-      'ductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
+      'select Top(200) IdProductoFoto, IdProducto, IdDocumento, Notas'#13#10 +
+      ' from ProductosFotos'#13#10#13#10'where IDProducto=:IdProducto'#13#10
     DataSource = DSCotizacionDetalle
     IndexFieldNames = 'IdProducto'
     MasterFields = 'IdProducto'
@@ -5107,6 +5107,7 @@ inherited dmCotizaciones: TdmCotizaciones
         Attributes = [paSigned, paNullable]
         DataType = ftInteger
         Precision = 10
+        Size = 4
         Value = 1
       end>
     Left = 640
@@ -5157,9 +5158,9 @@ inherited dmCotizaciones: TdmCotizaciones
     Connection = _dmConection.ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'select IdDocumento, IdDocumentoTipo, IdDocumentoClase, '#13#10'Descrip' +
-      'cion, NombreArchivo, IdArchivo, Archivo '#13#10'from Documentos'#13#10'where' +
-      ' iddocumento=:IdDocumento'
+      'select Top(200) IdDocumento, IdDocumentoTipo, IdDocumentoClase, ' +
+      #13#10'Descripcion, NombreArchivo, IdArchivo, Archivo '#13#10'from Document' +
+      'os'#13#10'where iddocumento=:IdDocumento'
     DataSource = dsProductosFotos
     IndexFieldNames = 'IdDocumento'
     MasterFields = 'IdDocumento'
@@ -5169,7 +5170,8 @@ inherited dmCotizaciones: TdmCotizaciones
         Attributes = [paSigned]
         DataType = ftInteger
         Precision = 10
-        Value = 11
+        Size = 4
+        Value = Null
       end>
     Left = 728
     Top = 464

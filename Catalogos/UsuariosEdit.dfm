@@ -3,7 +3,7 @@ inherited frmUsuariosEdit: TfrmUsuariosEdit
   ClientHeight = 334
   ClientWidth = 480
   ExplicitWidth = 486
-  ExplicitHeight = 362
+  ExplicitHeight = 363
   PixelsPerInch = 96
   TextHeight = 13
   inherited pcMain: TcxPageControl

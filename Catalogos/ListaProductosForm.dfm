@@ -23,7 +23,6 @@ object frmListaProductos: TfrmListaProductos
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 442
     object cxGrid: TcxGrid
       Left = 0
       Top = 50
@@ -32,7 +31,6 @@ object frmListaProductos: TfrmListaProductos
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfStandard
-      ExplicitHeight = 392
       object tvMaster: TcxGridDBTableView
         OnDblClick = tvMasterDblClick
         Navigator.Buttons.CustomButtons = <>
@@ -254,7 +252,6 @@ object frmListaProductos: TfrmListaProductos
       Color = 16776176
       ImageIndex = 0
       ParentColor = False
-      ExplicitWidth = 704
       object PnlFotos: TPanel
         Left = 0
         Top = 0
@@ -263,8 +260,6 @@ object frmListaProductos: TfrmListaProductos
         Align = alClient
         ParentColor = True
         TabOrder = 0
-        ExplicitTop = -8
-        ExplicitWidth = 704
         object ImgFoto: TImage
           Left = 23
           Top = 18

@@ -25,12 +25,19 @@ type
     adodsMasterIdDocumentoSalida: TIntegerField;
     adodsMasterIdDocumento: TIntegerField;
     adodsMasterNotas: TStringField;
-    adodsMasterNombreArchivo: TStringField;
     ActNuevoDocumento: TAction;
     ActEditaDocumento: TAction;
+    ADODtStDocumentoCon: TADODataSet;
+    ADODtStDocumentoConDescripcion: TStringField;
+    ADODtStDocumentoConNombreArchivo: TStringField;
+    ADODtStDocumentoConIdDocumento: TAutoIncField;
+    adodsMasterNombreArchivo: TStringField;
+    adodsMasterotronombre: TStringField;
     procedure ActNuevoDocumentoExecute(Sender: TObject);
     procedure ActEditaDocumentoExecute(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+    procedure adodsMasterCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
      procedure ReadFile(FileName: TFileName);
@@ -93,6 +100,16 @@ begin
   dmDocumentos.Free;
 end;
 
+procedure TdmCotizacionesArchivos.adodsMasterCalcFields(DataSet: TDataSet);
+begin
+  inherited;
+  ADODtStDocumentoCon.Close;
+  ADODtStDocumentoCon.Parameters.ParamByName('iddocumento').Value:=dataset.FieldByName('idDocumento').AsInteger;
+  ADODtStDocumentoCon.Open;
+  dataset.FieldByName('NombreArchivo').AsString:=ADODtStDocumentoCon.FieldByName('NombreArchivo').asString;
+
+end;
+
 procedure TdmCotizacionesArchivos.DataModuleCreate(Sender: TObject);
 begin
   inherited;
@@ -105,6 +122,12 @@ begin
 //  AdodsMaster.open; //Deshabilitado de aca pasado antes de nuevo documento  Ene 13/17
 
 //  ADODsDocumento.Open;   //Deshabilitado de aca pasado antes de nuevo documento  Ene 13/17
+end;
+
+procedure TdmCotizacionesArchivos.DataModuleDestroy(Sender: TObject);
+begin
+  inherited;
+   ADODtStDocumentoCon.Close;
 end;
 
 procedure TdmCotizacionesArchivos.ReadFile(FileName: TFileName);
